@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Tracks · 30-Day Cultivation Deep Dive · 2026-04-13 to 2026-05-13</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --aroya-olive:         #635e51;
+  --aroya-olive-hover:   #6c6759;
+  --aroya-lime:          #cbeeb0;
+  --aroya-lime-hover:    #b7d89e;
+  --aroya-light-green:   #c7c8c2;
+  --aroya-medium-gray:   #46483d;
+  --aroya-app-blue-1:    #1c2632;
+  --aroya-app-blue-2:    #071538;
+  --aroya-attention:     #d0ff00;
+  --aroya-footer-hr:     #c7c7b9;
+  --addium-blue:         #2d62ff;
+  --addium-blue-light:   #d9e5ff;
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-display: 2.5rem;
+  --radius: 12px;
+  --radius-sm: 6px;
+  --dur: 160ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root {
+  --fg:#1a1c19; --fg-muted:#444; --fg-subtle:#666; --fg-disabled:#aaa;
+  --bg:#fff; --bg-muted:#f9f9f9; --bg-subtle:#f5f5f5;
+  --bg-surface:#fff; --bg-surface-2:#f9f9f9;
+  --border:#ebebea; --border-strong:#cccccc;
+  --success-bg:#cef5ca; --success-fg:#114e0b; --success-border:#a9dea4;
+  --warning-bg:#fcf8d8; --warning-fg:#5e5515; --warning-border:#e0d683;
+  --error-bg:#f8e4e4;   --error-fg:#3b0b0b;   --error-border:#dfaaaa;
+  --info-bg:#d9e5ff;    --info-fg:#1e3b99;    --info-border:#b8ccff;
+}
+body {
+  background:
+    radial-gradient(900px 500px at 12% -10%, rgba(203,238,176,0.25) 0%, transparent 55%),
+    radial-gradient(700px 400px at 110% 30%, rgba(99,94,81,0.06) 0%, transparent 60%),
+    linear-gradient(180deg,#fbfbfa 0%,#f4f4f2 100%);
+  background-attachment: fixed; color: var(--fg);
+}
+.nav { background: var(--aroya-app-blue-1); color:#fff; border-bottom:1px solid var(--aroya-app-blue-2); }
+.nav__name { color:#fff; }
+.hero {
+  background:
+    radial-gradient(600px 300px at 85% 30%, rgba(203,238,176,0.12) 0%, transparent 65%),
+    linear-gradient(180deg,#22303f 0%,var(--aroya-app-blue-1) 100%);
+  color:#fff; border-bottom:1px solid var(--aroya-app-blue-2);
+}
+.hero__title { color:#fff; }
+.hero__title em { background: linear-gradient(transparent 62%, rgba(203,238,176,0.35) 62%); color:#fff; padding:0 2px; }
+.page { background: transparent; }
+.kpi__bar { background: var(--bg-subtle); }
+.caveat { background: var(--addium-blue-light); border:1px solid #b8ccff; color:#1e3b99; }
+.caveat b { color:#1e3b99; }
+
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body { font-family: var(--font-sans); font-size: var(--text-sm); line-height:1.55;
+  -webkit-font-smoothing: antialiased; font-feature-settings:"cv11","ss01"; }
+.num, td.num, .kpi-value, .kpi-delta, .mono { font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
+span[lang="es"] { display: none; }
+body.es span[lang="en"] { display: none; }
+body.es span[lang="es"] { display: inline; }
+.lang-toggle { position: fixed; bottom: var(--s-4); right: var(--s-4);
+  background: var(--bg-surface); border:1px solid var(--border); color: var(--fg);
+  font-family: var(--font-sans); font-size: var(--text-xs); font-weight:500;
+  padding:0; border-radius:999px; letter-spacing:0.05em; z-index:50;
+  display:flex; overflow:hidden; cursor:pointer; box-shadow: 0 4px 18px rgba(0,0,0,0.18); }
+.lang-toggle button { background:transparent; border:0; color: var(--fg-muted); font:inherit;
+  padding:7px 14px; cursor:pointer; text-transform:uppercase; letter-spacing:0.08em;
+  transition: all var(--dur) var(--ease); }
+.lang-toggle button.active { background: var(--aroya-lime); color: var(--aroya-app-blue-1); }
+.lang-toggle button:hover:not(.active) { color: var(--aroya-lime); }
+.nav { padding: var(--s-3) var(--s-6); display:flex; align-items:center; justify-content:space-between; }
+.nav__brand { display:flex; align-items:center; gap: var(--s-3); }
+.nav__logo { width:28px; height:28px; border-radius:8px; background: var(--aroya-lime);
+  display:flex; align-items:center; justify-content:center; position:relative; }
+.nav__logo::before { content:""; width:14px; height:14px;
+  border:2px solid var(--aroya-app-blue-1); border-radius:50%;
+  border-left-color:transparent; border-bottom-color:transparent; transform: rotate(-35deg); }
+.nav__name { font-weight:500; font-size: var(--text-base); letter-spacing:0.02em; }
+.nav__name .dot { color: var(--aroya-lime); }
+.nav__links { display:flex; gap: var(--s-5); font-size: var(--text-xs); color: var(--aroya-light-green);
+  text-transform:uppercase; letter-spacing:0.08em; }
+.nav__links .active { color: var(--aroya-lime); }
+.hero { padding: var(--s-7) var(--s-6) var(--s-6); position:relative; overflow:hidden; }
+.hero::after { content:""; position:absolute; right:-40px; top:-40px; width:240px; height:240px;
+  background: var(--aroya-lime); opacity:0.08; border-radius:50%; pointer-events:none; }
+.hero__inner { max-width:1120px; margin:0 auto; position:relative; }
+.hero__eyebrow { font-size: var(--text-xs); text-transform:uppercase; letter-spacing:0.1em;
+  color: var(--aroya-lime); margin:0 0 var(--s-3); font-weight:500; }
+.hero__title { font-size: var(--text-display); font-weight:500; letter-spacing:-0.015em;
+  line-height:1.15; margin:0 0 var(--s-3); max-width:820px; }
+.hero__title em { font-style: normal; }
+.hero__subtitle { font-size: var(--text-base); color: var(--aroya-light-green); margin:0 0 var(--s-5); font-weight:400; }
+.hero__meta { font-size: var(--text-xs); color: var(--aroya-light-green); margin-bottom: var(--s-5); }
+.hero__meta span { margin-right: var(--s-3); }
+.hero__chips { display:flex; flex-wrap:wrap; gap: var(--s-2); }
+.hero__chip { display:inline-flex; align-items:center; padding:3px 10px; border-radius:999px;
+  font-size: var(--text-xs); font-weight:500; border:1px solid; }
+.hero__chip.brand { border-color: var(--aroya-lime); color: var(--aroya-lime); background: rgba(203,238,176,0.10); }
+.hero__chip.info  { border-color: var(--addium-blue); color: var(--addium-blue-light); background: rgba(45,98,255,0.14); }
+.hero__chip.warn  { border-color: var(--warning-border); color: var(--warning-fg); background: var(--warning-bg); }
+.hero__chip.bad   { border-color: var(--error-border); color: var(--error-fg); background: var(--error-bg); }
+.page { max-width:1120px; margin:0 auto; padding: var(--s-6) var(--s-6) var(--s-7); }
+.h1 { font-size: var(--text-xl); font-weight:500; letter-spacing:-0.005em; color: var(--fg);
+  margin: var(--s-7) 0 var(--s-2); display:flex; align-items:center; gap: var(--s-3); }
+.h1::before { content:""; width:3px; height:20px; background: var(--aroya-lime); border-radius:2px; }
+.eyebrow { font-size: var(--text-xs); text-transform:uppercase; letter-spacing:0.08em;
+  color: var(--fg-subtle); font-weight:500; margin:0 0 var(--s-4); padding-left:15px; }
+p { margin:0 0 var(--s-3); }
+.exec { border:1px solid var(--border); border-radius: var(--radius); background: var(--bg-surface);
+  margin: var(--s-6) 0; overflow:hidden; display:grid; grid-template-columns: 6px 1fr; }
+.exec__accent { background: linear-gradient(180deg, var(--aroya-lime) 0%, var(--aroya-olive) 100%); }
+.exec__body { padding: var(--s-5); }
+.exec__label { font-size: var(--text-xs); text-transform:uppercase; letter-spacing:0.1em;
+  color: var(--aroya-olive); font-weight:500; margin:0 0 var(--s-2); }
+body.theme-dark .exec__label { color: var(--aroya-lime); }
+.exec__body p { margin:0; font-size: var(--text-sm); line-height:1.65; color: var(--fg); }
+.exec__body em.flag { font-style:normal; font-weight:500;
+  background: linear-gradient(transparent 62%, var(--aroya-lime) 62%); padding:0 2px; }
+body.theme-dark .exec__body em.flag { background: linear-gradient(transparent 62%, rgba(203,238,176,0.35) 62%); color: var(--aroya-lime); }
+.kpi-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--s-3); }
+.kpi { background: var(--bg-surface); border:1px solid var(--border); border-radius: var(--radius);
+  padding: var(--s-4); position:relative; overflow:hidden;
+  display:flex; flex-direction:column; gap: var(--s-2); }
+.kpi::before { content:""; position:absolute; left:0; top:0; bottom:0; width:4px; }
+.kpi.substrate::before { background: var(--aroya-olive); }
+.kpi.climate::before   { background: var(--aroya-medium-gray); }
+.kpi.ok::before        { background: var(--aroya-lime); }
+.kpi.warn::before      { background: var(--warning-border); }
+.kpi.bad::before       { background: var(--error-border); }
+.kpi__label { font-size: var(--text-xs); color: var(--fg-subtle); font-weight:500;
+  text-transform:uppercase; letter-spacing:0.05em;
+  display:flex; justify-content:space-between; align-items:center; gap: var(--s-2); }
+.kpi__tag { font-size:10px; font-weight:500; padding:1px 6px; border-radius:4px;
+  text-transform:uppercase; letter-spacing:0.05em; font-family: var(--font-sans); white-space: nowrap; }
+.kpi__tag.substrate { background: rgba(99,94,81,0.14); color: var(--aroya-olive); }
+.kpi__tag.climate   { background: rgba(70,72,61,0.14); color: var(--aroya-medium-gray); }
+body.theme-dark .kpi__tag.substrate { background: rgba(99,94,81,0.40); color: var(--aroya-light-green); }
+body.theme-dark .kpi__tag.climate   { background: rgba(199,200,194,0.18); color: var(--aroya-light-green); }
+.kpi__value { font-size: var(--text-2xl); font-weight:500; line-height:1.1; color: var(--fg); }
+.kpi__unit { font-size: var(--text-sm); color: var(--fg-subtle); margin-left:3px; font-family: var(--font-sans); }
+.kpi__range { font-size: var(--text-xs); color: var(--fg-subtle); font-family: var(--font-mono); }
+.kpi__bar { height:4px; border-radius:2px; overflow:hidden; position:relative; margin-top: var(--s-1); }
+.kpi__bar-fill { position:absolute; top:0; bottom:0; background: var(--aroya-olive); border-radius:2px; }
+.kpi__bar-fill.ok   { background: var(--aroya-lime); }
+.kpi__bar-fill.warn { background: var(--warning-border); }
+.kpi__bar-fill.bad  { background: var(--error-border); }
+body.theme-dark .kpi__bar-fill.ok { box-shadow: 0 0 8px rgba(203,238,176,0.4); }
+body.theme-dark .kpi__bar-fill.warn { background: var(--warning-fg); }
+body.theme-dark .kpi__bar-fill.bad { background: var(--error-fg); }
+.kpi__delta { font-size: var(--text-xs); color: var(--fg-muted); }
+.kpi__delta.warn { color: var(--warning-fg); }
+.kpi__delta.bad  { color: var(--error-fg); }
+.kpi__delta.ok   { color: var(--success-fg); }
+.card { background: var(--bg-surface); border:1px solid var(--border); border-radius: var(--radius);
+  overflow:hidden; margin-top: var(--s-3); }
+.card__head { display:flex; align-items:center; justify-content:space-between;
+  padding: var(--s-3) var(--s-5); border-bottom:1px solid var(--border); background: var(--bg-muted); }
+.card__title { margin:0; font-size: var(--text-base); font-weight:500; color: var(--fg); }
+.card__subtitle { margin:2px 0 0; font-size: var(--text-xs); color: var(--fg-subtle); }
+.card__meta { font-size: var(--text-xs); color: var(--fg-subtle); font-family: var(--font-mono); }
+.card__body { padding: var(--s-5); }
+.card__body.tight { padding:0; }
+.data-table { width:100%; border-collapse:collapse; font-size: var(--text-sm); }
+.data-table thead th { background: var(--bg-subtle); color: var(--fg-subtle);
+  font-size: var(--text-xs); font-weight:500; text-transform:uppercase; letter-spacing:0.05em;
+  text-align:left; padding: var(--s-3) var(--s-4); border-bottom:1px solid var(--border); }
+.data-table thead th.num { text-align:right; }
+.data-table tbody td { padding: var(--s-3) var(--s-4); border-bottom:1px solid var(--border); color: var(--fg); }
+.data-table tbody td.num { text-align:right; font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
+.data-table tbody td.trend { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--fg-muted); }
+.data-table tbody td.trend.up   { color: var(--success-fg); }
+.data-table tbody td.trend.down { color: var(--info-fg); }
+.data-table tbody td.trend.bad  { color: var(--error-fg); }
+.data-table tbody tr:last-child td { border-bottom:0; }
+.data-table tbody tr { transition: background var(--dur) var(--ease); }
+.pill { display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:999px;
+  font-size: var(--text-xs); font-weight:500; border:1px solid transparent; }
+.pill.ok      { background: var(--success-bg); color: var(--success-fg); border-color: var(--success-border); }
+.pill.warn    { background: var(--warning-bg); color: var(--warning-fg); border-color: var(--warning-border); }
+.pill.bad     { background: var(--error-bg);   color: var(--error-fg);   border-color: var(--error-border); }
+.pill.neutral { background: var(--bg-subtle);  color: var(--fg-muted);   border-color: var(--border); }
+.pill.brand   { background: rgba(203,238,176,0.20); color:#1a2b10; border-color: var(--aroya-lime-hover); }
+body.theme-dark .pill.brand { background: rgba(203,238,176,0.18); color: var(--aroya-lime); border-color: var(--aroya-lime); }
+.pill.info    { background: var(--info-bg); color: var(--info-fg); border-color: var(--info-border); }
+.pill.olive   { background: rgba(99,94,81,0.10); color: var(--aroya-olive); border-color: rgba(99,94,81,0.25); }
+body.theme-dark .pill.olive { background: rgba(99,94,81,0.35); color: var(--aroya-light-green); border-color: rgba(199,200,194,0.25); }
+.caveat { border-radius: var(--radius); padding: var(--s-3) var(--s-4); font-size: var(--text-xs);
+  margin: var(--s-4) 0 0; line-height:1.6; display:grid; grid-template-columns: 20px 1fr;
+  gap: var(--s-3); align-items:start; }
+.caveat__icon { width:20px; height:20px; border-radius:50%; background: var(--addium-blue); color:white;
+  font-size:11px; font-weight:500; display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-sans); }
+.caveat b { font-weight:500; }
+.zones { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--s-3); }
+.zone { background: var(--bg-surface); border:1px solid var(--border); border-radius: var(--radius);
+  padding: var(--s-4); position:relative; overflow:hidden; }
+.zone::before { content:""; position:absolute; left:0; right:0; top:0; height:4px; }
+.zone.ok::before   { background: var(--aroya-lime); }
+.zone.warn::before { background: var(--warning-border); }
+.zone.bad::before  { background: var(--error-border); }
+body.theme-dark .zone.warn::before { background: var(--warning-fg); }
+body.theme-dark .zone.bad::before  { background: var(--error-fg); }
+.zone__head { display:flex; justify-content:space-between; align-items:baseline;
+  margin-bottom: var(--s-3); padding-bottom: var(--s-2); border-bottom:1px solid var(--border); }
+.zone__head h4 { margin:0; font-size: var(--text-base); font-weight:500; color: var(--fg); }
+.zone__head .id { font-size: var(--text-xs); color: var(--fg-subtle); font-family: var(--font-mono); }
+.kv { display:flex; justify-content:space-between; align-items:baseline; padding: var(--s-1) 0;
+  font-size: var(--text-sm); border-bottom:1px dashed var(--border); }
+.kv:last-of-type { border-bottom:0; }
+.kv span:first-child { color: var(--fg-subtle); font-size: var(--text-xs); }
+.kv b { font-weight:400; font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--fg); }
+.zone__verdict { margin-top: var(--s-3); font-size: var(--text-xs); padding: var(--s-2) var(--s-3);
+  border-radius: var(--radius-sm); line-height:1.5; border:1px solid; }
+.zone__verdict.ok   { background: var(--success-bg); color: var(--success-fg); border-color: var(--success-border); }
+.zone__verdict.warn { background: var(--warning-bg); color: var(--warning-fg); border-color: var(--warning-border); }
+.zone__verdict.bad  { background: var(--error-bg);   color: var(--error-fg);   border-color: var(--error-border); }
+.findings { display:flex; flex-direction:column; gap: var(--s-3); }
+.finding { background: var(--bg-surface); border:1px solid var(--border); border-radius: var(--radius);
+  padding: var(--s-4) var(--s-5); display:grid; grid-template-columns: 40px 1fr;
+  gap: var(--s-4); border-left:4px solid var(--aroya-lime); }
+.finding.bad  { border-left-color: var(--error-fg);   background: linear-gradient(90deg, rgba(248,228,228,0.40) 0%, var(--bg-surface) 12%); }
+.finding.warn { border-left-color: var(--warning-fg); background: linear-gradient(90deg, rgba(252,248,216,0.50) 0%, var(--bg-surface) 12%); }
+.finding.ok   { border-left-color: var(--success-fg); background: linear-gradient(90deg, rgba(206,245,202,0.40) 0%, var(--bg-surface) 12%); }
+.finding.info { border-left-color: var(--addium-blue); background: linear-gradient(90deg, var(--info-bg) 0%, var(--bg-surface) 12%); }
+body.theme-dark .finding.bad  { background: linear-gradient(90deg, rgba(239,140,140,0.10) 0%, var(--bg-surface) 14%); }
+body.theme-dark .finding.warn { background: linear-gradient(90deg, rgba(232,210,110,0.10) 0%, var(--bg-surface) 14%); }
+body.theme-dark .finding.ok   { background: linear-gradient(90deg, rgba(203,238,176,0.10) 0%, var(--bg-surface) 14%); }
+body.theme-dark .finding.info { background: linear-gradient(90deg, rgba(170,188,255,0.10) 0%, var(--bg-surface) 14%); border-left-color: var(--info-fg); }
+.finding__icon { width:32px; height:32px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-mono); font-size: var(--text-base); font-weight:500; margin-top:2px; }
+.finding.bad  .finding__icon { background: var(--error-bg);   color: var(--error-fg); }
+.finding.warn .finding__icon { background: var(--warning-bg); color: var(--warning-fg); }
+.finding.ok   .finding__icon { background: var(--success-bg); color: var(--success-fg); }
+.finding.info .finding__icon { background: var(--info-bg);    color: var(--info-fg); }
+body.theme-dark .finding.bad  .finding__icon,
+body.theme-dark .finding.warn .finding__icon,
+body.theme-dark .finding.ok   .finding__icon,
+body.theme-dark .finding.info .finding__icon { border:1px solid currentColor; border-color: rgba(255,255,255,0.15); }
+.finding h4 { margin:0 0 var(--s-2); font-size: var(--text-base); font-weight:500; color: var(--fg); }
+.finding p  { margin:0 0 var(--s-2); color: var(--fg); font-size: var(--text-sm); line-height:1.6; }
+.finding p:last-child { margin-bottom:0; }
+.finding .why { color: var(--fg-muted); font-size: var(--text-xs); font-style:italic; }
+.finding strong { font-weight:500; background: linear-gradient(transparent 62%, var(--aroya-lime) 62%); padding:0 2px; }
+body.theme-dark .finding strong { background: linear-gradient(transparent 62%, rgba(203,238,176,0.35) 62%); color: var(--aroya-lime); }
+.recs { display:grid; gap: var(--s-2); }
+.rec { border:1px solid var(--border); border-radius: var(--radius); padding: var(--s-4);
+  display:grid; grid-template-columns: 32px 1fr; gap: var(--s-4); align-items:start; background: var(--bg-surface); }
+.rec .num-badge { width:28px; height:28px; border-radius:999px;
+  background: var(--aroya-lime); color: var(--aroya-medium-gray);
+  font-family: var(--font-mono); font-size: var(--text-sm); font-weight:500;
+  display:flex; align-items:center; justify-content:center; margin-top:1px; }
+.rec:nth-child(1) .num-badge { background: var(--aroya-olive); color:#ffffff; }
+.rec:nth-child(2) .num-badge { background: var(--aroya-olive); color:#ffffff; }
+.rec:nth-child(3) .num-badge { background: var(--aroya-lime); color: var(--aroya-medium-gray); }
+.rec:nth-child(4) .num-badge { background: var(--aroya-lime); color: var(--aroya-medium-gray); }
+.rec:nth-child(5) .num-badge { background: var(--aroya-light-green); color: var(--aroya-medium-gray); }
+.rec b { display:block; margin-bottom:2px; font-size: var(--text-sm); font-weight:500; color: var(--fg); }
+.rec p { margin:0; font-size: var(--text-sm); color: var(--fg-muted); line-height:1.55; }
+.rec__tag { display:inline-block; margin-left: var(--s-2); font-size:10px;
+  text-transform:uppercase; letter-spacing:0.05em; padding:1px 6px; border-radius:4px;
+  font-weight:500; vertical-align:1px; }
+.rec__tag.high { background: var(--error-bg); color: var(--error-fg); border:1px solid var(--error-border); }
+.rec__tag.med  { background: var(--warning-bg); color: var(--warning-fg); border:1px solid var(--warning-border); }
+.rec__tag.low  { background: var(--bg-subtle); color: var(--fg-muted); border:1px solid var(--border); }
+.clean { list-style:none; padding:0; margin:0; border:1px solid var(--border);
+  border-radius: var(--radius); background: var(--bg-surface); overflow:hidden; }
+.clean li { padding: var(--s-3) var(--s-4); border-bottom:1px solid var(--border);
+  font-size: var(--text-sm); color: var(--fg-muted);
+  display:grid; grid-template-columns: 180px 1fr; gap: var(--s-4); }
+.clean li:last-child { border-bottom:0; }
+.clean li b { font-weight:500; color: var(--aroya-olive); font-size: var(--text-xs);
+  text-transform:uppercase; letter-spacing:0.05em; }
+.foot { margin-top: var(--s-7); padding-top: var(--s-4); border-top:1px solid var(--border);
+  font-size: var(--text-xs); color: var(--fg-subtle);
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap: var(--s-2); }
+.foot .brand-mark { color: var(--aroya-olive); font-weight:500; }
+body.theme-dark .foot .brand-mark { color: var(--aroya-lime); }
+@media print {
+  body { background:#fff !important; color:#1a1c19 !important; }
+  .nav { background:#fff; color:#1a1c19; border-bottom:1px solid #ebebea; }
+  .nav__name, .nav__links, .nav__links .active { color:#1a1c19; }
+  .hero { background:#fff; color:#1a1c19; border-bottom:1px solid #ebebea; }
+  .hero__title, .hero__subtitle, .hero__meta, .hero__eyebrow { color:#1a1c19; }
+  .lang-toggle { display:none; }
+  .kpi, .zone, .card, .rec, .finding, .clean, .exec { break-inside: avoid; }
+}
+</style></head>
+<body class="theme-light">
+
+<div class="lang-toggle" role="group" aria-label="Language toggle">
+  <button type="button" class="active" data-lang="en">EN</button>
+  <button type="button" data-lang="es">ES</button>
+</div>
+
+<nav class="nav">
+  <div class="nav__brand">
+    <div class="nav__logo"></div>
+    <div class="nav__name">AROYA<span class="dot">.</span></div>
+  </div>
+  <div class="nav__links">
+    <span><span lang="en">Facilities</span><span lang="es">Instalaciones</span></span>
+    <span><span lang="en">Harvests</span><span lang="es">Cosechas</span></span>
+    <span><span lang="en">Devices</span><span lang="es">Dispositivos</span></span>
+    <span class="active"><span lang="en">Reports</span><span lang="es">Reportes</span></span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero__inner">
+    <p class="hero__eyebrow"><span lang="en">Facility 4140 · The Tracks · 30-Day Cultivation Deep Dive</span><span lang="es">Instalación 4140 · The Tracks · Análisis Profundo de Cultivo de 30 Días</span></p>
+    <h1 class="hero__title">
+      <span lang="en">Bulking finished on Apr 29. <em>Spain Down's zones are pulling apart</em>, and <em>a new run started without being logged</em>.</span>
+      <span lang="es">El engorde terminó el 29 de abril. <em>Las zonas de Spain Down se están separando</em>, y <em>una nueva corrida empezó sin ser registrada</em>.</span>
+    </h1>
+    <p class="hero__subtitle"><span lang="en">30-day facility report · 13 Apr – 13 May 2026 · HGs SD 2/25-4/29 + SU 2/25-4/29</span><span lang="es">Reporte de instalación de 30 días · 13 Abr – 13 May 2026 · HGs SD 2/25-4/29 + SU 2/25-4/29</span></p>
+    <div class="hero__meta">
+      <span><span lang="en">Prepared by AROYA Monitoring</span><span lang="es">Preparado por AROYA Monitoring</span></span>
+      <span>·</span>
+      <span>AROYA by Addium, Inc.</span>
+      <span>·</span>
+      <span><span lang="en">13 May 2026</span><span lang="es">13 de mayo de 2026</span></span>
+    </div>
+    <div class="hero__chips">
+      <span class="hero__chip brand"><span lang="en">2 flower rooms · 4 substrate zones</span><span lang="es">2 salas de floración · 4 zonas de sustrato</span></span>
+      <span class="hero__chip info"><span lang="en">Inverse photoperiods (SD day = SU night)</span><span lang="es">Fotoperíodos inversos (día SD = noche SU)</span></span>
+      <span class="hero__chip bad"><span lang="en">Zone divergence in Spain Down</span><span lang="es">Divergencia de zonas en Spain Down</span></span>
+      <span class="hero__chip warn"><span lang="en">Operational gap — new run not registered</span><span lang="es">Brecha operativa — nueva corrida no registrada</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- EXEC SUMMARY -->
+  <div class="exec">
+    <div class="exec__accent"></div>
+    <div class="exec__body">
+      <p class="exec__label"><span lang="en">Executive summary</span><span lang="es">Resumen ejecutivo</span></p>
+      <p>
+        <span lang="en">The 30-day window catches the last 17 days of a Bulking phase that completed cleanly on Apr 29, plus a 14-day turnaround where the rooms appear to have been re-planted around May 1 — though no new harvest group has been registered in AROYA. Three concerns drive everything else: <em class="flag">Spain Down's Right zone (61136) is parked at 83–84 % VWC while Left zone (61137) is sitting at 35 % and stacking pore EC to a peak of 16.21 dS/m</em> — that is dripper-coverage failure, not a recipe problem. <em class="flag">Spain Up's substrate is running 80.4 °F mean with peaks at 84.3 °F</em>, well above the 75 °F root-zone ceiling. And <em class="flag">Spain Up's air is too dry for any bulking-style target</em> — VPD averaging 1.68 kPa vs the configured 1.2–1.4 band. Climate on Spain Down is the bright spot: VPD locked at 1.28–1.30 across the whole window. Worth a quick physical walkthrough of Spain Down's Left zone before the next run goes deeper into flower.</span>
+        <span lang="es">La ventana de 30 días captura los últimos 17 días de una fase de Engorde que se completó limpiamente el 29 de abril, más 14 días de cambio en los que las salas parecen haber sido replantadas alrededor del 1 de mayo — aunque no se ha registrado ningún nuevo grupo de cosecha en AROYA. Tres preocupaciones lo conducen todo: <em class="flag">la zona Right de Spain Down (61136) está estacionada en 83–84 % VWC mientras la zona Left (61137) se mantiene en 35 % y acumula CE de poro hasta un pico de 16.21 dS/m</em> — eso es una falla de cobertura de riego, no un problema de receta. <em class="flag">El sustrato de Spain Up está corriendo a 80.4 °F en promedio con picos de 84.3 °F</em>, muy por encima del límite radicular de 75 °F. Y <em class="flag">el aire de Spain Up está demasiado seco para cualquier objetivo tipo engorde</em> — VPD promediando 1.68 kPa vs la banda configurada 1.2–1.4. El clima de Spain Down es el punto brillante: VPD anclado en 1.28–1.30 toda la ventana. Vale la pena un recorrido físico rápido de la zona Left de Spain Down antes que la nueva corrida avance en floración.</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- CRITICAL CAVEAT -->
+  <div class="caveat">
+    <div class="caveat__icon">!</div>
+    <div>
+      <span lang="en"><b>Data caveat — read this first.</b> The AROYA MCP <code>get_raw_data</code> endpoint silently ignored the explicit date range (Apr 13 → Apr 29) and returned a trailing ~3.4-day window of data (≈ May 10 → May 13). All numeric KPIs below therefore reflect <strong>current room state at the time of the report</strong>, not the historical Bulking phase. The phase-level interpretations (targets, recipe, light schedule, plant counts) are confirmed against AROYA's configuration endpoints and ARE accurate. The journal endpoint returned zero entries for the 30-day window.</span>
+      <span lang="es"><b>Advertencia de datos — leer esto primero.</b> El endpoint <code>get_raw_data</code> del MCP de AROYA ignoró silenciosamente el rango de fechas explícito (13 Abr → 29 Abr) y devolvió una ventana de datos final de ~3.4 días (≈ 10 May → 13 May). Por lo tanto, todos los KPI numéricos a continuación reflejan <strong>el estado actual de la sala al momento del reporte</strong>, no la fase de Engorde histórica. Las interpretaciones a nivel de fase (objetivos, receta, programa de luces, conteo de plantas) están confirmadas contra los endpoints de configuración de AROYA y SON precisas. El endpoint de diario devolvió cero entradas para la ventana de 30 días.</span>
+    </div>
+  </div>
+
+  <!-- KPI SNAPSHOT -->
+  <h2 class="h1"><span lang="en">Current state — both rooms</span><span lang="es">Estado actual — ambas salas</span></h2>
+  <p class="eyebrow"><span lang="en">Trailing ~3-day snapshot · room-level averages · for full data caveat see above</span><span lang="es">Instantánea final ~3 días · promedios a nivel de sala · ver advertencia de datos arriba</span></p>
+
+  <div class="kpi-grid">
+
+    <div class="kpi substrate bad">
+      <div class="kpi__label"><span lang="en">VWC · Spain Down R</span><span lang="es">VWC · Spain Down R</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
+      <div class="kpi__value">83.7<span class="kpi__unit">%</span></div>
+      <div class="kpi__range">0.9 – 84.4 %</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill bad" style="left:80%;right:0%"></div></div>
+      <div class="kpi__delta bad"><span lang="en">Way above 65 % bulking ceiling</span><span lang="es">Muy por encima del techo 65 % de engorde</span></div>
+    </div>
+
+    <div class="kpi substrate bad">
+      <div class="kpi__label"><span lang="en">VWC · Spain Down L</span><span lang="es">VWC · Spain Down L</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
+      <div class="kpi__value">35.6<span class="kpi__unit">%</span></div>
+      <div class="kpi__range">2.2 – 37.1 %</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill bad" style="left:5%;right:62%"></div></div>
+      <div class="kpi__delta bad"><span lang="en">At lower floor · same room as 83.7 %</span><span lang="es">En el piso · misma sala que 83.7 %</span></div>
+    </div>
+
+    <div class="kpi substrate bad">
+      <div class="kpi__label"><span lang="en">Pore EC · Spain Down L</span><span lang="es">CE de poro · Spain Down L</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
+      <div class="kpi__value">6.80<span class="kpi__unit">dS/m</span></div>
+      <div class="kpi__range">0.38 – 16.21</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill bad" style="left:80%;right:0%"></div></div>
+      <div class="kpi__delta bad"><span lang="en">Max 16.21 — extreme stacking</span><span lang="es">Máx 16.21 — acumulación extrema</span></div>
+    </div>
+
+    <div class="kpi substrate bad">
+      <div class="kpi__label"><span lang="en">Substrate temp · Spain Up</span><span lang="es">Temp. sustrato · Spain Up</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
+      <div class="kpi__value">80.4<span class="kpi__unit">°F</span></div>
+      <div class="kpi__range">77.1 – 84.3 °F</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill bad" style="left:75%;right:0%"></div></div>
+      <div class="kpi__delta bad"><span lang="en">Above 75 °F root ceiling whole window</span><span lang="es">Sobre el límite radicular de 75 °F toda la ventana</span></div>
+    </div>
+
+    <div class="kpi substrate ok">
+      <div class="kpi__label"><span lang="en">Substrate temp · Spain Down</span><span lang="es">Temp. sustrato · Spain Down</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
+      <div class="kpi__value">75.7<span class="kpi__unit">°F</span></div>
+      <div class="kpi__range">75.3 – 78.1 °F</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill ok" style="left:5%;right:35%"></div></div>
+      <div class="kpi__delta ok"><span lang="en">At top of 65 – 75 °F band</span><span lang="es">En la parte alta de la banda 65 – 75 °F</span></div>
+    </div>
+
+    <div class="kpi climate bad">
+      <div class="kpi__label"><span lang="en">VPD · Spain Up</span><span lang="es">VPD · Spain Up</span> <span class="kpi__tag climate"><span lang="en">Climate</span><span lang="es">Clima</span></span></div>
+      <div class="kpi__value">1.68<span class="kpi__unit">kPa</span></div>
+      <div class="kpi__range">1.49 – 1.93 kPa</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill bad" style="left:78%;right:0%"></div></div>
+      <div class="kpi__delta bad"><span lang="en">Above 1.2 – 1.4 bulking target</span><span lang="es">Sobre objetivo de engorde 1.2 – 1.4</span></div>
+    </div>
+
+    <div class="kpi climate ok">
+      <div class="kpi__label"><span lang="en">VPD · Spain Down</span><span lang="es">VPD · Spain Down</span> <span class="kpi__tag climate"><span lang="en">Climate</span><span lang="es">Clima</span></span></div>
+      <div class="kpi__value">1.29<span class="kpi__unit">kPa</span></div>
+      <div class="kpi__range">1.27 – 1.30 kPa</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill ok" style="left:40%;right:35%"></div></div>
+      <div class="kpi__delta ok"><span lang="en">Locked in target band 1.2 – 1.4</span><span lang="es">Anclado en banda objetivo 1.2 – 1.4</span></div>
+    </div>
+
+    <div class="kpi climate ok">
+      <div class="kpi__label"><span lang="en">Air temp · Spain Down</span><span lang="es">Temp. aire · Spain Down</span> <span class="kpi__tag climate"><span lang="en">Climate</span><span lang="es">Clima</span></span></div>
+      <div class="kpi__value">77.8<span class="kpi__unit">°F</span></div>
+      <div class="kpi__range">77.4 – 78.0 °F</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill ok" style="left:38%;right:38%"></div></div>
+      <div class="kpi__delta ok"><span lang="en">Mid-band 75 – 80 °F · very stable</span><span lang="es">Mitad de banda 75 – 80 °F · muy estable</span></div>
+    </div>
+
+  </div>
+
+  <!-- FACILITY OVERVIEW -->
+  <h2 class="h1"><span lang="en">Facility overview</span><span lang="es">Resumen de la instalación</span></h2>
+  <p class="eyebrow"><span lang="en">Rooms, sensors, and harvest groups that touched the 30-day window</span><span lang="es">Salas, sensores y grupos de cosecha que tocaron la ventana de 30 días</span></p>
+
+  <section class="card">
+    <header class="card__head">
+      <div>
+        <p class="card__title"><span lang="en">Rooms and sensor inventory</span><span lang="es">Salas e inventario de sensores</span></p>
+        <p class="card__subtitle"><span lang="en">Verified against AROYA SPA room config</span><span lang="es">Verificado contra la configuración de sala del SPA de AROYA</span></p>
+      </div>
+      <span class="card__meta"><span lang="en">Facility 4140 · 2 flower · 1 dry</span><span lang="es">Instalación 4140 · 2 floración · 1 secado</span></span>
+    </header>
+    <div class="card__body tight">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th><span lang="en">Room</span><span lang="es">Sala</span></th>
+            <th><span lang="en">Zones</span><span lang="es">Zonas</span></th>
+            <th><span lang="en">Devices</span><span lang="es">Dispositivos</span></th>
+            <th><span lang="en">Lights on (local)</span><span lang="es">Luces encendidas (local)</span></th>
+            <th style="text-align:right"><span lang="en">Status</span><span lang="es">Estado</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Spain Up <span class="card__meta">14507</span></td>
+            <td>Right, Left</td>
+            <td><span lang="en">2 substrate stations (ter15) per zone · 1 climate (ee894)</span><span lang="es">2 estaciones de sustrato (ter15) por zona · 1 clima (ee894)</span></td>
+            <td>01:00 → 13:00</td>
+            <td style="text-align:right"><span class="pill ok">● <span lang="en">Online · battery 100 %</span><span lang="es">En línea · batería 100 %</span></span></td>
+          </tr>
+          <tr>
+            <td>Spain Down <span class="card__meta">14508</span></td>
+            <td>Right, Left</td>
+            <td><span lang="en">2 substrate stations (ter15) per zone · 1 climate (ee894)</span><span lang="es">2 estaciones de sustrato (ter15) por zona · 1 clima (ee894)</span></td>
+            <td>13:00 → 01:00</td>
+            <td style="text-align:right"><span class="pill ok">● <span lang="en">Online · battery 100 %</span><span lang="es">En línea · batería 100 %</span></span></td>
+          </tr>
+          <tr>
+            <td>Dry Room <span class="card__meta">19457</span></td>
+            <td>Zone 1</td>
+            <td>—</td>
+            <td>—</td>
+            <td style="text-align:right"><span class="pill neutral"><span lang="en">Not in scope</span><span lang="es">Fuera de alcance</span></span></td>
+          </tr>
+          <tr>
+            <td><span lang="en">Light / PPFD / DLI</span><span lang="es">Luz / PPFD / DLI</span></td>
+            <td colspan="3">—</td>
+            <td style="text-align:right"><span class="pill warn">○ <span lang="en">Not deployed</span><span lang="es">No desplegado</span></span></td>
+          </tr>
+          <tr>
+            <td><span lang="en">Drip volume / drain volume</span><span lang="es">Volumen riego / drenaje</span></td>
+            <td colspan="3">—</td>
+            <td style="text-align:right"><span class="pill warn">○ <span lang="en">Not deployed</span><span lang="es">No desplegado</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="caveat">
+    <div class="caveat__icon">i</div>
+    <div>
+      <span lang="en"><b>Inverse photoperiod is intentional and confirmed.</b> Spain Up lights ON 01:00 local (23:00 UTC) and OFF 13:00 local (11:00 UTC). Spain Down is the mirror: ON 13:00 local, OFF 01:00 local. Common 2-room mirroring strategy — Spain Up is in "night" when Spain Down is in "day", which spreads HVAC load and CO₂ enrichment cost across the 24-hour cycle.</span>
+      <span lang="es"><b>El fotoperíodo inverso es intencional y está confirmado.</b> Spain Up enciende luces 01:00 local (23:00 UTC) y apaga 13:00 local (11:00 UTC). Spain Down es el espejo: ON 13:00 local, OFF 01:00 local. Estrategia común de espejado para 2 salas — Spain Up está en "noche" cuando Spain Down está en "día", lo que distribuye la carga de HVAC y el costo de enriquecimiento con CO₂ a lo largo del ciclo de 24 horas.</span>
+    </div>
+  </div>
+
+  <!-- HARVEST GROUPS THIS WINDOW -->
+  <h2 class="h1"><span lang="en">Harvest groups in window</span><span lang="es">Grupos de cosecha en la ventana</span></h2>
+  <p class="eyebrow"><span lang="en">From flip date to harvest · cycle days are AROYA-reported</span><span lang="es">De fecha de volteo a cosecha · los días del ciclo son los reportados por AROYA</span></p>
+
+  <section class="card">
+    <div class="card__body tight">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>HG</th>
+            <th><span lang="en">Room</span><span lang="es">Sala</span></th>
+            <th class="num"><span lang="en">Plants</span><span lang="es">Plantas</span></th>
+            <th class="num"><span lang="en">Cycle</span><span lang="es">Ciclo</span></th>
+            <th><span lang="en">Phases</span><span lang="es">Fases</span></th>
+            <th><span lang="en">Status in window</span><span lang="es">Estado en la ventana</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SD 2/25-4/29 <span class="card__meta">150064</span></td>
+            <td>Spain Down</td>
+            <td class="num">108</td>
+            <td class="num">63 d</td>
+            <td><span lang="en">Slab Root In · Transition · Early Flower · Bulking</span><span lang="es">Enraizado · Transición · Floración Temprana · Engorde</span></td>
+            <td><span class="pill bad"><span lang="en">Bulking d6 – d21 · harvested Apr 29</span><span lang="es">Engorde d6 – d21 · cosechado 29 abr</span></span></td>
+          </tr>
+          <tr>
+            <td>SU 2/25-4/29 <span class="card__meta">150061</span></td>
+            <td>Spain Up</td>
+            <td class="num">6</td>
+            <td class="num">63 d</td>
+            <td><span lang="en">Slab Root In · Transition · Early Flower · Bulking</span><span lang="es">Enraizado · Transición · Floración Temprana · Engorde</span></td>
+            <td><span class="pill warn"><span lang="en">Bulking d6 – d21 · R&amp;D batch · harvested Apr 29</span><span lang="es">Engorde d6 – d21 · lote I+D · cosechado 29 abr</span></span></td>
+          </tr>
+          <tr>
+            <td><span lang="en">(new run — not registered)</span><span lang="es">(nueva corrida — no registrada)</span></td>
+            <td><span lang="en">Both rooms (inferred)</span><span lang="es">Ambas salas (inferido)</span></td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td>—</td>
+            <td><span class="pill warn"><span lang="en">Inferred from VWC re-saturation ≈ May 1</span><span lang="es">Inferido por re-saturación de VWC ≈ 1 may</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PHASE TARGETS — what was configured -->
+  <h2 class="h1"><span lang="en">Bulking phase targets that were configured</span><span lang="es">Objetivos configurados para la fase de Engorde</span></h2>
+  <p class="eyebrow"><span lang="en">Pulled from /phases/{{id}}/targetRanges/ · authoritative for what the grow team intended</span><span lang="es">Tomado de /phases/{{id}}/targetRanges/ · es autoritativo para lo que el equipo de cultivo pretendía</span></p>
+
+  <section class="card">
+    <div class="card__body tight">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th><span lang="en">Metric</span><span lang="es">Métrica</span></th>
+            <th class="num"><span lang="en">Min</span><span lang="es">Min</span></th>
+            <th class="num"><span lang="en">Max</span><span lang="es">Max</span></th>
+            <th><span lang="en">AROYA crop-steering guidance</span><span lang="es">Guía de crop-steering de AROYA</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="pill olive"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span> VWC</td><td class="num">30 %</td><td class="num">65 %</td><td><span lang="en">Bulking: 50 – 65 % peak, 15 – 30 pt dryback</span><span lang="es">Engorde: pico 50 – 65 %, dryback 15 – 30 pt</span></td></tr>
+          <tr><td><span class="pill olive"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span> <span lang="en">Pore EC</span><span lang="es">CE de poro</span></td><td class="num">3.0</td><td class="num">7.0</td><td><span lang="en">Bulking: 6 – 7 dS/m step-down from Early Flower</span><span lang="es">Engorde: reducción 6 – 7 dS/m desde Floración Temprana</span></td></tr>
+          <tr><td><span class="pill neutral"><span lang="en">Climate</span><span lang="es">Clima</span></span> <span lang="en">Air temp</span><span lang="es">Temp. aire</span></td><td class="num">75 °F</td><td class="num">80 °F</td><td><span lang="en">Bulking day: 75 – 80 °F · night cooler</span><span lang="es">Día de engorde: 75 – 80 °F · noche más fría</span></td></tr>
+          <tr><td><span class="pill neutral"><span lang="en">Climate</span><span lang="es">Clima</span></span> VPD</td><td class="num">1.2 kPa</td><td class="num">1.4 kPa</td><td><span lang="en">Bulking: 1.0 – 1.2 kPa day · 0.8 – 1.2 night</span><span lang="es">Engorde: 1.0 – 1.2 kPa día · 0.8 – 1.2 noche</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ZONE BREAKDOWN -->
+  <h2 class="h1"><span lang="en">Zone-by-zone substrate breakdown</span><span lang="es">Desglose de sustrato zona por zona</span></h2>
+  <p class="eyebrow"><span lang="en">Per AROYA zone · current trailing snapshot</span><span lang="es">Por zona AROYA · instantánea actual</span></p>
+
+  <div class="zones">
+
+    <div class="zone warn">
+      <div class="zone__head"><h4>Spain Up · Right</h4><span class="id"><span lang="en">zone 61134</span><span lang="es">zona 61134</span></span></div>
+      <div class="kv"><span><span lang="en">VWC avg / range</span><span lang="es">VWC prom / rango</span></span><b>48.6 % · 0.1 – 54.2</b></div>
+      <div class="kv"><span><span lang="en">Pore EC avg / max</span><span lang="es">CE poro prom / máx</span></span><b>4.02 · max 7.62</b></div>
+      <div class="kv"><span><span lang="en">Substrate temp</span><span lang="es">Temp. sustrato</span></span><b>80.0 °F · max 83.6</b></div>
+      <div class="zone__verdict warn"><span lang="en">Substrate sits above 75 °F root ceiling. VWC and EC ranges look reasonable but the wide 0.1 – 54.2 VWC swing suggests a fresh transplant event mid-window.</span><span lang="es">El sustrato se mantiene sobre el límite radicular de 75 °F. Los rangos de VWC y CE se ven razonables pero el amplio swing de VWC 0.1 – 54.2 sugiere un evento de transplante reciente a mitad de ventana.</span></div>
+    </div>
+
+    <div class="zone warn">
+      <div class="zone__head"><h4>Spain Up · Left</h4><span class="id"><span lang="en">zone 61135</span><span lang="es">zona 61135</span></span></div>
+      <div class="kv"><span><span lang="en">VWC avg / range</span><span lang="es">VWC prom / rango</span></span><b>48.1 % · 3.1 – 53.9</b></div>
+      <div class="kv"><span><span lang="en">Pore EC avg / max</span><span lang="es">CE poro prom / máx</span></span><b>3.72 · max 7.48</b></div>
+      <div class="kv"><span><span lang="en">Substrate temp</span><span lang="es">Temp. sustrato</span></span><b>80.7 °F · max 85.1</b></div>
+      <div class="zone__verdict warn"><span lang="en">Mirror of the Right zone — same fresh-transplant signature. Substrate temp peaks at 85.1 °F — the warmest single point in the facility this window.</span><span lang="es">Espejo de la zona Right — misma firma de transplante reciente. La temp. del sustrato alcanza 85.1 °F — el punto más caliente de la instalación esta ventana.</span></div>
+    </div>
+
+    <div class="zone bad">
+      <div class="zone__head"><h4>Spain Down · Right</h4><span class="id"><span lang="en">zone 61136</span><span lang="es">zona 61136</span></span></div>
+      <div class="kv"><span><span lang="en">VWC avg / range</span><span lang="es">VWC prom / rango</span></span><b>78.6 % · 0.9 – 84.4</b></div>
+      <div class="kv"><span><span lang="en">Pore EC avg / max</span><span lang="es">CE poro prom / máx</span></span><b>3.56 · max 3.86</b></div>
+      <div class="kv"><span><span lang="en">Substrate temp</span><span lang="es">Temp. sustrato</span></span><b>75.9 °F · max 76.3</b></div>
+      <div class="zone__verdict bad"><span lang="en">VWC sitting at 83–84 % — no observable dryback. Either a sensor in a permanently saturated pocket, a stuck dripper running constantly, or runoff not draining.</span><span lang="es">VWC fijo en 83–84 % — sin dryback observable. O un sensor en una zona permanentemente saturada, o un gotero atorado abierto, o el drenaje no fluyendo.</span></div>
+    </div>
+
+    <div class="zone bad">
+      <div class="zone__head"><h4>Spain Down · Left</h4><span class="id"><span lang="en">zone 61137</span><span lang="es">zona 61137</span></span></div>
+      <div class="kv"><span><span lang="en">VWC avg / range</span><span lang="es">VWC prom / rango</span></span><b>32.4 % · 2.2 – 37.1</b></div>
+      <div class="kv"><span><span lang="en">Pore EC avg / max</span><span lang="es">CE poro prom / máx</span></span><b>6.80 · max <strong>16.21</strong></b></div>
+      <div class="kv"><span><span lang="en">Substrate temp</span><span lang="es">Temp. sustrato</span></span><b>75.5 °F · max 80.9</b></div>
+      <div class="zone__verdict bad"><span lang="en">Sitting at the lower floor with EC stacking to 16.21 dS/m — twice the bulking ceiling. Classic dripper-coverage failure or sensor in a low-irrigation pocket. Same room, same recipe as the Right zone above.</span><span lang="es">En el piso inferior con CE acumulándose a 16.21 dS/m — el doble del techo de engorde. Falla clásica de cobertura de riego o sensor en una zona de bajo riego. Misma sala, misma receta que la zona Right de arriba.</span></div>
+    </div>
+
+  </div>
+
+  <!-- FINDINGS -->
+  <h2 class="h1"><span lang="en">Key findings</span><span lang="es">Hallazgos clave</span></h2>
+  <p class="eyebrow"><span lang="en">Sorted by impact on the next run</span><span lang="es">Ordenados por impacto en la próxima corrida</span></p>
+
+  <div class="findings">
+
+    <div class="finding bad">
+      <div class="finding__icon">!</div>
+      <div>
+        <h4><span lang="en">Spain Down's two zones are operating like two different rooms</span><span lang="es">Las dos zonas de Spain Down están operando como dos salas diferentes</span></h4>
+        <p>
+          <span lang="en">Right zone (61136) is parked at <strong>83.7 % VWC mean</strong> (range 0.9 – 84.4) with pore EC capped at 3.86. Left zone (61137) is sitting at <strong>32.4 % VWC mean</strong> with pore EC averaging 6.80 and peaking at <strong>16.21 dS/m</strong>. Same room. Same recipe. The 16.21 dS/m peak is more than 2× the configured 7.0 dS/m bulking ceiling and represents a salt environment that will burn root tips on the new crop.</span>
+          <span lang="es">La zona Right (61136) está estacionada en <strong>83.7 % VWC promedio</strong> (rango 0.9 – 84.4) con CE de poro topada en 3.86. La zona Left (61137) se mantiene en <strong>32.4 % VWC promedio</strong> con CE de poro promediando 6.80 y un pico de <strong>16.21 dS/m</strong>. Misma sala. Misma receta. El pico de 16.21 dS/m es más de 2× el techo configurado de 7.0 dS/m para engorde y representa un ambiente salino que quemará las puntas de raíz del nuevo cultivo.</span>
+        </p>
+        <p class="why">
+          <span lang="en">Mechanically this is one of: a stuck dripper running constantly on Right, a clogged or shorted line feeding Left, sensors planted in atypical pockets, or runoff that drains away from Left but not Right. None of these are diagnosable from the data — they need a physical walkthrough.</span>
+          <span lang="es">Mecánicamente esto es: un gotero atorado corriendo constante en Right, una línea tapada o cortada alimentando Left, sensores plantados en zonas atípicas, o drenaje que sale de Left pero no de Right. Nada de esto se puede diagnosticar desde los datos — requiere un recorrido físico.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="finding bad">
+      <div class="finding__icon">!</div>
+      <div>
+        <h4><span lang="en">Spain Up substrate is running hot — 80.4 °F mean, 84.3 °F peak</span><span lang="es">El sustrato de Spain Up está corriendo caliente — 80.4 °F promedio, 84.3 °F pico</span></h4>
+        <p>
+          <span lang="en">Root-zone temperature averages <strong>80.4 °F across the window with a peak of 84.3 °F</strong> in the Left zone. AROYA / METER guidance is 65–75 °F optimal; every degree above 75 °F progressively degrades nutrient uptake. Above ~77 °F root function drops materially. Spain Down at 75.7 °F is right at the ceiling but holding — Spain Up is well past it.</span>
+          <span lang="es">La temperatura de la zona radicular promedia <strong>80.4 °F en la ventana con un pico de 84.3 °F</strong> en la zona Left. La guía de AROYA / METER es 65–75 °F óptimo; cada grado sobre 75 °F degrada progresivamente la absorción de nutrientes. Sobre ~77 °F la función radicular cae materialmente. Spain Down a 75.7 °F está justo en el límite pero aguantando — Spain Up está muy por encima.</span>
+        </p>
+        <p class="why">
+          <span lang="en">Normally the single biggest yield-limiting factor a grower can fix. Two rooms running the same crop on identical infrastructure shouldn't see a 5 °F substrate-temp gap. Worth comparing air return placement, supply-air pattern, and substrate insulation between the rooms.</span>
+          <span lang="es">Suele ser el factor limitante de rendimiento más grande que un cultivador puede corregir. Dos salas corriendo el mismo cultivo con infraestructura idéntica no deberían ver una brecha de 5 °F en temp. de sustrato. Vale la pena comparar ubicación de retorno de aire, patrón de aire de suministro y aislamiento del sustrato entre las salas.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="finding bad">
+      <div class="finding__icon">!</div>
+      <div>
+        <h4><span lang="en">A new run is in the rooms but no harvest group has been created</span><span lang="es">Una nueva corrida está en las salas pero no se ha creado ningún grupo de cosecha</span></h4>
+        <p>
+          <span lang="en">Substrate VWC trends from <strong>≈ 1.6 % up to 51 – 60 %</strong> across the trailing window in both rooms — the unmistakable signature of a fresh slab-saturation event, which means new plants were loaded. Climate is still being held at flower-room setpoints (Spain Up VPD 1.68, Spain Down VPD 1.29; 60 % RH; 78 °F air). And yet: zero new harvest groups in <code>spa_list_harvest_groups</code>, zero journal entries in <code>spa_get_journal</code> for the entire 30-day window.</span>
+          <span lang="es">El VWC del sustrato pasa de <strong>≈ 1.6 % hasta 51 – 60 %</strong> en la ventana final en ambas salas — la firma inconfundible de un evento de saturación de slab nuevo, lo que significa que se cargaron plantas nuevas. El clima todavía se mantiene en los setpoints de sala de floración (Spain Up VPD 1.68, Spain Down VPD 1.29; 60 % HR; 78 °F aire). Sin embargo: cero nuevos grupos de cosecha en <code>spa_list_harvest_groups</code>, cero entradas de diario en <code>spa_get_journal</code> para toda la ventana de 30 días.</span>
+        </p>
+        <p class="why">
+          <span lang="en">This is an operational gap, not a sensor problem. Without an HG, AROYA can't apply phase targets to the new crop — the Bulking targets that drove the last run are still the active band, even though the new plants are likely in Slab Root In / Transition. Phase-specific automation will misfire until an HG is created.</span>
+          <span lang="es">Esto es una brecha operativa, no un problema de sensor. Sin un HG, AROYA no puede aplicar objetivos de fase al nuevo cultivo — los objetivos de Engorde que condujeron la última corrida siguen siendo la banda activa, aunque las plantas nuevas estén probablemente en Enraizado / Transición. La automatización por fase fallará hasta que se cree un HG.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding__icon">△</div>
+      <div>
+        <h4><span lang="en">Spain Up VPD is averaging 1.68 kPa — well above any bulking target</span><span lang="es">El VPD de Spain Up promedia 1.68 kPa — muy por encima de cualquier objetivo de engorde</span></h4>
+        <p>
+          <span lang="en">Air VPD in Spain Up sits at <strong>1.68 kPa mean</strong> with a max of 1.93. The configured Bulking target is 1.2 – 1.4 kPa and the AROYA guidance for the bulking day band is 1.0 – 1.2 kPa. That is generative-leaning air for a phase that wants to be vegetative-leaning. Spain Down at 1.29 kPa is right where you'd want it.</span>
+          <span lang="es">El VPD del aire en Spain Up está en <strong>1.68 kPa promedio</strong> con un máx de 1.93. El objetivo configurado para Engorde es 1.2 – 1.4 kPa y la guía AROYA para la banda diurna de engorde es 1.0 – 1.2 kPa. Eso es aire con tendencia generativa para una fase que quiere ser vegetativa. Spain Down a 1.29 kPa está justo donde se quiere.</span>
+        </p>
+        <p class="why">
+          <span lang="en">If the next crop is now early in flower (Slab Root In or Transition), 1.68 is too aggressive for the canopy size. Either RH is being driven too low or air temp is too high for the dew point. With Spain Down's tight 1.27 – 1.30 band on the same campus, the HVAC clearly *can* hold a tighter envelope — it's a setpoint or balance issue, not equipment.</span>
+          <span lang="es">Si el próximo cultivo ahora está temprano en floración (Enraizado o Transición), 1.68 es demasiado agresivo para el tamaño del canopy. O la HR se está manteniendo demasiado baja o la temp. del aire es demasiado alta para el punto de rocío. Con la banda 1.27 – 1.30 muy estrecha de Spain Down en el mismo campus, el HVAC claramente *puede* mantener una envolvente más ajustada — es un problema de setpoint o balance, no de equipo.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="finding info">
+      <div class="finding__icon">i</div>
+      <div>
+        <h4><span lang="en">Phase recipe shows real intent — Bulking irrigation was aggressive and confirmed</span><span lang="es">La receta de fase muestra intención real — el riego de Engorde fue agresivo y confirmado</span></h4>
+        <p>
+          <span lang="en">SD Bulking irrigation schedule (id 38490) confirmed active: <strong>5 ramp shots × 5.0 min interval 15 min</strong> starting 14:00 local, then <strong>7 maintenance shots × 5.25 min interval ~1 h</strong> from 16:26. That is ~12 shots/day — textbook bulking cadence. The schedule was last confirmed/published on May 12 (one day before this report), so irrigation control is being actively managed.</span>
+          <span lang="es">El programa de riego de Engorde de SD (id 38490) está confirmado activo: <strong>5 disparos de rampa × 5.0 min intervalo 15 min</strong> comenzando 14:00 local, luego <strong>7 disparos de mantenimiento × 5.25 min intervalo ~1 h</strong> desde 16:26. Eso es ~12 disparos/día — cadencia textual de engorde. El programa fue confirmado/publicado por última vez el 12 de mayo (un día antes de este reporte), así que el control de riego se está gestionando activamente.</span>
+        </p>
+        <p class="why">
+          <span lang="en">The intent is solid; the execution is letting it down at the zone level on Spain Down. Whatever is causing the 84 / 35 split isn't in the recipe.</span>
+          <span lang="es">La intención es sólida; la ejecución está fallando a nivel de zona en Spain Down. Lo que sea que esté causando el split 84 / 35 no está en la receta.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="finding ok">
+      <div class="finding__icon">✓</div>
+      <div>
+        <h4><span lang="en">Spain Down climate is the bright spot</span><span lang="es">El clima de Spain Down es el punto brillante</span></h4>
+        <p>
+          <span lang="en">Spain Down held VPD between <strong>1.27 and 1.30 kPa</strong>, RH between 59.9 and 61.0 %, air temp between 77.4 and 78.0 °F across the entire trailing window. That is unusually tight control — well within the configured Bulking target band — and a model for what Spain Up's HVAC should be capable of. CO₂ sits at ≈ 500 ppm, which is room-air (no enrichment running, consistent with a post-harvest / very-early-phase posture).</span>
+          <span lang="es">Spain Down mantuvo el VPD entre <strong>1.27 y 1.30 kPa</strong>, la HR entre 59.9 y 61.0 %, la temp. del aire entre 77.4 y 78.0 °F en toda la ventana final. Ese es un control inusualmente ajustado — bien dentro de la banda objetivo configurada de Engorde — y un modelo de lo que el HVAC de Spain Up debería ser capaz. El CO₂ se mantiene en ≈ 500 ppm, que es aire ambiente (sin enriquecimiento corriendo, consistente con postura post-cosecha / fase muy temprana).</span>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <h2 class="h1"><span lang="en">Recommendations</span><span lang="es">Recomendaciones</span></h2>
+  <p class="eyebrow"><span lang="en">Ranked by expected impact on the next run</span><span lang="es">Ordenadas por impacto esperado en la próxima corrida</span></p>
+
+  <div class="recs">
+    <div class="rec">
+      <div class="num-badge">1</div>
+      <div>
+        <b><span lang="en">Walk Spain Down Left zone (61137) physically before this run goes deeper.</span><span lang="es">Recorrer físicamente la zona Left de Spain Down (61137) antes que esta corrida avance.</span> <span class="rec__tag high"><span lang="en">High impact</span><span lang="es">Alto impacto</span></span></b>
+        <p><span lang="en">Inspect every dripper line, emitter count per slab, solenoid state, and runoff path. Pull a manual in-substrate EC sample to cross-check the 16.21 dS/m sensor reading. If the sensor is in a low-irrigation pocket move it; if the dripper is undersized fix it; if the recipe is correct but the line is clogged flush it. This is your highest-leverage fix for the upcoming flower run.</span><span lang="es">Inspeccionar cada línea de goteros, conteo de emisores por slab, estado del solenoide y ruta de drenaje. Tomar una muestra manual de CE en sustrato para contrastar la lectura de sensor de 16.21 dS/m. Si el sensor está en una zona de bajo riego, moverlo; si el gotero está subdimensionado, arreglarlo; si la receta está correcta pero la línea está obstruida, lavarla. Es la corrección de mayor palanca para la próxima corrida de floración.</span></p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="num-badge">2</div>
+      <div>
+        <b><span lang="en">Register the new harvest group in AROYA today.</span><span lang="es">Registrar el nuevo grupo de cosecha en AROYA hoy.</span> <span class="rec__tag high"><span lang="en">High impact</span><span lang="es">Alto impacto</span></span></b>
+        <p><span lang="en">Create new HGs in both Spain Up and Spain Down with the actual flip date (≈ May 1), cultivar, and plant count. Until this is done AROYA is still using the Apr 8 – Apr 29 Bulking phase targets to evaluate the room, which is wrong for a Slab Root In / Transition crop. Phase-specific automation and alerts won't fire correctly until an HG exists.</span><span lang="es">Crear nuevos HGs en Spain Up y Spain Down con la fecha real de volteo (≈ 1 may), variedad y conteo de plantas. Hasta que esto se haga, AROYA sigue usando los objetivos de Engorde del 8 abr – 29 abr para evaluar la sala, lo cual está mal para un cultivo en Enraizado / Transición. La automatización y las alertas específicas de fase no dispararán correctamente hasta que exista un HG.</span></p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="num-badge">3</div>
+      <div>
+        <b><span lang="en">Investigate Spain Up substrate temperature.</span><span lang="es">Investigar la temperatura del sustrato en Spain Up.</span> <span class="rec__tag med"><span lang="en">Medium impact</span><span lang="es">Impacto medio</span></span></b>
+        <p><span lang="en">Compare to Spain Down side-by-side: HVAC supply/return location, substrate type and insulation, slab elevation off the floor, and any sub-bench cooling. A 5 °F gap on identical infrastructure points at airflow or floor temperature, not chiller capacity.</span><span lang="es">Comparar lado a lado con Spain Down: ubicación de suministro/retorno de HVAC, tipo de sustrato y aislamiento, elevación del slab desde el piso, y cualquier refrigeración sub-mesa. Una brecha de 5 °F en infraestructura idéntica apunta a flujo de aire o temperatura de piso, no a capacidad del chiller.</span></p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="num-badge">4</div>
+      <div>
+        <b><span lang="en">Re-tune Spain Up's climate setpoint to match the actual phase.</span><span lang="es">Reajustar el setpoint climático de Spain Up para coincidir con la fase actual.</span> <span class="rec__tag med"><span lang="en">Medium impact</span><span lang="es">Impacto medio</span></span></b>
+        <p><span lang="en">If the new crop is at Slab Root In, target VPD 0.8 – 1.0 kPa, not 1.68. Raise RH (or drop air temp) to get there. Spain Down on the same campus is already holding a tight 1.27 – 1.30 band, so the equipment is capable — it's a control-loop balance issue.</span><span lang="es">Si el nuevo cultivo está en Enraizado, apuntar a VPD 0.8 – 1.0 kPa, no 1.68. Subir la HR (o bajar la temp. del aire) para llegar ahí. Spain Down en el mismo campus ya mantiene una banda ajustada de 1.27 – 1.30, así que el equipo es capaz — es un problema de balance del loop de control.</span></p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="num-badge">5</div>
+      <div>
+        <b><span lang="en">Add a quantum sensor + drip / drain meters per room.</span><span lang="es">Añadir un sensor cuántico + medidores de riego / drenaje por sala.</span> <span class="rec__tag low"><span lang="en">Infra</span><span lang="es">Infra</span></span></b>
+        <p><span lang="en">Without PPFD / DLI we can't photoperiod-split climate from raw data (we used the configured light schedule instead). Without drip / drain volume we can't compute shots per day or runoff % directly. Each adds high-signal data and would let the next report run a full phase deep-dive instead of leaning on schedule-derived photoperiod.</span><span lang="es">Sin PPFD / DLI no podemos separar el clima por fotoperíodo desde datos crudos (usamos el programa de luces configurado en su lugar). Sin volumen de riego / drenaje no podemos calcular disparos por día o % de drenaje directamente. Cada uno suma datos de alta señal y permitiría que el próximo reporte ejecute un análisis profundo de fase completo en lugar de apoyarse en el fotoperíodo derivado del programa.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHODOLOGY -->
+  <h2 class="h1"><span lang="en">Methodology &amp; caveats</span><span lang="es">Metodología y advertencias</span></h2>
+
+  <ul class="clean">
+    <li><b><span lang="en">Data source</span><span lang="es">Fuente de datos</span></b><span><span lang="en">AROYA MCP · facility 4140 · rooms 14507 (Spain Up) + 14508 (Spain Down) · 30-day window 2026-04-13 → 2026-05-13.</span><span lang="es">MCP de AROYA · instalación 4140 · salas 14507 (Spain Up) + 14508 (Spain Down) · ventana de 30 días 2026-04-13 → 2026-05-13.</span></span></li>
+    <li><b><span lang="en">Date-range bug</span><span lang="es">Bug de rango de fechas</span></b><span><span lang="en">get_raw_data ignored explicit start/end and returned only ~3.4 days of trailing data (≈ May 10 → May 13). All numeric KPIs are therefore current-state. Phase context (recipe, targets, plant counts, light schedule) was pulled from configuration endpoints which work correctly.</span><span lang="es">get_raw_data ignoró el start/end explícito y devolvió solamente ~3.4 días de datos finales (≈ 10 May → 13 May). Todos los KPI numéricos son por tanto del estado actual. El contexto de fase (receta, objetivos, conteo de plantas, programa de luces) fue tomado de endpoints de configuración que funcionan correctamente.</span></span></li>
+    <li><b><span lang="en">Photoperiod</span><span lang="es">Fotoperíodo</span></b><span><span lang="en">Derived from light schedule rows (not a quantum sensor). Spain Up ON 01:00 → 13:00 local; Spain Down ON 13:00 → 01:00 local — inverse to balance HVAC load.</span><span lang="es">Derivado de las filas del programa de luces (no de un sensor cuántico). Spain Up ON 01:00 → 13:00 local; Spain Down ON 13:00 → 01:00 local — inverso para balancear carga de HVAC.</span></span></li>
+    <li><b><span lang="en">Phase assignment</span><span lang="es">Asignación de fase</span></b><span><span lang="en">Both rooms' last completed phase was Bulking/Vegetative 2, Apr 8 – Apr 29 (21 days). Targets pulled from /phases/1013250/ (SD) and /phases/1013185/ (SU).</span><span lang="es">La última fase completada de ambas salas fue Engorde/Vegetativa 2, 8 abr – 29 abr (21 días). Objetivos tomados de /phases/1013250/ (SD) y /phases/1013185/ (SU).</span></span></li>
+    <li><b><span lang="en">Irrigation cadence</span><span lang="es">Cadencia de riego</span></b><span><span lang="en">Shots/day and runoff % not directly observable — no drip / drain volume sensors deployed. count_irrigation_events returned 0 for both rooms.</span><span lang="es">Disparos/día y % de drenaje no observables directamente — no hay sensores de volumen de riego / drenaje desplegados. count_irrigation_events devolvió 0 para ambas salas.</span></span></li>
+    <li><b><span lang="en">Journal</span><span lang="es">Diario</span></b><span><span lang="en">spa_get_journal returned 0 entries for the full 30-day window. No manual grower annotations or system phase-transition events.</span><span lang="es">spa_get_journal devolvió 0 entradas para toda la ventana de 30 días. Sin anotaciones manuales del cultivador o eventos de transición de fase del sistema.</span></span></li>
+    <li><b><span lang="en">New run inference</span><span lang="es">Inferencia de nueva corrida</span></b><span><span lang="en">Substrate VWC trending from ~1.6 % up to 51 – 60 % across the trailing window is a fresh saturation signature — confidently a new transplant, but specific flip date is inferred from the trend shape, not confirmed via journal.</span><span lang="es">La tendencia del VWC del sustrato pasando de ~1.6 % hasta 51 – 60 % en la ventana final es una firma de saturación nueva — con confianza un transplante reciente, pero la fecha específica de volteo se infiere de la forma de la tendencia, no se confirma vía diario.</span></span></li>
+    <li><b><span lang="en">Hardware identifiers</span><span lang="es">Identificadores de hardware</span></b><span><span lang="en">All sensors are H-prefix devices (repeater serials shown). Sensor-head serials (ter15, ee894) deliberately not surfaced to avoid confusion with hardware seen on-bench.</span><span lang="es">Todos los sensores son dispositivos con prefijo H (se muestran los seriales del repetidor). Los seriales de cabezas de sensor (ter15, ee894) deliberadamente no se exponen para evitar confusión con el hardware visto en banco.</span></span></li>
+  </ul>
+
+  <footer class="foot">
+    <div><span lang="en">Generated 13 May 2026 · AROYA MCP</span><span lang="es">Generado 13 May 2026 · MCP de AROYA</span> · <span class="brand-mark">AROYA by Addium</span></div>
+    <div><span lang="en">2 flower rooms · 4 substrate zones · 2 climate stations · 30-day window</span><span lang="es">2 salas de floración · 4 zonas de sustrato · 2 estaciones de clima · ventana de 30 días</span></div>
+  </footer>
+
+</div>
+
+<script>
+  (function() {
+    const toggle = document.querySelector('.lang-toggle');
+    if (!toggle) return;
+    toggle.addEventListener('click', function(e) {
+      const btn = e.target.closest('button[data-lang]');
+      if (!btn) return;
+      const lang = btn.dataset.lang;
+      document.body.classList.toggle('es', lang === 'es');
+      toggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
+    });
+  })();
+</script>
+
+</body>
+</html>
