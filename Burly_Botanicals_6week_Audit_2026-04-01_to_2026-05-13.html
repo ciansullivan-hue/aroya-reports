@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Burly Botanicals · 6-Week Irrigation & Climate Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>
 /* Chart.js v4.4.1 (inlined - no CDN dependency) */
 /**
@@ -56,24 +59,46 @@
     --grid-line: #2a3220;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Inter","SF Pro Text","Segoe UI",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  html,body{margin:0;padding:0;font:14px/1.5 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","ss03"}
   a{color:var(--app-blue);text-decoration:none}
   a:hover{text-decoration:underline}
-  .wrap{max-width:1180px;margin:0 auto;padding:32px 28px 80px}
-  /* Header strip */
-  .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:linear-gradient(90deg,var(--olive) 0%,var(--olive-2) 100%);color:#f4f6e8;border-radius:14px;margin-bottom:24px}
-  .topbar .brand{font-weight:700;letter-spacing:.5px;font-size:16px}
-  .topbar .brand .dot{display:inline-block;width:10px;height:10px;background:var(--lime);border-radius:50%;margin-right:8px;vertical-align:middle}
-  .controls{display:flex;gap:8px}
-  .btn{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px;font-weight:500}
-  .btn:hover{background:rgba(255,255,255,.28)}
-  .btn.active{background:#fff;color:var(--olive)}
-  /* Title */
-  .titleblock{margin:8px 0 28px}
-  .titleblock h1{font-size:30px;margin:0 0 8px;font-weight:700;letter-spacing:-.5px}
-  .titleblock .sub{color:var(--ink-2);font-size:15px}
-  .titleblock .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:18px;font-size:13px;color:var(--ink-muted)}
-  .titleblock .meta b{color:var(--ink-2)}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+  /* =========================
+     Masthead — AROYA design system
+     ========================= */
+  .masthead{background:#1a1c19;color:#fff;padding:18px 28px 16px;margin:0 -28px 0;position:relative;overflow:hidden}
+  .masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative;z-index:1}
+  .brand-lockup{display:flex;align-items:center;gap:12px}
+  .brand-mark{width:28px;height:28px;flex:none}
+  .brand-mark rect{fill:#cbeeb0}
+  .brand-text{display:flex;flex-direction:column;line-height:1.1}
+  .brand-wordmark{font-family:'Inter',sans-serif;font-weight:500;font-size:20px;letter-spacing:.18em;color:#fff}
+  .brand-sub{font-family:'Inter',sans-serif;font-weight:400;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#aaa;margin-top:2px}
+  .brand-sub em{font-style:italic;color:#cbeeb0;font-weight:500;letter-spacing:.16em}
+  .controls{display:flex;gap:6px;align-items:center}
+  .btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
+  .btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
+  .btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
+  /* Corner tick marks — AROYA system motif */
+  .tick{position:absolute;width:4px;height:4px;background:#3a3d35;z-index:0}
+  .tick.t1{top:10px;left:46%}
+  .tick.t2{top:10px;left:52%}
+  .tick.t3{top:10px;left:78%}
+  .tick.t4{bottom:10px;left:20%}
+  .tick.t5{bottom:10px;left:23%}
+  .tick.t6{bottom:10px;right:12%}
+  .tick.t7{top:14px;right:24%}
+  /* Page header */
+  .pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+  .pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
+  .pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
+  .pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+  .pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+  .pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+  /* Dark mode overrides for masthead */
+  :root[data-theme="dark"] .pagehead{border-bottom-color:var(--border)}
+  :root[data-theme="dark"] .pagehead-eyebrow{color:var(--olive-2)}
   /* Section */
   section{margin-top:40px}
   h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
@@ -188,32 +213,51 @@
 </style>
 </head>
 <body class="en">
-<div class="wrap">
 
-<div class="topbar">
-  <div class="brand"><span class="dot"></span> AROYA · Burly Botanicals Audit</div>
-  <div class="controls">
-    <button class="btn lang-btn active" data-lang="en">EN</button>
-    <button class="btn lang-btn" data-lang="es">ES</button>
-    <button class="btn theme-btn" data-theme="dark">Dark</button>
+<div class="masthead">
+  <span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span><span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
+  <div class="masthead-inner">
+    <div class="brand-lockup">
+      <svg class="brand-mark" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" aria-label="AROYA glyph">
+        <!-- Chunky T-shape constructed from filled squares (building/header silhouette) -->
+        <rect x="2"  y="3"  width="6" height="6" rx="1"/>
+        <rect x="11" y="3"  width="6" height="6" rx="1"/>
+        <rect x="20" y="3"  width="6" height="6" rx="1"/>
+        <rect x="11" y="12" width="6" height="6" rx="1"/>
+        <rect x="11" y="21" width="6" height="6" rx="1"/>
+      </svg>
+      <div class="brand-text">
+        <div class="brand-wordmark">AROYA</div>
+        <div class="brand-sub">by <em>Addium</em> · Reports</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn lang-btn active" data-lang="en">EN</button>
+      <button class="btn lang-btn" data-lang="es">ES</button>
+      <button class="btn theme-btn" data-theme="dark">Dark</button>
+    </div>
   </div>
 </div>
 
-<div class="titleblock">
+<div class="wrap">
+
+<div class="pagehead">
+  <div class="pagehead-eyebrow"><span class="en-only">6-Week Facility Audit</span><span class="es-only">Auditoría de 6 Semanas</span></div>
   <h1>
-    <span class="en-only">Burly Botanicals · 6-Week Irrigation, Climate &amp; Feeding Audit</span>
-    <span class="es-only">Burly Botanicals · Auditoría de 6 Semanas de Riego, Clima y Fertilización</span>
+    <span class="en-only">Burly Botanicals · Irrigation, Climate &amp; Feeding</span>
+    <span class="es-only">Burly Botanicals · Riego, Clima y Fertilización</span>
   </h1>
   <div class="sub">
     <span class="en-only">2026-04-01 → 2026-05-13 · Coco 2-gal Char-Coir · 5 flower cycles spanning every phase (stretch, bulking, ripening, dry)</span>
-    <span class="es-only">2026-04-01 → 2026-05-13 · Coco Char-Coir 2 gal · 5 ciclos de flor cubriendo cada fase (estiramiento, engorde, maduración, secado)</span>
+    <span class="es-only">2026-04-01 → 2026-05-13 · Coco Char-Coir 2 gal · 5 ciclos de flor cubriendo cada fase</span>
   </div>
   <div class="meta">
-    <span><b>Facility:</b> Burly Botanicals (AROYA ID 3920)</span>
-    <span><b>Owner:</b> Michael Fayak (feed/EC)</span>
-    <span><b>Grower:</b> Brittany Durham (climate/VPD, since Feb 2026)</span>
-    <span><b>Emitters:</b> 2 GPH × 2 per plant</span>
-    <span><b>Lighting:</b> UCL 600 + UC ~660 PPFD + CO₂</span>
+    <span><b>Facility</b>Burly Botanicals · AROYA 3920</span>
+    <span><b>Owner</b>Michael Fayak <span style="color:var(--ink-muted)">(feed / EC)</span></span>
+    <span><b>Grower</b>Brittany Durham <span style="color:var(--ink-muted)">(climate / VPD, since Feb 2026)</span></span>
+    <span><b>Emitters</b>2 GPH × 2 per plant</span>
+    <span><b>Lighting</b>UCL 600 + UC ~660 PPFD + CO₂</span>
+    <span><b>Substrate</b>Coco 2-gal Char-Coir bag</span>
   </div>
 </div>
 
