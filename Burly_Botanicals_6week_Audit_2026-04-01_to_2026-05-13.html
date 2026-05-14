@@ -168,6 +168,23 @@
   .datagap b{color:var(--warn)}
   /* Footer */
   footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+
+  /* Biophysics section */
+  .biophys-room{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;box-shadow:var(--card-shadow)}
+  .biophys-room h3{margin:0 0 10px;font-size:17px}
+  .biophys-brief{font-size:13.5px;color:var(--ink-2);margin-bottom:14px;padding:12px 14px;background:var(--bg-3);border-left:3px solid var(--olive);border-radius:0 8px 8px 0;line-height:1.55}
+  .biophys-section-label{font-size:11px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.8px;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px dashed var(--border)}
+  .bp-scroll{overflow-x:auto}
+  .bp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  .bp-table th{background:var(--bg-3);padding:8px 10px;text-align:left;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1.5px solid var(--border);white-space:nowrap}
+  .bp-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .bp-table.compact td{padding:7px 8px;font-size:12.5px}
+  .bp-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .bp-targets{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .bp-tgt{display:inline-block;font-size:12px;padding:5px 10px;background:var(--bg-3);border-radius:6px;color:var(--ink-2)}
+  .bp-tgt b{color:var(--ink)}
+  .muted{color:var(--ink-muted);font-style:italic}
+
 </style>
 </head>
 <body class="en">
@@ -324,6 +341,235 @@
   <div class="legend" id="legendTemp"></div>
 </div>
 </section>
+
+<!-- ============ PHASE BIOPHYSICS & IRRIGATION INPUTS (6-WEEK AGGREGATES) ============ -->
+<section id="biophysics">
+<h2><span class="en-only">Phase Biophysics &amp; Irrigation Inputs</span><span class="es-only">Biofísica y Entradas de Riego por Fase</span></h2>
+
+<p><span class="en-only">For each room and phase: drip volume, drain volume, drip/drain EC, runoff ratio, EC stack delta, daily field capacity (FC) and VWC floor averages, evapotranspiration rate (% VWC loss per hour during dryback), DLI, CO₂, VPD-stress hours, day-night temperature differential (DIF), and substrate temperatures. <b>All numbers are 6-week zone-aggregate stats</b> across 2026-04-01 → 2026-05-13 (12-zone average per room). Target bands are phase-specific. Feed pH (5.6–5.8) and runoff pH (5.8–6.2) targets are listed but AROYA does not capture pH — those require lab/probe verification.</span><span class="es-only">Para cada sala y fase: volumen drip, volumen drain, CE drip/drain, ratio runoff, delta pila CE, promedios diarios de capacidad de campo (FC) y piso VWC, tasa de evapotranspiración (% pérdida VWC/hr durante dryback), DLI, CO₂, horas de estrés VPD, diferencial térmico día-noche (DIF), y temperaturas de sustrato. <b>Todos los números son agregados de 6 semanas por zona</b> en 2026-04-01 → 2026-05-13. Objetivos pH de fertilización (5.6–5.8) y runoff (5.8–6.2) listados pero AROYA no captura pH — requieren laboratorio.</span></p>
+
+<div class="biophys-room">
+  <h3>Flower East A1-A4 · Cycle 40</h3>
+  <div class="biophys-brief"><span class="en-only">Cycle 40 has the only continuous 6-week sensor record. The data shows a textbook generative cascade: ET rate climbed 0.4→1.7 %/hr Wk 1→Wk 4, DLI ramped 28→39 mol/m²/d, CO₂ supplementation climbed 1474→1711 ppm. Drip-drain (12 zones aggregated over 6w): drip 2,780 mL, drain 891 mL → 32.0% runoff (slightly above 20–30% bulking target). Drip EC 2.10 mS is BELOW Michael's 2.3–2.6 commitment. EC stack delta is +0.56 mS (drain higher than drip) which is correct direction but small — substrate pore_EC sits at 2.96 mS, far below the 4–7 mS bulking target. This is the May 8 chain still active.</span><span class="es-only">El Ciclo 40 tiene el único registro continuo de 6 semanas. Los datos muestran una cascada generativa de manual: ET subió 0.4→1.7 %/hr de Sem 1→Sem 4, DLI 28→39 mol/m²/d, CO₂ 1474→1711 ppm. Drip-drain (12 zonas agregadas en 6sem): drip 2,780 mL, drain 891 mL → 32.0% runoff. CE drip 2.10 mS BAJO el compromiso de Michael 2.3–2.6. Delta de pila +0.56 mS — sustrato pore_EC en 2.96 mS, muy bajo el objetivo 4–7 mS de engorde.</span></div>
+
+  <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · 6-week zone aggregate (n_zones=12) · period 2026-04-01 → 2026-05-13</span><span class="es-only">DRIP-DRAIN · agregado por zona 6 semanas</span></div>
+  <table class="bp-table">
+    <thead><tr><th>Metric</th><th>Observed (mean · zone range)</th><th>Target (Wk 4 Mega Pump (bulking))</th><th>Status</th></tr></thead>
+    <tbody><tr><td><span class="en-only">Drip volume (DFI)</span><span class="es-only">Volumen drip (DFI)</span></td><td class="num">2781 mL<br><span style='color:var(--ink-muted);font-size:11px'>2208–3436</span></td><td class="num">—</td><td><span class="pill muted">raw input</span></td></tr><tr><td><span class="en-only">Drain volume (DFI_drain)</span><span class="es-only">Volumen drain (DFI_drain)</span></td><td class="num">891 mL<br><span style='color:var(--ink-muted);font-size:11px'>527–1257</span></td><td class="num">—</td><td><span class="pill muted">raw output</span></td></tr><tr><td><span class="en-only">Drain / drip ratio (runoff %)</span><span class="es-only">Ratio drain / drip</span></td><td class="num">32.0%</td><td class="num">20–30%</td><td><span class="pill bad">above target</span></td></tr><tr><td><span class="en-only">Drip EC (feed)</span><span class="es-only">CE drip (fertilización)</span></td><td class="num">2.10 mS<br><span style='color:var(--ink-muted);font-size:11px'>1.88–2.73</span></td><td class="num">2.5–3.0 mS</td><td><span class="pill warn">below target</span></td></tr><tr><td><span class="en-only">Drain EC (runoff)</span><span class="es-only">CE drain (runoff)</span></td><td class="num">2.66 mS<br><span style='color:var(--ink-muted);font-size:11px'>2.15–3.67</span></td><td class="num">4.0–7.0 mS</td><td><span class="pill warn">below target</span></td></tr><tr><td><span class="en-only">Substrate EC (pore_ec)</span><span class="es-only">CE sustrato (pore_ec)</span></td><td class="num">2.96 mS<br><span style='color:var(--ink-muted);font-size:11px'>2.75–3.22</span></td><td class="num">4.0–7.0 mS</td><td><span class="pill muted">between drip &amp; drain</span></td></tr><tr><td><span class="en-only">EC stack Δ (drain − drip)</span><span class="es-only">Δ pila CE (drain − drip)</span></td><td class="num">+0.56 mS</td><td class="num">+1.0 to +5.0 mS</td><td><span class="pill warn">+0.56 mS weak stack</span></td></tr><tr><td><span class="en-only">Feed pH target</span><span class="es-only">Objetivo pH fert.</span></td><td class="num"><span class="muted">not in AROYA</span></td><td class="num">5.6–5.8</td><td><span class="pill muted">manual / lab</span></td></tr><tr><td><span class="en-only">Runoff pH target</span><span class="es-only">Objetivo pH runoff</span></td><td class="num"><span class="muted">not in AROYA</span></td><td class="num">5.8–6.2</td><td><span class="pill muted">manual / lab</span></td></tr></tbody></table>
+  <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (6-week aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados 6 semanas)</span></div>
+  <div class="bp-scroll"><table class="bp-table compact">
+    <thead><tr>
+      <th>Phase</th>
+      <th>FC daily mean</th>
+      <th>Floor daily mean</th>
+      <th>ET rate (%/hr dryback)</th>
+      <th>DLI (mol/m²/d)</th>
+      <th>VPD-stress hrs/d</th>
+      <th>DIF (°F)</th>
+      <th>CO₂ lights-on (ppm)</th>
+      <th>VPD lights-on (kPa)</th>
+      <th>Soil temp on / off (°F)</th>
+    </tr></thead>
+    <tbody>
+<tr><td><span class="phase veg">Veggie Tails</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="pill good" style="font-weight:600">28.0</span><br><span style='color:var(--ink-muted);font-size:10px'>14.9–36.8</span></td><td class="num">0.0h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–0.0</span></td><td class="num"><span class="pill warn" style="font-weight:600">0.99°F</span><br><span style='color:var(--ink-muted);font-size:10px'>0.51–1.94</span></td><td class="num"><span class="pill good" style="font-weight:600">1474</span><br><span style='color:var(--ink-muted);font-size:10px'>1290–1727</span></td><td class="num">1.08 ±0.184</td><td class="num">—</td></tr><tr><td><span class="phase stretch">Wk 1 Transition</span> <span style="color:var(--ink-muted);font-size:11px">(7d)</span></td><td class="num"><span class="pill good" style="font-weight:600">72.5%</span><br><span style='color:var(--ink-muted);font-size:10px'>68.3–74.9</span></td><td class="num"><span class="pill bad" style="font-weight:600">62.0%</span><br><span style='color:var(--ink-muted);font-size:10px'>59.5–64.8</span></td><td class="num"><span class="pill warn" style="font-weight:600">0.40 %/hr</span><br><span style='color:var(--ink-muted);font-size:10px'>-0.76–1.01</span></td><td class="num"><span class="pill good" style="font-weight:600">32.7</span><br><span style='color:var(--ink-muted);font-size:10px'>30.2–37.0</span></td><td class="num">0.0h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–0.0</span></td><td class="num"><span class="pill warn" style="font-weight:600">0.70°F</span><br><span style='color:var(--ink-muted);font-size:10px'>0.24–0.96</span></td><td class="num"><span class="pill good" style="font-weight:600">1509</span><br><span style='color:var(--ink-muted);font-size:10px'>1422–1713</span></td><td class="num">0.99 ±0.128</td><td class="num">—</td></tr><tr><td><span class="phase stretch">Wk 2 Early Gen</span> <span style="color:var(--ink-muted);font-size:11px">(7d)</span></td><td class="num"><span class="pill good" style="font-weight:600">73.4%</span><br><span style='color:var(--ink-muted);font-size:10px'>72.5–73.7</span></td><td class="num"><span class="pill bad" style="font-weight:600">55.1%</span><br><span style='color:var(--ink-muted);font-size:10px'>50.8–61.5</span></td><td class="num"><span class="pill good" style="font-weight:600">1.70 %/hr</span><br><span style='color:var(--ink-muted);font-size:10px'>0.80–2.12</span></td><td class="num"><span class="pill warn" style="font-weight:600">34.7</span><br><span style='color:var(--ink-muted);font-size:10px'>31.4–37.5</span></td><td class="num">0.0h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–0.0</span></td><td class="num"><span class="pill warn" style="font-weight:600">0.56°F</span><br><span style='color:var(--ink-muted);font-size:10px'>0.13–0.90</span></td><td class="num"><span class="pill good" style="font-weight:600">1654</span><br><span style='color:var(--ink-muted);font-size:10px'>1322–2000</span></td><td class="num">1.04 ±0.082</td><td class="num">—</td></tr><tr><td><span class="phase stretch">Wk 3 Late Gen</span> <span style="color:var(--ink-muted);font-size:11px">(8d)</span></td><td class="num"><span class="pill good" style="font-weight:600">74.0%</span><br><span style='color:var(--ink-muted);font-size:10px'>73.2–74.8</span></td><td class="num"><span class="pill good" style="font-weight:600">54.9%</span><br><span style='color:var(--ink-muted);font-size:10px'>51.3–61.6</span></td><td class="num"><span class="pill good" style="font-weight:600">1.57 %/hr</span><br><span style='color:var(--ink-muted);font-size:10px'>0.96–1.88</span></td><td class="num"><span class="pill good" style="font-weight:600">38.9</span><br><span style='color:var(--ink-muted);font-size:10px'>34.9–40.6</span></td><td class="num">0.0h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–0.0</span></td><td class="num"><span class="pill warn" style="font-weight:600">0.42°F</span><br><span style='color:var(--ink-muted);font-size:10px'>-0.08–0.61</span></td><td class="num"><span class="pill good" style="font-weight:600">1686</span><br><span style='color:var(--ink-muted);font-size:10px'>1398–2000</span></td><td class="num">1.04 ±0.082</td><td class="num">—</td></tr><tr><td><span class="phase bulking">Wk 4 Mega Pump (bulking)</span> <span style="color:var(--ink-muted);font-size:11px">(7d)</span></td><td class="num"><span class="pill good" style="font-weight:600">74.2%</span><br><span style='color:var(--ink-muted);font-size:10px'>73.5–74.6</span></td><td class="num"><span class="pill good" style="font-weight:600">54.1%</span><br><span style='color:var(--ink-muted);font-size:10px'>52.8–55.5</span></td><td class="num"><span class="pill good" style="font-weight:600">1.63 %/hr</span><br><span style='color:var(--ink-muted);font-size:10px'>1.52–1.75</span></td><td class="num"><span class="pill warn" style="font-weight:600">33.2</span><br><span style='color:var(--ink-muted);font-size:10px'>31.3–35.4</span></td><td class="num">0.0h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–0.0</span></td><td class="num"><span class="pill warn" style="font-weight:600">0.34°F</span><br><span style='color:var(--ink-muted);font-size:10px'>0.06–0.98</span></td><td class="num"><span class="pill bad" style="font-weight:600">1711</span><br><span style='color:var(--ink-muted);font-size:10px'>1395–2000</span></td><td class="num">1.03 ±0.105</td><td class="num">—</td></tr></tbody></table></div>
+  <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Wk 4 Mega Pump (bulking)</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Wk 4 Mega Pump (bulking)</span></div>
+  <div class="bp-targets">
+    <span class="bp-tgt"><b>Feed/Drip EC:</b> 2.5–3.0 mS</span>
+    <span class="bp-tgt"><b>Drain EC:</b> 4.0–7.0 mS</span>
+    <span class="bp-tgt"><b>Feed pH:</b> 5.6–5.8</span>
+    <span class="bp-tgt"><b>Runoff pH:</b> 5.8–6.2</span>
+    <span class="bp-tgt"><b>Runoff %:</b> 20–30%</span>
+    <span class="bp-tgt"><b>Dryback:</b> 12–18%</span>
+    <span class="bp-tgt"><b>VPD lights-on:</b> 1.2–1.4 kPa</span>
+    <span class="bp-tgt"><b>DIF:</b> 2–4°F</span>
+    <span class="bp-tgt"><b>DLI:</b> 38–48 mol/m²/d</span>
+    <span class="bp-tgt"><b>CO₂:</b> 1200–1700 ppm</span>
+    <span class="bp-tgt"><b>ET rate target:</b> 1.4–2.2 %/hr</span>
+  </div></div>
+<div class="biophys-room">
+  <h3>Flower East B1-B4 · Cycle 39</h3>
+  <div class="biophys-brief"><span class="en-only">Cycle 39 entered the audit in Wk 6 Pump/Ripen and is now Wk 8 Flush. The flush is correctly executing: drip EC 0.99 mS (in flush target 0.5–1.5), drain EC 1.22 mS, substrate pulling to 1.78 mS. Drain ratio at 52.4% is in target for flush. ET rate 1.55→1.82 %/hr matches healthy ripening transpiration. VPD-stress hours 1.9/day in Wk 6 indicate generative push working. This is the room where May 8 commitments are visibly closest to landing — the controller and the data finally agree.</span><span class="es-only">Ciclo 39 entró en Sem 6 Pump/Ripen y ahora Sem 8 Flush. El flush ejecutando correctamente: CE drip 0.99 mS (en objetivo 0.5–1.5), CE drain 1.22 mS, sustrato tirando a 1.78 mS. Ratio drain 52.4% en objetivo flush. ET 1.55→1.82 %/hr — transpiración saludable de maduración. Estrés VPD 1.9 hrs/d en Sem 6 = empuje generativo funcionando. Sala donde compromisos del 8/5 están visiblemente más cerca.</span></div>
+
+  <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · 6-week zone aggregate (n_zones=12) · period 2026-04-01 → 2026-05-13</span><span class="es-only">DRIP-DRAIN · agregado por zona 6 semanas</span></div>
+  <table class="bp-table">
+    <thead><tr><th>Metric</th><th>Observed (mean · zone range)</th><th>Target (Wk 8 Flush)</th><th>Status</th></tr></thead>
+    <tbody><tr><td><span class="en-only">Drip volume (DFI)</span><span class="es-only">Volumen drip (DFI)</span></td><td class="num">3352 mL<br><span style='color:var(--ink-muted);font-size:11px'>1572–4355</span></td><td class="num">—</td><td><span class="pill muted">raw input</span></td></tr><tr><td><span class="en-only">Drain volume (DFI_drain)</span><span class="es-only">Volumen drain (DFI_drain)</span></td><td class="num">1756 mL<br><span style='color:var(--ink-muted);font-size:11px'>659–3893</span></td><td class="num">—</td><td><span class="pill muted">raw output</span></td></tr><tr><td><span class="en-only">Drain / drip ratio (runoff %)</span><span class="es-only">Ratio drain / drip</span></td><td class="num">52.4%</td><td class="num">30–50%</td><td><span class="pill bad">above target</span></td></tr><tr><td><span class="en-only">Drip EC (feed)</span><span class="es-only">CE drip (fertilización)</span></td><td class="num">0.99 mS<br><span style='color:var(--ink-muted);font-size:11px'>0.83–1.53</span></td><td class="num">0.5–1.5 mS</td><td><span class="pill good">in band</span></td></tr><tr><td><span class="en-only">Drain EC (runoff)</span><span class="es-only">CE drain (runoff)</span></td><td class="num">1.22 mS<br><span style='color:var(--ink-muted);font-size:11px'>0.84–2.43</span></td><td class="num">0.8–2.0 mS</td><td><span class="pill good">in band</span></td></tr><tr><td><span class="en-only">Substrate EC (pore_ec)</span><span class="es-only">CE sustrato (pore_ec)</span></td><td class="num">1.78 mS<br><span style='color:var(--ink-muted);font-size:11px'>1.44–2.64</span></td><td class="num">0.8–2.0 mS</td><td><span class="pill muted">between drip &amp; drain</span></td></tr><tr><td><span class="en-only">EC stack Δ (drain − drip)</span><span class="es-only">Δ pila CE (drain − drip)</span></td><td class="num">+0.23 mS</td><td class="num">+1.0 to +5.0 mS</td><td><span class="pill warn">+0.23 mS flat</span></td></tr><tr><td><span class="en-only">Feed pH target</span><span class="es-only">Objetivo pH fert.</span></td><td class="num"><span class="muted">not in AROYA</span></td><td class="num">5.6–5.8</td><td><span class="pill muted">manual / lab</span></td></tr><tr><td><span class="en-only">Runoff pH target</span><span class="es-only">Objetivo pH runoff</span></td><td class="num"><span class="muted">not in AROYA</span></td><td class="num">5.8–6.2</td><td><span class="pill muted">manual / lab</span></td></tr></tbody></table>
+  <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (6-week aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados 6 semanas)</span></div>
+  <div class="bp-scroll"><table class="bp-table compact">
+    <thead><tr>
+      <th>Phase</th>
+      <th>FC daily mean</th>
+      <th>Floor daily mean</th>
+      <th>ET rate (%/hr dryback)</th>
+      <th>DLI (mol/m²/d)</th>
+      <th>VPD-stress hrs/d</th>
+      <th>DIF (°F)</th>
+      <th>CO₂ lights-on (ppm)</th>
+      <th>VPD lights-on (kPa)</th>
+      <th>Soil temp on / off (°F)</th>
+    </tr></thead>
+    <tbody>
+<tr><td><span class="phase ripening">Wk 6 Pump/Ripen</span> <span style="color:var(--ink-muted);font-size:11px">(7d)</span></td><td class="num"><span class="pill good" style="font-weight:600">72.3%</span><br><span style='color:var(--ink-muted);font-size:10px'>70.4–74.4</span></td><td class="num"><span class="pill bad" style="font-weight:600">57.4%</span><br><span style='color:var(--ink-muted);font-size:10px'>52.4–61.9</span></td><td class="num"><span class="pill good" style="font-weight:600">1.55 %/hr</span><br><span style='color:var(--ink-muted);font-size:10px'>1.09–2.01</span></td><td class="num"><span class="muted">—</span></td><td class="num">1.9h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–10.0</span></td><td class="num"><span class="pill warn" style="font-weight:600">1.06°F</span><br><span style='color:var(--ink-muted);font-size:10px'>0.70–1.71</span></td><td class="num"><span class="muted">—</span></td><td class="num">1.25 ±0.226</td><td class="num">—</td></tr><tr><td><span class="phase ripening">Wk 8 Flush</span> <span style="color:var(--ink-muted);font-size:11px">(4d)</span></td><td class="num"><span class="pill good" style="font-weight:600">74.2%</span><br><span style='color:var(--ink-muted);font-size:10px'>74.0–74.5</span></td><td class="num"><span class="pill good" style="font-weight:600">53.6%</span><br><span style='color:var(--ink-muted);font-size:10px'>52.4–54.7</span></td><td class="num"><span class="pill good" style="font-weight:600">1.82 %/hr</span><br><span style='color:var(--ink-muted);font-size:10px'>1.69–1.91</span></td><td class="num"><span class="muted">—</span></td><td class="num">0.0h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–0.0</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num">0.95 ±0.062</td><td class="num">—</td></tr></tbody></table></div>
+  <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Wk 8 Flush</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Wk 8 Flush</span></div>
+  <div class="bp-targets">
+    <span class="bp-tgt"><b>Feed/Drip EC:</b> 0.5–1.5 mS</span>
+    <span class="bp-tgt"><b>Drain EC:</b> 0.8–2.0 mS</span>
+    <span class="bp-tgt"><b>Feed pH:</b> 5.6–5.8</span>
+    <span class="bp-tgt"><b>Runoff pH:</b> 5.8–6.2</span>
+    <span class="bp-tgt"><b>Runoff %:</b> 30–50%</span>
+    <span class="bp-tgt"><b>Dryback:</b> 25–35%</span>
+    <span class="bp-tgt"><b>VPD lights-on:</b> 1.4–1.6 kPa</span>
+    <span class="bp-tgt"><b>DIF:</b> 3–5°F</span>
+    <span class="bp-tgt"><b>DLI:</b> 30–40 mol/m²/d</span>
+    <span class="bp-tgt"><b>CO₂:</b> 0–800 ppm</span>
+    <span class="bp-tgt"><b>ET rate target:</b> 1.8–2.8 %/hr</span>
+  </div></div>
+<div class="biophys-room">
+  <h3>Flower Westt A1-A4 · Cycle 41</h3>
+  <div class="biophys-brief"><span class="en-only">Cycle 41 flipped to flower 4/9 (Wk 1 Transition / stretch). **CRITICAL FINDING:** Drain EC 2.17 mS is LOWER than drip EC 2.41 mS — that's a NEGATIVE EC stack delta (-0.24 mS). For stretch, you want aggressive STACKING (drain EC ≥ drip + 1 to + 5). Substrate pore_EC is 1.23 mS — far below the 6–12 mS stretch target. Drain ratio 19.8% is at the low edge. Some sensor zones show readings dropping to 0–1 (intermittent disconnects) — flag for service. Cycle 41 is not getting its generative push.</span><span class="es-only">Ciclo 41 cambió a flor el 4/9 (Sem 1 Transición / estiramiento). **HALLAZGO CRÍTICO:** CE drain 2.17 mS es MENOR que CE drip 2.41 mS — delta pila NEGATIVO (-0.24 mS). Para estiramiento, necesitas APILAMIENTO agresivo (drain ≥ drip + 1 a + 5). Sustrato pore_EC en 1.23 mS — muy bajo el objetivo 6–12 mS. Ratio drain 19.8% borde bajo. Sensores con desconexiones intermitentes — alertar servicio.</span></div>
+
+  <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · 6-week zone aggregate (n_zones=12) · period 2026-04-09 → 2026-05-13</span><span class="es-only">DRIP-DRAIN · agregado por zona 6 semanas</span></div>
+  <table class="bp-table">
+    <thead><tr><th>Metric</th><th>Observed (mean · zone range)</th><th>Target (Cycle 41 Wk 1 Transition (stretch))</th><th>Status</th></tr></thead>
+    <tbody><tr><td><span class="en-only">Drip volume (DFI)</span><span class="es-only">Volumen drip (DFI)</span></td><td class="num">664 mL<br><span style='color:var(--ink-muted);font-size:11px'>60–1069</span></td><td class="num">—</td><td><span class="pill muted">raw input</span></td></tr><tr><td><span class="en-only">Drain volume (DFI_drain)</span><span class="es-only">Volumen drain (DFI_drain)</span></td><td class="num">131 mL<br><span style='color:var(--ink-muted);font-size:11px'>0–353</span></td><td class="num">—</td><td><span class="pill muted">raw output</span></td></tr><tr><td><span class="en-only">Drain / drip ratio (runoff %)</span><span class="es-only">Ratio drain / drip</span></td><td class="num">19.8%</td><td class="num">15–25%</td><td><span class="pill good">in band</span></td></tr><tr><td><span class="en-only">Drip EC (feed)</span><span class="es-only">CE drip (fertilización)</span></td><td class="num">2.41 mS<br><span style='color:var(--ink-muted);font-size:11px'>1.67–5.01</span></td><td class="num">3.0–3.5 mS</td><td><span class="pill warn">below target</span></td></tr><tr><td><span class="en-only">Drain EC (runoff)</span><span class="es-only">CE drain (runoff)</span></td><td class="num">2.17 mS<br><span style='color:var(--ink-muted);font-size:11px'>0.68–7.18</span></td><td class="num">6.0–12.0 mS</td><td><span class="pill warn">below target</span></td></tr><tr><td><span class="en-only">Substrate EC (pore_ec)</span><span class="es-only">CE sustrato (pore_ec)</span></td><td class="num">1.23 mS<br><span style='color:var(--ink-muted);font-size:11px'>0.80–1.61</span></td><td class="num">6.0–12.0 mS</td><td><span class="pill muted">between drip &amp; drain</span></td></tr><tr><td><span class="en-only">EC stack Δ (drain − drip)</span><span class="es-only">Δ pila CE (drain − drip)</span></td><td class="num">-0.24 mS</td><td class="num">+1.0 to +5.0 mS</td><td><span class="pill bad">-0.24 mS NEGATIVE — substrate not concentrating</span></td></tr><tr><td><span class="en-only">Feed pH target</span><span class="es-only">Objetivo pH fert.</span></td><td class="num"><span class="muted">not in AROYA</span></td><td class="num">5.6–5.8</td><td><span class="pill muted">manual / lab</span></td></tr><tr><td><span class="en-only">Runoff pH target</span><span class="es-only">Objetivo pH runoff</span></td><td class="num"><span class="muted">not in AROYA</span></td><td class="num">5.8–6.2</td><td><span class="pill muted">manual / lab</span></td></tr></tbody></table>
+  <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (6-week aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados 6 semanas)</span></div>
+  <div class="bp-scroll"><table class="bp-table compact">
+    <thead><tr>
+      <th>Phase</th>
+      <th>FC daily mean</th>
+      <th>Floor daily mean</th>
+      <th>ET rate (%/hr dryback)</th>
+      <th>DLI (mol/m²/d)</th>
+      <th>VPD-stress hrs/d</th>
+      <th>DIF (°F)</th>
+      <th>CO₂ lights-on (ppm)</th>
+      <th>VPD lights-on (kPa)</th>
+      <th>Soil temp on / off (°F)</th>
+    </tr></thead>
+    <tbody>
+<tr><td><span class="phase stretch">Cycle 41 Wk 1 Transition (stretch)</span> <span style="color:var(--ink-muted);font-size:11px">(8d)</span></td><td class="num"><span class="pill warn" style="font-weight:600">61.9%</span><br><span style='color:var(--ink-muted);font-size:10px'>1.6–74.6</span></td><td class="num"><span class="pill good" style="font-weight:600">46.3%</span><br><span style='color:var(--ink-muted);font-size:10px'>1.2–67.6</span></td><td class="num"><span class="pill warn" style="font-weight:600">-23.30 %/hr</span><br><span style='color:var(--ink-muted);font-size:10px'>-167.24–1.09</span></td><td class="num"><span class="muted">—</span></td><td class="num">0.0h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–0.0</span></td><td class="num"><span class="pill warn" style="font-weight:600">-0.40°F</span><br><span style='color:var(--ink-muted);font-size:10px'>-1.35–0.84</span></td><td class="num"><span class="muted">—</span></td><td class="num">1.14 ±0.135</td><td class="num">—</td></tr></tbody></table></div>
+  <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Cycle 41 Wk 1 Transition (stretch)</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Cycle 41 Wk 1 Transition (stretch)</span></div>
+  <div class="bp-targets">
+    <span class="bp-tgt"><b>Feed/Drip EC:</b> 3.0–3.5 mS</span>
+    <span class="bp-tgt"><b>Drain EC:</b> 6.0–12.0 mS</span>
+    <span class="bp-tgt"><b>Feed pH:</b> 5.6–5.8</span>
+    <span class="bp-tgt"><b>Runoff pH:</b> 5.8–6.2</span>
+    <span class="bp-tgt"><b>Runoff %:</b> 15–25%</span>
+    <span class="bp-tgt"><b>Dryback:</b> 20–30%</span>
+    <span class="bp-tgt"><b>VPD lights-on:</b> 1.0–1.2 kPa</span>
+    <span class="bp-tgt"><b>DIF:</b> 3–5°F</span>
+    <span class="bp-tgt"><b>DLI:</b> 28–38 mol/m²/d</span>
+    <span class="bp-tgt"><b>CO₂:</b> 1200–1700 ppm</span>
+    <span class="bp-tgt"><b>ET rate target:</b> 1.0–1.8 %/hr</span>
+  </div></div>
+<div class="biophys-room">
+  <h3>Flower West B1-B4 · Cycle 38 Dry</h3>
+  <div class="biophys-brief"><span class="en-only">Dry room. Climate-only data (no substrate sensors active in dry). VPD running 1.10 ± 0.08 — slightly high for a slow terpene-preserving dry (target 0.6–1.0). DIF slightly negative (-0.4°F) is fine for dry. Only 4 days of data available — re-run when bridge stabilizes for trend confidence.</span><span class="es-only">Sala de secado. Solo datos de clima. VPD en 1.10 ± 0.08 — algo alto para secado lento preservando terpenos (objetivo 0.6–1.0). DIF ligeramente negativo (-0.4°F) está bien. Solo 4 días de datos.</span></div>
+
+  <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN</span><span class="es-only">DRIP-DRAIN</span></div>
+  <div style="font-size:13px;color:var(--ink-2);padding:10px 14px;background:var(--bg-3);border-radius:8px;border-left:3px solid var(--warn);margin-bottom:6px"><b>Dry room — no irrigation hardware</b></div>
+  <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (6-week aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados 6 semanas)</span></div>
+  <div class="bp-scroll"><table class="bp-table compact">
+    <thead><tr>
+      <th>Phase</th>
+      <th>FC daily mean</th>
+      <th>Floor daily mean</th>
+      <th>ET rate (%/hr dryback)</th>
+      <th>DLI (mol/m²/d)</th>
+      <th>VPD-stress hrs/d</th>
+      <th>DIF (°F)</th>
+      <th>CO₂ lights-on (ppm)</th>
+      <th>VPD lights-on (kPa)</th>
+      <th>Soil temp on / off (°F)</th>
+    </tr></thead>
+    <tbody>
+<tr><td><span class="phase dry">Cycle 38 Dry</span> <span style="color:var(--ink-muted);font-size:11px">(4d)</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num">0.0h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–0.0</span></td><td class="num"><span class="pill warn" style="font-weight:600">-0.40°F</span><br><span style='color:var(--ink-muted);font-size:10px'>-0.77–-0.02</span></td><td class="num"><span class="muted">—</span></td><td class="num">1.10 ±0.082</td><td class="num">—</td></tr></tbody></table></div>
+  <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Cycle 38 Dry</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Cycle 38 Dry</span></div>
+  <div class="bp-targets">
+    <span class="bp-tgt"><b>Feed/Drip EC:</b> N/A mS</span>
+    <span class="bp-tgt"><b>Drain EC:</b> N/A mS</span>
+    <span class="bp-tgt"><b>Feed pH:</b> 5.6–5.8</span>
+    <span class="bp-tgt"><b>Runoff pH:</b> N/A</span>
+    <span class="bp-tgt"><b>Runoff %:</b> N/A%</span>
+    <span class="bp-tgt"><b>Dryback:</b> N/A%</span>
+    <span class="bp-tgt"><b>VPD lights-on:</b> 0.6–1.0 kPa</span>
+    <span class="bp-tgt"><b>DIF:</b> 0–2°F</span>
+    <span class="bp-tgt"><b>DLI:</b> N/A mol/m²/d</span>
+    <span class="bp-tgt"><b>CO₂:</b> 0–500 ppm</span>
+    <span class="bp-tgt"><b>ET rate target:</b> N/A %/hr</span>
+  </div></div>
+<div class="biophys-room">
+  <h3>MOM / PROP</h3>
+  <div class="biophys-brief"><span class="en-only">MOM / PROP — 175 plants. CO₂ at 4050 ppm during lights-on is **near the 5000 ppm hard ceiling** — extremely aggressive for a veg room. Substrate pore_EC 1.70 mS (zones 1.27–2.12) is below mother target 3–5. ET rate 0.11 %/hr — appropriate for mothers (don't transpire like flower canopy). VPD 0.69 kPa — at low edge of veg band. **No drip-drain station in this room** — only substrate pore_EC sensors, so drip/drain volumes cannot be reported.</span><span class="es-only">MOM/PROP — 175 plantas. CO₂ a 4050 ppm en luces-on cerca del techo 5000 ppm — agresivo. CE sustrato 1.70 mS bajo objetivo madres 3–5. ET 0.11 %/hr — apropiado para madres. **Sin estación drip-drain** — solo sensores pore_EC.</span></div>
+
+  <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN</span><span class="es-only">DRIP-DRAIN</span></div>
+  <div style="font-size:13px;color:var(--ink-2);padding:10px 14px;background:var(--bg-3);border-radius:8px;border-left:3px solid var(--warn);margin-bottom:6px"><b>No drip-drain station deployed in MOM/PROP — substrate pore_ec sensors only</b></div>
+  <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (6-week aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados 6 semanas)</span></div>
+  <div class="bp-scroll"><table class="bp-table compact">
+    <thead><tr>
+      <th>Phase</th>
+      <th>FC daily mean</th>
+      <th>Floor daily mean</th>
+      <th>ET rate (%/hr dryback)</th>
+      <th>DLI (mol/m²/d)</th>
+      <th>VPD-stress hrs/d</th>
+      <th>DIF (°F)</th>
+      <th>CO₂ lights-on (ppm)</th>
+      <th>VPD lights-on (kPa)</th>
+      <th>Soil temp on / off (°F)</th>
+    </tr></thead>
+    <tbody>
+<tr><td><span class="phase veg">Mothers + Props (veg)</span> <span style="color:var(--ink-muted);font-size:11px">(3d)</span></td><td class="num"><span class="pill good" style="font-weight:600">69.6%</span><br><span style='color:var(--ink-muted);font-size:10px'>67.6–73.3</span></td><td class="num"><span class="pill good" style="font-weight:600">60.3%</span><br><span style='color:var(--ink-muted);font-size:10px'>58.3–62.6</span></td><td class="num"><span class="pill good" style="font-weight:600">0.11 %/hr</span><br><span style='color:var(--ink-muted);font-size:10px'>-0.05–0.27</span></td><td class="num"><span class="muted">—</span></td><td class="num">0.0h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–0.0</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num">—</td><td class="num">—</td></tr></tbody></table></div>
+  <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Mothers + Props (veg)</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Mothers + Props (veg)</span></div>
+  <div class="bp-targets">
+    <span class="bp-tgt"><b>Feed/Drip EC:</b> 2.5–3.5 mS</span>
+    <span class="bp-tgt"><b>Drain EC:</b> 3.5–5.0 mS</span>
+    <span class="bp-tgt"><b>Feed pH:</b> 5.6–5.8</span>
+    <span class="bp-tgt"><b>Runoff pH:</b> 5.8–6.2</span>
+    <span class="bp-tgt"><b>Runoff %:</b> 10–20%</span>
+    <span class="bp-tgt"><b>Dryback:</b> 10–20%</span>
+    <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
+    <span class="bp-tgt"><b>DIF:</b> 1–3°F</span>
+    <span class="bp-tgt"><b>DLI:</b> 25–35 mol/m²/d</span>
+    <span class="bp-tgt"><b>CO₂:</b> 800–1500 ppm</span>
+    <span class="bp-tgt"><b>ET rate target:</b> 0.1–0.5 %/hr</span>
+  </div></div>
+<div class="biophys-room">
+  <h3>Veg West</h3>
+  <div class="biophys-brief"><span class="en-only">Veg West supports flower cycles. ET rate 1.9 %/hr is healthy (young transplants pulling moisture). VPD 0.77 kPa in veg target 0.8–1.1 (low edge). DIF flat (-0.01°F). Substrate readings show massive variance — multiple zones with sensors dropping to ~0 (FC range 1.25–72.69, pore_EC range 0–30 with outlier zones). **No drip-drain station** in this room. Get a service tech in to assess the disconnected substrate sensors before this data can be trusted for daily steering.</span><span class="es-only">Veg West soporta ciclos de flor. ET 1.9 %/hr saludable. VPD 0.77 kPa en objetivo veg 0.8–1.1. DIF plano. Varios sensores de sustrato desconectados — datos no confiables para guía diaria. **Sin estación drip-drain**.</span></div>
+
+  <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN</span><span class="es-only">DRIP-DRAIN</span></div>
+  <div style="font-size:13px;color:var(--ink-2);padding:10px 14px;background:var(--bg-3);border-radius:8px;border-left:3px solid var(--warn);margin-bottom:6px"><b>No drip-drain station deployed in Veg West — substrate pore_ec sensors only</b></div>
+  <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (6-week aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados 6 semanas)</span></div>
+  <div class="bp-scroll"><table class="bp-table compact">
+    <thead><tr>
+      <th>Phase</th>
+      <th>FC daily mean</th>
+      <th>Floor daily mean</th>
+      <th>ET rate (%/hr dryback)</th>
+      <th>DLI (mol/m²/d)</th>
+      <th>VPD-stress hrs/d</th>
+      <th>DIF (°F)</th>
+      <th>CO₂ lights-on (ppm)</th>
+      <th>VPD lights-on (kPa)</th>
+      <th>Soil temp on / off (°F)</th>
+    </tr></thead>
+    <tbody>
+<tr><td><span class="phase veg">Veg supply (Veggie Tails)</span> <span style="color:var(--ink-muted);font-size:11px">(8d)</span></td><td class="num"><span class="pill warn" style="font-weight:600">51.9%</span><br><span style='color:var(--ink-muted);font-size:10px'>1.2–72.7</span></td><td class="num"><span class="pill warn" style="font-weight:600">38.9%</span><br><span style='color:var(--ink-muted);font-size:10px'>0.3–64.0</span></td><td class="num"><span class="pill good" style="font-weight:600">1.90 %/hr</span><br><span style='color:var(--ink-muted);font-size:10px'>0.24–8.14</span></td><td class="num"><span class="muted">—</span></td><td class="num">0.4h<br><span style='color:var(--ink-muted);font-size:10px'>0.0–3.0</span></td><td class="num"><span class="pill warn" style="font-weight:600">-0.01°F</span><br><span style='color:var(--ink-muted);font-size:10px'>-0.35–0.29</span></td><td class="num"><span class="muted">—</span></td><td class="num">0.77 ±0.119</td><td class="num">—</td></tr></tbody></table></div>
+  <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg supply (Veggie Tails)</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg supply (Veggie Tails)</span></div>
+  <div class="bp-targets">
+    <span class="bp-tgt"><b>Feed/Drip EC:</b> 2.5–3.5 mS</span>
+    <span class="bp-tgt"><b>Drain EC:</b> 3.5–5.0 mS</span>
+    <span class="bp-tgt"><b>Feed pH:</b> 5.6–5.8</span>
+    <span class="bp-tgt"><b>Runoff pH:</b> 5.8–6.2</span>
+    <span class="bp-tgt"><b>Runoff %:</b> 10–20%</span>
+    <span class="bp-tgt"><b>Dryback:</b> 5–15%</span>
+    <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
+    <span class="bp-tgt"><b>DIF:</b> 1–3°F</span>
+    <span class="bp-tgt"><b>DLI:</b> 15–30 mol/m²/d</span>
+    <span class="bp-tgt"><b>CO₂:</b> 800–1500 ppm</span>
+    <span class="bp-tgt"><b>ET rate target:</b> 1.5–2.5 %/hr</span>
+  </div></div></section>
 
 <!-- ============ EVENT-LOG AUDIT ACROSS CYCLES ============ -->
 <section id="events">
