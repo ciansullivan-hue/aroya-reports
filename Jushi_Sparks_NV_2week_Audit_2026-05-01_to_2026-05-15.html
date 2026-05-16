@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jushi - Sparks NV — 2026-05-15 Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root { 
+  --aroya-olive: #635e51;
+  --aroya-lime: #cbeeb0;
+  --aroya-app-blue: #1c2632;
+  --aroya-app-blue-2: #243040;
+  --aroya-medium-gray: #46483d;
+  --aroya-line: #ebebea;
+  --aroya-text: #1c2632;
+  --aroya-text-muted: #635e51;
+  --aroya-bg: #fafaf7;
+  --aroya-card-bg: #ffffff;
+  --aroya-ok: #cbeeb0;
+  --aroya-ok-stripe: #635e51;
+  --aroya-warn: #f5d77c;
+  --aroya-warn-stripe: #a07a1e;
+  --aroya-bad: #f4a89a;
+  --aroya-bad-stripe: #b04030;
+  --aroya-info: #d9e5ff;
+  --aroya-info-stripe: #2d62ff;
+  --aroya-substrate-stripe: #635e51;
+  --aroya-climate-stripe: #46483d;
+ 
+  --aroya-bg: #fafaf7;
+  --aroya-card-bg: #ffffff;
+  --aroya-text: #1c2632;
+  --aroya-line: #ebebea;
+  --hero-bg: radial-gradient(circle at 75% 25%, rgba(203,238,176,0.35), transparent 55%),
+             radial-gradient(circle at 20% 70%, rgba(99,94,81,0.20), transparent 55%),
+             linear-gradient(135deg, #1c2632 0%, #243040 100%);
+  --hero-text: #fafaf7;
+ }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400; color: var(--aroya-text); background: var(--aroya-bg); -webkit-font-smoothing: antialiased; }
+.numeric { font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; }
+.weight-500 { font-weight: 500; }
+span[lang="es"] { display: none; }
+body.es span[lang="es"] { display: inline; }
+body.es span[lang="en"] { display: none; }
+nav.topbar { background: #1c2632; color: #fafaf7; padding: 14px 32px; display: flex; align-items: center; gap: 32px; border-bottom: 1px solid #2f3a47; }
+nav.topbar .logo { font-family: 'JetBrains Mono', monospace; font-weight: 500; letter-spacing: 0.5px; color: #cbeeb0; font-size: 14px; }
+nav.topbar a { color: #d9d9d4; text-decoration: none; font-size: 13px; }
+nav.topbar a.active { color: #cbeeb0; }
+.hero { background: var(--hero-bg); color: var(--hero-text); padding: 56px 32px 64px; border-bottom: 1px solid var(--aroya-line); }
+.hero .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: #cbeeb0; text-transform: uppercase; margin-bottom: 16px; }
+.hero h1 { font-size: 38px; font-weight: 500; margin: 0 0 14px; line-height: 1.15; max-width: 920px; }
+.hero h1 em { font-style: normal; color: #cbeeb0; }
+.hero .subtitle { font-size: 16px; color: #c8ccd1; max-width: 720px; line-height: 1.55; margin: 0 0 22px; }
+.hero .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-block; padding: 5px 11px; font-size: 11px; letter-spacing: 0.5px; border-radius: 99px; border: 1px solid rgba(255,255,255,0.18); color: #fafaf7; font-family: 'JetBrains Mono', monospace; }
+.chip.brand { background: #cbeeb0; color: #1c2632; border-color: #cbeeb0; }
+.chip.warn { background: rgba(245,215,124,0.18); color: #f5d77c; border-color: rgba(245,215,124,0.35); }
+.chip.bad { background: rgba(244,168,154,0.18); color: #f4a89a; border-color: rgba(244,168,154,0.35); }
+.chip.info { background: rgba(45,98,255,0.18); color: #99b5ff; border-color: rgba(45,98,255,0.35); }
+.page { max-width: 1140px; margin: 0 auto; padding: 0 32px 80px; }
+section { padding-top: 56px; }
+.h1 { font-size: 24px; font-weight: 500; margin: 0 0 22px; position: relative; padding-left: 18px; color: var(--aroya-text); }
+.h1::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 4px; background: #cbeeb0; border-radius: 2px; }
+.h2 { font-size: 16px; font-weight: 500; margin: 0 0 8px; color: var(--aroya-text); }
+.lede { font-size: 15px; line-height: 1.65; color: var(--aroya-text); max-width: 820px; margin-bottom: 28px; }
+.bullets { list-style: none; padding: 0; margin: 0; }
+.bullets li { padding: 12px 0; border-bottom: 1px solid var(--aroya-line); font-size: 14px; line-height: 1.55; }
+.bullets li:last-child { border-bottom: none; }
+.bullets li::before { content: "▸"; color: #635e51; margin-right: 10px; font-family: 'JetBrains Mono', monospace; }
+.grid-kpi { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.kpi { background: var(--aroya-card-bg); border: 1px solid var(--aroya-line); border-left: 4px solid var(--aroya-substrate-stripe); padding: 16px 18px; border-radius: 6px; }
+.kpi.climate { border-left-color: var(--aroya-climate-stripe); }
+.kpi.ok { background: color-mix(in srgb, var(--aroya-ok) 18%, var(--aroya-card-bg)); }
+.kpi.warn { background: color-mix(in srgb, var(--aroya-warn) 24%, var(--aroya-card-bg)); border-left-color: var(--aroya-warn-stripe); }
+.kpi.bad { background: color-mix(in srgb, var(--aroya-bad) 24%, var(--aroya-card-bg)); border-left-color: var(--aroya-bad-stripe); }
+.kpi .label { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--aroya-text-muted); margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+.kpi .value { font-size: 24px; font-weight: 500; font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', monospace; color: var(--aroya-text); }
+.kpi .unit { font-size: 12px; color: var(--aroya-text-muted); margin-left: 4px; }
+.kpi .meta { margin-top: 6px; font-size: 11px; color: var(--aroya-text-muted); font-family: 'JetBrains Mono', monospace; }
+.bar { height: 6px; background: var(--aroya-line); border-radius: 3px; margin-top: 10px; position: relative; overflow: hidden; }
+.bar .fill { position: absolute; height: 100%; background: var(--aroya-ok-stripe); border-radius: 3px; }
+.bar .marker { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--aroya-text); }
+.zone-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.zone { background: var(--aroya-card-bg); border: 1px solid var(--aroya-line); border-top: 4px solid var(--aroya-ok-stripe); padding: 18px; border-radius: 6px; }
+.zone.warn { border-top-color: var(--aroya-warn-stripe); }
+.zone.bad { border-top-color: var(--aroya-bad-stripe); }
+.zone .room-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.zone .phase { font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--aroya-text-muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 12px; }
+.zone .metric { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px solid var(--aroya-line); }
+.zone .metric:last-child { border-bottom: none; }
+.zone .metric .v { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+.zone .metric.state-bad .v { color: #b04030; }
+.zone .metric.state-warn .v { color: #a07a1e; }
+.zone .metric.state-ok .v { color: var(--aroya-text); }
+.finding { background: var(--aroya-card-bg); border: 1px solid var(--aroya-line); border-radius: 6px; padding: 22px 24px; margin-bottom: 14px; position: relative; }
+.finding.bad { background: linear-gradient(135deg, color-mix(in srgb, var(--aroya-bad) 22%, var(--aroya-card-bg)), var(--aroya-card-bg)); border-left: 4px solid var(--aroya-bad-stripe); }
+.finding.warn { background: linear-gradient(135deg, color-mix(in srgb, var(--aroya-warn) 22%, var(--aroya-card-bg)), var(--aroya-card-bg)); border-left: 4px solid var(--aroya-warn-stripe); }
+.finding.info { background: linear-gradient(135deg, color-mix(in srgb, var(--aroya-info) 30%, var(--aroya-card-bg)), var(--aroya-card-bg)); border-left: 4px solid var(--aroya-info-stripe); }
+.finding.ok { background: linear-gradient(135deg, color-mix(in srgb, var(--aroya-ok) 22%, var(--aroya-card-bg)), var(--aroya-card-bg)); border-left: 4px solid var(--aroya-ok-stripe); }
+.finding .row { display: flex; gap: 16px; align-items: flex-start; }
+.finding .icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+.finding.bad .icon { background: var(--aroya-bad-stripe); color: white; }
+.finding.warn .icon { background: var(--aroya-warn-stripe); color: white; }
+.finding.info .icon { background: var(--aroya-info-stripe); color: white; }
+.finding.ok .icon { background: var(--aroya-ok-stripe); color: white; }
+.finding h3 { font-size: 15px; font-weight: 500; margin: 2px 0 12px; line-height: 1.4; }
+.finding .id { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--aroya-text-muted); }
+.finding p { margin: 8px 0; font-size: 13px; line-height: 1.6; color: var(--aroya-text); }
+.finding p strong { font-weight: 500; }
+.finding .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--aroya-text-muted); margin-top: 14px; margin-bottom: 4px; }
+.finding .rooms { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+.finding .rooms span { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 99px; background: var(--aroya-line); }
+.rec { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--aroya-line); }
+.rec .badge { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; color: #1c2632; font-size: 14px; }
+.rec.p1 .badge, .rec.p2 .badge { background: #635e51; color: #fafaf7; }
+.rec.p3 .badge, .rec.p4 .badge { background: #cbeeb0; color: #1c2632; }
+.rec.p5 .badge, .rec.p6 .badge, .rec.p7 .badge, .rec.p8 .badge { background: color-mix(in srgb, #cbeeb0 50%, #ffffff); color: #1c2632; }
+.rec .body { flex: 1; }
+.rec h4 { font-size: 14px; font-weight: 500; margin: 4px 0 8px; }
+.rec p { font-size: 13px; line-height: 1.55; margin: 6px 0; color: var(--aroya-text); }
+.rec .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--aroya-text-muted); margin-right: 6px; }
+.rec .pill { padding: 4px 11px; border-radius: 99px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; flex-shrink: 0; align-self: flex-start; margin-top: 6px; }
+.rec .pill.high { background: #b04030; color: #fafaf7; }
+.rec .pill.medium { background: #a07a1e; color: #fafaf7; }
+.rec .pill.infra { background: #46483d; color: #fafaf7; }
+.caveat { background: color-mix(in srgb, var(--aroya-info) 50%, var(--aroya-card-bg)); border-left: 4px solid var(--aroya-info-stripe); padding: 14px 18px; border-radius: 4px; font-size: 13px; line-height: 1.6; margin: 16px 0; color: var(--aroya-text); }
+table.data { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
+table.data th, table.data td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--aroya-line); }
+table.data th { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--aroya-text-muted); font-weight: 500; }
+table.data td.numeric { font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', monospace; }
+table.data tr.bad td:first-child { border-left: 3px solid var(--aroya-bad-stripe); }
+table.data tr.warn td:first-child { border-left: 3px solid var(--aroya-warn-stripe); }
+table.data tr.ok td:first-child { border-left: 3px solid var(--aroya-ok-stripe); }
+footer { margin-top: 80px; padding: 32px; border-top: 1px solid var(--aroya-line); text-align: center; font-size: 12px; color: var(--aroya-text-muted); }
+.lang-toggle { position: fixed; bottom: 20px; right: 20px; background: #1c2632; color: #cbeeb0; border: 1px solid #2f3a47; padding: 8px 14px; border-radius: 99px; font-family: 'JetBrains Mono', monospace; font-size: 12px; cursor: pointer; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+.lang-toggle:hover { background: #2f3a47; }
+
+</style>
+</head>
+<body class="light">
+
+    <nav class="topbar">
+      <span class="logo">▲ AROYA</span>
+      <a href="#"><span lang="en">Facilities</span><span lang="es">Instalaciones</span></a>
+      <a href="#"><span lang="en">Rooms</span><span lang="es">Salas</span></a>
+      <a href="#"><span lang="en">Harvests</span><span lang="es">Cosechas</span></a>
+      <a href="#" class="active"><span lang="en">Reports</span><span lang="es">Informes</span></a>
+    </nav>
+    <header class="hero">
+      <div class="page">
+        <div class="eyebrow"><span lang="en">2-WEEK AGRONOMIC + FACILITY AUDIT</span><span lang="es">AUDITORÍA AGRONÓMICA + DE INSTALACIÓN DE 2 SEMANAS</span></div>
+        <h1><span lang="en">Jushi <em>— Sparks NV</em>: 14 days, 18 rooms, 31 active harvest groups, 5,140+ plants under analysis</span><span lang="es">Jushi <em>— Sparks NV</em>: 14 días, 18 salas, 31 grupos de cosecha activos, más de 5,140 plantas en análisis</span></h1>
+        <p class="subtitle"><span lang="en">Facility 4191 — period 2026-05-01 to 2026-05-15. Three high-severity findings, five medium, two informational. Primary risk vector: humidity/VPD control in active Bulking + Early Flower rooms.</span><span lang="es">Instalación 4191 — período 2026-05-01 al 2026-05-15. Tres hallazgos de alta gravedad, cinco medios, dos informativos. Vector de riesgo principal: control de HR/DPV en salas activas de Engorde y Floración Temprana.</span></p>
+        <div class="chips">
+          <span class="chip brand"><span lang="en">Facility 4191</span><span lang="es">Instalación 4191</span></span>
+          <span class="chip"><span lang="en">Org 3290</span><span lang="es">Org 3290</span></span>
+          <span class="chip bad"><span lang="en">3 critical</span><span lang="es">3 críticos</span></span>
+          <span class="chip warn"><span lang="en">5 warnings</span><span lang="es">5 advertencias</span></span>
+          <span class="chip info"><span lang="en">2 info</span><span lang="es">2 informativos</span></span>
+        </div>
+      </div>
+    </header><div class="page">
+    <section>
+      <h2 class="h1"><span lang="en">Executive summary</span><span lang="es">Resumen ejecutivo</span></h2>
+      <p class="lede"><span lang="en">Five facts from 14 days of sensor data — what to look at first, what to fix this week, and what is on track.</span><span lang="es">Cinco hechos a partir de 14 días de datos de sensores — qué mirar primero, qué arreglar esta semana y qué va bien.</span></p>
+      <ul class="bullets"><li><span lang="en">F 1-3 is at imminent powdery-mildew / botrytis risk — 240 plants in Bulking under 14-day mean RH 74.9 % (max 85.0 %) and VPD 0.88 vs target 1.1–1.4. This is the single largest pathogen exposure in the facility.</span><span lang="es">F 1-3 está en riesgo inminente de oídio/botritis — 240 plantas en Engorde bajo HR media de 14 días de 74.9 % (máx 85.0 %) y DPV 0.88 vs objetivo 1.1–1.4. Es la mayor exposición a patógenos en la instalación.</span></li><li><span lang="en">F 1-4 (536 plants in Early Flower) and F 2-3 (400 plants in Transition) are both being held vegetative by over-irrigation. VWC sits at 84.9 % and 88.2 % respectively with no dryback signal — generative crop-steering objectives are not being delivered.</span><span lang="es">F 1-4 (536 plantas en Floración Temprana) y F 2-3 (400 plantas en Transición) ambas se mantienen vegetativas por exceso de riego. CVH a 84.9 % y 88.2 % respectivamente sin señal de agotamiento — los objetivos de dirección generativa no se entregan.</span></li><li><span lang="en">F 2-1 shows dripper-level irrigation heterogeneity — a 47-percentage-point VWC spread (25–72 %) between zones in one Bulking room, with EC concentrating to 6.53 in the under-watered zone. Physical inspection required.</span><span lang="es">F 2-1 muestra heterogeneidad de riego a nivel de gotero — dispersión de 47 puntos porcentuales de CVH (25–72 %) entre zonas de una sala de Engorde, con CE concentrándose a 6.53 en la zona sub-regada. Se requiere inspección física.</span></li><li><span lang="en">F 2-4 ripening cohort (504 plants harvesting 2026-05-26) is leaving 5–8 % trichome density on the table because the climate envelope isn't being pushed hard enough into ripening (VPD 1.12 vs target 1.3–1.6). EC stacking is correct; lift is purely climate.</span><span lang="es">El grupo de maduración de F 2-4 (504 plantas con cosecha 2026-05-26) deja sobre la mesa un 5–8 % de densidad de tricomas porque la envolvente climática no se empuja suficientemente a maduración (DPV 1.12 vs objetivo 1.3–1.6). Acumulación de CE correcta; la mejora es puramente climática.</span></li><li><span lang="en">Both dry rooms (2.1 & 2.2) are operating in textbook range — 58–61 °F, 59–62 % RH, sub-1 °F variability. Drain-EC sensor in F 2-5 is returning fault-class readings (std 2.28 over an 11 ppt range) and needs replacement or recalibration.</span><span lang="es">Ambas salas de secado (2.1 y 2.2) operan en rango ejemplar — 58–61 °F, 59–62 % HR, variabilidad inferior a 1 °F. El sensor de CE de drenaje en F 2-5 devuelve lecturas de fallo (desv 2.28 sobre un rango de 11 ppt) y necesita reemplazo o recalibración.</span></li></ul>
+    </section>
+    <section>
+      <h2 class="h1"><span lang="en">Per-room phase adherence</span><span lang="es">Adherencia por sala y fase</span></h2>
+      <p class="lede"><span lang="en">Each row scored against the AROYA crop-steer targets for that room's dominant active phase. Color stripes flag rooms with at least one out-of-target metric (warn) or one metric outside the 10% tolerance band (bad).</span><span lang="es">Cada fila puntuada contra los objetivos de dirección de cultivo de AROYA para la fase dominante de esa sala. Las franjas de color marcan salas con al menos una métrica fuera de objetivo (advertencia) o fuera de la banda de tolerancia del 10 % (crítico).</span></p>
+      <table class="data">
+        <thead><tr>
+          <th><span lang="en">Room</span><span lang="es">Sala</span></th>
+          <th><span lang="en">Phase</span><span lang="es">Fase</span></th>
+          <th>VPD</th><th>RH%</th><th>°F</th><th>CO₂</th><th>VWC%</th><th>EC</th>
+        </tr></thead>
+        <tbody><tr class="bad">
+          <td>F 1-1</td>
+          <td><span lang="en">VEG</span><span lang="es">Veg</span></td>
+          <td class="numeric">0.84</td>
+          <td class="numeric">61.5</td>
+          <td class="numeric">66.1</td>
+          <td class="numeric">1292</td>
+          <td class="numeric">64.6</td>
+          <td class="numeric">4.61</td>
+        </tr><tr class="bad">
+          <td>F 1-2</td>
+          <td><span lang="en">BULKING</span><span lang="es">Engorde</span></td>
+          <td class="numeric">1.44</td>
+          <td class="numeric">56.8</td>
+          <td class="numeric">78.6</td>
+          <td class="numeric">1990</td>
+          <td class="numeric">61.1</td>
+          <td class="numeric">4.41</td>
+        </tr><tr class="bad">
+          <td>F 1-3</td>
+          <td><span lang="en">BULKING</span><span lang="es">Engorde</span></td>
+          <td class="numeric">0.88</td>
+          <td class="numeric">74.9</td>
+          <td class="numeric">79.8</td>
+          <td class="numeric">1517</td>
+          <td class="numeric">64.2</td>
+          <td class="numeric">3.22</td>
+        </tr><tr class="bad">
+          <td>F 1-4</td>
+          <td><span lang="en">EARLY</span><span lang="es">Flor Temprana</span></td>
+          <td class="numeric">1.10</td>
+          <td class="numeric">68.1</td>
+          <td class="numeric">79.4</td>
+          <td class="numeric">1429</td>
+          <td class="numeric">84.9</td>
+          <td class="numeric">3.01</td>
+        </tr><tr class="bad">
+          <td>F 2-1</td>
+          <td><span lang="en">BULKING</span><span lang="es">Engorde</span></td>
+          <td class="numeric">1.09</td>
+          <td class="numeric">67.9</td>
+          <td class="numeric">78.9</td>
+          <td class="numeric">1675</td>
+          <td class="numeric">52.5</td>
+          <td class="numeric">5.45</td>
+        </tr><tr class="bad">
+          <td>F 2-2</td>
+          <td><span lang="en">BULKING</span><span lang="es">Engorde</span></td>
+          <td class="numeric">1.07</td>
+          <td class="numeric">68.7</td>
+          <td class="numeric">79.3</td>
+          <td class="numeric">1557</td>
+          <td class="numeric">69.2</td>
+          <td class="numeric">4.08</td>
+        </tr><tr class="bad">
+          <td>F 2-3</td>
+          <td><span lang="en">TRANSITION</span><span lang="es">Transición</span></td>
+          <td class="numeric">1.50</td>
+          <td class="numeric">57.3</td>
+          <td class="numeric">80.2</td>
+          <td class="numeric">1063</td>
+          <td class="numeric">88.2</td>
+          <td class="numeric">2.90</td>
+        </tr><tr class="bad">
+          <td>F 2-4</td>
+          <td><span lang="en">RIPENING</span><span lang="es">Maduración</span></td>
+          <td class="numeric">1.12</td>
+          <td class="numeric">61.4</td>
+          <td class="numeric">74.4</td>
+          <td class="numeric">1549</td>
+          <td class="numeric">60.5</td>
+          <td class="numeric">4.21</td>
+        </tr><tr class="bad">
+          <td>F 2-5</td>
+          <td><span lang="en">EARLY</span><span lang="es">Flor Temprana</span></td>
+          <td class="numeric">1.18</td>
+          <td class="numeric">65.3</td>
+          <td class="numeric">79.0</td>
+          <td class="numeric">1445</td>
+          <td class="numeric">77.5</td>
+          <td class="numeric">3.15</td>
+        </tr><tr class="bad">
+          <td>F 2-6</td>
+          <td><span lang="en">BULKING</span><span lang="es">Engorde</span></td>
+          <td class="numeric">1.13</td>
+          <td class="numeric">65.2</td>
+          <td class="numeric">77.7</td>
+          <td class="numeric">1811</td>
+          <td class="numeric">68.3</td>
+          <td class="numeric">4.07</td>
+        </tr></tbody>
+      </table>
+    </section>
+    <section>
+      <h2 class="h1"><span lang="en">Flower room cards — 14-day averages</span><span lang="es">Tarjetas de salas de floración — promedios de 14 días</span></h2>
+      <div class="zone-grid">
+    <div class="zone bad">
+      <div class="room-name">F 1-1</div>
+      <div class="phase"><span lang="en">VEG</span><span lang="es">Veg</span></div>
+      <div class="metric state-ok"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">0.84 kPa</span></div><div class="metric state-ok"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">61.54 %</span></div><div class="metric state-bad"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">66.09 °F</span></div><div class="metric state-warn"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1292.20 ppm</span></div><div class="metric state-ok"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">64.64 %</span></div><div class="metric state-bad"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">4.61 mS/cm</span></div>
+    </div>
+    <div class="zone bad">
+      <div class="room-name">F 1-2</div>
+      <div class="phase"><span lang="en">BULKING</span><span lang="es">Engorde</span></div>
+      <div class="metric state-warn"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">1.44 kPa</span></div><div class="metric state-ok"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">56.83 %</span></div><div class="metric state-ok"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">78.58 °F</span></div><div class="metric state-bad"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1989.56 ppm</span></div><div class="metric state-ok"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">61.15 %</span></div><div class="metric state-ok"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">4.41 mS/cm</span></div>
+    </div>
+    <div class="zone bad">
+      <div class="room-name">F 1-3</div>
+      <div class="phase"><span lang="en">BULKING</span><span lang="es">Engorde</span></div>
+      <div class="metric state-bad"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">0.88 kPa</span></div><div class="metric state-bad"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">74.87 %</span></div><div class="metric state-ok"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">79.85 °F</span></div><div class="metric state-warn"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1516.51 ppm</span></div><div class="metric state-ok"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">64.22 %</span></div><div class="metric state-warn"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">3.22 mS/cm</span></div>
+    </div>
+    <div class="zone bad">
+      <div class="room-name">F 1-4</div>
+      <div class="phase"><span lang="en">EARLY</span><span lang="es">Flor Temprana</span></div>
+      <div class="metric state-ok"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">1.10 kPa</span></div><div class="metric state-bad"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">68.11 %</span></div><div class="metric state-ok"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">79.43 °F</span></div><div class="metric state-ok"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1429.05 ppm</span></div><div class="metric state-bad"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">84.90 %</span></div><div class="metric state-bad"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">3.01 mS/cm</span></div>
+    </div>
+    <div class="zone bad">
+      <div class="room-name">F 2-1</div>
+      <div class="phase"><span lang="en">BULKING</span><span lang="es">Engorde</span></div>
+      <div class="metric state-warn"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">1.09 kPa</span></div><div class="metric state-bad"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">67.89 %</span></div><div class="metric state-ok"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">78.94 °F</span></div><div class="metric state-bad"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1675.24 ppm</span></div><div class="metric state-bad"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">52.49 %</span></div><div class="metric state-warn"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">5.45 mS/cm</span></div>
+    </div>
+    <div class="zone bad">
+      <div class="room-name">F 2-2</div>
+      <div class="phase"><span lang="en">BULKING</span><span lang="es">Engorde</span></div>
+      <div class="metric state-warn"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">1.07 kPa</span></div><div class="metric state-bad"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">68.68 %</span></div><div class="metric state-ok"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">79.30 °F</span></div><div class="metric state-warn"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1557.41 ppm</span></div><div class="metric state-ok"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">69.15 %</span></div><div class="metric state-ok"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">4.08 mS/cm</span></div>
+    </div>
+    <div class="zone bad">
+      <div class="room-name">F 2-3</div>
+      <div class="phase"><span lang="en">TRANSITION</span><span lang="es">Transición</span></div>
+      <div class="metric state-warn"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">1.50 kPa</span></div><div class="metric state-ok"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">57.28 %</span></div><div class="metric state-warn"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">80.21 °F</span></div><div class="metric state-ok"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1063.30 ppm</span></div><div class="metric state-bad"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">88.20 %</span></div><div class="metric state-warn"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">2.90 mS/cm</span></div>
+    </div>
+    <div class="zone bad">
+      <div class="room-name">F 2-4</div>
+      <div class="phase"><span lang="en">RIPENING</span><span lang="es">Maduración</span></div>
+      <div class="metric state-bad"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">1.12 kPa</span></div><div class="metric state-bad"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">61.37 %</span></div><div class="metric state-ok"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">74.36 °F</span></div><div class="metric state-bad"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1549.29 ppm</span></div><div class="metric state-ok"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">60.45 %</span></div><div class="metric state-ok"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">4.21 mS/cm</span></div>
+    </div>
+    <div class="zone bad">
+      <div class="room-name">F 2-5</div>
+      <div class="phase"><span lang="en">EARLY</span><span lang="es">Flor Temprana</span></div>
+      <div class="metric state-ok"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">1.18 kPa</span></div><div class="metric state-warn"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">65.27 %</span></div><div class="metric state-ok"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">79.04 °F</span></div><div class="metric state-ok"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1445.22 ppm</span></div><div class="metric state-bad"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">77.45 %</span></div><div class="metric state-bad"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">3.15 mS/cm</span></div>
+    </div>
+    <div class="zone bad">
+      <div class="room-name">F 2-6</div>
+      <div class="phase"><span lang="en">BULKING</span><span lang="es">Engorde</span></div>
+      <div class="metric state-ok"><span>VPD <span style="opacity:.5">14d avg</span></span><span class="v">1.13 kPa</span></div><div class="metric state-warn"><span>RH <span style="opacity:.5">14d avg</span></span><span class="v">65.20 %</span></div><div class="metric state-ok"><span>Air °F <span style="opacity:.5">14d avg</span></span><span class="v">77.69 °F</span></div><div class="metric state-bad"><span>CO₂ <span style="opacity:.5">14d avg</span></span><span class="v">1811.16 ppm</span></div><div class="metric state-ok"><span>VWC <span style="opacity:.5">14d avg</span></span><span class="v">68.26 %</span></div><div class="metric state-ok"><span>Pore EC <span style="opacity:.5">14d avg</span></span><span class="v">4.07 mS/cm</span></div>
+    </div></div>
+    </section>
+    <section>
+      <h2 class="h1"><span lang="en">Findings</span><span lang="es">Hallazgos</span></h2>
+      <div class="caveat"><span lang="en">Methodology: per-room compact stats over 2026-05-01 → 2026-05-15 (336 hours), 480 binned points per series. Scored against published AROYA crop-steer targets per phase. Drip/drain inferences are from delta of cumulative dfi / dfi_drain series. Source: AROYA MCP get_room_stats, spa_list_harvest_groups, spa_get_journal. The facility-scoped /alerts endpoint returned HTTP 404, so issues are inferred from chart statistics rather than a native alert feed.</span><span lang="es">Metodología: estadísticas compactas por sala del 2026-05-01 al 2026-05-15 (336 horas), 480 puntos por serie. Puntuadas contra los objetivos publicados de AROYA por fase. Las inferencias de goteo/drenaje provienen del delta de las series acumuladas dfi / dfi_drain. Fuente: AROYA MCP get_room_stats, spa_list_harvest_groups, spa_get_journal. El endpoint /alerts a nivel de instalación devolvió HTTP 404, por lo que los problemas se infieren de las estadísticas de gráficos en lugar de una fuente nativa de alertas.</span></div>
+      
+    <div class="finding bad">
+      <div class="row">
+        <div class="icon">!</div>
+        <div style="flex:1">
+          <span class="id">F-01</span>
+          <h3><span lang="en">F 1-3 — Catastrophic humidity in Bulking phase, PM/botrytis risk imminent</span><span lang="es">F 1-3 — Humedad catastrófica en fase de engorde, riesgo inminente de oídio/botritis</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">RH avg 74.9%, max 85.0%, std 7.93 over 14 days. VPD avg 0.88 (target 1.1–1.4 for Bulking/Veg). 240 plants in active Bulking (Hypn062326.1.3 + Tama062326.1.3, harvest 2026-06-23). Air temp 79.9 °F is fine — the dew point is the problem.</span><span lang="es">HR media 74.9 %, máx 85.0 %, desv 7.93 en 14 días. DPV medio 0.88 (objetivo 1.1–1.4 para Engorde/Veg). 240 plantas en Engorde activo (Hypn062326.1.3 + Tama062326.1.3, cosecha 2026-06-23). Temperatura aérea 79.9 °F es aceptable — el punto de rocío es el problema.</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">Bulking-phase canopy at 75 %+ RH with a closing canopy is the textbook setup for powdery mildew and late-flower botrytis. With ~5 weeks remaining the loss exposure is full flower weight on 240 plants. This is the #1 risk in the facility right now.</span><span lang="es">Una marquesina en fase de engorde con HR ≥ 75 % es el escenario clásico para oídio y botritis tardía. Con ~5 semanas restantes, la exposición es el peso completo de flor de 240 plantas. Es el riesgo #1 de la instalación.</span></p>
+          <div class="rooms"><span>F 1-3</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="finding bad">
+      <div class="row">
+        <div class="icon">!</div>
+        <div style="flex:1">
+          <span class="id">F-02</span>
+          <h3><span lang="en">F 2-3 — Transition phase running 88% VWC, no dryback achieved</span><span lang="es">F 2-3 — Fase de transición a 88 % CVH, sin agotamiento logrado</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">Substrate moisture avg 88.2 %, range 87.2–91.7 %, std only 1.05 across 14 days. Two Transition/Veg HGs (ChCh071426.2.3, FuBo071426.2.3 — 400 plants, started 2026-04-15). Substrate temp drip avg 81.7 °F vs air temp 80.2 °F (substrate ~2 °F warmer than canopy — unusual).</span><span lang="es">Humedad del sustrato media 88.2 %, rango 87.2–91.7 %, desv solo 1.05 en 14 días. Dos HGs de Transición/Veg (ChCh071426.2.3, FuBo071426.2.3 — 400 plantas, iniciados 2026-04-15). Temperatura del sustrato en goteo media 81.7 °F vs temp aérea 80.2 °F (sustrato ~2 °F más cálido que la canopia — inusual).</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">Transition steers via controlled dryback (target 8–12 % drop overnight). 88 % static VWC means the substrate is being topped up faster than the plant can transpire — the generative signal isn't being delivered. The crop is being held vegetative when the phase plan says transition.</span><span lang="es">La transición se dirige mediante un agotamiento controlado (objetivo 8–12 % de caída nocturna). 88 % de CVH estática significa que se repone el sustrato más rápido de lo que la planta puede transpirar — la señal generativa no llega. El cultivo se mantiene vegetativo cuando el plan de fase indica transición.</span></p>
+          <div class="rooms"><span>F 2-3</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="finding bad">
+      <div class="row">
+        <div class="icon">!</div>
+        <div style="flex:1">
+          <span class="id">F-03</span>
+          <h3><span lang="en">F 1-4 — Early Flower being driven vegetative (84.9% VWC, EC stalled at 3.01)</span><span lang="es">F 1-4 — Floración temprana siendo dirigida vegetativamente (CVH 84.9 %, CE estancada en 3.01)</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">Substrate moisture avg 84.9 %, zones up to 93.5 %. Pore EC avg 3.01, range 2.94–3.10 (essentially flat). Three Early Flower/Gen HGs (MaTa, Mell, Pave — 536 plants total, harvest 2026-07-07). Drip EC 2.13 / drain EC 2.86 — basically no EC stacking happening. Lights-on RH 68 % is also above the 55–60 % Gen target.</span><span lang="es">Humedad del sustrato media 84.9 %, zonas hasta 93.5 %. CE de poros media 3.01, rango 2.94–3.10 (prácticamente plana). Tres HGs de Floración Temprana/Gen (MaTa, Mell, Pave — 536 plantas en total, cosecha 2026-07-07). CE goteo 2.13 / CE drenaje 2.86 — sin acumulación de CE significativa. HR con luces encendidas 68 % también por encima del objetivo 55–60 % Gen.</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">Generative steering depends on letting EC climb to 3.5–5.0 via controlled dryback. With VWC pinned in the high 80s and EC flat at 3.0 this run is being pushed vegetative — expect leaf-to-flower ratio off-spec at harvest. Highest-plant-count loss exposure of any room (536).</span><span lang="es">La dirección generativa depende de permitir que la CE suba a 3.5–5.0 mediante agotamiento controlado. Con CVH fijada en los altos 80 y CE plana en 3.0, esta corrida se empuja vegetativamente — se espera una relación hoja/flor fuera de especificación en cosecha. Máxima exposición de pérdida por número de plantas (536) en la instalación.</span></p>
+          <div class="rooms"><span>F 1-4</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="finding warn">
+      <div class="row">
+        <div class="icon">△</div>
+        <div style="flex:1">
+          <span class="id">F-04</span>
+          <h3><span lang="en">F 2-1 — Massive zone-to-zone irrigation heterogeneity</span><span lang="es">F 2-1 — Heterogeneidad masiva de riego entre zonas</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">Zone VWC spread 25.2 % (zone 64715) ↔ 72.3 % (zone 64720) — 47 percentage-point delta within one room. Zone EC spread 4.41 ↔ 6.53. 384 plants across three Bulking HGs (GaPo, NeCu, ZZBo). Drainage volume max 2,440 mL is highest in the facility.</span><span lang="es">Rango de CVH entre zonas 25.2 % (zona 64715) ↔ 72.3 % (zona 64720) — diferencia de 47 puntos porcentuales dentro de una habitación. Rango de CE entre zonas 4.41 ↔ 6.53. 384 plantas distribuidas en tres HGs de Engorde (GaPo, NeCu, ZZBo). Volumen máx de drenaje 2,440 mL es el más alto de la instalación.</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">47-point VWC spread is dripper-plumbing-level dysfunction, not a setpoint issue. Either clogged emitters, uneven cube spacing, or substrate compaction in zone 64715. The 6.53 EC in zone 64720 indicates evaporative concentration — that zone is under-watering.</span><span lang="es">Una dispersión de 47 puntos en CVH es disfunción a nivel de plomería de goteros, no de consigna. Goteros tapados, espaciado desigual o compactación de sustrato en zona 64715. La CE 6.53 en zona 64720 indica concentración por evaporación — esa zona está sub-regada.</span></p>
+          <div class="rooms"><span>F 2-1</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="finding warn">
+      <div class="row">
+        <div class="icon">△</div>
+        <div style="flex:1">
+          <span class="id">F-05</span>
+          <h3><span lang="en">F 2-4 — Ripening climate not aggressive enough (VPD 1.12, target 1.3–1.6)</span><span lang="es">F 2-4 — Clima de maduración insuficientemente agresivo (DPV 1.12, objetivo 1.3–1.6)</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">Three Ripening/Gen HGs harvest in 11 days (ApTa, BrSt, ChSu — 504 plants, 2026-05-26). VPD avg 1.12, RH avg 61.4 % (target 45–55 %), air temp 74.4 °F (target 72–76 °F is on-target). Pore EC 4.21 is on target for ripening, drip 2.34 / drain 4.37 — appropriate stacking.</span><span lang="es">Tres HGs de Maduración/Gen se cosechan en 11 días (ApTa, BrSt, ChSu — 504 plantas, 2026-05-26). DPV medio 1.12, HR media 61.4 % (objetivo 45–55 %), temp aérea 74.4 °F (objetivo 72–76 °F está en rango). CE poros 4.21 está en objetivo para maduración, goteo 2.34 / drenaje 4.37 — acumulación apropiada.</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">Final 10 days of ripening drive trichome maturation and terpene retention via aggressive moisture stress. Holding 61 % RH at this stage gives away the last 5–8 % of resin density. EC stacking already correct — the lift is purely climate.</span><span lang="es">Los últimos 10 días de maduración impulsan la maduración de tricomas y la retención de terpenos mediante estrés hídrico agresivo. Mantener 61 % de HR en esta etapa cede los últimos 5–8 % de densidad de resina. La acumulación de CE ya es correcta — la mejora es puramente climática.</span></p>
+          <div class="rooms"><span>F 2-4</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="finding warn">
+      <div class="row">
+        <div class="icon">△</div>
+        <div style="flex:1">
+          <span class="id">F-06</span>
+          <h3><span lang="en">F 2-5 — Drain-EC sensor reading wild (1.11 → 10.58 over window)</span><span lang="es">F 2-5 — Sensor de CE de drenaje con lecturas erráticas (1.11 → 10.58 en la ventana)</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">pore_ec_drain min 1.11, max 10.58, std 2.28 in zone 65222. dfi_drain currently reading 0.0. Drain volume range 0.0–1,968 mL. Comparison: every other flower-room drain-EC has std ≤ 0.55.</span><span lang="es">pore_ec_drain mín 1.11, máx 10.58, desv 2.28 en zona 65222. dfi_drain actual 0.0. Rango de volumen de drenaje 0.0–1,968 mL. Comparación: todas las demás salas de floración tienen desv de CE de drenaje ≤ 0.55.</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">Drain-EC variance of this magnitude means the sensor is either intermittently submerged, miscalibrated, or returning sensor-fault sentinel values. Until fixed, no decisions about F 2-5 dryback strategy can be data-driven. The drain-EC signal is currently unusable.</span><span lang="es">Una varianza de CE de drenaje de esta magnitud significa que el sensor está intermitentemente sumergido, mal calibrado o devolviendo valores de error. Hasta arreglarlo, no se pueden tomar decisiones de agotamiento basadas en datos para F 2-5. La señal de CE de drenaje es actualmente inutilizable.</span></p>
+          <div class="rooms"><span>F 2-5</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="finding warn">
+      <div class="row">
+        <div class="icon">△</div>
+        <div style="flex:1">
+          <span class="id">F-07</span>
+          <h3><span lang="en">F 1-2 and F 2-6 — CO₂ saturating sensor at 2000 ppm</span><span lang="es">F 1-2 y F 2-6 — CO₂ saturando el sensor a 2000 ppm</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">F 1-2 CO₂ mean 1989.6, max 2000.0, std 38 (essentially pegged). F 2-6 CO₂ mean 1811, max 2000. F 2-1 CO₂ max 2000 as well. Standard NDIR sensor range caps at 2000 ppm.</span><span lang="es">F 1-2 CO₂ medio 1989.6, máx 2000.0, desv 38 (esencialmente fijo). F 2-6 CO₂ medio 1811, máx 2000. F 2-1 CO₂ máx 2000 también. El rango estándar del sensor NDIR se limita a 2000 ppm.</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">Two possibilities: (1) rooms are running setpoint >2000 ppm and the sensor is correctly reporting cap — wasteful and respiration-suppressive at >1500 ppm; (2) rooms are at setpoint 1500 but the sensor is reading high. Either needs verification. Plant uptake plateaus by 1200–1400 ppm under typical light levels.</span><span lang="es">Dos posibilidades: (1) las salas operan con consigna >2000 ppm y el sensor informa correctamente el tope — desperdicio y supresión respiratoria a >1500 ppm; (2) las salas operan a consigna 1500 pero el sensor lee alto. Cualquiera requiere verificación. La absorción de la planta se estanca a 1200–1400 ppm bajo niveles de luz típicos.</span></p>
+          <div class="rooms"><span>F 1-2</span><span>F 2-1</span><span>F 2-6</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="finding warn">
+      <div class="row">
+        <div class="icon">△</div>
+        <div style="flex:1">
+          <span class="id">F-08</span>
+          <h3><span lang="en">F 1-1 — Two phases co-occupying one climate envelope</span><span lang="es">F 1-1 — Dos fases compartiendo la misma envolvente climática</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">Three Ripening/Gen HGs harvesting 2026-05-19 + three fresh Veg HGs started 2026-04-22 in the same room. Room VPD 0.84 (low for both phases), CO₂ 1292 (low for both), air temp 66.1 °F (within Ripening target, below Veg target). VWC 64.6 % is OK for Veg but high for late Ripening.</span><span lang="es">Tres HGs de Maduración/Gen se cosechan el 2026-05-19 + tres HGs de Veg recién iniciados el 2026-04-22 en la misma sala. DPV de sala 0.84 (bajo para ambas fases), CO₂ 1292 (bajo para ambas), temp aérea 66.1 °F (dentro del objetivo de Maduración, por debajo del objetivo Veg). CVH 64.6 % está bien para Veg pero alto para Maduración tardía.</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">A single room cannot simultaneously support 72 °F low-VPD Veg setpoint and 74 °F high-VPD Ripening setpoint. Either the room is being optimized for one phase (Ripening climate now, Veg phase suffering) or split-the-difference (both phases under-optimized). Schedule fix is the answer; until then this is structurally constrained.</span><span lang="es">Una sola sala no puede soportar simultáneamente la consigna Veg de 72 °F y DPV bajo y la consigna de Maduración de 74 °F y DPV alto. La sala se optimiza para una fase (clima de Maduración ahora, fase Veg sufriendo) o se reparte (ambas fases sub-optimizadas). El arreglo es de programación; hasta entonces está estructuralmente limitado.</span></p>
+          <div class="rooms"><span>F 1-1</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="finding info">
+      <div class="row">
+        <div class="icon">i</div>
+        <div style="flex:1">
+          <span class="id">F-09</span>
+          <h3><span lang="en">Dry Rooms 2.1 & 2.2 — within spec</span><span lang="es">Salas de Secado 2.1 y 2.2 — dentro de especificación</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">Dry 2.1: 60.7 °F / 62.0 % RH / VPD 0.69. Dry 2.2: 58.1 °F / 59.5 % RH / VPD 0.67. Both running below 1 °F / 4 % RH variability — textbook dry-curing.</span><span lang="es">Secado 2.1: 60.7 °F / 62.0 % HR / DPV 0.69. Secado 2.2: 58.1 °F / 59.5 % HR / DPV 0.67. Ambas con variabilidad inferior a 1 °F / 4 % HR — secado y curado modélico.</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">Two pieces of the operation that are doing exactly what they should. Worth noting because it is rare across the AROYA portfolio to see both dry rooms this stable.</span><span lang="es">Dos partes de la operación que están haciendo exactamente lo que deberían. Vale la pena destacar porque es raro en la cartera AROYA ver ambas salas de secado tan estables.</span></p>
+          <div class="rooms"><span>Dry 2.1</span><span>Dry 2.2</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="finding info">
+      <div class="row">
+        <div class="icon">i</div>
+        <div style="flex:1">
+          <span class="id">F-10</span>
+          <h3><span lang="en">Zero journal entries logged for May 1–15</span><span lang="es">Cero entradas de diario registradas del 1 al 15 de mayo</span></h3>
+          <div class="label"><span lang="en">Evidence</span><span lang="es">Evidencia</span></div>
+          <p><span lang="en">spa_get_journal returned 0 entries for facility 4191 in the 2-week window. No phase transitions, manual notes, or task completions recorded.</span><span lang="es">spa_get_journal devolvió 0 entradas para la instalación 4191 en la ventana de 2 semanas. No se registraron transiciones de fase, notas manuales ni tareas completadas.</span></p>
+          <div class="label"><span lang="en">Why it matters</span><span lang="es">Por qué importa</span></div>
+          <p><span lang="en">Either (a) the grow team isn't using the AROYA journal feature, (b) journal access is restricted at the CSM API token level, or (c) data ingest from a 3rd-party log system isn't wired. Affects the auditability of decisions made on this run — pair with whoever logs in the SOPs.</span><span lang="es">(a) El equipo de cultivo no usa la función de diario AROYA, (b) el acceso al diario está restringido a nivel del token API del CSM, o (c) no está conectada la ingesta desde un sistema de registro externo. Afecta la auditabilidad de las decisiones tomadas en esta corrida — coordinar con quien registra en los POE.</span></p>
+          <div class="rooms"><span>facility</span></div>
+        </div>
+      </div>
+    </div>
+    </section>
+    <section>
+      <h2 class="h1"><span lang="en">Recommendations — 8 changes, ranked by impact/effort</span><span lang="es">Recomendaciones — 8 cambios, ordenados por impacto/esfuerzo</span></h2>
+      
+    <div class="rec p1">
+      <div class="badge">1</div>
+      <div class="body">
+        <h4><span lang="en">F 1-3 — Drop RH setpoint by 8 points; add dehu capacity if needed</span><span lang="es">F 1-3 — Bajar consigna de HR en 8 puntos; añadir capacidad de des-humidificación si es necesario</span></h4>
+        <p><span class="label"><span lang="en">Action</span><span lang="es">Acción</span></span><span lang="en">Set RH target to 55 % lights-on, 60 % lights-off. If equipment can't hold without overshoot, rent or relocate dehumidification from a low-pressure room. Target VPD ≥ 1.20 by end of week.</span><span lang="es">Establecer objetivo de HR a 55 % con luces encendidas, 60 % con luces apagadas. Si el equipo no logra mantenerlo sin sobrepasos, alquilar o reubicar des-humidificación de una sala de baja presión. Objetivo DPV ≥ 1.20 al final de la semana.</span></p>
+        <p><span class="label"><span lang="en">Expected response</span><span lang="es">Respuesta esperada</span></span><span lang="en">Bring 14-day RH avg from 74.9 % down to ≤ 60 %. Eliminates the immediate PM risk on 240 plants. Visible response within 48 hours; full canopy stabilization 5–7 days.</span><span lang="es">Reducir la HR media de 14 días de 74.9 % a ≤ 60 %. Elimina el riesgo inmediato de oídio sobre 240 plantas. Respuesta visible en 48 horas; estabilización total de la canopia en 5–7 días.</span></p>
+      </div>
+      <span class="pill high"><span lang="en">High</span><span lang="es">Alta</span></span>
+    </div>
+    <div class="rec p2">
+      <div class="badge">2</div>
+      <div class="body">
+        <h4><span lang="en">F 1-4 — Cut shot count by 30%, force EC to climb to 3.8+</span><span lang="es">F 1-4 — Reducir el número de pulsos de riego en 30 %, forzar el aumento de CE a 3.8+</span></h4>
+        <p><span class="label"><span lang="en">Action</span><span lang="es">Acción</span></span><span lang="en">Drop daily shot count from current pattern by 30%. Allow VWC to fall from 84.9 % avg to 68–72 %. Target pore EC 3.8–4.2 within 5 days. Lights-on RH setpoint to 55 %.</span><span lang="es">Reducir el número diario de pulsos del patrón actual en 30 %. Permitir que la CVH caiga de 84.9 % de media a 68–72 %. Objetivo CE poros 3.8–4.2 en 5 días. Consigna de HR con luces encendidas a 55 %.</span></p>
+        <p><span class="label"><span lang="en">Expected response</span><span lang="es">Respuesta esperada</span></span><span lang="en">Restart the generative signal on 536 plants entering Early Flower. Expect 8–12 % yield-density lift at harvest if implemented in next 7 days.</span><span lang="es">Reactivar la señal generativa en 536 plantas que entran a Floración Temprana. Se esperan 8–12 % de incremento en densidad de rendimiento en cosecha si se implementa en los próximos 7 días.</span></p>
+      </div>
+      <span class="pill high"><span lang="en">High</span><span lang="es">Alta</span></span>
+    </div>
+    <div class="rec p3">
+      <div class="badge">3</div>
+      <div class="body">
+        <h4><span lang="en">F 2-3 — Tighten last-shot timing; verify substrate-temp sensor 63616</span><span lang="es">F 2-3 — Ajustar el tiempo del último pulso; verificar el sensor de temp. de sustrato 63616</span></h4>
+        <p><span class="label"><span lang="en">Action</span><span lang="es">Acción</span></span><span lang="en">Move last-shot to lights-on + 5 hr (currently appears to be late afternoon). Reduce P2 shot volume by 25 %. Spot-check the substrate-temp sensor in zone 63616 — current reading 81.7 °F is implausibly high vs other rooms running same air temp.</span><span lang="es">Mover el último pulso a luces encendidas + 5 h (actualmente parece ser a media tarde). Reducir el volumen del pulso P2 en 25 %. Verificar el sensor de temp. de sustrato en zona 63616 — la lectura actual de 81.7 °F es implausiblemente alta vs otras salas con la misma temp aérea.</span></p>
+        <p><span class="label"><span lang="en">Expected response</span><span lang="es">Respuesta esperada</span></span><span lang="en">Re-establish dryback signal on 400 transition plants. Target 8–12 % overnight VWC drop within 5 days. Sensor verification also rules out whether substrate is genuinely hot (root-zone temps > 78 °F restrict transpiration).</span><span lang="es">Restablecer la señal de agotamiento en 400 plantas en transición. Objetivo: 8–12 % de caída nocturna de CVH en 5 días. La verificación del sensor también descarta si el sustrato está genuinamente caliente (temp. de raíces > 78 °F restringe la transpiración).</span></p>
+      </div>
+      <span class="pill high"><span lang="en">High</span><span lang="es">Alta</span></span>
+    </div>
+    <div class="rec p4">
+      <div class="badge">4</div>
+      <div class="body">
+        <h4><span lang="en">F 2-1 — Dripper / cube audit; rebalance zones 64715 and 64720</span><span lang="es">F 2-1 — Auditoría de goteros / cubos; reequilibrar zonas 64715 y 64720</span></h4>
+        <p><span class="label"><span lang="en">Action</span><span lang="es">Acción</span></span><span lang="en">Physical inspection of dripper emitters and cube placement in zones 64715 (low VWC 25–55 %) and 64720 (high EC 6.53). Flush zone 64720 if EC > 6 persists 48 hours after dripper rebalance.</span><span lang="es">Inspección física de los goteros y la colocación de cubos en las zonas 64715 (CVH baja 25–55 %) y 64720 (CE alta 6.53). Lavar la zona 64720 si la CE > 6 persiste 48 horas tras reequilibrar los goteros.</span></p>
+        <p><span class="label"><span lang="en">Expected response</span><span lang="es">Respuesta esperada</span></span><span lang="en">Close the 47-point VWC spread to ≤ 10 points within the room. Pulls the 384-plant Bulking cohort onto a single trajectory.</span><span lang="es">Cerrar la dispersión de 47 puntos de CVH a ≤ 10 puntos dentro de la sala. Lleva al grupo de 384 plantas de Engorde a una sola trayectoria.</span></p>
+      </div>
+      <span class="pill medium"><span lang="en">Medium</span><span lang="es">Media</span></span>
+    </div>
+    <div class="rec p5">
+      <div class="badge">5</div>
+      <div class="body">
+        <h4><span lang="en">F 2-4 — Push aggressive ripening climate: RH to 50%, VPD to 1.4+</span><span lang="es">F 2-4 — Empujar clima de maduración agresivo: HR a 50 %, DPV a 1.4+</span></h4>
+        <p><span class="label"><span lang="en">Action</span><span lang="es">Acción</span></span><span lang="en">RH setpoint 50 % lights-on, 55 % off. VPD target 1.4–1.5. Drop air temp 1 °F. Hold through harvest 2026-05-26.</span><span lang="es">Consigna de HR 50 % luces encendidas, 55 % apagadas. Objetivo DPV 1.4–1.5. Bajar temp aérea 1 °F. Mantener hasta cosecha 2026-05-26.</span></p>
+        <p><span class="label"><span lang="en">Expected response</span><span lang="es">Respuesta esperada</span></span><span lang="en">5–8 % uplift in trichome head density and terpene retention on 504-plant ripening cohort. Low-risk because EC stacking is already correct.</span><span lang="es">5–8 % de incremento en densidad de tricomas y retención de terpenos en el grupo de maduración de 504 plantas. Bajo riesgo porque la acumulación de CE ya es correcta.</span></p>
+      </div>
+      <span class="pill medium"><span lang="en">Medium</span><span lang="es">Media</span></span>
+    </div>
+    <div class="rec p6">
+      <div class="badge">6</div>
+      <div class="body">
+        <h4><span lang="en">F 2-5 — Replace or recalibrate drain-EC sensor (zone 65222)</span><span lang="es">F 2-5 — Reemplazar o recalibrar el sensor de CE de drenaje (zona 65222)</span></h4>
+        <p><span class="label"><span lang="en">Action</span><span lang="es">Acción</span></span><span lang="en">Swap sensor module, or pull and recalibrate using 2.0 mS/cm + 5.0 mS/cm reference solutions. Verify drainage line is not flooding the sensor cup.</span><span lang="es">Cambiar el módulo del sensor, o retirarlo y recalibrarlo usando soluciones de referencia de 2.0 mS/cm + 5.0 mS/cm. Verificar que la línea de drenaje no inunde la copa del sensor.</span></p>
+        <p><span class="label"><span lang="en">Expected response</span><span lang="es">Respuesta esperada</span></span><span lang="en">Restores data fidelity for F 2-5 Early Flower decisions. Without a trustworthy drain-EC, dryback strategy in this room is being driven blind.</span><span lang="es">Restaura la fidelidad de los datos para las decisiones de Floración Temprana en F 2-5. Sin una CE de drenaje confiable, la estrategia de agotamiento en esta sala se gestiona a ciegas.</span></p>
+      </div>
+      <span class="pill medium"><span lang="en">Medium</span><span lang="es">Media</span></span>
+    </div>
+    <div class="rec p7">
+      <div class="badge">7</div>
+      <div class="body">
+        <h4><span lang="en">CO₂ sensor audit — F 1-2, F 2-1, F 2-6</span><span lang="es">Auditoría del sensor de CO₂ — F 1-2, F 2-1, F 2-6</span></h4>
+        <p><span class="label"><span lang="en">Action</span><span lang="es">Acción</span></span><span lang="en">Confirm current setpoints vs sensor readings. If running >1500 ppm, drop setpoint to 1200–1400. Consider upgrading capped sensors to 5000 ppm range so you can actually see what you're running.</span><span lang="es">Confirmar las consignas actuales vs las lecturas del sensor. Si se opera por encima de 1500 ppm, bajar la consigna a 1200–1400. Considerar la actualización de los sensores limitados a un rango de 5000 ppm para poder ver realmente lo que se está operando.</span></p>
+        <p><span class="label"><span lang="en">Expected response</span><span lang="es">Respuesta esperada</span></span><span lang="en">Saves CO₂ supply cost; eliminates the diminishing-returns zone above 1500 ppm; gives real readings instead of pegged ones.</span><span lang="es">Ahorra costo de suministro de CO₂; elimina la zona de rendimientos decrecientes por encima de 1500 ppm; entrega lecturas reales en lugar de valores fijos.</span></p>
+      </div>
+      <span class="pill infra"><span lang="en">Infra</span><span lang="es">Infra</span></span>
+    </div>
+    <div class="rec p8">
+      <div class="badge">8</div>
+      <div class="body">
+        <h4><span lang="en">F 1-1 — Phase-segregate the room or accept structural sub-optimization</span><span lang="es">F 1-1 — Segregar fases en la sala o aceptar sub-optimización estructural</span></h4>
+        <p><span class="label"><span lang="en">Action</span><span lang="es">Acción</span></span><span lang="en">Decide: either (a) commit F 1-1 to a single phase per crop turn, or (b) document the dual-phase tradeoff and choose which phase climate the room serves. Current dual occupancy will recur 4× per year.</span><span lang="es">Decidir: (a) comprometer F 1-1 a una sola fase por ciclo de cultivo, o (b) documentar el compromiso de doble fase y elegir a qué fase climática sirve la sala. La ocupación dual actual se repetirá 4× al año.</span></p>
+        <p><span class="label"><span lang="en">Expected response</span><span lang="es">Respuesta esperada</span></span><span lang="en">Either eliminates a recurring 5–8 % yield drag on whichever phase is under-served, or makes the tradeoff explicit so it stops looking like a configuration error in reports.</span><span lang="es">Elimina un déficit recurrente de rendimiento de 5–8 % en la fase sub-atendida, o explicita el compromiso para que deje de aparecer como un error de configuración en los informes.</span></p>
+      </div>
+      <span class="pill infra"><span lang="en">Infra</span><span lang="es">Infra</span></span>
+    </div>
+    </section>
+    <section>
+      <h2 class="h1"><span lang="en">Active harvest groups in 14-day window</span><span lang="es">Grupos de cosecha activos en la ventana de 14 días</span></h2>
+      <table class="data">
+        <thead><tr>
+          <th><span lang="en">HG</span><span lang="es">HG</span></th>
+          <th><span lang="en">Phase</span><span lang="es">Fase</span></th>
+          <th><span lang="en">Room</span><span lang="es">Sala</span></th>
+          <th><span lang="en">Plants</span><span lang="es">Plantas</span></th>
+          <th><span lang="en">Harvest</span><span lang="es">Cosecha</span></th>
+        </tr></thead>
+        <tbody><tr><td>CiSl051226.2.3</td><td><span lang="en">DRY</span><span lang="es">Secado</span></td><td>F 2-3</td><td class="numeric">97</td><td class="numeric">2026-05-12</td></tr><tr><td>PiDo051226.2.3</td><td><span lang="en">DRY</span><span lang="es">Secado</span></td><td>F 2-3</td><td class="numeric">40</td><td class="numeric">2026-05-12</td></tr><tr><td>PuSt051226.2.3</td><td><span lang="en">DRY</span><span lang="es">Secado</span></td><td>F 2-3</td><td class="numeric">103</td><td class="numeric">2026-05-12</td></tr><tr><td>ChCh051926.1.1</td><td><span lang="en">RIPENING</span><span lang="es">Maduración</span></td><td>F 1-1</td><td class="numeric">145</td><td class="numeric">2026-05-19</td></tr><tr><td>GrDi051926.1.1</td><td><span lang="en">RIPENING</span><span lang="es">Maduración</span></td><td>F 1-1</td><td class="numeric">143</td><td class="numeric">2026-05-19</td></tr><tr><td>MiMe051926.1.1</td><td><span lang="en">RIPENING</span><span lang="es">Maduración</span></td><td>F 1-1</td><td class="numeric">145</td><td class="numeric">2026-05-19</td></tr><tr><td>ApTa052626.2.4</td><td><span lang="en">RIPENING</span><span lang="es">Maduración</span></td><td>F 2-4</td><td class="numeric">168</td><td class="numeric">2026-05-26</td></tr><tr><td>BrSt052626.2.4</td><td><span lang="en">RIPENING</span><span lang="es">Maduración</span></td><td>F 2-4</td><td class="numeric">168</td><td class="numeric">2026-05-26</td></tr><tr><td>ChSu052626.2.4</td><td><span lang="en">RIPENING</span><span lang="es">Maduración</span></td><td>F 2-4</td><td class="numeric">168</td><td class="numeric">2026-05-26</td></tr><tr><td>GlBo060226.1.2</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 1-2</td><td class="numeric">172</td><td class="numeric">2026-06-02</td></tr><tr><td>IcCM060226.1.2</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 1-2</td><td class="numeric">172</td><td class="numeric">2026-06-02</td></tr><tr><td>MaRa060226.1.2</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 1-2</td><td class="numeric">172</td><td class="numeric">2026-06-02</td></tr><tr><td>FiPr060926.2.2</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 2-2</td><td class="numeric">180</td><td class="numeric">2026-06-09</td></tr><tr><td>FrSt060926.2.2</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 2-2</td><td class="numeric">120</td><td class="numeric">2026-06-09</td></tr><tr><td>EgCh060926.2.6</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 2-6</td><td class="numeric">180</td><td class="numeric">2026-06-09</td></tr><tr><td>GMO060926.2.6</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 2-6</td><td class="numeric">168</td><td class="numeric">2026-06-09</td></tr><tr><td>GaPo061626.2.1</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 2-1</td><td class="numeric">128</td><td class="numeric">2026-06-16</td></tr><tr><td>NeCu061626.2.1</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 2-1</td><td class="numeric">128</td><td class="numeric">2026-06-16</td></tr><tr><td>ZZBo061626.2.1</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 2-1</td><td class="numeric">128</td><td class="numeric">2026-06-16</td></tr><tr><td>Hypn062326.1.3</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 1-3</td><td class="numeric">120</td><td class="numeric">2026-06-23</td></tr><tr><td>Tama062326.1.3</td><td><span lang="en">BULKING</span><span lang="es">Engorde</span></td><td>F 1-3</td><td class="numeric">120</td><td class="numeric">2026-06-23</td></tr><tr><td>CoCr063026.2.5</td><td><span lang="en">EARLY</span><span lang="es">Flor Temprana</span></td><td>F 2-5</td><td class="numeric">144</td><td class="numeric">2026-06-30</td></tr><tr><td>ScSo063026.2.5</td><td><span lang="en">EARLY</span><span lang="es">Flor Temprana</span></td><td>F 2-5</td><td class="numeric">96</td><td class="numeric">2026-06-30</td></tr><tr><td>MaTa070726.1.4</td><td><span lang="en">EARLY</span><span lang="es">Flor Temprana</span></td><td>F 1-4</td><td class="numeric">60</td><td class="numeric">2026-07-07</td></tr><tr><td>Mell070726.1.4</td><td><span lang="en">EARLY</span><span lang="es">Flor Temprana</span></td><td>F 1-4</td><td class="numeric">240</td><td class="numeric">2026-07-07</td></tr><tr><td>Pave070726.1.4</td><td><span lang="en">EARLY</span><span lang="es">Flor Temprana</span></td><td>F 1-4</td><td class="numeric">236</td><td class="numeric">2026-07-07</td></tr><tr><td>ChCh071426.2.3</td><td><span lang="en">TRANSITION</span><span lang="es">Transición</span></td><td>F 2-3</td><td class="numeric">200</td><td class="numeric">2026-07-14</td></tr><tr><td>FuBo071426.2.3</td><td><span lang="en">TRANSITION</span><span lang="es">Transición</span></td><td>F 2-3</td><td class="numeric">200</td><td class="numeric">2026-07-14</td></tr><tr><td>GrDi072126.1.1</td><td><span lang="en">VEG</span><span lang="es">Veg</span></td><td>F 1-1</td><td class="numeric">150</td><td class="numeric">2026-07-21</td></tr><tr><td>MiMe072126.1.1</td><td><span lang="en">VEG</span><span lang="es">Veg</span></td><td>F 1-1</td><td class="numeric">150</td><td class="numeric">2026-07-21</td></tr><tr><td>PiDo072126.1.1</td><td><span lang="en">VEG</span><span lang="es">Veg</span></td><td>F 1-1</td><td class="numeric">150</td><td class="numeric">2026-07-21</td></tr></tbody>
+      </table>
+    </section>
+    <section>
+      <h2 class="h1"><span lang="en">Device health note</span><span lang="es">Nota sobre estado de dispositivos</span></h2>
+      <p class="lede"><span lang="en">A full mesh-device telemetry pull (battery, RSSI, link quality, travel time) was not completed in this audit run. The facility-wide /alerts endpoint returned HTTP 404, and the publicly-available search_issues paginates across the entire AROYA device fleet rather than the 4191 subset. Two sensor-level anomalies were inferred from chart statistics: (1) F 2-5 drain-EC sensor in zone 65222 returning std 2.28 over an 11 ppt range — almost certainly a fault state; (2) F 2-3 substrate-temp drip sensor reading ~3 °F warmer than peer rooms running similar air temperatures. Recommend running aroya-device-health skill against facility 4191 as a follow-up — node-level battery and RSSI readings will confirm or rule out broader mesh degradation.</span><span lang="es">No se completó una extracción completa de telemetría de la red de dispositivos (batería, RSSI, calidad de enlace, tiempo de viaje) en esta auditoría. El endpoint /alerts a nivel de instalación devolvió HTTP 404, y el endpoint público search_issues pagina toda la flota de AROYA en lugar del subconjunto 4191. Dos anomalías a nivel de sensor se infieren de las estadísticas: (1) sensor de CE de drenaje de F 2-5 en zona 65222 con desv 2.28 sobre rango de 11 ppt — casi seguro un estado de fallo; (2) sensor de temp. de sustrato de F 2-3 leyendo ~3 °F más cálido que salas similares con temperaturas aéreas similares. Se recomienda ejecutar la herramienta aroya-device-health contra la instalación 4191 como seguimiento — las lecturas de batería y RSSI a nivel de nodo confirmarán o descartarán degradación de la red.</span></p>
+    </section>
+    <footer><span lang="en">Generated 2026-05-15 from AROYA MCP. Cited queries: list_rooms(4191), get_room_stats(4191, room, 336h) ×12, spa_list_harvest_groups(4191, active), spa_get_journal(4191, 2026-05-01..15), spa_get_target_ranges(4191).</span><span lang="es">Generado el 2026-05-15 desde AROYA MCP. Consultas citadas: list_rooms(4191), get_room_stats(4191, sala, 336h) ×12, spa_list_harvest_groups(4191, activos), spa_get_journal(4191, 2026-05-01..15), spa_get_target_ranges(4191).</span></footer></div>
+<button id="lang-btn" class="lang-toggle" onclick="langToggle()">ES</button>
+<script>
+const langToggle = () => {
+  document.body.classList.toggle('es');
+  const btn = document.getElementById('lang-btn');
+  btn.textContent = document.body.classList.contains('es') ? 'EN' : 'ES';
+};
+</script>
+</body>
+</html>
