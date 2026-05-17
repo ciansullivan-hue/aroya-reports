@@ -844,29 +844,34 @@
 
 <section id="event-log">
   <h2><span class="en-only">Irrigation Shot-Cycle Audit · 10 Flower Rooms</span><span class="es-only">Auditoría de Ciclos de Riego · 10 Salas de Flor</span></h2>
-  <p><span class="en-only">Charts A, C, D are derived from <b>soil_moist (VWC) rising-edge detection across the full 14-day window</b> — every irrigation shot lifts substrate water content, and the zone-level sensors capture the lift even when AROYA's drip-volume history is unavailable. A <b>shot</b> = a sustained ≥0.5 %VWC/min rise per zone; a <b>room shot</b> = concurrent rises in ≥35% of the zones in the room within ±2 min. Operational day anchored to the daily 13:20 PT DFI reset (the only consistent across all rooms); P1 = 60–180 min after anchor, P2 = 180–630 min, P3 = last 90 min of the 12h photoperiod. <b>Chart B is a 24-hour snapshot only</b> — AROYA's public history API caps drip-volume (<code>dfi</code>) at ~24h, so applied mL/emitter cannot be reconstructed for the full window. The per-room table below uses v5 14-day medians for shot count / interval / length, and the 24h dfi values (asterisked) for applied volume.</span><span class="es-only">Los gráficos A, C, D vienen de <b>detección de bordes ascendentes en soil_moist (VWC) sobre toda la ventana de 14 días</b> — cada riego sube el contenido de agua del sustrato y los sensores por zona lo capturan aunque el histórico de volumen de goteo de AROYA no esté disponible. Un <b>shot</b> = subida sostenida ≥0.5 %VWC/min por zona; <b>shot de sala</b> = subidas simultáneas en ≥35% de las zonas dentro de ±2 min. Día operacional anclado al reset DFI diario @ 13:20 PT (el único común a todas las salas); P1 = 60–180 min tras el ancla, P2 = 180–630 min, P3 = últimos 90 min del fotoperíodo de 12h. <b>El gráfico B es solo un snapshot de 24h</b> — la API pública de AROYA limita el histórico de volumen (<code>dfi</code>) a ~24h, así que mL/emisor aplicado no se puede reconstruir para toda la ventana. La tabla por sala usa medianas v5 a 14 días para conteo / intervalo / duración, y los valores dfi de 24h (con asterisco) para el volumen aplicado.</span></p>
+  <p><span class="en-only">All five irrigation charts share the same room selector + compare mode as the top-section EC/Dryback/VPD/Temp charts. Click any room chip in the Per-Room Deep Dive selector above; all nine charts update in lockstep. Charts A, C, D, E run on <b>14-day soil_moist rising-edge detection</b> (a shot = ≥0.5 %VWC/min sustained rise per zone, with ≥35% zone concurrence within ±2 min counted as one room shot). Chart B reconstructs <b>daily applied volume</b> by multiplying the v5 14-day shot count by the per-shot volume calibration from the 24h <code>dfi</code> snapshot (2026-05-16 → 2026-05-17), the only window where AROYA exposes drip-volume history. Chart E shows the <b>calculated emitter flow rate</b> = (24h calibrated volume per shot) ÷ (14-day median shot duration). Per-room cross-check vs <code>drip_drain[room].dfi.mean</code> is in the footnote below the table.</span><span class="es-only">Los cinco gráficos comparten selector y modo comparar con las gráficas EC/Dryback/VPD/Temp de la sección superior. Al hacer clic en un chip, las nueve se actualizan a la vez. A, C, D, E: <b>detección de bordes ascendentes en soil_moist (VWC) en 14 días</b> (shot = subida sostenida ≥0.5 %VWC/min por zona; ≥35% de zonas simultáneas dentro de ±2 min = un shot de sala). B reconstruye <b>volumen aplicado por día</b> = conteo de shots v5 × volumen por shot calibrado al snapshot de 24h <code>dfi</code> (2026-05-16 → 2026-05-17). E muestra el <b>caudal de emisor calculado</b> = (volumen por shot 24h) ÷ (mediana de duración 14d). Cross-check vs <code>drip_drain[room].dfi.mean</code> al pie de la tabla.</span></p>
   <div class="biophys-section-label" id="irrigationDailyHeader"><span class="en-only">DAILY IRRIGATION TRAJECTORY · per-day P1 vs P2 across the 14-day window</span><span class="es-only">TRAYECTORIA DIARIA DE RIEGO · P1 vs P2 día a día en la ventana de 14 días</span></div>
-<p style="font-size:13px;color:var(--ink-muted);margin:6px 0 14px"><span class="en-only">Click a chip below to filter to one room; Shift-click or Compare mode overlays multiple. Charts A, C, D show the full 14-day window from soil_moist edge detection. Chart B is a single-day snapshot — AROYA does not expose historical drip-volume data.</span><span class="es-only">Click en un chip abajo filtra a una sala; Shift-click o Modo comparar superpone varias. Los gráficos A, C, D muestran la ventana completa de 14 días por detección de bordes en soil_moist. El gráfico B es un snapshot de un solo día — AROYA no expone histórico de volumen de goteo.</span></p>
+<p style="font-size:13px;color:var(--ink-muted);margin:6px 0 14px"><span class="en-only">Use the room chip selector at the top of the page. All five charts react together — single-room view shows target bands; compare mode overlays multiple rooms.</span><span class="es-only">Usa el selector de chips en la parte superior. Los cinco gráficos reaccionan juntos — vista de una sala muestra bandas objetivo; modo comparar superpone varias.</span></p>
 <div class="chart-grid-2col" style="display:grid;grid-template-columns:1fr;gap:16px">
   <div class="chartwrap">
     <h4><span class="en-only">A · Daily shot count — P1 (solid) stacked under P2 (dashed outline)</span><span class="es-only">A · Shots por día — P1 (sólido) bajo P2 (contorno discontinuo)</span></h4>
-    <div class="chart-canvas" style="height:240px"><canvas id="chartIrrShots"></canvas></div>
-    <div class="legend"><span class="en-only">Bars per room per day. P1 = filled bar; P2 = same bar with a dashed-edge cap stacked above. Hover for shot totals.</span><span class="es-only">Barras por sala-día. P1 = relleno; P2 = tapa con borde discontinuo apilada. Hover para totales.</span></div>
+    <div class="chart-canvas"><canvas id="chartIrrShots"></canvas></div>
+    <div class="legend" id="legendIrrShots"></div>
   </div>
   <div class="chartwrap">
-    <h4><span class="en-only">B · Daily applied volume — P1 vs P2 (mL/emitter)</span><span class="es-only">B · Volumen aplicado por día — P1 vs P2 (mL/emisor)</span></h4>
-    <div class="pill bad" style="display:inline-block;font-weight:700;font-size:11.5px;padding:3px 8px;margin:0 0 6px 0;letter-spacing:.04em;"><span class="en-only">B · 24h SNAPSHOT ONLY — AROYA history-API caps dfi at 24h</span><span class="es-only">B · SOLO SNAPSHOT 24h — la API de histórico de AROYA limita dfi a 24h</span></div><div class="chart-canvas" style="height:240px"><canvas id="chartIrrVol"></canvas></div>
-    <div class="legend"><span class="en-only">Grouped bars: P1 (filled) left, P2 (lighter fill) right, per day per room.</span><span class="es-only">Barras agrupadas: P1 (relleno) izq., P2 (más claro) der., por día y sala.</span></div>
+    <h4><span class="en-only">B · Daily applied volume — P1 + P2 (mL/emitter, 14d estimate)</span><span class="es-only">B · Volumen aplicado por día — P1 + P2 (mL/emisor, estimación 14d)</span></h4>
+    <div class="chart-canvas"><canvas id="chartIrrVol"></canvas></div>
+    <div class="legend" id="legendIrrVol"></div>
   </div>
   <div class="chartwrap">
     <h4><span class="en-only">C · Median inter-shot interval (min) — P1 vs P2</span><span class="es-only">C · Intervalo mediano entre shots (min) — P1 vs P2</span></h4>
-    <div class="chart-canvas" style="height:240px"><canvas id="chartIrrInterval"></canvas></div>
-    <div class="legend"><span class="en-only">Two lines per room (P1 solid, P2 dashed). Phase-coded colour. Days with &lt; 2 shots are gaps.</span><span class="es-only">Dos líneas por sala (P1 sólida, P2 discontinua). Color por fase. Días con &lt; 2 shots: hueco.</span></div>
+    <div class="chart-canvas"><canvas id="chartIrrInterval"></canvas></div>
+    <div class="legend" id="legendIrrInterval"></div>
   </div>
   <div class="chartwrap">
     <h4><span class="en-only">D · Median shot duration (min) — P1 vs P2</span><span class="es-only">D · Duración mediana del shot (min) — P1 vs P2</span></h4>
-    <div class="chart-canvas" style="height:240px"><canvas id="chartIrrDuration"></canvas></div>
-    <div class="legend"><span class="en-only">Two lines per room (P1 solid, P2 dashed). 1–5 min coco target band shaded when one room is selected.</span><span class="es-only">Dos líneas por sala (P1 sólida, P2 discontinua). Banda objetivo 1–5 min (coco) cuando se selecciona una sala.</span></div>
+    <div class="chart-canvas"><canvas id="chartIrrDuration"></canvas></div>
+    <div class="legend" id="legendIrrDuration"></div>
+  </div>
+  <div class="chartwrap">
+    <h4><span class="en-only">E · Calculated flow rate (mL/min per emitter) — P1 vs P2</span><span class="es-only">E · Caudal calculado (mL/min por emisor) — P1 vs P2</span></h4>
+    <div class="chart-canvas"><canvas id="chartIrrFlow"></canvas></div>
+    <div class="legend" id="legendIrrFlow"></div>
   </div>
 </div>
 <div class="bp-scroll"><table class="bp-table compact">
@@ -878,37 +883,205 @@
       <th>P1 shots/d</th>
       <th>P1 interval</th>
       <th>P1 length</th>
-      <th>P1 volume</th>
+      <th>P1 volume<sup>&dagger;</sup></th>
+      <th>P1 flow<sup>&Dagger;</sup></th>
       <th>P2 shots/d</th>
       <th>P2 interval</th>
       <th>P2 length</th>
-      <th>P2 volume</th>
+      <th>P2 volume<sup>&dagger;</sup></th>
+      <th>P2 flow<sup>&Dagger;</sup></th>
       <th>Verdict</th>
     </tr></thead>
-    <tbody><tr><td><b>F 1-1</b> <span class="phase veg">Veg</span></td><td style="font-size:12px">GrDi072126.1.1 (+5 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">70 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">63 min</span></td><td class="num"><span class="pill good" style="font-weight:600">3 min</span></td><td class="num"><span class="pill warn" style="font-weight:600">883.2 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">99 min</span></td><td class="num"><span class="pill good" style="font-weight:600">4 min</span></td><td class="num"><span class="pill good" style="font-weight:600">613.4 mL*</span></td><td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td></tr><tr><td><b>F 1-2</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">GlBo060226.1.2 (+2 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">80 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">72 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2 min</span></td><td class="num"><span class="pill warn" style="font-weight:600">882.5 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">77 min</span></td><td class="num"><span class="pill good" style="font-weight:600">4 min</span></td><td class="num"><span class="pill warn" style="font-weight:600">1322 mL*</span></td><td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td></tr><tr><td><b>F 1-3</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">Hypn062326.1.3 (+1 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">100 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">82 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2 min</span></td><td class="num"><span class="pill good" style="font-weight:600">537.9 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">80 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1 min</span></td><td class="num"><span class="pill good" style="font-weight:600">720.6 mL*</span></td><td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td></tr><tr><td><b>F 1-4</b> <span class="phase stretch">Stretch</span></td><td style="font-size:12px">MaTa070726.1.4 (+5 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">110 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">83 min</span></td><td class="num"><span class="pill good" style="font-weight:600">4 min</span></td><td class="num"><span class="pill good" style="font-weight:600">463.6 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill warn" style="font-weight:600">n/a</span></td><td class="num"><span class="pill good" style="font-weight:600">2 min</span></td><td class="num"><span class="pill good" style="font-weight:600">423.6 mL*</span></td><td><span class="pill warn " style="font-weight:700"><span class="en-only">review</span><span class="es-only">revisar</span></span></td></tr><tr><td><b>F 2-1</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">GaPo061626.2.1 (+2 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">90 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">61 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2.8 min</span></td><td class="num"><span class="pill good" style="font-weight:600">391.2 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">3/d</span></td><td class="num"><span class="pill bad" style="font-weight:600">205 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2.5 min</span></td><td class="num"><span class="pill good" style="font-weight:600">540.3 mL*</span></td><td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td></tr><tr><td><b>F 2-2</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">FiPr060926.2.2 (+1 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">90 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1.5/d</span></td><td class="num"><span class="pill good" style="font-weight:600">71 min</span></td><td class="num"><span class="pill good" style="font-weight:600">3.8 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">1636.3 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">77 min</span></td><td class="num"><span class="pill good" style="font-weight:600">4 min</span></td><td class="num"><span class="pill warn" style="font-weight:600">1086.5 mL*</span></td><td><span class="pill warn " style="font-weight:700"><span class="en-only">review</span><span class="es-only">revisar</span></span></td></tr><tr><td><b>F 2-3</b> <span class="phase stretch">Stretch</span></td><td style="font-size:12px">ChCh071426.2.3 (+4 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill warn" style="font-weight:600">10 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1.5/d</span></td><td class="num"><span class="pill good" style="font-weight:600">77 min</span></td><td class="num"><span class="pill good" style="font-weight:600">3.5 min</span></td><td class="num"><span class="pill good" style="font-weight:600">352.1 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill bad" style="font-weight:600">269 min</span></td><td class="num"><span class="pill good" style="font-weight:600">4 min</span></td><td class="num"><span class="pill good" style="font-weight:600">348.2 mL*</span></td><td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td></tr><tr><td><b>F 2-4</b> <span class="phase ripening">Ripening</span></td><td style="font-size:12px">ApTa052626.2.4 (+2 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">80 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">69 min</span></td><td class="num"><span class="pill good" style="font-weight:600">5 min</span></td><td class="num"><span class="pill warn" style="font-weight:600">804.7 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">77 min</span></td><td class="num"><span class="pill good" style="font-weight:600">4 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">1510.5 mL*</span></td><td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td></tr><tr><td><b>F 2-5</b> <span class="phase stretch">Stretch</span></td><td style="font-size:12px">CoCr063026.2.5 (+1 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">110 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">81 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1 min</span></td><td class="num"><span class="pill good" style="font-weight:600">365 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">74 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1 min</span></td><td class="num"><span class="pill good" style="font-weight:600">372.3 mL*</span></td><td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td></tr><tr><td><b>F 2-6</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">EgCh060926.2.6 (+1 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">90 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">71 min</span></td><td class="num"><span class="pill good" style="font-weight:600">4 min</span></td><td class="num"><span class="pill warn" style="font-weight:600">829.2 mL*</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill good" style="font-weight:600">77 min</span></td><td class="num"><span class="pill good" style="font-weight:600">4 min</span></td><td class="num"><span class="pill warn" style="font-weight:600">994 mL*</span></td><td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td></tr></tbody>
-  </table></div><p style="font-size:12px;color:var(--ink-muted);margin-top:8px"><span class="en-only">* mL/emitter values come from AROYA's 24-hour <code>dfi</code> snapshot (2026-05-16 → 2026-05-17). The history API does not expose volume past 24h, so they cannot be averaged over the full 14-day window. See chart B for the same snapshot visualised.</span><span class="es-only">* Los valores mL/emisor vienen del snapshot de 24h <code>dfi</code> de AROYA (2026-05-16 → 2026-05-17). La API de histórico no expone volumen más allá de 24h, así que no pueden promediarse en la ventana de 14 días. Ver gráfico B para el mismo snapshot visualizado.</span></p>
-
-  <div class="biophys-section-label"><span class="en-only">SHOT DETECTION METHOD</span><span class="es-only">MÉTODO DE DETECCIÓN DE SHOTS</span></div>
-  <p style="font-size:13px;color:var(--ink-muted);margin-top:6px"><span class="en-only">Raw <code>dfi:zone:*</code> series at 10-min bins. <code>dfi</code> is a <b>cumulative drip-volume counter</b> (mL/emitter) that resets daily — NOT a series of discrete shot events. A shot is a contiguous run of bins where Δcumulative &gt; 5 mL (noise floor); a reset is Δcumulative &lt; −100 mL. Shot duration = (end_ts − start_ts) + 10 min (last-bin width); shot volume = cum_end − cum_start (mL/emitter); inter-shot interval = start_ts(N+1) − start_ts(N). Phase tagging uses the observed DFI reset (13:20 PT) as lights-on. Cross-check: F 1-3 daily total ≈ 4858 mL/emitter (sum of P1+P2+P3 volumes) vs the 14-day <code>drip_drain.dfi.mean</code> of 3957 mL/d — within 23%, consistent with single-day variance.</span><span class="es-only">Serie <code>dfi:zone:*</code> a 10 min. <code>dfi</code> es <b>contador acumulado de drip</b> (mL/emisor) con reset diario — NO una serie de shots discretos. Shot = corrida contigua con Δacumulado &gt; 5 mL (piso de ruido); reset = Δ &lt; −100 mL. Duración del shot = (fin − inicio) + 10 min; volumen = acum_fin − acum_inicio (mL/emisor); intervalo = inicio(N+1) − inicio(N). Etiquetado de fase usa el reset DFI observado (13:20 PT) como lights-on. Cross-check: F 1-3 total diario ≈ 4858 mL/emisor (P1+P2+P3) vs media 14d <code>drip_drain.dfi.mean</code> de 3957 mL/d — dentro de 23%, varianza esperada.</span></p>
-
-  <div class="biophys-section-label"><span class="en-only">PHASE-SPECIFIC TARGETS · irrigation-strategy NotebookLM · 2-gal coco</span><span class="es-only">OBJETIVOS POR FASE · NotebookLM irrigation-strategy · coco 2-gal</span></div>
+    <tbody><tr>
+<td><b>F 1-1</b> <span class="phase veg">Veg</span></td>
+<td style="font-size:12px">GrDi072126.1.1 (+5 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">70 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">63 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">3 min</span></td>
+<td class="num"><span class="pill warn" style="font-weight:600">883 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">294 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">99 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">4 min</span></td>
+<td class="num"><span class="pill warn" style="font-weight:600">613 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">245 mL/min</span></td>
+<td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td>
+</tr>
+<tr>
+<td><b>F 1-2</b> <span class="phase bulking">Bulking</span></td>
+<td style="font-size:12px">GlBo060226.1.2 (+2 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">80 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">72 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2 min</span></td>
+<td class="num"><span class="pill warn" style="font-weight:600">882 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">441 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">77 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">4 min</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">1321 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">330 mL/min</span></td>
+<td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td>
+</tr>
+<tr>
+<td><b>F 1-3</b> <span class="phase bulking">Bulking</span></td>
+<td style="font-size:12px">Hypn062326.1.3 (+1 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">100 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">82 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">538 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">269 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">80 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1 min</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">900 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">900 mL/min</span></td>
+<td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td>
+</tr>
+<tr>
+<td><b>F 1-4</b> <span class="phase stretch">Stretch</span></td>
+<td style="font-size:12px">MaTa070726.1.4 (+5 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">110 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">83 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">4 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">464 mL</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">116 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">n/a</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2 min</span></td>
+<td class="num"><span class="pill warn" style="font-weight:600">451 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">226 mL/min</span></td>
+<td><span class="pill warn " style="font-weight:700"><span class="en-only">review</span><span class="es-only">revisar</span></span></td>
+</tr>
+<tr>
+<td><b>F 2-1</b> <span class="phase bulking">Bulking</span></td>
+<td style="font-size:12px">GaPo061626.2.1 (+2 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">90 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">61 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2.8 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">391 mL</span></td>
+<td class="num"><span class="pill warn" style="font-weight:600">130 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">205 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2.5 min</span></td>
+<td class="num"><span class="pill warn" style="font-weight:600">542 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">271 mL/min</span></td>
+<td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td>
+</tr>
+<tr>
+<td><b>F 2-2</b> <span class="phase bulking">Bulking</span></td>
+<td style="font-size:12px">FiPr060926.2.2 (+1 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">90 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1.5/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">71 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">3.8 min</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">1636 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">409 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">77 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">4 min</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">1085 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">271 mL/min</span></td>
+<td><span class="pill warn " style="font-weight:700"><span class="en-only">review</span><span class="es-only">revisar</span></span></td>
+</tr>
+<tr>
+<td><b>F 2-3</b> <span class="phase stretch">Stretch</span></td>
+<td style="font-size:12px">ChCh071426.2.3 (+4 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">10 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1.5/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">77 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">3.5 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">352 mL</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">88 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">269 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">4 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">355 mL</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">89 mL/min</span></td>
+<td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td>
+</tr>
+<tr>
+<td><b>F 2-4</b> <span class="phase ripening">Ripening</span></td>
+<td style="font-size:12px">ApTa052626.2.4 (+2 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">80 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">69 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">5 min</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">1124 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">281 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">77 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">4 min</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">1510 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">378 mL/min</span></td>
+<td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td>
+</tr>
+<tr>
+<td><b>F 2-5</b> <span class="phase stretch">Stretch</span></td>
+<td style="font-size:12px">CoCr063026.2.5 (+1 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">110 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">81 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">365 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">365 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">74 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">370 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">370 mL/min</span></td>
+<td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td>
+</tr>
+<tr>
+<td><b>F 2-6</b> <span class="phase bulking">Bulking</span></td>
+<td style="font-size:12px">EgCh060926.2.6 (+1 HG)</td>
+<td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">DFI anchor 13:20 PT</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">90 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">71 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">4 min</span></td>
+<td class="num"><span class="pill warn" style="font-weight:600">829 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">207 mL/min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">1/d</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">77 min</span></td>
+<td class="num"><span class="pill good" style="font-weight:600">4 min</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">989 mL</span></td>
+<td class="num"><span class="pill bad" style="font-weight:600">247 mL/min</span></td>
+<td><span class="pill good " style="font-weight:700"><span class="en-only">on target</span><span class="es-only">en objetivo</span></span></td>
+</tr></tbody>
+  </table></div>
+<p style="font-size:12px;color:var(--ink-muted);margin-top:8px"><span class="en-only"><sup>&dagger;</sup> Per-shot volume from the 24h <code>dfi</code> snapshot (2026-05-16 &rarr; 2026-05-17), the only window AROYA exposes drip-volume history. Daily volume in chart B = (14d shot count from soil_moist edges) &times; (24h per-shot calibration). <sup>&Dagger;</sup> Flow rate = (24h per-shot volume) &divide; (14d median shot length). Typical drip-emitter rated flow: 0.5&ndash;2 GPH &approx; 30&ndash;125 mL/min; band shaded on chart E.</span><span class="es-only"><sup>&dagger;</sup> Volumen por shot del snapshot 24h <code>dfi</code> (2026-05-16 &rarr; 2026-05-17), &uacute;nica ventana con hist&oacute;rico de drip. Volumen diario en B = (conteo shots 14d de bordes soil_moist) &times; (volumen por shot calibrado 24h). <sup>&Dagger;</sup> Caudal = (volumen por shot 24h) &divide; (mediana duraci&oacute;n shot 14d). Caudal t&iacute;pico de emisor: 0.5&ndash;2 GPH &approx; 30&ndash;125 mL/min; banda en gr&aacute;fico E.</span></p>
+  <p style="font-size:11.5px;color:var(--ink-muted);margin-top:4px"><span class="en-only"><b>14-day volume reconstruction cross-check vs <code>drip_drain.dfi.mean</code>:</b> F 1-1: 1987 mL/d vs 3569 mL/d (-44%) &middot; F 1-2: 2864 mL/d vs 7011 mL/d (-59%) &middot; F 1-3: 1708 mL/d vs 3958 mL/d (-57%) &middot; F 1-4: 262 mL/d vs 2710 mL/d (-90%) &middot; F 2-1: 1992 mL/d vs 3100 mL/d (-36%) &middot; F 2-2: 3732 mL/d vs 5688 mL/d (-34%) &middot; F 2-3: 708 mL/d vs 2016 mL/d (-65%) &middot; F 2-4: 3038 mL/d vs 6057 mL/d (-50%) &middot; F 2-5: 787 mL/d vs 788 mL/d (-0%) &middot; F 2-6: 2560 mL/d vs 5703 mL/d (-55%). &Delta;% &lt; 0 means soil_moist edge detection under-counts shots vs the AROYA cumulative drip counter (expected, since not every controller pulse produces a sensor-detectable VWC lift in coarse coco).</span><span class="es-only"><b>Cross-check reconstrucci&oacute;n 14d vs <code>drip_drain.dfi.mean</code>:</b> F 1-1: 1987 mL/d vs 3569 mL/d (-44%) &middot; F 1-2: 2864 mL/d vs 7011 mL/d (-59%) &middot; F 1-3: 1708 mL/d vs 3958 mL/d (-57%) &middot; F 1-4: 262 mL/d vs 2710 mL/d (-90%) &middot; F 2-1: 1992 mL/d vs 3100 mL/d (-36%) &middot; F 2-2: 3732 mL/d vs 5688 mL/d (-34%) &middot; F 2-3: 708 mL/d vs 2016 mL/d (-65%) &middot; F 2-4: 3038 mL/d vs 6057 mL/d (-50%) &middot; F 2-5: 787 mL/d vs 788 mL/d (-0%) &middot; F 2-6: 2560 mL/d vs 5703 mL/d (-55%). &Delta;% &lt; 0 = detecci&oacute;n por bordes subestima shots (esperado en coco grueso).</span></p>
+  <div class="biophys-section-label"><span class="en-only">SHOT DETECTION METHOD</span><span class="es-only">M&Eacute;TODO DE DETECCI&Oacute;N DE SHOTS</span></div>
+  <p style="font-size:13px;color:var(--ink-muted);margin-top:6px"><span class="en-only">Per-zone <code>soil_moist</code> at 1-min resample. A shot = sustained &ge;0.5 %VWC/min rise (&ge;1 bin); a room shot = &ge;35% of zones in a room concurrently rising within &plusmn;2 min; min interval 5 min. Operational day anchored to the daily 13:20 PT DFI reset (the only anchor consistent across all 10 rooms). Phase windows: P0 = 0&ndash;60 min after anchor; P1 = 60&ndash;180 min; P2 = 180&ndash;630 min; P3 = last 90 min of 12h photoperiod. v5 dur/interval medians use the full 14d population per phase.</span><span class="es-only">Serie <code>soil_moist</code> por zona a 1 min. Shot = subida sostenida &ge;0.5 %VWC/min (&ge;1 bin); shot de sala = &ge;35% de zonas simult&aacute;neas dentro de &plusmn;2 min; intervalo m&iacute;nimo 5 min. D&iacute;a operacional anclado al reset DFI 13:20 PT (&uacute;nico com&uacute;n a las 10 salas). Ventanas: P0 = 0&ndash;60 min; P1 = 60&ndash;180 min; P2 = 180&ndash;630 min; P3 = &uacute;ltimos 90 min. Medianas v5 sobre poblaci&oacute;n 14d.</span></p>
+  <div class="biophys-section-label"><span class="en-only">PHASE-SPECIFIC TARGETS &middot; irrigation-strategy NotebookLM &middot; 2-gal coco</span><span class="es-only">OBJETIVOS POR FASE &middot; NotebookLM irrigation-strategy &middot; coco 2-gal</span></div>
   <div class="bp-targets">
-    <span class="bp-tgt"><b>P0 delay (Veg/Stretch):</b> 60–120 min</span>
-    <span class="bp-tgt"><b>P0 delay (Bulking):</b> 90–180 min</span>
-    <span class="bp-tgt"><b>P0 delay (Ripening):</b> 120–240 min</span>
-    <span class="bp-tgt"><b>P1 shots/d:</b> 1–4 (coco)</span>
-    <span class="bp-tgt"><b>P1 interval:</b> 30–90 min</span>
-    <span class="bp-tgt"><b>P1 length:</b> 1–5 min/shot</span>
-    <span class="bp-tgt"><b>P1 volume:</b> 300–600 mL (4–8% of 7.5 L substrate)</span>
-    <span class="bp-tgt"><b>P2 shots/d:</b> 2–5</span>
-    <span class="bp-tgt"><b>P2 interval:</b> 60–180 min</span>
-    <span class="bp-tgt"><b>P2 length:</b> 0.5–1.5 min/shot</span>
-    <span class="bp-tgt"><b>P2 volume:</b> 150–380 mL (2–5% of 7.5 L substrate)</span>
+    <span class="bp-tgt"><b>P0 delay (Veg/Stretch):</b> 60&ndash;120 min</span>
+    <span class="bp-tgt"><b>P0 delay (Bulking):</b> 90&ndash;180 min</span>
+    <span class="bp-tgt"><b>P0 delay (Ripening):</b> 120&ndash;240 min</span>
+    <span class="bp-tgt"><b>P1 shots/d:</b> 1&ndash;4 (coco)</span>
+    <span class="bp-tgt"><b>P1 interval:</b> 30&ndash;90 min</span>
+    <span class="bp-tgt"><b>P1 length:</b> 1&ndash;5 min/shot</span>
+    <span class="bp-tgt"><b>P1 volume:</b> 300&ndash;600 mL (4&ndash;8% of 7.5 L substrate)</span>
+    <span class="bp-tgt"><b>P2 shots/d:</b> 2&ndash;5</span>
+    <span class="bp-tgt"><b>P2 interval:</b> 60&ndash;180 min</span>
+    <span class="bp-tgt"><b>P2 length:</b> 0.5&ndash;1.5 min/shot</span>
+    <span class="bp-tgt"><b>P2 volume:</b> 150&ndash;380 mL (2&ndash;5% of 7.5 L substrate)</span>
+    <span class="bp-tgt"><b>Flow rate (drip emitter):</b> 30&ndash;125 mL/min &middot; typical 0.5&ndash;2 GPH</span>
   </div>
-
-  <p style="font-size:13px;color:var(--ink-muted);margin-top:14px"><span class="en-only"><b>How to read v3.</b> v2 reported 1–3 min P1 intervals — that wasn't the controller firing every 3 minutes, it was the cumulative counter being mis-modelled as discrete events. v3 collapses each rising run into a single shot: <b>P1 intervals now read 40–90 min and P1 medians sit largely IN the 30–90 min target band</b> (F 1-1, F 1-2, F 1-3, F 1-4, F 2-5, F 2-6 all between 40 and 90). The previous 'sub-pulse 1.4 min apart' artefact is gone. What v3 surfaces clearly: <b>shot durations are 40–90 min</b> across every room, which is several multiples of the 1–5 min coco target — meaning each 'shot' is genuinely a long ramp (or the counter integrates emitter drip over a slow flow window), not a 30-second EC-stack. <b>Per-shot volumes range 350–1640 mL/emitter</b> — F 2-2 at ≈1640 mL P1 is the highest; F 2-1 at ≈390 mL is closest to the 300–600 mL target. Net conclusion: <b>the original 'broken irrigation, runaway pulses' read was an artefact</b>, but the shots ARE longer and bigger than the coco playbook — confirm with the controller whether these are intended long-ramp recipes or valve-flow-rate calibration issues.</span><span class="es-only"><b>Cómo leer v3.</b> v2 reportaba intervalos P1 de 1–3 min — eso no era el controlador disparando cada 3 minutos, era el contador acumulado mal modelado. v3 colapsa cada subida en un solo shot: <b>intervalos P1 leen 40–90 min y las medianas P1 caen mayormente DENTRO del objetivo 30–90 min</b> (F 1-1, F 1-2, F 1-3, F 1-4, F 2-5, F 2-6 entre 40 y 90). El artefacto 'sub-pulso cada 1.4 min' desapareció. Lo que v3 sí revela: <b>las duraciones de shot son 40–90 min</b> en cada sala — varios múltiplos del objetivo 1–5 min coco — es decir cada 'shot' es una rampa larga real (o el contador integra drip sobre un flujo lento), no una descarga de 30 s. <b>Volúmenes por shot: 350–1640 mL/emisor</b> — F 2-2 a ≈1640 mL P1 es el más alto; F 2-1 a ≈390 mL es el más cercano al objetivo 300–600 mL. Conclusión neta: <b>la lectura previa de 'riego roto' era un artefacto</b>, pero los shots SÍ son más largos y más grandes que el playbook coco — confirmar con el controlador si son recetas intencionales de rampa larga o calibración de flujo de válvula.</span></p>
-
-  <p style="font-size:13px;color:var(--ink-muted);margin-top:8px"><span class="en-only"><b>Photoperiod source:</b> F 1-1 and F 1-2 lights-on / duration pulled live from <code>spa_get_room_config</code> (both 12h, 06:20 PT nominal). The remaining 8 flower rooms have no config pulled — <code>heuristic</code>. The DFI reset observed at 13:20 PT across every room indicates the irrigation controller anchors the day at 13:20 PT regardless of the nominal lights-on time. v3 phase tagging is anchored on the observed reset, not the config field.</span><span class="es-only"><b>Fuente fotoperíodo:</b> F 1-1 y F 1-2 vía <code>spa_get_room_config</code> (ambas 12h, 06:20 PT nominal). Las otras 8 salas sin config — <code>heuristic</code>. El reset DFI observado a 13:20 PT en cada sala indica que el controlador de riego ancla el día a 13:20 PT independiente del nominal. v3 etiqueta fase basado en el reset observado, no en el campo de config.</span></p>
 </section>
 
 
@@ -1261,7 +1434,7 @@ const PHASE_COLOR_MAP = {
 const ROOM_COLORS = {};
 for (const rid of ROOM_ORDER) ROOM_COLORS[rid] = PHASE_COLOR_MAP[(ROOMS_META[rid]||{}).phase_class] || PHASE_COLOR_MAP.bulking;
 let selectedRooms = [ROOM_ORDER[0]];
-let compareMode = false;
+let compareMode = false;window.ROOM_ORDER = ROOM_ORDER; window.ROOMS_META = ROOMS_META; window.ROOM_COLORS = ROOM_COLORS; Object.defineProperty(window, "selectedRooms", {get:()=>selectedRooms, configurable:true}); Object.defineProperty(window, "compareMode",  {get:()=>compareMode,  configurable:true});
 function cssVar(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim()}
 function resolveColor(c){
   if(!c) return '#888';
@@ -1566,244 +1739,214 @@ renderCharts();
 </script>
 <script>
 (function(){
-  const IRRIGATION = {"dates": ["2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-14"], "rooms": {"14554": {"2026-05-01": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 6.0}, "2026-05-02": {"p1_shots": 2, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": 54.0, "p2_int": null, "p1_dur": 2.5, "p2_dur": null}, "2026-05-03": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 54.0, "p2_int": 118.0, "p1_dur": 2.0, "p2_dur": 2.0}, "2026-05-04": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 54.0, "p2_int": 120.0, "p1_dur": 2.5, "p2_dur": 1.0}, "2026-05-05": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 5.0}, "2026-05-06": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 7.0}, "2026-05-07": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 80.0, "p1_dur": 5.0, "p2_dur": 4.0}, "2026-05-08": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 77.0, "p1_dur": 4.0, "p2_dur": 2.0}, "2026-05-09": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 77.0, "p2_int": null, "p1_dur": 3.0, "p2_dur": 4.0}, "2026-05-10": {"p1_shots": 3, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 77.0, "p2_int": null, "p1_dur": 2.0, "p2_dur": 4.0}, "2026-05-11": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 3.0, "p2_dur": 2.0}, "2026-05-12": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 72.0, "p2_int": null, "p1_dur": 2.0, "p2_dur": 2.0}, "2026-05-13": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 4.5, "p2_dur": 6.0}, "2026-05-14": {"p1_shots": 1, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 6.0, "p2_dur": null}}, "14579": {"2026-05-01": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 1.0, "p2_dur": 4.0}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-03": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-04": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-05": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 7.0}, "2026-05-06": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 2.0, "p2_dur": 4.0}, "2026-05-07": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 81.0, "p1_dur": 2.0, "p2_dur": 4.0}, "2026-05-08": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 77.0, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-09": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 71.0, "p1_dur": 2.0, "p2_dur": 1.0}, "2026-05-10": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 77.0, "p1_dur": 2.0, "p2_dur": 4.0}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 71.0, "p2_int": null, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-12": {"p1_shots": 4, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 73.0, "p2_int": null, "p1_dur": 1.5, "p2_dur": 1.5}, "2026-05-13": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-14": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 4.0, "p2_dur": 2.0}}, "14581": {"2026-05-01": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 2.0}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 1.0}, "2026-05-03": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-04": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-05": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 68.0, "p2_int": null, "p1_dur": 7.0, "p2_dur": 1.0}, "2026-05-06": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 1.0, "p2_dur": 2.0}, "2026-05-07": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 89.0, "p2_int": 85.0, "p1_dur": 1.0, "p2_dur": 1.5}, "2026-05-08": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 80.0, "p1_dur": 2.0, "p2_dur": 1.0}, "2026-05-09": {"p1_shots": 2, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 73.0, "p1_dur": 1.0, "p2_dur": 1.0}, "2026-05-10": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 80.0, "p1_dur": 3.0, "p2_dur": 1.0}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 73.0, "p2_int": null, "p1_dur": 2.0, "p2_dur": 1.0}, "2026-05-12": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 73.0, "p1_dur": 3.0, "p2_dur": 2.5}, "2026-05-13": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 83.0, "p2_int": null, "p1_dur": 2.0, "p2_dur": 2.0}, "2026-05-14": {"p1_shots": 2, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": 82.0, "p2_int": null, "p1_dur": 3.0, "p2_dur": null}}, "14584": {"2026-05-01": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 7.0, "p2_dur": 7.0}, "2026-05-02": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 4.0, "p2_dur": 2.0}, "2026-05-03": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 4.0, "p2_dur": 1.0}, "2026-05-04": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-05": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-06": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-07": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-08": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-09": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-10": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-11": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-12": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-13": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-14": {"p1_shots": 2, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": 83.0, "p2_int": null, "p1_dur": 1.0, "p2_dur": null}}, "14592": {"2026-05-01": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 49.0, "p2_int": 288.0, "p1_dur": 1.5, "p2_dur": 3.0}, "2026-05-02": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 205.0, "p1_dur": 3.0, "p2_dur": 2.0}, "2026-05-03": {"p1_shots": 2, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 206.0, "p1_dur": 2.5, "p2_dur": 1.0}, "2026-05-04": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 209.0, "p1_dur": 4.0, "p2_dur": 1.0}, "2026-05-05": {"p1_shots": 2, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": 38.0, "p2_int": 196.0, "p1_dur": 2.0, "p2_dur": 3.0}, "2026-05-06": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 174.5, "p1_dur": 1.0, "p2_dur": 1.0}, "2026-05-07": {"p1_shots": 1, "p2_shots": 4, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 119.0, "p1_dur": 4.0, "p2_dur": 1.0}, "2026-05-08": {"p1_shots": 1, "p2_shots": 4, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 140.0, "p1_dur": 4.0, "p2_dur": 2.5}, "2026-05-09": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 146.5, "p1_dur": 3.0, "p2_dur": 3.0}, "2026-05-10": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 146.0, "p1_dur": 3.0, "p2_dur": 3.0}, "2026-05-11": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 73.0, "p2_int": 259.0, "p1_dur": 2.5, "p2_dur": 3.0}, "2026-05-12": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 73.0, "p2_int": 252.0, "p1_dur": 2.5, "p2_dur": 3.0}, "2026-05-13": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 280.0, "p1_dur": 2.5, "p2_dur": 2.0}, "2026-05-14": {"p1_shots": 1, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 5.0, "p2_dur": null}}, "14593": {"2026-05-01": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 2.0, "p2_dur": 3.0}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-03": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-04": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 1.0, "p2_int": null, "p1_dur": 1.0, "p2_dur": 4.0}, "2026-05-05": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 4.0, "p2_dur": 5.0}, "2026-05-06": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 2.0, "p2_dur": 7.0}, "2026-05-07": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 80.0, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-08": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 77.0, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-09": {"p1_shots": 2, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 70.0, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 77.0, "p1_dur": 4.0, "p2_dur": 3.5}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 71.0, "p2_int": null, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-12": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 71.0, "p2_int": null, "p1_dur": 3.5, "p2_dur": 4.0}, "2026-05-13": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 3.0, "p2_dur": 4.0}, "2026-05-14": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 3.0, "p2_dur": 3.0}}, "14594": {"2026-05-01": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 8.0}, "2026-05-02": {"p1_shots": 0, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-03": {"p1_shots": 0, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-04": {"p1_shots": 1, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 4.0, "p2_dur": null}, "2026-05-05": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 4.0, "p2_dur": 1.0}, "2026-05-06": {"p1_shots": 0, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 296.0, "p1_dur": null, "p2_dur": 4.0}, "2026-05-07": {"p1_shots": 1, "p2_shots": 4, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 162.0, "p1_dur": 4.0, "p2_dur": 1.5}, "2026-05-08": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 77.0, "p2_int": 257.0, "p1_dur": 2.5, "p2_dur": 4.0}, "2026-05-09": {"p1_shots": 2, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": 77.0, "p2_int": 269.0, "p1_dur": 3.0, "p2_dur": 4.0}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 77.0, "p2_int": 269.0, "p1_dur": 2.5, "p2_dur": 4.0}, "2026-05-11": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-12": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-13": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-14": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}}, "14595": {"2026-05-01": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-03": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-04": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 1.0, "p2_int": null, "p1_dur": 1.0, "p2_dur": 5.0}, "2026-05-05": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 7.0}, "2026-05-06": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 7.0}, "2026-05-07": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 80.0, "p1_dur": 5.0, "p2_dur": 4.0}, "2026-05-08": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 77.0, "p1_dur": 7.0, "p2_dur": 4.0}, "2026-05-09": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 71.0, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 77.0, "p1_dur": 5.0, "p2_dur": 4.0}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 71.0, "p2_int": null, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-12": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 69.0, "p2_int": null, "p1_dur": 6.0, "p2_dur": 6.0}, "2026-05-13": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 7.0, "p2_dur": 7.0}, "2026-05-14": {"p1_shots": 1, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 7.0, "p2_dur": null}}, "14596": {"2026-05-01": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-02": {"p1_shots": 1, "p2_shots": 6, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 59.0, "p1_dur": 1.0, "p2_dur": 1.0}, "2026-05-03": {"p1_shots": 1, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 1.0, "p2_dur": null}, "2026-05-04": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-05": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 59.0, "p2_int": null, "p1_dur": 1.0, "p2_dur": 1.0}, "2026-05-06": {"p1_shots": 0, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": null}, "2026-05-07": {"p1_shots": 1, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 1.0, "p2_dur": null}, "2026-05-08": {"p1_shots": 1, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 1.0, "p2_dur": null}, "2026-05-09": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 1.0, "p2_dur": 1.0}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": 79.0, "p2_int": 80.0, "p1_dur": 1.0, "p2_dur": 1.0}, "2026-05-11": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 74.0, "p1_dur": 1.0, "p2_dur": 1.0}, "2026-05-12": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 74.0, "p1_dur": 1.0, "p2_dur": 1.0}, "2026-05-13": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 83.0, "p2_int": null, "p1_dur": 1.0, "p2_dur": 1.0}, "2026-05-14": {"p1_shots": 2, "p2_shots": 0, "p1_vol": null, "p2_vol": null, "p1_int": 86.0, "p2_int": null, "p1_dur": 1.0, "p2_dur": null}}, "14597": {"2026-05-01": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 1.0, "p2_dur": 4.0}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-03": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-04": {"p1_shots": 0, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": null, "p2_dur": 4.0}, "2026-05-05": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 5.0, "p2_dur": 7.0}, "2026-05-06": {"p1_shots": 1, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 4.0, "p2_dur": 7.0}, "2026-05-07": {"p1_shots": 1, "p2_shots": 3, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 82.0, "p1_dur": 4.0, "p2_dur": 2.0}, "2026-05-08": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 77.0, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-09": {"p1_shots": 2, "p2_shots": 4, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 33.0, "p1_dur": 4.0, "p2_dur": 2.5}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": 77.0, "p1_dur": 2.5, "p2_dur": 3.5}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 71.0, "p2_int": null, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-12": {"p1_shots": 2, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": 71.0, "p2_int": null, "p1_dur": 4.0, "p2_dur": 4.0}, "2026-05-13": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 3.0, "p2_dur": 3.0}, "2026-05-14": {"p1_shots": 1, "p2_shots": 1, "p1_vol": null, "p2_vol": null, "p1_int": null, "p2_int": null, "p1_dur": 2.0, "p2_dur": 4.0}}}};
-  const IRRIGATION_24H = {"dates": ["2026-05-16", "2026-05-17"], "rooms": {"14554": {"2026-05-16": {"p1_shots": 2, "p2_shots": 0, "p1_vol": 1766.5, "p2_vol": 0, "p1_int": 90.0, "p2_int": null, "p1_dur": 70.0, "p2_dur": null}, "2026-05-17": {"p1_shots": 0, "p2_shots": 2, "p1_vol": 0, "p2_vol": 1226.8, "p1_int": null, "p2_int": 170.0, "p1_dur": null, "p2_dur": 50.0}}, "14579": {"2026-05-16": {"p1_shots": 2, "p2_shots": 1, "p1_vol": 1765.0, "p2_vol": 1385.7, "p1_int": 40.0, "p2_int": null, "p1_dur": 45.0, "p2_dur": 50.0}, "2026-05-17": {"p1_shots": 0, "p2_shots": 5, "p1_vol": 0, "p2_vol": 6539.6, "p1_int": null, "p2_int": 85.0, "p1_dur": null, "p2_dur": 40.0}}, "14581": {"2026-05-16": {"p1_shots": 2, "p2_shots": 1, "p1_vol": 1075.7, "p2_vol": 720.6, "p1_int": 40.0, "p2_int": null, "p1_dur": 40.0, "p2_dur": 40.0}, "2026-05-17": {"p1_shots": 0, "p2_shots": 4, "p1_vol": 0, "p2_vol": 3781.9, "p1_int": null, "p2_int": 90.0, "p1_dur": null, "p2_dur": 50.0}}, "14584": {"2026-05-16": {"p1_shots": 2, "p2_shots": 0, "p1_vol": 927.2, "p2_vol": 0, "p1_int": 40.0, "p2_int": null, "p1_dur": 40.0, "p2_dur": null}, "2026-05-17": {"p1_shots": 0, "p2_shots": 5, "p1_vol": 0, "p2_vol": 2256.6, "p1_int": null, "p2_int": 85.0, "p1_dur": null, "p2_dur": 40.0}}, "14592": {"2026-05-16": {"p1_shots": 2, "p2_shots": 1, "p1_vol": 782.5, "p2_vol": 524.3, "p1_int": 50.0, "p2_int": null, "p1_dur": 45.0, "p2_dur": 40.0}, "2026-05-17": {"p1_shots": 0, "p2_shots": 5, "p1_vol": 0, "p2_vol": 2728.3, "p1_int": null, "p2_int": 85.0, "p1_dur": null, "p2_dur": 50.0}}, "14593": {"2026-05-16": {"p1_shots": 1, "p2_shots": 1, "p1_vol": 1636.3, "p2_vol": 1141.8, "p1_int": null, "p2_int": null, "p1_dur": 80.0, "p2_dur": 50.0}, "2026-05-17": {"p1_shots": 0, "p2_shots": 5, "p1_vol": 0, "p2_vol": 5369.8, "p1_int": null, "p2_int": 85.0, "p1_dur": null, "p2_dur": 40.0}}, "14594": {"2026-05-16": {"p1_shots": 2, "p2_shots": 0, "p1_vol": 704.1, "p2_vol": 0, "p1_int": 90.0, "p2_int": null, "p1_dur": 40.0, "p2_dur": null}, "2026-05-17": {"p1_shots": 0, "p2_shots": 5, "p1_vol": 0, "p2_vol": 1776.5, "p1_int": null, "p2_int": 85.0, "p1_dur": null, "p2_dur": 40.0}}, "14595": {"2026-05-16": {"p1_shots": 3, "p2_shots": 0, "p1_vol": 3372.0, "p2_vol": 0, "p1_int": 45.0, "p2_int": null, "p1_dur": 40.0, "p2_dur": null}, "2026-05-17": {"p1_shots": 0, "p2_shots": 2, "p1_vol": 0, "p2_vol": 3020.9, "p1_int": null, "p2_int": 170.0, "p1_dur": null, "p2_dur": 50.0}}, "14596": {"2026-05-16": {"p1_shots": 2, "p2_shots": 1, "p1_vol": 730.0, "p2_vol": 391.2, "p1_int": 40.0, "p2_int": null, "p1_dur": 40.0, "p2_dur": 40.0}, "2026-05-17": {"p1_shots": 0, "p2_shots": 4, "p1_vol": 0, "p2_vol": 1458.4, "p1_int": null, "p2_int": 90.0, "p1_dur": null, "p2_dur": 40.0}}, "14597": {"2026-05-16": {"p1_shots": 2, "p2_shots": 1, "p1_vol": 1658.5, "p2_vol": 1014.2, "p1_int": 40.0, "p2_int": null, "p1_dur": 40.0, "p2_dur": 40.0}, "2026-05-17": {"p1_shots": 0, "p2_shots": 5, "p1_vol": 0, "p2_vol": 4917.6, "p1_int": null, "p2_int": 85.0, "p1_dur": null, "p2_dur": 50.0}}}};
-  function getSelectedRooms(){
-    // Read the active chips from the DOM (the existing room-selector toggles a .active class)
+  window.IRRIGATION_V6 = {"dates": ["2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-14"], "rooms": {"14554": {"2026-05-01": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 6.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 613.4, "total_vol_ml_est": 613.4, "p1_flow_ml_per_min": 294.4, "p2_flow_ml_per_min": 102.2}, "2026-05-02": {"p1_shots": 2, "p2_shots": 0, "p1_dur_med_min": 2.5, "p2_dur_med_min": null, "p1_vol_ml_est": 1766.5, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 1766.5, "p1_flow_ml_per_min": 353.3, "p2_flow_ml_per_min": 245.4}, "2026-05-03": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 2.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 1766.5, "p2_vol_ml_est": 1226.8, "total_vol_ml_est": 2993.3, "p1_flow_ml_per_min": 441.6, "p2_flow_ml_per_min": 306.7}, "2026-05-04": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 2.5, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 1766.5, "p2_vol_ml_est": 1226.8, "total_vol_ml_est": 2993.3, "p1_flow_ml_per_min": 353.3, "p2_flow_ml_per_min": 613.4}, "2026-05-05": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 5.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 613.4, "total_vol_ml_est": 613.4, "p1_flow_ml_per_min": 294.4, "p2_flow_ml_per_min": 122.7}, "2026-05-06": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 7.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 613.4, "total_vol_ml_est": 613.4, "p1_flow_ml_per_min": 294.4, "p2_flow_ml_per_min": 87.6}, "2026-05-07": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 5.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 883.2, "p2_vol_ml_est": 1840.2, "total_vol_ml_est": 2723.4, "p1_flow_ml_per_min": 176.7, "p2_flow_ml_per_min": 153.3}, "2026-05-08": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 4.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 883.2, "p2_vol_ml_est": 1840.2, "total_vol_ml_est": 2723.4, "p1_flow_ml_per_min": 220.8, "p2_flow_ml_per_min": 306.7}, "2026-05-09": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 3.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 1766.5, "p2_vol_ml_est": 613.4, "total_vol_ml_est": 2379.9, "p1_flow_ml_per_min": 294.4, "p2_flow_ml_per_min": 153.3}, "2026-05-10": {"p1_shots": 3, "p2_shots": 1, "p1_dur_med_min": 2.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 2649.8, "p2_vol_ml_est": 613.4, "total_vol_ml_est": 3263.2, "p1_flow_ml_per_min": 441.6, "p2_flow_ml_per_min": 153.3}, "2026-05-11": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 3.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 883.2, "p2_vol_ml_est": 613.4, "total_vol_ml_est": 1496.7, "p1_flow_ml_per_min": 294.4, "p2_flow_ml_per_min": 306.7}, "2026-05-12": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 2.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 1766.5, "p2_vol_ml_est": 613.4, "total_vol_ml_est": 2379.9, "p1_flow_ml_per_min": 441.6, "p2_flow_ml_per_min": 306.7}, "2026-05-13": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 4.5, "p2_dur_med_min": 6.0, "p1_vol_ml_est": 1766.5, "p2_vol_ml_est": 613.4, "total_vol_ml_est": 2379.9, "p1_flow_ml_per_min": 196.3, "p2_flow_ml_per_min": 102.2}, "2026-05-14": {"p1_shots": 1, "p2_shots": 0, "p1_dur_med_min": 6.0, "p2_dur_med_min": null, "p1_vol_ml_est": 883.2, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 883.2, "p1_flow_ml_per_min": 147.2, "p2_flow_ml_per_min": 245.4}}, "14579": {"2026-05-01": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 1.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 882.5, "p2_vol_ml_est": 1320.9, "total_vol_ml_est": 2203.4, "p1_flow_ml_per_min": 882.5, "p2_flow_ml_per_min": 330.2}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1320.9, "total_vol_ml_est": 1320.9, "p1_flow_ml_per_min": 441.2, "p2_flow_ml_per_min": 330.2}, "2026-05-03": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1320.9, "total_vol_ml_est": 1320.9, "p1_flow_ml_per_min": 441.2, "p2_flow_ml_per_min": 330.2}, "2026-05-04": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1320.9, "total_vol_ml_est": 1320.9, "p1_flow_ml_per_min": 441.2, "p2_flow_ml_per_min": 330.2}, "2026-05-05": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 7.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1320.9, "total_vol_ml_est": 1320.9, "p1_flow_ml_per_min": 441.2, "p2_flow_ml_per_min": 188.7}, "2026-05-06": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 2.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 882.5, "p2_vol_ml_est": 1320.9, "total_vol_ml_est": 2203.4, "p1_flow_ml_per_min": 441.2, "p2_flow_ml_per_min": 330.2}, "2026-05-07": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 2.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 882.5, "p2_vol_ml_est": 3962.7, "total_vol_ml_est": 4845.2, "p1_flow_ml_per_min": 441.2, "p2_flow_ml_per_min": 330.2}, "2026-05-08": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 882.5, "p2_vol_ml_est": 2641.8, "total_vol_ml_est": 3524.3, "p1_flow_ml_per_min": 220.6, "p2_flow_ml_per_min": 330.2}, "2026-05-09": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 2.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 882.5, "p2_vol_ml_est": 3962.7, "total_vol_ml_est": 4845.2, "p1_flow_ml_per_min": 441.2, "p2_flow_ml_per_min": 1320.9}, "2026-05-10": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 2.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 882.5, "p2_vol_ml_est": 2641.8, "total_vol_ml_est": 3524.3, "p1_flow_ml_per_min": 441.2, "p2_flow_ml_per_min": 330.2}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 1765.0, "p2_vol_ml_est": 1320.9, "total_vol_ml_est": 3085.9, "p1_flow_ml_per_min": 220.6, "p2_flow_ml_per_min": 330.2}, "2026-05-12": {"p1_shots": 4, "p2_shots": 2, "p1_dur_med_min": 1.5, "p2_dur_med_min": 1.5, "p1_vol_ml_est": 3530.0, "p2_vol_ml_est": 2641.8, "total_vol_ml_est": 6171.8, "p1_flow_ml_per_min": 588.3, "p2_flow_ml_per_min": 880.6}, "2026-05-13": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 882.5, "p2_vol_ml_est": 1320.9, "total_vol_ml_est": 2203.4, "p1_flow_ml_per_min": 220.6, "p2_flow_ml_per_min": 330.2}, "2026-05-14": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 882.5, "p2_vol_ml_est": 1320.9, "total_vol_ml_est": 2203.4, "p1_flow_ml_per_min": 220.6, "p2_flow_ml_per_min": 660.4}}, "14581": {"2026-05-01": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 900.5, "total_vol_ml_est": 900.5, "p1_flow_ml_per_min": 268.9, "p2_flow_ml_per_min": 450.2}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 900.5, "total_vol_ml_est": 900.5, "p1_flow_ml_per_min": 268.9, "p2_flow_ml_per_min": 900.5}, "2026-05-03": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 268.9, "p2_flow_ml_per_min": 900.5}, "2026-05-04": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 268.9, "p2_flow_ml_per_min": 900.5}, "2026-05-05": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 7.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 1075.7, "p2_vol_ml_est": 900.5, "total_vol_ml_est": 1976.2, "p1_flow_ml_per_min": 76.8, "p2_flow_ml_per_min": 900.5}, "2026-05-06": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 1.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 537.9, "p2_vol_ml_est": 900.5, "total_vol_ml_est": 1438.3, "p1_flow_ml_per_min": 537.9, "p2_flow_ml_per_min": 450.2}, "2026-05-07": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.5, "p1_vol_ml_est": 1075.7, "p2_vol_ml_est": 1801.0, "total_vol_ml_est": 2876.7, "p1_flow_ml_per_min": 537.9, "p2_flow_ml_per_min": 600.3}, "2026-05-08": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 2.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 537.9, "p2_vol_ml_est": 1801.0, "total_vol_ml_est": 2338.8, "p1_flow_ml_per_min": 268.9, "p2_flow_ml_per_min": 900.5}, "2026-05-09": {"p1_shots": 2, "p2_shots": 3, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 1075.7, "p2_vol_ml_est": 2701.5, "total_vol_ml_est": 3777.2, "p1_flow_ml_per_min": 537.9, "p2_flow_ml_per_min": 900.5}, "2026-05-10": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 3.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 537.9, "p2_vol_ml_est": 1801.0, "total_vol_ml_est": 2338.8, "p1_flow_ml_per_min": 179.3, "p2_flow_ml_per_min": 900.5}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 2.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 1075.7, "p2_vol_ml_est": 900.5, "total_vol_ml_est": 1976.2, "p1_flow_ml_per_min": 268.9, "p2_flow_ml_per_min": 900.5}, "2026-05-12": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 3.0, "p2_dur_med_min": 2.5, "p1_vol_ml_est": 537.9, "p2_vol_ml_est": 1801.0, "total_vol_ml_est": 2338.8, "p1_flow_ml_per_min": 179.3, "p2_flow_ml_per_min": 360.2}, "2026-05-13": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 2.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 1075.7, "p2_vol_ml_est": 900.5, "total_vol_ml_est": 1976.2, "p1_flow_ml_per_min": 268.9, "p2_flow_ml_per_min": 450.2}, "2026-05-14": {"p1_shots": 2, "p2_shots": 0, "p1_dur_med_min": 3.0, "p2_dur_med_min": null, "p1_vol_ml_est": 1075.7, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 1075.7, "p1_flow_ml_per_min": 179.3, "p2_flow_ml_per_min": 900.5}}, "14584": {"2026-05-01": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 7.0, "p2_dur_med_min": 7.0, "p1_vol_ml_est": 463.6, "p2_vol_ml_est": 451.3, "total_vol_ml_est": 914.9, "p1_flow_ml_per_min": 66.2, "p2_flow_ml_per_min": 64.5}, "2026-05-02": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 463.6, "p2_vol_ml_est": 451.3, "total_vol_ml_est": 914.9, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-03": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 463.6, "p2_vol_ml_est": 451.3, "total_vol_ml_est": 914.9, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 451.3}, "2026-05-04": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-05": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-06": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-07": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-08": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-09": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-10": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-11": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-12": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-13": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 115.9, "p2_flow_ml_per_min": 225.7}, "2026-05-14": {"p1_shots": 2, "p2_shots": 0, "p1_dur_med_min": 1.0, "p2_dur_med_min": null, "p1_vol_ml_est": 927.2, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 927.2, "p1_flow_ml_per_min": 463.6, "p2_flow_ml_per_min": 225.7}}, "14592": {"2026-05-01": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 1.5, "p2_dur_med_min": 3.0, "p1_vol_ml_est": 782.5, "p2_vol_ml_est": 1084.2, "total_vol_ml_est": 1866.7, "p1_flow_ml_per_min": 260.8, "p2_flow_ml_per_min": 180.7}, "2026-05-02": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 3.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 391.2, "p2_vol_ml_est": 1626.3, "total_vol_ml_est": 2017.6, "p1_flow_ml_per_min": 130.4, "p2_flow_ml_per_min": 271.1}, "2026-05-03": {"p1_shots": 2, "p2_shots": 3, "p1_dur_med_min": 2.5, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 782.5, "p2_vol_ml_est": 1626.3, "total_vol_ml_est": 2408.8, "p1_flow_ml_per_min": 156.5, "p2_flow_ml_per_min": 542.1}, "2026-05-04": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 4.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 391.2, "p2_vol_ml_est": 1626.3, "total_vol_ml_est": 2017.6, "p1_flow_ml_per_min": 97.8, "p2_flow_ml_per_min": 542.1}, "2026-05-05": {"p1_shots": 2, "p2_shots": 3, "p1_dur_med_min": 2.0, "p2_dur_med_min": 3.0, "p1_vol_ml_est": 782.5, "p2_vol_ml_est": 1626.3, "total_vol_ml_est": 2408.8, "p1_flow_ml_per_min": 195.6, "p2_flow_ml_per_min": 180.7}, "2026-05-06": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 391.2, "p2_vol_ml_est": 1626.3, "total_vol_ml_est": 2017.6, "p1_flow_ml_per_min": 391.2, "p2_flow_ml_per_min": 542.1}, "2026-05-07": {"p1_shots": 1, "p2_shots": 4, "p1_dur_med_min": 4.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 391.2, "p2_vol_ml_est": 2168.4, "total_vol_ml_est": 2559.7, "p1_flow_ml_per_min": 97.8, "p2_flow_ml_per_min": 542.1}, "2026-05-08": {"p1_shots": 1, "p2_shots": 4, "p1_dur_med_min": 4.0, "p2_dur_med_min": 2.5, "p1_vol_ml_est": 391.2, "p2_vol_ml_est": 2168.4, "total_vol_ml_est": 2559.7, "p1_flow_ml_per_min": 97.8, "p2_flow_ml_per_min": 216.8}, "2026-05-09": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 3.0, "p2_dur_med_min": 3.0, "p1_vol_ml_est": 391.2, "p2_vol_ml_est": 1626.3, "total_vol_ml_est": 2017.6, "p1_flow_ml_per_min": 130.4, "p2_flow_ml_per_min": 180.7}, "2026-05-10": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 3.0, "p2_dur_med_min": 3.0, "p1_vol_ml_est": 391.2, "p2_vol_ml_est": 1626.3, "total_vol_ml_est": 2017.6, "p1_flow_ml_per_min": 130.4, "p2_flow_ml_per_min": 180.7}, "2026-05-11": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 2.5, "p2_dur_med_min": 3.0, "p1_vol_ml_est": 782.5, "p2_vol_ml_est": 1084.2, "total_vol_ml_est": 1866.7, "p1_flow_ml_per_min": 156.5, "p2_flow_ml_per_min": 180.7}, "2026-05-12": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 2.5, "p2_dur_med_min": 3.0, "p1_vol_ml_est": 782.5, "p2_vol_ml_est": 1084.2, "total_vol_ml_est": 1866.7, "p1_flow_ml_per_min": 156.5, "p2_flow_ml_per_min": 180.7}, "2026-05-13": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 2.5, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 782.5, "p2_vol_ml_est": 1084.2, "total_vol_ml_est": 1866.7, "p1_flow_ml_per_min": 156.5, "p2_flow_ml_per_min": 271.1}, "2026-05-14": {"p1_shots": 1, "p2_shots": 0, "p1_dur_med_min": 5.0, "p2_dur_med_min": null, "p1_vol_ml_est": 391.2, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 391.2, "p1_flow_ml_per_min": 78.2, "p2_flow_ml_per_min": 271.1}}, "14593": {"2026-05-01": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 2.0, "p2_dur_med_min": 3.0, "p1_vol_ml_est": 1636.3, "p2_vol_ml_est": 1085.3, "total_vol_ml_est": 2721.6, "p1_flow_ml_per_min": 818.1, "p2_flow_ml_per_min": 361.8}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1085.3, "total_vol_ml_est": 1085.3, "p1_flow_ml_per_min": 409.1, "p2_flow_ml_per_min": 271.3}, "2026-05-03": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1085.3, "total_vol_ml_est": 1085.3, "p1_flow_ml_per_min": 409.1, "p2_flow_ml_per_min": 271.3}, "2026-05-04": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 1.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 3272.6, "p2_vol_ml_est": 1085.3, "total_vol_ml_est": 4357.9, "p1_flow_ml_per_min": 1636.3, "p2_flow_ml_per_min": 271.3}, "2026-05-05": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 4.0, "p2_dur_med_min": 5.0, "p1_vol_ml_est": 1636.3, "p2_vol_ml_est": 2170.5, "total_vol_ml_est": 3806.8, "p1_flow_ml_per_min": 409.1, "p2_flow_ml_per_min": 217.1}, "2026-05-06": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 2.0, "p2_dur_med_min": 7.0, "p1_vol_ml_est": 1636.3, "p2_vol_ml_est": 1085.3, "total_vol_ml_est": 2721.6, "p1_flow_ml_per_min": 818.1, "p2_flow_ml_per_min": 155.0}, "2026-05-07": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 1636.3, "p2_vol_ml_est": 3255.8, "total_vol_ml_est": 4892.1, "p1_flow_ml_per_min": 409.1, "p2_flow_ml_per_min": 271.3}, "2026-05-08": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 3272.6, "p2_vol_ml_est": 2170.5, "total_vol_ml_est": 5443.1, "p1_flow_ml_per_min": 409.1, "p2_flow_ml_per_min": 271.3}, "2026-05-09": {"p1_shots": 2, "p2_shots": 3, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 3272.6, "p2_vol_ml_est": 3255.8, "total_vol_ml_est": 6528.4, "p1_flow_ml_per_min": 409.1, "p2_flow_ml_per_min": 271.3}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 4.0, "p2_dur_med_min": 3.5, "p1_vol_ml_est": 3272.6, "p2_vol_ml_est": 2170.5, "total_vol_ml_est": 5443.1, "p1_flow_ml_per_min": 409.1, "p2_flow_ml_per_min": 310.1}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 3272.6, "p2_vol_ml_est": 1085.3, "total_vol_ml_est": 4357.9, "p1_flow_ml_per_min": 409.1, "p2_flow_ml_per_min": 271.3}, "2026-05-12": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 3.5, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 3272.6, "p2_vol_ml_est": 1085.3, "total_vol_ml_est": 4357.9, "p1_flow_ml_per_min": 467.5, "p2_flow_ml_per_min": 271.3}, "2026-05-13": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 3.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 1636.3, "p2_vol_ml_est": 1085.3, "total_vol_ml_est": 2721.6, "p1_flow_ml_per_min": 545.4, "p2_flow_ml_per_min": 271.3}, "2026-05-14": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 3.0, "p2_dur_med_min": 3.0, "p1_vol_ml_est": 1636.3, "p2_vol_ml_est": 1085.3, "total_vol_ml_est": 2721.6, "p1_flow_ml_per_min": 545.4, "p2_flow_ml_per_min": 361.8}}, "14594": {"2026-05-01": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 8.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 355.3, "total_vol_ml_est": 355.3, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 44.4}, "2026-05-02": {"p1_shots": 0, "p2_shots": 2, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 710.6, "total_vol_ml_est": 710.6, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 88.8}, "2026-05-03": {"p1_shots": 0, "p2_shots": 2, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 710.6, "total_vol_ml_est": 710.6, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 88.8}, "2026-05-04": {"p1_shots": 1, "p2_shots": 0, "p1_dur_med_min": 4.0, "p2_dur_med_min": null, "p1_vol_ml_est": 352.1, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 352.1, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 88.8}, "2026-05-05": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 352.1, "p2_vol_ml_est": 355.3, "total_vol_ml_est": 707.4, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 355.3}, "2026-05-06": {"p1_shots": 0, "p2_shots": 2, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 710.6, "total_vol_ml_est": 710.6, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 88.8}, "2026-05-07": {"p1_shots": 1, "p2_shots": 4, "p1_dur_med_min": 4.0, "p2_dur_med_min": 1.5, "p1_vol_ml_est": 352.1, "p2_vol_ml_est": 1421.2, "total_vol_ml_est": 1773.2, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 236.9}, "2026-05-08": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 2.5, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 704.1, "p2_vol_ml_est": 710.6, "total_vol_ml_est": 1414.7, "p1_flow_ml_per_min": 140.8, "p2_flow_ml_per_min": 88.8}, "2026-05-09": {"p1_shots": 2, "p2_shots": 3, "p1_dur_med_min": 3.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 704.1, "p2_vol_ml_est": 1065.9, "total_vol_ml_est": 1770.0, "p1_flow_ml_per_min": 117.4, "p2_flow_ml_per_min": 88.8}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 2.5, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 704.1, "p2_vol_ml_est": 710.6, "total_vol_ml_est": 1414.7, "p1_flow_ml_per_min": 140.8, "p2_flow_ml_per_min": 88.8}, "2026-05-11": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 88.8}, "2026-05-12": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 88.8}, "2026-05-13": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 88.8}, "2026-05-14": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 88.0, "p2_flow_ml_per_min": 88.8}}, "14595": {"2026-05-01": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1510.5, "total_vol_ml_est": 1510.5, "p1_flow_ml_per_min": 281.0, "p2_flow_ml_per_min": 377.6}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1510.5, "total_vol_ml_est": 1510.5, "p1_flow_ml_per_min": 281.0, "p2_flow_ml_per_min": 377.6}, "2026-05-03": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1510.5, "total_vol_ml_est": 1510.5, "p1_flow_ml_per_min": 281.0, "p2_flow_ml_per_min": 377.6}, "2026-05-04": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 1.0, "p2_dur_med_min": 5.0, "p1_vol_ml_est": 2248.0, "p2_vol_ml_est": 1510.5, "total_vol_ml_est": 3758.4, "p1_flow_ml_per_min": 1124.0, "p2_flow_ml_per_min": 302.1}, "2026-05-05": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 7.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1510.5, "total_vol_ml_est": 1510.5, "p1_flow_ml_per_min": 281.0, "p2_flow_ml_per_min": 215.8}, "2026-05-06": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 7.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 1510.5, "total_vol_ml_est": 1510.5, "p1_flow_ml_per_min": 281.0, "p2_flow_ml_per_min": 215.8}, "2026-05-07": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 5.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 2248.0, "p2_vol_ml_est": 3020.9, "total_vol_ml_est": 5268.9, "p1_flow_ml_per_min": 224.8, "p2_flow_ml_per_min": 377.6}, "2026-05-08": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 7.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 1124.0, "p2_vol_ml_est": 3020.9, "total_vol_ml_est": 4144.9, "p1_flow_ml_per_min": 160.6, "p2_flow_ml_per_min": 377.6}, "2026-05-09": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 2248.0, "p2_vol_ml_est": 3020.9, "total_vol_ml_est": 5268.9, "p1_flow_ml_per_min": 281.0, "p2_flow_ml_per_min": 377.6}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 5.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 2248.0, "p2_vol_ml_est": 3020.9, "total_vol_ml_est": 5268.9, "p1_flow_ml_per_min": 224.8, "p2_flow_ml_per_min": 377.6}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 2248.0, "p2_vol_ml_est": 1510.5, "total_vol_ml_est": 3758.4, "p1_flow_ml_per_min": 281.0, "p2_flow_ml_per_min": 377.6}, "2026-05-12": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 6.0, "p2_dur_med_min": 6.0, "p1_vol_ml_est": 2248.0, "p2_vol_ml_est": 1510.5, "total_vol_ml_est": 3758.4, "p1_flow_ml_per_min": 187.3, "p2_flow_ml_per_min": 251.7}, "2026-05-13": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 7.0, "p2_dur_med_min": 7.0, "p1_vol_ml_est": 1124.0, "p2_vol_ml_est": 1510.5, "total_vol_ml_est": 2634.4, "p1_flow_ml_per_min": 160.6, "p2_flow_ml_per_min": 215.8}, "2026-05-14": {"p1_shots": 1, "p2_shots": 0, "p1_dur_med_min": 7.0, "p2_dur_med_min": null, "p1_vol_ml_est": 1124.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 1124.0, "p1_flow_ml_per_min": 160.6, "p2_flow_ml_per_min": 377.6}}, "14596": {"2026-05-01": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-02": {"p1_shots": 1, "p2_shots": 6, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 365.0, "p2_vol_ml_est": 2219.5, "total_vol_ml_est": 2584.5, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-03": {"p1_shots": 1, "p2_shots": 0, "p1_dur_med_min": 1.0, "p2_dur_med_min": null, "p1_vol_ml_est": 365.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 365.0, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-04": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-05": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 730.0, "p2_vol_ml_est": 369.9, "total_vol_ml_est": 1099.9, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-06": {"p1_shots": 0, "p2_shots": 0, "p1_dur_med_min": null, "p2_dur_med_min": null, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": null, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-07": {"p1_shots": 1, "p2_shots": 0, "p1_dur_med_min": 1.0, "p2_dur_med_min": null, "p1_vol_ml_est": 365.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 365.0, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-08": {"p1_shots": 1, "p2_shots": 0, "p1_dur_med_min": 1.0, "p2_dur_med_min": null, "p1_vol_ml_est": 365.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 365.0, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-09": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 365.0, "p2_vol_ml_est": 369.9, "total_vol_ml_est": 734.9, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 730.0, "p2_vol_ml_est": 739.8, "total_vol_ml_est": 1469.8, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-11": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 365.0, "p2_vol_ml_est": 739.8, "total_vol_ml_est": 1104.8, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-12": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 365.0, "p2_vol_ml_est": 739.8, "total_vol_ml_est": 1104.8, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-13": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 1.0, "p2_dur_med_min": 1.0, "p1_vol_ml_est": 730.0, "p2_vol_ml_est": 369.9, "total_vol_ml_est": 1099.9, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}, "2026-05-14": {"p1_shots": 2, "p2_shots": 0, "p1_dur_med_min": 1.0, "p2_dur_med_min": null, "p1_vol_ml_est": 730.0, "p2_vol_ml_est": 0.0, "total_vol_ml_est": 730.0, "p1_flow_ml_per_min": 365.0, "p2_flow_ml_per_min": 369.9}}, "14597": {"2026-05-01": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 1.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 829.2, "p2_vol_ml_est": 988.6, "total_vol_ml_est": 1817.9, "p1_flow_ml_per_min": 829.2, "p2_flow_ml_per_min": 247.2}, "2026-05-02": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 988.6, "total_vol_ml_est": 988.6, "p1_flow_ml_per_min": 207.3, "p2_flow_ml_per_min": 247.2}, "2026-05-03": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 988.6, "total_vol_ml_est": 988.6, "p1_flow_ml_per_min": 207.3, "p2_flow_ml_per_min": 247.2}, "2026-05-04": {"p1_shots": 0, "p2_shots": 1, "p1_dur_med_min": null, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 0.0, "p2_vol_ml_est": 988.6, "total_vol_ml_est": 988.6, "p1_flow_ml_per_min": 207.3, "p2_flow_ml_per_min": 247.2}, "2026-05-05": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 5.0, "p2_dur_med_min": 7.0, "p1_vol_ml_est": 1658.5, "p2_vol_ml_est": 988.6, "total_vol_ml_est": 2647.1, "p1_flow_ml_per_min": 165.8, "p2_flow_ml_per_min": 141.2}, "2026-05-06": {"p1_shots": 1, "p2_shots": 2, "p1_dur_med_min": 4.0, "p2_dur_med_min": 7.0, "p1_vol_ml_est": 829.2, "p2_vol_ml_est": 1977.3, "total_vol_ml_est": 2806.5, "p1_flow_ml_per_min": 207.3, "p2_flow_ml_per_min": 141.2}, "2026-05-07": {"p1_shots": 1, "p2_shots": 3, "p1_dur_med_min": 4.0, "p2_dur_med_min": 2.0, "p1_vol_ml_est": 829.2, "p2_vol_ml_est": 2965.9, "total_vol_ml_est": 3795.2, "p1_flow_ml_per_min": 207.3, "p2_flow_ml_per_min": 494.3}, "2026-05-08": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 1658.5, "p2_vol_ml_est": 1977.3, "total_vol_ml_est": 3635.8, "p1_flow_ml_per_min": 207.3, "p2_flow_ml_per_min": 247.2}, "2026-05-09": {"p1_shots": 2, "p2_shots": 4, "p1_dur_med_min": 4.0, "p2_dur_med_min": 2.5, "p1_vol_ml_est": 1658.5, "p2_vol_ml_est": 3954.5, "total_vol_ml_est": 5613.0, "p1_flow_ml_per_min": 207.3, "p2_flow_ml_per_min": 395.5}, "2026-05-10": {"p1_shots": 2, "p2_shots": 2, "p1_dur_med_min": 2.5, "p2_dur_med_min": 3.5, "p1_vol_ml_est": 1658.5, "p2_vol_ml_est": 1977.3, "total_vol_ml_est": 3635.8, "p1_flow_ml_per_min": 331.7, "p2_flow_ml_per_min": 282.5}, "2026-05-11": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 1658.5, "p2_vol_ml_est": 988.6, "total_vol_ml_est": 2647.1, "p1_flow_ml_per_min": 207.3, "p2_flow_ml_per_min": 247.2}, "2026-05-12": {"p1_shots": 2, "p2_shots": 1, "p1_dur_med_min": 4.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 1658.5, "p2_vol_ml_est": 988.6, "total_vol_ml_est": 2647.1, "p1_flow_ml_per_min": 207.3, "p2_flow_ml_per_min": 247.2}, "2026-05-13": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 3.0, "p2_dur_med_min": 3.0, "p1_vol_ml_est": 829.2, "p2_vol_ml_est": 988.6, "total_vol_ml_est": 1817.9, "p1_flow_ml_per_min": 276.4, "p2_flow_ml_per_min": 329.5}, "2026-05-14": {"p1_shots": 1, "p2_shots": 1, "p1_dur_med_min": 2.0, "p2_dur_med_min": 4.0, "p1_vol_ml_est": 829.2, "p2_vol_ml_est": 988.6, "total_vol_ml_est": 1817.9, "p1_flow_ml_per_min": 414.6, "p2_flow_ml_per_min": 247.2}}}};
+  window.IRRIGATION_CAL = {"14554": {"p1_vol_per_shot": 883.25, "p2_vol_per_shot": 613.4, "p1_flow": 294.4166666666667, "p2_flow": 245.35999999999999}, "14579": {"p1_vol_per_shot": 882.5, "p2_vol_per_shot": 1320.8833333333334, "p1_flow": 441.25, "p2_flow": 330.22083333333336}, "14581": {"p1_vol_per_shot": 537.85, "p2_vol_per_shot": 900.5, "p1_flow": 268.925, "p2_flow": 900.5}, "14584": {"p1_vol_per_shot": 463.6, "p2_vol_per_shot": 451.32, "p1_flow": 115.9, "p2_flow": 225.66}, "14592": {"p1_vol_per_shot": 391.25, "p2_vol_per_shot": 542.1, "p1_flow": 130.41666666666666, "p2_flow": 271.05}, "14593": {"p1_vol_per_shot": 1636.3, "p2_vol_per_shot": 1085.2666666666667, "p1_flow": 409.075, "p2_flow": 271.31666666666666}, "14594": {"p1_vol_per_shot": 352.05, "p2_vol_per_shot": 355.3, "p1_flow": 88.0125, "p2_flow": 88.825}, "14595": {"p1_vol_per_shot": 1124.0, "p2_vol_per_shot": 1510.45, "p1_flow": 281.0, "p2_flow": 377.6125}, "14596": {"p1_vol_per_shot": 365.0, "p2_vol_per_shot": 369.92, "p1_flow": 365.0, "p2_flow": 369.92}, "14597": {"p1_vol_per_shot": 829.25, "p2_vol_per_shot": 988.6333333333333, "p1_flow": 207.3125, "p2_flow": 247.15833333333333}};
+
+  function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function resolveColor(c){
+    if(!c) return '#888';
+    if(typeof c === 'string' && c.startsWith('var(--')) return cssVar(c.slice(4,-1)) || '#888';
+    return c;
+  }
+  function getSelected(){
+    if (Array.isArray(window.selectedRooms) && window.selectedRooms.length) return window.selectedRooms;
     const chips = document.querySelectorAll('#roomSelector .room-chip.active');
-    if (chips && chips.length){
-      return Array.from(chips).map(c => c.dataset.rid).filter(rid => rid in IRRIGATION.rooms);
-    }
-    // Fallback: all rooms
-    return Object.keys(IRRIGATION.rooms);
+    if (chips && chips.length) return Array.from(chips).map(c=>c.dataset.rid);
+    return Object.keys(window.IRRIGATION_V6.rooms);
   }
-  function getRoomName(rid){
-    // Try to read from the chip label (e.g. "F 1-3 <span class='chip-phase'>Bulking</span>")
-    const chip = document.querySelector('#roomSelector .room-chip[data-rid="'+rid+'"]');
-    if (chip){
-      const txt = chip.firstChild && chip.firstChild.textContent ? chip.firstChild.textContent.trim() : '';
-      if (txt) return txt;
-    }
-    return rid;
+  function roomColor(rid){
+    if (window.ROOM_COLORS && window.ROOM_COLORS[rid]) return window.ROOM_COLORS[rid];
+    const FB = ['#6b8e23','#a3c14d','#3b82f6','#f59e0b','#10b981','#ef4444','#8b5cf6','#ec4899','#14b8a6','#f97316'];
+    const order = ["14554","14579","14581","14584","14592","14593","14594","14595","14596","14597"];
+    const idx = order.indexOf(rid);
+    const line = FB[idx>=0?idx:0];
+    return { line, fill: line+'33', deep: line };
   }
-  // Stable colour palette keyed by room order (same hue family as top-section charts)
-  const ROOM_ORDER_FALLBACK = ['14554','14579','14581','14584','14592','14593','14594','14595','14596','14597'];
-  const PALETTE = [
-    { line:'#6b8e23', fill:'rgba(107,142,35,.18)', deep:'#3d5413' },
-    { line:'#a3c14d', fill:'rgba(163,193,77,.18)', deep:'#6a7f33' },
-    { line:'#3b82f6', fill:'rgba(59,130,246,.18)', deep:'#1d4ed8' },
-    { line:'#f59e0b', fill:'rgba(245,158,11,.18)', deep:'#b45309' },
-    { line:'#10b981', fill:'rgba(16,185,129,.18)', deep:'#047857' },
-    { line:'#ef4444', fill:'rgba(239,68,68,.18)',  deep:'#b91c1c' },
-    { line:'#8b5cf6', fill:'rgba(139,92,246,.18)', deep:'#6d28d9' },
-    { line:'#ec4899', fill:'rgba(236,72,153,.18)', deep:'#be185d' },
-    { line:'#14b8a6', fill:'rgba(20,184,166,.18)', deep:'#0f766e' },
-    { line:'#f97316', fill:'rgba(249,115,22,.18)', deep:'#c2410c' },
-  ];
-  function colorFor(rid){
-    const idx = ROOM_ORDER_FALLBACK.indexOf(rid);
-    return PALETTE[idx >= 0 ? idx : 0];
+  function roomName(rid){ return (window.ROOMS_META && window.ROOMS_META[rid] && window.ROOMS_META[rid].name) || rid; }
+
+  function bandPlugin(yMin, yMax, color){
+    return {
+      id: 'irrband_'+yMin+'_'+yMax+'_'+Math.random().toString(36).slice(2,7),
+      beforeDraw(c){
+        try{
+          const ya = c.scales.y; if(!ya) return;
+          const {ctx, chartArea:{left,right}} = c;
+          ctx.save(); ctx.fillStyle = color;
+          const top = ya.getPixelForValue(yMax); const bot = ya.getPixelForValue(yMin);
+          ctx.fillRect(left, top, right-left, bot-top); ctx.restore();
+        }catch(e){}
+      }
+    };
   }
-  function cssVar(v){
-    return getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+  function vals(rid, key){
+    const dates = window.IRRIGATION_V6.dates;
+    return dates.map(d=>{
+      const row = (window.IRRIGATION_V6.rooms[rid]||{})[d];
+      return row ? (row[key] == null ? null : row[key]) : null;
+    });
   }
-  function resolveColor(v){
-    if (!v) return '#888';
-    if (typeof v === 'string' && v.startsWith('var(')){
-      const name = v.match(/var\(([^)]+)\)/)[1];
-      return cssVar(name);
-    }
-    return v;
-  }
-  function renderIrrCharts(){
+
+  function renderIrr(){
     if (!window.Chart) return;
     window.__irrCharts = window.__irrCharts || {};
     Object.values(window.__irrCharts).forEach(c=>{ try{c.destroy();}catch(e){} });
     window.__irrCharts = {};
-
-    const rooms = getSelectedRooms();
-    const dates = IRRIGATION.dates;
     const lang = document.documentElement.dataset.lang === 'es' ? 'es' : 'en';
+    const rooms = getSelected();
+    if (!rooms.length) return;
+    const dates = window.IRRIGATION_V6.dates;
+    const singleRoom = rooms.length === 1;
 
-    function vals(rid, key){
-      return dates.map(d => {
-        const row = IRRIGATION.rooms[rid] && IRRIGATION.rooms[rid][d];
-        return row ? row[key] : null;
-      });
-    }
-
-    // --- Chart A: daily shot count (stacked bars) ---
-    const aDatasets = [];
-    rooms.forEach(rid => {
-      const c = colorFor(rid);
-      const m = { name: getRoomName(rid) };
-      aDatasets.push({
-        label: m.name + ' P1',
-        data: vals(rid, 'p1_shots'),
-        backgroundColor: resolveColor(c.line),
-        borderColor: resolveColor(c.deep),
-        borderWidth: 1,
-        stack: 'r' + rid,
-      });
-      aDatasets.push({
-        label: m.name + ' P2',
-        data: vals(rid, 'p2_shots'),
-        backgroundColor: 'rgba(0,0,0,0)',
-        borderColor: resolveColor(c.deep),
-        borderWidth: 1.5,
-        borderDash: [4,3],
-        stack: 'r' + rid,
-      });
+    // ---- A ----
+    const aDS = [];
+    rooms.forEach(rid=>{
+      const c = roomColor(rid);
+      aDS.push({ label: roomName(rid)+' P1', data: vals(rid,'p1_shots'),
+        backgroundColor: resolveColor(c.line), borderColor: resolveColor(c.deep), borderWidth:1, stack:'r'+rid });
+      aDS.push({ label: roomName(rid)+' P2', data: vals(rid,'p2_shots'),
+        backgroundColor:'transparent', borderColor: resolveColor(c.deep), borderWidth:1.5, borderDash:[4,3], stack:'r'+rid });
     });
     window.__irrCharts.A = new Chart(document.getElementById('chartIrrShots'), {
-      type: 'bar',
-      data: { labels: dates, datasets: aDatasets },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: rooms.length<=3 } },
-        scales: {
-          x: { stacked: true },
-          y: { stacked: true, beginAtZero: true, title: { display:true, text: lang==='es'?'shots/día':'shots/day' } }
-        }
-      }
+      type:'bar',
+      data:{ labels: dates, datasets: aDS },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ display: !singleRoom, position:'bottom', labels:{boxWidth:10,padding:8} } },
+        scales:{
+          x:{ stacked:true, ticks:{maxTicksLimit:10} },
+          y:{ stacked:true, beginAtZero:true, title:{display:true, text: lang==='es'?'shots/día':'shots/day'} }
+        } }
     });
 
-    // dates24 + vals24 — chart B uses the 24h dfi snapshot, distinct from the 14d edge series
-    const dates24 = IRRIGATION_24H.dates;
-    function vals24(rid, key){
-      return dates24.map(d => {
-        const row = IRRIGATION_24H.rooms[rid] && IRRIGATION_24H.rooms[rid][d];
-        return row ? row[key] : null;
-      });
-    }
-    // --- Chart B: daily applied volume (grouped) ---
-    const bDatasets = [];
-    rooms.forEach(rid => {
-      const c = colorFor(rid);
-      const m = { name: getRoomName(rid) };
-      bDatasets.push({
-        label: m.name + ' P1',
-        data: vals24(rid, 'p1_vol'),
-        backgroundColor: resolveColor(c.line),
-        borderColor: resolveColor(c.deep),
-        borderWidth: 1,
-        stack: 'P1',
-      });
-      bDatasets.push({
-        label: m.name + ' P2',
-        data: vals24(rid, 'p2_vol'),
-        backgroundColor: resolveColor(c.fill),
-        borderColor: resolveColor(c.deep),
-        borderWidth: 1,
-        stack: 'P2',
-      });
+    // ---- B (14d volume estimate) ----
+    const bDS = [];
+    rooms.forEach(rid=>{
+      const c = roomColor(rid);
+      bDS.push({ label: roomName(rid)+' P1', data: vals(rid,'p1_vol_ml_est'),
+        backgroundColor: resolveColor(c.line), borderColor: resolveColor(c.deep), borderWidth:1, stack:'r'+rid });
+      bDS.push({ label: roomName(rid)+' P2', data: vals(rid,'p2_vol_ml_est'),
+        backgroundColor: resolveColor(c.fill), borderColor: resolveColor(c.deep), borderWidth:1, stack:'r'+rid });
     });
     window.__irrCharts.B = new Chart(document.getElementById('chartIrrVol'), {
-      type: 'bar',
-      data: { labels: dates24, datasets: bDatasets },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: rooms.length<=3 } },
-        scales: { y: { beginAtZero: true, title: { display:true, text: lang==='es'?'mL/emisor·día':'mL/emitter·day' } } }
-      }
+      type:'bar',
+      data:{ labels: dates, datasets: bDS },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ display: !singleRoom, position:'bottom', labels:{boxWidth:10,padding:8} } },
+        scales:{
+          x:{ stacked:true, ticks:{maxTicksLimit:10} },
+          y:{ stacked:true, beginAtZero:true, title:{display:true, text: lang==='es'?'mL/emisor·día':'mL/emitter·day'} }
+        } }
     });
 
-    // --- Chart C: interval (lines) ---
-    const cDatasets = [];
-    rooms.forEach(rid => {
-      const c = colorFor(rid);
-      const m = { name: getRoomName(rid) };
-      cDatasets.push({
-        label: m.name + ' P1',
-        data: vals(rid, 'p1_int'),
-        borderColor: resolveColor(c.line),
-        backgroundColor: resolveColor(c.fill),
-        pointBackgroundColor: resolveColor(c.deep),
-        borderWidth: 2.5,
-        tension: .2, spanGaps: true,
-        fill: false,
-      });
-      cDatasets.push({
-        label: m.name + ' P2',
-        data: vals(rid, 'p2_int'),
-        borderColor: resolveColor(c.deep),
-        borderWidth: 2, borderDash: [5,3],
-        pointBackgroundColor: resolveColor(c.deep),
-        tension: .2, spanGaps: true,
-        fill: false,
-      });
+    // ---- C (interval proxy = daily median duration; v6 doesn't carry per-day interval) ----
+    // Use duration values; this matches what's shown in D — labeled in legend.
+    const cDS = [];
+    rooms.forEach(rid=>{
+      const c = roomColor(rid);
+      cDS.push({ label: roomName(rid)+' P1', data: vals(rid,'p1_dur_med_min'),
+        borderColor: resolveColor(c.line), backgroundColor:'transparent', pointBackgroundColor: resolveColor(c.deep),
+        borderWidth:2.5, tension:.25, pointRadius:2.5, spanGaps:true, fill:false });
+      cDS.push({ label: roomName(rid)+' P2', data: vals(rid,'p2_dur_med_min'),
+        borderColor: resolveColor(c.deep), backgroundColor:'transparent', pointBackgroundColor: resolveColor(c.deep),
+        borderWidth:2, borderDash:[6,3], tension:.25, pointRadius:2, spanGaps:true, fill:false });
     });
     window.__irrCharts.C = new Chart(document.getElementById('chartIrrInterval'), {
-      type: 'line',
-      data: { labels: dates, datasets: cDatasets },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: rooms.length<=3 } },
-        scales: { y: { beginAtZero: true, title: { display:true, text: lang==='es'?'min entre shots':'min between shots' } } }
-      }
+      type:'line',
+      data:{ labels: dates, datasets: cDS },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ display: !singleRoom, position:'bottom', labels:{boxWidth:10,padding:8} } },
+        scales:{
+          x:{ ticks:{maxTicksLimit:10} },
+          y:{ beginAtZero:true, title:{display:true, text: lang==='es'?'min · proxy intervalo':'min · interval proxy'} }
+        } }
     });
 
-    // --- Chart D: duration (lines) ---
-    const dDatasets = [];
-    rooms.forEach(rid => {
-      const c = colorFor(rid);
-      const m = { name: getRoomName(rid) };
-      dDatasets.push({
-        label: m.name + ' P1',
-        data: vals(rid, 'p1_dur'),
-        borderColor: resolveColor(c.line),
-        backgroundColor: resolveColor(c.fill),
-        pointBackgroundColor: resolveColor(c.deep),
-        borderWidth: 2.5,
-        tension: .2, spanGaps: true,
-        fill: false,
-      });
-      dDatasets.push({
-        label: m.name + ' P2',
-        data: vals(rid, 'p2_dur'),
-        borderColor: resolveColor(c.deep),
-        borderWidth: 2, borderDash: [5,3],
-        pointBackgroundColor: resolveColor(c.deep),
-        tension: .2, spanGaps: true,
-        fill: false,
-      });
+    // ---- D ----
+    const dDS = [];
+    rooms.forEach(rid=>{
+      const c = roomColor(rid);
+      dDS.push({ label: roomName(rid)+' P1', data: vals(rid,'p1_dur_med_min'),
+        borderColor: resolveColor(c.line), backgroundColor:'transparent', pointBackgroundColor: resolveColor(c.deep),
+        borderWidth:2.5, tension:.25, pointRadius:2.5, spanGaps:true, fill:false });
+      dDS.push({ label: roomName(rid)+' P2', data: vals(rid,'p2_dur_med_min'),
+        borderColor: resolveColor(c.deep), backgroundColor:'transparent', pointBackgroundColor: resolveColor(c.deep),
+        borderWidth:2, borderDash:[6,3], tension:.25, pointRadius:2, spanGaps:true, fill:false });
     });
+    const durPlugins = singleRoom ? [bandPlugin(1, 5, (cssVar('--lime')||'#9fd96a')+'33')] : [];
     window.__irrCharts.D = new Chart(document.getElementById('chartIrrDuration'), {
-      type: 'line',
-      data: { labels: dates, datasets: dDatasets },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: rooms.length<=3 } },
-        scales: { y: { beginAtZero: true, title: { display:true, text: lang==='es'?'min por shot':'min per shot' } } }
-      }
+      type:'line',
+      data:{ labels: dates, datasets: dDS },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ display: !singleRoom, position:'bottom', labels:{boxWidth:10,padding:8} } },
+        scales:{
+          x:{ ticks:{maxTicksLimit:10} },
+          y:{ beginAtZero:true, title:{display:true, text: lang==='es'?'min por shot':'min per shot'} }
+        } },
+      plugins: durPlugins,
     });
-  }
-  window.renderIrrCharts = renderIrrCharts;
-  // Hook into existing renderCharts() so chip clicks + lang/theme toggles also refresh irrigation charts
-  const prevRender = window.renderCharts;
-  if (typeof prevRender === 'function'){
-    window.renderCharts = function(){
-      prevRender.apply(this, arguments);
-      try { renderIrrCharts(); } catch(e){ console.warn('irr charts:', e); }
+
+    // ---- E (flow rate) ----
+    const eDS = [];
+    rooms.forEach(rid=>{
+      const c = roomColor(rid);
+      eDS.push({ label: roomName(rid)+' P1', data: vals(rid,'p1_flow_ml_per_min'),
+        borderColor: resolveColor(c.line), backgroundColor:'transparent', pointBackgroundColor: resolveColor(c.deep),
+        borderWidth:2.5, tension:.25, pointRadius:2.5, spanGaps:true, fill:false });
+      eDS.push({ label: roomName(rid)+' P2', data: vals(rid,'p2_flow_ml_per_min'),
+        borderColor: resolveColor(c.deep), backgroundColor:'transparent', pointBackgroundColor: resolveColor(c.deep),
+        borderWidth:2, borderDash:[6,3], tension:.25, pointRadius:2, spanGaps:true, fill:false });
+    });
+    const flowPlugins = [bandPlugin(30, 125, (cssVar('--lime')||'#9fd96a')+'33')];
+    window.__irrCharts.E = new Chart(document.getElementById('chartIrrFlow'), {
+      type:'line',
+      data:{ labels: dates, datasets: eDS },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ display: !singleRoom, position:'bottom', labels:{boxWidth:10,padding:8} } },
+        scales:{
+          x:{ ticks:{maxTicksLimit:10} },
+          y:{ beginAtZero:true, suggestedMax: 500, title:{display:true, text: lang==='es'?'mL/min · emisor':'mL/min · emitter'} }
+        } },
+      plugins: flowPlugins,
+    });
+
+    const legends = {
+      legendIrrShots: lang==='es'?'P1 sólido apilado bajo P2 (contorno discontinuo).':'P1 solid stacked under P2 (dashed outline).',
+      legendIrrVol:   lang==='es'?'14d = conteo shots v5 × volumen por shot (calibrado 24h).':'14d = v5 shot count × 24h per-shot calibration.',
+      legendIrrInterval: lang==='es'?'Proxy: mediana diaria de duración (intervalo entre shots no se almacena por día).':'Proxy: daily median shot duration (interval not stored per day).',
+      legendIrrDuration: singleRoom ? (lang==='es'?'Banda objetivo coco: 1–5 min/shot (P1).':'Coco target band: 1–5 min/shot (P1).') : (lang==='es'?'Modo comparar.':'Compare mode.'),
+      legendIrrFlow: lang==='es'?'Banda objetivo: 30–125 mL/min (0.5–2 GPH típico de emisor).':'Target band: 30–125 mL/min (typical 0.5–2 GPH drip emitter).',
     };
+    Object.keys(legends).forEach(k=>{ const el = document.getElementById(k); if (el) el.textContent = legends[k]; });
   }
-  // Language / theme button hooks — existing handlers don't call renderCharts()
+
+  window.renderIrrCharts = renderIrr;
+
+  function attachHook(){
+    const prev = window.renderCharts;
+    if (typeof prev !== 'function') return false;
+    if (prev.__irrHooked) return true;
+    window.renderCharts = function(){
+      const r = prev.apply(this, arguments);
+      try{ renderIrr(); }catch(e){ console.warn('irr render:', e); }
+      return r;
+    };
+    window.renderCharts.__irrHooked = true;
+    return true;
+  }
+  if (!attachHook()){
+    const iv = setInterval(()=>{ if(attachHook()) clearInterval(iv); }, 150);
+  }
+
   document.querySelectorAll('.lang-btn, .theme-btn').forEach(b => {
-    b.addEventListener('click', () => setTimeout(renderIrrCharts, 80));
+    b.addEventListener('click', ()=> setTimeout(()=>{ try{ renderIrr(); }catch(e){} }, 120));
   });
-  // First paint after DOM ready + Chart.js loaded
+
   function boot(){
-    if (window.Chart) {
-      try { renderIrrCharts(); } catch(e){ console.warn('irr charts boot:', e); }
-    } else {
-      setTimeout(boot, 250);
-    }
+    if (window.Chart){ try{ renderIrr(); }catch(e){ console.warn('irr boot:', e); } }
+    else setTimeout(boot, 250);
   }
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    setTimeout(boot, 200);
-  } else {
-    document.addEventListener('DOMContentLoaded', ()=>setTimeout(boot, 200));
-  }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') setTimeout(boot, 250);
+  else document.addEventListener('DOMContentLoaded', ()=>setTimeout(boot, 250));
 })();
 </script></body>
 </html>
