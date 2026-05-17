@@ -844,8 +844,32 @@
 
 <section id="event-log">
   <h2><span class="en-only">Irrigation Shot-Cycle Audit · 10 Flower Rooms</span><span class="es-only">Auditoría de Ciclos de Riego · 10 Salas de Flor</span></h2>
-  <p><span class="en-only">Per-shot timestamps and volumes parsed from <code>dfi</code> step-up events at 10-min cadence (the finest available from <code>mcp__aroya__get_raw_data</code>, which caps at ~24h per room — so this is a single representative irrigation day per room, anchored on the daily DFI reset at <b>13:30 PT</b>). Each row shows the corrected <b>P0 delay</b> (DFI reset → first shot, used here as the operational "lights-on → first shot" gap), <b>P1/P2 shots</b>, <b>median interval</b> between collapsed shots, <b>median shot length</b> (multi-pulse burst duration), and <b>median per-shot volume</b> in mL. <b>Sub-pulses within 30 min of each other are collapsed into a single shot</b> — the previous build mis-classified each 10-min sub-pulse bin as an independent shot, producing the artificial 1–3 min intervals that read as broken irrigation. Targets per the irrigation-strategy NotebookLM for 2-gal coco substrate.</span><span class="es-only">Timestamps y volúmenes por shot parseados de eventos <code>dfi</code> step-up a cadencia 10 min (lo más fino que devuelve <code>mcp__aroya__get_raw_data</code>, limitado a ~24h por sala — un día representativo por sala, anclado en el reset diario DFI a las <b>13:30 PT</b>). Por fila: <b>retraso P0</b> (reset DFI → primer shot), <b>shots P1/P2</b>, <b>intervalo mediano</b> entre shots colapsados, <b>duración mediana</b> del shot (ráfaga multi-pulso), y <b>volumen mediano por shot</b> en mL. <b>Sub-pulsos dentro de 30 min se colapsan en un solo shot</b> — la versión previa contaba cada bin como shot independiente. Objetivos: NotebookLM irrigation-strategy para coco 2-gal.</span></p>
-  <div class="bp-scroll"><table class="bp-table compact">
+  <p><span class="en-only">Per-shot duration, volume, and interval derived from the cumulative <code>dfi</code> counter (mL per emitter). A <b>shot is a contiguous run of bins where the cumulative counter strictly increases</b>; plateaus (counter held flat) are flow-off intervals and a sharp drop (&gt;100 mL) is the daily reset. v2 mis-modelled the cumulative counter — every 10-min step-up was scored as a separate pulse, then re-stitched with a 30-min collapse rule. v3 walks the cumulative curve directly: one rising run = one shot, with duration = run length and volume = end−start delta. <b>Photoperiod anchor = the observed daily DFI reset @ 13:20 PT</b> (every room resets in lock-step at that moment, so we treat 13:20 PT as the operational start-of-day for phase tagging, independent of the nominal lights-on config value). P1 = 60–180 min after anchor; P2 = 180–630 min; P3 = last 90 min of the 12 h photoperiod. The dfi cache covers ~24 h per room — see the 4 daily charts above for what little multi-day coverage exists.</span><span class="es-only">Duración, volumen e intervalo por shot derivados del contador acumulado <code>dfi</code> (mL por emisor). Un <b>shot es una corrida contigua de bins donde el contador acumulado estrictamente sube</b>; mesetas (contador plano) son intervalos sin flujo y una caída fuerte (&gt;100 mL) es el reset diario. v2 modelaba mal el contador — cada step-up de 10 min se contaba como pulso aparte y luego se re-pegaba con regla de colapso de 30 min. v3 recorre la curva acumulada directamente: una subida = un shot, duración = largo de la corrida, volumen = delta fin−inicio. <b>Ancla del fotoperíodo = reset diario DFI observado @ 13:20 PT</b> (todas las salas resetean en sincronía a esa hora; tratamos 13:20 PT como inicio operacional del día para etiquetado de fase, independiente del valor nominal de lights-on en config). P1 = 60–180 min después del ancla; P2 = 180–630 min; P3 = últimos 90 min del fotoperíodo de 12h. El caché dfi cubre ~24h por sala — ver gráficos diarios arriba para la cobertura multi-día disponible.</span></p>
+  <div class="biophys-section-label" id="irrigationDailyHeader"><span class="en-only">DAILY IRRIGATION TRAJECTORY · per-day P1 vs P2 across the 14-day window</span><span class="es-only">TRAYECTORIA DIARIA DE RIEGO · P1 vs P2 día a día en la ventana de 14 días</span></div>
+<p style="font-size:13px;color:var(--ink-muted);margin:6px 0 14px"><span class="en-only">Click a chip below to filter to one room; Shift-click or Compare mode overlays multiple. The chip set is the same one driving the substrate-EC / dryback / VPD charts at the top of the page. The dfi cache window is &asymp;24h per room — most rooms have only 1–2 days of resolved shots, so bars/lines will look sparse. The shape will fill in as the audit window extends.</span><span class="es-only">Click en un chip abajo filtra a una sala; Shift-click o Modo comparar superpone varias. Es el mismo set de chips de los gráficos arriba. Caché dfi &asymp;24h por sala, así que se ven datos escasos; la forma se llenará al extender la ventana de auditoría.</span></p>
+<div class="chart-grid-2col" style="display:grid;grid-template-columns:1fr;gap:16px">
+  <div class="chartwrap">
+    <h4><span class="en-only">A · Daily shot count — P1 (solid) stacked under P2 (dashed outline)</span><span class="es-only">A · Shots por día — P1 (sólido) bajo P2 (contorno discontinuo)</span></h4>
+    <div class="chart-canvas" style="height:240px"><canvas id="chartIrrShots"></canvas></div>
+    <div class="legend"><span class="en-only">Bars per room per day. P1 = filled bar; P2 = same bar with a dashed-edge cap stacked above. Hover for shot totals.</span><span class="es-only">Barras por sala-día. P1 = relleno; P2 = tapa con borde discontinuo apilada. Hover para totales.</span></div>
+  </div>
+  <div class="chartwrap">
+    <h4><span class="en-only">B · Daily applied volume — P1 vs P2 (mL/emitter)</span><span class="es-only">B · Volumen aplicado por día — P1 vs P2 (mL/emisor)</span></h4>
+    <div class="chart-canvas" style="height:240px"><canvas id="chartIrrVol"></canvas></div>
+    <div class="legend"><span class="en-only">Grouped bars: P1 (filled) left, P2 (lighter fill) right, per day per room.</span><span class="es-only">Barras agrupadas: P1 (relleno) izq., P2 (más claro) der., por día y sala.</span></div>
+  </div>
+  <div class="chartwrap">
+    <h4><span class="en-only">C · Median inter-shot interval (min) — P1 vs P2</span><span class="es-only">C · Intervalo mediano entre shots (min) — P1 vs P2</span></h4>
+    <div class="chart-canvas" style="height:240px"><canvas id="chartIrrInterval"></canvas></div>
+    <div class="legend"><span class="en-only">Two lines per room (P1 solid, P2 dashed). Phase-coded colour. Days with &lt; 2 shots are gaps.</span><span class="es-only">Dos líneas por sala (P1 sólida, P2 discontinua). Color por fase. Días con &lt; 2 shots: hueco.</span></div>
+  </div>
+  <div class="chartwrap">
+    <h4><span class="en-only">D · Median shot duration (min) — P1 vs P2</span><span class="es-only">D · Duración mediana del shot (min) — P1 vs P2</span></h4>
+    <div class="chart-canvas" style="height:240px"><canvas id="chartIrrDuration"></canvas></div>
+    <div class="legend"><span class="en-only">Two lines per room (P1 solid, P2 dashed). 1–5 min coco target band shaded when one room is selected.</span><span class="es-only">Dos líneas por sala (P1 sólida, P2 discontinua). Banda objetivo 1–5 min (coco) cuando se selecciona una sala.</span></div>
+  </div>
+</div>
+<div class="bp-scroll"><table class="bp-table compact">
     <thead><tr>
       <th>Room</th>
       <th>Active HG</th>
@@ -861,162 +885,11 @@
       <th>P2 volume</th>
       <th>Verdict</th>
     </tr></thead>
-    <tbody>
-      <tr>
-        <td><b>F 1-1</b> <span class="phase veg">Veg</span></td>
-        <td style="font-size:12px">GrDi072126.1.1 (+5 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">config (06:20 on)</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">70 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">240 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">85 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">1186 mL</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">1/d</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">n/a</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">40 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">621 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-      <tr>
-        <td><b>F 1-2</b> <span class="phase bulking">Bulking</span></td>
-        <td style="font-size:12px">GlBo060226.1.2 (+2 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">config (06:20 on)</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">80 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">135 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">40 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">1357 mL</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">90 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">40 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">1323 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-      <tr>
-        <td><b>F 1-3</b> <span class="phase bulking">Bulking</span></td>
-        <td style="font-size:12px">Hypn062326.1.3 (+1 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">100 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">95 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">40 min</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">721 mL</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">85 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">40 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">1176 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-      <tr>
-        <td><b>F 1-4</b> <span class="phase stretch">Stretch</span></td>
-        <td style="font-size:12px">Mell070726.1.4 (+5 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">110 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">95 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">30 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">462 mL</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">85 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">30 min</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">424 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-      <tr>
-        <td><b>F 2-1</b> <span class="phase bulking">Bulking</span></td>
-        <td style="font-size:12px">GaPo061626.2.1 (+2 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">90 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">190 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">90 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">923 mL</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">85 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">40 min</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">550 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-      <tr>
-        <td><b>F 2-2</b> <span class="phase bulking">Bulking</span></td>
-        <td style="font-size:12px">FiPr060926.2.2 (+1 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">80 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">140 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">40 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">1051 mL</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">80 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">35 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">1087 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-      <tr>
-        <td><b>F 2-3</b> <span class="phase stretch">Stretch</span></td>
-        <td style="font-size:12px">ChCh071426.2.3 (+4 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">10 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">4/d</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">80 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">35 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">372 mL</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">110 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">60 min</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">526 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-      <tr>
-        <td><b>F 2-4</b> <span class="phase ripening">Ripening</span></td>
-        <td style="font-size:12px">ApTa052626.2.4 (+2 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">80 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">240 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">85 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">2388 mL</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">1/d</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">n/a</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">40 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">1617 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-      <tr>
-        <td><b>F 2-5</b> <span class="phase stretch">Stretch</span></td>
-        <td style="font-size:12px">CoCr063026.2.5 (+1 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">100 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">200 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">90 min</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">742 mL</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">90 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">30 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">373 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-      <tr>
-        <td><b>F 2-6</b> <span class="phase bulking">Bulking</span></td>
-        <td style="font-size:12px">EgCh060926.2.6 (+1 HG)</td>
-        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">90 min</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">3/d</span></td>
-        <td class="num"><span class="pill warn" style="font-weight:600">135 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">40 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">997 mL</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">2/d</span></td>
-        <td class="num"><span class="pill good" style="font-weight:600">90 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">35 min</span></td>
-        <td class="num"><span class="pill bad" style="font-weight:600">975 mL</span></td>
-        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
-      </tr>
-    </tbody>
+    <tbody><tr><td><b>F 1-1</b> <span class="phase veg">Veg</span></td><td style="font-size:12px">GrDi072126.1.1 (+5 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">config (06:20 PT nominal · DFI anchor 13:20 PT)</span></td><td class="num"><span class="pill good" style="font-weight:600">70 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">90.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">70.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">883 mL</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">170.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">50.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">613 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr><tr><td><b>F 1-2</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">GlBo060226.1.2 (+2 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">config (06:20 PT nominal · DFI anchor 13:20 PT)</span></td><td class="num"><span class="pill warn" style="font-weight:600">80 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">45.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">882 mL</span></td><td class="num"><span class="pill warn" style="font-weight:600">6/d</span></td><td class="num"><span class="pill good" style="font-weight:600">90.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">45.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">1322 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr><tr><td><b>F 1-3</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">Hypn062326.1.3 (+1 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">observed DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">100 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill good" style="font-weight:600">538 mL</span></td><td class="num"><span class="pill good" style="font-weight:600">5/d</span></td><td class="num"><span class="pill good" style="font-weight:600">85.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">50.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">721 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr><tr><td><b>F 1-4</b> <span class="phase stretch">Stretch</span></td><td style="font-size:12px">Mell070726.1.4 (+5 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">observed DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">110 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill good" style="font-weight:600">464 mL</span></td><td class="num"><span class="pill good" style="font-weight:600">5/d</span></td><td class="num"><span class="pill good" style="font-weight:600">85.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill warn" style="font-weight:600">424 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr><tr><td><b>F 2-1</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">GaPo061626.2.1 (+2 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">observed DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">90 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">50.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">45.0 min</span></td><td class="num"><span class="pill good" style="font-weight:600">391 mL</span></td><td class="num"><span class="pill warn" style="font-weight:600">6/d</span></td><td class="num"><span class="pill good" style="font-weight:600">80.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">45.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">540 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr><tr><td><b>F 2-2</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">FiPr060926.2.2 (+1 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">observed DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">90 min</span></td><td class="num"><span class="pill good" style="font-weight:600">1/d</span></td><td class="num"><span class="pill warn" style="font-weight:600">n/a</span></td><td class="num"><span class="pill bad" style="font-weight:600">80.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">1636 mL</span></td><td class="num"><span class="pill warn" style="font-weight:600">6/d</span></td><td class="num"><span class="pill good" style="font-weight:600">90.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">45.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">1086 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr><tr><td><b>F 2-3</b> <span class="phase stretch">Stretch</span></td><td style="font-size:12px">ChCh071426.2.3 (+4 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">observed DFI anchor 13:20 PT</span></td><td class="num"><span class="pill bad" style="font-weight:600">10 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">90.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill good" style="font-weight:600">352 mL</span></td><td class="num"><span class="pill good" style="font-weight:600">5/d</span></td><td class="num"><span class="pill good" style="font-weight:600">85.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill good" style="font-weight:600">348 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr><tr><td><b>F 2-4</b> <span class="phase ripening">Ripening</span></td><td style="font-size:12px">ApTa052626.2.4 (+2 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">observed DFI anchor 13:20 PT</span></td><td class="num"><span class="pill bad" style="font-weight:600">80 min</span></td><td class="num"><span class="pill good" style="font-weight:600">3/d</span></td><td class="num"><span class="pill good" style="font-weight:600">45.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">805 mL</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">170.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">50.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">1510 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr><tr><td><b>F 2-5</b> <span class="phase stretch">Stretch</span></td><td style="font-size:12px">CoCr063026.2.5 (+1 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">observed DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">110 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill good" style="font-weight:600">365 mL</span></td><td class="num"><span class="pill good" style="font-weight:600">5/d</span></td><td class="num"><span class="pill good" style="font-weight:600">90.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill good" style="font-weight:600">372 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr><tr><td><b>F 2-6</b> <span class="phase bulking">Bulking</span></td><td style="font-size:12px">EgCh060926.2.6 (+1 HG)</td><td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">observed DFI anchor 13:20 PT</span></td><td class="num"><span class="pill good" style="font-weight:600">90 min</span></td><td class="num"><span class="pill good" style="font-weight:600">2/d</span></td><td class="num"><span class="pill good" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">40.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">829 mL</span></td><td class="num"><span class="pill warn" style="font-weight:600">6/d</span></td><td class="num"><span class="pill good" style="font-weight:600">80.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">45.0 min</span></td><td class="num"><span class="pill bad" style="font-weight:600">994 mL</span></td><td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td></tr></tbody>
   </table></div>
 
   <div class="biophys-section-label"><span class="en-only">SHOT DETECTION METHOD</span><span class="es-only">MÉTODO DE DETECCIÓN DE SHOTS</span></div>
-  <p style="font-size:13px;color:var(--ink-muted);margin-top:6px"><span class="en-only">Raw <code>dfi:zone:*</code> series at 10-min bins. Positive deltas (&gt;0.3 mL) = irrigation pulses. We aggregate to room-level by summing zone deltas at the same timestamp, then <b>collapse sub-pulses within ≤30 min into a single shot</b>. For each collapsed shot: duration = (last_pulse_ts − first_pulse_ts) + 10 min (bin width), volume = Σ pulse deltas, n_pulses = bin count. Phase by minutes-from-anchor (anchor = daily DFI reset @ 13:30 PT, when the controller starts a fresh irrigation day): P1 = first 50% of the 720-min photoperiod, P2 = 50–80%, P3 = last 20%. The MCP raw endpoint caps at ~24h per call, so the "per day" figures are single-day samples (one full irrigation cycle 5/16 13:30 PT → 5/17 13:30 PT). Daily volume cross-checks against 14-day <code>drip_drain.dfi.mean</code>: F 1-3 = 3957 mL/day · 7 shots × ~1130 mL median ≈ 7900 mL/day (close to 1.0× — within sensor variance).</span><span class="es-only">Serie <code>dfi:zone:*</code> a 10 min. Delta positivo (&gt;0.3 mL) = pulso. Agrego a nivel sala (suma deltas por timestamp), luego <b>colapso sub-pulsos dentro de ≤30 min en un solo shot</b>. Por shot: duración = (último − primero) + 10 min, volumen = Σ deltas, n_pulsos = nº bins. Fase por minutos-desde-ancla (ancla = reset DFI 13:30 PT). P1 = 50% inicial del fotoperíodo 720 min, P2 = 50–80%, P3 = 20% final. MCP raw cap = ~24h — valores "por día" son muestras de un ciclo. Cross-check vs <code>drip_drain.dfi.mean</code> 14d: F 1-3 = 3957 mL/d, 7 shots × ~1130 mL ≈ 7900 mL/d (consistente con varianza de sensor).</span></p>
+  <p style="font-size:13px;color:var(--ink-muted);margin-top:6px"><span class="en-only">Raw <code>dfi:zone:*</code> series at 10-min bins. <code>dfi</code> is a <b>cumulative drip-volume counter</b> (mL/emitter) that resets daily — NOT a series of discrete shot events. A shot is a contiguous run of bins where Δcumulative &gt; 5 mL (noise floor); a reset is Δcumulative &lt; −100 mL. Shot duration = (end_ts − start_ts) + 10 min (last-bin width); shot volume = cum_end − cum_start (mL/emitter); inter-shot interval = start_ts(N+1) − start_ts(N). Phase tagging uses the observed DFI reset (13:20 PT) as lights-on. Cross-check: F 1-3 daily total ≈ 4858 mL/emitter (sum of P1+P2+P3 volumes) vs the 14-day <code>drip_drain.dfi.mean</code> of 3957 mL/d — within 23%, consistent with single-day variance.</span><span class="es-only">Serie <code>dfi:zone:*</code> a 10 min. <code>dfi</code> es <b>contador acumulado de drip</b> (mL/emisor) con reset diario — NO una serie de shots discretos. Shot = corrida contigua con Δacumulado &gt; 5 mL (piso de ruido); reset = Δ &lt; −100 mL. Duración del shot = (fin − inicio) + 10 min; volumen = acum_fin − acum_inicio (mL/emisor); intervalo = inicio(N+1) − inicio(N). Etiquetado de fase usa el reset DFI observado (13:20 PT) como lights-on. Cross-check: F 1-3 total diario ≈ 4858 mL/emisor (P1+P2+P3) vs media 14d <code>drip_drain.dfi.mean</code> de 3957 mL/d — dentro de 23%, varianza esperada.</span></p>
 
   <div class="biophys-section-label"><span class="en-only">PHASE-SPECIFIC TARGETS · irrigation-strategy NotebookLM · 2-gal coco</span><span class="es-only">OBJETIVOS POR FASE · NotebookLM irrigation-strategy · coco 2-gal</span></div>
   <div class="bp-targets">
@@ -1033,9 +906,9 @@
     <span class="bp-tgt"><b>P2 volume:</b> 150–380 mL (2–5% of 7.5 L substrate)</span>
   </div>
 
-  <p style="font-size:13px;color:var(--ink-muted);margin-top:14px"><span class="en-only"><b>How to read it.</b> The previous build mis-classified every 10-min sub-pulse bin as an independent P1 shot, producing the false "1–3 min P1 interval" signal that read as broken irrigation. The corrected view tells a different story: <b>P1 intervals are 80–240 min — well within or above the 30–90 min target</b>, and <b>P1 shot SIZE is the actual problem</b>. Most rooms run 700–1300 mL P1 shots — that's 2–4× the 300–600 mL target for 2-gal coco. Each P1 shot is a 30–90 min burst of 3–7 sub-pulses, which is a recipe pattern (some growers stack EC inside one long burst) — not a runaway controller. F 2-4 (Ripening) and F 1-2 / F 2-2 (Bulking) are the highest-volume offenders at 1300–2400 mL P1.</span><span class="es-only"><b>Cómo leerlo.</b> La versión previa contaba cada sub-pulso de 10 min como shot P1 independiente — falso intervalo "1–3 min" que parecía riego roto. Corregido: <b>intervalos P1 son 80–240 min — dentro o sobre objetivo 30–90 min</b>, y el problema real es el <b>TAMAÑO del shot P1</b>. La mayoría corre 700–1300 mL P1, 2–4× objetivo 300–600 mL coco 2-gal. Cada P1 es ráfaga 30–90 min con 3–7 sub-pulsos (patrón de receta para apilar CE en una ráfaga larga, no controlador descontrolado). F 2-4 (Maduración) y F 1-2 / F 2-2 (Engorde) son los de mayor volumen: 1300–2400 mL P1.</span></p>
+  <p style="font-size:13px;color:var(--ink-muted);margin-top:14px"><span class="en-only"><b>How to read v3.</b> v2 reported 1–3 min P1 intervals — that wasn't the controller firing every 3 minutes, it was the cumulative counter being mis-modelled as discrete events. v3 collapses each rising run into a single shot: <b>P1 intervals now read 40–90 min and P1 medians sit largely IN the 30–90 min target band</b> (F 1-1, F 1-2, F 1-3, F 1-4, F 2-5, F 2-6 all between 40 and 90). The previous 'sub-pulse 1.4 min apart' artefact is gone. What v3 surfaces clearly: <b>shot durations are 40–90 min</b> across every room, which is several multiples of the 1–5 min coco target — meaning each 'shot' is genuinely a long ramp (or the counter integrates emitter drip over a slow flow window), not a 30-second EC-stack. <b>Per-shot volumes range 350–1640 mL/emitter</b> — F 2-2 at ≈1640 mL P1 is the highest; F 2-1 at ≈390 mL is closest to the 300–600 mL target. Net conclusion: <b>the original 'broken irrigation, runaway pulses' read was an artefact</b>, but the shots ARE longer and bigger than the coco playbook — confirm with the controller whether these are intended long-ramp recipes or valve-flow-rate calibration issues.</span><span class="es-only"><b>Cómo leer v3.</b> v2 reportaba intervalos P1 de 1–3 min — eso no era el controlador disparando cada 3 minutos, era el contador acumulado mal modelado. v3 colapsa cada subida en un solo shot: <b>intervalos P1 leen 40–90 min y las medianas P1 caen mayormente DENTRO del objetivo 30–90 min</b> (F 1-1, F 1-2, F 1-3, F 1-4, F 2-5, F 2-6 entre 40 y 90). El artefacto 'sub-pulso cada 1.4 min' desapareció. Lo que v3 sí revela: <b>las duraciones de shot son 40–90 min</b> en cada sala — varios múltiplos del objetivo 1–5 min coco — es decir cada 'shot' es una rampa larga real (o el contador integra drip sobre un flujo lento), no una descarga de 30 s. <b>Volúmenes por shot: 350–1640 mL/emisor</b> — F 2-2 a ≈1640 mL P1 es el más alto; F 2-1 a ≈390 mL es el más cercano al objetivo 300–600 mL. Conclusión neta: <b>la lectura previa de 'riego roto' era un artefacto</b>, pero los shots SÍ son más largos y más grandes que el playbook coco — confirmar con el controlador si son recetas intencionales de rampa larga o calibración de flujo de válvula.</span></p>
 
-  <p style="font-size:13px;color:var(--ink-muted);margin-top:8px"><span class="en-only"><b>Photoperiod source:</b> F 1-1 and F 1-2 lights-on / duration pulled live from <code>spa_get_room_config</code> (both 12h, 06:20 nominal). The remaining 8 flower rooms are tagged <code>heuristic</code>. The DFI reset observed at 13:30 PT across every room indicates the controller anchors the irrigation day at 13:30 PT, regardless of the nominal lights-on time — confirm the actual photoperiod policy in the next audit cycle.</span><span class="es-only"><b>Fuente fotoperiodo:</b> F 1-1 y F 1-2 vía <code>spa_get_room_config</code> (12h, 06:20 nominal). Las otras 8 marcadas <code>heuristic</code>. El reset DFI a 13:30 PT en todas las salas indica que el controlador ancla el día de riego a 13:30 PT independientemente del nominal — confirmar política de fotoperíodo en próxima auditoría.</span></p>
+  <p style="font-size:13px;color:var(--ink-muted);margin-top:8px"><span class="en-only"><b>Photoperiod source:</b> F 1-1 and F 1-2 lights-on / duration pulled live from <code>spa_get_room_config</code> (both 12h, 06:20 PT nominal). The remaining 8 flower rooms have no config pulled — <code>heuristic</code>. The DFI reset observed at 13:20 PT across every room indicates the irrigation controller anchors the day at 13:20 PT regardless of the nominal lights-on time. v3 phase tagging is anchored on the observed reset, not the config field.</span><span class="es-only"><b>Fuente fotoperíodo:</b> F 1-1 y F 1-2 vía <code>spa_get_room_config</code> (ambas 12h, 06:20 PT nominal). Las otras 8 salas sin config — <code>heuristic</code>. El reset DFI observado a 13:20 PT en cada sala indica que el controlador de riego ancla el día a 13:20 PT independiente del nominal. v3 etiqueta fase basado en el reset observado, no en el campo de config.</span></p>
 </section>
 
 
@@ -1691,5 +1564,237 @@ renderRoomMeta();
 window.__charts = {};
 renderCharts();
 </script>
-</body>
+<script>
+(function(){
+  const IRRIGATION = {"dates":["2026-05-16","2026-05-17"],"rooms":{"14554":{"2026-05-16":{"p1_shots":2,"p2_shots":0,"p1_vol":1766.5,"p2_vol":0,"p1_int":90.0,"p2_int":null,"p1_dur":70.0,"p2_dur":null},"2026-05-17":{"p1_shots":0,"p2_shots":2,"p1_vol":0,"p2_vol":1226.8,"p1_int":null,"p2_int":170.0,"p1_dur":null,"p2_dur":50.0}},"14579":{"2026-05-16":{"p1_shots":2,"p2_shots":1,"p1_vol":1765.0,"p2_vol":1385.7,"p1_int":40.0,"p2_int":null,"p1_dur":45.0,"p2_dur":50.0},"2026-05-17":{"p1_shots":0,"p2_shots":5,"p1_vol":0,"p2_vol":6539.6,"p1_int":null,"p2_int":85.0,"p1_dur":null,"p2_dur":40.0}},"14581":{"2026-05-16":{"p1_shots":2,"p2_shots":1,"p1_vol":1075.7,"p2_vol":720.6,"p1_int":40.0,"p2_int":null,"p1_dur":40.0,"p2_dur":40.0},"2026-05-17":{"p1_shots":0,"p2_shots":4,"p1_vol":0,"p2_vol":3781.9,"p1_int":null,"p2_int":90.0,"p1_dur":null,"p2_dur":50.0}},"14584":{"2026-05-16":{"p1_shots":2,"p2_shots":0,"p1_vol":927.2,"p2_vol":0,"p1_int":40.0,"p2_int":null,"p1_dur":40.0,"p2_dur":null},"2026-05-17":{"p1_shots":0,"p2_shots":5,"p1_vol":0,"p2_vol":2256.6,"p1_int":null,"p2_int":85.0,"p1_dur":null,"p2_dur":40.0}},"14592":{"2026-05-16":{"p1_shots":2,"p2_shots":1,"p1_vol":782.5,"p2_vol":524.3,"p1_int":50.0,"p2_int":null,"p1_dur":45.0,"p2_dur":40.0},"2026-05-17":{"p1_shots":0,"p2_shots":5,"p1_vol":0,"p2_vol":2728.3,"p1_int":null,"p2_int":85.0,"p1_dur":null,"p2_dur":50.0}},"14593":{"2026-05-16":{"p1_shots":1,"p2_shots":1,"p1_vol":1636.3,"p2_vol":1141.8,"p1_int":null,"p2_int":null,"p1_dur":80.0,"p2_dur":50.0},"2026-05-17":{"p1_shots":0,"p2_shots":5,"p1_vol":0,"p2_vol":5369.8,"p1_int":null,"p2_int":85.0,"p1_dur":null,"p2_dur":40.0}},"14594":{"2026-05-16":{"p1_shots":2,"p2_shots":0,"p1_vol":704.1,"p2_vol":0,"p1_int":90.0,"p2_int":null,"p1_dur":40.0,"p2_dur":null},"2026-05-17":{"p1_shots":0,"p2_shots":5,"p1_vol":0,"p2_vol":1776.5,"p1_int":null,"p2_int":85.0,"p1_dur":null,"p2_dur":40.0}},"14595":{"2026-05-16":{"p1_shots":3,"p2_shots":0,"p1_vol":3372.0,"p2_vol":0,"p1_int":45.0,"p2_int":null,"p1_dur":40.0,"p2_dur":null},"2026-05-17":{"p1_shots":0,"p2_shots":2,"p1_vol":0,"p2_vol":3020.9,"p1_int":null,"p2_int":170.0,"p1_dur":null,"p2_dur":50.0}},"14596":{"2026-05-16":{"p1_shots":2,"p2_shots":1,"p1_vol":730.0,"p2_vol":391.2,"p1_int":40.0,"p2_int":null,"p1_dur":40.0,"p2_dur":40.0},"2026-05-17":{"p1_shots":0,"p2_shots":4,"p1_vol":0,"p2_vol":1458.4,"p1_int":null,"p2_int":90.0,"p1_dur":null,"p2_dur":40.0}},"14597":{"2026-05-16":{"p1_shots":2,"p2_shots":1,"p1_vol":1658.5,"p2_vol":1014.2,"p1_int":40.0,"p2_int":null,"p1_dur":40.0,"p2_dur":40.0},"2026-05-17":{"p1_shots":0,"p2_shots":5,"p1_vol":0,"p2_vol":4917.6,"p1_int":null,"p2_int":85.0,"p1_dur":null,"p2_dur":50.0}}}};
+  function getSelectedRooms(){
+    // Read the active chips from the DOM (the existing room-selector toggles a .active class)
+    const chips = document.querySelectorAll('#roomSelector .room-chip.active');
+    if (chips && chips.length){
+      return Array.from(chips).map(c => c.dataset.rid).filter(rid => rid in IRRIGATION.rooms);
+    }
+    // Fallback: all rooms
+    return Object.keys(IRRIGATION.rooms);
+  }
+  function getRoomName(rid){
+    // Try to read from the chip label (e.g. "F 1-3 <span class='chip-phase'>Bulking</span>")
+    const chip = document.querySelector('#roomSelector .room-chip[data-rid="'+rid+'"]');
+    if (chip){
+      const txt = chip.firstChild && chip.firstChild.textContent ? chip.firstChild.textContent.trim() : '';
+      if (txt) return txt;
+    }
+    return rid;
+  }
+  // Stable colour palette keyed by room order (same hue family as top-section charts)
+  const ROOM_ORDER_FALLBACK = ['14554','14579','14581','14584','14592','14593','14594','14595','14596','14597'];
+  const PALETTE = [
+    { line:'#6b8e23', fill:'rgba(107,142,35,.18)', deep:'#3d5413' },
+    { line:'#a3c14d', fill:'rgba(163,193,77,.18)', deep:'#6a7f33' },
+    { line:'#3b82f6', fill:'rgba(59,130,246,.18)', deep:'#1d4ed8' },
+    { line:'#f59e0b', fill:'rgba(245,158,11,.18)', deep:'#b45309' },
+    { line:'#10b981', fill:'rgba(16,185,129,.18)', deep:'#047857' },
+    { line:'#ef4444', fill:'rgba(239,68,68,.18)',  deep:'#b91c1c' },
+    { line:'#8b5cf6', fill:'rgba(139,92,246,.18)', deep:'#6d28d9' },
+    { line:'#ec4899', fill:'rgba(236,72,153,.18)', deep:'#be185d' },
+    { line:'#14b8a6', fill:'rgba(20,184,166,.18)', deep:'#0f766e' },
+    { line:'#f97316', fill:'rgba(249,115,22,.18)', deep:'#c2410c' },
+  ];
+  function colorFor(rid){
+    const idx = ROOM_ORDER_FALLBACK.indexOf(rid);
+    return PALETTE[idx >= 0 ? idx : 0];
+  }
+  function cssVar(v){
+    return getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  }
+  function resolveColor(v){
+    if (!v) return '#888';
+    if (typeof v === 'string' && v.startsWith('var(')){
+      const name = v.match(/var\(([^)]+)\)/)[1];
+      return cssVar(name);
+    }
+    return v;
+  }
+  function renderIrrCharts(){
+    if (!window.Chart) return;
+    window.__irrCharts = window.__irrCharts || {};
+    Object.values(window.__irrCharts).forEach(c=>{ try{c.destroy();}catch(e){} });
+    window.__irrCharts = {};
+
+    const rooms = getSelectedRooms();
+    const dates = IRRIGATION.dates;
+    const lang = document.documentElement.dataset.lang === 'es' ? 'es' : 'en';
+
+    function vals(rid, key){
+      return dates.map(d => {
+        const row = IRRIGATION.rooms[rid] && IRRIGATION.rooms[rid][d];
+        return row ? row[key] : null;
+      });
+    }
+
+    // --- Chart A: daily shot count (stacked bars) ---
+    const aDatasets = [];
+    rooms.forEach(rid => {
+      const c = colorFor(rid);
+      const m = { name: getRoomName(rid) };
+      aDatasets.push({
+        label: m.name + ' P1',
+        data: vals(rid, 'p1_shots'),
+        backgroundColor: resolveColor(c.line),
+        borderColor: resolveColor(c.deep),
+        borderWidth: 1,
+        stack: 'r' + rid,
+      });
+      aDatasets.push({
+        label: m.name + ' P2',
+        data: vals(rid, 'p2_shots'),
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: resolveColor(c.deep),
+        borderWidth: 1.5,
+        borderDash: [4,3],
+        stack: 'r' + rid,
+      });
+    });
+    window.__irrCharts.A = new Chart(document.getElementById('chartIrrShots'), {
+      type: 'bar',
+      data: { labels: dates, datasets: aDatasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: rooms.length<=3 } },
+        scales: {
+          x: { stacked: true },
+          y: { stacked: true, beginAtZero: true, title: { display:true, text: lang==='es'?'shots/día':'shots/day' } }
+        }
+      }
+    });
+
+    // --- Chart B: daily applied volume (grouped) ---
+    const bDatasets = [];
+    rooms.forEach(rid => {
+      const c = colorFor(rid);
+      const m = { name: getRoomName(rid) };
+      bDatasets.push({
+        label: m.name + ' P1',
+        data: vals(rid, 'p1_vol'),
+        backgroundColor: resolveColor(c.line),
+        borderColor: resolveColor(c.deep),
+        borderWidth: 1,
+        stack: 'P1',
+      });
+      bDatasets.push({
+        label: m.name + ' P2',
+        data: vals(rid, 'p2_vol'),
+        backgroundColor: resolveColor(c.fill),
+        borderColor: resolveColor(c.deep),
+        borderWidth: 1,
+        stack: 'P2',
+      });
+    });
+    window.__irrCharts.B = new Chart(document.getElementById('chartIrrVol'), {
+      type: 'bar',
+      data: { labels: dates, datasets: bDatasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: rooms.length<=3 } },
+        scales: { y: { beginAtZero: true, title: { display:true, text: lang==='es'?'mL/emisor·día':'mL/emitter·day' } } }
+      }
+    });
+
+    // --- Chart C: interval (lines) ---
+    const cDatasets = [];
+    rooms.forEach(rid => {
+      const c = colorFor(rid);
+      const m = { name: getRoomName(rid) };
+      cDatasets.push({
+        label: m.name + ' P1',
+        data: vals(rid, 'p1_int'),
+        borderColor: resolveColor(c.line),
+        backgroundColor: resolveColor(c.fill),
+        pointBackgroundColor: resolveColor(c.deep),
+        borderWidth: 2.5,
+        tension: .2, spanGaps: true,
+        fill: false,
+      });
+      cDatasets.push({
+        label: m.name + ' P2',
+        data: vals(rid, 'p2_int'),
+        borderColor: resolveColor(c.deep),
+        borderWidth: 2, borderDash: [5,3],
+        pointBackgroundColor: resolveColor(c.deep),
+        tension: .2, spanGaps: true,
+        fill: false,
+      });
+    });
+    window.__irrCharts.C = new Chart(document.getElementById('chartIrrInterval'), {
+      type: 'line',
+      data: { labels: dates, datasets: cDatasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: rooms.length<=3 } },
+        scales: { y: { beginAtZero: true, title: { display:true, text: lang==='es'?'min entre shots':'min between shots' } } }
+      }
+    });
+
+    // --- Chart D: duration (lines) ---
+    const dDatasets = [];
+    rooms.forEach(rid => {
+      const c = colorFor(rid);
+      const m = { name: getRoomName(rid) };
+      dDatasets.push({
+        label: m.name + ' P1',
+        data: vals(rid, 'p1_dur'),
+        borderColor: resolveColor(c.line),
+        backgroundColor: resolveColor(c.fill),
+        pointBackgroundColor: resolveColor(c.deep),
+        borderWidth: 2.5,
+        tension: .2, spanGaps: true,
+        fill: false,
+      });
+      dDatasets.push({
+        label: m.name + ' P2',
+        data: vals(rid, 'p2_dur'),
+        borderColor: resolveColor(c.deep),
+        borderWidth: 2, borderDash: [5,3],
+        pointBackgroundColor: resolveColor(c.deep),
+        tension: .2, spanGaps: true,
+        fill: false,
+      });
+    });
+    window.__irrCharts.D = new Chart(document.getElementById('chartIrrDuration'), {
+      type: 'line',
+      data: { labels: dates, datasets: dDatasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: rooms.length<=3 } },
+        scales: { y: { beginAtZero: true, title: { display:true, text: lang==='es'?'min por shot':'min per shot' } } }
+      }
+    });
+  }
+  window.renderIrrCharts = renderIrrCharts;
+  // Hook into existing renderCharts() so chip clicks + lang/theme toggles also refresh irrigation charts
+  const prevRender = window.renderCharts;
+  if (typeof prevRender === 'function'){
+    window.renderCharts = function(){
+      prevRender.apply(this, arguments);
+      try { renderIrrCharts(); } catch(e){ console.warn('irr charts:', e); }
+    };
+  }
+  // Language / theme button hooks — existing handlers don't call renderCharts()
+  document.querySelectorAll('.lang-btn, .theme-btn').forEach(b => {
+    b.addEventListener('click', () => setTimeout(renderIrrCharts, 80));
+  });
+  // First paint after DOM ready + Chart.js loaded
+  function boot(){
+    if (window.Chart) {
+      try { renderIrrCharts(); } catch(e){ console.warn('irr charts boot:', e); }
+    } else {
+      setTimeout(boot, 250);
+    }
+  }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(boot, 200);
+  } else {
+    document.addEventListener('DOMContentLoaded', ()=>setTimeout(boot, 200));
+  }
+})();
+</script></body>
 </html>
