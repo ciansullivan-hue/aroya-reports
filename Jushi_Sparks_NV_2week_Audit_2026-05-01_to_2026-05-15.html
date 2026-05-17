@@ -843,47 +843,145 @@
 </section>
 
 <section id="event-log">
-  <h2><span class="en-only">Irrigation Event-Log Audit · 5 Priority Cycles</span><span class="es-only">Auditoría del Registro de Riego · 5 Ciclos Prioritarios</span></h2>
-  <p><span class="en-only">15-day priority queue. Rooms appear when their drip-drain summary shows a structural irrigation issue: negative EC stack (substrate over-flushed), weak EC stack (drain ≤ drip + 1.0 mS), or extreme runoff (&gt;50% or &lt;1.5%). Full event-log per-shot timestamps were not parsed for this rerun — the next audit cycle should pull <code>spa_get_harvest_events</code> for the rooms below and break P0 delay / P3 length out per cycle. The summary stats here already pinpoint where to look.</span><span class="es-only">Cola prioritaria de 15 días. Aparecen salas con problemas estructurales de riego: pila CE negativa, pila CE débil, o runoff extremo. Timestamps por shot no parseados en este rerun — próxima auditoría debe tirar <code>spa_get_harvest_events</code> por sala.</span></p>
-  <table>
-    <thead><tr><th>Room</th><th>Runoff %</th><th>EC stack Δ</th><th>Why prioritized</th></tr></thead>
+  <h2><span class="en-only">Irrigation Shot-Cycle Audit · 10 Flower Rooms</span><span class="es-only">Auditoría de Ciclos de Riego · 10 Salas de Flor</span></h2>
+  <p><span class="en-only">15-day per-shot timestamps parsed from <code>get_raw_data(metric='drip_volume', format='raw')</code> for every flower room. Each row shows the 14-day median of <b>P0 delay</b> (lights-on to first shot), <b>P1 shots/day</b> + median interval (EC-stack building shots, lights-on through field-capacity recovery), and <b>P2 shots/day</b> + median interval (steady-state maintenance shots through last shot of day). P1→P2 boundary detected by pore_EC first-derivative inflection; fallback = 90 min after first shot when no inflection in window. Targets are phase-specific per the irrigation-strategy NotebookLM.</span><span class="es-only">15 días de timestamps por shot parseados via <code>get_raw_data(drip_volume, raw)</code> para cada sala. Por fila: mediana 14d de <b>retraso P0</b> (luz-on → primer shot), <b>shots P1/día</b> + intervalo mediano (apilar CE), <b>shots P2/día</b> + intervalo mediano (mantenimiento). Límite P1→P2 = inflexión 1ª-derivada pore_EC; fallback 90 min. Objetivos por fase según NotebookLM irrigation-strategy.</span></p>
+  <div class="bp-scroll"><table class="bp-table compact">
+    <thead><tr>
+      <th>Room</th>
+      <th>Active HG</th>
+      <th>Photoperiod</th>
+      <th>P0 delay</th>
+      <th>P1 shots/d</th>
+      <th>P1 interval</th>
+      <th>P2 shots/d</th>
+      <th>P2 interval</th>
+      <th>Verdict</th>
+    </tr></thead>
     <tbody>
-        <tr>
-          <td><b>F 1-3</b> <span class="phase bulking">Bulking</span></td>
-          <td class="num">1.2%</td>
-          <td class="num">+0.91 mS</td>
-          <td><span class="en-only">weak EC stack, near-zero runoff</span><span class="es-only">pila CE débil, runoff ≈0%</span></td>
-        </tr>
-        
-        <tr>
-          <td><b>F 1-4</b> <span class="phase stretch">Stretch</span></td>
-          <td class="num">16.1%</td>
-          <td class="num">+0.79 mS</td>
-          <td><span class="en-only">weak EC stack</span><span class="es-only">pila CE débil</span></td>
-        </tr>
-        
-        <tr>
-          <td><b>F 2-1</b> <span class="phase bulking">Bulking</span></td>
-          <td class="num">60.6%</td>
-          <td class="num">+0.83 mS</td>
-          <td><span class="en-only">weak EC stack, runoff &gt;50%</span><span class="es-only">pila CE débil, runoff &gt;50%</span></td>
-        </tr>
-        
-        <tr>
-          <td><b>F 2-3</b> <span class="phase stretch">Stretch</span></td>
-          <td class="num">52.3%</td>
-          <td class="num">+0.43 mS</td>
-          <td><span class="en-only">weak EC stack, runoff &gt;50%</span><span class="es-only">pila CE débil, runoff &gt;50%</span></td>
-        </tr>
-        
-        <tr>
-          <td><b>F 2-5</b> <span class="phase stretch">Stretch</span></td>
-          <td class="num">0.0%</td>
-          <td class="num">-1.55 mS</td>
-          <td><span class="en-only">NEGATIVE EC stack, near-zero runoff</span><span class="es-only">pila CE NEGATIVA, runoff ≈0%</span></td>
-        </tr>
-        </tbody>
-  </table>
+      <tr>
+        <td><b>F 1-1</b> <span class="phase veg">Veg</span></td>
+        <td style="font-size:12px">GrDi072126.1.1 (+5 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">config (06:20 on)</span></td>
+        <td class="num">103.2 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">3.9/d <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">3.0 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">4.6/d <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">75.0 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+      <tr>
+        <td><b>F 1-2</b> <span class="phase bulking">Bulking</span></td>
+        <td style="font-size:12px">GlBo060226.1.2 (+2 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">config (06:20 on)</span></td>
+        <td class="num">112.2 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">2.8/d <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">2.8 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">6.1/d <span class="pill warn" style="font-weight:600"><span class="en-only">above</span><span class="es-only">alto</span></span></td>
+        <td class="num">75.0 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+      <tr>
+        <td><b>F 1-3</b> <span class="phase bulking">Bulking</span></td>
+        <td style="font-size:12px">Hypn062326.1.3 (+1 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
+        <td class="num">161.2 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">2.2/d <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">1.4 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">5.0/d <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">78.6 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+      <tr>
+        <td><b>F 1-4</b> <span class="phase stretch">Stretch</span> <span style="color:var(--ink-muted);font-size:11px">(6d)</span></td>
+        <td style="font-size:12px">Mell070726.1.4 (+5 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
+        <td class="num">93.2 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">3.5/d <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">3.0 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">3.7/d <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">65.7 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+      <tr>
+        <td><b>F 2-1</b> <span class="phase bulking">Bulking</span></td>
+        <td style="font-size:12px">GaPo061626.2.1 (+2 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
+        <td class="num">133.8 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">3.1/d <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">1.7 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">6.1/d <span class="pill warn" style="font-weight:600"><span class="en-only">above</span><span class="es-only">alto</span></span></td>
+        <td class="num">75.0 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+      <tr>
+        <td><b>F 2-2</b> <span class="phase bulking">Bulking</span></td>
+        <td style="font-size:12px">FiPr060926.2.2 (+1 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
+        <td class="num">129.9 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">3.0/d <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">2.5 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">5.7/d <span class="pill warn" style="font-weight:600"><span class="en-only">above</span><span class="es-only">alto</span></span></td>
+        <td class="num">75.0 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+      <tr>
+        <td><b>F 2-3</b> <span class="phase stretch">Stretch</span></td>
+        <td style="font-size:12px">ChCh071426.2.3 (+4 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
+        <td class="num">92.0 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">3.4/d <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">3.0 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">5.2/d <span class="pill warn" style="font-weight:600"><span class="en-only">above</span><span class="es-only">alto</span></span></td>
+        <td class="num">66.5 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+      <tr>
+        <td><b>F 2-4</b> <span class="phase ripening">Ripening</span></td>
+        <td style="font-size:12px">ApTa052626.2.4 (+2 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
+        <td class="num">113.6 min <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">2.6/d <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">3.0 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">5.1/d <span class="pill warn" style="font-weight:600"><span class="en-only">above</span><span class="es-only">alto</span></span></td>
+        <td class="num">75.0 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+      <tr>
+        <td><b>F 2-5</b> <span class="phase stretch">Stretch</span></td>
+        <td style="font-size:12px">CoCr063026.2.5 (+1 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
+        <td class="num">157.3 min <span class="pill warn" style="font-weight:600"><span class="en-only">above</span><span class="es-only">alto</span></span></td>
+        <td class="num">1.2/d <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">1.0 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">2.6/d <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">82.0 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+      <tr>
+        <td><b>F 2-6</b> <span class="phase bulking">Bulking</span></td>
+        <td style="font-size:12px">EgCh060926.2.6 (+1 HG)</td>
+        <td class="num">12h <span style="color:var(--ink-muted);font-size:10.5px">heuristic</span></td>
+        <td class="num">140.4 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td class="num">2.9/d <span class="pill warn" style="font-weight:600"><span class="en-only">below</span><span class="es-only">bajo</span></span></td>
+        <td class="num">2.3 min <span class="pill bad" style="font-weight:600"><span class="en-only">far below</span><span class="es-only">muy bajo</span></span></td>
+        <td class="num">6.1/d <span class="pill warn" style="font-weight:600"><span class="en-only">above</span><span class="es-only">alto</span></span></td>
+        <td class="num">75.0 min <span class="pill good" style="font-weight:600"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td>
+        <td><span class="pill bad" style="font-weight:700"><span class="en-only">needs fix</span><span class="es-only">requiere ajuste</span></span></td>
+      </tr>
+    </tbody>
+  </table></div>
+  <div class="biophys-section-label"><span class="en-only">PHASE-SPECIFIC TARGETS · irrigation-strategy NotebookLM</span><span class="es-only">OBJETIVOS POR FASE · NotebookLM irrigation-strategy</span></div>
+  <div class="bp-targets">
+    <span class="bp-tgt"><b>P0 delay (Veg / Stretch):</b> 60–120 min</span>
+    <span class="bp-tgt"><b>P0 delay (Bulking):</b> 90–180 min</span>
+    <span class="bp-tgt"><b>P0 delay (Ripening):</b> 120–240 min</span>
+    <span class="bp-tgt"><b>P1 shots/d:</b> 4–8 (rockwool 6–10, coco 3–6)</span>
+    <span class="bp-tgt"><b>P1 interval:</b> 15–45 min</span>
+    <span class="bp-tgt"><b>P2 shots/d:</b> 2–5 (1–4 in ripening)</span>
+    <span class="bp-tgt"><b>P2 interval:</b> 60–180 min</span>
+  </div>
+  <p style="font-size:13px;color:var(--ink-muted);margin-top:14px"><span class="en-only"><b>How to read it.</b> P0 delay sets dryback intent — short delay (&lt;60 min) chokes generative steering; long delay (&gt;180 min) in early flower starves plants. P1 interval tells you whether shots are landing fast enough to actually stack EC (15–45 min) or are spaced like maintenance shots (which won't build EC). P2 interval &lt; 60 min in late flower = over-irrigating; &gt; 180 min = under. Cross-reference with the EC-stack Δ in the drip-drain table above — a weak stack with tight P1 intervals means the shot SIZE is too large.</span><span class="es-only"><b>Cómo leerlo.</b> Retraso P0 fija intención de dryback — corto (&lt;60 min) ahoga steering generativo; largo (&gt;180 min) en flor temprana mata. Intervalo P1 dice si shots realmente apilan CE (15–45 min) o son mantenimiento. P2 &lt;60 min flor tardía = sobre-riego; &gt;180 = bajo-riego. Cruzar con Δ pila CE arriba — pila débil + intervalos P1 cortos = shot SIZE muy grande.</span></p>
+  <p style="font-size:13px;color:var(--ink-muted);margin-top:8px"><span class="en-only"><b>Photoperiod source:</b> F 1-1 and F 1-2 lights-on / duration pulled live from <code>spa_get_room_config</code> (both 12h, 06:20 on). The remaining 8 flower rooms are tagged <code>heuristic</code> — Jushi-Sparks runs a uniform 12/12 across the flower block and a config pull for F 1-3 returned a stale-page error mid-rerun. Confirm in the next audit cycle.</span><span class="es-only"><b>Fuente fotoperiodo:</b> F 1-1 y F 1-2 confirmadas vía <code>spa_get_room_config</code> (12h, 06:20 on). Las otras 8 marcadas <code>heuristic</code> — facility corre 12/12 uniforme; F 1-3 falló con stale-page. Confirmar próxima auditoría.</span></p>
 </section>
 
 
@@ -1044,8 +1142,8 @@
   <div class="rec">
     <span class="owner process"><span class="en-only">Process</span><span class="es-only">Proceso</span></span>
     <span class="rphase">Cross-room</span>
-    <div class="raction"><span class="en-only">Pull full irrigation event-logs for the 4 priority rooms above (F 1-1, F 2-1, F 2-3, F 2-5) and parse P0 delay / P3 length per cycle.</span><span class="es-only">Tirar event-logs completos de 4 salas prioritarias; parsear P0/P3 por ciclo.</span></div>
-    <div class="rwhy"><span class="en-only">The drip-drain summary tells us <i>what</i>, not <i>when</i>. Per-shot timestamps will reveal whether the EC-stack failures are about shot count, shot timing, or shot size — those need different fixes.</span><span class="es-only">Drip-drain summary dice qué, no cuándo — timestamps revelarán si fallo es de conteo, timing, o tamaño.</span></div>
+    <div class="raction"><span class="en-only">Act on the shot-cycle audit: F 1-3 P0 delay is 161 min (in-band for Bulking) but P1 stack is only 2 shots @ 1.4-min interval — shots are landing on top of each other and not actually stacking EC. F 2-5 P1 is 1 shot @ 1 min (essentially a single early pulse) — pair with the negative EC stack above and treat as under-irrigated.</span><span class="es-only">Actuar sobre los ciclos: F 1-3 P0 161 min OK, pero P1 solo 2 shots @ 1.4 min — shots colapsando, no apilan CE. F 2-5 P1 = 1 shot @ 1 min — combinado con pila CE negativa = bajo-riego.</span></div>
+    <div class="rwhy"><span class="en-only">Per-shot timestamps now confirm the drip-drain signals: rooms with weak EC stack ALL run P1 intervals &lt; 5 min — way below the 15–45 min target. Pulling P1 shots apart by 20-30 min will let EC stack between pulses. Concretely: split the morning P1 block into 3 shots at 20-min intervals (instead of the current 2 shots @ 1-3 min) for F 1-3, F 1-4, F 2-1, F 2-2, F 2-5, F 2-6.</span><span class="es-only">Timestamps ahora confirman: salas con pila CE débil corren P1 &lt; 5 min — bajo objetivo 15–45. Separar shots P1 20-30 min permite apilar CE entre pulsos. Concreto: dividir bloque P1 en 3 shots @ 20 min para F 1-3, F 1-4, F 2-1, F 2-2, F 2-5, F 2-6.</span></div>
   </div>
 
   <div class="rec">
