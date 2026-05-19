@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>GreenMed · 2-Week Facility Audit · 2026-05-05 → 2026-05-19</title>
+<style>
+  :root[data-theme="light"]{
+    --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
+    --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
+    --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
+    --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
+    --attention:#e76f51; --attention-2:#f4a261;
+    --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
+    --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
+    --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+    --grid-line: #e8e8e0;
+  }
+  :root[data-theme="dark"]{
+    --bg:#13160f; --bg-2:#1a1e15; --bg-3:#22281c; --border:#2e3624;
+    --ink:#e8ead9; --ink-2:#b9bda5; --ink-muted:#7e836e;
+    --olive:#8aa05c; --olive-2:#a7bb74; --lime:#b9e587; --lime-2:#6b8d3d;
+    --app-blue:#6cb5d8; --app-blue-2:#3a6d80;
+    --attention:#f48066; --attention-2:#f4a261;
+    --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
+    --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
+    --p-rootin:#7fbacd; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#b694ea; --p-ripening:#e76f51;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 8px 28px rgba(0,0,0,0.45);
+    --grid-line: #2a3220;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;font:14px/1.5 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","ss03"}
+  a{color:var(--app-blue);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+  .masthead{background:#1a1c19;color:#fff;padding:20px 28px 24px;margin:0 -28px 0;position:relative;overflow:hidden;min-height:80px}
+  .masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1}
+  .lockup{position:relative;display:flex;align-items:center;gap:10px;color:#fff;padding-bottom:14px}
+  .lockup-mark{font-family:'Inter',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:1;color:#fff}
+  .lockup-glyph{display:inline-block;width:26px;height:26px;position:relative;flex:none}
+  .lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#fff;border-radius:2px}
+  .lockup-glyph::before{top:0;right:0;width:13px;height:13px}
+  .lockup-glyph::after{bottom:0;left:0;width:17px;height:17px;border-top-right-radius:0}
+  .lockup-byline{position:absolute;top:34px;left:0;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;color:#aaa;letter-spacing:0;line-height:1}
+  .controls{display:flex;gap:6px;align-items:center}
+  .btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
+  .btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
+  .btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
+  .tick{position:absolute;width:7px;height:7px;background:#3a3d35;border-radius:1px;z-index:0}
+  .tick.t1{top:14px;left:42%} .tick.t2{top:14px;left:48%;width:8px;height:8px} .tick.t3{top:14px;right:24%;width:6px;height:6px}
+  .tick.t4{bottom:12px;left:18%} .tick.t5{bottom:12px;left:22%;width:5px;height:5px}
+  .tick.t6{top:46%;right:18px} .tick.t7{bottom:12px;right:32%;width:6px;height:6px}
+  .pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+  .pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
+  .pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
+  .pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+  .pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+  .pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+  :root[data-theme="dark"] .pagehead{border-bottom-color:var(--border)}
+  :root[data-theme="dark"] .pagehead-eyebrow{color:var(--olive-2)}
+  section{margin-top:40px}
+  h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+  h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+  h4{font-size:14px;margin:18px 0 6px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
+  p{margin:0 0 12px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+  .kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
+  .kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
+  .kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+  .kpi .val{font-size:22px;font-weight:700;color:var(--ink)}
+  .kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
+  .kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
+  .card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
+  .phase{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .phase.rootin{background:var(--p-rootin);color:#0c2a35}
+  .phase.veg{background:var(--p-veg);color:#1c3700}
+  .phase.stretch{background:var(--p-stretch);color:#4a1d00}
+  .phase.bulking{background:var(--p-bulking);color:#2c1750}
+  .phase.ripening{background:var(--p-ripening);color:#3c0f00}
+  .phase.dry{background:var(--bg-3);color:var(--ink-muted)}
+  .verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
+  .verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
+  .verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
+  .verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
+  .verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+  table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+  th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
+  .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
+  .en .es-only{display:none} .es .en-only{display:none}
+  .rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow)}
+  .rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
+  .rec .owner.grower{background:var(--app-blue)}
+  .rec .owner.process{background:var(--ink-2)}
+  .rec .rphase{color:var(--ink-muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-left:4px}
+  .rec .raction{margin-top:6px;font-weight:500}
+  .rec .rwhy{margin-top:4px;font-size:13px;color:var(--ink-2)}
+  footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+  .biophys-room{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;box-shadow:var(--card-shadow)}
+  .biophys-room h3{margin:0 0 10px;font-size:17px}
+  .biophys-brief{font-size:13.5px;color:var(--ink-2);margin-bottom:14px;padding:12px 14px;background:var(--bg-3);border-left:3px solid var(--olive);border-radius:0 8px 8px 0;line-height:1.55}
+  .biophys-section-label{font-size:11px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.8px;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px dashed var(--border)}
+  .bp-scroll{overflow-x:auto}
+  .bp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  .bp-table th{background:var(--bg-3);padding:8px 10px;text-align:left;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1.5px solid var(--border);white-space:nowrap}
+  .bp-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .bp-table.compact td{padding:7px 8px;font-size:12.5px}
+  .bp-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .bp-targets{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .bp-tgt{display:inline-block;font-size:12px;padding:5px 10px;background:var(--bg-3);border-radius:6px;color:var(--ink-2)}
+  .bp-tgt b{color:var(--ink)}
+  .muted{color:var(--ink-muted);font-style:italic}
+  kbd{font-family:'JetBrains Mono','Monaco',monospace;font-size:11px;padding:1px 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg-3);color:var(--ink-2)}
+</style>
+</head>
+<body class="en">
+<div class="wrap">
+<div class="masthead">
+  <span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span><span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
+  <div class="masthead-inner">
+    <div class="lockup">
+      <span class="lockup-mark">AROYA</span>
+      <span class="lockup-glyph" aria-hidden="true"></span>
+      <span class="lockup-byline">by Addium</span>
+    </div>
+    <div class="controls">
+      <button class="btn lang-btn active" data-lang="en">EN</button>
+      <button class="btn lang-btn" data-lang="es">ES</button>
+      <button class="btn theme-btn" data-theme="light">Light</button>
+    </div>
+  </div>
+</div>
+
+<div class="pagehead">
+  <div class="pagehead-eyebrow"><span class="en-only">AROYA · 2-Week Facility Audit · Cultivation Intelligence</span><span class="es-only">AROYA · Auditoría 2 Semanas · Inteligencia de Cultivo</span></div>
+  <h1><span class="en-only">GreenMed · Irrigation, Climate &amp; Steering</span><span class="es-only">GreenMed · Riego, Clima y Manejo</span></h1>
+  <div class="sub"><span class="en-only">14-day deep dive across 7 active flower harvest groups · coco-coir 4 L bag · phase-aware crop-steering review · follow-up to 2026-05-07 audit</span><span class="es-only">Análisis de 14 días en 7 grupos activos · sustrato coco-coir 4 L · revisión por fase · seguimiento a auditoría 2026-05-07</span></div>
+  <div class="meta">
+    <span><b><span class="en-only">Facility</span><span class="es-only">Instalación</span></b>GreenMed (ID 4504)</span>
+    <span><b><span class="en-only">Window</span><span class="es-only">Ventana</span></b>2026-05-05 → 2026-05-19 (14 days)</span>
+    <span><b><span class="en-only">Rooms</span><span class="es-only">Salas</span></b>11 total · 8 flower · 7 with active HG · GH1 fallow</span>
+    <span><b><span class="en-only">Harvest groups</span><span class="es-only">Grupos cosecha</span></b>7 active flower</span>
+    <span><b><span class="en-only">Substrate</span><span class="es-only">Sustrato</span></b>Coco Coir, 4 L bag (SOILLESS)</span>
+    <span><b><span class="en-only">Lighting</span><span class="es-only">Iluminación</span></b>12/12 flower · 06:00–18:00 PDT</span>
+    <span><b><span class="en-only">Source</span><span class="es-only">Fuente</span></b>AROYA SPA + public_api · facility 4504</span>
+    <span><b><span class="en-only">Report date</span><span class="es-only">Fecha informe</span></b>2026-05-19</span>
+  </div>
+</div>
+
+<section id="headline">
+  <h2><span class="en-only">Headline Findings</span><span class="es-only">Hallazgos Principales</span></h2>
+  
+  <div class="kpis">
+    <div class="kpi warn">
+      <div class="label"><span class="en-only">Rooms in dryback band</span><span class="es-only">Salas en banda dryback</span></div>
+      <div class="val">3 / 7</div>
+      <div class="delta"><span class="en-only">phase-specific dryback target</span><span class="es-only">objetivo dryback por fase</span></div>
+    </div>
+    <div class="kpi warn">
+      <div class="label"><span class="en-only">Weak / negative EC stack</span><span class="es-only">Pila CE débil / negativa</span></div>
+      <div class="val">2 <span style="font-size:13px;color:var(--ink-muted)">/ 7</span></div>
+      <div class="delta"><span class="en-only">peak − trough &lt; +1.0 mS over 14d</span><span class="es-only">pico − valle &lt; +1.0 mS en 14d</span></div>
+    </div>
+    <div class="kpi warn">
+      <div class="label"><span class="en-only">Rooms within pore_EC target</span><span class="es-only">Salas en objetivo pore_EC</span></div>
+      <div class="val">4 / 7</div>
+      <div class="delta"><span class="en-only">phase-specific coco bands</span><span class="es-only">bandas coco por fase</span></div>
+    </div>
+    <div class="kpi warn">
+      <div class="label"><span class="en-only">Flower rooms · climate blind</span><span class="es-only">Salas flor sin clima</span></div>
+      <div class="val">1 / 8</div>
+      <div class="delta"><span class="en-only">&lt;20% climate-sensor coverage</span><span class="es-only">&lt;20% cobertura sensor clima</span></div>
+    </div>
+    <div class="kpi good">
+      <div class="label"><span class="en-only">Data coverage (climate)</span><span class="es-only">Cobertura datos (clima)</span></div>
+      <div class="val">81.5%</div>
+      <div class="delta"><span class="en-only">expected 480 pts/room/metric</span><span class="es-only">esperado 480 pts/sala/métrica</span></div>
+    </div>
+    <div class="kpi good">
+      <div class="label"><span class="en-only">Active harvest groups</span><span class="es-only">Grupos cosecha activos</span></div>
+      <div class="val">7</div>
+      <div class="delta"><span class="en-only">across 7 flower rooms · GH1 fallow</span><span class="es-only">en 7 salas de flor · GH1 vacía</span></div>
+    </div>
+  </div>
+
+  <div class="verdict warn">
+    <div class="v-head"><span class="en-only">The Lead — what 14 days tell us, 12 days after the last audit</span><span class="es-only">La Lectura — qué dicen 14 días, 12 días después del último informe</span></div>
+    <p><span class="en-only"><b>11-room facility, 14-day audit (May 5 – May 19, 2026).</b> GreenMed runs a coco-coir bag flower deck with 7 active flower harvest groups across Indoor 1–6 + GH2 (GH1 fallow, sensor fleet failing). 3 rooms in Stack (Indoor 4, 5, 6), 3 in Bulk (Indoor 2, 3, GH2), 1 in Finish (Indoor 1). The 5/07 audit asked for: (a) climate sensors in GH2, (b) RH/VPD fix in Indoor 1 BSR1, (c) EC re-balance across 5 rooms, (d) Indoor 6 CO₂ cap. <b>14 days later:</b> (a) GH2 zone 71281 now has climate but two zones still blind; (b) Indoor 1 RH still 73% / VPD 0.72 (unchanged); (c) EC partially recovered — 3 of 5 outlier rooms back in band, Indoor 1 still high, Indoor 5 PL3 still under-fed; (d) Indoor 6 still pegged at 1785 ppm CO₂. <b>The yield-binding issues are still climate-side, not substrate-side.</b> 3 of 7 rooms hit dryback band, 4 of 7 sit inside phase pore_EC, 1 flower rooms have <20% climate coverage.</span><span class="es-only"><b>11-room facility, 14-day audit (May 5 – May 19, 2026).</b> GreenMed runs a coco-coir bag flower deck with 7 active flower harvest groups across Indoor 1–6 + GH2 (GH1 fallow, sensor fleet failing). 3 rooms in Stack (Indoor 4, 5, 6), 3 in Bulk (Indoor 2, 3, GH2), 1 in Finish (Indoor 1). The 5/07 audit asked for: (a) climate sensors in GH2, (b) RH/VPD fix in Indoor 1 BSR1, (c) EC re-balance across 5 rooms, (d) Indoor 6 CO₂ cap. <b>14 days later:</b> (a) GH2 zone 71281 now has climate but two zones still blind; (b) Indoor 1 RH still 73% / VPD 0.72 (unchanged); (c) EC partially recovered — 3 of 5 outlier rooms back in band, Indoor 1 still high, Indoor 5 PL3 still under-fed; (d) Indoor 6 still pegged at 1785 ppm CO₂. <b>The yield-binding issues are still climate-side, not substrate-side.</b> 3 of 7 rooms hit dryback band, 4 of 7 sit inside phase pore_EC, 1 flower rooms have <20% climate coverage.</span></p>
+  </div>
+</section>
+
+
+<section id="prior-commitment">
+  <h2><span class="en-only">Prior-Commitment Audit · what 5/07 asked for, what landed</span><span class="es-only">Auditoría de Compromisos Previos · qué pidió 5/07, qué se cumplió</span></h2>
+
+  <p class="en-only" style="color:var(--ink-2);font-size:13px;margin:6px 0 14px"><b>Source register:</b> <a href="https://ciansullivan-hue.github.io/aroya-reports/GreenMed_Facility_Audit_2026-05-07.html">GreenMed Facility Audit · 7 May 2026</a> (shipped 12 days ago). Five recommendations, ranked H/M/L impact. Status below is from this 14-day window 5/05 → 5/19.</p>
+
+  <div class="verdict warn">
+    <div class="v-head">◐ Rec #1 · Get climate sensors live in GH2 — PARTIAL</div>
+    <p><span class="en-only">5/07 flagged GH2 (3,758 plants) as totally blind on climate. <b>This window: zone 71281 (BI) is now reporting</b> with 215 of 480 climate points (~45% coverage) — RH 66.4%, VPD 1.08, air 25°C / 77°F. Zones 74291 (TRG) and 81738 (SBZ) still have no climate sensor. <b>CO₂ still reading 0</b> in all zones — no CO₂ sensor deployed at GH2. The largest HG at the facility just entered Bulk on 5/19; the climate fix is half-done and Bulk runs 21 days from today.</span></p>
+  </div>
+
+  <div class="verdict bad">
+    <div class="v-head">✗ Rec #2 · Reduce humidity in Indoor 1 (BSR1) — UNRESOLVED</div>
+    <p><span class="en-only">5/07 logged BSR1 in Bulk day 16 at RH 77/80%, VPD 0.69 — botrytis exposure. <b>This window: BSR1 is now in Finish day 7</b> (harvest 5/26 — 7 days out). RH 73.4% mean / 80.8% max. VPD 0.72 kPa mean / 0.45 min. <b>Essentially unchanged from 5/07.</b> Air temp 72.3°F mean, abs_hum 14.6 g/m³ — the dehumidifier hasn't bitten. With dense flower in the final week, this is the highest near-term operational risk at the facility, exactly as flagged 12 days ago.</span></p>
+  </div>
+
+  <div class="verdict warn">
+    <div class="v-head">◐ Rec #3 · Audit substrate EC across 5 outlier rooms — PARTIAL</div>
+    <p><span class="en-only">5/07 flagged PL2 (8.0), RIF10 (8.1), TRG1 (7.3) above Bulk ceiling; PL3 (4.0), BSR1 (5.7) under-fed. <b>This window's verdict:</b></span></p>
+    <ul style="margin:6px 0 0 0;padding-left:20px;font-size:13px;line-height:1.7">
+      <li><b>Indoor 2 PL2 Bulk:</b> EC 7.0 mS — <span class="pill good">resolved</span> (was 8.0, now solidly inside 6.0–7.0 Bulk band)</li>
+      <li><b>Indoor 3 TRG1 Bulk:</b> EC 6.87 mS — <span class="pill good">resolved</span> (was 7.3, now inside band)</li>
+      <li><b>Indoor 1 BSR1 Finish:</b> EC 8.01 mS — <span class="pill warn">drifted higher</span> (was 5.7 Bulk under-fed, now 8.0 Finish — needs flush before harvest)</li>
+      <li><b>Indoor 5 PL3 Stack:</b> EC 3.56 mS — <span class="pill bad">unresolved</span> (was 4.0, now lower; PL3 still under-fed at Stack day 18)</li>
+      <li><b>Indoor 4 BLS1 Stack:</b> EC 5.76 room mean but with <b>2.0 mS split between zones</b> (71005=4.72, 71006=6.80) — likely emitter or sensor offset issue, new finding</li>
+    </ul>
+  </div>
+
+  <div class="verdict good">
+    <div class="v-head">✓ Rec #4 · Walk 7 silent h421 climate sensors — RESOLVED for most</div>
+    <p><span class="en-only">5/07 flagged 7 flower rooms each missing one h421. <b>This window:</b> Indoor 1–5 climate combos report 480/480 points (100% coverage). <b>GH1 still partial</b> (35/480 points climate — sensor stack appears to have failed entirely, also substrate sensors reading nonsense; flagged as separate issue). <b>GH2 still partial</b> (215/480 points). Indoor 1–5 fleet repaired since 5/07.</span></p>
+  </div>
+
+  <div class="verdict bad">
+    <div class="v-head">✗ Rec #5 · Re-tune PL3 and PL2 irrigation — PL2 LANDED, PL3 UNRESOLVED</div>
+    <p><span class="en-only">5/07: PL3 (Stack) needed deeper drybacks + delay first-shot; PL2 (Bulk) needed bigger discrete shots. <b>This window:</b> PL2 now in Bulk day 16, EC inside band (7.0), VPD 1.34 (in band), VWC range 40–62% — Bulk dynamics restored. ✓. <b>PL3 day 18 of Stack:</b> EC 3.56 mS (worse than 5/07's 3.96), dryback proxy 14.8% (was 10%), VWC range 45.9–53.9% (very flat — peak 53.9 is below 5/07's 41 peak, but the floor only drops 8 pts overnight). PL3 has been under-fed and over-watered for 18 straight days; flip to Bulk in 4 days. No recovery happened.</span></p>
+  </div>
+
+  <div class="verdict bad">
+    <div class="v-head">⚠ NEW · GH1 sensor fleet has failed since 5/07</div>
+    <p><span class="en-only">GH1 is fallow this window (no active HG). All 4 sensor channels reading garbage: substrate VWC 0.79% (sensor disconnected), pore_EC 16+ mS room mean (stuck at out-of-range), climate sensors 35/480 points (silent). Either the room was deliberately taken offline for re-provisioning or the entire sensor stack failed. <b>Confirm intent before next planting — running an HG here today would be flying blind.</b></span></p>
+  </div>
+</section>
+
+
+<section id="hvac-capacity">
+  <h2><span class="en-only">HVAC Capacity &amp; Climate Load · Are the rooms able to hit their targets?</span><span class="es-only">Capacidad HVAC y carga climática</span></h2>
+
+  <div class="verdict warn">
+    <div class="v-head">⚠ Climate plant is the binding constraint in 3 of 7 rooms — same pattern as 5/07</div>
+    <p>Indoor 1 (Finish) carries the worst RH/VPD inversion at the facility — RH 73% mean (max 81%), VPD 0.72 (min 0.45). Indoor 6 swings 3.0°F across the day with CO₂ pegged at 2000 ppm.
+    Indoor 5 swings 8.4°F (the biggest air-temp range at GreenMed) and has the deepest VPD distribution — 0.76 to 1.51. The 5/07 hot-room walk shows up as room-by-room variation, not a facility-wide ceiling: Indoor 2 sits cleanly inside Bulk targets (VPD 1.34, RH 56.7%), so the HVAC plant is sized — it's the per-room recipes and setpoint enforcement that wobble.</p>
+  </div>
+
+  <p class="en-only" style="color:var(--ink-2);font-size:13px;margin:4px 0 10px">Signals below evaluate whether the climate plant has the headroom for each room's phase recipe. VPD stress hrs/day is a normal-tail proxy from the 14-day mean &amp; std around an 0.8–1.6 kPa generic comfort band. Air swing &gt; 8 °F suggests the room cannot hold its setpoint.</p>
+
+  <div style="overflow-x:auto">
+  <table class="bp-table compact" style="font-size:12px">
+    <thead><tr>
+      <th>Room · Phase</th><th>HVAC verdict</th><th>Day air (lights-on, °F)</th>
+      <th>Range (14d, Δ)</th><th>VPD lights-on</th><th>RH lights-on</th>
+    </tr></thead>
+    <tbody><tr>
+          <td><b>Indoor 1</b> · <span class='phase ripening'>Finish</span></td>
+          <td><span class='pill bad'>binding constraint</span></td>
+          <td class='num'>72.3 °F <span class='pill good'>in band</span></td>
+          <td class='num'>66.4–75.9 °F (Δ 9.5)</td>
+          <td class='num'>0.72 kPa <span class='pill bad'>17.9 stress hrs/d</span></td>
+          <td class='num'>73.45% (67.1–80.8)</td>
+        </tr><tr>
+          <td><b>Indoor 2</b> · <span class='phase bulking'>Bulk</span></td>
+          <td><span class='pill good'>holding</span></td>
+          <td class='num'>76.4 °F <span class='pill good'>in band</span></td>
+          <td class='num'>73.9–79.3 °F (Δ 5.4)</td>
+          <td class='num'>1.34 kPa <span class='pill good'>0.1 stress hrs/d</span></td>
+          <td class='num'>56.74% (51.9–64.4)</td>
+        </tr><tr>
+          <td><b>Indoor 3</b> · <span class='phase bulking'>Bulk</span></td>
+          <td><span class='pill warn'>at edge</span></td>
+          <td class='num'>75.6 °F <span class='pill good'>in band</span></td>
+          <td class='num'>68.5–80.8 °F (Δ 12.3)</td>
+          <td class='num'>0.94 kPa <span class='pill warn'>5.2 stress hrs/d</span></td>
+          <td class='num'>69.54% (66.6–75.3)</td>
+        </tr><tr>
+          <td><b>Indoor 4</b> · <span class='phase stretch'>Stack</span></td>
+          <td><span class='pill warn'>at edge</span></td>
+          <td class='num'>75.2 °F <span class='pill warn'>below</span></td>
+          <td class='num'>72.5–79.3 °F (Δ 6.8)</td>
+          <td class='num'>0.99 kPa <span class='pill good'>0.7 stress hrs/d</span></td>
+          <td class='num'>66.89% (61.1–74.1)</td>
+        </tr><tr>
+          <td><b>Indoor 5</b> · <span class='phase stretch'>Stack</span></td>
+          <td><span class='pill bad'>binding constraint</span></td>
+          <td class='num'>74.4 °F <span class='pill warn'>below</span></td>
+          <td class='num'>68.2–83.3 °F (Δ 15.1)</td>
+          <td class='num'>1.09 kPa <span class='pill good'>2.8 stress hrs/d</span></td>
+          <td class='num'>63.13% (58.6–70.1)</td>
+        </tr><tr>
+          <td><b>Indoor 6</b> · <span class='phase stretch'>Stack</span></td>
+          <td><span class='pill good'>holding</span></td>
+          <td class='num'>78.3 °F <span class='pill good'>in band</span></td>
+          <td class='num'>75.6–81.0 °F (Δ 5.4)</td>
+          <td class='num'>1.09 kPa <span class='pill good'>3.4 stress hrs/d</span></td>
+          <td class='num'>67.16% (57.4–79.9)</td>
+        </tr><tr>
+              <td><b>GH1</b> · <span class='phase muted'>fallow / silent</span></td>
+              <td><span class='pill muted'>insufficient data</span></td>
+              <td class='num muted'>n/a</td>
+              <td class='num muted'>n/a</td>
+              <td class='num muted'>n/a</td>
+              <td class='num muted'>n/a</td>
+            </tr><tr>
+          <td><b>GH2</b> · <span class='phase bulking'>Bulk</span></td>
+          <td><span class='pill bad'>binding constraint</span></td>
+          <td class='num'>77.0 °F <span class='pill good'>in band</span></td>
+          <td class='num'>72.3–80.8 °F (Δ 8.5)</td>
+          <td class='num'>1.08 kPa <span class='pill good'>2.3 stress hrs/d</span></td>
+          <td class='num'>66.36% (59.9–75.3)</td>
+        </tr></tbody>
+  </table>
+  </div>
+</section>
+
+
+<section id="climate-irrigation-interplay">
+  <h2><span class="en-only">Climate ↔ Irrigation Interplay · per-room mechanism scoring</span><span class="es-only">Interacción Clima ↔ Riego · puntuación de mecanismo por sala</span></h2>
+  <p><span class="en-only">Five climate-side mechanisms each scored against this 14-day window's hourly time series, then mapped to the irrigation/steering outcome they drive. The table answers <i>"is the climate plant the binding constraint, the slab, or neither?"</i> per room. All numbers below are derived from hourly soil_moist / pore_ec / vpd / air_temp / soil_temp aggregates pulled directly from the AROYA chart endpoint (no rollups, no aggregates re-binning). Rows with insufficient data are omitted rather than placeholdered.</span><span class="es-only">Cinco mecanismos climáticos calificados contra la serie horaria de 14 días, mapeados al resultado de riego / manejo. Filas sin datos suficientes se omiten.</span></p>
+  <div style="overflow-x:auto">
+  <table class='bp-table compact' style='font-size:12.5px'>
+    <thead><tr>
+      <th>Room · Phase</th>
+      <th>Mechanism</th>
+      <th>Observed (14d)</th>
+      <th>Verdict</th>
+      <th>Impact on irrigation / steering</th>
+    </tr></thead>
+    <tbody><tr>
+                <td><b>Indoor 1</b> · <span class='phase ripening'>Finish</span></td>
+                <td><b>VPD ceiling stress</b><div style='font-size:11.5px;color:var(--ink-muted)'>hrs/d lights-on above phase upper VPD</div></td>
+                <td class='num'>0h/d · target ≤ 1.5 kPa</td>
+                <td><span class='pill good'>in band</span></td>
+                <td style='font-size:12.5px'>VPD holds inside phase band (0h/d above 1.5 kPa) — climate-side is not the steering blocker.</td>
+            </tr><tr>
+                <td><b>Indoor 1</b> · <span class='phase ripening'>Finish</span></td>
+                <td><b>Negative DIF</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where lights-on mean &lt; lights-off mean</div></td>
+                <td class='num'>1/14 days · mean Δ 0.89°C</td>
+                <td><span class='pill good'>positive</span></td>
+                <td style='font-size:12.5px'>DIF stays positive 13/14 days (mean 0.89°C). Photosynthate moves the right direction.</td>
+            </tr><tr>
+                <td><b>Indoor 1</b> · <span class='phase ripening'>Finish</span></td>
+                <td><b>Diurnal swing &gt; 4.4°C</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where max − min air temp &gt; 8°F</div></td>
+                <td class='num'>0/14 days · mean swing 3.36°C</td>
+                <td><span class='pill good'>tight</span></td>
+                <td style='font-size:12.5px'>Daily swing stays ≤4.4°C (0/14 days exceeded, mean 3.36°C). HVAC sized correctly for the load.</td>
+            </tr><tr>
+                <td><b>Indoor 1</b> · <span class='phase ripening'>Finish</span></td>
+                <td><b>Air ↔ soil thermal coupling</b><div style='font-size:11.5px;color:var(--ink-muted)'>Pearson r over lights-on hourly mean</div></td>
+                <td class='num'>r = 0.90</td>
+                <td><span class='pill good'>tight</span></td>
+                <td style='font-size:12.5px'>Air ↔ soil-temp r = 0.90. HVAC drives the substrate — recipe changes land on root-zone fast. Setpoint moves matter more than slab mass.</td>
+            </tr><tr>
+                <td><b>Indoor 1</b> · <span class='phase ripening'>Finish</span></td>
+                <td><b>EC stacking trajectory</b><div style='font-size:11.5px;color:var(--ink-muted)'>slope of hourly pore_ec over the 14d window</div></td>
+                <td class='num'>+0.24 mS/day · 5.7 → 8.24</td>
+                <td><span class='pill good'>stacking</span></td>
+                <td style='font-size:12.5px'>Pore_EC trending +0.24 mS/day (5.7→8.24). On-strategy stacking through the window — phase wants 6.0–7.5 mS.</td>
+            </tr><tr>
+                <td><b>Indoor 2</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>VPD ceiling stress</b><div style='font-size:11.5px;color:var(--ink-muted)'>hrs/d lights-on above phase upper VPD</div></td>
+                <td class='num'>8.64h/d · target ≤ 1.2 kPa</td>
+                <td><span class='pill bad'>binding</span></td>
+                <td style='font-size:12.5px'>Plant transpires at ceiling for 8.64h/day on average — Bulk recipe wants ≤1h/d. Dryback flattens because demand-side stops responding to shot timing.</td>
+            </tr><tr>
+                <td><b>Indoor 2</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>Negative DIF</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where lights-on mean &lt; lights-off mean</div></td>
+                <td class='num'>9/14 days · mean Δ -0.18°C</td>
+                <td><span class='pill warn'>split</span></td>
+                <td style='font-size:12.5px'>DIF flips negative on 9/14 days (mean -0.18°C). Either HVAC overcooling lights-on or undercooling lights-off — pick a side.</td>
+            </tr><tr>
+                <td><b>Indoor 2</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>Diurnal swing &gt; 4.4°C</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where max − min air temp &gt; 8°F</div></td>
+                <td class='num'>1/14 days · mean swing 2.01°C</td>
+                <td><span class='pill good'>tight</span></td>
+                <td style='font-size:12.5px'>Daily swing stays ≤4.4°C (1/14 days exceeded, mean 2.01°C). HVAC sized correctly for the load.</td>
+            </tr><tr>
+                <td><b>Indoor 2</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>Air ↔ soil thermal coupling</b><div style='font-size:11.5px;color:var(--ink-muted)'>Pearson r over lights-on hourly mean</div></td>
+                <td class='num'>r = 0.86</td>
+                <td><span class='pill good'>tight</span></td>
+                <td style='font-size:12.5px'>Air ↔ soil-temp r = 0.86. HVAC drives the substrate — recipe changes land on root-zone fast. Setpoint moves matter more than slab mass.</td>
+            </tr><tr>
+                <td><b>Indoor 2</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>EC stacking trajectory</b><div style='font-size:11.5px;color:var(--ink-muted)'>slope of hourly pore_ec over the 14d window</div></td>
+                <td class='num'>-0.01 mS/day · 8.6 → 7.36</td>
+                <td><span class='pill good'>stable</span></td>
+                <td style='font-size:12.5px'>Pore_EC essentially flat (-0.01 mS/day, 8.6→7.36). Recipe steady; substrate at equilibrium with feed.</td>
+            </tr><tr>
+                <td><b>Indoor 3</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>VPD ceiling stress</b><div style='font-size:11.5px;color:var(--ink-muted)'>hrs/d lights-on above phase upper VPD</div></td>
+                <td class='num'>1.29h/d · target ≤ 1.2 kPa</td>
+                <td><span class='pill warn'>at edge</span></td>
+                <td style='font-size:12.5px'>1.29h/d of lights-on VPD above 1.2 kPa. Watch shot-cadence drift — if drybacks shallow further, the room is past its evaporative ceiling.</td>
+            </tr><tr>
+                <td><b>Indoor 3</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>Negative DIF</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where lights-on mean &lt; lights-off mean</div></td>
+                <td class='num'>0/14 days · mean Δ 2.85°C</td>
+                <td><span class='pill good'>positive</span></td>
+                <td style='font-size:12.5px'>DIF stays positive 14/14 days (mean 2.85°C). Photosynthate moves the right direction.</td>
+            </tr><tr>
+                <td><b>Indoor 3</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>Diurnal swing &gt; 4.4°C</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where max − min air temp &gt; 8°F</div></td>
+                <td class='num'>14/14 days · mean swing 6.86°C</td>
+                <td><span class='pill bad'>HVAC undersized</span></td>
+                <td style='font-size:12.5px'>Diurnal swing exceeds 4.4°C on 14/14 days (mean 6.86°C). HVAC plant can't hold setpoint — plant resets transpiration each day. Steering targets reset with it.</td>
+            </tr><tr>
+                <td><b>Indoor 3</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>Air ↔ soil thermal coupling</b><div style='font-size:11.5px;color:var(--ink-muted)'>Pearson r over lights-on hourly mean</div></td>
+                <td class='num'>r = 0.96</td>
+                <td><span class='pill good'>tight</span></td>
+                <td style='font-size:12.5px'>Air ↔ soil-temp r = 0.96. HVAC drives the substrate — recipe changes land on root-zone fast. Setpoint moves matter more than slab mass.</td>
+            </tr><tr>
+                <td><b>Indoor 3</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>EC stacking trajectory</b><div style='font-size:11.5px;color:var(--ink-muted)'>slope of hourly pore_ec over the 14d window</div></td>
+                <td class='num'>+0.02 mS/day · 8.32 → 7.02</td>
+                <td><span class='pill good'>stable</span></td>
+                <td style='font-size:12.5px'>Pore_EC essentially flat (+0.02 mS/day, 8.32→7.02). Recipe steady; substrate at equilibrium with feed.</td>
+            </tr><tr>
+                <td><b>Indoor 4</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>VPD ceiling stress</b><div style='font-size:11.5px;color:var(--ink-muted)'>hrs/d lights-on above phase upper VPD</div></td>
+                <td class='num'>0h/d · target ≤ 1.4 kPa</td>
+                <td><span class='pill good'>in band</span></td>
+                <td style='font-size:12.5px'>VPD holds inside phase band (0h/d above 1.4 kPa) — climate-side is not the steering blocker.</td>
+            </tr><tr>
+                <td><b>Indoor 4</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>Negative DIF</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where lights-on mean &lt; lights-off mean</div></td>
+                <td class='num'>9/14 days · mean Δ -0.08°C</td>
+                <td><span class='pill warn'>split</span></td>
+                <td style='font-size:12.5px'>DIF flips negative on 9/14 days (mean -0.08°C). Either HVAC overcooling lights-on or undercooling lights-off — pick a side.</td>
+            </tr><tr>
+                <td><b>Indoor 4</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>Diurnal swing &gt; 4.4°C</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where max − min air temp &gt; 8°F</div></td>
+                <td class='num'>0/13 days · mean swing 2.28°C</td>
+                <td><span class='pill good'>tight</span></td>
+                <td style='font-size:12.5px'>Daily swing stays ≤4.4°C (0/13 days exceeded, mean 2.28°C). HVAC sized correctly for the load.</td>
+            </tr><tr>
+                <td><b>Indoor 4</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>Air ↔ soil thermal coupling</b><div style='font-size:11.5px;color:var(--ink-muted)'>Pearson r over lights-on hourly mean</div></td>
+                <td class='num'>r = 0.55</td>
+                <td><span class='pill warn'>loose</span></td>
+                <td style='font-size:12.5px'>Air ↔ soil-temp r = 0.55. Slab buffers the HVAC swings — climate-driven steering signals reach the root zone with lag.</td>
+            </tr><tr>
+                <td><b>Indoor 4</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>EC stacking trajectory</b><div style='font-size:11.5px;color:var(--ink-muted)'>slope of hourly pore_ec over the 14d window</div></td>
+                <td class='num'>+0.06 mS/day · 6.15 → 6.07</td>
+                <td><span class='pill good'>stable</span></td>
+                <td style='font-size:12.5px'>Pore_EC essentially flat (+0.06 mS/day, 6.15→6.07). Recipe steady; substrate at equilibrium with feed.</td>
+            </tr><tr>
+                <td><b>Indoor 5</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>VPD ceiling stress</b><div style='font-size:11.5px;color:var(--ink-muted)'>hrs/d lights-on above phase upper VPD</div></td>
+                <td class='num'>0h/d · target ≤ 1.4 kPa</td>
+                <td><span class='pill good'>in band</span></td>
+                <td style='font-size:12.5px'>VPD holds inside phase band (0h/d above 1.4 kPa) — climate-side is not the steering blocker.</td>
+            </tr><tr>
+                <td><b>Indoor 5</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>Negative DIF</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where lights-on mean &lt; lights-off mean</div></td>
+                <td class='num'>14/14 days · mean Δ -2.39°C</td>
+                <td><span class='pill bad'>inverted</span></td>
+                <td style='font-size:12.5px'>Air is colder lights-on than lights-off on 14/14 days (mean DIF -2.39°C). Reverses the metabolite-drive signal — plant won't push stretch / won't ripen on schedule.</td>
+            </tr><tr>
+                <td><b>Indoor 5</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>Diurnal swing &gt; 4.4°C</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where max − min air temp &gt; 8°F</div></td>
+                <td class='num'>6/14 days · mean swing 4.86°C</td>
+                <td><span class='pill warn'>edge</span></td>
+                <td style='font-size:12.5px'>Swing >4.4°C on 6/14 days (mean 4.86°C). Setpoint mostly holds; days with wide swings line up with shallow drybacks.</td>
+            </tr><tr>
+                <td><b>Indoor 5</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>Air ↔ soil thermal coupling</b><div style='font-size:11.5px;color:var(--ink-muted)'>Pearson r over lights-on hourly mean</div></td>
+                <td class='num'>r = 0.93</td>
+                <td><span class='pill good'>tight</span></td>
+                <td style='font-size:12.5px'>Air ↔ soil-temp r = 0.93. HVAC drives the substrate — recipe changes land on root-zone fast. Setpoint moves matter more than slab mass.</td>
+            </tr><tr>
+                <td><b>Indoor 5</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>EC stacking trajectory</b><div style='font-size:11.5px;color:var(--ink-muted)'>slope of hourly pore_ec over the 14d window</div></td>
+                <td class='num'>-0.05 mS/day · 4.32 → 3.58</td>
+                <td><span class='pill good'>stable</span></td>
+                <td style='font-size:12.5px'>Pore_EC essentially flat (-0.05 mS/day, 4.32→3.58). Recipe steady; substrate at equilibrium with feed.</td>
+            </tr><tr>
+                <td><b>Indoor 6</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>VPD ceiling stress</b><div style='font-size:11.5px;color:var(--ink-muted)'>hrs/d lights-on above phase upper VPD</div></td>
+                <td class='num'>0.21h/d · target ≤ 1.4 kPa</td>
+                <td><span class='pill good'>in band</span></td>
+                <td style='font-size:12.5px'>VPD holds inside phase band (0.21h/d above 1.4 kPa) — climate-side is not the steering blocker.</td>
+            </tr><tr>
+                <td><b>Indoor 6</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>Negative DIF</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where lights-on mean &lt; lights-off mean</div></td>
+                <td class='num'>14/14 days · mean Δ -1.61°C</td>
+                <td><span class='pill bad'>inverted</span></td>
+                <td style='font-size:12.5px'>Air is colder lights-on than lights-off on 14/14 days (mean DIF -1.61°C). Reverses the metabolite-drive signal — plant won't push stretch / won't ripen on schedule.</td>
+            </tr><tr>
+                <td><b>Indoor 6</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>Diurnal swing &gt; 4.4°C</b><div style='font-size:11.5px;color:var(--ink-muted)'>days where max − min air temp &gt; 8°F</div></td>
+                <td class='num'>7/13 days · mean swing 4.56°C</td>
+                <td><span class='pill warn'>edge</span></td>
+                <td style='font-size:12.5px'>Swing >4.4°C on 7/13 days (mean 4.56°C). Setpoint mostly holds; days with wide swings line up with shallow drybacks.</td>
+            </tr><tr>
+                <td><b>Indoor 6</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>Air ↔ soil thermal coupling</b><div style='font-size:11.5px;color:var(--ink-muted)'>Pearson r over lights-on hourly mean</div></td>
+                <td class='num'>r = 0.95</td>
+                <td><span class='pill good'>tight</span></td>
+                <td style='font-size:12.5px'>Air ↔ soil-temp r = 0.95. HVAC drives the substrate — recipe changes land on root-zone fast. Setpoint moves matter more than slab mass.</td>
+            </tr><tr>
+                <td><b>Indoor 6</b> · <span class='phase stretch'>Stack</span></td>
+                <td><b>EC stacking trajectory</b><div style='font-size:11.5px;color:var(--ink-muted)'>slope of hourly pore_ec over the 14d window</div></td>
+                <td class='num'>-0.15 mS/day · 8.92 → 4.45</td>
+                <td><span class='pill bad'>leaching</span></td>
+                <td style='font-size:12.5px'>Pore_EC drops -0.15 mS/day from 8.92 → 4.45. Below phase floor (4.5 mS) — the recipe is washing out the stack.</td>
+            </tr><tr>
+                <td><b>GH2</b> · <span class='phase bulking'>Bulk</span></td>
+                <td><b>EC stacking trajectory</b><div style='font-size:11.5px;color:var(--ink-muted)'>slope of hourly pore_ec over the 14d window</div></td>
+                <td class='num'>+0.16 mS/day · 5.29 → 6.68</td>
+                <td><span class='pill good'>stacking</span></td>
+                <td style='font-size:12.5px'>Pore_EC trending +0.16 mS/day (5.29→6.68). On-strategy stacking through the window — phase wants 6.0–7.0 mS.</td>
+            </tr></tbody>
+  </table>
+  </div>
+</section>
+
+
+<section id="room-selector">
+  <h2><span class="en-only">Per-Room Snapshot · 14-day aggregate</span><span class="es-only">Resumen por Sala · agregado 14d</span></h2>
+  <p><span class="en-only">Quick chip-strip of the 7 active flower harvest groups, color-coded by phase bucket (stretch = orange / bulking = purple / ripening = red). The full per-room metrics are in the Phase Biophysics section above; this strip is for orienting the reader at the section break.</span><span class="es-only">Tira de chips de los 7 grupos activos, codificados por fase.</span></p>
+  <div style='margin:14px 0'><span class='room-chip' style='display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);font-size:13px;font-weight:500;margin:4px'>Indoor 1 <span style='font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px'>ripening</span></span><span class='room-chip' style='display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);font-size:13px;font-weight:500;margin:4px'>Indoor 2 <span style='font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px'>bulking</span></span><span class='room-chip' style='display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);font-size:13px;font-weight:500;margin:4px'>Indoor 3 <span style='font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px'>bulking</span></span><span class='room-chip' style='display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);font-size:13px;font-weight:500;margin:4px'>Indoor 4 <span style='font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px'>stretch</span></span><span class='room-chip' style='display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);font-size:13px;font-weight:500;margin:4px'>Indoor 5 <span style='font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px'>stretch</span></span><span class='room-chip' style='display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);font-size:13px;font-weight:500;margin:4px'>Indoor 6 <span style='font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px'>stretch</span></span><span class='room-chip' style='display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);font-size:13px;font-weight:500;margin:4px'>GH2 <span style='font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px'>bulking</span></span></div>
+</section>
+
+<section id="biophysics">
+  <h2><span class="en-only">Phase Biophysics &amp; Irrigation Inputs · per-room deep dive</span><span class="es-only">Biofísica y Riego por Fase</span></h2>
+  <p><span class="en-only">For each active HG: lead with the steering intent, then overnight dryback proxy (14d max − min on soil_moist), substrate pore_EC + EC stack Δ, lights-on VPD / RH / air temp, soil temp, CO₂. All numbers are 14-day room-aggregate stats from 2026-05-05 → 2026-05-19. Per-shot volume and per-shot duration require the per-zone irrigation-event endpoint — flagged in 5/07, still pending.</span></p>
+
+
+<div class="biophys-room">
+  <h3>Indoor 1 · <span class="phase ripening">Finish</span> · BSR1 Si1 in1 3/26-5/31 · day 7 of phase · 560 plants</h3>
+  <div class="biophys-brief"><b>Indoor 1</b> is <b>generatively-steered</b>. Overnight dryback proxy <b>42.9%</b> (above band vs 20–35%). FC ceiling 50.1% / overnight floor 28.6%. Substrate pore_EC <b>8.01 mS</b> (above band vs 6.0–7.5 mS). Daily EC swing (max − min, 14d) <b>+1.15 mS</b> — healthy stacking. Lights-on VPD <b>0.72 kPa</b> (below band vs 1.2–1.5 kPa), RH <b>73.45%</b> (above band vs 50–60%), air temp <b>72.3 °F</b> (in band vs 72–78 °F). Soil temp 70.6°F. CO₂ 1622.8 ppm.</div>
+  
+  <div class="biophys-section-label">PER-PHASE BIOPHYSICS · 14-day room aggregate</div>
+  <div class="bp-scroll"><table class="bp-table compact">
+        <thead><tr>
+          <th>Phase</th><th>FC max</th><th>Floor min</th><th>Dryback %</th>
+          <th>Pore_EC mS</th><th>EC swing</th>
+          <th>VPD on</th><th>RH on</th><th>Air °F</th><th>Soil °F</th><th>CO₂</th>
+        </tr></thead>
+        <tbody><tr>
+          <td><span class='phase ripening'>Finish</span></td>
+          <td class='num'>50.1%</td>
+          <td class='num'>28.6%</td>
+          <td class='num'>42.9% <span class='pill bad'>above</span></td>
+          <td class='num'>8.01 mS <span class='pill bad'>above</span></td>
+          <td class='num'>1.15 mS <span class='pill good'>in band</span></td>
+          <td class='num'>0.72 kPa <span class='pill bad'>below</span></td>
+          <td class='num'>73.45% <span class='pill bad'>above</span></td>
+          <td class='num'>72.3 °F <span class='pill good'>in band</span></td>
+          <td class='num'>70.6 °F <span class='pill good'>in band</span></td>
+          <td class='num'>1622.8 ppm <span class='pill bad'>above</span></td>
+        </tr></tbody>
+        </table></div>
+  <div class="biophys-section-label">CURRENT PHASE TARGETS</div>
+  <div class='bp-targets'><span class='bp-tgt'><b>Dryback:</b> 20–35%</span><span class='bp-tgt'><b>Substrate EC:</b> 6.0–7.5 mS</span><span class='bp-tgt'><b>Shot size:</b> 3–5%</span><span class='bp-tgt'><b>P0 delay:</b> 180–300 min</span><span class='bp-tgt'><b>VPD lights-on:</b> 1.2–1.5 kPa</span><span class='bp-tgt'><b>Temp lights-on:</b> 72–78 °F</span><span class='bp-tgt'><b>RH lights-on:</b> 50–60%</span></div>
+</div>
+
+
+<div class="biophys-room">
+  <h3>Indoor 2 · <span class="phase bulking">Bulk</span> · PL2 in2 4/5-6/7 · day 16 of phase · 240 plants</h3>
+  <div class="biophys-brief"><b>Indoor 2</b> is <b>vegetatively-steered (with generative ripening signals)</b>. Overnight dryback proxy <b>35.2%</b> (above band vs 10–20%). FC ceiling 62.3% / overnight floor 40.4%. Substrate pore_EC <b>7.0 mS</b> (in band vs 6.0–7.0 mS). Daily EC swing (max − min, 14d) <b>+2.18 mS</b> — healthy stacking. Lights-on VPD <b>1.34 kPa</b> (above band vs 1.0–1.2 kPa), RH <b>56.74%</b> (in band vs 55–65%), air temp <b>76.4 °F</b> (in band vs 74–80 °F). Soil temp 73.0°F. CO₂ 1137.47 ppm.</div>
+  
+  <div class="biophys-section-label">PER-PHASE BIOPHYSICS · 14-day room aggregate</div>
+  <div class="bp-scroll"><table class="bp-table compact">
+        <thead><tr>
+          <th>Phase</th><th>FC max</th><th>Floor min</th><th>Dryback %</th>
+          <th>Pore_EC mS</th><th>EC swing</th>
+          <th>VPD on</th><th>RH on</th><th>Air °F</th><th>Soil °F</th><th>CO₂</th>
+        </tr></thead>
+        <tbody><tr>
+          <td><span class='phase bulking'>Bulk</span></td>
+          <td class='num'>62.3%</td>
+          <td class='num'>40.4%</td>
+          <td class='num'>35.2% <span class='pill bad'>above</span></td>
+          <td class='num'>7.0 mS <span class='pill good'>in band</span></td>
+          <td class='num'>2.18 mS <span class='pill good'>in band</span></td>
+          <td class='num'>1.34 kPa <span class='pill bad'>above</span></td>
+          <td class='num'>56.74% <span class='pill good'>in band</span></td>
+          <td class='num'>76.4 °F <span class='pill good'>in band</span></td>
+          <td class='num'>73.0 °F <span class='pill good'>in band</span></td>
+          <td class='num'>1137.47 ppm <span class='pill good'>in band</span></td>
+        </tr></tbody>
+        </table></div>
+  <div class="biophys-section-label">CURRENT PHASE TARGETS</div>
+  <div class='bp-targets'><span class='bp-tgt'><b>Dryback:</b> 10–20%</span><span class='bp-tgt'><b>Substrate EC:</b> 6.0–7.0 mS</span><span class='bp-tgt'><b>Shot size:</b> 3–5%</span><span class='bp-tgt'><b>P0 delay:</b> 60–120 min</span><span class='bp-tgt'><b>VPD lights-on:</b> 1.0–1.2 kPa</span><span class='bp-tgt'><b>Temp lights-on:</b> 74–80 °F</span><span class='bp-tgt'><b>RH lights-on:</b> 55–65%</span></div>
+</div>
+
+
+<div class="biophys-room">
+  <h3>Indoor 3 · <span class="phase bulking">Bulk</span> · TRG1 NS2 in3 3 4/12-6/17 · day 12 of phase · 478 plants</h3>
+  <div class="biophys-brief"><b>Indoor 3</b> is <b>vegetatively-steered (with generative ripening signals)</b>. Overnight dryback proxy <b>26.5%</b> (above band vs 10–20%). FC ceiling 58.6% / overnight floor 43.1%. Substrate pore_EC <b>6.87 mS</b> (in band vs 6.0–7.0 mS). Daily EC swing (max − min, 14d) <b>+2.0 mS</b> — healthy stacking. Lights-on VPD <b>0.94 kPa</b> (below band vs 1.0–1.2 kPa), RH <b>69.54%</b> (above band vs 55–65%), air temp <b>75.6 °F</b> (in band vs 74–80 °F). Soil temp 72.3°F. CO₂ 1491.63 ppm.</div>
+  
+  <div class="biophys-section-label">PER-PHASE BIOPHYSICS · 14-day room aggregate</div>
+  <div class="bp-scroll"><table class="bp-table compact">
+        <thead><tr>
+          <th>Phase</th><th>FC max</th><th>Floor min</th><th>Dryback %</th>
+          <th>Pore_EC mS</th><th>EC swing</th>
+          <th>VPD on</th><th>RH on</th><th>Air °F</th><th>Soil °F</th><th>CO₂</th>
+        </tr></thead>
+        <tbody><tr>
+          <td><span class='phase bulking'>Bulk</span></td>
+          <td class='num'>58.6%</td>
+          <td class='num'>43.1%</td>
+          <td class='num'>26.5% <span class='pill bad'>above</span></td>
+          <td class='num'>6.87 mS <span class='pill good'>in band</span></td>
+          <td class='num'>2.0 mS <span class='pill good'>in band</span></td>
+          <td class='num'>0.94 kPa <span class='pill bad'>below</span></td>
+          <td class='num'>69.54% <span class='pill bad'>above</span></td>
+          <td class='num'>75.6 °F <span class='pill good'>in band</span></td>
+          <td class='num'>72.3 °F <span class='pill good'>in band</span></td>
+          <td class='num'>1491.63 ppm <span class='pill bad'>above</span></td>
+        </tr></tbody>
+        </table></div>
+  <div class="biophys-section-label">CURRENT PHASE TARGETS</div>
+  <div class='bp-targets'><span class='bp-tgt'><b>Dryback:</b> 10–20%</span><span class='bp-tgt'><b>Substrate EC:</b> 6.0–7.0 mS</span><span class='bp-tgt'><b>Shot size:</b> 3–5%</span><span class='bp-tgt'><b>P0 delay:</b> 60–120 min</span><span class='bp-tgt'><b>VPD lights-on:</b> 1.0–1.2 kPa</span><span class='bp-tgt'><b>Temp lights-on:</b> 74–80 °F</span><span class='bp-tgt'><b>RH lights-on:</b> 55–65%</span></div>
+</div>
+
+
+<div class="biophys-room">
+  <h3>Indoor 4 · <span class="phase stretch">Stack</span> · BLS1 in4 4 5/6-7/8 · day 9 of phase · 470 plants</h3>
+  <div class="biophys-brief"><b>Indoor 4</b> is <b>generatively-steered</b>. Overnight dryback proxy <b>33.3%</b> (in band vs 25–40%). FC ceiling 55.0% / overnight floor 36.7%. Substrate pore_EC <b>5.76 mS</b> (in band vs 4.5–6.0 mS). Daily EC swing (max − min, 14d) <b>+1.27 mS</b> — healthy stacking. Lights-on VPD <b>0.99 kPa</b> (below band vs 1.2–1.4 kPa), RH <b>66.89%</b> (above band vs 55–65%), air temp <b>75.2 °F</b> (below band vs 76–82 °F). Soil temp 72.9°F. CO₂ 1416.91 ppm.</div>
+  
+  <div class="biophys-section-label">PER-PHASE BIOPHYSICS · 14-day room aggregate</div>
+  <div class="bp-scroll"><table class="bp-table compact">
+        <thead><tr>
+          <th>Phase</th><th>FC max</th><th>Floor min</th><th>Dryback %</th>
+          <th>Pore_EC mS</th><th>EC swing</th>
+          <th>VPD on</th><th>RH on</th><th>Air °F</th><th>Soil °F</th><th>CO₂</th>
+        </tr></thead>
+        <tbody><tr>
+          <td><span class='phase stretch'>Stack</span></td>
+          <td class='num'>55.0%</td>
+          <td class='num'>36.7%</td>
+          <td class='num'>33.3% <span class='pill good'>in band</span></td>
+          <td class='num'>5.76 mS <span class='pill good'>in band</span></td>
+          <td class='num'>1.27 mS <span class='pill good'>in band</span></td>
+          <td class='num'>0.99 kPa <span class='pill bad'>below</span></td>
+          <td class='num'>66.89% <span class='pill warn'>above</span></td>
+          <td class='num'>75.2 °F <span class='pill warn'>below</span></td>
+          <td class='num'>72.9 °F <span class='pill good'>in band</span></td>
+          <td class='num'>1416.91 ppm <span class='pill bad'>above</span></td>
+        </tr></tbody>
+        </table></div>
+  <div class="biophys-section-label">CURRENT PHASE TARGETS</div>
+  <div class='bp-targets'><span class='bp-tgt'><b>Dryback:</b> 25–40%</span><span class='bp-tgt'><b>Substrate EC:</b> 4.5–6.0 mS</span><span class='bp-tgt'><b>Shot size:</b> 4–6%</span><span class='bp-tgt'><b>P0 delay:</b> 120–240 min</span><span class='bp-tgt'><b>VPD lights-on:</b> 1.2–1.4 kPa</span><span class='bp-tgt'><b>Temp lights-on:</b> 76–82 °F</span><span class='bp-tgt'><b>RH lights-on:</b> 55–65%</span></div>
+</div>
+
+
+<div class="biophys-room">
+  <h3>Indoor 5 · <span class="phase stretch">Stack</span> · PL3 in5 4/27-6/29 · day 18 of phase · 568 plants</h3>
+  <div class="biophys-brief"><b>Indoor 5</b> is <b>generatively-steered</b>. Overnight dryback proxy <b>14.8%</b> (below band vs 25–40%). FC ceiling 53.9% / overnight floor 45.9%. Substrate pore_EC <b>3.56 mS</b> (below band vs 4.5–6.0 mS). Daily EC swing (max − min, 14d) <b>+0.55 mS</b> — weak stacking, P3/P2 ratio too maintenance-heavy. Lights-on VPD <b>1.09 kPa</b> (below band vs 1.2–1.4 kPa), RH <b>63.13%</b> (in band vs 55–65%), air temp <b>74.4 °F</b> (below band vs 76–82 °F). Soil temp 70.9°F. CO₂ 1007.25 ppm.</div>
+  
+  <div class="biophys-section-label">PER-PHASE BIOPHYSICS · 14-day room aggregate</div>
+  <div class="bp-scroll"><table class="bp-table compact">
+        <thead><tr>
+          <th>Phase</th><th>FC max</th><th>Floor min</th><th>Dryback %</th>
+          <th>Pore_EC mS</th><th>EC swing</th>
+          <th>VPD on</th><th>RH on</th><th>Air °F</th><th>Soil °F</th><th>CO₂</th>
+        </tr></thead>
+        <tbody><tr>
+          <td><span class='phase stretch'>Stack</span></td>
+          <td class='num'>53.9%</td>
+          <td class='num'>45.9%</td>
+          <td class='num'>14.8% <span class='pill bad'>below</span></td>
+          <td class='num'>3.56 mS <span class='pill bad'>below</span></td>
+          <td class='num'>0.55 mS <span class='pill warn'>below</span></td>
+          <td class='num'>1.09 kPa <span class='pill bad'>below</span></td>
+          <td class='num'>63.13% <span class='pill good'>in band</span></td>
+          <td class='num'>74.4 °F <span class='pill warn'>below</span></td>
+          <td class='num'>70.9 °F <span class='pill good'>in band</span></td>
+          <td class='num'>1007.25 ppm <span class='pill good'>in band</span></td>
+        </tr></tbody>
+        </table></div>
+  <div class="biophys-section-label">CURRENT PHASE TARGETS</div>
+  <div class='bp-targets'><span class='bp-tgt'><b>Dryback:</b> 25–40%</span><span class='bp-tgt'><b>Substrate EC:</b> 4.5–6.0 mS</span><span class='bp-tgt'><b>Shot size:</b> 4–6%</span><span class='bp-tgt'><b>P0 delay:</b> 120–240 min</span><span class='bp-tgt'><b>VPD lights-on:</b> 1.2–1.4 kPa</span><span class='bp-tgt'><b>Temp lights-on:</b> 76–82 °F</span><span class='bp-tgt'><b>RH lights-on:</b> 55–65%</span></div>
+</div>
+
+
+<div class="biophys-room">
+  <h3>Indoor 6 · <span class="phase stretch">Stack</span> · Subgal1 in6 6 5/13-7/18 · day 2 of phase · 184 plants</h3>
+  <div class="biophys-brief"><b>Indoor 6</b> is <b>generatively-steered</b>. Overnight dryback proxy <b>37.4%</b> (in band vs 25–40%). FC ceiling 50.0% / overnight floor 31.3%. Substrate pore_EC <b>4.27 mS</b> (below band vs 4.5–6.0 mS). Daily EC swing (max − min, 14d) <b>+0.99 mS</b> — weak stacking, P3/P2 ratio too maintenance-heavy. Lights-on VPD <b>1.09 kPa</b> (below band vs 1.2–1.4 kPa), RH <b>67.16%</b> (above band vs 55–65%), air temp <b>78.3 °F</b> (in band vs 76–82 °F). Soil temp 75.8°F. CO₂ 1785.25 ppm.</div>
+  
+  <div class="biophys-section-label">PER-PHASE BIOPHYSICS · 14-day room aggregate</div>
+  <div class="bp-scroll"><table class="bp-table compact">
+        <thead><tr>
+          <th>Phase</th><th>FC max</th><th>Floor min</th><th>Dryback %</th>
+          <th>Pore_EC mS</th><th>EC swing</th>
+          <th>VPD on</th><th>RH on</th><th>Air °F</th><th>Soil °F</th><th>CO₂</th>
+        </tr></thead>
+        <tbody><tr>
+          <td><span class='phase stretch'>Stack</span></td>
+          <td class='num'>50.0%</td>
+          <td class='num'>31.3%</td>
+          <td class='num'>37.4% <span class='pill good'>in band</span></td>
+          <td class='num'>4.27 mS <span class='pill warn'>below</span></td>
+          <td class='num'>0.99 mS <span class='pill warn'>below</span></td>
+          <td class='num'>1.09 kPa <span class='pill bad'>below</span></td>
+          <td class='num'>67.16% <span class='pill warn'>above</span></td>
+          <td class='num'>78.3 °F <span class='pill good'>in band</span></td>
+          <td class='num'>75.8 °F <span class='pill good'>in band</span></td>
+          <td class='num'>1785.25 ppm <span class='pill bad'>above</span></td>
+        </tr></tbody>
+        </table></div>
+  <div class="biophys-section-label">CURRENT PHASE TARGETS</div>
+  <div class='bp-targets'><span class='bp-tgt'><b>Dryback:</b> 25–40%</span><span class='bp-tgt'><b>Substrate EC:</b> 4.5–6.0 mS</span><span class='bp-tgt'><b>Shot size:</b> 4–6%</span><span class='bp-tgt'><b>P0 delay:</b> 120–240 min</span><span class='bp-tgt'><b>VPD lights-on:</b> 1.2–1.4 kPa</span><span class='bp-tgt'><b>Temp lights-on:</b> 76–82 °F</span><span class='bp-tgt'><b>RH lights-on:</b> 55–65%</span></div>
+</div>
+
+
+<div class="biophys-room">
+  <h3>GH2 · <span class="phase bulking">Bulk</span> · SBZ7GH BI1GH TRG1GH GH2 4/15-6/24 · day 0 of phase · 3758 plants</h3>
+  <div class="biophys-brief"><b>GH2</b> is <b>vegetatively-steered (with generative ripening signals)</b>. Overnight dryback proxy <b>15.7%</b> (in band vs 10–20%). FC ceiling 58.6% / overnight floor 49.4%. Substrate pore_EC <b>6.5 mS</b> (in band vs 6.0–7.0 mS). Daily EC swing (max − min, 14d) <b>+1.47 mS</b> — healthy stacking. Lights-on VPD <b>1.08 kPa</b> (in band vs 1.0–1.2 kPa), RH <b>66.36%</b> (above band vs 55–65%), air temp <b>77.0 °F</b> (in band vs 74–80 °F). Soil temp 75.3°F. CO₂ 0.0 ppm.</div>
+  <div style='margin-top:8px;padding:8px 12px;background:var(--bad-bg);border-left:3px solid var(--bad);border-radius:6px;font-size:12px;color:var(--bad)'><b>Climate coverage warning:</b> only 215 of 480 expected climate points reported. RH/VPD/temp readings are partial-window proxies, not 14-day means.</div>
+  <div class="biophys-section-label">PER-PHASE BIOPHYSICS · 14-day room aggregate</div>
+  <div class="bp-scroll"><table class="bp-table compact">
+        <thead><tr>
+          <th>Phase</th><th>FC max</th><th>Floor min</th><th>Dryback %</th>
+          <th>Pore_EC mS</th><th>EC swing</th>
+          <th>VPD on</th><th>RH on</th><th>Air °F</th><th>Soil °F</th><th>CO₂</th>
+        </tr></thead>
+        <tbody><tr>
+          <td><span class='phase bulking'>Bulk</span></td>
+          <td class='num'>58.6%</td>
+          <td class='num'>49.4%</td>
+          <td class='num'>15.7% <span class='pill good'>in band</span></td>
+          <td class='num'>6.5 mS <span class='pill good'>in band</span></td>
+          <td class='num'>1.47 mS <span class='pill good'>in band</span></td>
+          <td class='num'>1.08 kPa <span class='pill good'>in band</span></td>
+          <td class='num'>66.36% <span class='pill warn'>above</span></td>
+          <td class='num'>77.0 °F <span class='pill good'>in band</span></td>
+          <td class='num'>75.3 °F <span class='pill good'>in band</span></td>
+          <td class='num'>0.0 ppm <span class='pill bad'>below</span></td>
+        </tr></tbody>
+        </table></div>
+  <div class="biophys-section-label">CURRENT PHASE TARGETS</div>
+  <div class='bp-targets'><span class='bp-tgt'><b>Dryback:</b> 10–20%</span><span class='bp-tgt'><b>Substrate EC:</b> 6.0–7.0 mS</span><span class='bp-tgt'><b>Shot size:</b> 3–5%</span><span class='bp-tgt'><b>P0 delay:</b> 60–120 min</span><span class='bp-tgt'><b>VPD lights-on:</b> 1.0–1.2 kPa</span><span class='bp-tgt'><b>Temp lights-on:</b> 74–80 °F</span><span class='bp-tgt'><b>RH lights-on:</b> 55–65%</span></div>
+</div>
+
+</section>
+
+<section id="vwc-proxies">
+  <h2><span class="en-only">VWC-Derived Irrigation Proxies · hourly</span><span class="es-only">Proxies de Riego Derivados de VWC · horario</span></h2>
+  <p><span class="en-only">Per-room daily medians of the three VWC-derived irrigation signals — overnight relative dryback %, P0 delay (lights-on → first &gt;1% VWC rise), and approximate shot count (hourly rises &gt;1.5%). Computed directly from hourly soil_moist time series — does <b>not</b> substitute for the per-zone irrigation-event endpoint (per-shot volume / duration / total runoff still pending). With no drip/drain plumbing at this facility, these proxies are the cleanest read on whether the recipe is landing.</span><span class="es-only">Medianas diarias por sala de los tres proxies de riego derivados de VWC.</span></p>
+  <table class='bp-table compact'>
+    <thead><tr><th>Room · Phase</th><th>Dryback % (median)</th><th>P0 delay (median)</th><th>Shot proxy</th><th>Coverage</th></tr></thead>
+    <tbody><tr>
+            <td><b>Indoor 1</b> · <span class='phase ripening'>Finish</span></td>
+            <td>36.6% <span class='pill warn'>above band</span><div style='font-size:11px;color:var(--ink-muted)'>target 20–35%</div></td>
+            <td>60 min <span class='pill bad'>too short</span><div style='font-size:11px;color:var(--ink-muted)'>target 180–300 min</div></td>
+            <td class='num'>1.0/d</td>
+            <td style='font-size:11.5px;color:var(--ink-muted)'>14 dryback-days, 13 P0-days resolved at hourly cadence</td>
+        </tr><tr>
+            <td><b>Indoor 2</b> · <span class='phase bulking'>Bulk</span></td>
+            <td>1.0% <span class='pill bad'>below band</span><div style='font-size:11px;color:var(--ink-muted)'>target 10–20%</div></td>
+            <td><span class='muted'>n/a</span></td>
+            <td class='num'>0.0/d</td>
+            <td style='font-size:11.5px;color:var(--ink-muted)'>14 dryback-days, 0 P0-days resolved at hourly cadence</td>
+        </tr><tr>
+            <td><b>Indoor 3</b> · <span class='phase bulking'>Bulk</span></td>
+            <td>26.8% <span class='pill bad'>above band</span><div style='font-size:11px;color:var(--ink-muted)'>target 10–20%</div></td>
+            <td>60 min <span class='pill good'>in band</span><div style='font-size:11px;color:var(--ink-muted)'>target 60–120 min</div></td>
+            <td class='num'>0.0/d</td>
+            <td style='font-size:11.5px;color:var(--ink-muted)'>14 dryback-days, 2 P0-days resolved at hourly cadence</td>
+        </tr><tr>
+            <td><b>Indoor 4</b> · <span class='phase stretch'>Stack</span></td>
+            <td>12.8% <span class='pill bad'>below band</span><div style='font-size:11px;color:var(--ink-muted)'>target 25–40%</div></td>
+            <td><span class='muted'>n/a</span></td>
+            <td class='num'>0.0/d</td>
+            <td style='font-size:11.5px;color:var(--ink-muted)'>14 dryback-days, 0 P0-days resolved at hourly cadence</td>
+        </tr><tr>
+            <td><b>Indoor 5</b> · <span class='phase stretch'>Stack</span></td>
+            <td>-1.0% <span class='pill bad'>below band</span><div style='font-size:11px;color:var(--ink-muted)'>target 25–40%</div></td>
+            <td><span class='muted'>n/a</span></td>
+            <td class='num'>1.0/d</td>
+            <td style='font-size:11.5px;color:var(--ink-muted)'>14 dryback-days, 0 P0-days resolved at hourly cadence</td>
+        </tr><tr>
+            <td><b>Indoor 6</b> · <span class='phase stretch'>Stack</span></td>
+            <td>47.5% <span class='pill warn'>above band</span><div style='font-size:11px;color:var(--ink-muted)'>target 25–40%</div></td>
+            <td>60 min <span class='pill bad'>too short</span><div style='font-size:11px;color:var(--ink-muted)'>target 120–240 min</div></td>
+            <td class='num'>1.0/d</td>
+            <td style='font-size:11.5px;color:var(--ink-muted)'>14 dryback-days, 8 P0-days resolved at hourly cadence</td>
+        </tr><tr>
+            <td><b>GH2</b> · <span class='phase bulking'>Bulk</span></td>
+            <td>25.7% <span class='pill bad'>above band</span><div style='font-size:11px;color:var(--ink-muted)'>target 10–20%</div></td>
+            <td><span class='muted'>n/a</span></td>
+            <td class='num'>0.0/d</td>
+            <td style='font-size:11.5px;color:var(--ink-muted)'>14 dryback-days, 0 P0-days resolved at hourly cadence</td>
+        </tr></tbody>
+  </table>
+</section>
+
+
+<section id="config">
+  <h2><span class="en-only">Config &amp; Guardrail Audit</span><span class="es-only">Auditoría de Configuración y Guardrails</span></h2>
+  <p><span class="en-only">Per-room <code>spa_get_room_config</code> + facility-wide <code>spa_get_target_ranges</code> payloads captured at extraction time. Indoor 1 carries the canonical photoperiod (lights-on 13:00 UTC, 12 h duration → 06:00–18:00 PDT). Substrate config: <b>coco coir, 4 L bag, 2.2 mL/min single emitter</b> in Indoor 1–5; Indoor 6 runs 1.1 mL/min × 2 emitters/plant. Facility-level target ranges are loose (VPD 1.2–1.4 kPa, RH 50–70%, air 18–28 °C) and not phase-aware — the audit applies tighter phase-specific coco bands. <b>AUTOMAIT:</b> not enabled at GreenMed as of 2026-05-19.</span></p>
+</section>
+
+<section id="recommendations">
+  <h2><span class="en-only">Recommendations</span><span class="es-only">Recomendaciones</span></h2>
+  <p><span class="en-only">Owner-tagged. <b>Owner</b> = GreenMed head grower / facility lead (sensor installs, CO₂ controller, feed-EC strategy). <b>Grower</b> = per-room shot-cycle and climate tuning. <b>Process</b> = cross-room operating discipline.</span><span class="es-only">Etiquetadas por dueño.</span></p>
+
+
+<div class="rec">
+  <span class="owner owner">Owner</span><span class="rphase">GH2 · 3,758-plant biggest HG · partial climate coverage</span>
+  <div class="raction">Install climate sensors in GH2 zones 74291 (TRG) and 81738 (SBZ) — only zone 71281 (BI) is currently reporting climate (45.0% of expected points).</div>
+  <div class="rwhy">GH2 entered Bulk on 2026-05-19 (today). The room holds 3,758 plants — the largest HG at GreenMed — and only one of three zones has a climate sensor reporting. The 5/07 audit flagged GH2 as totally blind; one zone has come online since, but Bulk steering needs facility-wide RH/VPD/temp across all zones before this group can be safely steered through 4 more weeks to harvest. CO₂ is also reading 0 across all GH2 zones — no CO₂ sensor deployed.</div>
+</div>
+
+<div class="rec">
+  <span class="owner owner">Owner</span><span class="rphase">GH1 · sensor fleet failure · no active HG</span>
+  <div class="raction">Triage GH1 sensor fleet — substrate sensors reading near-zero VWC (0.79% room avg) and pore_EC stuck at 16+ mS (out-of-range). Climate sensors silent (35 of 480 expected points). No active HG in GH1.</div>
+  <div class="rwhy">All four sensor channels in GH1 are either silent or reading nonsense. Either the room is intentionally fallow (and sensors will get re-provisioned at next flip) or the entire sensor stack failed since the 5/07 audit. Confirm intent before next planting — running a HG here today would be flying entirely blind.</div>
+</div>
+
+<div class="rec">
+  <span class="owner grower">Grower</span><span class="rphase">Indoor 1 · BSR1 Finish · botrytis exposure (carry-over from 5/07)</span>
+  <div class="raction">Pull RH from 73% (max 81%) down to ≤65% — VPD 0.72 kPa is in vegetative territory during Finish phase. Verify dehumidifier capacity vs current canopy density.</div>
+  <div class="rwhy">5/07 flagged Indoor 1 humid in Bulk; the group is now 7 days into Finish (harvest 5/26 — 7 days out). RH has held at 73% mean / 81% max across the 14-day window. With dense flower in the final week, mold pressure is the dominant risk. Finish phase target is 50–60% RH / 1.2–1.5 kPa.</div>
+</div>
+
+<div class="rec">
+  <span class="owner owner">Owner</span><span class="rphase">Indoor 6 · CO₂ overdosing (carry-over from 5/07)</span>
+  <div class="raction">Cap CO₂ at 1200 ppm — Indoor 6 averages 1785 ppm with max 2000 (sensor saturated at 2000 ppm). Returns above 1500 ppm are minimal in Stack/Finish; below ~600 µmol PPFD, returns above 1200 ppm are zero.</div>
+  <div class="rwhy">5/07 audit flagged Indoor 6 dosing CO₂ at ~1900 ppm 24/7 in UN9 Finish (harvested). The new Subgal1 HG (started 5/13, 2 days into Stack) inherited the same recipe — CO₂ is still pegged at 1785 ppm avg, 2000 ppm max. Pure cost with no yield benefit at this PPFD. Consider whether the controller is hard-set or recipe-driven; align dose schedule with photoperiod.</div>
+</div>
+
+<div class="rec">
+  <span class="owner grower">Grower</span><span class="rphase">Indoor 5 · PL3 Stack day 18 · under-fed & shallow dryback (carry-over from 5/07)</span>
+  <div class="raction">Push feed EC up 0.3–0.5 mS and deepen P3 dry-down. Substrate EC is 3.56 mS (target 4.5–6.0); overnight dryback proxy 14.8% (target 25–40%). Zone 71007 specifically running 2.69 mS — well under-fed.</div>
+  <div class="rwhy">5/07 flagged PL3 (Indoor 5) Stack as vegetative-leaning with 10% dryback and 3.96 EC. 14 days later, EC is 3.56 mS (worse) and the room dryback proxy is 14.8%. The generative cue isn't being delivered — the room is now 18 days into Stack with no recovery. Flip is in 4 days; reaching even partial generative steering before Bulk requires immediate feed-EC and shot-cycle correction.</div>
+</div>
+
+<div class="rec">
+  <span class="owner process">Process</span><span class="rphase">Facility-wide · EC stacking discipline</span>
+  <div class="raction">Tighten P3 dry-down in 2 rooms with weak substrate-EC trajectory (Indoor 5, Indoor 6). Daily peak−trough Δ < 1.0 mS means the slab is not concentrating salts between shots.</div>
+  <div class="rwhy">In coco at 4 L bag with single 2.2 mL/min emitter, weak EC stack signals the P2 maintenance shots are drowning the dry-down. Trim P2 last-shot and lengthen P3 by 30–45 min until the daily EC swing reads ≥ 1.0 mS room-mean.</div>
+</div>
+
+<div class="rec">
+  <span class="owner owner">Owner</span><span class="rphase">Indoor 4 · BLS1 Stack day 9 · zone EC imbalance</span>
+  <div class="raction">Check emitter/feed lines at zone 71005 (Front Door, EC 4.72 mS) vs zone 71006 (Back Wall, EC 6.80 mS). 2-mS room-mean split inside a single HG is mechanical (emitter clog, line pressure, or sensor offset) — confirm with a manual in-substrate EC probe.</div>
+  <div class="rwhy">Zone 71005 is reading 1.5 mS below the Stack floor; zone 71006 sits at the upper end of the band. Same recipe, same room, same HG — the only way to get a 2-mS spread is unequal water delivery or a sensor offset. Same finding pattern as 5/07 Indoor 4 ee894 critical alert.</div>
+</div>
+</section>
+
+<section id="data-quality">
+  <h2><span class="en-only">Data Quality &amp; Coverage</span><span class="es-only">Calidad y Cobertura de Datos</span></h2>
+  <p><span class="en-only">Per-room point counts across the 14-day window (5/05 → 5/19, ~480 expected per metric at 36-min cadence). Climate-sensor coverage gaps are the most actionable; substrate-sensor gaps in GH1 are the new finding since 5/07.</span></p>
+  <table class='bp-table compact'>
+    <thead><tr><th>Room</th><th>Type</th><th>Climate pts</th><th>Substrate pts</th><th>Coverage</th><th>Status</th><th>Note</th></tr></thead>
+    <tbody><tr><td><b>Indoor 1</b></td><td>FLOWER</td><td class='num'>480</td><td class='num'>480</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'></td></tr><tr><td><b>Indoor 2</b></td><td>FLOWER</td><td class='num'>480</td><td class='num'>480</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'></td></tr><tr><td><b>Indoor 3</b></td><td>FLOWER</td><td class='num'>480</td><td class='num'>480</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'></td></tr><tr><td><b>Indoor 4</b></td><td>FLOWER</td><td class='num'>480</td><td class='num'>480</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'></td></tr><tr><td><b>Indoor 5</b></td><td>FLOWER</td><td class='num'>480</td><td class='num'>480</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'></td></tr><tr><td><b>Indoor 6</b></td><td>FLOWER</td><td class='num'>480</td><td class='num'>480</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'></td></tr><tr><td><b>GH1</b></td><td>FLOWER</td><td class='num'>35</td><td class='num'>480</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'>GH1 sensor stack appears failed (VWC 0.79%, EC stuck 16+ mS, climate 35/480)</td></tr><tr><td><b>GH2</b></td><td>FLOWER</td><td class='num'>215</td><td class='num'>480</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'>GH2 zone 71281 reporting; zones 74291, 81738 still no climate sensor</td></tr><tr><td><b>Dry 10</b></td><td>DRY</td><td class='num'>0</td><td class='num'>0</td><td class='num'>0%</td><td><span class='pill bad'>silent / failing</span></td><td style='font-size:11px;color:var(--ink-muted)'>Dry 10 silent — drying room not in use this window</td></tr><tr><td><b>Dry 1</b></td><td>DRY</td><td class='num'>479</td><td class='num'>0</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'></td></tr><tr><td><b>Nursery</b></td><td>VEG</td><td class='num'>0</td><td class='num'>479</td><td class='num'>100.0%</td><td><span class='pill good'>complete</span></td><td style='font-size:11px;color:var(--ink-muted)'></td></tr></tbody>
+  </table>
+</section>
+
+
+<footer>
+  <div><span class="en-only">Generated 2026-05-19 · AROYA SPA + public_api facility 4504 · 8 metrics × 8 flower rooms × 14-day aggregate</span><span class="es-only">Generado 2026-05-19</span></div>
+  <div style="margin-top:6px"><span class="en-only">Crop-steering targets sourced from the <code>irrigation-strategy</code> NotebookLM (AROYA · Athena · Cultiwool · Fluence · Pulse Grow · Netafim · GCM). Coco-coir bag bands adapted from rockwool slab presets in <code>memory/reference_irrigation-phase-targets.md</code>.</span></div>
+</footer>
+
+</div>
+<script>
+(function(){
+  var root = document.documentElement;
+  var body = document.body;
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.addEventListener('click', function(e){
+    var lang = e.target.dataset.lang;
+    root.dataset.lang = lang;
+    body.className = lang;
+    document.querySelectorAll('.lang-btn').forEach(function(b2){b2.classList.toggle('active', b2.dataset.lang===lang);});
+  });});
+  document.querySelectorAll('.theme-btn').forEach(function(b){b.addEventListener('click', function(e){
+    var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    e.target.textContent = next === 'dark' ? 'Light' : 'Dark';
+    e.target.dataset.theme = next === 'dark' ? 'light' : 'dark';
+  });});
+})();
+</script>
+</body></html>
