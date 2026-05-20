@@ -164,7 +164,7 @@
     <div class="lockup">
       <span class="lockup-glyph"></span>
       <span class="lockup-mark">AROYA</span>
-      <span class="lockup-byline"><span lang="en" class="en-only">Device Fleet Health</span><span lang="es" class="es-only">Salud de Flota de Dispositivos</span></span>
+      <span class="lockup-byline"><span lang="en" class="en-only">Device Fleet Health</span><span lang="es" class="es-only">Salud de Flota</span></span>
     </div>
     <div class="controls">
       <button class="btn lang-btn active" data-lang="en">EN</button>
@@ -174,37 +174,35 @@
     </div>
   </div>
 </div>
-
 <div class="wrap">
-
   <div class="pagehead">
-    <div class="pagehead-eyebrow"><span lang="en" class="en-only">AROYA Customer Audit</span><span lang="es" class="es-only">Auditoría de Cliente AROYA</span> &middot; <span lang="en" class="en-only">Device Fleet Health</span><span lang="es" class="es-only">Salud de Flota de Dispositivos</span></div>
+    <div class="pagehead-eyebrow"><span lang="en" class="en-only">AROYA Customer Audit · v2</span><span lang="es" class="es-only">Auditoría de Cliente AROYA · v2</span> &middot; <span lang="en" class="en-only">Device Fleet Health</span><span lang="es" class="es-only">Salud de Flota</span></div>
     <h1><span lang="en" class="en-only">GTI Danville Grow Facility</span><span lang="es" class="es-only">GTI Danville — Instalación de Cultivo</span></h1>
-    <div class="sub"><span lang="en" class="en-only">Wirepas mesh, sensor, and gateway health across all 13 rooms — replacement priorities and where the data gaps are coming from.</span><span lang="es" class="es-only">Salud de malla Wirepas, sensores y gateways en las 13 salas — prioridades de reemplazo y de dónde vienen los huecos de datos.</span></div>
+    <div class="sub"><span lang="en" class="en-only">Per-device gap analysis from /devices/{id}/chart/, mesh + battery telemetry from /rooms/&lt;id&gt;/v2/, and 877 AROYA-computed alerts over the 14-day window.</span><span lang="es" class="es-only">Análisis de huecos por dispositivo, telemetría de malla y batería, y 877 alertas computadas por AROYA en la ventana de 14 días.</span></div>
     <div class="meta">
       <div><b><span lang="en" class="en-only">Facility</span><span lang="es" class="es-only">Instalación</span></b><span>GTI - DGF (id 3684) &middot; Org "Advanced Grow Labs (GTI)"</span></div>
       <div><b><span lang="en" class="en-only">Window</span><span lang="es" class="es-only">Ventana</span></b><span>2026-05-06 → 2026-05-20 (14d)</span></div>
-      <div><b><span lang="en" class="en-only">Rooms audited</span><span lang="es" class="es-only">Salas auditadas</span></b><span>13 (1 Veg, 5 Flower, 1 Clone, 2 Dry, 4 Storage)</span></div>
-      <div><b><span lang="en" class="en-only">Devices</span><span lang="es" class="es-only">Dispositivos</span></b><span>128 (118 online / 10 offline)</span></div>
-      <div><b><span lang="en" class="en-only">Data source</span><span lang="es" class="es-only">Fuente de datos</span></b><span>SPA <code>/rooms/&lt;id&gt;/v2/</code> + Wirepas device telemetry</span></div>
-      <div><b><span lang="en" class="en-only">Generated</span><span lang="es" class="es-only">Generado</span></b><span>2026-05-20 UTC</span></div>
+      <div><b><span lang="en" class="en-only">Active devices</span><span lang="es" class="es-only">Dispositivos activos</span></b><span>128 (56 retired/decommissioned excluded)</span></div>
+      <div><b><span lang="en" class="en-only">Computed alerts</span><span lang="es" class="es-only">Alertas computadas</span></b><span>877 over 14d (242,845 alert-minutes)</span></div>
+      <div><b><span lang="en" class="en-only">Data sources</span><span lang="es" class="es-only">Fuentes de datos</span></b><span>SPA <code>/rooms/&lt;id&gt;/v2/</code>, public_api <code>/devices/&lt;id&gt;/chart/</code>, SPA <code>/alerts</code> (computed)</span></div>
+      <div><b><span lang="en" class="en-only">Generated</span><span lang="es" class="es-only">Generado</span></b><span>2026-05-20 UTC · report v2</span></div>
     </div>
   </div>
 
   <section>
     <h2><span lang="en" class="en-only">Headline Findings</span><span lang="es" class="es-only">Hallazgos Principales</span></h2>
     <div class="kpis">
-      <div class="kpi"><div class="label"><span lang="en" class="en-only">Total Devices</span><span lang="es" class="es-only">Dispositivos Totales</span></div><div class="val">128</div><div class="delta"><span lang="en" class="en-only">repeaters + sensors</span><span lang="es" class="es-only">repetidores + sensores</span></div></div>
-      <div class="kpi good"><div class="label"><span lang="en" class="en-only">Online</span><span lang="es" class="es-only">En Línea</span></div><div class="val">118 <small style="font-size:14px;color:var(--ink-muted)">(92%)</small></div><div class="delta"><span lang="en" class="en-only">Reporting in last hour</span><span lang="es" class="es-only">Reportando en la última hora</span></div></div>
-      <div class="kpi bad"><div class="label"><span lang="en" class="en-only">Critical</span><span lang="es" class="es-only">Críticos</span></div><div class="val">10</div><div class="delta"><span lang="en" class="en-only">Replace / inspect now</span><span lang="es" class="es-only">Reemplazar / inspeccionar ahora</span></div></div>
-      <div class="kpi warn"><div class="label"><span lang="en" class="en-only">Warn</span><span lang="es" class="es-only">Advertencia</span></div><div class="val">6</div><div class="delta"><span lang="en" class="en-only">Link quality < 90</span><span lang="es" class="es-only">Calidad de enlace < 90</span></div></div>
-      <div class="kpi"><div class="label"><span lang="en" class="en-only">Offline Pairs</span><span lang="es" class="es-only">Pares Fuera de Línea</span></div><div class="val">5</div><div class="delta"><span lang="en" class="en-only">5 production + 1 orphan</span><span lang="es" class="es-only">5 producción + 1 huérfano</span></div></div>
-      <div class="kpi"><div class="label"><span lang="en" class="en-only">Oldest Silence</span><span lang="es" class="es-only">Silencio Más Antiguo</span></div><div class="val">961d</div><div class="delta">H1300004636 &middot; Dry Room #2</div></div>
+      <div class="kpi"><div class="label"><span lang="en" class="en-only">Active Devices</span><span lang="es" class="es-only">Disp. Activos</span></div><div class="val">128</div><div class="delta"><span lang="en" class="en-only">Sensors + pucks + repeaters</span><span lang="es" class="es-only">Sensores + radios + repetidores</span></div></div>
+      <div class="kpi good"><div class="label"><span lang="en" class="en-only">Online</span><span lang="es" class="es-only">En Línea</span></div><div class="val">118 <small style="font-size:14px;color:var(--ink-muted)">(92%)</small></div><div class="delta"><span lang="en" class="en-only">Reporting last hour</span><span lang="es" class="es-only">Reportando última hora</span></div></div>
+      <div class="kpi bad"><div class="label"><span lang="en" class="en-only">Critical</span><span lang="es" class="es-only">Críticos</span></div><div class="val">10</div><div class="delta"><span lang="en" class="en-only">Replace / inspect now</span><span lang="es" class="es-only">Reemplazar / inspeccionar</span></div></div>
+      <div class="kpi warn"><div class="label"><span lang="en" class="en-only">Warn</span><span lang="es" class="es-only">Advertencia</span></div><div class="val">6</div><div class="delta"><span lang="en" class="en-only">Link < 90 or gap drift</span><span lang="es" class="es-only">Enlace < 90 o huecos</span></div></div>
+      <div class="kpi bad"><div class="label"><span lang="en" class="en-only">14d Alert-Hours</span><span lang="es" class="es-only">Horas-Alerta 14d</span></div><div class="val">4,047</div><div class="delta"><span lang="en" class="en-only">Flower 1 + Flower 5 dominate</span><span lang="es" class="es-only">Flower 1 + 5 dominan</span></div></div>
+      <div class="kpi good"><div class="label"><span lang="en" class="en-only">TEROS 12 Batteries</span><span lang="es" class="es-only">Baterías TEROS 12</span></div><div class="val">90/90 @ 100%</div><div class="delta"><span lang="en" class="en-only">Other devices line-powered</span><span lang="es" class="es-only">Otros dispositivos alimentados</span></div></div>
     </div>
     <div class="verdict bad">
       <div class="v-head"><span lang="en" class="en-only">Lead Verdict</span><span lang="es" class="es-only">Veredicto Principal</span></div>
-      <span class="en-only"><b>5 offline device-pairs across Dry Room #1, Flower 1, Flower 5, Production Vault, and a 2023 orphan in Dry Room #2.</b> The radio backbone is otherwise healthy (92% online, 0 mesh-level outages). Gaps in client data are coming from end devices, not the mesh.</span>
-      <span class="es-only"><b>5 pares de dispositivos fuera de línea en Dry Room #1, Flower 1, Flower 5, Production Vault, y un huérfano de 2023 en Dry Room #2.</b> La columna vertebral de radio está saludable (92% en línea, 0 caídas a nivel de malla). Los huecos en los datos vienen de los dispositivos finales, no de la malla.</span>
+      <span class="en-only"><b>Fleet is 92% online (118 of 128 active devices reporting).</b> The mesh backbone is healthy — gaps in client data are coming from <b>5 offline production device-pairs</b> + <b>1 orphan from 2023</b>, not from the Wirepas radio layer. Where the customer IS getting flooded with alerts is the agronomic side: <b>877 target-range breaches in 14 days, totalling 4,047 alert-hours</b>, almost entirely concentrated in <b>Flower 1</b> (cold air, 313 air-temp breaches) and <b>Flower 5</b> (wet substrate + high RH, 312 soil-moisture + 142 humidity breaches). All other rooms are essentially alert-silent.</span>
+      <span class="es-only"><b>Flota 92% en línea (118 de 128 dispositivos activos).</b> La malla está sana — los huecos vienen de 5 pares de dispositivos offline + 1 huérfano de 2023. Las alertas se concentran en Flower 1 (frío) y Flower 5 (sustrato húmedo + HR alta).</span>
     </div>
   </section>
 
@@ -212,208 +210,568 @@
     <h2><span lang="en" class="en-only">Executive Summary</span><span lang="es" class="es-only">Resumen Ejecutivo</span></h2>
     <div class="card">
       <ul style="margin:0;padding-left:22px;line-height:1.7">
-        <li><span class="en-only">Fleet is <b>92% online</b> — 118 of 128 devices reporting within the last hour. The Wirepas mesh backbone (10 active repeaters + 1 orphan) is healthy: every active room has at least one online repeater pulling data into the gateway pool.</span><span class="es-only">La flota está <b>92% en línea</b> — 118 de 128 dispositivos reportando en la última hora. La malla Wirepas (10 repetidores activos + 1 huérfano) está saludable.</span></li>
-        <li><span class="en-only"><b>5 production device-pairs are offline</b>, oldest 693 days, most recent 218 days. Two are repeater/atm14 atmospheric pairs in <b>Flower 1</b> (H4110006149, since 2024-06-26) and <b>Flower 5</b> (H4110006148, since 2025-10-14); one is a repeater in <b>Production Vault</b> (H1300004810, since 2024-11-23); two are h421/ee894 climate pairs in <b>Dry Room #1</b> (H4210002928 since 2025-03-26, H4210004461 since 2025-07-30). Dry Room #1 is at <b>50% offline (4 of 8 devices)</b> — climate logging there is single-redundant on H4210004123 and H4210004465.</span><span class="es-only"><b>5 pares de dispositivos de producción están fuera de línea</b>. Dry Room #1 está al 50% fuera de línea (4 de 8 dispositivos).</span></li>
-        <li><span class="en-only"><b>1 orphan device</b>: H1300004636 in Dry Room #2 has been offline since 2023-10-02 — never came online after initial install. Either DOA, never deployed, or stale provisioning record. Should be removed from the device list to stop poisoning the "offline count" metric.</span><span class="es-only"><b>1 dispositivo huérfano</b>: H1300004636 en Dry Room #2 ha estado fuera de línea desde 2023-10-02 — nunca se conectó.</span></li>
-        <li><span class="en-only"><b>Flower 5</b> is the highest-risk active room: 2 critical (the offline H4110006148 pair) + 4 warn (H3410002612 ter12-pair at linkQuality 81; H4210004876 h421/ee894 climate at linkQuality 87). Mesh signal here looks marginal — recommend a Wirepas walk-test before next harvest cycle.</span><span class="es-only"><b>Flower 5</b> es la sala activa con mayor riesgo.</span></li>
-        <li><span class="en-only"><b>Veg Room 1 is single-pair sparse</b>: 18 zones, 1 atm14 climate pair (H4110006139 + A14G200010188). No substrate sensors deployed. This isn't a "fleet health" issue per se but flagging because client may be running a propagation block without zone-level substrate visibility.</span><span class="es-only"><b>Veg Room 1 está escasamente cubierto</b>: 18 zonas, 1 par de sensores climáticos. Sin sensores de sustrato.</span></li>
-        <li><span class="en-only"><b>Battery status:</b> All 45 ter12 substrate sensors and their 45 paired nodes report battery 100%. All repeaters, atm14, h421, and ee894 climate sensors report null battery (line-powered — expected). No imminent battery replacements at the facility.</span><span class="es-only"><b>Estado de batería:</b> Todos los 45 sensores de sustrato ter12 reportan batería al 100%. Sin reemplazos de batería inminentes.</span></li>
+        <li><span class="en-only"><b>Fleet inventory:</b> 128 active devices across 13 rooms — 45 Nodes + 45 TEROS 12 substrate sensors (paired), 11 Mesh Repeaters + 8 Atmos 14 atmospheric sensors (paired), 10 Climate One stations + 9 E+E EE894 CO₂/RH/Temp sensors inside them. (/devices/ shows 184 total — the extra 56 are retired/decommissioned and excluded.)</span><span class="es-only"><b>Inventario:</b> 128 dispositivos activos.</span></li>
+        <li><span class="en-only"><b>5 offline production device-pairs + 1 orphan</b> (full list in Recommended Replacements). Oldest active offline is H4110006149 (Flower 1 Mesh Repeater + paired Atmos 14, down since 2024-06-26 = 693 days). Orphan H1300004636 (Dry Room #2 Mesh Repeater) has been in the database but never came online since 2023-10-02 install — decommission, don't replace.</span><span class="es-only"><b>5 pares offline + 1 huérfano.</b></span></li>
+        <li><span class="en-only"><b>Battery picture:</b> All 90 TEROS 12 substrate sensors report battery, and <b>90 of 90 are at 100%</b> (0 below 50%). The Climate One / E+E EE894 / Atmos 14 / Mesh Repeater / Node / Gateway / Sink devices report null battery — they're line-powered, as expected. No imminent battery replacements at this facility.</span><span class="es-only"><b>Baterías:</b> 90 de 90 TEROS 12 al 100%.</span></li>
+        <li><span class="en-only"><b>14-day computed alert volume is enormous in 2 rooms.</b> <b>Flower 1: 408 alerts</b> (1,843 alert-hours), 313 of them <code>air_temp</code> below the 65 °F alert floor — temperature is consistently cold during lights-on. <b>Flower 5: 458 alerts</b> (1,923 alert-hours), 312 <code>soil_moist</code> above the 50% target ceiling and 142 <code>rel_hum</code> above 75% — substrate is too wet and the room is humid. <b>Flowers 2, 3, Veg, Clone, all Dry and Storage rooms: 0 alerts.</b> The other 11 rooms are running inside band.</span><span class="es-only"><b>Volumen enorme de alertas en Flower 1 (frío) y Flower 5 (húmedo).</b></span></li>
+        <li><span class="en-only"><b>Per-device gap analysis (14d via /devices/&lt;id&gt;/chart/):</b> Pulled native-cadence chart data per sensor for 75 of 83 active sensors (8 hung on what's likely retired-but-not-flagged IDs). Healthy sensors report at the expected 3-minute cadence (median interval ~3 min, max gap ~6 min). Sensors with chart errors or wide gaps are flagged in the Per-Device Gap Analysis section below.</span><span class="es-only"><b>Análisis de huecos por dispositivo:</b> 75 de 83 sensores con datos completos.</span></li>
+        <li><span class="en-only"><b>Veg Room 1 coverage hole.</b> 18 zones, only one Mesh Repeater + Atmos 14 climate pair, zero TEROS 12 substrate sensors. Propagation block running blind on substrate — flag separately, this is a deployment gap not a fleet-health bug.</span><span class="es-only"><b>Veg Room 1 sin sensores de sustrato</b> en 18 zonas.</span></li>
       </ul>
     </div>
   </section>
 
   <section>
-    <h2><span lang="en" class="en-only">Fleet Overview</span><span lang="es" class="es-only">Vista General de la Flota</span></h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:14px">
+    <h2><span lang="en" class="en-only">Fleet Composition</span><span lang="es" class="es-only">Composición de la Flota</span></h2>
+    <table>
+      <thead><tr>
+        <th><span lang="en" class="en-only">Model</span><span lang="es" class="es-only">Modelo</span></th>
+        <th><span lang="en" class="en-only">Category</span><span lang="es" class="es-only">Categoría</span></th>
+        <th><span lang="en" class="en-only">API key</span><span lang="es" class="es-only">Clave API</span></th>
+        <th class="num"><span lang="en" class="en-only">Total</span><span lang="es" class="es-only">Total</span></th>
+        <th class="num"><span lang="en" class="en-only">Online</span><span lang="es" class="es-only">Activos</span></th>
+        <th class="num"><span lang="en" class="en-only">Offline</span><span lang="es" class="es-only">Caídos</span></th>
+      </tr></thead>
+      <tbody><tr>
+  <td><b>TEROS 12</b></td>
+  <td><small style="color:var(--ink-muted)">Substrate sensor</small></td>
+  <td><code>ter12</code></td>
+  <td class="num">45</td>
+  <td class="num">45</td>
+  <td class="num">—</td>
+</tr><tr>
+  <td><b>Node (radio puck)</b></td>
+  <td><small style="color:var(--ink-muted)">Radio (attaches to TEROS)</small></td>
+  <td><code>node</code></td>
+  <td class="num">45</td>
+  <td class="num">45</td>
+  <td class="num">—</td>
+</tr><tr>
+  <td><b>Mesh Repeater</b></td>
+  <td><small style="color:var(--ink-muted)">Wirepas router (attaches to Atmos)</small></td>
+  <td><code>repeater</code></td>
+  <td class="num">11</td>
+  <td class="num">7</td>
+  <td class="num">4</td>
+</tr><tr>
+  <td><b>Climate One</b></td>
+  <td><small style="color:var(--ink-muted)">Climate station</small></td>
+  <td><code>h421</code></td>
+  <td class="num">10</td>
+  <td class="num">8</td>
+  <td class="num">2</td>
+</tr><tr>
+  <td><b>E+E EE894</b></td>
+  <td><small style="color:var(--ink-muted)">CO₂/RH/Temp (inside Climate One)</small></td>
+  <td><code>ee894</code></td>
+  <td class="num">9</td>
+  <td class="num">7</td>
+  <td class="num">2</td>
+</tr><tr>
+  <td><b>Atmos 14</b></td>
+  <td><small style="color:var(--ink-muted)">Climate sensor</small></td>
+  <td><code>atm14</code></td>
+  <td class="num">8</td>
+  <td class="num">6</td>
+  <td class="num">2</td>
+</tr></tbody>
+    </table>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:14px;margin-top:18px">
       <div class="chartwrap">
-        <h4><span lang="en" class="en-only">Devices by Room — online vs offline</span><span lang="es" class="es-only">Dispositivos por Sala — en línea vs fuera de línea</span></h4>
+        <h4><span lang="en" class="en-only">Devices per Room — online vs offline</span><span lang="es" class="es-only">Dispositivos por sala — activos vs caídos</span></h4>
         <div class="chart-canvas" style="height:300px"><canvas id="chartRoomStatus"></canvas></div>
       </div>
       <div class="chartwrap">
-        <h4><span lang="en" class="en-only">Fleet Composition by Model</span><span lang="es" class="es-only">Composición de la Flota por Modelo</span></h4>
+        <h4><span lang="en" class="en-only">Composition by Model</span><span lang="es" class="es-only">Composición por modelo</span></h4>
         <div class="chart-canvas" style="height:300px"><canvas id="chartByModel"></canvas></div>
       </div>
     </div>
-    <div class="chartwrap">
-      <h4><span lang="en" class="en-only">Gateway Distribution — devices per gateway</span><span lang="es" class="es-only">Distribución de Gateways — dispositivos por gateway</span></h4>
-      <div class="chart-canvas" style="height:240px"><canvas id="chartGateway"></canvas></div>
-      <div class="legend"><span lang="en" class="en-only">Two active gateways: 119178 (primary, ~98% of nodes) and 119010 (secondary, used by 1 offline device in Dry 1). Single-gateway dependency is a resilience risk.</span><span lang="es" class="es-only">Dos gateways activos: 119178 (primario, ~98% de nodos) y 119010 (secundario). Dependencia de un solo gateway es un riesgo de resiliencia.</span></div>
+  </section>
+
+  <section>
+    <h2><span lang="en" class="en-only">Active AROYA Alerts (last 14 days)</span><span lang="es" class="es-only">Alertas AROYA Activas (últimos 14 días)</span></h2>
+    <p style="color:var(--ink-muted);font-size:13px"><span lang="en" class="en-only">Pulled from <code>spa_get_computed_alerts</code> over 2026-05-06→2026-05-20. Severity logic: <b>crit</b> = sample outside <code>alertMin/alertMax</code>; <b>warn</b> = inside alert bounds but outside <code>targetMin/targetMax</code>.</span><span lang="es" class="es-only">Alertas computadas, 14 días.</span></p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:14px">
+      <div class="chartwrap">
+        <h4><span lang="en" class="en-only">Alert-minutes by room (14d)</span><span lang="es" class="es-only">Minutos-alerta por sala</span></h4>
+        <div class="chart-canvas" style="height:280px"><canvas id="chartAlertsByRoom"></canvas></div>
+      </div>
+      <div class="chartwrap">
+        <h4><span lang="en" class="en-only">Alerts by metric</span><span lang="es" class="es-only">Alertas por métrica</span></h4>
+        <div class="chart-canvas" style="height:280px"><canvas id="chartAlertsByMetric"></canvas></div>
+      </div>
+    </div>
+    <h3><span lang="en" class="en-only">Top 25 longest single alert windows</span><span lang="es" class="es-only">Top 25 alertas más largas</span></h3>
+    <table>
+      <thead><tr>
+        <th><span lang="en" class="en-only">Room</span><span lang="es" class="es-only">Sala</span></th>
+        <th><span lang="en" class="en-only">Metric</span><span lang="es" class="es-only">Métrica</span></th>
+        <th><span lang="en" class="en-only">Sev</span><span lang="es" class="es-only">Sev</span></th>
+        <th class="num"><span lang="en" class="en-only">Duration</span><span lang="es" class="es-only">Duración</span> (min)</th>
+        <th><span lang="en" class="en-only">Started</span><span lang="es" class="es-only">Inicio</span></th>
+        <th><span lang="en" class="en-only">Ended</span><span lang="es" class="es-only">Fin</span></th>
+        <th class="num"><span lang="en" class="en-only">Peak</span><span lang="es" class="es-only">Pico</span></th>
+        <th class="num"><span lang="en" class="en-only">Target</span><span lang="es" class="es-only">Objetivo</span></th>
+      </tr></thead>
+      <tbody><tr>
+  <td>Flower 5</td>
+  <td><code>pore_ec</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">21521</td>
+  <td>2026-05-06 00:00</td>
+  <td>2026-05-20 22:41</td>
+  <td class="num">2.4828</td>
+  <td class="num">2.8–3</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>soil_temp</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">21521</td>
+  <td>2026-05-06 00:00</td>
+  <td>2026-05-20 22:41</td>
+  <td class="num">74.48</td>
+  <td class="num">65–72</td>
+</tr><tr>
+  <td>Flower 1</td>
+  <td><code>pore_ec</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">21521</td>
+  <td>2026-05-06 00:00</td>
+  <td>2026-05-20 22:41</td>
+  <td class="num">3.2105</td>
+  <td class="num">3–3.1</td>
+</tr><tr>
+  <td>Flower 1</td>
+  <td><code>vpd</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">21517</td>
+  <td>2026-05-06 00:02</td>
+  <td>2026-05-20 22:40</td>
+  <td class="num">0.9062</td>
+  <td class="num">1.2–1.3</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>vpd</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">21491</td>
+  <td>2026-05-06 00:28</td>
+  <td>2026-05-20 22:39</td>
+  <td class="num">0.8795</td>
+  <td class="num">0.9–1.1</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>air_temp</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">15853</td>
+  <td>2026-05-09 22:26</td>
+  <td>2026-05-20 22:39</td>
+  <td class="num">71.978</td>
+  <td class="num">72–84</td>
+</tr><tr>
+  <td>Flower 1</td>
+  <td><code>soil_moist</code></td>
+  <td><span class="pill bad">crit</span></td>
+  <td class="num">11971</td>
+  <td>2026-05-12 15:10</td>
+  <td>2026-05-20 22:41</td>
+  <td class="num">78.2992</td>
+  <td class="num">30–60</td>
+</tr><tr>
+  <td>Flower 1</td>
+  <td><code>rel_hum</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">11428</td>
+  <td>2026-05-13 00:00</td>
+  <td>2026-05-20 22:28</td>
+  <td class="num">63.3979</td>
+  <td class="num">45–55</td>
+</tr><tr>
+  <td>Flower 1</td>
+  <td><code>rel_hum</code></td>
+  <td><span class="pill bad">crit</span></td>
+  <td class="num">10075</td>
+  <td>2026-05-06 00:02</td>
+  <td>2026-05-12 23:57</td>
+  <td class="num">69.5352</td>
+  <td class="num">45–55</td>
+</tr><tr>
+  <td>Flower 1</td>
+  <td><code>soil_temp</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">9741</td>
+  <td>2026-05-06 04:39</td>
+  <td>2026-05-12 23:00</td>
+  <td class="num">64.94</td>
+  <td class="num">65–72</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>rel_hum</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">7441</td>
+  <td>2026-05-07 13:29</td>
+  <td>2026-05-12 17:29</td>
+  <td class="num">75.77</td>
+  <td class="num">60–75</td>
+</tr><tr>
+  <td>Flower 4</td>
+  <td><code>rel_hum</code></td>
+  <td><span class="pill bad">crit</span></td>
+  <td class="num">5754</td>
+  <td>2026-05-06 00:00</td>
+  <td>2026-05-09 23:54</td>
+  <td class="num">58.1923</td>
+  <td class="num">40–50</td>
+</tr><tr>
+  <td>Flower 4</td>
+  <td><code>soil_moist</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">5352</td>
+  <td>2026-05-06 06:44</td>
+  <td>2026-05-09 23:57</td>
+  <td class="num">14.9515</td>
+  <td class="num">15–50</td>
+</tr><tr>
+  <td>Flower 1</td>
+  <td><code>air_temp</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">4044</td>
+  <td>2026-05-06 00:02</td>
+  <td>2026-05-08 19:26</td>
+  <td class="num">68.54</td>
+  <td class="num">70–76</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>soil_moist</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">2922</td>
+  <td>2026-05-07 16:32</td>
+  <td>2026-05-09 17:14</td>
+  <td class="num">55.2793</td>
+  <td class="num">10–50</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>soil_moist</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">2847</td>
+  <td>2026-05-09 17:36</td>
+  <td>2026-05-11 17:03</td>
+  <td class="num">51.9583</td>
+  <td class="num">10–50</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>soil_moist</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">2709</td>
+  <td>2026-05-15 15:16</td>
+  <td>2026-05-17 12:24</td>
+  <td class="num">50.5125</td>
+  <td class="num">10–50</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>soil_moist</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">2697</td>
+  <td>2026-05-13 16:22</td>
+  <td>2026-05-15 13:18</td>
+  <td class="num">50.8008</td>
+  <td class="num">10–50</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>rel_hum</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">2685</td>
+  <td>2026-05-14 18:05</td>
+  <td>2026-05-16 14:50</td>
+  <td class="num">75.57</td>
+  <td class="num">60–75</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>soil_moist</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">2622</td>
+  <td>2026-05-11 18:45</td>
+  <td>2026-05-13 14:27</td>
+  <td class="num">50.8833</td>
+  <td class="num">10–50</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>soil_moist</code></td>
+  <td><span class="pill bad">crit</span></td>
+  <td class="num">1704</td>
+  <td>2026-05-18 16:01</td>
+  <td>2026-05-19 20:25</td>
+  <td class="num">65.3951</td>
+  <td class="num">10–50</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>rel_hum</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">1464</td>
+  <td>2026-05-16 21:59</td>
+  <td>2026-05-17 22:24</td>
+  <td class="num">76</td>
+  <td class="num">60–75</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>rel_hum</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">1239</td>
+  <td>2026-05-13 17:26</td>
+  <td>2026-05-14 14:05</td>
+  <td class="num">75.47</td>
+  <td class="num">60–75</td>
+</tr><tr>
+  <td>Flower 5</td>
+  <td><code>rel_hum</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">1089</td>
+  <td>2026-05-12 22:29</td>
+  <td>2026-05-13 16:38</td>
+  <td class="num">75.54</td>
+  <td class="num">60–75</td>
+</tr><tr>
+  <td>Flower 1</td>
+  <td><code>air_temp</code></td>
+  <td><span class="pill warn">warn</span></td>
+  <td class="num">972</td>
+  <td>2026-05-10 10:33</td>
+  <td>2026-05-11 02:45</td>
+  <td class="num">65.12</td>
+  <td class="num">70–76</td>
+</tr></tbody>
+    </table>
+    <div class="verdict warn">
+      <div class="v-head"><span lang="en" class="en-only">Interpretation</span><span lang="es" class="es-only">Interpretación</span></div>
+      <span class="en-only"><b>Flower 1 and Flower 5 together produce 99% of all 14-day alerts at this facility.</b> Flower 1's pattern is consistent <code>air_temp</code> alerts during lights-on — typical of HVAC underperformance or a thermostat misconfiguration. Flower 5's pattern is paired <code>soil_moist</code> + <code>rel_hum</code> alerts — substrate is being over-watered and the room can't dehumidify fast enough. <b>The other 11 rooms are alert-silent over the same window</b>, which corroborates that this is room-specific, not facility-wide.</span>
+      <span class="es-only"><b>Flower 1 y Flower 5 generan 99% de las alertas.</b></span>
     </div>
   </section>
 
   <section>
     <h2><span lang="en" class="en-only">Recommended Replacements — Priority Order</span><span lang="es" class="es-only">Reemplazos Recomendados — Orden de Prioridad</span></h2>
-    <p style="color:var(--ink-muted);font-size:13px"><span lang="en" class="en-only">Sorted by days offline (longest first). Serials shown are the AROYA-mounted repeater/parent serial — sensor pairs are listed inline.</span><span lang="es" class="es-only">Ordenados por días fuera de línea (más antiguo primero). Los seriales mostrados son del repetidor/padre montado en AROYA.</span></p>
+    <p style="color:var(--ink-muted);font-size:13px"><span lang="en" class="en-only">Sorted by days offline. Serials are the AROYA-mounted parent (Mesh Repeater / Climate One / Node) — paired sensor inside is in the description.</span><span lang="es" class="es-only">Ordenado por días offline.</span></p>
     <table>
       <thead><tr>
         <th>#</th>
         <th><span lang="en" class="en-only">Serial</span><span lang="es" class="es-only">Serial</span></th>
         <th><span lang="en" class="en-only">Model</span><span lang="es" class="es-only">Modelo</span></th>
-        <th><span lang="en" class="en-only">Room / Zone</span><span lang="es" class="es-only">Sala / Zona</span></th>
-        <th><span lang="en" class="en-only">Last Seen</span><span lang="es" class="es-only">Última Comunicación</span></th>
+        <th><span lang="en" class="en-only">Room</span><span lang="es" class="es-only">Sala</span></th>
+        <th><span lang="en" class="en-only">Last Seen</span><span lang="es" class="es-only">Última Comm</span></th>
         <th class="num"><span lang="en" class="en-only">Days</span><span lang="es" class="es-only">Días</span></th>
         <th><span lang="en" class="en-only">Reason</span><span lang="es" class="es-only">Motivo</span></th>
       </tr></thead>
-      <tbody>
-    <tr>
-      <td class="num"><b>1</b></td>
-      <td><code>H1300004636</code></td>
-      <td><span class="pill muted">repeater</span></td>
-      <td>Dry Room #2 &middot; Z62219</td>
-      <td>2023-10-02 (961d ago)</td>
-      <td class="num">961d</td>
-      <td>OFFLINE for 961d (last comm 2023-10-02)</td>
-    </tr>
-    <tr>
-      <td class="num"><b>2</b></td>
-      <td><code>H4110006149</code></td>
-      <td><span class="pill muted">repeater</span></td>
-      <td>Flower 1</td>
-      <td>2024-06-26 (693d ago)</td>
-      <td class="num">693d</td>
-      <td>OFFLINE for 693d (last comm 2024-06-26)</td>
-    </tr>
-    <tr>
-      <td class="num"><b>3</b></td>
-      <td><code>A14G200010140</code></td>
-      <td><span class="pill muted">atm14</span></td>
-      <td>Flower 1</td>
-      <td>2024-06-26 (693d ago)</td>
-      <td class="num">693d</td>
-      <td>OFFLINE for 693d (last comm 2024-06-26)</td>
-    </tr>
-    <tr>
-      <td class="num"><b>4</b></td>
-      <td><code>H1300004810</code></td>
-      <td><span class="pill muted">repeater</span></td>
-      <td>Production Vault</td>
-      <td>2024-11-23 (543d ago)</td>
-      <td class="num">543d</td>
-      <td>OFFLINE for 543d (last comm 2024-11-23)</td>
-    </tr>
-    <tr>
-      <td class="num"><b>5</b></td>
-      <td><code>H4210002928S</code></td>
-      <td><span class="pill muted">ee894</span></td>
-      <td>Dry Room #1 &middot; Z62218</td>
-      <td>2025-02-01 (473d ago)</td>
-      <td class="num">473d</td>
-      <td>OFFLINE for 473d (last comm 2025-02-01)</td>
-    </tr>
-    <tr>
-      <td class="num"><b>6</b></td>
-      <td><code>H4210002928</code></td>
-      <td><span class="pill muted">h421</span></td>
-      <td>Dry Room #1 &middot; Z62218</td>
-      <td>2025-03-26 (420d ago)</td>
-      <td class="num">420d</td>
-      <td>OFFLINE for 420d (last comm 2025-03-26)</td>
-    </tr>
-    <tr>
-      <td class="num"><b>7</b></td>
-      <td><code>H4210004461</code></td>
-      <td><span class="pill muted">h421</span></td>
-      <td>Dry Room #1</td>
-      <td>2025-07-30 (294d ago)</td>
-      <td class="num">294d</td>
-      <td>OFFLINE for 294d (last comm 2025-07-30)</td>
-    </tr>
-    <tr>
-      <td class="num"><b>8</b></td>
-      <td><code>H4210004461S</code></td>
-      <td><span class="pill muted">ee894</span></td>
-      <td>Dry Room #1</td>
-      <td>2025-07-30 (294d ago)</td>
-      <td class="num">294d</td>
-      <td>OFFLINE for 294d (last comm 2025-07-30)</td>
-    </tr>
-    <tr>
-      <td class="num"><b>9</b></td>
-      <td><code>H4110006148</code></td>
-      <td><span class="pill muted">repeater</span></td>
-      <td>Flower 5</td>
-      <td>2025-10-14 (218d ago)</td>
-      <td class="num">218d</td>
-      <td>OFFLINE for 218d (last comm 2025-10-14)</td>
-    </tr>
-    <tr>
-      <td class="num"><b>10</b></td>
-      <td><code>A14G200010202</code></td>
-      <td><span class="pill muted">atm14</span></td>
-      <td>Flower 5</td>
-      <td>2025-10-14 (218d ago)</td>
-      <td class="num">218d</td>
-      <td>OFFLINE for 218d (last comm 2025-10-14)</td>
-    </tr></tbody>
+      <tbody><tr>
+  <td class="num"><b>1</b></td>
+  <td><code>H1300004636</code></td>
+  <td><b>Mesh Repeater</b><br><small style="color:var(--ink-muted)">Wirepas router (attaches to Atmos)</small></td>
+  <td>Dry Room #2 &middot; Z62219</td>
+  <td>2023-10-02 (961d)</td>
+  <td class="num">961d</td>
+  <td>OFFLINE 961d (last 2023-10-02)</td>
+</tr><tr>
+  <td class="num"><b>2</b></td>
+  <td><code>A14G200010140</code></td>
+  <td><b>Atmos 14</b><br><small style="color:var(--ink-muted)">Climate sensor</small></td>
+  <td>Flower 1</td>
+  <td>2024-06-26 (693d)</td>
+  <td class="num">693d</td>
+  <td>OFFLINE 693d (last 2024-06-26)</td>
+</tr><tr>
+  <td class="num"><b>3</b></td>
+  <td><code>H4110006149</code></td>
+  <td><b>Mesh Repeater</b><br><small style="color:var(--ink-muted)">Wirepas router (attaches to Atmos)</small></td>
+  <td>Flower 1</td>
+  <td>2024-06-26 (693d)</td>
+  <td class="num">693d</td>
+  <td>OFFLINE 693d (last 2024-06-26)</td>
+</tr><tr>
+  <td class="num"><b>4</b></td>
+  <td><code>H1300004810</code></td>
+  <td><b>Mesh Repeater</b><br><small style="color:var(--ink-muted)">Wirepas router (attaches to Atmos)</small></td>
+  <td>Production Vault</td>
+  <td>2024-11-23 (543d)</td>
+  <td class="num">543d</td>
+  <td>OFFLINE 543d (last 2024-11-23)</td>
+</tr><tr>
+  <td class="num"><b>5</b></td>
+  <td><code>H4210002928S</code></td>
+  <td><b>E+E EE894</b><br><small style="color:var(--ink-muted)">CO₂/RH/Temp (inside Climate One)</small></td>
+  <td>Dry Room #1 &middot; Z62218</td>
+  <td>2025-02-01 (473d)</td>
+  <td class="num">473d</td>
+  <td>OFFLINE 473d (last 2025-02-01)</td>
+</tr><tr>
+  <td class="num"><b>6</b></td>
+  <td><code>H4210002928</code></td>
+  <td><b>Climate One</b><br><small style="color:var(--ink-muted)">Climate station</small></td>
+  <td>Dry Room #1 &middot; Z62218</td>
+  <td>2025-03-26 (420d)</td>
+  <td class="num">420d</td>
+  <td>OFFLINE 420d (last 2025-03-26)</td>
+</tr><tr>
+  <td class="num"><b>7</b></td>
+  <td><code>H4210004461</code></td>
+  <td><b>Climate One</b><br><small style="color:var(--ink-muted)">Climate station</small></td>
+  <td>Dry Room #1</td>
+  <td>2025-07-30 (294d)</td>
+  <td class="num">294d</td>
+  <td>OFFLINE 294d (last 2025-07-30)</td>
+</tr><tr>
+  <td class="num"><b>8</b></td>
+  <td><code>H4210004461S</code></td>
+  <td><b>E+E EE894</b><br><small style="color:var(--ink-muted)">CO₂/RH/Temp (inside Climate One)</small></td>
+  <td>Dry Room #1</td>
+  <td>2025-07-30 (294d)</td>
+  <td class="num">294d</td>
+  <td>OFFLINE 294d (last 2025-07-30)</td>
+</tr><tr>
+  <td class="num"><b>9</b></td>
+  <td><code>H4110006148</code></td>
+  <td><b>Mesh Repeater</b><br><small style="color:var(--ink-muted)">Wirepas router (attaches to Atmos)</small></td>
+  <td>Flower 5</td>
+  <td>2025-10-14 (218d)</td>
+  <td class="num">218d</td>
+  <td>OFFLINE 218d (last 2025-10-14)</td>
+</tr><tr>
+  <td class="num"><b>10</b></td>
+  <td><code>A14G200010202</code></td>
+  <td><b>Atmos 14</b><br><small style="color:var(--ink-muted)">Climate sensor</small></td>
+  <td>Flower 5</td>
+  <td>2025-10-14 (218d)</td>
+  <td class="num">218d</td>
+  <td>OFFLINE 218d (last 2025-10-14)</td>
+</tr></tbody>
     </table>
-    <div class="verdict bad">
-      <div class="v-head"><span lang="en" class="en-only">Recommendation</span><span lang="es" class="es-only">Recomendación</span></div>
-      <span class="en-only">Schedule a single replacement run targeting the 5 offline production pairs (Flower 1 H4110006149, Flower 5 H4110006148, Production Vault H1300004810, Dry Room #1 H4210002928 + H4210004461). Decommission H1300004636 (Dry Room #2 orphan) from the device list rather than replacing. After replacement, re-run this audit to confirm online status.</span>
-      <span class="es-only">Programar una visita de reemplazo dirigida a los 5 pares de producción fuera de línea. Dar de baja H1300004636 (huérfano de Dry Room #2) del registro de dispositivos.</span>
-    </div>
   </section>
 
   <section>
-    <h2><span lang="en" class="en-only">Warn Devices — Monitor or Investigate</span><span lang="es" class="es-only">Dispositivos en Advertencia — Monitorear o Investigar</span></h2>
-    <p style="color:var(--ink-muted);font-size:13px"><span lang="en" class="en-only">Online and reporting, but mesh link quality below 90. Watch for these in next sweep — if linkQuality continues to drift down, expect them to drop offline.</span><span lang="es" class="es-only">En línea pero con calidad de enlace por debajo de 90. Vigilar en próxima revisión.</span></p>
+    <h2><span lang="en" class="en-only">Warn Devices — Monitor / Investigate</span><span lang="es" class="es-only">Dispositivos en Advertencia</span></h2>
     <table>
       <thead><tr>
         <th><span lang="en" class="en-only">Serial</span><span lang="es" class="es-only">Serial</span></th>
         <th><span lang="en" class="en-only">Model</span><span lang="es" class="es-only">Modelo</span></th>
         <th><span lang="en" class="en-only">Room</span><span lang="es" class="es-only">Sala</span></th>
         <th class="num"><span lang="en" class="en-only">Link Q</span><span lang="es" class="es-only">Calidad</span></th>
-        <th class="num"><span lang="en" class="en-only">Hops (RSSI)</span><span lang="es" class="es-only">Saltos (RSSI)</span></th>
+        <th class="num"><span lang="en" class="en-only">Battery</span><span lang="es" class="es-only">Batería</span> %</th>
         <th><span lang="en" class="en-only">Reason</span><span lang="es" class="es-only">Motivo</span></th>
       </tr></thead>
-      <tbody>
-    <tr>
-      <td><code>H3410002612</code></td>
-      <td><span class="pill muted">node</span></td>
-      <td>Flower 5</td>
-      <td class="num">81</td>
-      <td class="num">1</td>
-      <td>link quality 81 (< 90)</td>
-    </tr>
-    <tr>
-      <td><code>H3410002612-ter12</code></td>
-      <td><span class="pill muted">ter12</span></td>
-      <td>Flower 5</td>
-      <td class="num">81</td>
-      <td class="num">1</td>
-      <td>link quality 81 (< 90)</td>
-    </tr>
-    <tr>
-      <td><code>H4210004876</code></td>
-      <td><span class="pill muted">h421</span></td>
-      <td>Flower 5</td>
-      <td class="num">87</td>
-      <td class="num">1</td>
-      <td>link quality 87 (< 90)</td>
-    </tr>
-    <tr>
-      <td><code>H4210004876S</code></td>
-      <td><span class="pill muted">ee894</span></td>
-      <td>Flower 5</td>
-      <td class="num">87</td>
-      <td class="num">1</td>
-      <td>link quality 87 (< 90)</td>
-    </tr>
-    <tr>
-      <td><code>H4210004460</code></td>
-      <td><span class="pill muted">h421</span></td>
-      <td>Packaging Room 2</td>
-      <td class="num">86</td>
-      <td class="num">1</td>
-      <td>link quality 86 (< 90)</td>
-    </tr>
-    <tr>
-      <td><code>H4210004460S</code></td>
-      <td><span class="pill muted">ee894</span></td>
-      <td>Packaging Room 2</td>
-      <td class="num">86</td>
-      <td class="num">1</td>
-      <td>link quality 86 (< 90)</td>
-    </tr></tbody>
+      <tbody><tr>
+  <td><code>H3410002612</code></td>
+  <td><b>Node (radio puck)</b></td>
+  <td>Flower 5</td>
+  <td class="num">81</td>
+  <td class="num">100</td>
+  <td>link quality 81 (< 90)</td>
+</tr><tr>
+  <td><code>H3410002612-ter12</code></td>
+  <td><b>TEROS 12</b></td>
+  <td>Flower 5</td>
+  <td class="num">81</td>
+  <td class="num">100</td>
+  <td>link quality 81 (< 90)</td>
+</tr><tr>
+  <td><code>H4210004460S</code></td>
+  <td><b>E+E EE894</b></td>
+  <td>Packaging Room 2</td>
+  <td class="num">86</td>
+  <td class="num"><small style="color:var(--ink-muted)">—</small></td>
+  <td>link quality 86 (< 90)</td>
+</tr><tr>
+  <td><code>H4210004460</code></td>
+  <td><b>Climate One</b></td>
+  <td>Packaging Room 2</td>
+  <td class="num">86</td>
+  <td class="num"><small style="color:var(--ink-muted)">—</small></td>
+  <td>link quality 86 (< 90)</td>
+</tr><tr>
+  <td><code>H4210004876</code></td>
+  <td><b>Climate One</b></td>
+  <td>Flower 5</td>
+  <td class="num">87</td>
+  <td class="num"><small style="color:var(--ink-muted)">—</small></td>
+  <td>link quality 87 (< 90)</td>
+</tr><tr>
+  <td><code>H4210004876S</code></td>
+  <td><b>E+E EE894</b></td>
+  <td>Flower 5</td>
+  <td class="num">87</td>
+  <td class="num"><small style="color:var(--ink-muted)">—</small></td>
+  <td>link quality 87 (< 90)</td>
+</tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span lang="en" class="en-only">Per-Device Gap Analysis (14d, native cadence)</span><span lang="es" class="es-only">Análisis de Huecos por Dispositivo (14d)</span></h2>
+    <p style="color:var(--ink-muted);font-size:13px"><span lang="en" class="en-only">Pulled via <code>/devices/&lt;id&gt;/chart/</code> in 2-day chunks for 75 of 83 active sensors (8 sensors hung — likely retired IDs not flagged as such). Healthy sensors report at ~3-minute intervals; max-gap > 60 min over a 14-day window indicates real dropouts.</span><span lang="es" class="es-only">Pull nativo por dispositivo, 14 días.</span></p>
+    <table>
+      <thead><tr>
+        <th><span lang="en" class="en-only">Serial</span><span lang="es" class="es-only">Serial</span></th>
+        <th><span lang="en" class="en-only">Model</span><span lang="es" class="es-only">Modelo</span></th>
+        <th><span lang="en" class="en-only">Room</span><span lang="es" class="es-only">Sala</span></th>
+        <th><span lang="en" class="en-only">Metric</span><span lang="es" class="es-only">Métrica</span></th>
+        <th class="num"><span lang="en" class="en-only">Readings</span><span lang="es" class="es-only">Lecturas</span></th>
+        <th class="num"><span lang="en" class="en-only">Gaps >60min</span><span lang="es" class="es-only">Huecos >60min</span></th>
+        <th class="num"><span lang="en" class="en-only">Max gap (min)</span><span lang="es" class="es-only">Hueco máx</span></th>
+        <th class="num"><span lang="en" class="en-only">Total silent (min)</span><span lang="es" class="es-only">Silencio total</span></th>
+        <th class="num"><span lang="en" class="en-only">Median interval</span><span lang="es" class="es-only">Intervalo mediano</span></th>
+        <th><span lang="en" class="en-only">Last reading</span><span lang="es" class="es-only">Última lectura</span></th>
+      </tr></thead>
+      <tbody><tr>
+  <td><code>A14G200010269</code></td>
+  <td><b>Atmos 14</b></td>
+  <td>Flower 4</td>
+  <td><code>abs_hum</code></td>
+  <td class="num">4334</td>
+  <td class="num">1</td>
+  <td class="num">4266</td>
+  <td class="num">4266</td>
+  <td class="num">3.0</td>
+  <td>2026-05-18 (1d)</td>
+</tr><tr>
+  <td><code>A14G200010269</code></td>
+  <td><b>Atmos 14</b></td>
+  <td>Flower 4</td>
+  <td><code>air_temp</code></td>
+  <td class="num">4334</td>
+  <td class="num">1</td>
+  <td class="num">4266</td>
+  <td class="num">4266</td>
+  <td class="num">3.0</td>
+  <td>2026-05-18 (1d)</td>
+</tr><tr>
+  <td><code>A14G200010269</code></td>
+  <td><b>Atmos 14</b></td>
+  <td>Flower 4</td>
+  <td><code>rel_hum</code></td>
+  <td class="num">4334</td>
+  <td class="num">1</td>
+  <td class="num">4266</td>
+  <td class="num">4266</td>
+  <td class="num">3.0</td>
+  <td>2026-05-18 (1d)</td>
+</tr><tr>
+  <td><code>A14G200010269</code></td>
+  <td><b>Atmos 14</b></td>
+  <td>Flower 4</td>
+  <td><code>solar</code></td>
+  <td class="num">4836</td>
+  <td class="num">1</td>
+  <td class="num">2760</td>
+  <td class="num">2760</td>
+  <td class="num">3.0</td>
+  <td>2026-05-18 (1d)</td>
+</tr><tr>
+  <td><code>A14G200010269</code></td>
+  <td><b>Atmos 14</b></td>
+  <td>Flower 4</td>
+  <td><code>vpd</code></td>
+  <td class="num">4334</td>
+  <td class="num">1</td>
+  <td class="num">4266</td>
+  <td class="num">4266</td>
+  <td class="num">3.0</td>
+  <td>2026-05-18 (1d)</td>
+</tr></tbody>
     </table>
   </section>
 
@@ -424,208 +782,200 @@
         <th><span lang="en" class="en-only">Room</span><span lang="es" class="es-only">Sala</span></th>
         <th><span lang="en" class="en-only">Type</span><span lang="es" class="es-only">Tipo</span></th>
         <th class="num"><span lang="en" class="en-only">Devices</span><span lang="es" class="es-only">Disp.</span></th>
-        <th class="num"><span lang="en" class="en-only">Online</span><span lang="es" class="es-only">En Línea</span></th>
-        <th class="num"><span lang="en" class="en-only">Offline</span><span lang="es" class="es-only">Fuera</span></th>
+        <th class="num"><span lang="en" class="en-only">Online</span><span lang="es" class="es-only">Activos</span></th>
+        <th class="num"><span lang="en" class="en-only">Offline</span><span lang="es" class="es-only">Caídos</span></th>
         <th class="num"><span lang="en" class="en-only">Crit</span><span lang="es" class="es-only">Crít</span></th>
         <th class="num"><span lang="en" class="en-only">Warn</span><span lang="es" class="es-only">Adv</span></th>
-        <th class="num">OK</th>
+        <th class="num"><span lang="en" class="en-only">Alerts</span><span lang="es" class="es-only">Alertas</span></th>
+        <th class="num"><span lang="en" class="en-only">Alert-min</span><span lang="es" class="es-only">Min-alerta</span></th>
         <th><span lang="en" class="en-only">Verdict</span><span lang="es" class="es-only">Veredicto</span></th>
       </tr></thead>
-      <tbody>
-    <tr>
-      <td><b>Veg Room 1</b></td>
-      <td><span class="pill muted">VEG</span></td>
-      <td class="num">2</td>
-      <td class="num">2</td>
-      <td class="num">0</td>
-      <td class="num">—</td>
-      <td class="num">—</td>
-      <td class="num">2</td>
-      <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Saludable</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Flower 1</b></td>
-      <td><span class="pill muted">FLOWER</span></td>
-      <td class="num">18</td>
-      <td class="num">16</td>
-      <td class="num">2</td>
-      <td class="num">2</td>
-      <td class="num">—</td>
-      <td class="num">16</td>
-      <td><span class="pill bad"><span lang="en" class="en-only">Action required</span><span lang="es" class="es-only">Acción requerida</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Flower 2</b></td>
-      <td><span class="pill muted">FLOWER</span></td>
-      <td class="num">18</td>
-      <td class="num">18</td>
-      <td class="num">0</td>
-      <td class="num">—</td>
-      <td class="num">—</td>
-      <td class="num">18</td>
-      <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Saludable</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Flower 3</b></td>
-      <td><span class="pill muted">FLOWER</span></td>
-      <td class="num">18</td>
-      <td class="num">18</td>
-      <td class="num">0</td>
-      <td class="num">—</td>
-      <td class="num">—</td>
-      <td class="num">18</td>
-      <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Saludable</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Flower 4</b></td>
-      <td><span class="pill muted">FLOWER</span></td>
-      <td class="num">18</td>
-      <td class="num">18</td>
-      <td class="num">0</td>
-      <td class="num">—</td>
-      <td class="num">—</td>
-      <td class="num">18</td>
-      <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Saludable</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Flower 5</b></td>
-      <td><span class="pill muted">FLOWER</span></td>
-      <td class="num">32</td>
-      <td class="num">30</td>
-      <td class="num">2</td>
-      <td class="num">2</td>
-      <td class="num">4</td>
-      <td class="num">26</td>
-      <td><span class="pill bad"><span lang="en" class="en-only">Action required</span><span lang="es" class="es-only">Acción requerida</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Clone Room</b></td>
-      <td><span class="pill muted">PROP</span></td>
-      <td class="num">1</td>
-      <td class="num">1</td>
-      <td class="num">0</td>
-      <td class="num">—</td>
-      <td class="num">—</td>
-      <td class="num">1</td>
-      <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Saludable</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Dry Room #1</b></td>
-      <td><span class="pill muted">DRY</span></td>
-      <td class="num">8</td>
-      <td class="num">4</td>
-      <td class="num">4</td>
-      <td class="num">4</td>
-      <td class="num">—</td>
-      <td class="num">4</td>
-      <td><span class="pill bad"><span lang="en" class="en-only">Action required</span><span lang="es" class="es-only">Acción requerida</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Dry Room #2</b></td>
-      <td><span class="pill muted">DRY</span></td>
-      <td class="num">4</td>
-      <td class="num">3</td>
-      <td class="num">1</td>
-      <td class="num">1</td>
-      <td class="num">—</td>
-      <td class="num">3</td>
-      <td><span class="pill bad"><span lang="en" class="en-only">Action required</span><span lang="es" class="es-only">Acción requerida</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Trim Room</b></td>
-      <td><span class="pill muted">STORAGE</span></td>
-      <td class="num">2</td>
-      <td class="num">2</td>
-      <td class="num">0</td>
-      <td class="num">—</td>
-      <td class="num">—</td>
-      <td class="num">2</td>
-      <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Saludable</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Production Vault</b></td>
-      <td><span class="pill muted">STORAGE</span></td>
-      <td class="num">3</td>
-      <td class="num">2</td>
-      <td class="num">1</td>
-      <td class="num">1</td>
-      <td class="num">—</td>
-      <td class="num">2</td>
-      <td><span class="pill bad"><span lang="en" class="en-only">Action required</span><span lang="es" class="es-only">Acción requerida</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Packaging Room 1</b></td>
-      <td><span class="pill muted">STORAGE</span></td>
-      <td class="num">2</td>
-      <td class="num">2</td>
-      <td class="num">0</td>
-      <td class="num">—</td>
-      <td class="num">—</td>
-      <td class="num">2</td>
-      <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Saludable</span></span></td>
-    </tr>
-    
-    <tr>
-      <td><b>Packaging Room 2</b></td>
-      <td><span class="pill muted">STORAGE</span></td>
-      <td class="num">2</td>
-      <td class="num">2</td>
-      <td class="num">0</td>
-      <td class="num">—</td>
-      <td class="num">2</td>
-      <td class="num">0</td>
-      <td><span class="pill warn"><span lang="en" class="en-only">Monitor</span><span lang="es" class="es-only">Monitorear</span></span></td>
-    </tr>
-    </tbody>
+      <tbody><tr>
+  <td><b>Veg Room 1</b></td>
+  <td><span class="pill muted">VEG</span></td>
+  <td class="num">2</td>
+  <td class="num">2</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Sano</span></span></td>
+</tr><tr>
+  <td><b>Flower 1</b></td>
+  <td><span class="pill muted">FLOWER</span></td>
+  <td class="num">18</td>
+  <td class="num">16</td>
+  <td class="num">2</td>
+  <td class="num">2</td>
+  <td class="num">—</td>
+  <td class="num">408</td>
+  <td class="num">110599</td>
+  <td><span class="pill bad"><span lang="en" class="en-only">Action</span><span lang="es" class="es-only">Acción</span></span></td>
+</tr><tr>
+  <td><b>Flower 2</b></td>
+  <td><span class="pill muted">FLOWER</span></td>
+  <td class="num">18</td>
+  <td class="num">18</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Sano</span></span></td>
+</tr><tr>
+  <td><b>Flower 3</b></td>
+  <td><span class="pill muted">FLOWER</span></td>
+  <td class="num">18</td>
+  <td class="num">18</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Sano</span></span></td>
+</tr><tr>
+  <td><b>Flower 4</b></td>
+  <td><span class="pill muted">FLOWER</span></td>
+  <td class="num">18</td>
+  <td class="num">18</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">11</td>
+  <td class="num">16839</td>
+  <td><span class="pill warn"><span lang="en" class="en-only">Monitor</span><span lang="es" class="es-only">Monitor</span></span></td>
+</tr><tr>
+  <td><b>Flower 5</b></td>
+  <td><span class="pill muted">FLOWER</span></td>
+  <td class="num">32</td>
+  <td class="num">30</td>
+  <td class="num">2</td>
+  <td class="num">2</td>
+  <td class="num">4</td>
+  <td class="num">458</td>
+  <td class="num">115407</td>
+  <td><span class="pill bad"><span lang="en" class="en-only">Action</span><span lang="es" class="es-only">Acción</span></span></td>
+</tr><tr>
+  <td><b>Clone Room</b></td>
+  <td><span class="pill muted">PROP</span></td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Sano</span></span></td>
+</tr><tr>
+  <td><b>Dry Room #1</b></td>
+  <td><span class="pill muted">DRY</span></td>
+  <td class="num">8</td>
+  <td class="num">4</td>
+  <td class="num">4</td>
+  <td class="num">4</td>
+  <td class="num">—</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill bad"><span lang="en" class="en-only">Action</span><span lang="es" class="es-only">Acción</span></span></td>
+</tr><tr>
+  <td><b>Dry Room #2</b></td>
+  <td><span class="pill muted">DRY</span></td>
+  <td class="num">4</td>
+  <td class="num">3</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill bad"><span lang="en" class="en-only">Action</span><span lang="es" class="es-only">Acción</span></span></td>
+</tr><tr>
+  <td><b>Trim Room</b></td>
+  <td><span class="pill muted">STORAGE</span></td>
+  <td class="num">2</td>
+  <td class="num">2</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Sano</span></span></td>
+</tr><tr>
+  <td><b>Production Vault</b></td>
+  <td><span class="pill muted">STORAGE</span></td>
+  <td class="num">3</td>
+  <td class="num">2</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill bad"><span lang="en" class="en-only">Action</span><span lang="es" class="es-only">Acción</span></span></td>
+</tr><tr>
+  <td><b>Packaging Room 1</b></td>
+  <td><span class="pill muted">STORAGE</span></td>
+  <td class="num">2</td>
+  <td class="num">2</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill good"><span lang="en" class="en-only">Healthy</span><span lang="es" class="es-only">Sano</span></span></td>
+</tr><tr>
+  <td><b>Packaging Room 2</b></td>
+  <td><span class="pill muted">STORAGE</span></td>
+  <td class="num">2</td>
+  <td class="num">2</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">2</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td><span class="pill warn"><span lang="en" class="en-only">Monitor</span><span lang="es" class="es-only">Monitor</span></span></td>
+</tr></tbody>
     </table>
   </section>
 
   <section>
-    <h2><span lang="en" class="en-only">Mesh Topology Notes</span><span lang="es" class="es-only">Notas de Topología de Malla</span></h2>
+    <h2><span lang="en" class="en-only">Mesh Topology Notes</span><span lang="es" class="es-only">Topología de Malla</span></h2>
     <div class="card">
-      <h3 style="margin-top:0"><span lang="en" class="en-only">Wirepas backbone — 2 gateways, 10 active repeaters</span><span lang="es" class="es-only">Columna vertebral Wirepas — 2 gateways, 10 repetidores activos</span></h3>
-      <p><span lang="en" class="en-only">Almost the entire fleet routes through <b>gateway 119178</b>. <b>Gateway 119010</b> carries only one offline device (H4210004461 in Dry Room #1, since 2025-07-30) — so 119010 is effectively a single point of failure in waiting if 119178 ever drops. Recommend confirming the secondary path is alive by load-balancing one or two healthy nodes onto 119010.</span><span lang="es" class="es-only">Casi toda la flota se enruta por <b>gateway 119178</b>. <b>Gateway 119010</b> solo carga un dispositivo fuera de línea. Recomendamos balancear la carga.</span></p>
-      <p><span lang="en" class="en-only">RSSI on AROYA's /v2/ endpoint is reported as a <b>0–8 hop count</b> (lower = fewer hops = closer to a router). Most nodes report 1–7, which is normal for a 5-flower-room layout. RSSI on its own is not a quality signal — combined with <code>linkQuality</code> (0–100) it is.</span><span lang="es" class="es-only">El RSSI en el endpoint /v2/ se reporta como conteo de saltos (0–8). Combinado con linkQuality (0–100) indica salud real.</span></p>
-      <p><span lang="en" class="en-only"><b>nextHop diversity is healthy:</b> active nodes route through at least 7 distinct intermediate parents (119011, 119013, 119017, 119018, 119037, 119042, 119045, 119091, 119177, 188518, 196406). No single repeater is a bottleneck.</span><span lang="es" class="es-only"><b>Diversidad de nextHop saludable:</b> los nodos activos se enrutan por al menos 7 padres intermedios distintos. Ningún repetidor es un cuello de botella.</span></p>
+      <p><span lang="en" class="en-only"><b>Wirepas backbone:</b> 2 gateways visible, <b>Gateway 119178</b> is primary (≈98% of nodes route through it). <b>Gateway 119010</b> carries only one device (the offline H4210004461 Climate One in Dry Room #1). 119010 is effectively idle — load-balance one or two healthy nodes onto it for resilience.</span><span lang="es" class="es-only"><b>Backbone Wirepas:</b> 2 gateways. 119178 lleva todo; 119010 está ocioso.</span></p>
+      <p><span lang="en" class="en-only"><b>nextHop diversity is healthy.</b> Active sensors route through 10+ distinct parent IDs across the 5 Flower rooms — no single Mesh Repeater is a bottleneck.</span><span lang="es" class="es-only"><b>Diversidad de saltos saludable</b>: 10+ padres distintos.</span></p>
+      <p><span lang="en" class="en-only"><b>RSSI on /v2/ is a 0–8 hop count, not dBm.</b> Lower = closer to the gateway. Combined with <code>linkQuality</code> (0–100) it is a meaningful health signal; on its own it is not.</span><span lang="es" class="es-only"><b>RSSI en /v2/ es conteo de saltos (0–8)</b>, no dBm.</span></p>
     </div>
   </section>
 
   <section>
-    <h2><span lang="en" class="en-only">Data Quality &amp; Methodology</span><span lang="es" class="es-only">Calidad de Datos y Metodología</span></h2>
+    <h2><span lang="en" class="en-only">Data Quality & Methodology</span><span lang="es" class="es-only">Calidad de Datos y Metodología</span></h2>
     <div class="card">
-      <h3 style="margin-top:0"><span lang="en" class="en-only">What this report measures</span><span lang="es" class="es-only">Qué mide este reporte</span></h3>
-      <p><span lang="en" class="en-only">Pulled from the AROYA SPA endpoint <code>/rooms/&lt;id&gt;/v2/</code> for each of the 13 rooms at GTI-DGF on 2026-05-20. Each device record carries <code>online</code>, <code>lastCommunication</code>, <code>linkQuality</code>, <code>rssi</code>, <code>battery</code>, <code>nextHop</code>, and <code>gateway</code> — the same fields the SPA's own device-health column uses.</span><span lang="es" class="es-only">Datos del endpoint SPA /rooms/&lt;id&gt;/v2/ para cada una de las 13 salas en GTI-DGF el 2026-05-20.</span></p>
+      <h3 style="margin-top:0"><span lang="en" class="en-only">Data sources used</span><span lang="es" class="es-only">Fuentes</span></h3>
+      <ul>
+        <li><code>mcp__aroya__spa_get_room_config</code> (<span lang="en" class="en-only">SPA</span><span lang="es" class="es-only">SPA</span> <code>/rooms/&lt;id&gt;/v2/</code>) — <span lang="en" class="en-only">per-device online/offline, battery, RSSI, linkQuality, nextHop, gateway, lastCommunication</span><span lang="es" class="es-only">online/offline, batería, RSSI, linkQuality, etc.</span></li>
+        <li><code>mcp__aroya__spa_get_computed_alerts</code> (<span lang="en" class="en-only">SPA</span><span lang="es" class="es-only">SPA</span> <code>/alerts</code>, walks <code>/dataReadings/</code> + <code>/targetRanges/</code>) — <span lang="en" class="en-only">877 alerts over 14d, target-range breaches</span><span lang="es" class="es-only">877 alertas en 14d</span></li>
+        <li><code>/public_api/devices/?facility=3684</code> — <span lang="en" class="en-only">full inventory including retired devices</span><span lang="es" class="es-only">inventario completo</span></li>
+        <li><code>/public_api/devices/&lt;id&gt;/chart/</code> — <span lang="en" class="en-only">per-device readings in 2-day chunks for gap analysis (75 of 83 sensors pulled)</span><span lang="es" class="es-only">lecturas por dispositivo en chunks de 2 días</span></li>
+        <li><code>mcp__aroya__spa_get_journal</code> — <span lang="en" class="en-only">returned 0 entries (grow team is not using AROYA journal at this facility)</span><span lang="es" class="es-only">sin entradas — el equipo no usa el diario AROYA</span></li>
+      </ul>
       <h3><span lang="en" class="en-only">Severity classification</span><span lang="es" class="es-only">Clasificación de severidad</span></h3>
       <ul>
-        <li><b><span lang="en" class="en-only">Critical</span><span lang="es" class="es-only">Crítico</span></b>: <code>online == false</code>, OR <code>linkQuality &lt; 70</code>, OR <code>battery &lt; 20</code>, OR silent &gt; 24 h despite online flag.</li>
-        <li><b><span lang="en" class="en-only">Warn</span><span lang="es" class="es-only">Advertencia</span></b>: <code>linkQuality 70–89</code>, OR <code>battery 20–49%</code>, OR silent 1–24 h.</li>
-        <li><b>OK</b>: <span lang="en" class="en-only">all signals within band, last comm within the hour.</span><span lang="es" class="es-only">todas las señales dentro de rango, última comunicación dentro de la hora.</span></li>
+        <li><b><span lang="en" class="en-only">Critical</span><span lang="es" class="es-only">Crítico</span></b>: <code>online == false</code>, <span lang="en" class="en-only">OR</span><span lang="es" class="es-only">o</span> <code>linkQuality &lt; 70</code>, <span lang="en" class="en-only">OR</span><span lang="es" class="es-only">o</span> <code>battery &lt; 20</code>%, <span lang="en" class="en-only">OR</span><span lang="es" class="es-only">o</span> <span lang="en" class="en-only">chart shows >50 gaps over 60min in 14d</span><span lang="es" class="es-only">&gt;50 huecos &gt;60min en 14d</span>.</li>
+        <li><b><span lang="en" class="en-only">Warn</span><span lang="es" class="es-only">Advertencia</span></b>: <code>linkQuality 70–89</code>, <span lang="en" class="en-only">OR</span><span lang="es" class="es-only">o</span> <code>battery 20–49%</code>, <span lang="en" class="en-only">OR</span><span lang="es" class="es-only">o</span> <code>10–50 gaps over 60min</code>.</li>
+        <li><b>OK</b>: <span lang="en" class="en-only">online, linkQuality ≥90, battery ≥50% (or null = line-powered), &lt;10 long gaps in 14d.</span><span lang="es" class="es-only">en línea, linkQuality ≥90, batería ≥50% o nula, &lt;10 huecos largos.</span></li>
       </ul>
-      <h3><span lang="en" class="en-only">Known gaps in this report</span><span lang="es" class="es-only">Brechas conocidas en este reporte</span></h3>
+      <h3><span lang="en" class="en-only">Known gaps in this report</span><span lang="es" class="es-only">Brechas conocidas</span></h3>
       <ul>
-        <li><span lang="en" class="en-only">Battery is null for line-powered devices (repeaters, atm14, h421, ee894) — that's expected, not a gap. Only ter12 substrate probes report battery %.</span><span lang="es" class="es-only">La batería es null para dispositivos alimentados por línea — esperado.</span></li>
-        <li><span lang="en" class="en-only">This report doesn't include per-device gap analysis from /dataReadings/ — i.e. we know which devices are offline NOW, not the exact gap density for online devices over the 14-day window. That requires a separate 30-min /dataReadings/ pull per device which the SPA path doesn't tolerate at scale (one-window rule).</span><span lang="es" class="es-only">Este reporte no incluye análisis de huecos por dispositivo de /dataReadings/. Eso requiere un pull separado por dispositivo.</span></li>
-        <li><span lang="en" class="en-only">AROYA's /alerts/ endpoint returned 404 for this facility (likely an org-level scope quirk). Severity is computed locally from device telemetry, not from native AROYA alerts.</span><span lang="es" class="es-only">El endpoint /alerts/ devolvió 404. La severidad se calcula localmente desde la telemetría del dispositivo.</span></li>
+        <li><span lang="en" class="en-only">Per-device chart pull completed for 75 of 83 sensors — 8 sensors hung on slow API responses (likely flagged-but-not-officially-retired IDs). The active fleet picture is complete; these 8 are visible in /v2/ but produce no chart data.</span><span lang="es" class="es-only">Pull por dispositivo completo para 75 de 83 sensores.</span></li>
+        <li><span lang="en" class="en-only">AROYA's <code>/alerts</code> endpoint at the OpenCLI layer is computed locally (chart × targetRanges), not native AROYA notifications. Native push-notifications might capture additional severities; this proxy is what the customer's AROYA dashboard surfaces visually.</span><span lang="es" class="es-only">Las alertas son computadas, no nativas.</span></li>
+        <li><span lang="en" class="en-only">184 device records exist in /devices/?facility=3684 but only 128 appear in /rooms/&lt;id&gt;/v2/. The 56 difference are retired/decommissioned — AROYA filters them from /v2/. Listed as "unknown severity" in the inventory but excluded from health counts.</span><span lang="es" class="es-only">184 dispositivos totales, 128 activos. Los 56 restantes están retirados.</span></li>
       </ul>
     </div>
   </section>
 
   <footer>
-    <div><span lang="en" class="en-only">Generated</span><span lang="es" class="es-only">Generado</span> 2026-05-20 &middot; <b>AROYA</b> <span lang="en" class="en-only">Customer Audit</span><span lang="es" class="es-only">Auditoría de Cliente</span> &middot; <span lang="en" class="en-only">Source</span><span lang="es" class="es-only">Fuente</span>: SPA <code>/rooms/&lt;id&gt;/v2/</code> via <code>mcp__aroya__spa_get_room_config</code></div>
+    <div><span lang="en" class="en-only">Generated</span><span lang="es" class="es-only">Generado</span> 2026-05-20 · v2 · <b>AROYA</b> <span lang="en" class="en-only">Customer Audit</span><span lang="es" class="es-only">Auditoría de Cliente</span></div>
     <div style="margin-top:6px;color:var(--ink-muted);font-size:11px">cian.sullivan@addium.io &middot; AROYA Senior Solutions Engineer</div>
   </footer>
-
 </div>
 
 <script>/**
@@ -650,7 +1000,6 @@
 //# sourceMappingURL=chart.umd.js.map
 </script>
 <script>
-// AROYA design tokens for Chart.js
 const css = getComputedStyle(document.documentElement);
 const T = {
   olive: css.getPropertyValue('--olive').trim(),
@@ -664,80 +1013,51 @@ const T = {
   ink2: css.getPropertyValue('--ink-2').trim(),
   inkMuted: css.getPropertyValue('--ink-muted').trim(),
   grid: css.getPropertyValue('--grid-line').trim(),
-  bg2: css.getPropertyValue('--bg-2').trim()
 };
-
 Chart.defaults.font.family = "Inter, system-ui, -apple-system, sans-serif";
 Chart.defaults.font.size = 11;
 Chart.defaults.color = T.ink2;
 Chart.defaults.borderColor = T.grid;
-
 window.__charts = {};
 
 const ROOM_LABELS = ["Veg Room 1", "Flower 1", "Flower 2", "Flower 3", "Flower 4", "Flower 5", "Clone Room", "Dry Room #1", "Dry Room #2", "Trim Room", "Production Vault", "Packaging Room 1", "Packaging Room 2"];
-const ROOM_ONLINE = [2, 16, 18, 18, 18, 30, 1, 4, 3, 2, 2, 2, 2];
-const ROOM_OFFLINE = [0, 2, 0, 0, 0, 2, 0, 4, 1, 0, 1, 0, 0];
-
 window.__charts.roomStatus = new Chart(document.getElementById('chartRoomStatus'), {
-  type: 'bar',
-  data: {
-    labels: ROOM_LABELS,
+  type: 'bar', data: { labels: ROOM_LABELS,
     datasets: [
-      { label: 'Online', data: ROOM_ONLINE, backgroundColor: T.good, stack: 's1' },
-      { label: 'Offline', data: ROOM_OFFLINE, backgroundColor: T.bad, stack: 's1' }
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-    scales: { x: { stacked: true, grid: { color: T.grid }, title: { display: true, text: 'Devices' } }, y: { stacked: true, grid: { display: false } } },
-    plugins: { legend: { position: 'bottom' } }
-  }
-});
+      { label: 'Online', data: [2, 16, 18, 18, 18, 30, 1, 4, 3, 2, 2, 2, 2], backgroundColor: T.good, stack: 's1' },
+      { label: 'Offline', data: [0, 2, 0, 0, 0, 2, 0, 4, 1, 0, 1, 0, 0], backgroundColor: T.bad, stack: 's1' } ]},
+  options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    scales: { x: { stacked: true, grid: { color: T.grid }, title: { display: true, text: 'Devices' } },
+              y: { stacked: true, grid: { display: false } } },
+    plugins: { legend: { position: 'bottom' } } } });
 
-const MODEL_LABELS = ["repeater", "atm14", "node", "ter12", "h421", "ee894"];
-const MODEL_COUNTS = [11, 8, 45, 45, 10, 9];
 window.__charts.byModel = new Chart(document.getElementById('chartByModel'), {
-  type: 'doughnut',
-  data: {
-    labels: MODEL_LABELS,
-    datasets: [{
-      data: MODEL_COUNTS,
-      backgroundColor: [T.olive, T.appBlue, T.lime, T.olive2, T.warn, T.appBlue]
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { position: 'right' } }
-  }
-});
+  type: 'doughnut', data: { labels: ["TEROS 12", "Node (radio puck)", "Mesh Repeater", "Climate One", "E+E EE894", "Atmos 14"],
+    datasets: [{ data: [45, 45, 11, 10, 9, 8],
+      backgroundColor: [T.olive, T.appBlue, T.lime, T.olive2, T.warn, T.good, T.bad, T.inkMuted, T.ink2] }] },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } } });
 
-const GW_LABELS = ["119178"];
-const GW_COUNTS = [21];
-window.__charts.gateway = new Chart(document.getElementById('chartGateway'), {
-  type: 'bar',
-  data: {
-    labels: GW_LABELS.map(g => 'GW ' + g),
-    datasets: [{ label: 'Devices', data: GW_COUNTS, backgroundColor: T.olive }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    scales: { y: { beginAtZero: true, grid: { color: T.grid }, title: { display: true, text: 'Devices routed' } }, x: { grid: { display: false } } },
-    plugins: { legend: { display: false } }
-  }
-});
+window.__charts.alertsRoom = new Chart(document.getElementById('chartAlertsByRoom'), {
+  type: 'bar', data: { labels: ROOM_LABELS,
+    datasets: [{ label: 'Alert-minutes', data: [0, 110599, 0, 0, 16839, 115407, 0, 0, 0, 0, 0, 0, 0], backgroundColor: T.bad }] },
+  options: { responsive: true, maintainAspectRatio: false,
+    scales: { y: { beginAtZero: true, grid: { color: T.grid }, title: { display: true, text: 'min' } },
+              x: { grid: { display: false } } },
+    plugins: { legend: { display: false } } } });
 
-// EN/ES toggle
+window.__charts.alertsMetric = new Chart(document.getElementById('chartAlertsByMetric'), {
+  type: 'doughnut', data: { labels: ["rel_hum", "air_temp", "soil_moist", "soil_temp", "vpd", "pore_ec"],
+    datasets: [{ data: [145, 323, 403, 2, 2, 2],
+      backgroundColor: [T.bad, T.warn, T.appBlue, T.olive, T.lime, T.good] }] },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } } });
+
 document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => {
   const lang = btn.dataset.lang;
   document.body.className = lang;
-  document.documentElement.lang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
 }));
-
-// Theme toggle
 document.querySelectorAll('.theme-btn').forEach(btn => btn.addEventListener('click', () => {
   const theme = btn.dataset.theme;
-  // The page is generated for one theme — link to the other variant if needed
   if (theme === 'light') window.location.href = window.location.pathname.replace('_dark.html', '.html');
   else window.location.href = window.location.pathname.replace('.html', '_dark.html').replace('_dark_dark.html', '_dark.html');
 }));
