@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>First Medical · Puerto Rico · 2-Week Facility Audit · 2026-05-06 → 2026-05-20</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root[data-theme="dark"]{
+  --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
+  --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
+  --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
+  --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
+  --attention:#e76f51; --attention-2:#f4a261;
+  --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
+  --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
+  --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+  --grid-line: #e8e8e0;
+}
+:root[data-theme="dark"]{
+  --bg:#13160f; --bg-2:#1a1e15; --bg-3:#22281c; --border:#2e3624;
+  --ink:#e8ead9; --ink-2:#b9bda5; --ink-muted:#7e836e;
+  --olive:#8aa05c; --olive-2:#a7bb74; --lime:#b9e587; --lime-2:#6b8d3d;
+  --app-blue:#6cb5d8; --app-blue-2:#3a6d80;
+  --attention:#f48066; --attention-2:#f4a261;
+  --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
+  --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
+  --p-rootin:#7fbacd; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#b694ea; --p-ripening:#e76f51;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 8px 28px rgba(0,0,0,0.45);
+  --grid-line: #2a3220;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font:14px/1.5 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","ss03"}
+a{color:var(--app-blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+.masthead{background:#1a1c19;color:#fff;padding:20px 28px 24px;margin:0;min-height:80px}
+.masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+.lockup{display:flex;align-items:center;gap:10px;color:#fff}
+.lockup-mark{font-size:24px;font-weight:500;letter-spacing:-0.01em;color:#fff}
+.lockup-glyph{display:inline-block;width:22px;height:22px;position:relative}
+.lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#cbeeb0;border-radius:2px}
+.lockup-glyph::before{top:0;right:0;width:11px;height:11px}
+.lockup-glyph::after{bottom:0;left:0;width:15px;height:15px;border-top-right-radius:0}
+.controls{display:flex;gap:6px;align-items:center}
+.btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
+.btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
+.btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
+.pagehead{max-width:1180px;margin:0 auto;padding:28px 28px 24px;border-bottom:1px solid var(--border);margin-bottom:32px}
+.pagehead-eyebrow{font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.pagehead h1{font-weight:500;font-size:30px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
+.pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.55;max-width:900px}
+.pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+.pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+.pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+section{margin-top:40px}
+h2{font-size:22px;margin:0 0 14px;font-weight:600;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+h4{font-size:12px;margin:18px 0 6px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:1px}
+p{margin:0 0 12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+.kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
+.kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
+.kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.kpi .val{font-size:22px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
+.kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
+.card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
+.phase{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.phase.veg{background:var(--p-veg);color:#1c3700}
+.phase.stretch{background:var(--p-stretch);color:#4a1d00}
+.phase.bulking{background:var(--p-bulking);color:#2c1750}
+.phase.ripening{background:var(--p-ripening);color:#3c0f00}
+.verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
+.verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
+.verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
+.verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
+.verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+.verdict p{margin:6px 0 0}
+.caveat{padding:12px 16px;background:#d9e5ff;border-left:4px solid #2d62ff;border-radius:8px;font-size:13.5px;color:#1a2a4a;margin:14px 0}
+:root[data-theme="dark"] .caveat{background:#1a2438;color:#a8c3f0;border-left-color:#6c8bd8}
+table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
+tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Menlo',monospace;font-size:13px}
+.pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
+.pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
+.biophys-room{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;box-shadow:var(--card-shadow)}
+.biophys-room h3{margin:0 0 10px;font-size:17px}
+.biophys-brief{font-size:13.5px;color:var(--ink-2);margin-bottom:14px;padding:12px 14px;background:var(--bg-3);border-left:3px solid var(--olive);border-radius:0 8px 8px 0;line-height:1.55}
+.biophys-section-label{font-size:11px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.8px;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px dashed var(--border)}
+.bp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+.bp-table th{background:var(--bg-3);padding:8px 10px;text-align:left;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1.5px solid var(--border);white-space:nowrap}
+.bp-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.bp-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bp-targets{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.bp-tgt{display:inline-block;font-size:12px;padding:5px 10px;background:var(--bg-3);border-radius:6px;color:var(--ink-2)}
+.bp-tgt b{color:var(--ink)}
+.rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow)}
+.rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
+.rec .owner.grower{background:var(--app-blue)}
+.rec .owner.process{background:var(--ink-2)}
+.rec .rphase{color:var(--ink-muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-left:4px}
+.rec .raction{margin-top:6px;font-weight:500}
+.rec .rwhy{margin-top:4px;font-size:13px;color:var(--ink-2)}
+footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+.en .es-only{display:none} .es .en-only{display:none}
+.muted{color:var(--ink-muted);font-style:italic}
+.serial{font-family:'JetBrains Mono','Menlo',monospace;font-size:12px;color:var(--ink-2)}
+</style>
+</head>
+<body class="en">
+
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="lockup">
+      <div class="lockup-glyph"></div>
+      <div class="lockup-mark">AROYA</div>
+    </div>
+    <div class="controls">
+      <button class="btn lang-btn active" data-lang="en">EN</button>
+      <button class="btn lang-btn" data-lang="es">ES</button>
+      <button class="btn theme-btn" data-theme="dark">Dark</button>
+    </div>
+  </div>
+</div>
+
+<div class="pagehead">
+  <div class="pagehead-eyebrow"><span class="en-only">2-Week Facility Audit</span><span class="es-only">Auditoría de Instalación · 2 Semanas</span></div>
+  <h1>First Medical · Puerto Rico · <span class="en-only">R&amp;D 6A Irrigation, Climate &amp; Mesh Health</span><span class="es-only">R&amp;D 6A · Riego, Clima y Salud de Malla</span></h1>
+  <div class="sub">
+    <span class="en-only">Single-room R&amp;D audit, Coco 2-gal (SOILLESS), 270 plants across 6 plant zones · HG 152690 (RND6 4/17–6/13) currently in Bulking/Vegetative 2 (day 12 of 21). Audit window 2026-05-06 → 2026-05-20.</span>
+    <span class="es-only">Auditoría sala R&amp;D única, Coco 2-gal (SOILLESS), 270 plantas en 6 zonas de planta · HG 152690 (RND6 4/17–6/13) actualmente en Engorde/Vegetativo 2 (día 12 de 21). Ventana 2026-05-06 → 2026-05-20.</span>
+  </div>
+  <div class="meta">
+    <span><b><span class="en-only">Facility</span><span class="es-only">Instalación</span></b>First Medical (ID 4623)</span>
+    <span><b><span class="en-only">Room</span><span class="es-only">Sala</span></b>R n D 6A · ID 19060</span>
+    <span><b><span class="en-only">Harvest group</span><span class="es-only">Grupo de cosecha</span></b>RND6 4/17–6/13 · ID 152690</span>
+    <span><b><span class="en-only">Current phase</span><span class="es-only">Fase actual</span></b>Bulking/Veg 2 · 2026-05-08 → 2026-05-29</span>
+    <span><b><span class="en-only">Cultivars</span><span class="es-only">Cultivares</span></b>2 (IDs 62566, 62567)</span>
+    <span><b><span class="en-only">Contact</span><span class="es-only">Contacto</span></b>Nelson Pagán</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ====== HEADLINE FINDINGS ====== -->
+<section id="headline">
+  <h2><span class="en-only">Headline Findings</span><span class="es-only">Hallazgos Principales</span></h2>
+
+  <div class="kpis">
+    <div class="kpi warn">
+      <div class="label"><span class="en-only">Bulking targets · in band</span><span class="es-only">Objetivos Engorde · en banda</span></div>
+      <div class="val">3 / 4</div>
+      <div class="delta"><span class="en-only">VPD ✓ · Temp edge · VWC ✓ · pore_EC over</span><span class="es-only">VPD ✓ · Temp borde · VWC ✓ · pore_EC sobre</span></div>
+    </div>
+    <div class="kpi bad">
+      <div class="label"><span class="en-only">Substrate-blind plant zones</span><span class="es-only">Zonas de planta sin sustrato</span></div>
+      <div class="val">3 / 6</div>
+      <div class="delta"><span class="en-only">Z1, Z3, Z5 have zero sensors — 50% of canopy</span><span class="es-only">Z1, Z3, Z5 sin sensores — 50% del dosel</span></div>
+    </div>
+    <div class="kpi warn">
+      <div class="label"><span class="en-only">Pore_EC drift (room)</span><span class="es-only">Deriva pore_EC (sala)</span></div>
+      <div class="val">+10.8%</div>
+      <div class="delta"><span class="en-only">7.30 → 8.09 mS/cm · Z4 +18.7% worst</span><span class="es-only">7.30 → 8.09 mS/cm · Z4 +18.7% peor</span></div>
+    </div>
+    <div class="kpi warn">
+      <div class="label"><span class="en-only">Overnight dryback</span><span class="es-only">Dryback nocturno</span></div>
+      <div class="val">~13%</div>
+      <div class="delta"><span class="en-only">Below Bulking 15–25% target · Z4 weakest @ 10%</span><span class="es-only">Bajo objetivo Engorde 15–25% · Z4 más débil @ 10%</span></div>
+    </div>
+    <div class="kpi bad">
+      <div class="label"><span class="en-only">Mesh — weak nodes</span><span class="es-only">Malla — nodos débiles</span></div>
+      <div class="val">2 / 8</div>
+      <div class="delta"><span class="en-only">Z6 ter15 pair · RSSI 1, link 62</span><span class="es-only">Par ter15 Z6 · RSSI 1, link 62</span></div>
+    </div>
+    <div class="kpi good">
+      <div class="label"><span class="en-only">Battery health</span><span class="es-only">Salud de batería</span></div>
+      <div class="val">100%</div>
+      <div class="delta"><span class="en-only">All nodes at 100% · no replacements due</span><span class="es-only">Todos los nodos al 100% · sin reemplazos</span></div>
+    </div>
+    <div class="kpi good">
+      <div class="label"><span class="en-only">Data coverage</span><span class="es-only">Cobertura de datos</span></div>
+      <div class="val">100%</div>
+      <div class="delta"><span class="en-only">14 days · 480 samples/series · no gaps</span><span class="es-only">14 días · 480 muestras/serie · sin huecos</span></div>
+    </div>
+    <div class="kpi warn">
+      <div class="label"><span class="en-only">Active guardrail alerts</span><span class="es-only">Alertas activas</span></div>
+      <div class="val">4</div>
+      <div class="delta"><span class="en-only">pore_EC, air_temp, VPD, VWC vs Early Flower bounds</span><span class="es-only">pore_EC, air_temp, VPD, VWC vs Flor Temprana</span></div>
+    </div>
+  </div>
+
+  <div class="verdict warn">
+    <div class="v-head"><span class="en-only">The Lead — what the 14 days tell us</span><span class="es-only">La Lectura — lo que dicen los 14 días</span></div>
+    <p><span class="en-only"><b>R&amp;D 6A is a single-room single-HG audit in mid-Bulking, week 5 of 8.</b> Climate is in the Bulking guardrail band on average (VPD 1.35 vs 1.2–1.4; temp 79.9°F vs 75–80°F) but the temperature is riding the upper edge with daily peaks at 82.6°F — beyond Bulking ceiling. Substrate is the bigger story: pore_EC averages 7.39 mS/cm against a 3–7 target band (just over), <b>and is drifting up</b> at +10.8% room-wide over the window, +18.7% on Zone 4 specifically. Overnight dryback is sitting at ~13% — below the 15–25% target for generative Bulking, and Zone 4 is weakest at ~10%. Mesh health is largely fine (every node battery at 100%, gateway online) except <b>Zone 6's two ter15 pair report RSSI 1 and linkQuality 62</b>, materially worse than Zones 2/4 which run RSSI 2–6 and linkQuality 100. The structural finding is that <b>three of six plant zones have no substrate sensors at all</b> — Zones 1, 3, and 5 are flying blind, so the metrics in this audit cover only the even-numbered half of the canopy. Recommendations are tagged Owner (Nelson), Grower, and Process below.</span><span class="es-only"><b>R&amp;D 6A es una auditoría de sala única, HG único, en mitad de Engorde, semana 5 de 8.</b> El clima está en banda Engorde en promedio (VPD 1.35 vs 1.2–1.4; temp 79.9°F vs 75–80°F) pero la temperatura está en el borde superior con picos diarios a 82.6°F — sobre el techo de Engorde. El sustrato es el tema más fuerte: pore_EC promedio 7.39 mS/cm contra banda 3–7 (justo sobre), <b>y deriva hacia arriba</b> +10.8% en toda la sala, +18.7% en Zona 4 específicamente. El dryback nocturno está en ~13% — bajo el objetivo 15–25% para Engorde generativo, y Zona 4 es la más débil a ~10%. La malla está mayormente bien (todos los nodos batería 100%, gateway online) excepto <b>el par ter15 de Zona 6 reporta RSSI 1 y linkQuality 62</b>, materialmente peor que Zonas 2/4 que corren RSSI 2–6 y linkQuality 100. El hallazgo estructural es que <b>tres de seis zonas de planta no tienen sensores de sustrato</b> — Zonas 1, 3, y 5 están a ciegas, así que las métricas cubren solo la mitad par del dosel. Recomendaciones etiquetadas Propietario (Nelson), Cultivador y Proceso abajo.</span></p>
+  </div>
+
+  <div class="caveat">
+    <span class="en-only"><b>Data scope:</b> No drip-volume, drain-volume, or DLI/PAR sensors are configured on this room — irrigation shot-cycle analysis is therefore inferred from substrate VWC dynamics only, not measured directly. The room has one climate sensor (EE894) and three substrate sensor pairs (one pair per even-numbered zone).</span>
+    <span class="es-only"><b>Alcance de datos:</b> No hay sensores de volumen de drip, volumen de drenaje, ni DLI/PAR configurados en esta sala — el análisis del ciclo de riego se infiere de la dinámica VWC del sustrato solamente, no medido directamente. La sala tiene un sensor de clima (EE894) y tres pares de sensores de sustrato (un par por zona par).</span>
+  </div>
+</section>
+
+<!-- ====== PRIOR-COMMITMENT AUDIT ====== -->
+<section id="commitments">
+  <h2><span class="en-only">Prior-Commitment Audit</span><span class="es-only">Auditoría de Compromisos Previos</span></h2>
+  <table>
+    <thead>
+      <tr><th><span class="en-only">Item</span><span class="es-only">Ítem</span></th><th><span class="en-only">From</span><span class="es-only">De</span></th><th><span class="en-only">Status</span><span class="es-only">Estado</span></th><th><span class="en-only">Action this meeting</span><span class="es-only">Acción esta reunión</span></th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="en-only">OpenSprinkler ↔ AROYA integration diagnostic report</span><span class="es-only">Informe diagnóstico integración OpenSprinkler ↔ AROYA</span></td>
+        <td><span class="en-only">Nelson-Pagán handoff 2026-04-17</span><span class="es-only">Handoff Nelson-Pagán 2026-04-17</span></td>
+        <td><span class="pill warn"><span class="en-only">Draft delivered, awaiting review</span><span class="es-only">Borrador entregado, pendiente revisión</span></span></td>
+        <td><span class="en-only">Walk Nelson through the diagnostic — does he want us to build the bridge, point at existing integration, or park?</span><span class="es-only">Repasar diagnóstico con Nelson — ¿construimos el puente, apuntamos a integración existente, o pausamos?</span></td>
+      </tr>
+      <tr>
+        <td><span class="en-only">Calendly: Ag Advising session</span><span class="es-only">Calendly: Sesión Ag Advising</span></td>
+        <td><span class="en-only">Self-booked by Nelson</span><span class="es-only">Auto-reservado por Nelson</span></td>
+        <td><span class="pill good"><span class="en-only">On calendar Thu 11 AM</span><span class="es-only">En calendario jue 11 AM</span></span></td>
+        <td><span class="en-only">This audit is the prep deliverable for that meeting — precision irrigation strategy.</span><span class="es-only">Esta auditoría es el entregable de prep para esa reunión — estrategia de riego de precisión.</span></td>
+      </tr>
+      <tr>
+        <td><span class="en-only">Sentry RIEGO-EE substrate EC sensor errors</span><span class="es-only">Errores Sentry RIEGO-EE sensor CE sustrato</span></td>
+        <td><span class="en-only">5 notifications, brief 2026-05-20</span><span class="es-only">5 notificaciones, brief 2026-05-20</span></td>
+        <td><span class="pill warn"><span class="en-only">Open</span><span class="es-only">Abierto</span></span></td>
+        <td><span class="en-only">Correlate with Z4 pore_EC drift (+18.7%) below — likely related; ask Nelson if RIEGO-EE telemetry reaches AROYA or only the OpenSprinkler controller.</span><span class="es-only">Correlacionar con deriva pore_EC de Z4 (+18.7%) abajo — probablemente relacionado; preguntar a Nelson si telemetría RIEGO-EE llega a AROYA o solo al OpenSprinkler.</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== ROOM META + TARGET BAND ====== -->
+<section id="room-card">
+  <h2><span class="en-only">R&amp;D 6A · Room Meta &amp; Active Guardrails</span><span class="es-only">R&amp;D 6A · Meta de Sala y Guardarrieles Activos</span></h2>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:10px">
+      <div>
+        <h3 style="margin:0">R n D 6A <span class="phase bulking">Bulking/Veg 2</span></h3>
+        <div class="muted" style="font-size:13px;margin-top:4px"><span class="en-only">270 plants · Coco 2-gal SOILLESS · 4 emitters/plant · 1.7 L emitter flow</span><span class="es-only">270 plantas · Coco 2-gal SOILLESS · 4 emisores/planta · flujo 1.7 L</span></div>
+      </div>
+      <div style="text-align:right;font-size:12px;color:var(--ink-muted)">
+        <div><span class="en-only">Photoperiod</span><span class="es-only">Fotoperíodo</span>: 12/12, lights on 14:10 UTC</div>
+        <div>HG 152690 · <span class="en-only">day 12 of 21 in Bulking</span><span class="es-only">día 12 de 21 en Engorde</span></div>
+      </div>
+    </div>
+    <div class="bp-targets">
+      <div class="bp-tgt"><b>VPD</b> 1.2–1.4 kPa</div>
+      <div class="bp-tgt"><b>Air temp</b> 75–80 °F</div>
+      <div class="bp-tgt"><b>VWC</b> 30–65 %</div>
+      <div class="bp-tgt"><b>pore_EC</b> 3–7 mS/cm</div>
+      <div class="bp-tgt"><b>Substrate temp</b> 65–75 °F (best practice)</div>
+      <div class="bp-tgt"><b>Bulking dryback</b> 15–25 % (best practice)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PHASE BIOPHYSICS ====== -->
+<section id="biophysics">
+  <h2><span class="en-only">Phase Biophysics — R&amp;D 6A · Bulking Phase</span><span class="es-only">Biofísica de Fase — R&amp;D 6A · Engorde</span></h2>
+
+  <div class="biophys-room">
+    <h3>R n D 6A · <span class="en-only">14-day climate snapshot</span><span class="es-only">Instantánea climática 14 días</span></h3>
+    <div class="biophys-brief">
+      <span class="en-only">Mean VPD 1.35 kPa sits in the upper half of the 1.2–1.4 Bulking band — adequate for Bulking transpiration drive, with a downward trend over the window (start 1.52 → end 1.38). Air temp averages 79.9 °F (75–80 target) but the daily peak of 82.6 °F is over the Bulking ceiling. CO₂ cycles 760 → 1273 ppm clean lights-on/off — supplementation working. Substrate temp 74.2 °F mean is at the top of the 65–75 °F comfort band, with peaks at 75.5 °F. The Bulking band is generous enough that nothing crosses an alert threshold today, but the operating point is "warm and slightly dry" rather than "cool and steady."</span>
+      <span class="es-only">VPD medio 1.35 kPa está en la mitad superior de la banda Engorde 1.2–1.4 — adecuado para empuje transpiratorio de Engorde, con tendencia descendente (inicio 1.52 → fin 1.38). Temp aire promedio 79.9 °F (objetivo 75–80) pero el pico diario 82.6 °F está sobre el techo Engorde. CO₂ cicla 760 → 1273 ppm limpiamente — suplementación funciona. Temp sustrato 74.2 °F media está en el tope de la banda de confort 65–75 °F, con picos 75.5 °F. La banda Engorde es generosa así nada cruza un umbral hoy, pero el punto de operación es "cálido y ligeramente seco" más que "fresco y estable".</span>
+    </div>
+
+    <div class="biophys-section-label"><span class="en-only">Room-level climate</span><span class="es-only">Clima a nivel sala</span></div>
+    <table class="bp-table">
+      <thead><tr><th>Metric</th><th>Target</th><th class="num">Mean</th><th class="num">p25</th><th class="num">p50</th><th class="num">p75</th><th class="num">Min</th><th class="num">Max</th><th class="num">Trend Δ</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Air temp °F</td><td>75–80</td><td class="num">79.93</td><td class="num">79.1</td><td class="num">79.7</td><td class="num">80.6</td><td class="num">77.6</td><td class="num">82.6</td><td class="num">+2.6 %</td><td><span class="pill warn"><span class="en-only">edge / peaks over</span><span class="es-only">borde / picos sobre</span></span></td></tr>
+        <tr><td>VPD kPa</td><td>1.2–1.4</td><td class="num">1.354</td><td class="num">1.32</td><td class="num">1.36</td><td class="num">1.39</td><td class="num">1.16</td><td class="num">1.52</td><td class="num">−9.2 %</td><td><span class="pill good"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td></tr>
+        <tr><td>RH %</td><td>55–65 (BP)</td><td class="num">61.18</td><td class="num">59.6</td><td class="num">61.0</td><td class="num">62.5</td><td class="num">55.5</td><td class="num">66.7</td><td class="num">+11.8 %</td><td><span class="pill good"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td></tr>
+        <tr><td>CO₂ ppm</td><td>~1200 day / 600 night (BP)</td><td class="num">1101</td><td class="num">926</td><td class="num">1243</td><td class="num">1263</td><td class="num">760</td><td class="num">1273</td><td class="num">−0.7 %</td><td><span class="pill good"><span class="en-only">supplementing</span><span class="es-only">suplementando</span></span></td></tr>
+        <tr><td>Abs hum g/m³</td><td>—</td><td class="num">15.45</td><td class="num">14.81</td><td class="num">15.37</td><td class="num">15.98</td><td class="num">13.61</td><td class="num">17.47</td><td class="num">+19.3 %</td><td><span class="pill muted">—</span></td></tr>
+      </tbody>
+    </table>
+    <div class="muted" style="font-size:12px;margin-top:4px"><span class="en-only">14-day mean. "BP" = best practice (no facility guardrail set for this metric).</span><span class="es-only">Promedio 14 días. "BP" = mejor práctica (sin guardarriel configurado).</span></div>
+
+    <div class="biophys-section-label"><span class="en-only">Substrate — by zone (only Z2/Z4/Z6 instrumented)</span><span class="es-only">Sustrato — por zona (solo Z2/Z4/Z6 instrumentadas)</span></div>
+    <table class="bp-table">
+      <thead><tr><th>Zone</th><th>Metric</th><th>Target</th><th class="num">Mean</th><th class="num">Min</th><th class="num">Max</th><th class="num">Start → End</th><th class="num">Trend Δ</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Z2 (77817)</td><td>VWC %</td><td>30–65</td><td class="num">51.31</td><td class="num">40.3</td><td class="num">62.8</td><td class="num">61.9 → 59.3</td><td class="num">−4.2 %</td><td><span class="pill good">in band</span></td></tr>
+        <tr><td>Z2 (77817)</td><td>pore_EC mS/cm</td><td>3–7</td><td class="num">6.82</td><td class="num">5.55</td><td class="num">8.40</td><td class="num">6.49 → 7.29</td><td class="num">+12.3 %</td><td><span class="pill warn"><span class="en-only">climbing toward ceiling</span><span class="es-only">subiendo al techo</span></span></td></tr>
+        <tr><td>Z2 (77817)</td><td>Subs temp °F</td><td>65–75</td><td class="num">74.13</td><td class="num">73.3</td><td class="num">75.2</td><td class="num">73.8 → 75.2</td><td class="num">+1.9 %</td><td><span class="pill warn">top edge</span></td></tr>
+
+        <tr><td>Z4 (77819)</td><td>VWC %</td><td>30–65</td><td class="num">47.10</td><td class="num">39.5</td><td class="num">53.7</td><td class="num">48.6 → 53.0</td><td class="num">+9.1 %</td><td><span class="pill good">in band</span></td></tr>
+        <tr><td>Z4 (77819)</td><td>pore_EC mS/cm</td><td>3–7</td><td class="num">7.89</td><td class="num">7.34</td><td class="num">8.74</td><td class="num">7.36 → 8.74</td><td class="num">+18.7 %</td><td><span class="pill bad"><span class="en-only">over band &amp; climbing</span><span class="es-only">sobre banda y subiendo</span></span></td></tr>
+        <tr><td>Z4 (77819)</td><td>Subs temp °F</td><td>65–75</td><td class="num">74.24</td><td class="num">73.1</td><td class="num">75.4</td><td class="num">74.3 → 74.8</td><td class="num">+0.7 %</td><td><span class="pill warn">top edge</span></td></tr>
+
+        <tr><td>Z6 (77821)</td><td>VWC %</td><td>30–65</td><td class="num">56.08</td><td class="num">47.0</td><td class="num">65.0</td><td class="num">64.3 → 63.4</td><td class="num">−1.4 %</td><td><span class="pill good">in band</span></td></tr>
+        <tr><td>Z6 (77821)</td><td>pore_EC mS/cm</td><td>3–7</td><td class="num">7.44</td><td class="num">6.82</td><td class="num">8.36</td><td class="num">8.04 → 8.24</td><td class="num">+2.5 %</td><td><span class="pill bad"><span class="en-only">over band</span><span class="es-only">sobre banda</span></span></td></tr>
+        <tr><td>Z6 (77821)</td><td>Subs temp °F</td><td>65–75</td><td class="num">74.12</td><td class="num">73.2</td><td class="num">75.5</td><td class="num">74.0 → 74.5</td><td class="num">+0.7 %</td><td><span class="pill warn">top edge</span></td></tr>
+
+        <tr><td>Z1 / Z3 / Z5</td><td colspan="7" class="muted"><span class="en-only">No substrate sensors installed — telemetry blind.</span><span class="es-only">Sin sensores de sustrato — telemetría a ciegas.</span></td><td><span class="pill bad"><span class="en-only">no data</span><span class="es-only">sin datos</span></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ====== IRRIGATION / DRYBACK ====== -->
+<section id="irrigation">
+  <h2><span class="en-only">Irrigation Shot-Cycle Audit (Inferred)</span><span class="es-only">Auditoría del Ciclo de Riego (Inferido)</span></h2>
+  <div class="caveat"><span class="en-only">This room has no drip-volume or drain-volume sensors. The numbers below come from VWC sawtooth analysis of the three instrumented zones (Z2 / Z4 / Z6), not from measured drip/drain. Treat as directional, not ledger-true.</span><span class="es-only">Esta sala no tiene sensores de volumen drip/drain. Los números abajo provienen del análisis dentado VWC de las tres zonas instrumentadas (Z2/Z4/Z6), no de drip/drain medido. Trate como direccional, no contable.</span></div>
+
+  <table class="bp-table">
+    <thead><tr><th>Zone</th><th class="num"><span class="en-only">Field cap</span><span class="es-only">Cap. campo</span></th><th class="num"><span class="en-only">Pre-irr low</span><span class="es-only">Pre-riego</span></th><th class="num"><span class="en-only">Abs dryback %pt</span><span class="es-only">Dryback abs %pt</span></th><th class="num"><span class="en-only">Rel dryback %</span><span class="es-only">Dryback rel %</span></th><th>Target Bulking</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>Z2 (77817)</td><td class="num">62.8</td><td class="num">40.3</td><td class="num">22.5</td><td class="num">35.8 %</td><td>15–25 %</td><td><span class="pill warn"><span class="en-only">over-deep</span><span class="es-only">muy profundo</span></span></td></tr>
+      <tr><td>Z4 (77819)</td><td class="num">53.7</td><td class="num">39.5</td><td class="num">14.2</td><td class="num">26.4 %</td><td>15–25 %</td><td><span class="pill good"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td></tr>
+      <tr><td>Z6 (77821)</td><td class="num">65.0</td><td class="num">47.0</td><td class="num">18.0</td><td class="num">27.7 %</td><td>15–25 %</td><td><span class="pill good"><span class="en-only">in band</span><span class="es-only">en banda</span></span></td></tr>
+      <tr><td>Room</td><td class="num">60.2</td><td class="num">42.3</td><td class="num">17.9</td><td class="num">29.7 %</td><td>15–25 %</td><td><span class="pill warn"><span class="en-only">top edge</span><span class="es-only">borde superior</span></span></td></tr>
+    </tbody>
+  </table>
+  <div class="muted" style="font-size:12px;margin-top:4px"><span class="en-only">Max-to-min on raw zone VWC over the 14-day window. The 6-hour binned view shows a clean daily sawtooth — generative steering is happening, the question is depth not absence.</span><span class="es-only">Max-a-min sobre VWC zona cruda en ventana 14 días. La vista binada 6h muestra un dentado diario limpio — el control generativo ocurre, la pregunta es profundidad no ausencia.</span></div>
+
+  <h3 style="margin-top:20px"><span class="en-only">Diurnal VWC pattern (last day, 6h bins, Z2)</span><span class="es-only">Patrón diurno VWC (último día, bines 6h, Z2)</span></h3>
+  <table class="bp-table">
+    <thead><tr><th>Window UTC</th><th class="num">Z2 mean</th><th class="num">Z4 mean</th><th class="num">Z6 mean</th><th><span class="en-only">Phase of day</span><span class="es-only">Fase del día</span></th></tr></thead>
+    <tbody>
+      <tr><td>00–06</td><td class="num">60.5</td><td class="num">52.7</td><td class="num">63.7</td><td><span class="en-only">post-irrigation peak (P1 ramp)</span><span class="es-only">pico post-riego (rampa P1)</span></td></tr>
+      <tr><td>06–12</td><td class="num">58.4</td><td class="num">52.0</td><td class="num">62.1</td><td><span class="en-only">P2 maintenance shots</span><span class="es-only">P2 mantenimiento</span></td></tr>
+      <tr><td>12–18</td><td class="num">50.5</td><td class="num">47.0</td><td class="num">55.7</td><td><span class="en-only">P3 dry-down begins</span><span class="es-only">P3 inicia secado</span></td></tr>
+      <tr><td>18–00</td><td class="num">44.7</td><td class="num">42.8</td><td class="num">50.4</td><td><span class="en-only">overnight dryback</span><span class="es-only">dryback nocturno</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== ZONE EC STACKING ====== -->
+<section id="ec-stacking">
+  <h2><span class="en-only">EC Stacking — Where the Salts Sit</span><span class="es-only">Apilamiento CE — Dónde Están las Sales</span></h2>
+  <p><span class="en-only">Without drip-EC or drain-EC sensors we can't compute a true drip→pore→drain EC stack, but the per-zone pore_EC drift over the 14 days tells a clear story: Zone 4 is the salt hotspot, climbing from 7.36 → 8.74 mS/cm (+18.7%), already 1.74 mS/cm above the 7.0 ceiling and accelerating. Zone 6 starts over the ceiling (8.04) and stays there. Zone 2 is the only zone still under the band (6.82 mean, just touched 7.29 at the end).</span><span class="es-only">Sin sensores drip-CE o drain-CE no podemos computar una verdadera pila drip→pore→drain, pero la deriva pore_EC por zona en 14 días cuenta una historia clara: Zona 4 es el punto caliente de sal, subiendo de 7.36 → 8.74 mS/cm (+18.7%), ya 1.74 mS/cm sobre el techo de 7.0 y acelerando. Zona 6 inicia sobre el techo (8.04) y se queda. Zona 2 es la única todavía bajo banda (6.82 media, justo tocó 7.29 al final).</span></p>
+
+  <table class="bp-table">
+    <thead><tr><th>Zone</th><th class="num">Start EC</th><th class="num">End EC</th><th class="num">Δ over 14d</th><th>Pattern</th></tr></thead>
+    <tbody>
+      <tr><td>Z2 (77817)</td><td class="num">6.49</td><td class="num">7.29</td><td class="num">+0.80</td><td><span class="en-only">Stacking from in-band to top edge (R² 0.65)</span><span class="es-only">Apilando desde en-banda al borde (R² 0.65)</span></td></tr>
+      <tr><td>Z4 (77819)</td><td class="num">7.36</td><td class="num">8.74</td><td class="num">+1.38</td><td><span class="en-only">Aggressive stack, over-band, R² 0.73 — the Sentry RIEGO-EE candidate</span><span class="es-only">Apilamiento agresivo, sobre banda, R² 0.73 — candidato Sentry RIEGO-EE</span></td></tr>
+      <tr><td>Z6 (77821)</td><td class="num">8.04</td><td class="num">8.24</td><td class="num">+0.20</td><td><span class="en-only">Plateau over the ceiling — possibly saturated above the sensor's effective range</span><span class="es-only">Meseta sobre el techo — posiblemente saturado sobre rango efectivo del sensor</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== DEVICE FLEET HEALTH ====== -->
+<section id="fleet">
+  <h2><span class="en-only">Device Fleet Health — Mesh, Battery, Signal</span><span class="es-only">Salud de Flota — Malla, Batería, Señal</span></h2>
+
+  <div class="verdict good">
+    <div class="v-head"><span class="en-only">Mesh verdict</span><span class="es-only">Veredicto malla</span></div>
+    <p><span class="en-only">All 8 devices online; every node battery at 100%; gateway H2110001289 reporting every 3 min. Mesh backbone is healthy. The one concern is the Zone 6 ter15 pair — RSSI 1 and linkQuality 62 vs RSSI 6 / linkQuality 100 on Zone 4. They're still reporting, but they are the weakest radios in the room and the most likely first failure if anything degrades.</span><span class="es-only">8 dispositivos en línea; cada nodo batería 100%; gateway H2110001289 reportando cada 3 min. Espina dorsal malla saludable. La única preocupación es el par ter15 de Zona 6 — RSSI 1 y linkQuality 62 vs RSSI 6 / linkQuality 100 en Zona 4. Aún reportan, pero son las radios más débiles de la sala y el primer fallo probable si algo se degrada.</span></p>
+  </div>
+
+  <h3><span class="en-only">Top problem devices (by mesh signal)</span><span class="es-only">Dispositivos problema (por señal de malla)</span></h3>
+  <table class="bp-table">
+    <thead><tr><th>#</th><th><span class="en-only">Serial (external)</span><span class="es-only">Serie (externa)</span></th><th><span class="en-only">Model</span><span class="es-only">Modelo</span></th><th>Zone</th><th class="num">RSSI</th><th class="num">Link Q</th><th class="num">Battery</th><th><span class="en-only">Action</span><span class="es-only">Acción</span></th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="serial">H3440014940</td><td>node + ter15</td><td>Zone 6 (77821)</td><td class="num">1</td><td class="num">62</td><td class="num">100%</td><td><span class="en-only">Move closer to gateway or add a repeater in Z6 row. Confirm physical install — antenna obstruction likely.</span><span class="es-only">Acercar al gateway o añadir repetidor en fila Z6. Confirmar instalación física — obstrucción de antena probable.</span></td></tr>
+      <tr><td>2</td><td class="serial">H3440014940-2</td><td>node + ter15</td><td>Zone 6 (77821)</td><td class="num">1</td><td class="num">62</td><td class="num">100%</td><td><span class="en-only">Same as above — paired with #1.</span><span class="es-only">Igual — emparejado con #1.</span></td></tr>
+      <tr><td>3</td><td class="serial">H3440014942</td><td>node + ter15</td><td>Zone 2 (77817)</td><td class="num">2</td><td class="num">100</td><td class="num">100%</td><td><span class="en-only">Watch — RSSI marginal but link quality clean. No action required.</span><span class="es-only">Monitorear — RSSI marginal pero link limpio. Sin acción.</span></td></tr>
+    </tbody>
+  </table>
+  <div class="muted" style="font-size:12px;margin-top:4px"><span class="en-only">All other devices (gateway H2110001289, H3440014941/Z4, H4210005203/climate) report RSSI 6 and linkQuality 100 — healthy.</span><span class="es-only">Todos los demás (gateway H2110001289, H3440014941/Z4, H4210005203/clima) reportan RSSI 6 y linkQuality 100 — saludables.</span></div>
+
+  <h3 style="margin-top:20px"><span class="en-only">Full device inventory · R&amp;D 6A</span><span class="es-only">Inventario completo · R&amp;D 6A</span></h3>
+  <table class="bp-table">
+    <thead><tr><th><span class="en-only">Serial</span><span class="es-only">Serie</span></th><th>Model</th><th>Zone</th><th>Sensor</th><th class="num">RSSI</th><th class="num">Link Q</th><th class="num">Battery</th><th><span class="en-only">Online</span><span class="es-only">En línea</span></th><th><span class="en-only">Last packet</span><span class="es-only">Último paquete</span></th></tr></thead>
+    <tbody>
+      <tr><td class="serial">H2110001289</td><td>gateway</td><td>—</td><td>—</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted"><span class="en-only">line</span><span class="es-only">línea</span></td><td><span class="pill good">on</span></td><td class="num">20:29 UTC</td></tr>
+      <tr><td class="serial">H4210005203</td><td>h421 + ee894</td><td>room climate</td><td>air_temp / RH / VPD / CO₂ / abs_hum</td><td class="num">6</td><td class="num">100</td><td class="num muted"><span class="en-only">line</span><span class="es-only">línea</span></td><td><span class="pill good">on</span></td><td class="num">20:29 UTC</td></tr>
+      <tr><td class="serial">H3440014940 / -2</td><td>node + ter15</td><td>Zone 6 (77821)</td><td>VWC / soil_temp / pore_EC ×2</td><td class="num">1</td><td class="num">62</td><td class="num">100%</td><td><span class="pill good">on</span></td><td class="num">20:28 UTC</td></tr>
+      <tr><td class="serial">H3440014941 / -2</td><td>node + ter15</td><td>Zone 4 (77819)</td><td>VWC / soil_temp / pore_EC ×2</td><td class="num">6</td><td class="num">100</td><td class="num">100%</td><td><span class="pill good">on</span></td><td class="num">20:27 UTC</td></tr>
+      <tr><td class="serial">H3440014942 / -2</td><td>node + ter15</td><td>Zone 2 (77817)</td><td>VWC / soil_temp / pore_EC ×2</td><td class="num">2</td><td class="num">100</td><td class="num">100%</td><td><span class="pill good">on</span></td><td class="num">20:27 UTC</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== CONFIG / GUARDRAIL AUDIT ====== -->
+<section id="config">
+  <h2><span class="en-only">Config &amp; Guardrail Audit</span><span class="es-only">Auditoría de Config y Guardarrieles</span></h2>
+
+  <h3><span class="en-only">Active guardrail breaches (computed-alerts)</span><span class="es-only">Brechas activas (alertas computadas)</span></h3>
+  <table class="bp-table">
+    <thead><tr><th><span class="en-only">Metric</span><span class="es-only">Métrica</span></th><th class="num"><span class="en-only">Peak</span><span class="es-only">Pico</span></th><th>Target</th><th><span class="en-only">Duration</span><span class="es-only">Duración</span></th><th><span class="en-only">Phase under which alert fired</span><span class="es-only">Fase de la alerta</span></th></tr></thead>
+    <tbody>
+      <tr><td>pore_EC mS/cm</td><td class="num">3.95</td><td>4–12</td><td>17,477 min (≈12 d)</td><td><span class="en-only">Early Flower (target_min breach from 5/8)</span><span class="es-only">Flor Temprana (brecha target_min desde 5/8)</span></td></tr>
+      <tr><td>air_temp °F</td><td class="num">82.1</td><td>80–82</td><td>21,490 min (≈15 d)</td><td><span class="en-only">Early Flower</span><span class="es-only">Flor Temprana</span></td></tr>
+      <tr><td>VPD kPa</td><td class="num">1.20</td><td>1.0–1.2</td><td>21,499 min (≈15 d)</td><td><span class="en-only">Early Flower</span><span class="es-only">Flor Temprana</span></td></tr>
+      <tr><td>VWC %</td><td class="num">59.2</td><td>31–52</td><td>21,409 min (≈15 d)</td><td><span class="en-only">Early Flower</span><span class="es-only">Flor Temprana</span></td></tr>
+    </tbody>
+  </table>
+  <div class="caveat"><span class="en-only"><b>All 4 alerts fire against Early Flower (phase 1030278) bounds</b>, even though the room flipped to Bulking (1030279) on 2026-05-08. The Bulking guardrail band is wider on every one of these metrics, and current values fit Bulking comfortably. This is a config nuance, not a real operational breach — the alert engine appears to be evaluating against the prior phase's targets. Flag for AROYA engineering or for Nelson to set Bulking-active phase explicitly.</span><span class="es-only"><b>Las 4 alertas se disparan contra límites de Flor Temprana (fase 1030278)</b>, aunque la sala cambió a Engorde (1030279) el 2026-05-08. La banda Engorde es más amplia en cada métrica y los valores actuales encajan cómodamente. Esto es matiz de configuración, no brecha operativa real — el motor de alertas parece evaluar contra objetivos de la fase previa. Marcar a ingeniería AROYA o para que Nelson active explícitamente la fase Engorde.</span></div>
+
+  <h3 style="margin-top:24px"><span class="en-only">Phase target ladder (HG 152690)</span><span class="es-only">Escalera de objetivos por fase (HG 152690)</span></h3>
+  <table class="bp-table">
+    <thead><tr><th>Phase</th><th>Dates</th><th class="num">VPD</th><th class="num">Air temp °F</th><th class="num">VWC %</th><th class="num">pore_EC mS/cm</th></tr></thead>
+    <tbody>
+      <tr><td>Transition/Veg 1</td><td>4/17–4/24</td><td class="num">1.0–1.2</td><td class="num">80–82</td><td class="num">45–65</td><td class="num">3–6</td></tr>
+      <tr><td>Early Flower/Gen</td><td>4/24–5/08</td><td class="num">1.0–1.2</td><td class="num">80–82</td><td class="num">31–52</td><td class="num">4–12</td></tr>
+      <tr><td><b>Bulking/Veg 2 (current)</b></td><td>5/08–5/29</td><td class="num">1.2–1.4</td><td class="num">75–80</td><td class="num">30–65</td><td class="num">3–7</td></tr>
+      <tr><td>Ripening/Gen 2</td><td>5/29–6/12</td><td class="num">1.2–1.4</td><td class="num">70–77</td><td class="num">25–55</td><td class="num">3–6</td></tr>
+      <tr><td>Harvest</td><td>6/12–6/13</td><td class="num">1.2–1.4</td><td class="num">70–75</td><td class="num">25–50</td><td class="num">1.5–3</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== RECOMMENDATIONS ====== -->
+<section id="recommendations">
+  <h2><span class="en-only">Recommendations — Owner-Tagged</span><span class="es-only">Recomendaciones — Por Responsable</span></h2>
+
+  <div class="rec">
+    <span class="owner">Owner</span> <span class="rphase"><span class="en-only">Nelson · infrastructure</span><span class="es-only">Nelson · infraestructura</span></span>
+    <div class="raction"><span class="en-only">1. Add substrate sensors to Zones 1, 3, 5 — the un-instrumented half of the canopy.</span><span class="es-only">1. Añadir sensores de sustrato a Zonas 1, 3, 5 — la mitad sin instrumentar del dosel.</span></div>
+    <div class="rwhy"><span class="en-only">50% of the plant zones have no VWC, soil_temp, or pore_EC data. Every irrigation decision is being made on telemetry from the even-numbered half. For an R&amp;D room this defeats the purpose of substrate-driven crop steering.</span><span class="es-only">50% de las zonas no tienen datos VWC, soil_temp ni pore_EC. Cada decisión de riego se toma sobre telemetría de la mitad par. Para una sala R&amp;D esto anula el propósito del control de cultivo basado en sustrato.</span></div>
+  </div>
+
+  <div class="rec">
+    <span class="owner">Owner</span> <span class="rphase"><span class="en-only">Nelson · mesh</span><span class="es-only">Nelson · malla</span></span>
+    <div class="raction"><span class="en-only">2. Investigate Zone 6 (77821) ter15 pair signal — RSSI 1, link quality 62. Likely fix: re-seat node, clear antenna obstruction, or add a repeater in the Z6 row.</span><span class="es-only">2. Investigar señal del par ter15 Zona 6 (77821) — RSSI 1, link 62. Probable arreglo: reasentar nodo, despejar obstrucción de antena, o añadir repetidor en fila Z6.</span></div>
+    <div class="rwhy"><span class="en-only">Devices H3440014940 and H3440014940-2 are still reporting but they're the weakest two radios in the room and the most likely first failure point. Pre-emptive, not urgent.</span><span class="es-only">H3440014940 y -2 aún reportan pero son las dos radios más débiles y el primer punto de fallo probable. Preventivo, no urgente.</span></div>
+  </div>
+
+  <div class="rec">
+    <span class="owner grower">Grower</span> <span class="rphase"><span class="en-only">Bulking · this week</span><span class="es-only">Engorde · esta semana</span></span>
+    <div class="raction"><span class="en-only">3. Address rising pore_EC in Zone 4 (+18.7%, now 8.74). Either: cut feed EC for the next 2–3 irrigation cycles, OR run a clear-water flush shot, OR confirm runoff EC vs feed EC to see whether the substrate is stacking or whether feed itself is climbing.</span><span class="es-only">3. Atender pore_EC en aumento en Zona 4 (+18.7%, ahora 8.74). O: reducir EC de alimentación los próximos 2–3 ciclos, O: correr shot de agua clara, O: confirmar EC de drenaje vs EC de alimentación para ver si el sustrato acumula o si la alimentación misma sube.</span></div>
+    <div class="rwhy"><span class="en-only">Above the Bulking pore_EC ceiling (7.0) and still trending up. This is the salt-stacking signature that erodes nutrient uptake and reduces flower bulking efficiency. Probably the same signal triggering the Sentry RIEGO-EE alerts.</span><span class="es-only">Sobre el techo Engorde (7.0) y aún subiendo. Esta es la firma de apilamiento de sal que erosiona absorción nutricional y reduce eficiencia de engorde. Probablemente la misma señal que dispara las alertas Sentry RIEGO-EE.</span></div>
+  </div>
+
+  <div class="rec">
+    <span class="owner grower">Grower</span> <span class="rphase"><span class="en-only">Bulking · setpoints</span><span class="es-only">Engorde · setpoints</span></span>
+    <div class="raction"><span class="en-only">4. Tighten the daytime air-temp ceiling. Mean 79.9 °F is fine; daily peaks at 82.6 °F are over the 80 °F Bulking ceiling. Either lower lights-on setpoint by 1.5 °F or increase HVAC capacity at the day-stage peak.</span><span class="es-only">4. Apretar el techo de temperatura diurna. Media 79.9 °F está bien; picos 82.6 °F sobre el techo Engorde de 80 °F. Bajar setpoint de luces-on 1.5 °F o aumentar HVAC en pico diurno.</span></div>
+    <div class="rwhy"><span class="en-only">Bulking is generative — overshoot on temp shifts the room toward stretch/vegetative behavior on the warm hours and reduces the day/night differential that the Bulking strategy depends on.</span><span class="es-only">Engorde es generativo — sobrepasar temp empuja la sala hacia comportamiento estiramiento/vegetativo en horas cálidas y reduce el diferencial día/noche que la estrategia depende.</span></div>
+  </div>
+
+  <div class="rec">
+    <span class="owner grower">Grower</span> <span class="rphase"><span class="en-only">Bulking · dryback</span><span class="es-only">Engorde · dryback</span></span>
+    <div class="raction"><span class="en-only">5. Extend P3 dry-down to deepen relative overnight dryback toward the 20–25% Bulking sweet spot. Z4 specifically at 26% is fine; Z2 at 36% is too deep — shorten Z2's P3 by ~30 min and lengthen Z4's by ~20 min.</span><span class="es-only">5. Extender P3 secado para profundizar dryback relativo nocturno hacia el sweet spot 20–25% Engorde. Z4 específicamente al 26% está bien; Z2 al 36% es muy profundo — acortar P3 de Z2 ~30 min y alargar Z4 ~20 min.</span></div>
+    <div class="rwhy"><span class="en-only">Z2's deep dryback is what's driving the EC ramp there too — substrate gets concentrated at low VWC. Bringing Z2's overnight low up by 3–5 percentage points will both ease the EC climb and stay inside generative dryback territory.</span><span class="es-only">El dryback profundo de Z2 es lo que también impulsa su rampa CE — el sustrato se concentra a VWC bajo. Subir el mínimo nocturno de Z2 3–5 puntos suavizará la subida CE y mantendrá territorio generativo.</span></div>
+  </div>
+
+  <div class="rec">
+    <span class="owner process">Process</span> <span class="rphase"><span class="en-only">AROYA-side · today</span><span class="es-only">Lado AROYA · hoy</span></span>
+    <div class="raction"><span class="en-only">6. Fix the phase-bounds drift in the alert engine — all 4 active alerts are still evaluating against Early Flower (phase 1030278) bounds 12 days after the room flipped to Bulking (1030279).</span><span class="es-only">6. Arreglar la deriva de límites en el motor de alertas — las 4 alertas activas aún evalúan contra límites Flor Temprana (1030278) 12 días después de que la sala cambió a Engorde (1030279).</span></div>
+    <div class="rwhy"><span class="en-only">Either the phase transition is not being persisted into the alert engine, or live target ranges are pinned to the original phase. Real values fit Bulking band today, so the noise is cosmetic — but every minute we leave it is a minute Nelson's dashboard says "warn" without reason.</span><span class="es-only">O la transición de fase no se persiste en el motor, o los rangos están fijados a la fase original. Los valores reales encajan banda Engorde hoy, así que el ruido es cosmético — pero cada minuto sin arreglarlo el panel de Nelson dice "warn" sin razón.</span></div>
+  </div>
+
+  <div class="rec">
+    <span class="owner process">Process</span> <span class="rphase"><span class="en-only">Cross-system · this week</span><span class="es-only">Multi-sistema · esta semana</span></span>
+    <div class="raction"><span class="en-only">7. Close the OpenSprinkler ↔ AROYA loop — the diagnostic doc from 2026-04-17 has been drafted but not delivered. Bring it to the Thu 11 AM Calendly with Nelson and decide: bridge, point at existing integration, or park.</span><span class="es-only">7. Cerrar el loop OpenSprinkler ↔ AROYA — el diagnóstico del 2026-04-17 está redactado pero no entregado. Llevarlo a la cita Calendly jue 11 AM con Nelson y decidir: puente, apuntar a integración existente, o pausar.</span></div>
+    <div class="rwhy"><span class="en-only">OpenSprinkler is currently driving irrigation but AROYA does not see the feedback loop — which means every Bulking-phase shot adjustment we suggest above is being made downstream of an integration AROYA can't observe.</span><span class="es-only">OpenSprinkler maneja riego pero AROYA no ve el loop — significa que cada ajuste de shot Engorde que sugerimos arriba se hace aguas abajo de una integración que AROYA no observa.</span></div>
+  </div>
+</section>
+
+<!-- ====== OPEN QUESTIONS ====== -->
+<section id="open-questions">
+  <h2><span class="en-only">Open Questions for Thursday's Meeting</span><span class="es-only">Preguntas Abiertas para la Reunión del Jueves</span></h2>
+  <ol style="padding-left:20px;line-height:1.7">
+    <li><span class="en-only">Is Z4's EC climb (+18.7% to 8.74) the same signal as the 5 Sentry RIEGO-EE notifications in our email queue?</span><span class="es-only">¿Es la subida CE de Z4 (+18.7% a 8.74) la misma señal que las 5 notificaciones Sentry RIEGO-EE?</span></li>
+    <li><span class="en-only">Plan for sensoring Zones 1, 3, 5 — budget, install timeline, who?</span><span class="es-only">Plan para sensorizar Zonas 1, 3, 5 — presupuesto, plazo de instalación, ¿quién?</span></li>
+    <li><span class="en-only">Is the Z6 mesh weakness physical (antenna obstruction) or topological (too far from gateway)? Walk-through with the AROYA mobile app while we're talking.</span><span class="es-only">¿La debilidad de malla Z6 es física (obstrucción de antena) o topológica (lejos del gateway)? Recorrido con la app móvil AROYA durante la llamada.</span></li>
+    <li><span class="en-only">Does Nelson want us to build the OpenSprinkler ↔ AROYA bridge in-house, point at an existing third-party integration, or park the project?</span><span class="es-only">¿Nelson quiere que construyamos el puente OpenSprinkler ↔ AROYA internamente, apuntar a una integración existente, o pausar el proyecto?</span></li>
+    <li><span class="en-only">Should the room be moved into Bulking target ranges explicitly inside AROYA, or is this an alert-engine config bug we should file?</span><span class="es-only">¿La sala debe moverse a rangos Engorde explícitamente en AROYA, o es un bug de configuración del motor de alertas para reportar?</span></li>
+  </ol>
+</section>
+
+<!-- ====== DATA QUALITY / COVERAGE ====== -->
+<section id="data-quality">
+  <h2><span class="en-only">Data Quality &amp; Coverage</span><span class="es-only">Calidad y Cobertura de Datos</span></h2>
+  <table class="bp-table">
+    <thead><tr><th><span class="en-only">Source</span><span class="es-only">Fuente</span></th><th><span class="en-only">Coverage</span><span class="es-only">Cobertura</span></th><th><span class="en-only">Cadence</span><span class="es-only">Cadencia</span></th><th><span class="en-only">Status</span><span class="es-only">Estado</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="en-only">Room-level climate (VPD/temp/RH/CO₂/abs_hum)</span><span class="es-only">Clima nivel sala</span></td><td>14 d · 480 samples/series</td><td>~42 min binned, 3 min raw</td><td><span class="pill good"><span class="en-only">complete</span><span class="es-only">completo</span></span></td></tr>
+      <tr><td><span class="en-only">Substrate (Z2, Z4, Z6)</span><span class="es-only">Sustrato (Z2, Z4, Z6)</span></td><td>14 d · 480 samples/zone</td><td>3 min raw</td><td><span class="pill good"><span class="en-only">complete</span><span class="es-only">completo</span></span></td></tr>
+      <tr><td><span class="en-only">Substrate (Z1, Z3, Z5)</span><span class="es-only">Sustrato (Z1, Z3, Z5)</span></td><td>—</td><td>—</td><td><span class="pill bad"><span class="en-only">no sensors installed</span><span class="es-only">sin sensores</span></span></td></tr>
+      <tr><td><span class="en-only">Drip volume / drain volume</span><span class="es-only">Volumen drip / drenaje</span></td><td>—</td><td>—</td><td><span class="pill bad"><span class="en-only">no sensors installed</span><span class="es-only">sin sensores</span></span></td></tr>
+      <tr><td><span class="en-only">Drip EC / drain EC</span><span class="es-only">CE drip / CE drenaje</span></td><td>—</td><td>—</td><td><span class="pill bad"><span class="en-only">no sensors installed</span><span class="es-only">sin sensores</span></span></td></tr>
+      <tr><td><span class="en-only">DLI / PAR / solar_quantum</span><span class="es-only">DLI / PAR / quántum solar</span></td><td>—</td><td>—</td><td><span class="pill bad"><span class="en-only">no sensors installed</span><span class="es-only">sin sensores</span></span></td></tr>
+      <tr><td><span class="en-only">Harvest events (manual + auto irrigation)</span><span class="es-only">Eventos cosecha (riego)</span></td><td>0 events in window</td><td>—</td><td><span class="pill warn"><span class="en-only">no events logged via AROYA</span><span class="es-only">sin eventos registrados</span></span></td></tr>
+      <tr><td><span class="en-only">Journal entries</span><span class="es-only">Entradas diario</span></td><td>0 in window</td><td>—</td><td><span class="pill muted"><span class="en-only">none</span><span class="es-only">ninguno</span></span></td></tr>
+      <tr><td><span class="en-only">Device telemetry (battery/RSSI/link)</span><span class="es-only">Telemetría dispositivos</span></td><td>All 8 reporting</td><td>3 min</td><td><span class="pill good"><span class="en-only">complete</span><span class="es-only">completo</span></span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  <p><span class="en-only">Built from AROYA public_api + SPA endpoints · target ranges, room config, computed-alerts pulled live · window 2026-05-06 → 2026-05-20 · 14 days · facility 4623 · room 19060 · HG 152690.</span><span class="es-only">Construido desde public_api AROYA + endpoints SPA · rangos objetivo, config sala, alertas computadas en vivo · ventana 2026-05-06 → 2026-05-20 · 14 días · instalación 4623 · sala 19060 · HG 152690.</span></p>
+  <p style="opacity:.7">AROYA · <span class="en-only">First Medical · Puerto Rico · R&amp;D 6A 2-Week Audit</span><span class="es-only">First Medical · Puerto Rico · Auditoría 2 Semanas R&amp;D 6A</span></p>
+</footer>
+
+</div>
+
+<script>
+const root = document.documentElement;
+const body = document.body;
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click', e=>{
+  const lang = e.target.dataset.lang;
+  root.dataset.lang = lang;
+  body.className = lang;
+  document.querySelectorAll('.lang-btn').forEach(b2=>b2.classList.toggle('active', b2.dataset.lang===lang));
+}));
+document.querySelectorAll('.theme-btn').forEach(b=>b.addEventListener('click', e=>{
+  const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  root.dataset.theme = next;
+  e.target.textContent = next === 'dark' ? 'Light' : 'Dark';
+  e.target.dataset.theme = next === 'dark' ? 'light' : 'dark';
+}));
+</script>
+</body>
+</html>
