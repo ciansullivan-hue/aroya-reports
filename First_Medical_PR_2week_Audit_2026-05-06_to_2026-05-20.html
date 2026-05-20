@@ -248,12 +248,6 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
         <td><span class="pill good"><span class="en-only">On calendar Thu 11 AM</span><span class="es-only">En calendario jue 11 AM</span></span></td>
         <td><span class="en-only">This audit is the prep deliverable for that meeting — precision irrigation strategy.</span><span class="es-only">Esta auditoría es el entregable de prep para esa reunión — estrategia de riego de precisión.</span></td>
       </tr>
-      <tr>
-        <td><span class="en-only">Sentry RIEGO-EE substrate EC sensor errors</span><span class="es-only">Errores Sentry RIEGO-EE sensor CE sustrato</span></td>
-        <td><span class="en-only">5 notifications, brief 2026-05-20</span><span class="es-only">5 notificaciones, brief 2026-05-20</span></td>
-        <td><span class="pill warn"><span class="en-only">Open</span><span class="es-only">Abierto</span></span></td>
-        <td><span class="en-only">Correlate with Z4 pore_EC drift (+18.7%) below — likely related; ask Nelson if RIEGO-EE telemetry reaches AROYA or only the OpenSprinkler controller.</span><span class="es-only">Correlacionar con deriva pore_EC de Z4 (+18.7%) abajo — probablemente relacionado; preguntar a Nelson si telemetría RIEGO-EE llega a AROYA o solo al OpenSprinkler.</span></td>
-      </tr>
     </tbody>
   </table>
 </section>
@@ -468,7 +462,7 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
     <thead><tr><th>Zone</th><th class="num">Start EC</th><th class="num">End EC</th><th class="num">Δ over 14d</th><th>Pattern</th></tr></thead>
     <tbody>
       <tr><td>Z2 (77817)</td><td class="num">6.49</td><td class="num">7.29</td><td class="num">+0.80</td><td><span class="en-only">Stacking from in-band to top edge (R² 0.65)</span><span class="es-only">Apilando desde en-banda al borde (R² 0.65)</span></td></tr>
-      <tr><td>Z4 (77819)</td><td class="num">7.36</td><td class="num">8.74</td><td class="num">+1.38</td><td><span class="en-only">Aggressive stack, over-band, R² 0.73 — the Sentry RIEGO-EE candidate</span><span class="es-only">Apilamiento agresivo, sobre banda, R² 0.73 — candidato Sentry RIEGO-EE</span></td></tr>
+      <tr><td>Z4 (77819)</td><td class="num">7.36</td><td class="num">8.74</td><td class="num">+1.38</td><td><span class="en-only">Aggressive stack, over-band, R² 0.73 — climbing fastest in the room</span><span class="es-only">Apilamiento agresivo, sobre banda, R² 0.73 — subiendo más rápido en la sala</span></td></tr>
       <tr><td>Z6 (77821)</td><td class="num">8.04</td><td class="num">8.24</td><td class="num">+0.20</td><td><span class="en-only">Plateau over the ceiling — possibly saturated above the sensor's effective range</span><span class="es-only">Meseta sobre el techo — posiblemente saturado sobre rango efectivo del sensor</span></td></tr>
     </tbody>
   </table>
@@ -555,7 +549,7 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
   <div class="rec">
     <span class="owner grower">Grower</span> <span class="rphase"><span class="en-only">Bulking · this week</span><span class="es-only">Engorde · esta semana</span></span>
     <div class="raction"><span class="en-only">3. Address rising pore_EC in Zone 4 (+18.7%, now 8.74). Either: cut feed EC for the next 2–3 irrigation cycles, OR run a clear-water flush shot, OR confirm runoff EC vs feed EC to see whether the substrate is stacking or whether feed itself is climbing.</span><span class="es-only">3. Atender pore_EC en aumento en Zona 4 (+18.7%, ahora 8.74). O: reducir EC de alimentación los próximos 2–3 ciclos, O: correr shot de agua clara, O: confirmar EC de drenaje vs EC de alimentación para ver si el sustrato acumula o si la alimentación misma sube.</span></div>
-    <div class="rwhy"><span class="en-only">Above the Bulking pore_EC ceiling (7.0) and still trending up. This is the salt-stacking signature that erodes nutrient uptake and reduces flower bulking efficiency. Probably the same signal triggering the Sentry RIEGO-EE alerts.</span><span class="es-only">Sobre el techo Engorde (7.0) y aún subiendo. Esta es la firma de apilamiento de sal que erosiona absorción nutricional y reduce eficiencia de engorde. Probablemente la misma señal que dispara las alertas Sentry RIEGO-EE.</span></div>
+    <div class="rwhy"><span class="en-only">Above the Bulking pore_EC ceiling (7.0) and still trending up. This is the salt-stacking signature that erodes nutrient uptake and reduces flower bulking efficiency.</span><span class="es-only">Sobre el techo Engorde (7.0) y aún subiendo. Esta es la firma de apilamiento de sal que erosiona absorción nutricional y reduce eficiencia de engorde.</span></div>
   </div>
 
   <div class="rec">
@@ -588,7 +582,6 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
   <h2><span class="en-only">Open Questions for Thursday's Meeting</span><span class="es-only">Preguntas Abiertas para la Reunión del Jueves</span></h2>
   <ol style="padding-left:20px;line-height:1.7">
     <li><b><span class="en-only">Which zone(s) hold LA Kush Cake vs Papaya Trop Cherries?</span><span class="es-only">¿Qué zona(s) tienen LA Kush Cake vs Papaya Trop Cherries?</span></b> <span class="en-only">The strain-zone map turns the Loose-Bud Issue Report from a directional hypothesis into a hard finding — if LA Kush Cake sits in Z4 (pore_EC 8.74, +18.7%), the EC stack story is the smoking gun.</span><span class="es-only">El mapa zona-cepa convierte el Reporte de Brote Suelto de hipótesis direccional en hallazgo duro — si LA Kush Cake está en Z4 (pore_EC 8.74, +18.7%), la pila CE es el arma humeante.</span></li>
-    <li><span class="en-only">Is Z4's EC climb (+18.7% to 8.74) the same signal as the 5 Sentry RIEGO-EE notifications in our email queue?</span><span class="es-only">¿Es la subida CE de Z4 (+18.7% a 8.74) la misma señal que las 5 notificaciones Sentry RIEGO-EE?</span></li>
     <li><span class="en-only">Plan for sensoring Zones 1, 3, 5 — budget, install timeline, who?</span><span class="es-only">Plan para sensorizar Zonas 1, 3, 5 — presupuesto, plazo de instalación, ¿quién?</span></li>
     <li><span class="en-only">Is the Z6 mesh weakness physical (antenna obstruction) or topological (too far from gateway)? Walk-through with the AROYA mobile app while we're talking.</span><span class="es-only">¿La debilidad de malla Z6 es física (obstrucción de antena) o topológica (lejos del gateway)? Recorrido con la app móvil AROYA durante la llamada.</span></li>
     <li><span class="en-only">Does Nelson want us to build the OpenSprinkler ↔ AROYA bridge in-house, point at an existing third-party integration, or park the project?</span><span class="es-only">¿Nelson quiere que construyamos el puente OpenSprinkler ↔ AROYA internamente, apuntar a una integración existente, o pausar el proyecto?</span></li>
