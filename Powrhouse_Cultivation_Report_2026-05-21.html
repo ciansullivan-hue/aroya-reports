@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026-05-21 - Powrhouse Cultivation Report</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: #fffaf2;
+      --ink: #1f2a1f;
+      --muted: #5f6b5f;
+      --accent: #2f6b45;
+      --accent-soft: #dce9d7;
+      --warn: #8a5a1f;
+      --danger: #8a2c1f;
+      --border: #d9cfbf;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Iowan Old Style", serif;
+      background:
+        radial-gradient(circle at top left, rgba(47,107,69,.12), transparent 32%),
+        linear-gradient(180deg, #f7f1e8, #f1eadf 40%, #ece4d8 100%);
+      color: var(--ink);
+    }
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    .hero {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 18px 40px rgba(39, 48, 36, 0.08);
+    }
+    h1, h2, h3 { margin: 0 0 12px; }
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.25rem; margin-top: 26px; }
+    p, li { line-height: 1.5; }
+    .muted { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .card {
+      background: rgba(255,255,255,.74);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .section {
+      margin-top: 18px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .chip {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.95rem;
+    }
+    .cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    ul { padding-left: 20px; margin: 10px 0 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Powrhouse Cultivation Report</h1>
+      <p class="muted">Prepared for Powrhouse meeting-prep rerun on 2026-05-21.</p>
+      <div class="chips">
+        <div class="chip">9 rooms analyzed</div>
+        <div class="chip">14 critical issues</div>
+        <div class="chip">88 warnings</div>
+        <div class="chip">local horticulture corpus</div>
+      </div>
+      <div class="section" style="margin-top:18px;">
+        <h2>Agronomic Read</h2>
+        <p>Local horticulture fallback: interpret the crop as a combined climate-root-zone-behavior system, and challenge stale metadata whenever the biological signal says the room is still active.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Room Highlights</h2>
+      <div class="grid">
+        
+            <div class="card">
+              <h3>POWR 1</h3>
+              <p class="muted">unknown · likely planted despite stale metadata</p>
+              <p>VWC <b>49.1%</b> · Temp <b>80.2F</b> · VPD <b>0.90</b> · EC <b>4.81</b></p>
+            </div>
+            
+            <div class="card">
+              <h3>POWR 2</h3>
+              <p class="muted">unknown · likely planted despite stale metadata</p>
+              <p>VWC <b>52.8%</b> · Temp <b>71.5F</b> · VPD <b>1.22</b> · EC <b>4.86</b></p>
+            </div>
+            
+            <div class="card">
+              <h3>POWR 3</h3>
+              <p class="muted">unknown · likely planted despite stale metadata</p>
+              <p>VWC <b>46.1%</b> · Temp <b>74.9F</b> · VPD <b>0.85</b> · EC <b>5.86</b></p>
+            </div>
+            
+            <div class="card">
+              <h3>POWR 4</h3>
+              <p class="muted">unknown · transitional / verify occupancy</p>
+              <p>VWC <b>1.1%</b> · Temp <b>73.9F</b> · VPD <b>1.17</b> · EC <b>0.14</b></p>
+            </div>
+            
+            <div class="card">
+              <h3>Veg Room</h3>
+              <p class="muted">unknown · likely planted despite stale metadata</p>
+              <p>VWC <b>36.2%</b> · Temp <b>78.9F</b> · VPD <b>0.69</b> · EC <b>4.31</b></p>
+            </div>
+            
+            <div class="card">
+              <h3>Dry 1</h3>
+              <p class="muted">unknown · transitional / verify occupancy</p>
+              <p>VWC <b>n/a%</b> · Temp <b>69.7F</b> · VPD <b>1.09</b> · EC <b>n/a</b></p>
+            </div>
+            
+            <div class="card">
+              <h3>Dry 2</h3>
+              <p class="muted">unknown · likely inactive or insufficient data</p>
+              <p>VWC <b>n/a%</b> · Temp <b>61.7F</b> · VPD <b>0.78</b> · EC <b>n/a</b></p>
+            </div>
+            
+            <div class="card">
+              <h3>Vault</h3>
+              <p class="muted">unknown · likely inactive or insufficient data</p>
+              <p>VWC <b>n/a%</b> · Temp <b>64.0F</b> · VPD <b>0.77</b> · EC <b>n/a</b></p>
+            </div>
+            
+            <div class="card">
+              <h3>Cure</h3>
+              <p class="muted">unknown · transitional / verify occupancy</p>
+              <p>VWC <b>n/a%</b> · Temp <b>65.3F</b> · VPD <b>0.93</b> · EC <b>n/a</b></p>
+            </div>
+            
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="section">
+        <h2>Critical Issues</h2>
+        <ul><li>POWR 3 / Zone 9b - Top — soil moist below target (2.30 %)</li><li>POWR 3 / Zone 9b - Top — pore ec below target (0.00 mS/cm)</li><li>POWR 4 / Zone 1 — soil moist below target (0.60 %)</li><li>POWR 4 / Zone 1 — pore ec below target (0.00 mS/cm)</li><li>POWR 4 / Zone 2 — soil moist below target (1.40 %)</li><li>POWR 4 / Zone 3 — soil moist below target (1.20 %)</li><li>POWR 4 / Zone 3 — pore ec below target (0.00 mS/cm)</li><li>POWR 4 / Zone 4 — soil moist below target (0.20 %)</li></ul>
+      </div>
+      <div class="section">
+        <h2>Warnings</h2>
+        <ul><li>POWR 1 / Zone 1 - Bottom — soil moist below target (29.70 %)</li><li>POWR 1 / Zone 1 - Bottom — soil temp above target (82.00 F)</li><li>POWR 1 / Zone 2 - Bottom — soil moist below target (36.90 %)</li><li>POWR 1 / Zone 2 - Bottom — soil temp above target (83.20 F)</li><li>POWR 1 / Zone 3 - Bottom — soil moist below target (26.80 %)</li><li>POWR 1 / Zone 3 - Bottom — co2 below target (67.70 ppm)</li><li>POWR 1 / Zone 3 - Bottom — soil temp above target (82.40 F)</li><li>POWR 1 / Zone 3 - Bottom — rel hum above target (80.00 %)</li></ul>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="section">
+        <h2>Occupancy Inference</h2>
+        <ul><li>POWR 1 — likely planted despite stale metadata — VWC is still in a biologically believable range at 49.1%; root-zone EC remains active at 4.81</li><li>POWR 2 — likely planted despite stale metadata — VWC is still in a biologically believable range at 52.8%; root-zone EC remains active at 4.86</li><li>POWR 3 — likely planted despite stale metadata — VWC is still in a biologically believable range at 46.1%; root-zone EC remains active at 5.86</li><li>POWR 4 — transitional / verify occupancy — VPD sits in a plausible crop-control range at 1.17 kPa; temperature is running like a conditioned crop room at 73.9F</li><li>Veg Room — likely planted despite stale metadata — VWC is still in a biologically believable range at 36.2%; root-zone EC remains active at 4.31</li><li>Dry 1 — transitional / verify occupancy — VPD sits in a plausible crop-control range at 1.09 kPa; temperature is running like a conditioned crop room at 69.7F</li><li>Dry 2 — likely inactive or insufficient data — VPD sits in a plausible crop-control range at 0.78 kPa</li><li>Vault — likely inactive or insufficient data — VPD sits in a plausible crop-control range at 0.77 kPa</li><li>Cure — transitional / verify occupancy — VPD sits in a plausible crop-control range at 0.93 kPa; temperature is running like a conditioned crop room at 65.3F</li></ul>
+      </div>
+      <div class="section">
+        <h2>Teach The Crop</h2>
+        <ul><li>A widening drip-to-drain or root-zone EC gap usually means the crop is concentrating salts faster than the current irrigation pattern is clearing them.</li><li>Climate can quietly undo steering intent; a low-VPD or low-DIF room can feel safe while still limiting the transpirational pull needed to match the root-zone program.</li><li>Room-turn metadata can lag reality; POWR 1, POWR 2, POWR 3 still read as biologically active, so occupancy should be inferred from the crop signal when labels are stale.</li></ul>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="section">
+        <h2>Assumptions To Challenge</h2>
+        <ul><li>Instead of asking whether EC is simply high, ask whether the plant is being asked to do too much osmotic work between shots.</li><li>Do not treat soft climate and aggressive root-zone signals as separate problems; the crop experiences them as one combined steering message.</li><li>A harvested or missing group does not prove the room is empty if VWC, EC, climate, and irrigation behavior still look plant-driven.</li></ul>
+      </div>
+      <div class="section">
+        <h2>Coaching Questions</h2>
+        <ul><li>Does the current runoff strategy intentionally maintain this EC gradient, or is it a side effect of under-clearing the slab?</li><li>If VPD and DIF are soft, is the team expecting the irrigation program alone to carry the steering load?</li><li>If a room looks occupied in the data but not in the metadata, what operational decisions are being missed because everyone trusts the label first?</li></ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
