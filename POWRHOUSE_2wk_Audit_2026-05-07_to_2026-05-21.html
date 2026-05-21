@@ -718,9 +718,9 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
 <!-- HERO -->
 <header class="hero">
   <div class="hero__inner">
-    <p class="hero__eyebrow"><span lang="en">Facility 3754 - Phase-2 facility audit buildout</span><span lang="es">Facility 3754 - Phase-2 facility audit buildout</span></p>
+    <p class="hero__eyebrow"><span lang="en">Facility 3754 - Phase-2 public API preview - OpenCLI blocked</span><span lang="es">Facility 3754 - Phase-2 public API preview - OpenCLI blocked</span></p>
     <h1 class="hero__title"><span lang="en">POWRHOUSE: </span><span lang="es">POWRHOUSE: </span><em><span lang="en">phase-2 facility audit</span><span lang="es">phase-2 facility audit</span></em></h1>
-    <p class="hero__subtitle"><span lang="en">2-week report - 2026-05-07 to 2026-05-21 - generated 2026-05-21 13:07 PDT</span><span lang="es">2-week report - 2026-05-07 to 2026-05-21 - generated 2026-05-21 13:07 PDT</span></p>
+    <p class="hero__subtitle"><span lang="en">2-week report - 2026-05-07 to 2026-05-21 - generated 2026-05-21 13:19 PDT</span><span lang="es">2-week report - 2026-05-07 to 2026-05-21 - generated 2026-05-21 13:19 PDT</span></p>
     <div class="hero__meta">
       <span><span lang="en">AROYA public API + Claude MCP runtime</span><span lang="es">AROYA public API + Claude MCP runtime</span></span>
       <span>-</span>
@@ -732,7 +732,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <span class="hero__chip brand"><span lang="en">9 rooms</span><span lang="es">9 rooms</span></span>
       <span class="hero__chip bad"><span lang="en">14 critical</span><span lang="es">14 critical</span></span>
       <span class="hero__chip warn"><span lang="en">89 warnings</span><span lang="es">89 warnings</span></span>
-      <span class="hero__chip info"><span lang="en">SPA/HG enrichment pending Browser Bridge</span><span lang="es">SPA/HG enrichment pending Browser Bridge</span></span>
+      <span class="hero__chip info"><span lang="en">PUBLIC API PREVIEW - OpenCLI blocked</span><span lang="es">PUBLIC API PREVIEW - OpenCLI blocked</span></span>
     </div>
   </div>
 </header>
@@ -788,7 +788,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
 
     <div class="kpi climate warn">
       <div class="kpi__label"><span lang="en">Avg VPD</span><span lang="es">Avg VPD</span> <span class="kpi__tag climate"><span lang="en">Climate</span><span lang="es">Clima</span></span></div>
-      <div class="kpi__value">0.93<span class="kpi__unit"> kPa</span></div>
+      <div class="kpi__value">0.94<span class="kpi__unit"> kPa</span></div>
       <div class="kpi__range">air temp mean 71.2 degF</div>
       <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:67%"></div></div>
       <div class="kpi__delta warn"><span lang="en">Climate read is public-API only in this build</span><span lang="es">Climate read is public-API only in this build</span></div>
@@ -800,7 +800,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     <div class="exec__accent"></div>
     <div class="exec__body">
       <p class="exec__label"><span lang="en">The lead</span><span lang="es">Resumen</span></p>
-      <p><span lang="en">POWRHOUSE is now running through the phase-2 Codex audit shell: 14 critical issues and 89 warnings across 9 rooms. The report is grouped by crop signal, room state, and next action instead of shipping a flat alert list. SPA harvest-group metadata, target ranges, recipes, and shot events are treated as explicit missing coverage until Browser Bridge is connected.</span><span lang="es">POWRHOUSE is now running through the phase-2 Codex audit shell: 14 critical issues and 89 warnings across 9 rooms. The report is grouped by crop signal, room state, and next action instead of shipping a flat alert list. SPA harvest-group metadata, target ranges, recipes, and shot events are treated as explicit missing coverage until Browser Bridge is connected.</span></p>
+      <p><span lang="en">POWRHOUSE is running through the phase-2 Codex audit shell: 14 critical issues and 89 warnings across 9 rooms. OpenCLI/Browser Bridge is not connected, so this file is only a public-API preview. It is not audit-grade because it lacks HG phase windows, target ranges, recipes, room config, dataReadings, and irrigation events. The analysis gate is crop-steering first: phase, substrate, relative dryback, EC stack, P0/P1/P2/P3 intent, and climate&#x27;s effect on transpiration must drive the findings.</span><span lang="es">POWRHOUSE is running through the phase-2 Codex audit shell: 14 critical issues and 89 warnings across 9 rooms. OpenCLI/Browser Bridge is not connected, so this file is only a public-API preview. It is not audit-grade because it lacks HG phase windows, target ranges, recipes, room config, dataReadings, and irrigation events. The analysis gate is crop-steering first: phase, substrate, relative dryback, EC stack, P0/P1/P2/P3 intent, and climate&#x27;s effect on transpiration must drive the findings.</span></p>
     </div>
   </div>
 
@@ -808,7 +808,49 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     <div class="caveat__icon">i</div>
     <div>
       <b><span lang="en">Phase-2 coverage note</span><span lang="es">Phase-2 coverage note</span></b><br>
-      <span lang="en">This renderer is facility-generic and publisher-ready, but it is not claiming full Claude gold-standard data parity yet. Browser Bridge must be connected to unlock active harvest groups, target ranges, recipes, shot events, and room config. Until then, phase labels and target bands are marked as assumptions.</span><span lang="es">This renderer is facility-generic and publisher-ready, but it is not claiming full Claude gold-standard data parity yet. Browser Bridge must be connected to unlock active harvest groups, target ranges, recipes, shot events, and room config. Until then, phase labels and target bands are marked as assumptions.</span>
+      <span lang="en">This renderer is facility-generic, but the data-quality gate now treats OpenCLI as the audit spine. Public API aggregates can make a preview; OpenCLI harvest groups, target ranges, recipes, room config, dataReadings, and irrigation events are required for Claude-grade analysis.</span><span lang="es">This renderer is facility-generic, but the data-quality gate now treats OpenCLI as the audit spine. Public API aggregates can make a preview; OpenCLI harvest groups, target ranges, recipes, room config, dataReadings, and irrigation events are required for Claude-grade analysis.</span>
+    </div>
+  </div>
+
+  <h2 class="h1"><span lang="en">OpenCLI Data Spine</span><span lang="es">Columna de datos OpenCLI</span></h2>
+  <div class="card">
+    <div class="card__head">
+      <div>
+        <h3 class="card__title"><span lang="en">SPA harvest status</span><span lang="es">SPA harvest status</span></h3>
+        <p class="card__subtitle"><span lang="en">OpenCLI/Browser Bridge is not connected, so this file is only a public-API preview. It is not audit-grade because it lacks HG phase windows, target ranges, recipes, room config, dataReadings, and irrigation events.</span><span lang="es">OpenCLI/Browser Bridge is not connected, so this file is only a public-API preview. It is not audit-grade because it lacks HG phase windows, target ranges, recipes, room config, dataReadings, and irrigation events.</span></p>
+      </div>
+      <div class="card__meta"><span lang="en">required for audit-grade</span><span lang="es">required for audit-grade</span></div>
+    </div>
+    <div class="card__body">
+      <ul class="compact-list">
+        <li><span lang="en">Required: active/overlapping harvest groups with phase dates and room assignments.</span><span lang="es">Required: active/overlapping harvest groups with phase dates and room assignments.</span></li>
+        <li><span lang="en">Required: targetRanges, harvest config, room config, recipes, journals, and computed alerts.</span><span lang="es">Required: targetRanges, harvest config, room config, recipes, journals, and computed alerts.</span></li>
+        <li><span lang="en">Required: sequential /dataReadings harvest for soil_moist, pore_ec, vpd, air_temp, soil_temp, rel_hum, co2, and solar_quantum.</span><span lang="es">Required: sequential /dataReadings harvest for soil_moist, pore_ec, vpd, air_temp, soil_temp, rel_hum, co2, and solar_quantum.</span></li>
+        <li><span lang="en">Required: irrigation events to calculate shots/day, P0 delay, P1 ramp, P2 maintenance cadence, and P3 drydown.</span><span lang="es">Required: irrigation events to calculate shots/day, P0 delay, P1 ramp, P2 maintenance cadence, and P3 drydown.</span></li>
+        <li><span lang="en">Current status: opencli exited 69: ~/.opencli/runtime/node_modules/.bin/opencli aroya hg-list --facility 3754 --status all --limit 1000 -f json
+stderr: ok: false
+error:
+  code: BROWSER_CONNECT
+  message: Browser Bridge extension not connected
+  help: |-
+    Make sure Chrome/Chromium is open and the extension is enabled.
+    If the extension is installed, try: opencli daemon stop &amp;&amp; opencli doctor
+    If not installed:
+      1. Download: https://github.com/jackwener/opencli/releases
+      2. Open chrome://extensions → Developer Mode → Load unpacked
+  exitCode: 69</span><span lang="es">Current status: opencli exited 69: ~/.opencli/runtime/node_modules/.bin/opencli aroya hg-list --facility 3754 --status all --limit 1000 -f json
+stderr: ok: false
+error:
+  code: BROWSER_CONNECT
+  message: Browser Bridge extension not connected
+  help: |-
+    Make sure Chrome/Chromium is open and the extension is enabled.
+    If the extension is installed, try: opencli daemon stop &amp;&amp; opencli doctor
+    If not installed:
+      1. Download: https://github.com/jackwener/opencli/releases
+      2. Open chrome://extensions → Developer Mode → Load unpacked
+  exitCode: 69</span></li>
+      </ul>
     </div>
   </div>
 
@@ -889,7 +931,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <td class="num">46.1</td>
               <td class="num">5.86</td>
               <td class="num">0.85</td>
-              <td class="num">74.9</td>
+              <td class="num">75.0</td>
               <td class="num">2</td>
               <td class="num">29</td>
             </tr>
@@ -901,8 +943,8 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <td>flower - phase needs SPA/HG confirmation</td>
               <td class="num">1.1</td>
               <td class="num">0.14</td>
-              <td class="num">1.19</td>
-              <td class="num">74.3</td>
+              <td class="num">1.20</td>
+              <td class="num">74.5</td>
               <td class="num">11</td>
               <td class="num">6</td>
             </tr>
@@ -1134,7 +1176,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>46.1%</b></div>
               <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>5.86</b></div>
               <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.85 kPa</b></div>
-              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>74.9 degF</b></div>
+              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>75.0 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_13619"></canvas></div>
               <div class="zone__verdict bad">
                 <span lang="en">2 critical / 29 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">2 critical / 29 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
@@ -1151,8 +1193,8 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>flower - phase needs SPA/HG confirmation</b></div>
               <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>1.1%</b></div>
               <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>0.14</b></div>
-              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>1.19 kPa</b></div>
-              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>74.3 degF</b></div>
+              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>1.20 kPa</b></div>
+              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>74.5 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_13620"></canvas></div>
               <div class="zone__verdict bad">
                 <span lang="en">11 critical / 6 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">11 critical / 6 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
@@ -1367,7 +1409,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   </ul>
 
   <footer class="foot">
-    <div><span lang="en">Generated 2026-05-21 13:07 PDT - AROYA public API + Claude MCP</span><span lang="es">Generated 2026-05-21 13:07 PDT - AROYA public API + Claude MCP</span></div>
+    <div><span lang="en">Generated 2026-05-21 13:19 PDT - AROYA public API + Claude MCP</span><span lang="es">Generated 2026-05-21 13:19 PDT - AROYA public API + Claude MCP</span></div>
     <div><span class="brand-mark">AROYA by Addium</span> - <span lang="en">phase-2 Codex publisher build</span><span lang="es">phase-2 Codex publisher build</span></div>
   </footer>
 </div>
@@ -1409,7 +1451,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   })();
 </script>
 
-<script id="phase2-data" type="application/json">{"rooms": [{"id": "13617", "name": "POWR 1", "vwc": 49.08, "ec": 4.82, "vpd": 0.89, "temp": 80.24, "critical": 0, "warning": 25}, {"id": "13618", "name": "POWR 2", "vwc": 52.72, "ec": 4.86, "vpd": 1.22, "temp": 71.48, "critical": 0, "warning": 11}, {"id": "13619", "name": "POWR 3", "vwc": 46.08, "ec": 5.86, "vpd": 0.85, "temp": 74.94, "critical": 2, "warning": 29}, {"id": "13620", "name": "POWR 4", "vwc": 1.09, "ec": 0.14, "vpd": 1.19, "temp": 74.32, "critical": 11, "warning": 6}, {"id": "13621", "name": "Veg Room", "vwc": 36.12, "ec": 4.31, "vpd": 0.69, "temp": 78.91, "critical": 1, "warning": 12}, {"id": "13622", "name": "Dry 1", "vwc": null, "ec": null, "vpd": 1.09, "temp": 69.73, "critical": 0, "warning": 0}, {"id": "13623", "name": "Dry 2", "vwc": null, "ec": null, "vpd": 0.78, "temp": 61.75, "critical": 0, "warning": 2}, {"id": "17390", "name": "Vault", "vwc": null, "ec": null, "vpd": 0.77, "temp": 64.07, "critical": 0, "warning": 4}, {"id": "18777", "name": "Cure", "vwc": null, "ec": null, "vpd": 0.93, "temp": 65.32, "critical": 0, "warning": 0}]}</script>
+<script id="phase2-data" type="application/json">{"rooms": [{"id": "13617", "name": "POWR 1", "vwc": 49.06, "ec": 4.82, "vpd": 0.89, "temp": 80.24, "critical": 0, "warning": 25}, {"id": "13618", "name": "POWR 2", "vwc": 52.74, "ec": 4.86, "vpd": 1.22, "temp": 71.48, "critical": 0, "warning": 11}, {"id": "13619", "name": "POWR 3", "vwc": 46.09, "ec": 5.86, "vpd": 0.85, "temp": 74.95, "critical": 2, "warning": 29}, {"id": "13620", "name": "POWR 4", "vwc": 1.09, "ec": 0.14, "vpd": 1.2, "temp": 74.48, "critical": 11, "warning": 6}, {"id": "13621", "name": "Veg Room", "vwc": 36.11, "ec": 4.31, "vpd": 0.69, "temp": 78.91, "critical": 1, "warning": 12}, {"id": "13622", "name": "Dry 1", "vwc": null, "ec": null, "vpd": 1.09, "temp": 69.73, "critical": 0, "warning": 0}, {"id": "13623", "name": "Dry 2", "vwc": null, "ec": null, "vpd": 0.78, "temp": 61.75, "critical": 0, "warning": 2}, {"id": "17390", "name": "Vault", "vwc": null, "ec": null, "vpd": 0.77, "temp": 64.06, "critical": 0, "warning": 4}, {"id": "18777", "name": "Cure", "vwc": null, "ec": null, "vpd": 0.93, "temp": 65.33, "critical": 0, "warning": 0}]}</script>
 <script>
 (function() {
   const payloadEl = document.getElementById('phase2-data');
