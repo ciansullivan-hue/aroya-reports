@@ -679,6 +679,139 @@ body.theme-dark .foot .brand-mark { color: var(--aroya-lime); }
 .chart-frame.small { min-height: 180px; }
 .chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--s-3); }
 .room-card.is-hidden { display: none; }
+.room-card.is-dimmed { opacity: 0.42; filter: saturate(0.65); }
+.compare-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-panel, var(--bg-surface));
+  padding: var(--s-4);
+  margin-bottom: var(--s-4);
+}
+.compare-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(240px, 0.7fr);
+  gap: var(--s-4);
+  align-items: start;
+}
+.compare-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  align-items: center;
+}
+.compare-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-surface);
+  color: var(--fg);
+  padding: 6px 10px;
+  font-size: var(--text-xs);
+  cursor: pointer;
+  user-select: none;
+}
+.compare-chip input { width: 14px; height: 14px; accent-color: var(--aroya-lime); }
+.compare-chip.is-selected {
+  border-color: var(--aroya-lime);
+  background: color-mix(in srgb, var(--aroya-lime) 28%, var(--bg-surface));
+  color: var(--fg);
+}
+.compare-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--s-2);
+}
+.compare-action,
+.metric-tab {
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--fg);
+  border-radius: 7px;
+  padding: 7px 10px;
+  font: inherit;
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+.compare-action:hover,
+.metric-tab:hover { border-color: var(--fg-subtle); }
+.metric-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  justify-content: flex-end;
+  margin-top: var(--s-2);
+}
+.metric-tab.active {
+  border-color: var(--addium-blue);
+  background: color-mix(in srgb, var(--addium-blue) 16%, var(--bg-surface));
+}
+.compare-count {
+  display: block;
+  margin-top: var(--s-2);
+  color: var(--fg-subtle);
+  font-size: var(--text-xs);
+  text-align: right;
+}
+.compare-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.1fr);
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+.compare-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-surface);
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-xs);
+  min-width: 740px;
+}
+.compare-table th,
+.compare-table td {
+  border-bottom: 1px solid var(--border);
+  padding: 8px 9px;
+  text-align: left;
+  vertical-align: top;
+}
+.compare-table th { color: var(--fg-subtle); font-weight: 700; }
+.compare-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.compare-table tr:last-child td { border-bottom: 0; }
+.compare-room { min-width: 126px; }
+.compare-room small {
+  display: block;
+  color: var(--fg-subtle);
+  margin-top: 2px;
+}
+.metric-high { color: var(--error-fg); font-weight: 800; }
+.metric-low { color: var(--addium-blue); font-weight: 800; }
+.extreme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+.extreme-card {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg-surface);
+  padding: var(--s-3);
+}
+.extreme-card b { display: block; font-size: var(--text-xs); color: var(--fg-subtle); margin-bottom: 4px; }
+.extreme-card span { display: block; font-weight: 800; line-height: 1.25; }
+.extreme-card small { display: block; color: var(--fg-subtle); margin-top: 4px; }
+.comparison-empty {
+  padding: var(--s-4);
+  color: var(--fg-subtle);
+  font-size: var(--text-sm);
+}
 .source-note { font-size: var(--text-xs); color: var(--fg-subtle); line-height: 1.6; }
 .compact-list { margin: 0; padding-left: var(--s-4); color: var(--fg-muted); }
 .compact-list li { margin-bottom: var(--s-2); }
@@ -691,6 +824,11 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   .page { padding: var(--s-5) var(--s-4) var(--s-7); }
   .hero__title { font-size: var(--text-2xl); }
   .clean li { grid-template-columns: 1fr; gap: var(--s-1); }
+  .compare-toolbar,
+  .compare-layout { grid-template-columns: 1fr; }
+  .compare-actions,
+  .metric-tabs,
+  .compare-count { justify-content: flex-start; text-align: left; }
 }
 </style></head>
 <body class="theme-light">
@@ -720,7 +858,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   <div class="hero__inner">
     <p class="hero__eyebrow"><span lang="en">Facility 3754 - Facility audit</span><span lang="es">Facility 3754 - Facility audit</span></p>
     <h1 class="hero__title"><span lang="en">POWRHOUSE: </span><span lang="es">POWRHOUSE: </span><em><span lang="en">phase-2 facility audit</span><span lang="es">phase-2 facility audit</span></em></h1>
-    <p class="hero__subtitle"><span lang="en">2-week report - 2026-05-07 to 2026-05-21 - generated 2026-05-21 14:27 PDT</span><span lang="es">2-week report - 2026-05-07 to 2026-05-21 - generated 2026-05-21 14:27 PDT</span></p>
+    <p class="hero__subtitle"><span lang="en">2-week report - 2026-05-07 to 2026-05-21 - generated 2026-05-21 20:44 PDT</span><span lang="es">2-week report - 2026-05-07 to 2026-05-21 - generated 2026-05-21 20:44 PDT</span></p>
     <div class="hero__meta">
       <span><span lang="en">AROYA public API + Claude MCP runtime</span><span lang="es">AROYA public API + Claude MCP runtime</span></span>
       <span>-</span>
@@ -731,7 +869,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     <div class="hero__chips">
       <span class="hero__chip brand"><span lang="en">9 rooms</span><span lang="es">9 rooms</span></span>
       <span class="hero__chip bad"><span lang="en">14 critical</span><span lang="es">14 critical</span></span>
-      <span class="hero__chip warn"><span lang="en">89 warnings</span><span lang="es">89 warnings</span></span>
+      <span class="hero__chip warn"><span lang="en">91 warnings</span><span lang="es">91 warnings</span></span>
       <span class="hero__chip info"><span lang="en">OpenCLI SPA harvest connected</span><span lang="es">OpenCLI SPA harvest connected</span></span>
     </div>
   </div>
@@ -753,7 +891,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     <div class="kpi substrate bad">
       <div class="kpi__label"><span lang="en">Critical issues</span><span lang="es">Critical issues</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
       <div class="kpi__value">14<span class="kpi__unit"></span></div>
-      <div class="kpi__range">76 substrate-linked flags</div>
+      <div class="kpi__range">78 substrate-linked flags</div>
       <div class="kpi__bar"><div class="kpi__bar-fill bad" style="left:0;right:16%"></div></div>
       <div class="kpi__delta bad"><span lang="en">Phase-aware triage still needs SPA/HG target ranges</span><span lang="es">Phase-aware triage still needs SPA/HG target ranges</span></div>
     </div>
@@ -761,7 +899,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
 
     <div class="kpi climate warn">
       <div class="kpi__label"><span lang="en">Warnings</span><span lang="es">Warnings</span> <span class="kpi__tag climate"><span lang="en">Climate</span><span lang="es">Clima</span></span></div>
-      <div class="kpi__value">89<span class="kpi__unit"></span></div>
+      <div class="kpi__value">91<span class="kpi__unit"></span></div>
       <div class="kpi__range">27 climate-linked flags</div>
       <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:0%"></div></div>
       <div class="kpi__delta warn"><span lang="en">Warnings are grouped by room below instead of shipped as a flat list</span><span lang="es">Warnings are grouped by room below instead of shipped as a flat list</span></div>
@@ -770,7 +908,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
 
     <div class="kpi substrate warn">
       <div class="kpi__label"><span lang="en">Avg VWC</span><span lang="es">Avg VWC</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
-      <div class="kpi__value">37.0<span class="kpi__unit">%</span></div>
+      <div class="kpi__value">37.1<span class="kpi__unit">%</span></div>
       <div class="kpi__range">room mean across available sensors</div>
       <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:52%"></div></div>
       <div class="kpi__delta warn"><span lang="en">Use overnight relative dryback once hourly SPA readings are connected</span><span lang="es">Use overnight relative dryback once hourly SPA readings are connected</span></div>
@@ -779,17 +917,17 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
 
     <div class="kpi substrate warn">
       <div class="kpi__label"><span lang="en">Avg pore EC</span><span lang="es">Avg pore EC</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
-      <div class="kpi__value">3.99<span class="kpi__unit"></span></div>
+      <div class="kpi__value">4.02<span class="kpi__unit"></span></div>
       <div class="kpi__range">room mean across EC series</div>
-      <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:51%"></div></div>
+      <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:50%"></div></div>
       <div class="kpi__delta warn"><span lang="en">EC stack needs drip/drain context before calling the cause</span><span lang="es">EC stack needs drip/drain context before calling the cause</span></div>
     </div>
     
 
     <div class="kpi climate warn">
       <div class="kpi__label"><span lang="en">Avg VPD</span><span lang="es">Avg VPD</span> <span class="kpi__tag climate"><span lang="en">Climate</span><span lang="es">Clima</span></span></div>
-      <div class="kpi__value">0.94<span class="kpi__unit"> kPa</span></div>
-      <div class="kpi__range">air temp mean 71.3 degF</div>
+      <div class="kpi__value">0.93<span class="kpi__unit"> kPa</span></div>
+      <div class="kpi__range">air temp mean 71.5 degF</div>
       <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:67%"></div></div>
       <div class="kpi__delta warn"><span lang="en">Climate read is public-API only in this build</span><span lang="es">Climate read is public-API only in this build</span></div>
     </div>
@@ -800,7 +938,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     <div class="exec__accent"></div>
     <div class="exec__body">
       <p class="exec__label"><span lang="en">The lead</span><span lang="es">Resumen</span></p>
-      <p><span lang="en">POWRHOUSE is running through the phase-2 Codex audit shell: 14 critical issues and 89 warnings across 9 rooms. OpenCLI is connected: 33 harvest groups, 9 recipes, room configs, and target-range counts were harvested for the report spine. The analysis gate is crop-steering first: phase, substrate, relative dryback, EC stack, P0/P1/P2/P3 intent, and climate&#x27;s effect on transpiration must drive the findings.</span><span lang="es">POWRHOUSE is running through the phase-2 Codex audit shell: 14 critical issues and 89 warnings across 9 rooms. OpenCLI is connected: 33 harvest groups, 9 recipes, room configs, and target-range counts were harvested for the report spine. The analysis gate is crop-steering first: phase, substrate, relative dryback, EC stack, P0/P1/P2/P3 intent, and climate&#x27;s effect on transpiration must drive the findings.</span></p>
+      <p><span lang="en">POWRHOUSE is running through the phase-2 Codex audit shell: 14 critical issues and 91 warnings across 9 rooms. OpenCLI is connected: 33 harvest groups, 9 recipes, 9/9 room configs, 5/9 target-range room matches, and 1/9 rooms with active harvest-group overlap were harvested for the report spine. The analysis gate is crop-steering first: phase, substrate, relative dryback, EC stack, P0/P1/P2/P3 intent, and climate&#x27;s effect on transpiration must drive the findings.</span><span lang="es">POWRHOUSE is running through the phase-2 Codex audit shell: 14 critical issues and 91 warnings across 9 rooms. OpenCLI is connected: 33 harvest groups, 9 recipes, 9/9 room configs, 5/9 target-range room matches, and 1/9 rooms with active harvest-group overlap were harvested for the report spine. The analysis gate is crop-steering first: phase, substrate, relative dryback, EC stack, P0/P1/P2/P3 intent, and climate&#x27;s effect on transpiration must drive the findings.</span></p>
     </div>
   </div>
 
@@ -817,7 +955,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     <div class="card__head">
       <div>
         <h3 class="card__title"><span lang="en">SPA harvest status</span><span lang="es">SPA harvest status</span></h3>
-        <p class="card__subtitle"><span lang="en">OpenCLI is connected: 33 harvest groups, 9 recipes, room configs, and target-range counts were harvested for the report spine.</span><span lang="es">OpenCLI is connected: 33 harvest groups, 9 recipes, room configs, and target-range counts were harvested for the report spine.</span></p>
+        <p class="card__subtitle"><span lang="en">OpenCLI is connected: 33 harvest groups, 9 recipes, 9/9 room configs, 5/9 target-range room matches, and 1/9 rooms with active harvest-group overlap were harvested for the report spine.</span><span lang="es">OpenCLI is connected: 33 harvest groups, 9 recipes, 9/9 room configs, 5/9 target-range room matches, and 1/9 rooms with active harvest-group overlap were harvested for the report spine.</span></p>
       </div>
       <div class="card__meta"><span lang="en">required for audit-grade</span><span lang="es">required for audit-grade</span></div>
     </div>
@@ -857,7 +995,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
         <h3 class="card__title"><span lang="en">Room verdict table</span><span lang="es">Room verdict table</span></h3>
         <p class="card__subtitle"><span lang="en">Public API aggregates now; lights-on/lights-off split lands once SPA readings are available.</span><span lang="es">Public API aggregates now; lights-on/lights-off split lands once SPA readings are available.</span></p>
       </div>
-      <div class="card__meta"><span lang="en">103 total flags</span><span lang="es">103 total flags</span></div>
+      <div class="card__meta"><span lang="en">105 total flags</span><span lang="es">105 total flags</span></div>
     </div>
     <div class="card__body tight">
       <table class="data-table">
@@ -879,13 +1017,13 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
             <tr>
               <td>POWR 1</td>
               <td><span class="pill warn">likely planted despite stale metadata</span></td>
-              <td>flower - phase needs SPA/HG confirmation</td>
-              <td class="num">48.9</td>
-              <td class="num">4.83</td>
-              <td class="num">0.89</td>
-              <td class="num">80.2</td>
+              <td>phase n/a</td>
+              <td class="num">48.0</td>
+              <td class="num">4.96</td>
+              <td class="num">0.86</td>
+              <td class="num">80.1</td>
               <td class="num">0</td>
-              <td class="num">25</td>
+              <td class="num">27</td>
             </tr>
             
 
@@ -893,8 +1031,8 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <td>POWR 2</td>
               <td><span class="pill warn">likely planted despite stale metadata</span></td>
               <td>flower - phase needs SPA/HG confirmation</td>
-              <td class="num">52.7</td>
-              <td class="num">4.85</td>
+              <td class="num">52.5</td>
+              <td class="num">4.83</td>
               <td class="num">1.22</td>
               <td class="num">71.5</td>
               <td class="num">0</td>
@@ -907,9 +1045,9 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <td><span class="pill bad">likely planted despite stale metadata</span></td>
               <td>flower - phase needs SPA/HG confirmation</td>
               <td class="num">46.2</td>
-              <td class="num">5.86</td>
+              <td class="num">5.85</td>
               <td class="num">0.85</td>
-              <td class="num">75.0</td>
+              <td class="num">75.1</td>
               <td class="num">2</td>
               <td class="num">29</td>
             </tr>
@@ -919,12 +1057,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <td>POWR 4</td>
               <td><span class="pill bad">transitional / verify occupancy</span></td>
               <td>flower - phase needs SPA/HG confirmation</td>
-              <td class="num">1.1</td>
-              <td class="num">0.14</td>
-              <td class="num">1.22</td>
-              <td class="num">75.4</td>
+              <td class="num">1.3</td>
+              <td class="num">0.18</td>
+              <td class="num">1.12</td>
+              <td class="num">76.8</td>
               <td class="num">11</td>
-              <td class="num">6</td>
+              <td class="num">7</td>
             </tr>
             
 
@@ -932,12 +1070,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <td>Veg Room</td>
               <td><span class="pill bad">likely planted despite stale metadata</span></td>
               <td>vegetative</td>
-              <td class="num">36.1</td>
-              <td class="num">4.29</td>
+              <td class="num">37.6</td>
+              <td class="num">4.26</td>
               <td class="num">0.70</td>
               <td class="num">78.9</td>
               <td class="num">1</td>
-              <td class="num">12</td>
+              <td class="num">13</td>
             </tr>
             
 
@@ -947,8 +1085,8 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <td>dry/cure - exclude from flower thresholds</td>
               <td class="num">n/a</td>
               <td class="num">n/a</td>
-              <td class="num">1.10</td>
-              <td class="num">69.7</td>
+              <td class="num">1.06</td>
+              <td class="num">68.9</td>
               <td class="num">0</td>
               <td class="num">0</td>
             </tr>
@@ -956,14 +1094,14 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
 
             <tr>
               <td>Dry 2</td>
-              <td><span class="pill warn">likely inactive or insufficient data</span></td>
+              <td><span class="pill ok">likely inactive or insufficient data</span></td>
               <td>dry/cure - exclude from flower thresholds</td>
               <td class="num">n/a</td>
               <td class="num">n/a</td>
-              <td class="num">0.79</td>
-              <td class="num">61.9</td>
+              <td class="num">0.80</td>
+              <td class="num">62.2</td>
               <td class="num">0</td>
-              <td class="num">2</td>
+              <td class="num">0</td>
             </tr>
             
 
@@ -973,8 +1111,8 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <td>dry/cure - exclude from flower thresholds</td>
               <td class="num">n/a</td>
               <td class="num">n/a</td>
-              <td class="num">0.78</td>
-              <td class="num">64.2</td>
+              <td class="num">0.81</td>
+              <td class="num">64.5</td>
               <td class="num">0</td>
               <td class="num">4</td>
             </tr>
@@ -987,7 +1125,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <td class="num">n/a</td>
               <td class="num">n/a</td>
               <td class="num">0.93</td>
-              <td class="num">65.4</td>
+              <td class="num">65.6</td>
               <td class="num">0</td>
               <td class="num">0</td>
             </tr>
@@ -1054,7 +1192,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               <div class="finding__icon">^</div>
               <div>
                 <h4>POWR 1 / Zone 1 - Bottom: soil temp above target</h4>
-                <p><span lang="en">Evidence: POWR 1 / Zone 1 - Bottom: soil temp above target at 82.00 F.</span><span lang="es">Evidence: POWR 1 / Zone 1 - Bottom: soil temp above target at 82.00 F.</span></p>
+                <p><span lang="en">Evidence: POWR 1 / Zone 1 - Bottom: soil temp above target at 82.20 F.</span><span lang="es">Evidence: POWR 1 / Zone 1 - Bottom: soil temp above target at 82.20 F.</span></p>
                 <p class="why"><span lang="en">Why it matters: Climate changes the crop&#x27;s ability to transpire; if VPD, DIF, or CO2 are off, irrigation data needs to be read through that lens.</span><span lang="es">Why it matters: Climate changes the crop&#x27;s ability to transpire; if VPD, DIF, or CO2 are off, irrigation data needs to be read through that lens.</span></p>
               </div>
             </div>
@@ -1082,9 +1220,106 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   </div>
 
   <h2 class="h1"><span lang="en">Per-Room Deep Dive - Select &amp; Compare</span><span lang="es">Detalle por sala - seleccionar y comparar</span></h2>
-  <div class="section-tools">
-    <button class="room-button active" data-room-filter="all">All rooms</button><button class="room-button" data-room-filter="13617">POWR 1</button><button class="room-button" data-room-filter="13618">POWR 2</button><button class="room-button" data-room-filter="13619">POWR 3</button><button class="room-button" data-room-filter="13620">POWR 4</button><button class="room-button" data-room-filter="13621">Veg Room</button><button class="room-button" data-room-filter="13622">Dry 1</button><button class="room-button" data-room-filter="13623">Dry 2</button><button class="room-button" data-room-filter="17390">Vault</button><button class="room-button" data-room-filter="18777">Cure</button>
+  <div class="compare-panel">
+    <div class="compare-toolbar">
+      <div>
+        <p class="eyebrow"><span lang="en">Select rooms for simultaneous comparison</span><span lang="es">Select rooms for simultaneous comparison</span></p>
+        <div class="compare-selector">
+          
+            <label class="compare-chip">
+              <input type="checkbox" data-room-toggle value="13617">
+              <span>POWR 1</span>
+            </label>
+            
+            <label class="compare-chip">
+              <input type="checkbox" data-room-toggle value="13618">
+              <span>POWR 2</span>
+            </label>
+            
+            <label class="compare-chip">
+              <input type="checkbox" data-room-toggle value="13619">
+              <span>POWR 3</span>
+            </label>
+            
+            <label class="compare-chip">
+              <input type="checkbox" data-room-toggle value="13620">
+              <span>POWR 4</span>
+            </label>
+            
+            <label class="compare-chip">
+              <input type="checkbox" data-room-toggle value="13621">
+              <span>Veg Room</span>
+            </label>
+            
+            <label class="compare-chip">
+              <input type="checkbox" data-room-toggle value="13622">
+              <span>Dry 1</span>
+            </label>
+            
+            <label class="compare-chip">
+              <input type="checkbox" data-room-toggle value="13623">
+              <span>Dry 2</span>
+            </label>
+            
+            <label class="compare-chip">
+              <input type="checkbox" data-room-toggle value="17390">
+              <span>Vault</span>
+            </label>
+            
+            <label class="compare-chip">
+              <input type="checkbox" data-room-toggle value="18777">
+              <span>Cure</span>
+            </label>
+            
+        </div>
+      </div>
+      <div>
+        <div class="compare-actions">
+          <button class="compare-action" type="button" data-select-all><span lang="en">All rooms</span><span lang="es">All rooms</span></button>
+          <button class="compare-action" type="button" data-clear-selection><span lang="en">Clear</span><span lang="es">Clear</span></button>
+        </div>
+        <div class="metric-tabs" role="group" aria-label="Comparison metric">
+          <button class="metric-tab active" type="button" data-compare-metric="vwc"><span lang="en">VWC</span><span lang="es">VWC</span></button>
+          <button class="metric-tab" type="button" data-compare-metric="ec"><span lang="en">EC</span><span lang="es">EC</span></button>
+          <button class="metric-tab" type="button" data-compare-metric="vpd"><span lang="en">VPD</span><span lang="es">VPD</span></button>
+          <button class="metric-tab" type="button" data-compare-metric="temp"><span lang="en">Temp</span><span lang="es">Temp</span></button>
+          <button class="metric-tab" type="button" data-compare-metric="flags"><span lang="en">Flags</span><span lang="es">Flags</span></button>
+          <button class="metric-tab" type="button" data-compare-metric="guardrails"><span lang="en">Targets</span><span lang="es">Targets</span></button>
+        </div>
+        <span class="compare-count" id="selectedRoomCount"><span lang="en">0 rooms selected</span><span lang="es">0 rooms selected</span></span>
+      </div>
+    </div>
+    <div class="compare-layout">
+      <div>
+        <div class="chart-frame"><canvas id="chartCompare"></canvas></div>
+        <div class="extreme-grid" id="compareExtremes"></div>
+      </div>
+      <div class="compare-table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th><span lang="en">Room</span><span lang="es">Room</span></th>
+              <th><span lang="en">Occupancy</span><span lang="es">Occupancy</span></th>
+              <th><span lang="en">Phase / HG</span><span lang="es">Phase / HG</span></th>
+              <th class="num"><span lang="en">VWC</span><span lang="es">VWC</span></th>
+              <th class="num"><span lang="en">EC</span><span lang="es">EC</span></th>
+              <th class="num"><span lang="en">VPD</span><span lang="es">VPD</span></th>
+              <th class="num"><span lang="en">Temp</span><span lang="es">Temp</span></th>
+              <th class="num"><span lang="en">Crit</span><span lang="es">Crit</span></th>
+              <th class="num"><span lang="en">Warn</span><span lang="es">Warn</span></th>
+              <th class="num"><span lang="en">Score</span><span lang="es">Score</span></th>
+              <th class="num"><span lang="en">Targets</span><span lang="es">Targets</span></th>
+              <th class="num"><span lang="en">Config</span><span lang="es">Config</span></th>
+            </tr>
+          </thead>
+          <tbody id="compareTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <p class="source-note"><span lang="en">Comparison uses the current public aggregate metrics plus OpenCLI harvest-group, target-range, and room-config coverage. The next data-depth layer is sequential /dataReadings and irrigation events for actual relative dryback, ET rate, and P0/P1/P2/P3 calculations.</span><span lang="es">Comparison uses the current public aggregate metrics plus OpenCLI harvest-group, target-range, and room-config coverage. The next data-depth layer is sequential /dataReadings and irrigation events for actual relative dryback, ET rate, and P0/P1/P2/P3 calculations.</span></p>
   </div>
+
+  <h2 class="h1"><span lang="en">Facility Overview Charts</span><span lang="es">Graficas generales de la instalacion</span></h2>
   <div class="chart-grid">
     <div class="card">
       <div class="card__head"><h3 class="card__title"><span lang="en">EC stack proxy</span><span lang="es">EC stack proxy</span></h3><span class="card__meta">chartEC</span></div>
@@ -1114,14 +1349,16 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
                 <span class="id">13617</span>
               </div>
               <div class="kv"><span><span lang="en">Occupancy</span><span lang="es">Occupancy</span></span><b>likely planted despite stale metadata</b></div>
-              <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>flower - phase needs SPA/HG confirmation</b></div>
-              <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>48.9%</b></div>
-              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>4.83</b></div>
-              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.89 kPa</b></div>
-              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>80.2 degF</b></div>
+              <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>phase n/a</b></div>
+              <div class="kv"><span><span lang="en">OpenCLI HG</span><span lang="es">OpenCLI HG</span></span><b>3 active / 11 historical HGs</b></div>
+              <div class="kv"><span><span lang="en">Targets / config</span><span lang="es">Targets / config</span></span><b>5 / 1</b></div>
+              <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>48.0%</b></div>
+              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>4.96</b></div>
+              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.86 kPa</b></div>
+              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>80.1 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_13617"></canvas></div>
               <div class="zone__verdict warn">
-                <span lang="en">0 critical / 25 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">0 critical / 25 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
+                <span lang="en">0 critical / 27 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">0 critical / 27 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
               </div>
             </div>
             
@@ -1133,8 +1370,10 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               </div>
               <div class="kv"><span><span lang="en">Occupancy</span><span lang="es">Occupancy</span></span><b>likely planted despite stale metadata</b></div>
               <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>flower - phase needs SPA/HG confirmation</b></div>
-              <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>52.7%</b></div>
-              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>4.85</b></div>
+              <div class="kv"><span><span lang="en">OpenCLI HG</span><span lang="es">OpenCLI HG</span></span><b>0 active / 10 historical HGs</b></div>
+              <div class="kv"><span><span lang="en">Targets / config</span><span lang="es">Targets / config</span></span><b>4 / 1</b></div>
+              <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>52.5%</b></div>
+              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>4.83</b></div>
               <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>1.22 kPa</b></div>
               <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>71.5 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_13618"></canvas></div>
@@ -1151,10 +1390,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               </div>
               <div class="kv"><span><span lang="en">Occupancy</span><span lang="es">Occupancy</span></span><b>likely planted despite stale metadata</b></div>
               <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>flower - phase needs SPA/HG confirmation</b></div>
+              <div class="kv"><span><span lang="en">OpenCLI HG</span><span lang="es">OpenCLI HG</span></span><b>0 active / 10 historical HGs</b></div>
+              <div class="kv"><span><span lang="en">Targets / config</span><span lang="es">Targets / config</span></span><b>0 / 1</b></div>
               <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>46.2%</b></div>
-              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>5.86</b></div>
+              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>5.85</b></div>
               <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.85 kPa</b></div>
-              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>75.0 degF</b></div>
+              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>75.1 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_13619"></canvas></div>
               <div class="zone__verdict bad">
                 <span lang="en">2 critical / 29 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">2 critical / 29 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
@@ -1169,13 +1410,15 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               </div>
               <div class="kv"><span><span lang="en">Occupancy</span><span lang="es">Occupancy</span></span><b>transitional / verify occupancy</b></div>
               <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>flower - phase needs SPA/HG confirmation</b></div>
-              <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>1.1%</b></div>
-              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>0.14</b></div>
-              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>1.22 kPa</b></div>
-              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>75.4 degF</b></div>
+              <div class="kv"><span><span lang="en">OpenCLI HG</span><span lang="es">OpenCLI HG</span></span><b>0 active / 18 historical HGs</b></div>
+              <div class="kv"><span><span lang="en">Targets / config</span><span lang="es">Targets / config</span></span><b>5 / 1</b></div>
+              <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>1.3%</b></div>
+              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>0.18</b></div>
+              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>1.12 kPa</b></div>
+              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>76.8 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_13620"></canvas></div>
               <div class="zone__verdict bad">
-                <span lang="en">11 critical / 6 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">11 critical / 6 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
+                <span lang="en">11 critical / 7 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">11 critical / 7 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
               </div>
             </div>
             
@@ -1187,13 +1430,15 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               </div>
               <div class="kv"><span><span lang="en">Occupancy</span><span lang="es">Occupancy</span></span><b>likely planted despite stale metadata</b></div>
               <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>vegetative</b></div>
-              <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>36.1%</b></div>
-              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>4.29</b></div>
+              <div class="kv"><span><span lang="en">OpenCLI HG</span><span lang="es">OpenCLI HG</span></span><b>0 active / 9 historical HGs</b></div>
+              <div class="kv"><span><span lang="en">Targets / config</span><span lang="es">Targets / config</span></span><b>0 / 1</b></div>
+              <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>37.6%</b></div>
+              <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>4.26</b></div>
               <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.70 kPa</b></div>
               <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>78.9 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_13621"></canvas></div>
               <div class="zone__verdict bad">
-                <span lang="en">1 critical / 12 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">1 critical / 12 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
+                <span lang="en">1 critical / 13 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">1 critical / 13 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
               </div>
             </div>
             
@@ -1205,10 +1450,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               </div>
               <div class="kv"><span><span lang="en">Occupancy</span><span lang="es">Occupancy</span></span><b>transitional / verify occupancy</b></div>
               <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>dry/cure - exclude from flower thresholds</b></div>
+              <div class="kv"><span><span lang="en">OpenCLI HG</span><span lang="es">OpenCLI HG</span></span><b>0 active / 24 historical HGs</b></div>
+              <div class="kv"><span><span lang="en">Targets / config</span><span lang="es">Targets / config</span></span><b>2 / 1</b></div>
               <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>n/a%</b></div>
               <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>n/a</b></div>
-              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>1.10 kPa</b></div>
-              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>69.7 degF</b></div>
+              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>1.06 kPa</b></div>
+              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>68.9 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_13622"></canvas></div>
               <div class="zone__verdict warn">
                 <span lang="en">0 critical / 0 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">0 critical / 0 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
@@ -1216,20 +1463,22 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
             </div>
             
 
-            <div class="zone warn room-card" data-room-card="13623">
+            <div class="zone ok room-card" data-room-card="13623">
               <div class="zone__head">
                 <h4>Dry 2</h4>
                 <span class="id">13623</span>
               </div>
               <div class="kv"><span><span lang="en">Occupancy</span><span lang="es">Occupancy</span></span><b>likely inactive or insufficient data</b></div>
               <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>dry/cure - exclude from flower thresholds</b></div>
+              <div class="kv"><span><span lang="en">OpenCLI HG</span><span lang="es">OpenCLI HG</span></span><b>0 active / 10 historical HGs</b></div>
+              <div class="kv"><span><span lang="en">Targets / config</span><span lang="es">Targets / config</span></span><b>2 / 1</b></div>
               <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>n/a%</b></div>
               <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>n/a</b></div>
-              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.79 kPa</b></div>
-              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>61.9 degF</b></div>
+              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.80 kPa</b></div>
+              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>62.2 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_13623"></canvas></div>
-              <div class="zone__verdict warn">
-                <span lang="en">0 critical / 2 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">0 critical / 2 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
+              <div class="zone__verdict ok">
+                <span lang="en">0 critical / 0 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">0 critical / 0 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
               </div>
             </div>
             
@@ -1241,10 +1490,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               </div>
               <div class="kv"><span><span lang="en">Occupancy</span><span lang="es">Occupancy</span></span><b>likely inactive or insufficient data</b></div>
               <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>dry/cure - exclude from flower thresholds</b></div>
+              <div class="kv"><span><span lang="en">OpenCLI HG</span><span lang="es">OpenCLI HG</span></span><b>no harvest-group room match</b></div>
+              <div class="kv"><span><span lang="en">Targets / config</span><span lang="es">Targets / config</span></span><b>0 / 1</b></div>
               <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>n/a%</b></div>
               <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>n/a</b></div>
-              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.78 kPa</b></div>
-              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>64.2 degF</b></div>
+              <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.81 kPa</b></div>
+              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>64.5 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_17390"></canvas></div>
               <div class="zone__verdict warn">
                 <span lang="en">0 critical / 4 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">0 critical / 4 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
@@ -1259,10 +1510,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
               </div>
               <div class="kv"><span><span lang="en">Occupancy</span><span lang="es">Occupancy</span></span><b>transitional / verify occupancy</b></div>
               <div class="kv"><span><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></span><b>dry/cure - exclude from flower thresholds</b></div>
+              <div class="kv"><span><span lang="en">OpenCLI HG</span><span lang="es">OpenCLI HG</span></span><b>no harvest-group room match</b></div>
+              <div class="kv"><span><span lang="en">Targets / config</span><span lang="es">Targets / config</span></span><b>0 / 1</b></div>
               <div class="kv"><span><span lang="en">VWC</span><span lang="es">VWC</span></span><b>n/a%</b></div>
               <div class="kv"><span><span lang="en">Pore EC</span><span lang="es">Pore EC</span></span><b>n/a</b></div>
               <div class="kv"><span><span lang="en">VPD</span><span lang="es">VPD</span></span><b>0.93 kPa</b></div>
-              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>65.4 degF</b></div>
+              <div class="kv"><span><span lang="en">Air temp</span><span lang="es">Air temp</span></span><b>65.6 degF</b></div>
               <div class="chart-frame small"><canvas id="roomMetrics_18777"></canvas></div>
               <div class="zone__verdict warn">
                 <span lang="en">0 critical / 0 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span><span lang="es">0 critical / 0 warning flags. Validate P0/P1/P2/P3 intent against active harvest group metadata.</span>
@@ -1281,8 +1534,8 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="card__head"><h3 class="card__title"><span lang="en">Shot-cycle gap</span><span lang="es">Shot-cycle gap</span></h3><span class="card__meta">P0/P1/P2/P3</span></div>
       <div class="card__body">
         <ul class="compact-list">
-          <li><span lang="en">P0 delay, P1 shot count, P2 maintenance cadence, and P3 runoff posture are not available from the public summary payload.</span><span lang="es">P0 delay, P1 shot count, P2 maintenance cadence, and P3 runoff posture are not available from the public summary payload.</span></li>
-          <li><span lang="en">Once Browser Bridge is connected, this section should switch from gap note to per-phase shot-cycle charts and EC-stack deltas.</span><span lang="es">Once Browser Bridge is connected, this section should switch from gap note to per-phase shot-cycle charts and EC-stack deltas.</span></li>
+          <li><span lang="en">P0 delay, P1 shot count, P2 maintenance cadence, and P3 runoff posture are not available from the aggregate summary payload.</span><span lang="es">P0 delay, P1 shot count, P2 maintenance cadence, and P3 runoff posture are not available from the aggregate summary payload.</span></li>
+          <li><span lang="en">OpenCLI is required and connected for this report; the remaining buildout is the readings/events collector that turns SPA access into per-phase shot-cycle charts and EC-stack deltas.</span><span lang="es">OpenCLI is required and connected for this report; the remaining buildout is the readings/events collector that turns SPA access into per-phase shot-cycle charts and EC-stack deltas.</span></li>
           <li><span lang="en">For now, room cards use VWC, EC, VPD, and temperature as steering proxies only.</span><span lang="es">For now, room cards use VWC, EC, VPD, and temperature as steering proxies only.</span></li>
         </ul>
       </div>
@@ -1290,11 +1543,119 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   </div>
 
   <h2 class="h1"><span lang="en">Config &amp; Guardrail Audit</span><span lang="es">Auditoria de configuracion y guardrails</span></h2>
-  <div class="caveat">
-    <div class="caveat__icon">!</div>
-    <div>
-      <b><span lang="en">Target ranges pending</span><span lang="es">Target ranges pending</span></b><br>
-      <span lang="en">The generic renderer does not hard-code facility target ranges. Pull spa_get_target_ranges, room_config, harvest_config, and recipes after Browser Bridge is connected, then re-render this same slug with live guardrails.</span><span lang="es">The generic renderer does not hard-code facility target ranges. Pull spa_get_target_ranges, room_config, harvest_config, and recipes after Browser Bridge is connected, then re-render this same slug with live guardrails.</span>
+  <div class="card">
+    <div class="card__head">
+      <div>
+        <h3 class="card__title"><span lang="en">OpenCLI guardrail coverage by room</span><span lang="es">OpenCLI guardrail coverage by room</span></h3>
+        <p class="card__subtitle"><span lang="en">5/9 rooms have target-range matches and 9/9 have room config in the SPA harvest.</span><span lang="es">5/9 rooms have target-range matches and 9/9 have room config in the SPA harvest.</span></p>
+      </div>
+      <div class="card__meta"><span lang="en">targetRanges + room_config</span><span lang="es">targetRanges + room_config</span></div>
+    </div>
+    <div class="card__body tight">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th><span lang="en">Room</span><span lang="es">Room</span></th>
+            <th><span lang="en">Phase</span><span lang="es">Phase</span></th>
+            <th class="num"><span lang="en">Active HG</span><span lang="es">Active HG</span></th>
+            <th class="num"><span lang="en">Targets</span><span lang="es">Targets</span></th>
+            <th class="num"><span lang="en">Config</span><span lang="es">Config</span></th>
+            <th><span lang="en">Harvest group</span><span lang="es">Harvest group</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td>POWR 1<small>ID 13617</small></td>
+              <td>phase n/a</td>
+              <td class="num">3</td>
+              <td class="num">5</td>
+              <td class="num">1</td>
+              <td>🔋2026-May-Powr1🏡 5/8-7/7</td>
+            </tr>
+            
+
+            <tr>
+              <td>POWR 2<small>ID 13618</small></td>
+              <td>flower - phase needs SPA/HG confirmation</td>
+              <td class="num">0</td>
+              <td class="num">4</td>
+              <td class="num">1</td>
+              <td>no overlapping HG in window</td>
+            </tr>
+            
+
+            <tr>
+              <td>POWR 3<small>ID 13619</small></td>
+              <td>flower - phase needs SPA/HG confirmation</td>
+              <td class="num">0</td>
+              <td class="num">0</td>
+              <td class="num">1</td>
+              <td>no overlapping HG in window</td>
+            </tr>
+            
+
+            <tr>
+              <td>POWR 4<small>ID 13620</small></td>
+              <td>flower - phase needs SPA/HG confirmation</td>
+              <td class="num">0</td>
+              <td class="num">5</td>
+              <td class="num">1</td>
+              <td>no overlapping HG in window</td>
+            </tr>
+            
+
+            <tr>
+              <td>Veg Room<small>ID 13621</small></td>
+              <td>vegetative</td>
+              <td class="num">0</td>
+              <td class="num">0</td>
+              <td class="num">1</td>
+              <td>no overlapping HG in window</td>
+            </tr>
+            
+
+            <tr>
+              <td>Dry 1<small>ID 13622</small></td>
+              <td>dry/cure - exclude from flower thresholds</td>
+              <td class="num">0</td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td>no overlapping HG in window</td>
+            </tr>
+            
+
+            <tr>
+              <td>Dry 2<small>ID 13623</small></td>
+              <td>dry/cure - exclude from flower thresholds</td>
+              <td class="num">0</td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td>no overlapping HG in window</td>
+            </tr>
+            
+
+            <tr>
+              <td>Vault<small>ID 17390</small></td>
+              <td>dry/cure - exclude from flower thresholds</td>
+              <td class="num">0</td>
+              <td class="num">0</td>
+              <td class="num">1</td>
+              <td>no overlapping HG in window</td>
+            </tr>
+            
+
+            <tr>
+              <td>Cure<small>ID 18777</small></td>
+              <td>dry/cure - exclude from flower thresholds</td>
+              <td class="num">0</td>
+              <td class="num">0</td>
+              <td class="num">1</td>
+              <td>no overlapping HG in window</td>
+            </tr>
+            
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -1377,17 +1738,17 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   <h2 class="h1"><span lang="en">Data Quality &amp; Coverage</span><span lang="es">Calidad y cobertura de datos</span></h2>
   <ul class="clean">
     <li><b><span lang="en">Window</span><span lang="es">Window</span></b><span><span lang="en">2026-05-07 to 2026-05-21; facility id 3754.</span><span lang="es">2026-05-07 to 2026-05-21; facility id 3754.</span></span></li>
-<li><b><span lang="en">Data source</span><span lang="es">Data source</span></b><span><span lang="en">Claude aroya-reporting MCP runtime plus AROYA public API statistics.</span><span lang="es">Claude aroya-reporting MCP runtime plus AROYA public API statistics.</span></span></li>
+<li><b><span lang="en">Data source</span><span lang="es">Data source</span></b><span><span lang="en">Claude aroya-reporting MCP runtime, AROYA public API statistics, and required OpenCLI SPA enrichment.</span><span lang="es">Claude aroya-reporting MCP runtime, AROYA public API statistics, and required OpenCLI SPA enrichment.</span></span></li>
 <li><b><span lang="en">Token handling</span><span lang="es">Token handling</span></b><span><span lang="en">environment / local auth map (token not embedded)</span><span lang="es">environment / local auth map (token not embedded)</span></span></li>
 <li><b><span lang="en">Renderer</span><span lang="es">Renderer</span></b><span><span lang="en">Codex phase-2 facility audit renderer using aroya-report-publish light/dark scaffolding and inline Chart.js.</span><span lang="es">Codex phase-2 facility audit renderer using aroya-report-publish light/dark scaffolding and inline Chart.js.</span></span></li>
-<li><b><span lang="en">SPA/HG coverage</span><span lang="es">SPA/HG coverage</span></b><span><span lang="en">Browser Bridge harvest-group, target-range, recipe, and room-config enrichment is not assumed. Missing phase metadata is called out instead of invented.</span><span lang="es">Browser Bridge harvest-group, target-range, recipe, and room-config enrichment is not assumed. Missing phase metadata is called out instead of invented.</span></span></li>
-<li><b><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></b><span><span lang="en">Flower / veg / dry-cure labels are inferred from room names, status, and biological signals until active HG metadata is available.</span><span lang="es">Flower / veg / dry-cure labels are inferred from room names, status, and biological signals until active HG metadata is available.</span></span></li>
+<li><b><span lang="en">SPA/HG coverage</span><span lang="es">SPA/HG coverage</span></b><span><span lang="en">OpenCLI confirmed: 33 harvest groups, 9 recipes, target-range counts, and room-config counts were harvested.</span><span lang="es">OpenCLI confirmed: 33 harvest groups, 9 recipes, target-range counts, and room-config counts were harvested.</span></span></li>
+<li><b><span lang="en">Phase assumption</span><span lang="es">Phase assumption</span></b><span><span lang="en">OpenCLI harvest-group phase labels are used when present; room-name/status inference is only a fallback.</span><span lang="es">OpenCLI harvest-group phase labels are used when present; room-name/status inference is only a fallback.</span></span></li>
 <li><b><span lang="en">Agronomic source</span><span lang="es">Agronomic source</span></b><span><span lang="en">local-horticulture-corpus:~/Documents/Knowledge_Base/Horticulture</span><span lang="es">local-horticulture-corpus:~/Documents/Knowledge_Base/Horticulture</span></span></li>
 <li><b><span lang="en">Security</span><span lang="es">Security</span></b><span><span lang="en">No token or local filesystem content is written into the HTML payload.</span><span lang="es">No token or local filesystem content is written into the HTML payload.</span></span></li>
   </ul>
 
   <footer class="foot">
-    <div><span lang="en">Generated 2026-05-21 14:27 PDT - AROYA public API + Claude MCP</span><span lang="es">Generated 2026-05-21 14:27 PDT - AROYA public API + Claude MCP</span></div>
+    <div><span lang="en">Generated 2026-05-21 20:44 PDT - AROYA public API + Claude MCP</span><span lang="es">Generated 2026-05-21 20:44 PDT - AROYA public API + Claude MCP</span></div>
     <div><span class="brand-mark">AROYA by Addium</span> - <span lang="en">phase-2 Codex publisher build</span><span lang="es">phase-2 Codex publisher build</span></div>
   </footer>
 </div>
@@ -1429,12 +1790,39 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   })();
 </script>
 
-<script id="phase2-data" type="application/json">{"rooms": [{"id": "13617", "name": "POWR 1", "vwc": 48.91, "ec": 4.83, "vpd": 0.89, "temp": 80.2, "critical": 0, "warning": 25}, {"id": "13618", "name": "POWR 2", "vwc": 52.71, "ec": 4.85, "vpd": 1.22, "temp": 71.49, "critical": 0, "warning": 11}, {"id": "13619", "name": "POWR 3", "vwc": 46.16, "ec": 5.86, "vpd": 0.85, "temp": 74.97, "critical": 2, "warning": 29}, {"id": "13620", "name": "POWR 4", "vwc": 1.12, "ec": 0.14, "vpd": 1.22, "temp": 75.39, "critical": 11, "warning": 6}, {"id": "13621", "name": "Veg Room", "vwc": 36.06, "ec": 4.29, "vpd": 0.7, "temp": 78.9, "critical": 1, "warning": 12}, {"id": "13622", "name": "Dry 1", "vwc": null, "ec": null, "vpd": 1.1, "temp": 69.7, "critical": 0, "warning": 0}, {"id": "13623", "name": "Dry 2", "vwc": null, "ec": null, "vpd": 0.79, "temp": 61.86, "critical": 0, "warning": 2}, {"id": "17390", "name": "Vault", "vwc": null, "ec": null, "vpd": 0.78, "temp": 64.2, "critical": 0, "warning": 4}, {"id": "18777", "name": "Cure", "vwc": null, "ec": null, "vpd": 0.93, "temp": 65.37, "critical": 0, "warning": 0}]}</script>
+<script id="phase2-data" type="application/json">{"rooms": [{"id": "13617", "name": "POWR 1", "status": "unknown", "occupancy": "likely planted despite stale metadata", "phase": "phase n/a", "harvestName": "\ud83d\udd0b2026-May-Powr1\ud83c\udfe1 5/8-7/7", "harvestRole": "flower", "activeHarvests": 3, "historicalHarvests": 11, "targetRanges": 5, "roomConfig": 1, "plantCount": 0, "phaseStart": null, "phaseEnd": null, "vwc": 47.99, "ec": 4.96, "vpd": 0.86, "temp": 80.13, "critical": 0, "warning": 27}, {"id": "13618", "name": "POWR 2", "status": "unknown", "occupancy": "likely planted despite stale metadata", "phase": "flower - phase needs SPA/HG confirmation", "harvestName": null, "harvestRole": null, "activeHarvests": 0, "historicalHarvests": 10, "targetRanges": 4, "roomConfig": 1, "plantCount": null, "phaseStart": null, "phaseEnd": null, "vwc": 52.48, "ec": 4.83, "vpd": 1.22, "temp": 71.46, "critical": 0, "warning": 11}, {"id": "13619", "name": "POWR 3", "status": "unknown", "occupancy": "likely planted despite stale metadata", "phase": "flower - phase needs SPA/HG confirmation", "harvestName": null, "harvestRole": null, "activeHarvests": 0, "historicalHarvests": 10, "targetRanges": 0, "roomConfig": 1, "plantCount": null, "phaseStart": null, "phaseEnd": null, "vwc": 46.24, "ec": 5.85, "vpd": 0.85, "temp": 75.08, "critical": 2, "warning": 29}, {"id": "13620", "name": "POWR 4", "status": "unknown", "occupancy": "transitional / verify occupancy", "phase": "flower - phase needs SPA/HG confirmation", "harvestName": null, "harvestRole": null, "activeHarvests": 0, "historicalHarvests": 18, "targetRanges": 5, "roomConfig": 1, "plantCount": null, "phaseStart": null, "phaseEnd": null, "vwc": 1.29, "ec": 0.18, "vpd": 1.12, "temp": 76.83, "critical": 11, "warning": 7}, {"id": "13621", "name": "Veg Room", "status": "unknown", "occupancy": "likely planted despite stale metadata", "phase": "vegetative", "harvestName": null, "harvestRole": null, "activeHarvests": 0, "historicalHarvests": 9, "targetRanges": 0, "roomConfig": 1, "plantCount": null, "phaseStart": null, "phaseEnd": null, "vwc": 37.6, "ec": 4.26, "vpd": 0.7, "temp": 78.91, "critical": 1, "warning": 13}, {"id": "13622", "name": "Dry 1", "status": "unknown", "occupancy": "transitional / verify occupancy", "phase": "dry/cure - exclude from flower thresholds", "harvestName": null, "harvestRole": null, "activeHarvests": 0, "historicalHarvests": 24, "targetRanges": 2, "roomConfig": 1, "plantCount": null, "phaseStart": null, "phaseEnd": null, "vwc": null, "ec": null, "vpd": 1.06, "temp": 68.91, "critical": 0, "warning": 0}, {"id": "13623", "name": "Dry 2", "status": "unknown", "occupancy": "likely inactive or insufficient data", "phase": "dry/cure - exclude from flower thresholds", "harvestName": null, "harvestRole": null, "activeHarvests": 0, "historicalHarvests": 10, "targetRanges": 2, "roomConfig": 1, "plantCount": null, "phaseStart": null, "phaseEnd": null, "vwc": null, "ec": null, "vpd": 0.8, "temp": 62.16, "critical": 0, "warning": 0}, {"id": "17390", "name": "Vault", "status": "unknown", "occupancy": "likely inactive or insufficient data", "phase": "dry/cure - exclude from flower thresholds", "harvestName": null, "harvestRole": null, "activeHarvests": 0, "historicalHarvests": 0, "targetRanges": 0, "roomConfig": 1, "plantCount": null, "phaseStart": null, "phaseEnd": null, "vwc": null, "ec": null, "vpd": 0.81, "temp": 64.48, "critical": 0, "warning": 4}, {"id": "18777", "name": "Cure", "status": "unknown", "occupancy": "transitional / verify occupancy", "phase": "dry/cure - exclude from flower thresholds", "harvestName": null, "harvestRole": null, "activeHarvests": 0, "historicalHarvests": 0, "targetRanges": 0, "roomConfig": 1, "plantCount": null, "phaseStart": null, "phaseEnd": null, "vwc": null, "ec": null, "vpd": 0.93, "temp": 65.61, "critical": 0, "warning": 0}], "opencli": {"available": true, "harvestGroupCount": 33, "recipeCount": 9}}</script>
 <script>
 (function() {
   const payloadEl = document.getElementById('phase2-data');
-  const payload = payloadEl ? JSON.parse(payloadEl.textContent) : {rooms: []};
-  const rooms = payload.rooms || [];
+  let payload = {rooms: []};
+  try {
+    payload = payloadEl ? JSON.parse(payloadEl.textContent) : {rooms: []};
+  } catch (err) {
+    console.warn('Unable to parse phase-2 report payload', err);
+  }
+  function asNumber(value) {
+    const num = Number(value);
+    return Number.isFinite(num) ? num : null;
+  }
+  function asCount(value) {
+    const num = Number(value);
+    return Number.isFinite(num) ? num : 0;
+  }
+  const rooms = (payload.rooms || []).map(function(room) {
+    return Object.assign({}, room, {
+      vwc: asNumber(room.vwc),
+      ec: asNumber(room.ec),
+      vpd: asNumber(room.vpd),
+      temp: asNumber(room.temp),
+      critical: asCount(room.critical),
+      warning: asCount(room.warning),
+      activeHarvests: asCount(room.activeHarvests),
+      historicalHarvests: asCount(room.historicalHarvests),
+      targetRanges: asCount(room.targetRanges),
+      roomConfig: asCount(room.roomConfig),
+      plantCount: asNumber(room.plantCount)
+    });
+  });
   const css = getComputedStyle(document.documentElement);
   function color(name, fallback) {
     const value = css.getPropertyValue(name).trim();
@@ -1450,17 +1838,22 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   window.__charts = window.__charts || {};
   window.__roomCharts = window.__roomCharts || {};
 
-  function values(key) {
-    return rooms.map(r => Number.isFinite(Number(r[key])) ? Number(r[key]) : null);
+  function numeric(room, key) {
+    return Number.isFinite(Number(room[key])) ? Number(room[key]) : null;
   }
-  function labels() { return rooms.map(r => r.name); }
-  function makeChart(id, type, datasets, yTitle) {
+  function values(key, sourceRooms) {
+    return (sourceRooms || rooms).map(r => numeric(r, key));
+  }
+  function labels(sourceRooms) {
+    return (sourceRooms || rooms).map(r => r.name);
+  }
+  function makeChart(id, type, datasets, yTitle, sourceRooms) {
     const el = document.getElementById(id);
     if (!el || !window.Chart) return;
     if (window.__charts[id]) window.__charts[id].destroy();
     window.__charts[id] = new Chart(el, {
       type: type,
-      data: { labels: labels(), datasets: datasets },
+      data: { labels: labels(sourceRooms), datasets: datasets },
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -1504,17 +1897,226 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     });
   });
 
-  const buttons = document.querySelectorAll('[data-room-filter]');
+  const metricDefs = {
+    vwc: { label: 'VWC proxy', unit: '%', key: 'vwc', color: lime, digits: 1 },
+    ec: { label: 'Pore EC', unit: '', key: 'ec', color: olive, digits: 2 },
+    vpd: { label: 'VPD', unit: ' kPa', key: 'vpd', color: blue, digits: 2 },
+    temp: { label: 'Air temp', unit: ' degF', key: 'temp', color: warn, digits: 1 },
+    flags: {
+      label: 'Critical + warning flags',
+      unit: '',
+      key: 'flags',
+      color: bad,
+      digits: 0,
+      value: function(room) { return room.critical + room.warning; }
+    },
+    guardrails: {
+      label: 'Target-range count',
+      unit: '',
+      key: 'targetRanges',
+      color: muted,
+      digits: 0,
+      value: function(room) { return room.targetRanges; }
+    }
+  };
+  let compareMetric = 'vwc';
+  const priorityIds = rooms
+    .filter(r => r.activeHarvests > 0 || r.critical > 0 || r.warning > 0 || r.targetRanges > 0)
+    .slice(0, 4)
+    .map(r => String(r.id));
+  const fallbackIds = rooms.slice(0, Math.min(4, rooms.length)).map(r => String(r.id));
+  const selected = new Set(priorityIds.length ? priorityIds : fallbackIds);
+  const toggles = Array.from(document.querySelectorAll('[data-room-toggle]'));
+  const metricButtons = Array.from(document.querySelectorAll('[data-compare-metric]'));
+  const selectedCount = document.getElementById('selectedRoomCount');
+  const tableBody = document.getElementById('compareTableBody');
+  const extremesEl = document.getElementById('compareExtremes');
   const cards = document.querySelectorAll('[data-room-card]');
-  buttons.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      const rid = btn.dataset.roomFilter;
-      buttons.forEach(b => b.classList.toggle('active', b === btn));
-      cards.forEach(function(card) {
-        card.classList.toggle('is-hidden', rid !== 'all' && card.dataset.roomCard !== rid);
-      });
+  let compareChart = null;
+
+  function escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, function(ch) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[ch];
+    });
+  }
+  function fmt(value, digits, unit) {
+    const num = Number(value);
+    if (!Number.isFinite(num)) return 'n/a';
+    return num.toFixed(digits) + (unit || '');
+  }
+  function selectedRooms() {
+    return rooms.filter(room => selected.has(String(room.id)));
+  }
+  function roomScore(room) {
+    return (room.critical * 2) + room.warning;
+  }
+  function bestBy(sourceRooms, getter, direction) {
+    let best = null;
+    sourceRooms.forEach(function(room) {
+      const value = getter(room);
+      if (!Number.isFinite(value)) return;
+      if (!best || (direction === 'min' ? value < best.value : value > best.value)) {
+        best = { room: room, value: value };
+      }
+    });
+    return best;
+  }
+  function selectedExtents(sourceRooms) {
+    return {
+      lowVwc: bestBy(sourceRooms, r => numeric(r, 'vwc'), 'min'),
+      highEc: bestBy(sourceRooms, r => numeric(r, 'ec'), 'max'),
+      highVpd: bestBy(sourceRooms, r => numeric(r, 'vpd'), 'max'),
+      highTemp: bestBy(sourceRooms, r => numeric(r, 'temp'), 'max'),
+      highFlags: bestBy(sourceRooms, r => roomScore(r), 'max')
+    };
+  }
+  function metricClass(room, key, extents) {
+    if (key === 'vwc' && extents.lowVwc && extents.lowVwc.room.id === room.id) return 'metric-low';
+    if (key === 'ec' && extents.highEc && extents.highEc.room.id === room.id) return 'metric-high';
+    if (key === 'vpd' && extents.highVpd && extents.highVpd.room.id === room.id) return 'metric-high';
+    if (key === 'temp' && extents.highTemp && extents.highTemp.room.id === room.id) return 'metric-high';
+    if (key === 'flags' && extents.highFlags && extents.highFlags.room.id === room.id) return 'metric-high';
+    return '';
+  }
+  function syncToggles() {
+    toggles.forEach(function(input) {
+      const active = selected.has(String(input.value));
+      input.checked = active;
+      const chip = input.closest('.compare-chip');
+      if (chip) chip.classList.toggle('is-selected', active);
+    });
+    metricButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.compareMetric === compareMetric));
+  }
+  function renderCompareChart(sourceRooms) {
+    const el = document.getElementById('chartCompare');
+    if (!el || !window.Chart) return;
+    if (compareChart) compareChart.destroy();
+    const def = metricDefs[compareMetric] || metricDefs.vwc;
+    const chartValues = sourceRooms.map(room => def.value ? def.value(room) : numeric(room, def.key));
+    compareChart = new Chart(el, {
+      type: 'bar',
+      data: {
+        labels: labels(sourceRooms),
+        datasets: [{
+          label: def.label,
+          data: chartValues,
+          backgroundColor: def.color,
+          borderColor: def.color,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return def.label + ': ' + fmt(context.parsed.y, def.digits, def.unit);
+              }
+            }
+          }
+        },
+        scales: {
+          y: { beginAtZero: compareMetric !== 'temp', title: { display: true, text: def.label }, grid: { color: 'rgba(120,120,120,0.16)' } },
+          x: { ticks: { maxRotation: 45, minRotation: 0 }, grid: { display: false } }
+        }
+      }
+    });
+  }
+  function renderTable(sourceRooms) {
+    if (!tableBody) return;
+    if (!sourceRooms.length) {
+      tableBody.innerHTML = '<tr><td colspan="12"><div class="comparison-empty">Select at least one room to compare.</div></td></tr>';
+      return;
+    }
+    const extents = selectedExtents(sourceRooms);
+    tableBody.innerHTML = sourceRooms.map(function(room) {
+      const flags = room.critical + room.warning;
+      const phase = room.phase || 'phase needs HG confirmation';
+      const harvest = room.harvestName || (room.activeHarvests ? 'active HG present' : 'no active HG in window');
+      return '<tr>' +
+        '<td class="compare-room"><b>' + escapeHTML(room.name) + '</b><small>ID ' + escapeHTML(room.id) + '</small></td>' +
+        '<td>' + escapeHTML(room.occupancy || 'unknown') + '</td>' +
+        '<td>' + escapeHTML(phase) + '<small>' + escapeHTML(harvest) + '</small></td>' +
+        '<td class="num ' + metricClass(room, 'vwc', extents) + '">' + fmt(room.vwc, 1, '%') + '</td>' +
+        '<td class="num ' + metricClass(room, 'ec', extents) + '">' + fmt(room.ec, 2, '') + '</td>' +
+        '<td class="num ' + metricClass(room, 'vpd', extents) + '">' + fmt(room.vpd, 2, '') + '</td>' +
+        '<td class="num ' + metricClass(room, 'temp', extents) + '">' + fmt(room.temp, 1, '') + '</td>' +
+        '<td class="num">' + room.critical + '</td>' +
+        '<td class="num">' + room.warning + '</td>' +
+        '<td class="num ' + metricClass(room, 'flags', extents) + '">' + flags + '</td>' +
+        '<td class="num">' + room.targetRanges + '</td>' +
+        '<td class="num">' + room.roomConfig + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+  function renderExtremes(sourceRooms) {
+    if (!extremesEl) return;
+    if (!sourceRooms.length) {
+      extremesEl.innerHTML = '';
+      return;
+    }
+    const extents = selectedExtents(sourceRooms);
+    const guardrailGaps = sourceRooms.filter(r => r.targetRanges < 1 || r.roomConfig < 1);
+    const card = function(label, item, formatter) {
+      if (!item) return '';
+      return '<div class="extreme-card"><b>' + escapeHTML(label) + '</b><span>' + escapeHTML(item.room.name) + '</span><small>' + escapeHTML(formatter(item.value, item.room)) + '</small></div>';
+    };
+    extremesEl.innerHTML =
+      card('Lowest VWC', extents.lowVwc, value => fmt(value, 1, '%')) +
+      card('Highest EC', extents.highEc, value => fmt(value, 2, '')) +
+      card('Highest VPD', extents.highVpd, value => fmt(value, 2, ' kPa')) +
+      card('Highest temp', extents.highTemp, value => fmt(value, 1, ' degF')) +
+      card('Most flags', extents.highFlags, value => String(value) + ' weighted flags') +
+      '<div class="extreme-card"><b>Guardrail gaps</b><span>' + guardrailGaps.length + ' selected rooms</span><small>' +
+      escapeHTML(guardrailGaps.map(r => r.name).slice(0, 4).join(', ') || 'none in selection') +
+      '</small></div>';
+  }
+  function syncCards(sourceRooms) {
+    const visible = new Set(sourceRooms.map(room => String(room.id)));
+    cards.forEach(function(card) {
+      card.classList.toggle('is-dimmed', visible.size > 0 && !visible.has(String(card.dataset.roomCard)));
+    });
+  }
+  function updateCompare() {
+    const current = selectedRooms();
+    syncToggles();
+    renderCompareChart(current);
+    renderTable(current);
+    renderExtremes(current);
+    syncCards(current);
+    if (selectedCount) {
+      selectedCount.textContent = current.length + ' of ' + rooms.length + ' rooms selected';
+    }
+  }
+  toggles.forEach(function(input) {
+    input.addEventListener('change', function() {
+      if (input.checked) selected.add(String(input.value));
+      else selected.delete(String(input.value));
+      updateCompare();
     });
   });
+  document.querySelectorAll('[data-select-all]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      rooms.forEach(room => selected.add(String(room.id)));
+      updateCompare();
+    });
+  });
+  document.querySelectorAll('[data-clear-selection]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      selected.clear();
+      updateCompare();
+    });
+  });
+  metricButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      compareMetric = btn.dataset.compareMetric || 'vwc';
+      updateCompare();
+    });
+  });
+  updateCompare();
 })();
 </script>
 
