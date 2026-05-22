@@ -8,3 +8,5 @@ Most full audit packages ship as a light + dark HTML pair with EN/ES toggle.
 - [Powrhouse Cultivation Report (2026-05-21)](Powrhouse_Cultivation_Report_2026-05-21.html)
 
 - [POWRHOUSE 2wk Audit 2026-05-07 to 2026-05-21 — light](POWRHOUSE_2wk_Audit_2026-05-07_to_2026-05-21.html) · [dark](POWRHOUSE_2wk_Audit_2026-05-07_to_2026-05-21_dark.html)
+
+- [Green Genius 2wk Audit 2026-05-08 to 2026-05-22 — light](Green_Genius_2wk_Audit_2026-05-08_to_2026-05-22.html) · [dark](Green_Genius_2wk_Audit_2026-05-08_to_2026-05-22_dark.html)
