@@ -1,0 +1,2795 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurora 99 Farms — Device Fleet Health Audit</title>
+<style>
+:root[data-theme="light"]{
+  --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
+  --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
+  --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
+  --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
+  --attention:#e76f51; --attention-2:#f4a261;
+  --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
+  --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+  --grid-line: #e8e8e0;
+}
+:root[data-theme="dark"]{
+  --bg:#13160f; --bg-2:#1a1e15; --bg-3:#22281c; --border:#2e3624;
+  --ink:#e8ead9; --ink-2:#b9bda5; --ink-muted:#7e836e;
+  --olive:#8aa05c; --olive-2:#a7bb74; --lime:#b9e587; --lime-2:#6b8d3d;
+  --app-blue:#6cb5d8; --app-blue-2:#3a6d80;
+  --attention:#f48066; --attention-2:#f4a261;
+  --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
+  --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 8px 28px rgba(0,0,0,0.45);
+  --grid-line: #2a3220;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font:14px/1.5 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","ss03"}
+a{color:var(--app-blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+.masthead{background:#1a1c19;color:#fff;padding:20px 28px 24px;margin:0;position:relative;overflow:hidden;min-height:80px}
+.masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1}
+.lockup{position:relative;display:flex;align-items:center;gap:10px;color:#fff;padding-bottom:14px}
+.lockup-mark{font-family:'Inter',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:1;color:#fff}
+.lockup-glyph{display:inline-block;width:26px;height:26px;position:relative;flex:none}
+.lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#fff;border-radius:2px}
+.lockup-glyph::before{top:0;right:0;width:13px;height:13px}
+.lockup-glyph::after{bottom:0;left:0;width:17px;height:17px;border-top-right-radius:0}
+.lockup-byline{position:absolute;top:34px;left:0;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;color:#aaa;letter-spacing:0;line-height:1}
+.controls{display:flex;gap:6px;align-items:center}
+.btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
+.btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
+.btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
+.tick{position:absolute;width:7px;height:7px;background:#3a3d35;border-radius:1px;z-index:0}
+.tick.t1{top:14px;left:42%} .tick.t2{top:14px;left:48%;width:8px;height:8px} .tick.t3{top:14px;right:24%;width:6px;height:6px}
+.tick.t4{bottom:12px;left:18%} .tick.t5{bottom:12px;left:22%;width:5px;height:5px}
+.tick.t6{top:46%;right:18px} .tick.t7{bottom:12px;right:32%;width:6px;height:6px}
+.pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+.pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
+.pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
+.pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+.pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+.pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+:root[data-theme="dark"] .pagehead{border-bottom-color:var(--border)}
+:root[data-theme="dark"] .pagehead-eyebrow{color:var(--olive-2)}
+section{margin-top:40px}
+h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+h4{font-size:14px;margin:18px 0 6px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
+p{margin:0 0 12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+.kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
+.kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
+.kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.kpi .val{font-size:22px;font-weight:700;color:var(--ink)}
+.kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
+.kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
+.card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
+.verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
+.verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
+.verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
+.verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
+.verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
+tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
+.pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
+.room-selector{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 18px}
+.room-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;user-select:none;box-shadow:var(--card-shadow)}
+.room-chip:hover{border-color:var(--olive-2);transform:translateY(-1px)}
+.room-chip.active{background:var(--olive);color:#fff;border-color:var(--olive)}
+.room-chip .chip-count{font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px}
+.room-chip.active .chip-count{background:rgba(255,255,255,.22);color:#fff}
+.es-only{display:none}
+body.es .en-only{display:none}
+body.es .es-only{display:initial}
+.room-panel{display:none}
+.room-panel.active{display:block}
+.muted-row{color:var(--ink-muted)}
+.bar-axis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 18px}
+.bar-axis .stack{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--card-shadow)}
+.bar-axis .stack h4{margin:0 0 8px}
+.bar-axis .stack .seg{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--bg-3)}
+.bar-axis .stack .seg span{display:block;line-height:14px;color:#fff;font-size:10px;font-weight:700;text-align:center}
+.bar-axis .stack .seg .s-good{background:var(--good)}
+.bar-axis .stack .seg .s-warn{background:var(--warn)}
+.bar-axis .stack .seg .s-bad{background:var(--bad)}
+.bar-axis .stack .seg .s-unk{background:var(--ink-muted);color:#fff}
+.bar-axis .stack .leg{font-size:11px;color:var(--ink-muted);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+.legend-dot{display:inline-block;width:9px;height:9px;border-radius:2px;vertical-align:middle;margin-right:4px}
+.note{font-size:12px;color:var(--ink-muted);font-style:italic;margin:4px 0 12px}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span>
+  <span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
+  <div class="masthead-inner">
+    <div class="lockup">
+      <span class="lockup-glyph"></span>
+      <span class="lockup-mark">AROYA</span>
+      <span class="lockup-byline"><span class="en-only">Device Fleet Health</span><span class="es-only">Salud de Flota</span></span>
+    </div>
+    <div class="controls">
+      <button class="btn lang-btn active" data-lang="en">EN</button>
+      <button class="btn lang-btn" data-lang="es">ES</button>
+      <button class="btn theme-btn" data-theme="light">☀</button>
+      <button class="btn theme-btn" data-theme="dark">☾</button>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="pagehead">
+    <div class="pagehead-eyebrow"><span class="en-only">AROYA Customer Audit · v1</span><span class="es-only">Auditoría AROYA · v1</span> · <span class="en-only">Device Fleet Health</span><span class="es-only">Salud de Flota</span></div>
+    <h1><span class="en-only">Aurora 99 Farms — Device Fleet Health</span><span class="es-only">Aurora 99 Farms — Salud de Flota</span></h1>
+    <div class="sub"><span class="en-only">Four-axis device audit (RSSI · battery · routing latency · travel time) over the 14-day window. No agronomic data — this is a device-side reliability report.</span><span class="es-only">Auditoría de cuatro ejes (RSSI · batería · latencia · viaje) en ventana de 14 días. Sin datos agronómicos — solo lado dispositivo.</span></div>
+    <div class="meta">
+      <div><b><span class="en-only">Facility</span><span class="es-only">Instalación</span></b><span>Aurora 99 Farms (id 3415)</span></div>
+      <div><b><span class="en-only">Window</span><span class="es-only">Ventana</span></b><span>2026-05-08 → 2026-05-22 (14d)</span></div>
+      <div><b><span class="en-only">Devices on file</span><span class="es-only">Disp. registrados</span></b><span>81 · 38 silent · 26 critical · 17 OK</span></div>
+      <div><b><span class="en-only">Active mesh radios</span><span class="es-only">Radios activos</span></b><span>20 reporting · 17 battery-powered nodes</span></div>
+      <div><b><span class="en-only">Data sources</span><span class="es-only">Fuentes</span></b><span>public_api <code>/devices/&lt;id&gt;/chart/</code> · 7×2-day chunks per device</span></div>
+      <div><b><span class="en-only">Generated</span><span class="es-only">Generado</span></b><span>2026-05-22 22:28 UTC · aroya-device-health v1</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2><span class="en-only">Executive Summary</span><span class="es-only">Resumen Ejecutivo</span></h2>
+    
+    <div class="kpis">
+      <div class="kpi"><div class="label"><span class="en-only">Devices on File</span><span class="es-only">Dispositivos Registrados</span></div><div class="val">81</div><div class="delta"><span class="en-only">38 silent · 26 critical · 17 OK</span><span class="es-only">38 silenciosos · 26 críticos · 17 OK</span></div></div>
+      <div class="kpi good"><div class="label"><span class="en-only">Reporting (last 24h)</span><span class="es-only">Reportando (últimas 24h)</span></div><div class="val">39<small style="font-size:14px;color:var(--ink-muted)"> / 43</small></div><div class="delta"><span class="en-only">37 within last hour</span><span class="es-only">37 en la última hora</span></div></div>
+      <div class="kpi bad"><div class="label"><span class="en-only">Silent in 14d</span><span class="es-only">Silenciosos en 14d</span></div><div class="val">38</div><div class="delta"><span class="en-only">Zero data in the window</span><span class="es-only">Sin datos en la ventana</span></div></div>
+      <div class="kpi bad"><div class="label"><span class="en-only">Gap-Critical Mesh Devices</span><span class="es-only">Dispositivos con Huecos Críticos</span></div><div class="val">9 / 20</div><div class="delta"><span class="en-only">Long mid-window silences</span><span class="es-only">Silencios prolongados</span></div></div>
+      <div class="kpi good"><div class="label"><span class="en-only">Battery (mesh nodes)</span><span class="es-only">Batería (nodos)</span></div><div class="val">17 / 17 OK</div><div class="delta"><span class="en-only">All p05 ≥ 3.4V · min 3.54V</span><span class="es-only">Todos p05 ≥ 3.4V · mín 3.54V</span></div></div>
+      <div class="kpi good"><div class="label"><span class="en-only">Radio Signal (RSSI)</span><span class="es-only">Señal Radio (RSSI)</span></div><div class="val">20 / 20 OK</div><div class="delta"><span class="en-only">Median p50 -54.0 dBm · all &gt; -75 dBm</span><span class="es-only">Mediana -54.0 dBm · todos &gt; -75 dBm</span></div></div>
+    </div>
+    
+    <div class="verdict warn">
+      <div class="v-head"><span class="en-only">Lead Verdict</span><span class="es-only">Veredicto</span></div>
+      <span class="en-only"><b>Radio backbone is healthy.</b> Every mesh device with telemetry is well above the -75 dBm signal floor (median p05 -57.0 dBm), every battery-reporting node is above 3.5V, and routing latency is sub-second on all but three nodes. <b>The story is data presence, not radio quality:</b> 38 of 81 devices recorded zero data in the 14-day window, and 9 mesh devices show multi-day mid-window silences. Top action is decommission-vs-revive triage on the silent set — only one of the four metrics requested (gap-driven 'travel/gap' issues) actually produces critical flags here; RSSI and battery are not the problem at Aurora 99.</span>
+      <span class="es-only"><b>La malla está sana.</b> Todos los dispositivos activos están por encima del piso de señal de -75 dBm (mediana p05 -57.0 dBm), todas las baterías &gt;3.5V, y la latencia es sub-segundo en casi todos. <b>El problema es presencia de datos, no calidad de radio:</b> 38 de 81 dispositivos no registraron datos en 14 días.</span>
+    </div>
+    <div class="card">
+      <ul style="margin:0;padding-left:22px;line-height:1.7">
+        <li><span class="en-only"><b>Fleet inventory:</b> 81 devices on file across 6 occupied room IDs — 34 Nodes, 24 TEROS 12 substrate sensors, 8 TEROS 15 substrate sensors, 7 Mesh Repeaters, 3 Atmos 14, 2 Gateways, 2 Sinks, 1 SQ-521 PAR sensor. Only 20 mesh-radio devices have telemetry inside the 14-day window; the other 38 are silent.</span><span class="es-only"><b>Inventario:</b> 81 dispositivos — 34 nodos, 24 TEROS 12, 8 TEROS 15, 7 repetidores, 3 Atmos 14, 2 gateways, 2 sinks. Solo 20 radios con datos.</span></li>
+        <li><span class="en-only"><b>RSSI is not a problem.</b> 100% of active mesh devices (20/20) are above the -75 dBm OK floor. Median p05 RSSI is -57.0 dBm and median p50 is -54.0 dBm. No node is anywhere near the -85 dBm warn line. The radio physical layer at Aurora 99 is comfortably healthy.</span><span class="es-only"><b>RSSI no es problema.</b> 100% de radios activos sobre -75 dBm. Mediana p05 -57.0 dBm.</span></li>
+        <li><span class="en-only"><b>Battery is not a problem.</b> All 17 battery-reporting nodes show p05 ≥ 3.5V — comfortably above the 3.4V OK threshold and well above the 3.2V warn line. Lowest single-device p05 is 3.54V. No imminent Li-SOCl₂ replacements due. Repeaters, atm14, sinks and gateways report null battery as expected (line-powered).</span><span class="es-only"><b>Batería sin problema.</b> Todos 17 nodos p05 ≥ 3.5V.</span></li>
+        <li><span class="en-only"><b>Telemetry routing latency is mostly sub-second, with three outliers.</b> 15 of 20 mesh devices have p95 travel time ≤ 10s (median p95 0.07 s). 3 are critical (&gt;60s): <code>H3210019837</code> (F3, 180.9s p95), <code>H3210019903</code> (F3, 119.8s p95 + reporting RSSI=0 which is a corrupt-link signature), and <code>H3210019873</code> (unassigned, 76.7s p95). One warn-tier outlier (<code>H3210019845</code>, 51.8s) sits in the unassigned pool.</span><span class="es-only"><b>Latencia mayormente sub-segundo, tres excepciones.</b> 3 críticos &gt;60s en F3 y pool sin asignar.</span></li>
+        <li><span class="en-only"><b>Travel-time / mesh hops:</b> The healthy nodes route in 0.04–0.08s p95, which is single-hop or near-source territory. The three travel-critical nodes are the only fleet members showing multi-second routing, suggesting either deep mesh paths or persistent retransmits. There is no global mesh congestion — this is device-localised.</span><span class="es-only"><b>Viaje / saltos:</b> Nodos sanos en 0.04–0.08s p95 (un salto). Los tres críticos son problemas localizados.</span></li>
+        <li><span class="en-only"><b>The real story: data gaps and silent devices.</b> 38 devices recorded zero readings in 14 days, and 9 mesh radios show critical mid-window gaps. Most of the 9 gap-critical mesh nodes are in the unassigned pool and only began reporting hours before the window closed (gaps of 4–5 days followed by a recent burst of data) — these are recently provisioned or recovered devices, not failing ones. The genuine reliability concerns are <b>F3</b> (6 critical of 12 devices) and <b>F4</b> (2 of 2 critical).</span><span class="es-only"><b>El problema real son los huecos y silencios.</b> 38 sin datos en 14d, 9 radios con huecos críticos. F3 (6 críticos) y F4 (ambos críticos) son las salas a investigar.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Per-Axis Distribution</span><span class="es-only">Distribución por Eje</span></h2>
+    <p class="note"><span class="en-only">Each bar shows mesh-radio device counts (20 total) flagged on that axis. Non-mesh devices (substrate sensors paired to nodes, line-powered repeaters) don't independently report all four metrics.</span><span class="es-only">Cada barra cuenta los 20 radios mesh activos por nivel.</span></p>
+    
+    <div class="bar-axis">
+      
+    <div class="stack">
+      <h4><span class="en-only">Radio Signal (RSSI)</span><span class="es-only">Señal Radio</span></h4>
+      <div class="seg"><span class="s-good" style="width:100.0%">20</span></div>
+      <div class="leg">
+        <span><span class="legend-dot" style="background:var(--good)"></span>OK 20</span>
+        <span><span class="legend-dot" style="background:var(--warn)"></span>Warn 0</span>
+        <span><span class="legend-dot" style="background:var(--bad)"></span>Critical 0</span>
+        
+      </div>
+      <div class="note"><span class="en-only">Flagged on p05 against -85 dBm warn / -95 dBm critical</span><span class="es-only">Marcado p05 contra -85 dBm advertencia</span></div>
+    </div>
+      
+    <div class="stack">
+      <h4><span class="en-only">Battery (p05)</span><span class="es-only">Batería (p05)</span></h4>
+      <div class="seg"><span class="s-good" style="width:85.0%">17</span><span class="s-unk"  style="width:15.0%">3</span></div>
+      <div class="leg">
+        <span><span class="legend-dot" style="background:var(--good)"></span>OK 17</span>
+        <span><span class="legend-dot" style="background:var(--warn)"></span>Warn 0</span>
+        <span><span class="legend-dot" style="background:var(--bad)"></span>Critical 0</span>
+        <span><span class="legend-dot" style="background:var(--ink-muted)"></span>Unknown 3</span>
+      </div>
+      <div class="note"><span class="en-only">Flagged on p05 against 3.2V warn / 3.0V critical (Li-SOCl₂)</span><span class="es-only">Marcado p05 contra 3.2V</span></div>
+    </div>
+      
+    <div class="stack">
+      <h4><span class="en-only">Travel Time (p95)</span><span class="es-only">Tiempo de Viaje (p95)</span></h4>
+      <div class="seg"><span class="s-good" style="width:75.0%">15</span><span class="s-warn" style="width:5.0%">1</span><span class="s-bad"  style="width:15.0%">3</span><span class="s-unk"  style="width:5.0%">1</span></div>
+      <div class="leg">
+        <span><span class="legend-dot" style="background:var(--good)"></span>OK 15</span>
+        <span><span class="legend-dot" style="background:var(--warn)"></span>Warn 1</span>
+        <span><span class="legend-dot" style="background:var(--bad)"></span>Critical 3</span>
+        <span><span class="legend-dot" style="background:var(--ink-muted)"></span>Unknown 1</span>
+      </div>
+      <div class="note"><span class="en-only">Flagged on p95 against 30s warn / 60s critical</span><span class="es-only">Marcado p95 contra 30s/60s</span></div>
+    </div>
+      
+    <div class="stack">
+      <h4><span class="en-only">Max Data Gap</span><span class="es-only">Hueco Máximo</span></h4>
+      <div class="seg"><span class="s-good" style="width:55.0%">11</span><span class="s-bad"  style="width:45.0%">9</span></div>
+      <div class="leg">
+        <span><span class="legend-dot" style="background:var(--good)"></span>OK 11</span>
+        <span><span class="legend-dot" style="background:var(--warn)"></span>Warn 0</span>
+        <span><span class="legend-dot" style="background:var(--bad)"></span>Critical 9</span>
+        
+      </div>
+      <div class="note"><span class="en-only">Flagged on largest observed interval: 30min warn / 60min critical</span><span class="es-only">Mayor intervalo: 30min/60min</span></div>
+    </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Radio Signal (RSSI)</span><span class="es-only">Señal Radio (RSSI)</span></h2>
+    <div class="card">
+      <p><span class="en-only"><b>Headline:</b> 20/20 mesh radios pass — zero warn, zero critical. Median p05 = -57.0 dBm, median p50 = -54.0 dBm. The weakest p05 in the active set is <b>-68.0 dBm</b>, still 25+ dB clear of the warn floor.</span><span class="es-only"><b>Titular:</b> 20/20 radios pasan — sin advertencias ni críticos.</span></p>
+      <p><span class="en-only"><b>Interpretation:</b> 2.4 GHz coverage at Aurora 99 is strong. There are no canyon-of-noise spots inside F2/F3/F4 from a signal perspective. The handful of devices showing p05 near -65 dBm are normal mesh-edge values, not problems.</span><span class="es-only"><b>Interpretación:</b> Cobertura 2.4 GHz fuerte en todas las salas.</span></p>
+      <p><span class="en-only"><b>One quirk:</b> sink <code>SINKH2100004308</code> reports RSSI = 255 dBm — a sentinel value indicating "no upstream radio link" since sinks talk to the gateway via Ethernet/serial, not 2.4 GHz. This is expected, not a fault.</span><span class="es-only">El sink reporta 255 dBm (valor centinela esperado).</span></p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Battery Health</span><span class="es-only">Salud de Batería</span></h2>
+    <div class="card">
+      <p><span class="en-only"><b>Headline:</b> All 17 battery-reporting Wirepas nodes are healthy. Lowest p05 across the fleet is <b>3.54V</b>, well above the 3.4V OK threshold and the 3.2V warn line. The Li-SOCl₂ discharge curve stays flat at ~3.6V for most of cell life, then drops steeply — none of the Aurora 99 nodes are in that drop region.</span><span class="es-only"><b>Titular:</b> Todos los 17 nodos con batería &gt;3.5V.</span></p>
+      <p><span class="en-only"><b>No imminent replacements due.</b> If you want to plan ahead, sort by lowest p05 — the bottom 3 in this fleet are still 0.1V+ above the warn line.</span><span class="es-only"><b>Sin reemplazos inmediatos.</b></span></p>
+      <p><span class="en-only"><b>Note on null-battery devices:</b> 3 active mesh devices (1 repeater, 1 sink, 1 gateway) report no battery field. These are line-powered as designed.</span><span class="es-only">3 dispositivos sin batería son alimentados por red.</span></p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Telemetry Routing Latency</span><span class="es-only">Latencia de Enrutamiento</span></h2>
+    <div class="card">
+      <p><span class="en-only"><b>Healthy fleet floor:</b> median p95 travel time is <b>0.07 s</b>, with the great majority of devices routing packets in under 100 milliseconds (p95 around 0.04–0.08s — single-hop territory). The full distribution: 15 OK, 1 warn, 3 critical, 1 unknown.</span><span class="es-only"><b>Mediana p95 0.07 s.</b> Mayoría &lt;100ms.</span></p>
+      <p><span class="en-only"><b>Critical outliers:</b></span><span class="es-only"><b>Críticos:</b></span></p>
+      <ul>
+        <li><span class="en-only"><code>H3210019837</code> (Node, F3): p95 = 180.9s. Median is also elevated. Likely a deep-hop path from the back of F3, or a node that's retransmitting repeatedly. Worth checking neighbour-table count and physical line-of-sight to the F3 repeater.</span><span class="es-only"><code>H3210019837</code> F3 nodo p95 180.9s — ruta profunda o retransmisiones.</span></li>
+        <li><span class="en-only"><code>H3210019903</code> (Node, F3): p95 = 119.8s AND link quality is reporting 0 (critical). This combination — corrupt link metric + high travel — usually indicates a node stuck in a degraded retry loop. Top priority for site investigation in F3.</span><span class="es-only"><code>H3210019903</code> F3 nodo p95 119.8s + enlace 0 — bucle de reintento, prioridad alta.</span></li>
+        <li><span class="en-only"><code>H3210019873</code> (Node, unassigned): p95 = 76.7s. In the unassigned pool, so physical location is unclear — confirm whether it's deployed or staged.</span><span class="es-only"><code>H3210019873</code> sin asignar p95 76.7s — confirmar ubicación.</span></li>
+      </ul>
+      <p class="note"><span class="en-only">Note: this is the Wirepas-reported per-packet travel time from originating node → sink. The downstream sink → gateway → AROYA cloud hop is not exposed per-device in the public API; the closest proxy is the "last_seen" timestamp, which sits ≤1h for 37 of 43 reporting devices — indicating the upstream pipeline is healthy.</span><span class="es-only">El viaje publicado es nodo → sink. El tramo sink → nube no se expone por dispositivo; last_seen ≤1h en 37/43 indica pipeline sano.</span></p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Travel Time / Mesh Topology</span><span class="es-only">Viaje / Topología</span></h2>
+    <div class="card">
+      <p><span class="en-only">Wirepas does not expose explicit hop count via the public_api charts endpoint, but per-packet travel time is a reliable proxy: single-hop nodes route in tens of milliseconds; multi-hop or retransmitting nodes climb into seconds. The Aurora 99 fleet sits in two well-defined groups:</span><span class="es-only">El viaje por paquete es proxy de saltos: nodos sanos &lt;100ms, los 3 críticos en segundos.</span></p>
+      <ul>
+        <li><span class="en-only"><b>Healthy single-hop / near-source group (n=15):</b> p95 travel between 0.04s and 0.08s — these are talking directly to a sink or one repeater hop away. The mesh backbone is doing its job.</span><span class="es-only">Grupo sano n=15: 0.04–0.08s p95.</span></li>
+        <li><span class="en-only"><b>Multi-hop / congested group (n=4):</b> p95 travel between 51s and 181s. Disproportionate routing cost. Whether this is a deep mesh path or a re-pair candidate is a site visit question.</span><span class="es-only">Grupo profundo/congestionado n=4: 51–181s.</span></li>
+      </ul>
+      <p><span class="en-only"><b>No isolated nodes detected</b> among the 20 reporting devices — every active mesh device has reached the sink in the window. The 38 silent devices are a separate problem (provisioning / decommission, not topology).</span><span class="es-only">Sin nodos aislados entre los activos. Los 38 silenciosos son otro problema.</span></p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Top-5 Recommended Actions</span><span class="es-only">Top-5 Acciones Recomendadas</span></h2>
+    <table>
+      <thead><tr><th>#</th><th>Serial</th><th>Model</th><th>Room</th><th><span class="en-only">Why critical</span><span class="es-only">Por qué</span></th><th><span class="en-only">Max gap</span><span class="es-only">Hueco</span></th><th><span class="en-only">Last seen</span><span class="es-only">Última</span></th><th><span class="en-only">Urgency</span><span class="es-only">Urgencia</span></th><th><span class="en-only">Action</span><span class="es-only">Acción</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td><code>H3430003333-ter15</code></td>
+          <td>ter15</td>
+          <td>F2</td>
+          <td>data gap</td>
+          <td class="num">7,185 min</td>
+          <td class="num">0.2 h</td>
+          <td><span class="pill warn">P2 — investigate</span></td>
+          <td>Came back online — verify provisioning, watch 48h</td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td><code>T12-00121381</code></td>
+          <td>ter12</td>
+          <td>F3</td>
+          <td>data gap</td>
+          <td class="num">7,185 min</td>
+          <td class="num">0.2 h</td>
+          <td><span class="pill warn">P2 — investigate</span></td>
+          <td>Came back online — verify provisioning, watch 48h</td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td><code>H3430003323</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td>data gap</td>
+          <td class="num">6,729 min</td>
+          <td class="num">0.2 h</td>
+          <td><span class="pill warn">P2 — investigate</span></td>
+          <td>Came back online — verify provisioning, watch 48h</td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td><code>H3430003332-ter15</code></td>
+          <td>ter15</td>
+          <td>(unassigned)</td>
+          <td>data gap</td>
+          <td class="num">6,726 min</td>
+          <td class="num">0.2 h</td>
+          <td><span class="pill warn">P2 — investigate</span></td>
+          <td>Came back online — verify provisioning, watch 48h</td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td><code>H3430003335-ter15</code></td>
+          <td>ter15</td>
+          <td>(unassigned)</td>
+          <td>data gap</td>
+          <td class="num">6,711 min</td>
+          <td class="num">0.2 h</td>
+          <td><span class="pill warn">P2 — investigate</span></td>
+          <td>Came back online — verify provisioning, watch 48h</td>
+        </tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Per-Room Detail</span><span class="es-only">Detalle por Sala</span></h2>
+    <p class="note"><span class="en-only">Click a chip to filter device-level metrics by room.</span><span class="es-only">Haga clic en una sala para filtrar.</span></p>
+    <div class="room-selector"><span class="room-chip active" data-room="ALL"><span class="en-only">All Rooms</span><span class="es-only">Todas</span><span class="chip-count">81</span></span><span class="room-chip" data-room="F2">F2<span class="chip-count">12</span></span><span class="room-chip" data-room="F3">F3<span class="chip-count">12</span></span><span class="room-chip" data-room="F4">F4<span class="chip-count">2</span></span><span class="room-chip" data-room="Flower_Room_1">Flower Room 1<span class="chip-count">3</span></span><span class="room-chip" data-room="Flower_Room_2">Flower Room 2<span class="chip-count">1</span></span><span class="room-chip" data-room="_unassigned_">(unassigned)<span class="chip-count">51</span></span></div>
+    <div class="room-panel active" data-room="ALL">
+        <h3>All 81 Devices</h3>
+        <table>
+          <thead><tr>
+            <th><span class="en-only">Serial</span><span class="es-only">Serie</span></th>
+            <th><span class="en-only">Model</span><span class="es-only">Modelo</span></th>
+            <th><span class="en-only">Room</span><span class="es-only">Sala</span></th>
+            <th><span class="en-only">RSSI (p05)</span><span class="es-only">RSSI</span></th>
+            <th><span class="en-only">Battery (p05)</span><span class="es-only">Batería</span></th>
+            <th><span class="en-only">Travel (p95)</span><span class="es-only">Viaje</span></th>
+            <th><span class="en-only">Max Gap</span><span class="es-only">Hueco</span></th>
+            <th><span class="en-only">Last Seen</span><span class="es-only">Última</span></th>
+            <th><span class="en-only">Overall</span><span class="es-only">Total</span></th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td><code>A14G200007682</code></td>
+              <td>atm14</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">1,083 min</span></td>
+              <td class="num">17.4 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>A14G200007752</code></td>
+              <td>atm14</td>
+              <td>F4</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">2,886 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019652</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-49.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.69 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.08 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,537 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019837</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-50.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.88 V</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">180.94 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019845</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-56.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.72 V</span></td>
+              <td><span class="pill warn">WARN</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">51.8 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">360 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019851</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-68.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.7 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.06 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">198 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019852</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-60.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.54 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.06 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">5,259 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019873</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-60.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.7 V</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">76.71 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019903</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.66 V</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">119.77 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003323</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-53.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.64 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.05 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,729 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003323-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,729 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003331</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-56.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.64 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.05 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,540 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003331-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,540 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003332</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-64.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.63 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.06 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,705 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003332-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,726 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003333-ter15</code></td>
+              <td>ter15</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">7,185 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003335</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-57.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.63 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.05 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,297 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003335-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,711 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H4110005097</code></td>
+              <td>repeater</td>
+              <td>F4</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-64.0 dBm</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.07 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">444 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121348</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">4,842 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121381</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">7,185 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121387</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">1,305 min</span></td>
+              <td class="num">112.0 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121444</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">1,491 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121528</code></td>
+              <td>ter12</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">2,883 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121537</code></td>
+              <td>ter12</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">2,883 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121651</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">4,137 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>A14G200007753</code></td>
+              <td>atm14</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">9.0 min</span></td>
+              <td class="num">48.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019811</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-58.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.66 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.07 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019838</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-57.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.66 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.07 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019839</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-52.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.72 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.05 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019857</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-58.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.6 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.04 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019876</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-59.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.75 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">7.21 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003326</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-55.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.65 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.08 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003326-ter15</code></td>
+              <td>ter15</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H4110005101</code></td>
+              <td>repeater</td>
+              <td>F2</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-58.0 dBm</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.06 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6.0 min</span></td>
+              <td class="num">17.4 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>SINKH2100004308</code></td>
+              <td>sink</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">255 dBm</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6.0 min</span></td>
+              <td class="num">115.0 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121431</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121437</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121468</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121472</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121499</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121621</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">48.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121679</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>B014459</code></td>
+              <td>sq-521</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H1300004553</code></td>
+              <td>repeater</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H1300004576</code></td>
+              <td>repeater</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H1300004761</code></td>
+              <td>repeater</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H1300004769</code></td>
+              <td>repeater</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H2100004285</code></td>
+              <td>gateway</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H2100004308</code></td>
+              <td>gateway</td>
+              <td>Flower Room 1</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019628</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019653</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019667</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019693</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019835</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019853</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019854</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019855</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019871</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019872</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019874</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019877</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019878</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210024425</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003329</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003329-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003333</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003336</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003336-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H4110005078</code></td>
+              <td>repeater</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>SINKH2100004285</code></td>
+              <td>sink</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121248</code></td>
+              <td>ter12</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121380</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121416</code></td>
+              <td>ter12</td>
+              <td>Flower Room 1</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121471</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121480</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121531</code></td>
+              <td>ter12</td>
+              <td>Flower Room 1</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121548</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121626</code></td>
+              <td>ter12</td>
+              <td>Flower Room 2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121658</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121667</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr></tbody>
+        </table></div><div class="room-panel" data-room="F2">
+        <div class="card">
+          <p><b>12 devices</b> · 3 mesh-radio · <span class="pill bad">4 crit</span> <span class="pill bad">4 silent</span> <span class="pill warn">0 warn</span> <span class="pill good">4 ok</span></p>
+          <p class="note"><span class="en-only">Models:</span><span class="es-only">Modelos:</span> node×5, ter12×3, ter15×2, repeater×1, atm14×1</p>
+          <p class="note"><span class="en-only">Median RSSI (p50):</span><span class="es-only">RSSI mediana:</span> -55.0 dBm · <span class="en-only">Min battery (p05):</span><span class="es-only">Bat. mín:</span> 3.65 V · <span class="en-only">Median travel (p95):</span><span class="es-only">Viaje mediana:</span> 0.07 s</p>
+        </div>
+        <h3>F2</h3>
+        <table>
+          <thead><tr>
+            <th><span class="en-only">Serial</span><span class="es-only">Serie</span></th>
+            <th><span class="en-only">Model</span><span class="es-only">Modelo</span></th>
+            <th><span class="en-only">Room</span><span class="es-only">Sala</span></th>
+            <th><span class="en-only">RSSI (p05)</span><span class="es-only">RSSI</span></th>
+            <th><span class="en-only">Battery (p05)</span><span class="es-only">Batería</span></th>
+            <th><span class="en-only">Travel (p95)</span><span class="es-only">Viaje</span></th>
+            <th><span class="en-only">Max Gap</span><span class="es-only">Hueco</span></th>
+            <th><span class="en-only">Last Seen</span><span class="es-only">Última</span></th>
+            <th><span class="en-only">Overall</span><span class="es-only">Total</span></th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td><code>A14G200007682</code></td>
+              <td>atm14</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">1,083 min</span></td>
+              <td class="num">17.4 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003333-ter15</code></td>
+              <td>ter15</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">7,185 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121528</code></td>
+              <td>ter12</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">2,883 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121537</code></td>
+              <td>ter12</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">2,883 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019811</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-58.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.66 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.07 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003326</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-55.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.65 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.08 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003326-ter15</code></td>
+              <td>ter15</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H4110005101</code></td>
+              <td>repeater</td>
+              <td>F2</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-58.0 dBm</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.06 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6.0 min</span></td>
+              <td class="num">17.4 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019667</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019855</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003333</code></td>
+              <td>node</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121248</code></td>
+              <td>ter12</td>
+              <td>F2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr></tbody>
+        </table></div><div class="room-panel" data-room="F3">
+        <div class="card">
+          <p><b>12 devices</b> · 5 mesh-radio · <span class="pill bad">6 crit</span> <span class="pill bad">1 silent</span> <span class="pill warn">0 warn</span> <span class="pill good">5 ok</span></p>
+          <p class="note"><span class="en-only">Models:</span><span class="es-only">Modelos:</span> ter12×5, node×5, repeater×1, atm14×1</p>
+          <p class="note"><span class="en-only">Median RSSI (p50):</span><span class="es-only">RSSI mediana:</span> 0.0 dBm · <span class="en-only">Min battery (p05):</span><span class="es-only">Bat. mín:</span> 3.66 V · <span class="en-only">Median travel (p95):</span><span class="es-only">Viaje mediana:</span> 7.21 s</p>
+        </div>
+        <h3>F3</h3>
+        <table>
+          <thead><tr>
+            <th><span class="en-only">Serial</span><span class="es-only">Serie</span></th>
+            <th><span class="en-only">Model</span><span class="es-only">Modelo</span></th>
+            <th><span class="en-only">Room</span><span class="es-only">Sala</span></th>
+            <th><span class="en-only">RSSI (p05)</span><span class="es-only">RSSI</span></th>
+            <th><span class="en-only">Battery (p05)</span><span class="es-only">Batería</span></th>
+            <th><span class="en-only">Travel (p95)</span><span class="es-only">Viaje</span></th>
+            <th><span class="en-only">Max Gap</span><span class="es-only">Hueco</span></th>
+            <th><span class="en-only">Last Seen</span><span class="es-only">Última</span></th>
+            <th><span class="en-only">Overall</span><span class="es-only">Total</span></th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td><code>H3210019837</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-50.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.88 V</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">180.94 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019851</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-68.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.7 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.06 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">198 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019903</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.66 V</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">119.77 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121381</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">7,185 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121444</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">1,491 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121651</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">4,137 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>A14G200007753</code></td>
+              <td>atm14</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">9.0 min</span></td>
+              <td class="num">48.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019838</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-57.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.66 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.07 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019876</code></td>
+              <td>node</td>
+              <td>F3</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-59.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.75 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">7.21 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121621</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">48.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121679</code></td>
+              <td>ter12</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H4110005078</code></td>
+              <td>repeater</td>
+              <td>F3</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr></tbody>
+        </table></div><div class="room-panel" data-room="F4">
+        <div class="card">
+          <p><b>2 devices</b> · 1 mesh-radio · <span class="pill bad">2 crit</span> <span class="pill bad">0 silent</span> <span class="pill warn">0 warn</span> <span class="pill good">0 ok</span></p>
+          <p class="note"><span class="en-only">Models:</span><span class="es-only">Modelos:</span> repeater×1, atm14×1</p>
+          <p class="note"><span class="en-only">Median RSSI (p50):</span><span class="es-only">RSSI mediana:</span> -63.0 dBm · <span class="en-only">Min battery (p05):</span><span class="es-only">Bat. mín:</span> — · <span class="en-only">Median travel (p95):</span><span class="es-only">Viaje mediana:</span> 0.07 s</p>
+        </div>
+        <h3>F4</h3>
+        <table>
+          <thead><tr>
+            <th><span class="en-only">Serial</span><span class="es-only">Serie</span></th>
+            <th><span class="en-only">Model</span><span class="es-only">Modelo</span></th>
+            <th><span class="en-only">Room</span><span class="es-only">Sala</span></th>
+            <th><span class="en-only">RSSI (p05)</span><span class="es-only">RSSI</span></th>
+            <th><span class="en-only">Battery (p05)</span><span class="es-only">Batería</span></th>
+            <th><span class="en-only">Travel (p95)</span><span class="es-only">Viaje</span></th>
+            <th><span class="en-only">Max Gap</span><span class="es-only">Hueco</span></th>
+            <th><span class="en-only">Last Seen</span><span class="es-only">Última</span></th>
+            <th><span class="en-only">Overall</span><span class="es-only">Total</span></th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td><code>A14G200007752</code></td>
+              <td>atm14</td>
+              <td>F4</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">2,886 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H4110005097</code></td>
+              <td>repeater</td>
+              <td>F4</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-64.0 dBm</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.07 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">444 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr></tbody>
+        </table></div><div class="room-panel" data-room="Flower_Room_1">
+        <div class="card">
+          <p><b>3 devices</b> · 0 mesh-radio · <span class="pill bad">0 crit</span> <span class="pill bad">3 silent</span> <span class="pill warn">0 warn</span> <span class="pill good">0 ok</span></p>
+          <p class="note"><span class="en-only">Models:</span><span class="es-only">Modelos:</span> ter12×2, gateway×1</p>
+          <p class="note"><span class="en-only">Median RSSI (p50):</span><span class="es-only">RSSI mediana:</span> — · <span class="en-only">Min battery (p05):</span><span class="es-only">Bat. mín:</span> — · <span class="en-only">Median travel (p95):</span><span class="es-only">Viaje mediana:</span> —</p>
+        </div>
+        <h3>Flower Room 1</h3>
+        <table>
+          <thead><tr>
+            <th><span class="en-only">Serial</span><span class="es-only">Serie</span></th>
+            <th><span class="en-only">Model</span><span class="es-only">Modelo</span></th>
+            <th><span class="en-only">Room</span><span class="es-only">Sala</span></th>
+            <th><span class="en-only">RSSI (p05)</span><span class="es-only">RSSI</span></th>
+            <th><span class="en-only">Battery (p05)</span><span class="es-only">Batería</span></th>
+            <th><span class="en-only">Travel (p95)</span><span class="es-only">Viaje</span></th>
+            <th><span class="en-only">Max Gap</span><span class="es-only">Hueco</span></th>
+            <th><span class="en-only">Last Seen</span><span class="es-only">Última</span></th>
+            <th><span class="en-only">Overall</span><span class="es-only">Total</span></th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td><code>H2100004308</code></td>
+              <td>gateway</td>
+              <td>Flower Room 1</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121416</code></td>
+              <td>ter12</td>
+              <td>Flower Room 1</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121531</code></td>
+              <td>ter12</td>
+              <td>Flower Room 1</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr></tbody>
+        </table></div><div class="room-panel" data-room="Flower_Room_2">
+        <div class="card">
+          <p><b>1 devices</b> · 0 mesh-radio · <span class="pill bad">0 crit</span> <span class="pill bad">1 silent</span> <span class="pill warn">0 warn</span> <span class="pill good">0 ok</span></p>
+          <p class="note"><span class="en-only">Models:</span><span class="es-only">Modelos:</span> ter12×1</p>
+          <p class="note"><span class="en-only">Median RSSI (p50):</span><span class="es-only">RSSI mediana:</span> — · <span class="en-only">Min battery (p05):</span><span class="es-only">Bat. mín:</span> — · <span class="en-only">Median travel (p95):</span><span class="es-only">Viaje mediana:</span> —</p>
+        </div>
+        <h3>Flower Room 2</h3>
+        <table>
+          <thead><tr>
+            <th><span class="en-only">Serial</span><span class="es-only">Serie</span></th>
+            <th><span class="en-only">Model</span><span class="es-only">Modelo</span></th>
+            <th><span class="en-only">Room</span><span class="es-only">Sala</span></th>
+            <th><span class="en-only">RSSI (p05)</span><span class="es-only">RSSI</span></th>
+            <th><span class="en-only">Battery (p05)</span><span class="es-only">Batería</span></th>
+            <th><span class="en-only">Travel (p95)</span><span class="es-only">Viaje</span></th>
+            <th><span class="en-only">Max Gap</span><span class="es-only">Hueco</span></th>
+            <th><span class="en-only">Last Seen</span><span class="es-only">Última</span></th>
+            <th><span class="en-only">Overall</span><span class="es-only">Total</span></th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td><code>T12-00121626</code></td>
+              <td>ter12</td>
+              <td>Flower Room 2</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr></tbody>
+        </table></div><div class="room-panel" data-room="_unassigned_">
+        <div class="card">
+          <p><b>51 devices</b> · 11 mesh-radio · <span class="pill bad">14 crit</span> <span class="pill bad">29 silent</span> <span class="pill warn">0 warn</span> <span class="pill good">8 ok</span></p>
+          <p class="note"><span class="en-only">Models:</span><span class="es-only">Modelos:</span> node×24, ter12×13, ter15×6, repeater×4, sink×2, sq-521×1, gateway×1</p>
+          <p class="note"><span class="en-only">Median RSSI (p50):</span><span class="es-only">RSSI mediana:</span> -55.0 dBm · <span class="en-only">Min battery (p05):</span><span class="es-only">Bat. mín:</span> 3.54 V · <span class="en-only">Median travel (p95):</span><span class="es-only">Viaje mediana:</span> 0.06 s</p>
+        </div>
+        <h3>(unassigned)</h3>
+        <table>
+          <thead><tr>
+            <th><span class="en-only">Serial</span><span class="es-only">Serie</span></th>
+            <th><span class="en-only">Model</span><span class="es-only">Modelo</span></th>
+            <th><span class="en-only">Room</span><span class="es-only">Sala</span></th>
+            <th><span class="en-only">RSSI (p05)</span><span class="es-only">RSSI</span></th>
+            <th><span class="en-only">Battery (p05)</span><span class="es-only">Batería</span></th>
+            <th><span class="en-only">Travel (p95)</span><span class="es-only">Viaje</span></th>
+            <th><span class="en-only">Max Gap</span><span class="es-only">Hueco</span></th>
+            <th><span class="en-only">Last Seen</span><span class="es-only">Última</span></th>
+            <th><span class="en-only">Overall</span><span class="es-only">Total</span></th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td><code>H3210019652</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-49.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.69 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.08 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,537 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019845</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-56.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.72 V</span></td>
+              <td><span class="pill warn">WARN</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">51.8 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">360 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019852</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-60.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.54 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.06 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">5,259 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019873</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-60.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.7 V</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">76.71 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003323</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-53.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.64 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.05 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,729 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003323-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,729 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003331</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-56.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.64 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.05 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,540 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003331-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,540 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003332</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-64.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.63 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.06 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,705 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003332-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,726 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003335</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-57.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.63 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.05 s</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,297 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003335-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6,711 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121348</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">4,842 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121387</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill bad">CRITICAL</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">1,305 min</span></td>
+              <td class="num">112.0 h</td>
+              <td><span class="pill bad">CRITICAL</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019839</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-52.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.72 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.05 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019857</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">-58.0 dBm</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.6 V</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">0.04 s</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>SINKH2100004308</code></td>
+              <td>sink</td>
+              <td>(unassigned)</td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">255 dBm</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">6.0 min</span></td>
+              <td class="num">115.0 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121431</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121437</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121468</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121472</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121499</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill good">OK</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">3.0 min</span></td>
+              <td class="num">0.2 h</td>
+              <td><span class="pill good">OK</span></td>
+            </tr>
+            <tr>
+              <td><code>B014459</code></td>
+              <td>sq-521</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H1300004553</code></td>
+              <td>repeater</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H1300004576</code></td>
+              <td>repeater</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H1300004761</code></td>
+              <td>repeater</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H1300004769</code></td>
+              <td>repeater</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H2100004285</code></td>
+              <td>gateway</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019628</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019653</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019693</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019835</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019853</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019854</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019871</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019872</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019874</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019877</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210019878</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3210024425</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003329</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003329-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003336</code></td>
+              <td>node</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>H3430003336-ter15</code></td>
+              <td>ter15</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>SINKH2100004285</code></td>
+              <td>sink</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121380</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121471</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121480</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121548</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121658</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr>
+            <tr>
+              <td><code>T12-00121667</code></td>
+              <td>ter12</td>
+              <td>(unassigned)</td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td><span class="pill muted">—</span><br><span class="num" style="font-size:11px;color:var(--ink-muted)">—</span></td>
+              <td class="num">—</td>
+              <td><span class="pill bad">SILENT</span></td>
+            </tr></tbody>
+        </table></div>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Critical Device Roster (26 devices)</span><span class="es-only">Lista de Críticos (26)</span></h2>
+    
+    <table>
+      <thead><tr><th>Serial</th><th>Model</th><th>Room</th><th><span class="en-only">Critical reasons</span><span class="es-only">Razones</span></th><th><span class="en-only">Max gap</span><span class="es-only">Hueco</span></th><th><span class="en-only">Travel p95</span><span class="es-only">Viaje</span></th><th><span class="en-only">Last seen</span><span class="es-only">Última</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>H3430003333-ter15</code></td>
+          <td>ter15</td>
+          <td>F2</td>
+          <td>gap</td>
+          <td class="num">7,185 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>T12-00121381</code></td>
+          <td>ter12</td>
+          <td>F3</td>
+          <td>gap</td>
+          <td class="num">7,185 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3430003323</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">6,729 min</td>
+          <td class="num">0.05 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3430003323-ter15</code></td>
+          <td>ter15</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">6,729 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3430003332-ter15</code></td>
+          <td>ter15</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">6,726 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3430003335-ter15</code></td>
+          <td>ter15</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">6,711 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3430003332</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">6,705 min</td>
+          <td class="num">0.06 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3430003331</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">6,540 min</td>
+          <td class="num">0.05 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3430003331-ter15</code></td>
+          <td>ter15</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">6,540 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3210019652</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">6,537 min</td>
+          <td class="num">0.08 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3430003335</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">6,297 min</td>
+          <td class="num">0.05 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3210019852</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">5,259 min</td>
+          <td class="num">0.06 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>T12-00121348</code></td>
+          <td>ter12</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">4,842 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>T12-00121651</code></td>
+          <td>ter12</td>
+          <td>F3</td>
+          <td>gap</td>
+          <td class="num">4,137 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>A14G200007752</code></td>
+          <td>atm14</td>
+          <td>F4</td>
+          <td>gap</td>
+          <td class="num">2,886 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>T12-00121528</code></td>
+          <td>ter12</td>
+          <td>F2</td>
+          <td>gap</td>
+          <td class="num">2,883 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>T12-00121537</code></td>
+          <td>ter12</td>
+          <td>F2</td>
+          <td>gap</td>
+          <td class="num">2,883 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>T12-00121444</code></td>
+          <td>ter12</td>
+          <td>F3</td>
+          <td>gap</td>
+          <td class="num">1,491 min</td>
+          <td class="num">—</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>T12-00121387</code></td>
+          <td>ter12</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">1,305 min</td>
+          <td class="num">—</td>
+          <td class="num">112.0 h</td>
+        </tr>
+        <tr>
+          <td><code>A14G200007682</code></td>
+          <td>atm14</td>
+          <td>F2</td>
+          <td>gap</td>
+          <td class="num">1,083 min</td>
+          <td class="num">—</td>
+          <td class="num">17.4 h</td>
+        </tr>
+        <tr>
+          <td><code>H4110005097</code></td>
+          <td>repeater</td>
+          <td>F4</td>
+          <td>gap</td>
+          <td class="num">444 min</td>
+          <td class="num">0.07 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3210019845</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td>gap</td>
+          <td class="num">360 min</td>
+          <td class="num">51.8 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3210019851</code></td>
+          <td>node</td>
+          <td>F3</td>
+          <td>gap</td>
+          <td class="num">198 min</td>
+          <td class="num">0.06 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3210019837</code></td>
+          <td>node</td>
+          <td>F3</td>
+          <td>travel</td>
+          <td class="num">6.0 min</td>
+          <td class="num">180.94 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3210019903</code></td>
+          <td>node</td>
+          <td>F3</td>
+          <td>link, travel</td>
+          <td class="num">3.0 min</td>
+          <td class="num">119.77 s</td>
+          <td class="num">0.2 h</td>
+        </tr>
+        <tr>
+          <td><code>H3210019873</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td>travel</td>
+          <td class="num">3.0 min</td>
+          <td class="num">76.71 s</td>
+          <td class="num">0.2 h</td>
+        </tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Silent Devices (38)</span><span class="es-only">Silenciosos (38)</span></h2>
+    <p class="note"><span class="en-only">Zero data in the 14-day window. Triage: confirm whether each is physically deployed (needs intervention) or retired but not flagged in /devices/ (decommission). Silent by model: node×17, ter12×10, repeater×5, gateway×2, ter15×2, sq-521×1, sink×1. Silent by room: (unassigned)×29, F2×4, Flower Room 1×3, Flower Room 2×1, F3×1.</span><span class="es-only">Sin datos en 14d. Triaje: confirmar despliegue físico o retiro. Por modelo: node×17, ter12×10, repeater×5, gateway×2, ter15×2, sq-521×1, sink×1.</span></p>
+    
+    <table>
+      <thead><tr><th>Serial</th><th>Model</th><th>Room</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr class="muted-row">
+          <td><code>H2100004285</code></td>
+          <td>gateway</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H2100004308</code></td>
+          <td>gateway</td>
+          <td>Flower Room 1</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019628</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019653</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019667</code></td>
+          <td>node</td>
+          <td>F2</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019693</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019835</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019853</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019854</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019855</code></td>
+          <td>node</td>
+          <td>F2</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019871</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019872</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019874</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019877</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210019878</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3210024425</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3430003329</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3430003333</code></td>
+          <td>node</td>
+          <td>F2</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3430003336</code></td>
+          <td>node</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H1300004553</code></td>
+          <td>repeater</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H1300004576</code></td>
+          <td>repeater</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H1300004761</code></td>
+          <td>repeater</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H1300004769</code></td>
+          <td>repeater</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H4110005078</code></td>
+          <td>repeater</td>
+          <td>F3</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>SINKH2100004285</code></td>
+          <td>sink</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>B014459</code></td>
+          <td>sq-521</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121248</code></td>
+          <td>ter12</td>
+          <td>F2</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121380</code></td>
+          <td>ter12</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121416</code></td>
+          <td>ter12</td>
+          <td>Flower Room 1</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121471</code></td>
+          <td>ter12</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121480</code></td>
+          <td>ter12</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121531</code></td>
+          <td>ter12</td>
+          <td>Flower Room 1</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121548</code></td>
+          <td>ter12</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121626</code></td>
+          <td>ter12</td>
+          <td>Flower Room 2</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121658</code></td>
+          <td>ter12</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>T12-00121667</code></td>
+          <td>ter12</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3430003329-ter15</code></td>
+          <td>ter15</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr>
+        <tr class="muted-row">
+          <td><code>H3430003336-ter15</code></td>
+          <td>ter15</td>
+          <td>(unassigned)</td>
+          <td><span class="pill bad">SILENT</span></td>
+        </tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="en-only">AROYA-Flagged Connectivity Issues</span><span class="es-only">Problemas Conectividad AROYA</span></h2>
+    <div class="card">
+      <p><span class="en-only">The AROYA <code>/alerts</code> endpoint returned HTTP 404 for facility 3415 — this facility does not have computed alerts enabled in the SPA. The fallback chart-scanned <code>/rooms/&lt;id&gt;/chart/</code> path returned 215,097 records back-tagged to a different facility (a known scope-leak quirk), so we excluded it. <b>The reliability picture in this report therefore comes purely from per-device chart endpoints, not from AROYA's own alert layer.</b></span><span class="es-only">El endpoint /alerts devolvió 404 para esta instalación; la auditoría usa solo /devices/&lt;id&gt;/chart/.</span></p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Open Questions / Followups</span><span class="es-only">Preguntas Abiertas</span></h2>
+    <div class="card">
+      <ul style="margin:0;padding-left:22px;line-height:1.7">
+        <li><span class="en-only"><b>Flower Room 1 + Flower Room 2 vs F1–F7:</b> the older "Flower Room N" room IDs only carry silent devices, while operations clearly run through the "F2/F3/F4" set. Likely a legacy room/zone schema that should be cleaned up — confirm with the customer whether Flower Room 1/2 can be archived in AROYA, and whether F1/F5/F6/F7 should exist on file but currently carry zero devices.</span><span class="es-only">Limpiar salas legado "Flower Room 1/2" vs "F1–F7".</span></li>
+        <li><span class="en-only"><b>51 of 81 devices have no room assignment.</b> Some of these are clearly active (the 14 critical nodes reporting in the last hour) — they need to be assigned to a room so this report can attribute them. Others are silent and likely just inventory ghosts.</span><span class="es-only">51 de 81 dispositivos sin sala asignada.</span></li>
+        <li><span class="en-only"><b>F3 is the genuine concern.</b> 6 of 12 devices critical, including the two travel-time outliers (H3210019837, H3210019903) and a node + ter15 pair (H3430003333) silent. Worth a focused F3 site walk-through.</span><span class="es-only">F3 es la sala a investigar: 6 de 12 críticos.</span></li>
+        <li><span class="en-only"><b>F4 has only 2 devices and both are critical.</b> Either F4 is sparsely instrumented and the two pieces of kit there are failing, or F4 has been partly migrated and the leftover devices should be relocated. Confirm intent with cultivation.</span><span class="es-only">F4 solo 2 dispositivos, ambos críticos.</span></li>
+        <li><span class="en-only"><b>Sink <code>SINKH2100004308</code> last reported 115 hours ago.</b> Worth confirming whether this is the live primary sink or a decommissioned spare — a 5-day silence on the sink itself would be a much bigger story than anything in the per-node table.</span><span class="es-only">El sink no reporta hace 115h — confirmar si activo.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="en-only">Data Quality &amp; Methodology</span><span class="es-only">Calidad de Datos y Metodología</span></h2>
+    <div class="card">
+      <ul style="margin:0;padding-left:22px;line-height:1.7">
+        <li><span class="en-only"><b>Inventory:</b> <code>GET /public_api/devices/?facility=3415</code> · 81 devices · pulled 2026-05-22 22:28 UTC.</span><span class="es-only">Inventario: 81 dispositivos.</span></li>
+        <li><span class="en-only"><b>Per-device telemetry:</b> <code>GET /public_api/devices/&lt;id&gt;/chart/</code> in 7 × 2-day chunks per device (567 calls). Native cadence varies by sensor (Wirepas radios ~5 min, TEROS ~3 min).</span><span class="es-only">Telemetría por dispositivo: 567 llamadas en chunks de 2 días.</span></li>
+        <li><span class="en-only"><b>Flag thresholds (AROYA-device-health defaults):</b> Battery p05 &lt;3.0V critical / &lt;3.2V warn · Signal p05 &lt;-95 dBm critical / &lt;-85 dBm warn · Link p05 &lt;40 critical / &lt;60 warn · Travel p95 &gt;60s critical / &gt;30s warn · Gap &gt;60min critical / &gt;30min warn.</span><span class="es-only">Umbrales por defecto del skill aroya-device-health.</span></li>
+        <li><span class="en-only"><b>Why p05/p95:</b> averages hide intermittent problems. A node solid 95% of the time but dropping out daily looks fine on a mean — p05/p95 catches the bad moments.</span><span class="es-only">p05/p95 captura los momentos malos que la media oculta.</span></li>
+        <li><span class="en-only"><b>Not in scope:</b> any agronomic data (VPD, dryback, yield, crop steering). This is strictly a device-side reliability audit — see Cian's standard facility audit reports for crop-side content.</span><span class="es-only">Sin datos agronómicos — solo lado dispositivo.</span></li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+<script>
+document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => {
+  const lang = btn.dataset.lang;
+  document.body.className = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+}));
+document.querySelectorAll('.theme-btn').forEach(btn => btn.addEventListener('click', () => {
+  const theme = btn.dataset.theme;
+  if (theme === 'light') window.location.href = window.location.pathname.replace('_dark.html', '.html');
+  else window.location.href = window.location.pathname.replace('.html', '_dark.html').replace('_dark_dark.html', '_dark.html');
+}));
+document.querySelectorAll('.room-chip').forEach(chip => chip.addEventListener('click', () => {
+  const room = chip.dataset.room;
+  document.querySelectorAll('.room-chip').forEach(c => c.classList.toggle('active', c.dataset.room === room));
+  document.querySelectorAll('.room-panel').forEach(p => p.classList.toggle('active', p.dataset.room === room));
+}));
+</script>
+</body>
+</html>
