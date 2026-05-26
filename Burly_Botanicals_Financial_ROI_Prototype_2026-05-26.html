@@ -91,6 +91,12 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
 .roi-pill.bad{background:var(--bad-bg);color:var(--bad)}
 .roi-pill.assumed{background:var(--app-blue-2);color:#0a3a55}
 :root[data-theme="dark"] .roi-pill.assumed{background:var(--app-blue-2);color:#e6f3fa}
+/* Wholesale $/lb source-tier pills — match the override hierarchy:
+   cultivator (tier 1) = green, state (tier 2) = amber, national (tier 3) = red. */
+.roi-pill.tier-cultivator{background:var(--good-bg);color:var(--good);border:1px solid var(--good)}
+.roi-pill.tier-state{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn)}
+.roi-pill.tier-national{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.roi-caveat-tier-summary{background:var(--bg-3);border-left:3px solid var(--warn);padding:10px 14px;border-radius:0 8px 8px 0;margin:8px 0 14px;font-size:13px;line-height:1.7}
 .roi-rec-table .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase}
 .roi-rec-table .owner.grower{background:var(--app-blue)}
 .roi-rec-table .owner.process{background:var(--ink-2)}
@@ -132,7 +138,7 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
   </div>
   <div class="meta">
     <span><b>Facility</b>Burly Botanicals (3920)</span>
-    <span><b>State</b>Pennsylvania</span>
+    <span><b>State</b>Oklahoma (Oklahoma City)</span>
     <span><b>Substrate</b>coco 2-gal Char-Coir (12409 rockwool)</span>
     <span><b>Window</b>2026-05-13 → 2026-05-22</span>
     <span><b>Active HGs</b>4 (3 active flower)</span>
@@ -143,13 +149,18 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
 </div>
 
 <div class="brad-note">
-  <b>For Brad (internal review).</b>
-  This is the Section 8.5 component, in isolation, against Burly placeholder data so the
-  math layer and renderer can be eyeballed before the Ryan/Juicy yield handoff. Three
-  lanes match your verbatim ask: (1) current losses, (2) projected gain from the top rec,
-  (3) where the next dollar goes (payback months). Yield-uplift is haircut hardest.
-  Wholesale $/lb is the national default and flagged — Cian's PA estimate is in the
-  caveat block below. Lean prose by design.
+  <b>For Brad (internal review · v2 — state inference live).</b>
+  Burly is in Oklahoma City. <code>facility_financials.yaml</code> now carries the
+  researched OKC numbers (OG&amp;E $0.085/kWh, OKC Utilities $0.00582/gal at the
+  dripper, Athena Pro $0.06/gal mixed feed, OK cultivation labor $16/hr) — but
+  <code>wholesale_price_per_lb</code> is intentionally <em>null</em> so the new
+  state-by-state pricing override hierarchy fires. Watch the amber
+  "state inference (OK: $700/lb)" pills next to every $-figure that uses
+  wholesale price; if Michael ever supplies a survey number it would flip them
+  green ("owner-supplied"); the red "national avg — needs owner override" tier
+  would fire only if the state were missing from <code>state_pricing.yaml</code>.
+  OK ~$700/lb is ~35% below the $1,081 national default — this is the textbook
+  "state inference matters" case for AROYA.
 </div>
 
 <section id="financial-roi">
@@ -165,15 +176,15 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
   <div class="kpis roi-kpis">
   <div class="kpi bad">
     <div class="label">Current losses · annual</div>
-    <div class="val">$15k</div>
-    <div class="delta">annualized vs facility's own best quartile · 2 defaulted input(s)</div>
-    <div class="roi-conf-row"><span class="roi-pill warn">haircut 0.4 · med</span></div>
+    <div class="val">$4.7k</div>
+    <div class="delta">annualized vs facility's own best quartile · 1 defaulted input(s)</div>
+    <div class="roi-conf-row"><span class="roi-pill bad">haircut 0.2 · low</span> <span class="roi-pill tier-state">state inference (OK: $700/lb)</span></div>
   </div>
   <div class="kpi good">
     <div class="label">Projected gain · top rec</div>
-    <div class="val">$59k/cycle</div>
+    <div class="val">$19k/cycle</div>
     <div class="delta">highest-$ owner-tagged rec · see table below</div>
-    <div class="roi-conf-row"><span class="roi-pill warn">haircut 0.4 · med</span></div>
+    <div class="roi-conf-row"><span class="roi-pill bad">haircut 0.2 · low</span> <span class="roi-pill tier-state">state inference (OK: $700/lb)</span></div>
   </div>
   <div class="kpi good">
     <div class="label">Where to spend · payback</div>
@@ -187,7 +198,7 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
   <h3>Yield-CV trend · last 4 HGs</h3>
   <p class="muted" style="margin-top:-4px">
     Predictability of revenue. Current CV = <b>60.5%</b>.
-    Halving it recovers <b>$6.0k</b>/cycle <span class="roi-pill warn">haircut 0.4 · med</span>.
+    Halving it recovers <b>$3.9k</b>/cycle <span class="roi-pill warn">haircut 0.4 · med</span> <span class="roi-pill tier-state">state inference (OK: $700/lb)</span>.
   </p>
   <div class="chart-canvas" style="height:200px">
     <canvas id="roi-cv-chart"></canvas>
@@ -233,15 +244,15 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
   <td><span class="owner ">Michael</span></td>
   <td>Triple P1 shot duration + push feed EC (Cycle 41 stretch)<div class="rec-room">16868 · Cycle 41 Wk 2–3 stretch</div></td>
   <td>yield_lift</td>
-  <td class="num"><b>$59k/cycle</b></td>
-  <td><span class="roi-pill warn">haircut 0.4 · med</span></td>
+  <td class="num"><b>$19k/cycle</b><div style='margin-top:4px'><span class="roi-pill tier-state">state inference (OK: $700/lb)</span></div></td>
+  <td><span class="roi-pill bad">haircut 0.2 · low</span></td>
   <td>1 cycle (Cycle 42)</td>
   <td><div class="rec-desc">P1 shot 60s → 180–240s, 4–6 shots in first 2h after P0 ends. P0 delay 2–3h. Feed EC 2.6–2.8 mS. Anchors stretch and builds the EC stack. Phase target: 20–30 absolute pp overnight dryback; current trajectory is well below.</div></td>
 </tr><tr>
   <td><span class="owner ">Michael</span></td>
   <td>Restore &#x27;Anchoring (Heavy DB)&#x27; phase in 13-phase template<div class="rec-room">Recipe template · Cycle 42+ stretch</div></td>
   <td>yield_lift</td>
-  <td class="num"><b>$30k/cycle</b></td>
+  <td class="num"><b>$19k/cycle</b><div style='margin-top:4px'><span class="roi-pill tier-state">state inference (OK: $700/lb)</span></div></td>
   <td><span class="roi-pill bad">haircut 0.2 · low</span></td>
   <td>1 cycle (Cycle 42)</td>
   <td><div class="rec-desc">Heavy P3 dryback (25–35 absolute pp on coco) at the very start of stretch is what anchors generative steering. Cycle 41&#x27;s failure here is the textbook case.</div></td>
@@ -249,7 +260,7 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
   <td><span class="owner ">Michael</span></td>
   <td>Hold Cycle 40 stack, plan ripening pull-back Wk 7<div class="rec-room">12403 · Cycle 40 Wk 6 Pump/Ripen entry</div></td>
   <td>risk_down</td>
-  <td class="num"><b>$6.0k/cycle</b></td>
+  <td class="num"><b>$3.9k/cycle</b><div style='margin-top:4px'><span class="roi-pill tier-state">state inference (OK: $700/lb)</span></div></td>
   <td><span class="roi-pill warn">haircut 0.4 · med</span></td>
   <td>Current cycle (1 cycle)</td>
   <td><div class="rec-desc">Substrate EC stack 5.25 mS up from 1.98 — phase target 6.0–8.0 mS through ripen. Drop feed EC to 2.0 mS Wk 7. Deepen P3 dryback into 25+ absolute pp.</div></td>
@@ -292,11 +303,12 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
 
   <div class="roi-caveat">
   <h3>Assumptions &amp; caveats</h3>
-  <p class="roi-caveat-state"><b>State-by-state $/lb required before external publish.</b> <code>wholesale_price_per_lb</code> defaults to the Cannabis Benchmarks national average (<b>$1081/lb</b>, May 2026). US regional wholesale spread is <b>~26&times;</b> (OK/MI/OR floors ~$100/lb, NJ/new-license premiums ~$2,598/lb). State-specific override (PA wholesale ~$1,200&ndash;1,500/lb retail-side per LeafLink 2025) MUST be supplied by owner survey before this section is published outside AROYA.</p>
+  <p class="roi-caveat-state"><b>Wholesale $/lb resolved via state inference (tier 2 of 3).</b> Facility state = <code>OK</code> &rarr; <b>$700/lb</b> (state_pricing.yaml). Cultivator override (tier 1) would replace this; national default (tier 3, $1081/lb) would overstate Oklahoma realized $/lb by ~35%. Owner survey still required before external publish to upgrade to <span class="roi-pill tier-cultivator">owner-supplied</span>.</p>
+  <p class="roi-caveat-tier-summary"><b>Wholesale $/lb override hierarchy — this report:</b><br><span class="roi-pill tier-state">6</span> figures derived from state inference for Oklahoma (OK: $700/lb).</p>
   <p>Defaulted inputs in this section
   (lowest confidence in section: <b>low</b>,
-  2 defaulted, 14 $-figures generated):</p>
-  <ul><li><code>wholesale_price_per_lb</code> &rarr; defaulted to <b>1081.0</b> <span class="roi-pill assumed">(assumed)</span></li><li><code>harvests_per_year</code> &rarr; defaulted to <b>5.0</b> <span class="roi-pill assumed">(assumed)</span></li></ul>
+  1 defaulted, 14 $-figures generated):</p>
+  <ul><li><code>harvests_per_year</code> &rarr; defaulted to <b>5.0</b> <span class="roi-pill assumed">(assumed)</span></li></ul>
   <p style="margin-top:14px"><b>Default sources</b> (re-validate annually):</p>
   <ul><li><b>Cannabis Benchmarks</b> — May 2026 regional spot index</li><li><b>ElectricityPlans</b> — 2025 US commercial avg $/kWh</li><li><b>TSRgrow Energy Cost Guide</b> — 2025 kWh/lb median</li><li><b>AROYA ROI Calculator</b> — 2025 internal — labor/nutrient/water defaults</li></ul>
   <p class="muted" style="margin-top:10px">
