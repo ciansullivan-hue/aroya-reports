@@ -212,19 +212,19 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
   <div class="kpis roi-lanes">
   <div class="kpi roi-lane bad">
   <div class="label">Energy</div>
-  <div class="val">n/a </div>
+  <div class="val">$42.50/lb <span class="roi-pill assumed">(assumed)</span></div>
   <div class="delta">kWh/lb × $/kWh — feed in owner bill to escape the (assumed) tier</div>
   <div class="roi-conf-row"><span class="roi-pill bad">haircut 0.2 · low</span></div>
 </div>
   <div class="kpi roi-lane bad">
   <div class="label">Water + Nutrient</div>
-  <div class="val">n/a </div>
+  <div class="val">$1.99/lb <span class="roi-pill assumed">(assumed)</span></div>
   <div class="delta">feed_gal × ($/gal water + $/gal nutrient) ÷ yield_lb</div>
   <div class="roi-conf-row"><span class="roi-pill bad">haircut 0.2 · low</span></div>
 </div>
   <div class="kpi roi-lane bad">
   <div class="label">Labor</div>
-  <div class="val">n/a </div>
+  <div class="val">$12.93/lb <span class="roi-pill assumed">(assumed)</span></div>
   <div class="delta">hr/cycle × $/hr ÷ yield_lb</div>
   <div class="roi-conf-row"><span class="roi-pill bad">haircut 0.2 · low</span></div>
 </div>
@@ -307,8 +307,8 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
   <p class="roi-caveat-tier-summary"><b>Wholesale $/lb override hierarchy — this report:</b><br><span class="roi-pill tier-state">6</span> figures derived from state inference for Oklahoma (OK: $700/lb).</p>
   <p>Defaulted inputs in this section
   (lowest confidence in section: <b>low</b>,
-  1 defaulted, 14 $-figures generated):</p>
-  <ul><li><code>harvests_per_year</code> &rarr; defaulted to <b>5.0</b> <span class="roi-pill assumed">(assumed)</span></li></ul>
+  5 defaulted, 14 $-figures generated):</p>
+  <ul><li><code>harvests_per_year</code> &rarr; defaulted to <b>5.0</b> <span class="roi-pill assumed">(assumed)</span></li><li><code>kwh_per_lb</code> &rarr; defaulted to <b>—</b> <span class="roi-pill assumed">(assumed)</span></li><li><code>feed_volume_gal_per_cycle</code> &rarr; defaulted to <b>—</b> <span class="roi-pill assumed">(assumed)</span></li><li><code>runoff_pct</code> &rarr; defaulted to <b>—</b> <span class="roi-pill assumed">(assumed)</span></li><li><code>labor_hours_per_cycle</code> &rarr; defaulted to <b>—</b> <span class="roi-pill assumed">(assumed)</span></li></ul>
   <p style="margin-top:14px"><b>Default sources</b> (re-validate annually):</p>
   <ul><li><b>Cannabis Benchmarks</b> — May 2026 regional spot index</li><li><b>ElectricityPlans</b> — 2025 US commercial avg $/kWh</li><li><b>TSRgrow Energy Cost Guide</b> — 2025 kWh/lb median</li><li><b>AROYA ROI Calculator</b> — 2025 internal — labor/nutrient/water defaults</li></ul>
   <p class="muted" style="margin-top:10px">
@@ -321,7 +321,7 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
 <footer>
   <div>Generated 2026-05-26 · AROYA Advanced — Financial ROI prototype · Burly Botanicals (placeholder)</div>
   <div style="margin-top:6px">
-    Math layer: <code>aroya-reporting/lib/financial_roi.py</code> · 30 tests passing ·
+    Math layer: <code>aroya-reporting/lib/financial_roi.py</code> · 65 tests passing ·
     Renderer: <code>aroya-reporting/lib/render_roi_section.py</code> ·
     Inputs: <code>clients/burly/facility_financials.yaml</code>
   </div>
