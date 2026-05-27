@@ -227,102 +227,684 @@
 
 <!-- 3. HVAC CAPACITY -->
 <section id="hvac">
-  <h2><span class="en-only">HVAC Capacity</span><span class="es-only">Capacidad HVAC</span></h2>
-  <p><span class="en-only">Per-room read on whether HVAC holds the room inside its phase VPD window, lights-on/off air-temp swing, RH compliance, and CO₂ dose. Hot rooms with negative DIF or RH excursions get flagged here before they show up as a steering problem in §5.</span><span class="es-only">Lectura por sala: HVAC manteniendo la ventana VPD de fase, swing de temperatura luces-on/off, cumplimiento HR vs objetivo y dosis CO₂.</span></p>
-  <div class="bp-scroll">
-  <table class="bp-table">
+  <h2><span class="en-only">HVAC Capacity &amp; Climate Load · Are the rooms able to hit their targets?</span><span class="es-only">Capacidad HVAC y carga climática</span></h2>
+
+  <div class="verdict bad">
+    <div class="v-head">⚠ HVAC capacity is the binding constraint on multiple Curaleaf NY rooms</div>
+    <p><span class="en-only"><b>Of the 27 active cultivation rooms, 17 carry a BAD HVAC verdict, 9 carry WARN, and 1 sit OK</b> for the 2-week window. <b>7 rooms run shallow or near-zero DIF</b> (lights-on within ±1°F of lights-off) — a signal that cooling capacity isn't separating the day and night thermal envelopes. <b>3 rooms exceed the day-air ceiling for their phase</b>. <b>16 rooms show a diurnal swing greater than 8°F</b> across the window. The worst swing observed is <b>NY F15 at 30.0°F</b>, meaning the room cannot hold its setpoint when load changes. The pattern across the cohort is uneven — early-flower / stretch and ripening rooms hold tighter envelopes than mid-bulking, where lights-on heat plus high CO₂ (mean 1,200+ ppm) plus transpiration push the latent + sensible load past the plant's modulating capacity. Root-zone substrate temps in the high-CO₂ bulking rooms run within 2–4°F of air — the slab is no longer acting as a thermal buffer, and irrigation can't compensate for what's fundamentally a climate-capacity gap.</span><span class="es-only">De las 27 salas activas, 17 tienen veredicto HVAC MALO, 9 con AVISO y 1 OK. 7 salas con DIF cercano a cero; 3 sobre techo de día; 16 con swing diurno &gt; 8°F.</span></p>
+  </div>
+
+  <p class="en-only" style="color:var(--ink-2);font-size:13px;margin:4px 0 10px">Signals below evaluate whether the climate plant has the <b>headroom</b> to hit the targets the recipe asks for — not just whether the current reading is on-band. A room can be "in band right now" and still be a capacity risk if it never gets the DIF, if it swings 8°F across the day, or if VPD-stress hours pile up. Lights-on (Temp on / VPD on / RH on / CO₂) is the 12-hour day window; lights-off (Temp off / VPD off) is the corresponding night.</p>
+
+  <div style="overflow-x:auto">
+  <table class="bp-table compact" style="font-size:12px">
     <thead><tr>
-      <th><span class="en-only">Room</span><span class="es-only">Sala</span></th>
-      <th><span class="en-only">Phase</span><span class="es-only">Fase</span></th>
-      <th class="num">VPD on (kPa)</th>
-      <th class="num">VPD off</th>
-      <th class="num">Temp on (°F)</th>
-      <th class="num">Temp off (°F)</th>
-      <th class="num">DIF (°F)</th>
-      <th class="num">RH on (%)</th>
-      <th class="num">CO₂ on (ppm)</th>
-      <th class="num">VPD-stress h/d</th>
-      <th><span class="en-only">Verdict</span><span class="es-only">Veredicto</span></th>
+      <th>Room · Phase</th>
+      <th>HVAC verdict</th>
+      <th>Day air (lights-on)</th>
+      <th>Night air</th>
+      <th>DIF</th>
+      <th>Diurnal swing</th>
+      <th>VPD on / off</th>
+      <th>VPD-stress</th>
+      <th>RH lights-on</th>
+      <th>CO₂ lights-on</th>
+      <th>Substrate · Δ vs air</th>
+      <th>Capacity flags</th>
     </tr></thead>
     <tbody>
-<tr><td><b>Veg 2</b></td><td><span class="phase veg">Vegetative</span></td><td class="num">0.87</td><td class="num">0.79</td><td class="num">78.6</td><td class="num">75.8</td><td class="num">2.8</td><td class="num">73.9</td><td class="num">634</td><td class="num">—</td><td><span class="pill good">in band</span></td></tr>
-<tr><td><b>Mom 1</b></td><td><span class="phase veg">Mother</span></td><td class="num">1.32</td><td class="num">1.19</td><td class="num">80.0</td><td class="num">75.1</td><td class="num">4.9</td><td class="num">62.3</td><td class="num">739</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>Mom 2</b></td><td><span class="phase veg">Mother</span></td><td class="num">1.31</td><td class="num">1.18</td><td class="num">79.5</td><td class="num">75.1</td><td class="num">4.4</td><td class="num">62.0</td><td class="num">744</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>Mom 3</b></td><td><span class="phase veg">Mother</span></td><td class="num">1.19</td><td class="num">1.07</td><td class="num">81.0</td><td class="num">76.5</td><td class="num">4.5</td><td class="num">67.2</td><td class="num">819</td><td class="num">high-VPD episodes</td><td><span class="pill bad">hot/dry</span></td></tr>
-<tr><td><b>NY F16 Veg</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">1.71</td><td class="num">1.54</td><td class="num">80.8</td><td class="num">80.1</td><td class="num">0.7</td><td class="num">52.5</td><td class="num">938</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F22</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">0.99</td><td class="num">0.89</td><td class="num">73.5</td><td class="num">72.0</td><td class="num">1.5</td><td class="num">64.7</td><td class="num">1612</td><td class="num">high-VPD episodes</td><td><span class="pill bad">hot/dry</span></td></tr>
-<tr><td><b>NY F3</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">0.71</td><td class="num">0.64</td><td class="num">67.0</td><td class="num">60.0</td><td class="num">7.0</td><td class="num">70.1</td><td class="num">973</td><td class="num">high-VPD episodes</td><td><span class="pill bad">hot/dry</span></td></tr>
-<tr><td><b>NY F5</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">1.32</td><td class="num">1.19</td><td class="num">75.1</td><td class="num">72.6</td><td class="num">2.5</td><td class="num">55.4</td><td class="num">1007</td><td class="num">high-VPD episodes</td><td><span class="pill bad">hot/dry</span></td></tr>
-<tr><td><b>NY F7</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">1.25</td><td class="num">1.12</td><td class="num">78.0</td><td class="num">73.1</td><td class="num">4.9</td><td class="num">61.9</td><td class="num">920</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F8</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">1.29</td><td class="num">1.16</td><td class="num">81.7</td><td class="num">75.7</td><td class="num">6.0</td><td class="num">65.4</td><td class="num">958</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F1</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.02</td><td class="num">0.91</td><td class="num">74.9</td><td class="num">72.6</td><td class="num">2.3</td><td class="num">65.2</td><td class="num">1011</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F11</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.07</td><td class="num">0.97</td><td class="num">73.9</td><td class="num">69.4</td><td class="num">4.5</td><td class="num">61.7</td><td class="num">1064</td><td class="num">high-VPD episodes</td><td><span class="pill bad">hot/dry</span></td></tr>
-<tr><td><b>NY F12</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.29</td><td class="num">1.16</td><td class="num">79.1</td><td class="num">74.1</td><td class="num">5.0</td><td class="num">62.4</td><td class="num">1055</td><td class="num">—</td><td><span class="pill good">in band</span></td></tr>
-<tr><td><b>NY F13</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.18</td><td class="num">1.06</td><td class="num">76.5</td><td class="num">73.7</td><td class="num">2.8</td><td class="num">62.2</td><td class="num">1346</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F14</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.17</td><td class="num">1.06</td><td class="num">80.3</td><td class="num">79.1</td><td class="num">1.2</td><td class="num">66.8</td><td class="num">1618</td><td class="num">high-VPD episodes</td><td><span class="pill bad">hot/dry</span></td></tr>
-<tr><td><b>NY F15</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.17</td><td class="num">1.05</td><td class="num">75.2</td><td class="num">64.1</td><td class="num">11.1</td><td class="num">61.5</td><td class="num">1212</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F2</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.17</td><td class="num">1.05</td><td class="num">74.9</td><td class="num">74.1</td><td class="num">0.8</td><td class="num">60.4</td><td class="num">1046</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F20</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.43</td><td class="num">1.29</td><td class="num">74.3</td><td class="num">73.5</td><td class="num">0.8</td><td class="num">50.5</td><td class="num">1296</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F23</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.33</td><td class="num">1.20</td><td class="num">73.2</td><td class="num">72.7</td><td class="num">0.5</td><td class="num">52.4</td><td class="num">950</td><td class="num">—</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F4</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.36</td><td class="num">1.22</td><td class="num">79.1</td><td class="num">71.8</td><td class="num">7.3</td><td class="num">60.2</td><td class="num">936</td><td class="num">—</td><td><span class="pill good">in band</span></td></tr>
-<tr><td><b>NY F10</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.54</td><td class="num">1.38</td><td class="num">78.2</td><td class="num">73.4</td><td class="num">4.8</td><td class="num">54.0</td><td class="num">1080</td><td class="num">—</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F17</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.67</td><td class="num">1.50</td><td class="num">72.0</td><td class="num">70.3</td><td class="num">1.7</td><td class="num">37.6</td><td class="num">993</td><td class="num">high-VPD episodes</td><td><span class="pill bad">hot/dry</span></td></tr>
-<tr><td><b>NY F18</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.33</td><td class="num">1.19</td><td class="num">75.7</td><td class="num">74.2</td><td class="num">1.5</td><td class="num">56.4</td><td class="num">967</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F19</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.39</td><td class="num">1.25</td><td class="num">75.8</td><td class="num">75.0</td><td class="num">0.8</td><td class="num">53.9</td><td class="num">1101</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F21</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.58</td><td class="num">1.42</td><td class="num">79.5</td><td class="num">79.0</td><td class="num">0.5</td><td class="num">54.0</td><td class="num">1400</td><td class="num">—</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F24</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.31</td><td class="num">1.18</td><td class="num">76.3</td><td class="num">75.7</td><td class="num">0.6</td><td class="num">57.7</td><td class="num">1226</td><td class="num">high-VPD episodes</td><td><span class="pill warn">review</span></td></tr>
-<tr><td><b>NY F9</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.41</td><td class="num">1.27</td><td class="num">76.2</td><td class="num">71.5</td><td class="num">4.7</td><td class="num">54.4</td><td class="num">1003</td><td class="num">—</td><td><span class="pill good">in band</span></td></tr>
+      <tr>
+      <td><b>NY F14</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>80.3°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>79.1°F</td>
+      <td><b>+1.2°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>10.9°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.17 / 1.06 kPa</td>
+      <td>0.8h<br><span class='small muted'>/day est off-band</span></td>
+      <td>66.8%</td>
+      <td>1618 ppm</td>
+      <td>77.4°F<br><span class='small'>Δ vs air -2.9°F</span></td>
+      <td><span class='small'>day air 80.3°F &gt; 80°F ceiling</span><br><span class='small'>DIF +1.2°F shallow vs 2–5°F target</span><br><span class='small'>diurnal swing 10.9°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F15</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>75.2°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>64.1°F</td>
+      <td><b>+11.1°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>30.0°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.17 / 1.05 kPa</td>
+      <td>0.8h<br><span class='small muted'>/day est off-band</span></td>
+      <td>61.5%</td>
+      <td>1212 ppm</td>
+      <td>72.0°F<br><span class='small'>Δ vs air -3.2°F</span></td>
+      <td><span class='small'>diurnal swing 30.0°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F21</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>79.5°F<br><span class='small muted'>band 72–78°F</span></td>
+      <td>79.0°F</td>
+      <td><b>+0.5°F</b><br><span class='small muted'>target 4–8°F</span></td>
+      <td>2.8°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.58 / 1.42 kPa</td>
+      <td>0.0h<br><span class='small muted'>/day est off-band</span></td>
+      <td>54.0%</td>
+      <td>1400 ppm</td>
+      <td>75.3°F<br><span class='small'>Δ vs air -4.2°F</span></td>
+      <td><span class='small'>day air 79.5°F &gt; 78°F ceiling</span><br><span class='small'>DIF +0.5°F shallow vs 4–8°F target</span></td>
+    </tr>
+      <tr>
+      <td><b>Veg 2</b> <span class='small muted'>Vegetative</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>78.6°F<br><span class='small muted'>band 75–82°F</span></td>
+      <td>75.8°F</td>
+      <td><b>+2.8°F</b><br><span class='small muted'>target 2–4°F</span></td>
+      <td>8.1°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>0.87 / 0.79 kPa</td>
+      <td>0.0h<br><span class='small muted'>/day est off-band</span></td>
+      <td>73.9%</td>
+      <td>634 ppm</td>
+      <td>76.6°F<br><span class='small'>Δ vs air -2.0°F</span></td>
+      <td><span class='small'>diurnal swing 8.1°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F1</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>74.9°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>72.6°F</td>
+      <td><b>+2.3°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>10.2°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.02 / 0.91 kPa</td>
+      <td>1.7h<br><span class='small muted'>/day est off-band</span></td>
+      <td>65.2%</td>
+      <td>1011 ppm</td>
+      <td>71.7°F<br><span class='small'>Δ vs air -3.2°F</span></td>
+      <td><span class='small'>diurnal swing 10.2°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F3</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>67.0°F<br><span class='small muted'>band 76–82°F</span></td>
+      <td>60.0°F</td>
+      <td><b>+7.0°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>29.8°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>0.71 / 0.64 kPa</td>
+      <td>2.3h<br><span class='small muted'>/day est off-band</span></td>
+      <td>70.1%</td>
+      <td>973 ppm</td>
+      <td>65.2°F<br><span class='small'>Δ vs air -1.8°F</span></td>
+      <td><span class='small'>diurnal swing 29.8°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F4</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>79.1°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>71.8°F</td>
+      <td><b>+7.3°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>20.2°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.36 / 1.22 kPa</td>
+      <td>0.0h<br><span class='small muted'>/day est off-band</span></td>
+      <td>60.2%</td>
+      <td>936 ppm</td>
+      <td>74.8°F<br><span class='small'>Δ vs air -4.3°F</span></td>
+      <td><span class='small'>diurnal swing 20.2°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F5</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>75.1°F<br><span class='small muted'>band 76–82°F</span></td>
+      <td>72.6°F</td>
+      <td><b>+2.5°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>13.4°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.32 / 1.19 kPa</td>
+      <td>1.3h<br><span class='small muted'>/day est off-band</span></td>
+      <td>55.4%</td>
+      <td>1007 ppm</td>
+      <td>70.3°F<br><span class='small'>Δ vs air -4.8°F</span></td>
+      <td><span class='small'>diurnal swing 13.4°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F7</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>78.0°F<br><span class='small muted'>band 76–82°F</span></td>
+      <td>73.1°F</td>
+      <td><b>+4.9°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>16.5°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.25 / 1.12 kPa</td>
+      <td>0.9h<br><span class='small muted'>/day est off-band</span></td>
+      <td>61.9%</td>
+      <td>920 ppm</td>
+      <td>73.9°F<br><span class='small'>Δ vs air -4.1°F</span></td>
+      <td><span class='small'>diurnal swing 16.5°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F8</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>81.7°F<br><span class='small muted'>band 76–82°F</span></td>
+      <td>75.7°F</td>
+      <td><b>+6.0°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>18.0°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.29 / 1.16 kPa</td>
+      <td>1.1h<br><span class='small muted'>/day est off-band</span></td>
+      <td>65.4%</td>
+      <td>958 ppm</td>
+      <td>77.3°F<br><span class='small'>Δ vs air -4.4°F</span></td>
+      <td><span class='small'>diurnal swing 18.0°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F10</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>78.2°F<br><span class='small muted'>band 72–78°F</span></td>
+      <td>73.4°F</td>
+      <td><b>+4.8°F</b><br><span class='small muted'>target 4–8°F</span></td>
+      <td>12.8°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.54 / 1.38 kPa</td>
+      <td>0.0h<br><span class='small muted'>/day est off-band</span></td>
+      <td>54.0%</td>
+      <td>1080 ppm</td>
+      <td>72.0°F<br><span class='small'>Δ vs air -6.2°F</span></td>
+      <td><span class='small'>day air 78.2°F &gt; 78°F ceiling</span><br><span class='small'>diurnal swing 12.8°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F18</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>75.7°F<br><span class='small muted'>band 72–78°F</span></td>
+      <td>74.2°F</td>
+      <td><b>+1.5°F</b><br><span class='small muted'>target 4–8°F</span></td>
+      <td>14.9°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.33 / 1.19 kPa</td>
+      <td>1.0h<br><span class='small muted'>/day est off-band</span></td>
+      <td>56.4%</td>
+      <td>967 ppm</td>
+      <td>73.4°F<br><span class='small'>Δ vs air -2.3°F</span></td>
+      <td><span class='small'>DIF +1.5°F shallow vs 4–8°F target</span><br><span class='small'>diurnal swing 14.9°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F11</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>73.9°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>69.4°F</td>
+      <td><b>+4.5°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>20.4°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.07 / 0.97 kPa</td>
+      <td>1.4h<br><span class='small muted'>/day est off-band</span></td>
+      <td>61.7%</td>
+      <td>1064 ppm</td>
+      <td>69.5°F<br><span class='small'>Δ vs air -4.4°F</span></td>
+      <td><span class='small'>diurnal swing 20.4°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F12</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>79.1°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>74.1°F</td>
+      <td><b>+5.0°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>16.3°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.29 / 1.16 kPa</td>
+      <td>0.0h<br><span class='small muted'>/day est off-band</span></td>
+      <td>62.4%</td>
+      <td>1055 ppm</td>
+      <td>75.5°F<br><span class='small'>Δ vs air -3.6°F</span></td>
+      <td><span class='small'>diurnal swing 16.3°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>Mom 1</b> <span class='small muted'>Mother</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>80.0°F<br><span class='small muted'>band 75–82°F</span></td>
+      <td>75.1°F</td>
+      <td><b>+4.9°F</b><br><span class='small muted'>target 2–4°F</span></td>
+      <td>14.3°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.32 / 1.19 kPa</td>
+      <td>2.2h<br><span class='small muted'>/day est off-band</span></td>
+      <td>62.3%</td>
+      <td>739 ppm</td>
+      <td>77.6°F<br><span class='small'>Δ vs air -2.4°F</span></td>
+      <td><span class='small'>diurnal swing 14.3°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>Mom 2</b> <span class='small muted'>Mother</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>79.5°F<br><span class='small muted'>band 75–82°F</span></td>
+      <td>75.1°F</td>
+      <td><b>+4.4°F</b><br><span class='small muted'>target 2–4°F</span></td>
+      <td>16.9°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.31 / 1.18 kPa</td>
+      <td>2.2h<br><span class='small muted'>/day est off-band</span></td>
+      <td>62.0%</td>
+      <td>744 ppm</td>
+      <td>76.8°F<br><span class='small'>Δ vs air -2.7°F</span></td>
+      <td><span class='small'>diurnal swing 16.9°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>Mom 3</b> <span class='small muted'>Mother</span></td>
+      <td><span class="pill bad">BAD</span></td>
+      <td>81.0°F<br><span class='small muted'>band 75–82°F</span></td>
+      <td>76.5°F</td>
+      <td><b>+4.5°F</b><br><span class='small muted'>target 2–4°F</span></td>
+      <td>13.3°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.19 / 1.07 kPa</td>
+      <td>1.4h<br><span class='small muted'>/day est off-band</span></td>
+      <td>67.2%</td>
+      <td>819 ppm</td>
+      <td>78.0°F<br><span class='small'>Δ vs air -3.0°F</span></td>
+      <td><span class='small'>diurnal swing 13.3°F (HVAC fighting setpoint)</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F13</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill warn">WARN</span></td>
+      <td>76.5°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>73.7°F</td>
+      <td><b>+2.8°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>7.9°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.18 / 1.06 kPa</td>
+      <td>0.7h<br><span class='small muted'>/day est off-band</span></td>
+      <td>62.2%</td>
+      <td>1346 ppm</td>
+      <td>73.3°F<br><span class='small'>Δ vs air -3.2°F</span></td>
+      <td><span class='small'>All HVAC capacity signals in range</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F17</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill warn">WARN</span></td>
+      <td>72.0°F<br><span class='small muted'>band 72–78°F</span></td>
+      <td>70.3°F</td>
+      <td><b>+1.7°F</b><br><span class='small muted'>target 4–8°F</span></td>
+      <td>4.4°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.67 / 1.50 kPa</td>
+      <td>1.0h<br><span class='small muted'>/day est off-band</span></td>
+      <td>37.6%</td>
+      <td>993 ppm</td>
+      <td>72.3°F<br><span class='small'>Δ vs air +0.3°F</span></td>
+      <td><span class='small'>DIF +1.7°F shallow vs 4–8°F target</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F19</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill warn">WARN</span></td>
+      <td>75.8°F<br><span class='small muted'>band 72–78°F</span></td>
+      <td>75.0°F</td>
+      <td><b>+0.8°F</b><br><span class='small muted'>target 4–8°F</span></td>
+      <td>5.8°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.39 / 1.25 kPa</td>
+      <td>0.7h<br><span class='small muted'>/day est off-band</span></td>
+      <td>53.9%</td>
+      <td>1101 ppm</td>
+      <td>72.4°F<br><span class='small'>Δ vs air -3.4°F</span></td>
+      <td><span class='small'>DIF +0.8°F shallow vs 4–8°F target</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F16 Veg</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill warn">WARN</span></td>
+      <td>80.8°F<br><span class='small muted'>band 76–82°F</span></td>
+      <td>80.1°F</td>
+      <td><b>+0.7°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>3.3°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.71 / 1.54 kPa</td>
+      <td>3.7h<br><span class='small muted'>/day est off-band</span></td>
+      <td>52.5%</td>
+      <td>938 ppm</td>
+      <td>75.6°F<br><span class='small'>Δ vs air -5.2°F</span></td>
+      <td><span class='small'>DIF +0.7°F shallow vs 2–5°F target</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F20</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill warn">WARN</span></td>
+      <td>74.3°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>73.5°F</td>
+      <td><b>+0.8°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>2.8°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.43 / 1.29 kPa</td>
+      <td>0.8h<br><span class='small muted'>/day est off-band</span></td>
+      <td>50.5%</td>
+      <td>1296 ppm</td>
+      <td>74.4°F<br><span class='small'>Δ vs air +0.1°F</span></td>
+      <td><span class='small'>DIF +0.8°F shallow vs 2–5°F target</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F22</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill warn">WARN</span></td>
+      <td>73.5°F<br><span class='small muted'>band 76–82°F</span></td>
+      <td>72.0°F</td>
+      <td><b>+1.5°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>6.2°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>0.99 / 0.89 kPa</td>
+      <td>0.7h<br><span class='small muted'>/day est off-band</span></td>
+      <td>64.7%</td>
+      <td>1612 ppm</td>
+      <td>71.1°F<br><span class='small'>Δ vs air -2.4°F</span></td>
+      <td><span class='small'>DIF +1.5°F shallow vs 2–5°F target</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F23</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill warn">WARN</span></td>
+      <td>73.2°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>72.7°F</td>
+      <td><b>+0.5°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>3.1°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.33 / 1.20 kPa</td>
+      <td>0.0h<br><span class='small muted'>/day est off-band</span></td>
+      <td>52.4%</td>
+      <td>950 ppm</td>
+      <td>74.0°F<br><span class='small'>Δ vs air +0.8°F</span></td>
+      <td><span class='small'>DIF +0.5°F shallow vs 2–5°F target</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F24</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill warn">WARN</span></td>
+      <td>76.3°F<br><span class='small muted'>band 72–78°F</span></td>
+      <td>75.7°F</td>
+      <td><b>+0.6°F</b><br><span class='small muted'>target 4–8°F</span></td>
+      <td>2.6°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.31 / 1.18 kPa</td>
+      <td>1.1h<br><span class='small muted'>/day est off-band</span></td>
+      <td>57.7%</td>
+      <td>1226 ppm</td>
+      <td>72.9°F<br><span class='small'>Δ vs air -3.4°F</span></td>
+      <td><span class='small'>DIF +0.6°F shallow vs 4–8°F target</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F2</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill warn">WARN</span></td>
+      <td>74.9°F<br><span class='small muted'>band 74–80°F</span></td>
+      <td>74.1°F</td>
+      <td><b>+0.8°F</b><br><span class='small muted'>target 2–5°F</span></td>
+      <td>3.5°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.17 / 1.05 kPa</td>
+      <td>0.8h<br><span class='small muted'>/day est off-band</span></td>
+      <td>60.4%</td>
+      <td>1046 ppm</td>
+      <td>74.2°F<br><span class='small'>Δ vs air -0.7°F</span></td>
+      <td><span class='small'>DIF +0.8°F shallow vs 2–5°F target</span></td>
+    </tr>
+      <tr>
+      <td><b>NY F9</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill good">OK</span></td>
+      <td>76.2°F<br><span class='small muted'>band 72–78°F</span></td>
+      <td>71.5°F</td>
+      <td><b>+4.7°F</b><br><span class='small muted'>target 4–8°F</span></td>
+      <td>4.1°F<br><span class='small muted'>14d air min→max</span></td>
+      <td>1.41 / 1.27 kPa</td>
+      <td>0.0h<br><span class='small muted'>/day est off-band</span></td>
+      <td>54.4%</td>
+      <td>1003 ppm</td>
+      <td>72.0°F<br><span class='small'>Δ vs air -4.2°F</span></td>
+      <td><span class='small'>All HVAC capacity signals in range</span></td>
+    </tr>
     </tbody>
   </table>
   </div>
+
+  <h3 style="margin-top:22px"><span class="en-only">What the HVAC signals mean — and what to size for</span><span class="es-only">Qué significan las señales HVAC y qué dimensionar</span></h3>
+  <p class="en-only"><b>NEGATIVE or near-zero DIF</b> in 7 rooms is the loudest signal. Lights-off should be the easy phase for HVAC because the sensible load drops 60–80%; if the room actually warms up after the lights cut, the plant is dumping latent heat (transpiration → condensation in the slab and on the canopy) faster than the dehumidifier can pull it. Either the dehumidifier is undersized, the condenser coil is at max delta-T already, or the cooling is set to "off" at night and only the dehum reheat is running. <b>Fix:</b> capacity audit of the dehum + condenser pair on the 7 flagged rooms, confirm cooling stays modulated at night, and verify the Argus / BMS setpoints match what AROYA reads at room level (drift between the two stacks is a recurring root cause).</p>
+  <p class="en-only"><b>Diurnal swing &gt; 8°F</b> in 16 room(s) — the most extreme being NY F15 at 30.0°F — says the room can't hold its setpoint when the lights come on. Either the recipe is asking for too steep a transition (lights-on shock load) or the cooling has to ramp from idle to max and the response lag is 30–90 minutes. <b>Fix:</b> stagger lights-on across the F-ring (rolling 5-minute offsets across the 24 flower rooms), pre-cool the room 30 min before lights-on, and re-rate the per-room HVAC sensible capacity against the actual lighting wattage (LED watts × density × duty cycle).</p>
+  <p class="en-only"><b>Substrate-vs-air delta:</b> in the bulking + early-stretch cohort, the substrate runs within 1–4°F of air for most rooms. With slabs at 76–78°F under 80°F day air, the root-zone steering window collapses — there's no thermal pull to dry the slab. <b>Fix:</b> drop the air-on band 2–4°F before adjusting any irrigation lever; the irrigation strategy can't compensate for an HVAC problem. The 78°F root-zone line is where ion uptake slows ~30%; several rooms here sit within 1°F of it.</p>
+  <p class="en-only" style="margin-top:14px"><b>Capacity sizing rule of thumb</b> (carry into the next HVAC conversation): per 1000 W of LED, plan for <b>~2,400 BTU/hr sensible + ~1,200 BTU/hr latent</b> at design VPD. Add 15–25% headroom for transition / lights-on peaks. The pattern across the cohort — post-flip rooms tracking high day air, mid-bulking rooms with shallow DIF and EC stacking, only deep-ripening rooms approaching their VPD band — says the load curve is real and the plant is sized for an average day, not the peak.</p>
 </section>
 
 <!-- 4. CLIMATE ↔ IRRIGATION INTERPLAY -->
 <section id="climate-irrigation">
-  <h2><span class="en-only">Climate ↔ Irrigation Interplay</span><span class="es-only">Interacción Clima ↔ Riego</span></h2>
-  <p><span class="en-only">Does the day's VPD profile match the day's shot rhythm? A high-VPD afternoon needs P2 to defend FC. A low-VPD afternoon means cutting P2 to drive a deeper P3 dryback. This section reads the per-room correlation and flags climate-driven steering misalignment.</span><span class="es-only">¿El perfil VPD del día coincide con el ritmo de shots del día? Una tarde VPD alta requiere P2 para defender FC. Una tarde VPD baja significa cortar P2 para impulsar dryback P3 más profundo.</span></p>
-  <div class="bp-scroll">
-  <table class="bp-table">
+  <h2><span class="en-only">Climate ↔ Irrigation Interplay · Where the Strategy Breaks</span><span class="es-only">Interacción Clima ↔ Riego</span></h2>
+
+  <div class="verdict bad">
+    <div class="v-head">⚠ 19 of 27 rooms have climate signals actively breaking the irrigation strategy</div>
+    <p><span class="en-only">The irrigation recipe and the climate setpoints have to be read together — they are coupled by plant biophysics. Curaleaf NY is running phase-appropriate crop-steering recipes (generative push in stretch + ripening, classic bulking in mid-flower) but the climate plant isn't holding the envelope the recipe was designed for. <b>7 rooms run shallow / near-zero DIF</b>, <b>16 have diurnal day-air swings &gt; 8°F</b>, and substrate temps sit within 4°F of air in most of the bulking cohort. These signals aren't separate problems — they're the same problem refracted three ways: <i>the room can't deliver the climate the irrigation strategy is asking the plant to do work in</i>. Adding more shots, deepening dryback, or pulling feed EC will not fix what's fundamentally a climate-capacity gap.</span><span class="es-only">El riego y los setpoints climáticos están acoplados por la biofísica de la planta. Curaleaf NY: 7 salas con DIF cercano a cero, 16 con swing &gt; 8°F. No es problema de receta — es capacidad climática.</span></p>
+  </div>
+
+  <h3><span class="en-only">The biophysics of the interplay — five mechanisms at work</span><span class="es-only">Mecanismos biofísicos</span></h3>
+
+  <div class="bp-table" style="margin:14px 0">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:var(--bg-3)">
+          <th style="text-align:left;padding:10px;width:24%">Climate signal</th>
+          <th style="text-align:left;padding:10px;width:38%">Biophysics</th>
+          <th style="text-align:left;padding:10px;width:38%">What it does to your irrigation strategy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px;vertical-align:top"><b>VPD-stress hrs/day</b><br><span class="small muted">band miss in either direction</span></td>
+          <td style="padding:10px;vertical-align:top">Stomata partially close when VPD &gt; 1.6 kPa or open uncontrollably when &lt; 0.6 kPa. Either way, gas exchange decouples from soil water availability — the plant ISN'T pulling at the rate the slab is giving.</td>
+          <td style="padding:10px;vertical-align:top">P1 / P2 shot recipes calibrated for "normal" transpiration are wrong. High-VPD-stress rooms can run a perfectly tuned 4% shot pattern and still flat-line dryback because the plant isn't drinking. Looks like sensor issue, IS climate.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px;vertical-align:top"><b>Negative / shallow DIF</b><br><span class="small muted">night air ≥ day air</span></td>
+          <td style="padding:10px;vertical-align:top">Stomata should close in the dark; transpiration ≈ 0; the slab should drift down with only respiration losses. When night air is warmer than day, residual stomatal conductance + leaf temperature drive continued ET — the plant burns sugars to defend itself against thermal stress.</td>
+          <td style="padding:10px;vertical-align:top">P3 dry-down extends past target — slab over-drying overnight. Morning AROYA reading shows "great dryback" but it's a climate-driven over-pull. Bigger P1 catch-up shots → channeling → eventual flush-or-finish forced call.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px;vertical-align:top"><b>Diurnal swing &gt; 8°F</b><br><span class="small muted">HVAC fighting load</span></td>
+          <td style="padding:10px;vertical-align:top">Stomatal response lags air-temp change by 30–90 min. Lights-on shock leaves stomata mostly closed for the first 60–90 min; plant doesn't pull water; ET rate flat. Then stomata catch up and transpiration spikes.</td>
+          <td style="padding:10px;vertical-align:top">NY F15 (30.0°F swing) and the other &gt; 8°F swing rooms show inconsistent P0 trigger times and erratic P1 shot demand. The grower will see "the recipe doesn't work the same every day" — it's the climate, not the recipe.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px;vertical-align:top"><b>Substrate-air thermal coupling</b><br><span class="small muted">|Δ| &lt; 4°F</span></td>
+          <td style="padding:10px;vertical-align:top">Healthy slab should run 3–6°F cooler than air during lights-on (evaporative cooling) and 1–2°F warmer during lights-off (thermal mass release). When |Δ| collapses, the slab is no longer a thermal buffer — root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%.</td>
+          <td style="padding:10px;vertical-align:top">Substrate EC stacks even at correct feed EC because the plant isn't pulling N/K fast enough. Looks like "feed too hot" — pulling it down will starve the plant. Bulking cohort here runs substrate within 2–4°F of air across most rooms.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px;vertical-align:top"><b>Climate-driven EC stacking</b><br><span class="small muted">stack widens with VPD-stress</span></td>
+          <td style="padding:10px;vertical-align:top">High VPD pulls water faster than ions — the slab concentrates from the top down. Same effect from negative DIF (continued night water loss with no nutrient uptake). Stack widens without any change to feed EC.</td>
+          <td style="padding:10px;vertical-align:top">Bulking rooms (target: pull EC BACK) instead show stack-rather-than-pull behavior — climate-driven. Flush response will undershoot until DIF + VPD-stress get fixed.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:24px"><span class="en-only">Per-room interplay verdicts · climate signals + irrigation impact</span><span class="es-only">Veredictos por sala</span></h3>
+  <p class="small en-only" style="color:var(--ink-2);margin-bottom:10px">Bad = the climate is actively breaking the strategy this window. Warn = climate is pulling against the strategy at the margin. Good = climate supports the recipe; observed irrigation behavior is genuinely a recipe / scheduling question, not a climate one. <b>Read this table before adjusting any irrigation parameter.</b></p>
+
+  <div style="overflow-x:auto">
+  <table class="bp-table compact" style="font-size:12.5px">
     <thead><tr>
-      <th><span class="en-only">Room</span><span class="es-only">Sala</span></th>
-      <th><span class="en-only">Phase</span><span class="es-only">Fase</span></th>
-      <th class="num"><span class="en-only">Peak VPD (kPa)</span><span class="es-only">VPD pico</span></th>
-      <th class="num">VWC envelope</th>
-      <th class="num">Pore EC mean</th>
-      <th class="num"><span class="en-only">Overnight dryback (absolute pp)</span><span class="es-only">Dryback nocturno (pp absoluto)</span></th>
-      <th class="num">VPD on</th>
+      <th>Room · Phase</th>
+      <th>Interplay verdict</th>
+      <th>Climate signals</th>
+      <th>Irrigation observed</th>
+      <th>Mechanism(s) → what it does to your strategy</th>
     </tr></thead>
     <tbody>
-<tr><td><b>Veg 2</b></td><td><span class="phase veg">Vegetative</span></td><td class="num">1.03</td><td class="num">49.5–66.3%</td><td class="num">3.56 mS <span class="pill good">stacking</span></td><td class="num">16.8 pp <span class="pill warn">above</span></td><td class="num">0.87</td></tr>
-<tr><td><b>Mom 1</b></td><td><span class="phase veg">Mother</span></td><td class="num">1.58</td><td class="num">48.3–62.0%</td><td class="num">3.74 mS <span class="pill good">stacking</span></td><td class="num">13.7 pp <span class="pill warn">above</span></td><td class="num">1.32</td></tr>
-<tr><td><b>Mom 2</b></td><td><span class="phase veg">Mother</span></td><td class="num">1.76</td><td class="num">44.3–63.8%</td><td class="num">3.64 mS <span class="pill good">stacking</span></td><td class="num">19.5 pp <span class="pill warn">above</span></td><td class="num">1.31</td></tr>
-<tr><td><b>Mom 3</b></td><td><span class="phase veg">Mother</span></td><td class="num">1.83</td><td class="num">51.2–63.8%</td><td class="num">4.18 mS <span class="pill good">stacking</span></td><td class="num">12.6 pp <span class="pill warn">above</span></td><td class="num">1.19</td></tr>
-<tr><td><b>NY F16 Veg</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">2.15</td><td class="num">8.2–52.1%</td><td class="num">2.54 mS <span class="pill warn">low stack</span></td><td class="num">43.9 pp <span class="pill warn">above</span></td><td class="num">1.71</td></tr>
-<tr><td><b>NY F22</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">1.22</td><td class="num">32.4–72.4%</td><td class="num">5.88 mS <span class="pill warn">low stack</span></td><td class="num">40.0 pp <span class="pill warn">above</span></td><td class="num">0.99</td></tr>
-<tr><td><b>NY F3</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">1.14</td><td class="num">39.9–69.2%</td><td class="num">4.95 mS <span class="pill warn">low stack</span></td><td class="num">29.3 pp <span class="pill good">in band</span></td><td class="num">0.71</td></tr>
-<tr><td><b>NY F5</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">1.96</td><td class="num">49.2–71.6%</td><td class="num">3.71 mS <span class="pill warn">low stack</span></td><td class="num">22.4 pp <span class="pill good">in band</span></td><td class="num">1.32</td></tr>
-<tr><td><b>NY F7</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">1.62</td><td class="num">39.0–68.3%</td><td class="num">4.85 mS <span class="pill warn">low stack</span></td><td class="num">29.3 pp <span class="pill good">in band</span></td><td class="num">1.25</td></tr>
-<tr><td><b>NY F8</b></td><td><span class="phase stretch">Early Flower / Stretch</span></td><td class="num">1.74</td><td class="num">52.3–71.3%</td><td class="num">3.56 mS <span class="pill warn">low stack</span></td><td class="num">19.0 pp <span class="pill warn">below</span></td><td class="num">1.29</td></tr>
-<tr><td><b>NY F1</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.28</td><td class="num">43.3–72.8%</td><td class="num">7.37 mS <span class="pill good">stacking</span></td><td class="num">29.5 pp <span class="pill warn">above</span></td><td class="num">1.02</td></tr>
-<tr><td><b>NY F11</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.50</td><td class="num">40.3–73.6%</td><td class="num">7.89 mS <span class="pill good">stacking</span></td><td class="num">33.3 pp <span class="pill warn">above</span></td><td class="num">1.07</td></tr>
-<tr><td><b>NY F12</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.80</td><td class="num">34.6–69.3%</td><td class="num">5.01 mS <span class="pill good">stacking</span></td><td class="num">34.7 pp <span class="pill warn">above</span></td><td class="num">1.29</td></tr>
-<tr><td><b>NY F13</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.39</td><td class="num">37.0–74.0%</td><td class="num">7.26 mS <span class="pill good">stacking</span></td><td class="num">37.0 pp <span class="pill warn">above</span></td><td class="num">1.18</td></tr>
-<tr><td><b>NY F14</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">2.81</td><td class="num">37.3–69.5%</td><td class="num">5.42 mS <span class="pill good">stacking</span></td><td class="num">32.2 pp <span class="pill warn">above</span></td><td class="num">1.17</td></tr>
-<tr><td><b>NY F15</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.64</td><td class="num">36.2–69.7%</td><td class="num">5.24 mS <span class="pill good">stacking</span></td><td class="num">33.5 pp <span class="pill warn">above</span></td><td class="num">1.17</td></tr>
-<tr><td><b>NY F2</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.41</td><td class="num">41.0–69.6%</td><td class="num">7.06 mS <span class="pill good">stacking</span></td><td class="num">28.6 pp <span class="pill warn">above</span></td><td class="num">1.17</td></tr>
-<tr><td><b>NY F20</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.66</td><td class="num">36.3–76.6%</td><td class="num">5.42 mS <span class="pill good">stacking</span></td><td class="num">40.3 pp <span class="pill warn">above</span></td><td class="num">1.43</td></tr>
-<tr><td><b>NY F23</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">1.68</td><td class="num">27.4–60.9%</td><td class="num">6.22 mS <span class="pill good">stacking</span></td><td class="num">33.5 pp <span class="pill warn">above</span></td><td class="num">1.33</td></tr>
-<tr><td><b>NY F4</b></td><td><span class="phase bulking">Bulking / Vegetative 2</span></td><td class="num">2.04</td><td class="num">49.8–74.9%</td><td class="num">5.56 mS <span class="pill good">stacking</span></td><td class="num">25.1 pp <span class="pill warn">above</span></td><td class="num">1.36</td></tr>
-<tr><td><b>NY F10</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">2.14</td><td class="num">41.3–73.3%</td><td class="num">6.83 mS <span class="pill good">stacking</span></td><td class="num">32.0 pp <span class="pill good">in band</span></td><td class="num">1.54</td></tr>
-<tr><td><b>NY F17</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.78</td><td class="num">5.3–36.0%</td><td class="num">10.86 mS <span class="pill good">stacking</span></td><td class="num">30.7 pp <span class="pill good">in band</span></td><td class="num">1.67</td></tr>
-<tr><td><b>NY F18</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.83</td><td class="num">40.3–69.2%</td><td class="num">8.11 mS <span class="pill good">stacking</span></td><td class="num">28.9 pp <span class="pill good">in band</span></td><td class="num">1.33</td></tr>
-<tr><td><b>NY F19</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.70</td><td class="num">35.9–68.6%</td><td class="num">7.52 mS <span class="pill good">stacking</span></td><td class="num">32.7 pp <span class="pill good">in band</span></td><td class="num">1.39</td></tr>
-<tr><td><b>NY F21</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">2.30</td><td class="num">37.7–75.5%</td><td class="num">7.32 mS <span class="pill good">stacking</span></td><td class="num">37.8 pp <span class="pill warn">above</span></td><td class="num">1.58</td></tr>
-<tr><td><b>NY F24</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.47</td><td class="num">35.1–77.0%</td><td class="num">7.94 mS <span class="pill good">stacking</span></td><td class="num">41.9 pp <span class="pill warn">above</span></td><td class="num">1.31</td></tr>
-<tr><td><b>NY F9</b></td><td><span class="phase ripening">Ripening / Generative 2</span></td><td class="num">1.79</td><td class="num">44.2–73.8%</td><td class="num">7.97 mS <span class="pill good">stacking</span></td><td class="num">29.6 pp <span class="pill good">in band</span></td><td class="num">1.41</td></tr>
+      <tr>
+      <td><b>NY F14</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>10.9°F</b><br>Substrate Δ <b>-2.9°F</b></td>
+      <td class='small'>Dryback <b>32.2 pp</b><br>pore_EC <b>5.42 mS</b><br>EC stack <b>-0.12 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F13</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Substrate Δ <b>-3.2°F</b><br>Dryback <b>37.0 pp</b></td>
+      <td class='small'>Dryback <b>37.0 pp</b><br>pore_EC <b>7.26 mS</b><br>EC stack <b>-0.02 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li><li><b>Dryback 37.0 pp exceeds bulking / vegetative 2 band (15–25 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F15</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>30.0°F</b><br>Substrate Δ <b>-3.2°F</b><br>Dryback <b>33.5 pp</b></td>
+      <td class='small'>Dryback <b>33.5 pp</b><br>pore_EC <b>5.24 mS</b><br>EC stack <b>-0.10 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li><li><b>Dryback 33.5 pp exceeds bulking / vegetative 2 band (15–25 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F19</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>DIF <b>+0.8°F</b><br>Substrate Δ <b>-3.4°F</b></td>
+      <td class='small'>Dryback <b>32.7 pp</b><br>pore_EC <b>8.11 mS</b><br>EC stack <b>-0.05 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Near-zero / negative DIF (night air ≥ day air)</b> — Plant transpires through dark cycle when stomata should close. P3 dry-down extends into morning; canopy burns sugars at night. <span class="small" style="color:var(--ink-2)">→ Looks like irrigation under-supply but is actually climate-driven over-pull. Fix the DIF before increasing P2 shots — more water + same DIF = channeling.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F16 Veg</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>DIF <b>+0.7°F</b><br>Dryback <b>43.9 pp</b></td>
+      <td class='small'>Dryback <b>43.9 pp</b><br>pore_EC <b>2.54 mS</b><br>EC stack <b>+0.09 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Near-zero / negative DIF (night air ≥ day air)</b> — Plant transpires through dark cycle when stomata should close. P3 dry-down extends into morning; canopy burns sugars at night. <span class="small" style="color:var(--ink-2)">→ Looks like irrigation under-supply but is actually climate-driven over-pull. Fix the DIF before increasing P2 shots — more water + same DIF = channeling.</span></li><li><b>Dryback 43.9 pp exceeds early flower / stretch band (20–30 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F20</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>DIF <b>+0.8°F</b><br>Substrate Δ <b>+0.1°F</b><br>Dryback <b>40.3 pp</b></td>
+      <td class='small'>Dryback <b>40.3 pp</b><br>pore_EC <b>5.42 mS</b><br>EC stack <b>-0.06 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Near-zero / negative DIF (night air ≥ day air)</b> — Plant transpires through dark cycle when stomata should close. P3 dry-down extends into morning; canopy burns sugars at night. <span class="small" style="color:var(--ink-2)">→ Looks like irrigation under-supply but is actually climate-driven over-pull. Fix the DIF before increasing P2 shots — more water + same DIF = channeling.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li><li><b>Dryback 40.3 pp exceeds bulking / vegetative 2 band (15–25 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F22</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Substrate Δ <b>-2.4°F</b><br>Dryback <b>40.0 pp</b></td>
+      <td class='small'>Dryback <b>40.0 pp</b><br>pore_EC <b>5.88 mS</b><br>EC stack <b>+0.06 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li><li><b>Dryback 40.0 pp exceeds early flower / stretch band (20–30 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F23</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>DIF <b>+0.5°F</b><br>Substrate Δ <b>+0.8°F</b><br>Dryback <b>33.5 pp</b></td>
+      <td class='small'>Dryback <b>33.5 pp</b><br>pore_EC <b>6.22 mS</b><br>EC stack <b>+0.01 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Near-zero / negative DIF (night air ≥ day air)</b> — Plant transpires through dark cycle when stomata should close. P3 dry-down extends into morning; canopy burns sugars at night. <span class="small" style="color:var(--ink-2)">→ Looks like irrigation under-supply but is actually climate-driven over-pull. Fix the DIF before increasing P2 shots — more water + same DIF = channeling.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li><li><b>Dryback 33.5 pp exceeds bulking / vegetative 2 band (15–25 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F24</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>DIF <b>+0.6°F</b><br>Substrate Δ <b>-3.4°F</b></td>
+      <td class='small'>Dryback <b>41.9 pp</b><br>pore_EC <b>7.94 mS</b><br>EC stack <b>-0.07 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Near-zero / negative DIF (night air ≥ day air)</b> — Plant transpires through dark cycle when stomata should close. P3 dry-down extends into morning; canopy burns sugars at night. <span class="small" style="color:var(--ink-2)">→ Looks like irrigation under-supply but is actually climate-driven over-pull. Fix the DIF before increasing P2 shots — more water + same DIF = channeling.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>Veg 2</b> <span class='small muted'>Vegetative</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>8.1°F</b><br>Substrate Δ <b>-2.0°F</b></td>
+      <td class='small'>Dryback <b>16.8 pp</b><br>pore_EC <b>3.56 mS</b><br>EC stack <b>+0.00 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F1</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>10.2°F</b><br>Substrate Δ <b>-3.2°F</b></td>
+      <td class='small'>Dryback <b>29.5 pp</b><br>pore_EC <b>7.37 mS</b><br>EC stack <b>+0.01 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F2</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>DIF <b>+0.8°F</b><br>Substrate Δ <b>-0.7°F</b></td>
+      <td class='small'>Dryback <b>28.6 pp</b><br>pore_EC <b>7.06 mS</b><br>EC stack <b>+0.01 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Near-zero / negative DIF (night air ≥ day air)</b> — Plant transpires through dark cycle when stomata should close. P3 dry-down extends into morning; canopy burns sugars at night. <span class="small" style="color:var(--ink-2)">→ Looks like irrigation under-supply but is actually climate-driven over-pull. Fix the DIF before increasing P2 shots — more water + same DIF = channeling.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F3</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>29.8°F</b><br>Substrate Δ <b>-1.8°F</b></td>
+      <td class='small'>Dryback <b>29.3 pp</b><br>pore_EC <b>4.95 mS</b><br>EC stack <b>-0.01 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F18</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>14.9°F</b><br>Substrate Δ <b>-2.3°F</b></td>
+      <td class='small'>Dryback <b>28.9 pp</b><br>pore_EC <b>6.83 mS</b><br>EC stack <b>+0.05 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F11</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>20.4°F</b><br>Dryback <b>33.3 pp</b></td>
+      <td class='small'>Dryback <b>33.3 pp</b><br>pore_EC <b>7.89 mS</b><br>EC stack <b>+0.04 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Dryback 33.3 pp exceeds bulking / vegetative 2 band (15–25 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F12</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>16.3°F</b><br>Substrate Δ <b>-3.6°F</b><br>Dryback <b>34.7 pp</b></td>
+      <td class='small'>Dryback <b>34.7 pp</b><br>pore_EC <b>5.01 mS</b><br>EC stack <b>-0.03 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li><li><b>Dryback 34.7 pp exceeds bulking / vegetative 2 band (15–25 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>Mom 1</b> <span class='small muted'>Mother</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>14.3°F</b><br>Substrate Δ <b>-2.4°F</b><br>Dryback <b>13.7 pp</b></td>
+      <td class='small'>Dryback <b>13.7 pp</b><br>pore_EC <b>3.74 mS</b><br>EC stack <b>+0.02 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li><li><b>Dryback 13.7 pp exceeds mother band (3–10 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>Mom 2</b> <span class='small muted'>Mother</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>16.9°F</b><br>Substrate Δ <b>-2.7°F</b><br>Dryback <b>19.5 pp</b></td>
+      <td class='small'>Dryback <b>19.5 pp</b><br>pore_EC <b>3.64 mS</b><br>EC stack <b>-0.02 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li><li><b>Dryback 19.5 pp exceeds mother band (3–10 pp)</b> — Plant over-drying the slab; in coupled-DIF cases this is climate-driven over-pull. <span class="small" style="color:var(--ink-2)">→ Adding more P2 shots will mask the climate signal. Stabilize DIF / VPD first, then re-read dryback.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>Mom 3</b> <span class='small muted'>Mother</span></td>
+      <td><span class="pill bad">BAD</span><br><span class='small'>Climate is breaking the irrigation strategy</span></td>
+      <td class='small'>Swing <b>13.3°F</b><br>Substrate Δ <b>-3.0°F</b></td>
+      <td class='small'>Dryback <b>12.6 pp</b><br>pore_EC <b>4.18 mS</b><br>EC stack <b>+0.01 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F17</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill warn">WARN</span><br><span class='small'>One climate signal to watch</span></td>
+      <td class='small'>Substrate Δ <b>+0.3°F</b></td>
+      <td class='small'>Dryback <b>30.7 pp</b><br>pore_EC <b>10.86 mS</b><br>EC stack <b>-0.33 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Substrate ↔ air thermal coupling (|Δ| &lt; 4°F)</b> — Slab no longer a thermal buffer; root-zone temp tracks air. Above 75°F root-zone, ion uptake slows ~30%. <span class="small" style="color:var(--ink-2)">→ Substrate EC stacks even at correct feed EC because plant isn't pulling N/K fast enough. Pulling feed EC down here will starve the plant.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F21</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill warn">WARN</span><br><span class='small'>One climate signal to watch</span></td>
+      <td class='small'>DIF <b>+0.5°F</b></td>
+      <td class='small'>Dryback <b>37.8 pp</b><br>pore_EC <b>7.32 mS</b><br>EC stack <b>+0.00 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Near-zero / negative DIF (night air ≥ day air)</b> — Plant transpires through dark cycle when stomata should close. P3 dry-down extends into morning; canopy burns sugars at night. <span class="small" style="color:var(--ink-2)">→ Looks like irrigation under-supply but is actually climate-driven over-pull. Fix the DIF before increasing P2 shots — more water + same DIF = channeling.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F4</b> <span class='small muted'>Bulking / Vegetative 2</span></td>
+      <td><span class="pill warn">WARN</span><br><span class='small'>One climate signal to watch</span></td>
+      <td class='small'>Swing <b>20.2°F</b></td>
+      <td class='small'>Dryback <b>25.1 pp</b><br>pore_EC <b>5.56 mS</b><br>EC stack <b>-0.03 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F5</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill warn">WARN</span><br><span class='small'>One climate signal to watch</span></td>
+      <td class='small'>Swing <b>13.4°F</b></td>
+      <td class='small'>Dryback <b>22.4 pp</b><br>pore_EC <b>3.71 mS</b><br>EC stack <b>-0.01 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F7</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill warn">WARN</span><br><span class='small'>One climate signal to watch</span></td>
+      <td class='small'>Swing <b>16.5°F</b></td>
+      <td class='small'>Dryback <b>29.3 pp</b><br>pore_EC <b>4.85 mS</b><br>EC stack <b>-0.00 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F8</b> <span class='small muted'>Early Flower / Stretch</span></td>
+      <td><span class="pill warn">WARN</span><br><span class='small'>One climate signal to watch</span></td>
+      <td class='small'>Swing <b>18.0°F</b></td>
+      <td class='small'>Dryback <b>19.0 pp</b><br>pore_EC <b>3.56 mS</b><br>EC stack <b>-0.03 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F10</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill warn">WARN</span><br><span class='small'>One climate signal to watch</span></td>
+      <td class='small'>Swing <b>12.8°F</b></td>
+      <td class='small'>Dryback <b>32.0 pp</b><br>pore_EC <b>7.97 mS</b><br>EC stack <b>+0.03 mS/d</b></td>
+      <td><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.45"><li><b>Diurnal day-air swing > 8°F</b> — Stomatal response lags air-temp change 30–90 min. Lights-on shock → stomata mostly closed for first 60–90 min → flat ET → then catch-up transpiration. <span class="small" style="color:var(--ink-2)">→ Inconsistent P0 trigger times + erratic P1 shot demand. Grower will see 'the recipe doesn't work the same every day' — it's the climate, not the recipe.</span></li></ul></td>
+    </tr>
+      <tr>
+      <td><b>NY F9</b> <span class='small muted'>Ripening / Generative 2</span></td>
+      <td><span class="pill good">GOOD</span><br><span class='small'>Climate supports the strategy</span></td>
+      <td class='small'><span class='small muted'>All signals in range</span></td>
+      <td class='small'>Dryback <b>29.6 pp</b><br>pore_EC <b>7.52 mS</b><br>EC stack <b>+0.07 mS/d</b></td>
+      <td><span class="small muted">No climate signal interfering with the irrigation strategy this window.</span></td>
+    </tr>
     </tbody>
   </table>
   </div>
+
+  <h3 style="margin-top:24px"><span class="en-only">The thread to pull · sequence of operations</span><span class="es-only">Secuencia</span></h3>
+  <ol style="font-size:13.5px;line-height:1.6;color:var(--ink-2)">
+    <li><b>Fix the climate first.</b> Dehum + condenser audit for the 7 rooms with shallow / negative DIF. Pre-cool routine for the 16 rooms with &gt; 8°F swing. Setpoint reconciliation Argus / BMS ↔ AROYA on every room — the BMS vs AROYA drift pattern is the most common root cause of "the recipe doesn't work" complaints.</li>
+    <li><b>Watch what irrigation does on its own</b> for one harvest cycle in the worst rooms. Don't change the recipe yet. The dryback, EC stack, and shot-demand patterns should normalize if the climate-capacity diagnosis is right.</li>
+    <li><b>Then tune the recipe.</b> Only after climate stabilizes is it fair to call a 35–40 pp overnight dryback "too aggressive P3" or substrate EC stacking in bulking "too hot feed". Right now those readings are 30–70% climate, not 100% irrigation.</li>
+    <li><b>For the good-verdict rooms</b> — the recipe IS the lever. Adjust freely; the climate isn't masking anything.</li>
+  </ol>
 </section>
 
 <!-- 5. PER-ROOM DEEP DIVE -->
@@ -965,8 +1547,8 @@
 <div class="biophys-room" id="biophys-room-room-16550">
   <h3>Veg 2 <span class="phase veg">Vegetative</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Vegetative target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Vegetative target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Vegetative · vegetatively-steered.</b> Overnight dryback <b>16.8 pp</b> exceeds the vegetative target (5–15 pp). VPD lights-on 0.87 kPa sits inside the 0.8–1.1 kPa target band; substrate-air Δ -2.0°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 3.56 mS inside 3.0–5.0 band; DIF +2.8°F inside the 2–4°F target band. <b>Intent vs reality:</b> the room is running vegetatively-steered and the climate envelope is largely holding — irrigation adjustments here will land as recipe changes, not be masked by climate. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Vegetative · vegetatively-steered.</b> Dryback nocturno <b>16.8 pp</b> exceeds the vegetative target (5–15 pp). VPD enc. 0.87 kPa; sustrato vs aire Δ -2.0°F; pore EC 3.56 mS; DIF +2.8°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 5–15 pp · phase Vegetative</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16550-vwc"></canvas></div></div>
@@ -980,8 +1562,8 @@
 <div class="biophys-room" id="biophys-room-room-18554">
   <h3>Mom 1 <span class="phase veg">Mother</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Mother target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Mother target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Mother · vegetatively-steered.</b> Overnight dryback <b>13.7 pp</b> exceeds the mother target (3–10 pp). VPD lights-on 1.32 kPa runs outside the 0.8–1.1 kPa target band; substrate-air Δ -2.4°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 3.74 mS inside 2.5–4.0 band; DIF +4.9°F inside the 2–4°F target band. <b>Intent vs reality:</b> the room is set up to run vegetatively-steered but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Mother · vegetatively-steered.</b> Dryback nocturno <b>13.7 pp</b> exceeds the mother target (3–10 pp). VPD enc. 1.32 kPa; sustrato vs aire Δ -2.4°F; pore EC 3.74 mS; DIF +4.9°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 3–10 pp · phase Mother</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18554-vwc"></canvas></div></div>
@@ -995,8 +1577,8 @@
 <div class="biophys-room" id="biophys-room-room-18555">
   <h3>Mom 2 <span class="phase veg">Mother</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Mother target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Mother target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Mother · vegetatively-steered.</b> Overnight dryback <b>19.5 pp</b> exceeds the mother target (3–10 pp). VPD lights-on 1.31 kPa runs outside the 0.8–1.1 kPa target band; substrate-air Δ -2.7°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 3.64 mS inside 2.5–4.0 band; DIF +4.4°F inside the 2–4°F target band. <b>Intent vs reality:</b> the room is set up to run vegetatively-steered but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Mother · vegetatively-steered.</b> Dryback nocturno <b>19.5 pp</b> exceeds the mother target (3–10 pp). VPD enc. 1.31 kPa; sustrato vs aire Δ -2.7°F; pore EC 3.64 mS; DIF +4.4°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 3–10 pp · phase Mother</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18555-vwc"></canvas></div></div>
@@ -1010,8 +1592,8 @@
 <div class="biophys-room" id="biophys-room-room-18556">
   <h3>Mom 3 <span class="phase veg">Mother</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=477 samples per metric aggregated across all zones). Mother target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=477 samples per metric aggregated across all zones). Mother target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Mother · vegetatively-steered.</b> Overnight dryback <b>12.6 pp</b> exceeds the mother target (3–10 pp). VPD lights-on 1.19 kPa runs outside the 0.8–1.1 kPa target band; substrate-air Δ -3.0°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 4.18 mS outside 2.5–4.0 band — stacking high; DIF +4.5°F inside the 2–4°F target band. <b>Intent vs reality:</b> the room is set up to run vegetatively-steered but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=477 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Mother · vegetatively-steered.</b> Dryback nocturno <b>12.6 pp</b> exceeds the mother target (3–10 pp). VPD enc. 1.19 kPa; sustrato vs aire Δ -3.0°F; pore EC 4.18 mS; DIF +4.5°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 3–10 pp · phase Mother</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18556-vwc"></canvas></div></div>
@@ -1025,8 +1607,8 @@
 <div class="biophys-room" id="biophys-room-room-16420">
   <h3>NY F16 Veg <span class="phase stretch">Early Flower / Stretch</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Overnight dryback <b>43.9 pp</b> exceeds the early flower / stretch target (20–30 pp). VPD lights-on 1.71 kPa runs outside the 1.0–1.2 kPa target band; substrate-air Δ -5.2°F (slab acting as thermal buffer); pore EC mean 2.54 mS outside 6.0–12.0 band — building / low stack; DIF +0.7°F shallow vs 2–5°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run generatively-steered stretch but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Dryback nocturno <b>43.9 pp</b> exceeds the early flower / stretch target (20–30 pp). VPD enc. 1.71 kPa; sustrato vs aire Δ -5.2°F; pore EC 2.54 mS; DIF +0.7°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 20–30 pp · phase Early Flower / Stretch</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16420-vwc"></canvas></div></div>
@@ -1040,8 +1622,8 @@
 <div class="biophys-room" id="biophys-room-room-16425">
   <h3>NY F22 <span class="phase stretch">Early Flower / Stretch</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Overnight dryback <b>40.0 pp</b> exceeds the early flower / stretch target (20–30 pp). VPD lights-on 0.99 kPa runs outside the 1.0–1.2 kPa target band; substrate-air Δ -2.4°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 5.88 mS outside 6.0–12.0 band — building / low stack; DIF +1.5°F shallow vs 2–5°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run generatively-steered stretch but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Dryback nocturno <b>40.0 pp</b> exceeds the early flower / stretch target (20–30 pp). VPD enc. 0.99 kPa; sustrato vs aire Δ -2.4°F; pore EC 5.88 mS; DIF +1.5°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 20–30 pp · phase Early Flower / Stretch</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16425-vwc"></canvas></div></div>
@@ -1055,8 +1637,8 @@
 <div class="biophys-room" id="biophys-room-room-18535">
   <h3>NY F3 <span class="phase stretch">Early Flower / Stretch</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Overnight dryback <b>29.3 pp</b> sits inside the early flower / stretch target band (20–30 pp). VPD lights-on 0.71 kPa runs outside the 1.0–1.2 kPa target band; substrate-air Δ -1.8°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 4.95 mS outside 6.0–12.0 band — building / low stack; DIF +7.0°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is set up to run generatively-steered stretch but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Dryback nocturno <b>29.3 pp</b> sits inside the early flower / stretch target band (20–30 pp). VPD enc. 0.71 kPa; sustrato vs aire Δ -1.8°F; pore EC 4.95 mS; DIF +7.0°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 20–30 pp · phase Early Flower / Stretch</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18535-vwc"></canvas></div></div>
@@ -1070,8 +1652,8 @@
 <div class="biophys-room" id="biophys-room-room-18537">
   <h3>NY F5 <span class="phase stretch">Early Flower / Stretch</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Overnight dryback <b>22.4 pp</b> sits inside the early flower / stretch target band (20–30 pp). VPD lights-on 1.32 kPa runs outside the 1.0–1.2 kPa target band; substrate-air Δ -4.8°F (slab acting as thermal buffer); pore EC mean 3.71 mS outside 6.0–12.0 band — building / low stack; DIF +2.5°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is set up to run generatively-steered stretch but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Dryback nocturno <b>22.4 pp</b> sits inside the early flower / stretch target band (20–30 pp). VPD enc. 1.32 kPa; sustrato vs aire Δ -4.8°F; pore EC 3.71 mS; DIF +2.5°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 20–30 pp · phase Early Flower / Stretch</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18537-vwc"></canvas></div></div>
@@ -1085,8 +1667,8 @@
 <div class="biophys-room" id="biophys-room-room-18539">
   <h3>NY F7 <span class="phase stretch">Early Flower / Stretch</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=479 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=479 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Overnight dryback <b>29.3 pp</b> sits inside the early flower / stretch target band (20–30 pp). VPD lights-on 1.25 kPa runs outside the 1.0–1.2 kPa target band; substrate-air Δ -4.1°F (slab acting as thermal buffer); pore EC mean 4.85 mS outside 6.0–12.0 band — building / low stack; DIF +4.9°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is set up to run generatively-steered stretch but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=479 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Dryback nocturno <b>29.3 pp</b> sits inside the early flower / stretch target band (20–30 pp). VPD enc. 1.25 kPa; sustrato vs aire Δ -4.1°F; pore EC 4.85 mS; DIF +4.9°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 20–30 pp · phase Early Flower / Stretch</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18539-vwc"></canvas></div></div>
@@ -1100,8 +1682,8 @@
 <div class="biophys-room" id="biophys-room-room-18540">
   <h3>NY F8 <span class="phase stretch">Early Flower / Stretch</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Early Flower / Stretch target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Overnight dryback <b>19.0 pp</b> sits below the early flower / stretch target (20–30 pp). VPD lights-on 1.29 kPa runs outside the 1.0–1.2 kPa target band; substrate-air Δ -4.4°F (slab acting as thermal buffer); pore EC mean 3.56 mS outside 6.0–12.0 band — building / low stack; DIF +6.0°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is set up to run generatively-steered stretch but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Early Flower / Stretch · generatively-steered stretch.</b> Dryback nocturno <b>19.0 pp</b> sits below the early flower / stretch target (20–30 pp). VPD enc. 1.29 kPa; sustrato vs aire Δ -4.4°F; pore EC 3.56 mS; DIF +6.0°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 20–30 pp · phase Early Flower / Stretch</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18540-vwc"></canvas></div></div>
@@ -1115,8 +1697,8 @@
 <div class="biophys-room" id="biophys-room-room-18533">
   <h3>NY F1 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>29.5 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.02 kPa runs outside the 1.2–1.4 kPa target band; substrate-air Δ -3.2°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 7.37 mS outside 4.0–7.0 band — stacking high; DIF +2.3°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is set up to run transitioning from generative stretch back toward a vegetative-leaning bulking profile but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>29.5 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.02 kPa; sustrato vs aire Δ -3.2°F; pore EC 7.37 mS; DIF +2.3°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18533-vwc"></canvas></div></div>
@@ -1130,8 +1712,8 @@
 <div class="biophys-room" id="biophys-room-room-18543">
   <h3>NY F11 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>33.3 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.07 kPa runs outside the 1.2–1.4 kPa target band; substrate-air Δ -4.4°F (slab acting as thermal buffer); pore EC mean 7.89 mS outside 4.0–7.0 band — stacking high; DIF +4.5°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is set up to run transitioning from generative stretch back toward a vegetative-leaning bulking profile but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>33.3 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.07 kPa; sustrato vs aire Δ -4.4°F; pore EC 7.89 mS; DIF +4.5°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18543-vwc"></canvas></div></div>
@@ -1145,8 +1727,8 @@
 <div class="biophys-room" id="biophys-room-room-18544">
   <h3>NY F12 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>34.7 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.29 kPa sits inside the 1.2–1.4 kPa target band; substrate-air Δ -3.6°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 5.01 mS inside 4.0–7.0 band; DIF +5.0°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is running transitioning from generative stretch back toward a vegetative-leaning bulking profile and the climate envelope is largely holding — irrigation adjustments here will land as recipe changes, not be masked by climate. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>34.7 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.29 kPa; sustrato vs aire Δ -3.6°F; pore EC 5.01 mS; DIF +5.0°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18544-vwc"></canvas></div></div>
@@ -1160,8 +1742,8 @@
 <div class="biophys-room" id="biophys-room-room-16414">
   <h3>NY F13 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>37.0 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.18 kPa runs outside the 1.2–1.4 kPa target band; substrate-air Δ -3.2°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 7.26 mS outside 4.0–7.0 band — stacking high; DIF +2.8°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is set up to run transitioning from generative stretch back toward a vegetative-leaning bulking profile but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>37.0 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.18 kPa; sustrato vs aire Δ -3.2°F; pore EC 7.26 mS; DIF +2.8°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16414-vwc"></canvas></div></div>
@@ -1175,8 +1757,8 @@
 <div class="biophys-room" id="biophys-room-room-16413">
   <h3>NY F14 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>32.2 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.17 kPa runs outside the 1.2–1.4 kPa target band; substrate-air Δ -2.9°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 5.42 mS inside 4.0–7.0 band; DIF +1.2°F shallow vs 2–5°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run transitioning from generative stretch back toward a vegetative-leaning bulking profile but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>32.2 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.17 kPa; sustrato vs aire Δ -2.9°F; pore EC 5.42 mS; DIF +1.2°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16413-vwc"></canvas></div></div>
@@ -1190,8 +1772,8 @@
 <div class="biophys-room" id="biophys-room-room-16415">
   <h3>NY F15 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>33.5 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.17 kPa runs outside the 1.2–1.4 kPa target band; substrate-air Δ -3.2°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 5.24 mS inside 4.0–7.0 band; DIF +11.1°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is set up to run transitioning from generative stretch back toward a vegetative-leaning bulking profile but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>33.5 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.17 kPa; sustrato vs aire Δ -3.2°F; pore EC 5.24 mS; DIF +11.1°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16415-vwc"></canvas></div></div>
@@ -1205,8 +1787,8 @@
 <div class="biophys-room" id="biophys-room-room-18534">
   <h3>NY F2 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>28.6 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.17 kPa runs outside the 1.2–1.4 kPa target band; substrate-air Δ -0.7°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 7.06 mS outside 4.0–7.0 band — stacking high; DIF +0.8°F shallow vs 2–5°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run transitioning from generative stretch back toward a vegetative-leaning bulking profile but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>28.6 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.17 kPa; sustrato vs aire Δ -0.7°F; pore EC 7.06 mS; DIF +0.8°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18534-vwc"></canvas></div></div>
@@ -1220,8 +1802,8 @@
 <div class="biophys-room" id="biophys-room-room-16422">
   <h3>NY F20 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>40.3 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.43 kPa runs outside the 1.2–1.4 kPa target band; substrate-air Δ +0.1°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 5.42 mS inside 4.0–7.0 band; DIF +0.8°F shallow vs 2–5°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run transitioning from generative stretch back toward a vegetative-leaning bulking profile but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>40.3 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.43 kPa; sustrato vs aire Δ +0.1°F; pore EC 5.42 mS; DIF +0.8°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16422-vwc"></canvas></div></div>
@@ -1235,8 +1817,8 @@
 <div class="biophys-room" id="biophys-room-room-16426">
   <h3>NY F23 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>33.5 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.33 kPa sits inside the 1.2–1.4 kPa target band; substrate-air Δ +0.8°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 6.22 mS inside 4.0–7.0 band; DIF +0.5°F shallow vs 2–5°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run transitioning from generative stretch back toward a vegetative-leaning bulking profile but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>33.5 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.33 kPa; sustrato vs aire Δ +0.8°F; pore EC 6.22 mS; DIF +0.5°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16426-vwc"></canvas></div></div>
@@ -1250,8 +1832,8 @@
 <div class="biophys-room" id="biophys-room-room-18536">
   <h3>NY F4 <span class="phase bulking">Bulking / Vegetative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Bulking / Vegetative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Overnight dryback <b>25.1 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD lights-on 1.36 kPa sits inside the 1.2–1.4 kPa target band; substrate-air Δ -4.3°F (slab acting as thermal buffer); pore EC mean 5.56 mS inside 4.0–7.0 band; DIF +7.3°F inside the 2–5°F target band. <b>Intent vs reality:</b> the room is running transitioning from generative stretch back toward a vegetative-leaning bulking profile and the climate envelope is largely holding — irrigation adjustments here will land as recipe changes, not be masked by climate. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Bulking / Vegetative 2 · transitioning from generative stretch back toward a vegetative-leaning bulking profile.</b> Dryback nocturno <b>25.1 pp</b> exceeds the bulking / vegetative 2 target (15–25 pp). VPD enc. 1.36 kPa; sustrato vs aire Δ -4.3°F; pore EC 5.56 mS; DIF +7.3°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 12–18 pp · phase Bulking / Vegetative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18536-vwc"></canvas></div></div>
@@ -1265,8 +1847,8 @@
 <div class="biophys-room" id="biophys-room-room-18542">
   <h3>NY F10 <span class="phase ripening">Ripening / Generative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Overnight dryback <b>28.9 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD lights-on 1.33 kPa runs outside the 1.4–1.6 kPa target band; substrate-air Δ -2.3°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 6.83 mS inside 6.0–8.0 band; DIF +1.5°F shallow vs 4–8°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run generatively-steered ripening / finish but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Dryback nocturno <b>28.9 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD enc. 1.33 kPa; sustrato vs aire Δ -2.3°F; pore EC 6.83 mS; DIF +1.5°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 25–35 pp · phase Ripening / Generative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18542-vwc"></canvas></div></div>
@@ -1280,8 +1862,8 @@
 <div class="biophys-room" id="biophys-room-room-16418">
   <h3>NY F17 <span class="phase ripening">Ripening / Generative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Overnight dryback <b>30.7 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD lights-on 1.67 kPa runs outside the 1.4–1.6 kPa target band; substrate-air Δ +0.3°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 10.86 mS outside 6.0–8.0 band — stacking high; DIF +1.7°F shallow vs 4–8°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run generatively-steered ripening / finish but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Dryback nocturno <b>30.7 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD enc. 1.67 kPa; sustrato vs aire Δ +0.3°F; pore EC 10.86 mS; DIF +1.7°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 25–35 pp · phase Ripening / Generative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16418-vwc"></canvas></div></div>
@@ -1295,8 +1877,8 @@
 <div class="biophys-room" id="biophys-room-room-16419">
   <h3>NY F18 <span class="phase ripening">Ripening / Generative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Overnight dryback <b>32.7 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD lights-on 1.39 kPa runs outside the 1.4–1.6 kPa target band; substrate-air Δ -3.4°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 8.11 mS outside 6.0–8.0 band — stacking high; DIF +0.8°F shallow vs 4–8°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run generatively-steered ripening / finish but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Dryback nocturno <b>32.7 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD enc. 1.39 kPa; sustrato vs aire Δ -3.4°F; pore EC 8.11 mS; DIF +0.8°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 25–35 pp · phase Ripening / Generative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16419-vwc"></canvas></div></div>
@@ -1310,8 +1892,8 @@
 <div class="biophys-room" id="biophys-room-room-16421">
   <h3>NY F19 <span class="phase ripening">Ripening / Generative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Overnight dryback <b>29.6 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD lights-on 1.41 kPa sits inside the 1.4–1.6 kPa target band; substrate-air Δ -4.2°F (slab acting as thermal buffer); pore EC mean 7.52 mS inside 6.0–8.0 band; DIF +4.7°F inside the 4–8°F target band. <b>Intent vs reality:</b> the room is running generatively-steered ripening / finish and the climate envelope is largely holding — irrigation adjustments here will land as recipe changes, not be masked by climate. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Dryback nocturno <b>29.6 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD enc. 1.41 kPa; sustrato vs aire Δ -4.2°F; pore EC 7.52 mS; DIF +4.7°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 25–35 pp · phase Ripening / Generative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16421-vwc"></canvas></div></div>
@@ -1325,8 +1907,8 @@
 <div class="biophys-room" id="biophys-room-room-16423">
   <h3>NY F21 <span class="phase ripening">Ripening / Generative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Overnight dryback <b>37.8 pp</b> exceeds the ripening / generative 2 target (25–35 pp). VPD lights-on 1.58 kPa sits inside the 1.4–1.6 kPa target band; substrate-air Δ -4.2°F (slab acting as thermal buffer); pore EC mean 7.32 mS inside 6.0–8.0 band; DIF +0.5°F shallow vs 4–8°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run generatively-steered ripening / finish but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Dryback nocturno <b>37.8 pp</b> exceeds the ripening / generative 2 target (25–35 pp). VPD enc. 1.58 kPa; sustrato vs aire Δ -4.2°F; pore EC 7.32 mS; DIF +0.5°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 25–35 pp · phase Ripening / Generative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16423-vwc"></canvas></div></div>
@@ -1340,8 +1922,8 @@
 <div class="biophys-room" id="biophys-room-room-16435">
   <h3>NY F24 <span class="phase ripening">Ripening / Generative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Overnight dryback <b>41.9 pp</b> exceeds the ripening / generative 2 target (25–35 pp). VPD lights-on 1.31 kPa runs outside the 1.4–1.6 kPa target band; substrate-air Δ -3.4°F (slab thermal coupling collapsed — no pull to dry the slab); pore EC mean 7.94 mS inside 6.0–8.0 band; DIF +0.6°F shallow vs 4–8°F target — limited steering separation between day and night. <b>Intent vs reality:</b> the room is set up to run generatively-steered ripening / finish but the climate envelope isn't fully holding — read this room's chart strip with the HVAC capacity diagnosis in mind, not as an irrigation problem to chase. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Dryback nocturno <b>41.9 pp</b> exceeds the ripening / generative 2 target (25–35 pp). VPD enc. 1.31 kPa; sustrato vs aire Δ -3.4°F; pore EC 7.94 mS; DIF +0.6°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 25–35 pp · phase Ripening / Generative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-16435-vwc"></canvas></div></div>
@@ -1355,8 +1937,8 @@
 <div class="biophys-room" id="biophys-room-room-18541">
   <h3>NY F9 <span class="phase ripening">Ripening / Generative 2</span></h3>
   <div class="biophys-brief">
-    <span class="en-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
-    <span class="es-only">REAL 14-day hourly trace (2026-05-13 → 2026-05-27, 336 hourly room-mean points, n=480 samples per metric aggregated across all zones). Ripening / Generative 2 target bands shaded. Lead with VWC dryback envelope (absolute pp), then pore EC for stack discipline, then VPD / Temp / RH for atmospheric drivers.</span>
+    <span class="en-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Overnight dryback <b>32.0 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD lights-on 1.54 kPa sits inside the 1.4–1.6 kPa target band; substrate-air Δ -6.2°F (slab acting as thermal buffer); pore EC mean 7.97 mS inside 6.0–8.0 band; DIF +4.8°F inside the 4–8°F target band. <b>Intent vs reality:</b> the room is running generatively-steered ripening / finish and the climate envelope is largely holding — irrigation adjustments here will land as recipe changes, not be masked by climate. <span style='color:var(--ink-2)'>(REAL 14-day room-mean trace, n=480 samples per metric, hourly resolution.)</span></span>
+    <span class="es-only"><b>Ripening / Generative 2 · generatively-steered ripening / finish.</b> Dryback nocturno <b>32.0 pp</b> sits inside the ripening / generative 2 target band (25–35 pp). VPD enc. 1.54 kPa; sustrato vs aire Δ -6.2°F; pore EC 7.97 mS; DIF +4.8°F.</span>
   </div>
   <div class="room-charts-full">
     <div class="room-chart-card"><h5>VWC (%) <span class="chart-note">absolute dryback target 25–35 pp · phase Ripening / Generative 2</span></h5><div class="room-chart-canvas"><canvas id="bp-room-18541-vwc"></canvas></div></div>
