@@ -241,10 +241,41 @@
 <!-- 2. PRIOR-COMMITMENT TRACKER -->
 <section id="prior-commitment">
   <h2><span class="en-only">Prior-Commitment Tracker</span><span class="es-only">Auditoría de Compromisos Previos</span></h2>
-  <div class="verdict good">
-    <div class="v-head"><span class="en-only">First audit — cold start</span><span class="es-only">Primera auditoría — inicio en frío</span></div>
-    <p><span class="en-only">No prior commitments on file for Curaleaf NY. This audit establishes the baseline. The §9 recommendations become the commitment register that the next 2-week audit grades against (landed / partial / slipping).</span><span class="es-only">No hay compromisos previos en archivo para Curaleaf NY. Esta auditoría establece la línea base. Las recomendaciones de la §9 se convierten en el registro de compromisos que la próxima auditoría de 2 semanas calificará (aterrizó / parcial / desvió).</span></p>
+
+  <p class="en-only" style="color:var(--ink-2);font-size:13px;margin:6px 0 14px"><b>Source register:</b> claude-brain <code>03-Clients/curaleaf/curaleaf-ny-ravena.md</code> (Phil Huff biweekly Ag Advising series since Feb 2026, latest meeting 2026-05-06, latest exchange 2026-05-19) + <code>10-ClientWiki/curaleaf-ny.md</code> (historical record from 2026-02-09 NY site trip and 2026-04-08 Phil check-in) + active runoff-data-review thread with Will Tobin opened 2026-05-26. This audit grades each prior commitment against the 14-day sensor signature 2026-05-13 → 2026-05-27.</p>
+  <p class="es-only" style="color:var(--ink-2);font-size:13px;margin:6px 0 14px"><b>Registro de origen:</b> claude-brain con la serie Ag Advising biweekly de Phil Huff (desde feb 2026), el viaje al sitio del 9 feb 2026 y el hilo de revisión de runoff con Will Tobin abierto el 26 may 2026.</p>
+
+  <div class="verdict warn">
+    <div class="v-head"><span class="en-only">◐ Active fertigation tuning + runoff data review (Will Tobin · opened 2026-05-26)</span><span class="es-only">◐ Ajuste activo de fertirrigación + revisión de runoff (Will Tobin · abierto 26 may 2026)</span></div>
+    <p><span class="en-only"><b>Tobin&apos;s ask:</b> runoff data review. The 14-day signal speaks directly to this: substrate EC stack delta is averaging <b>2.0–9.9 mS/cm/day</b> across the flower cohort with the upper-edge rooms (NY F17 at 9.93, NY F1 at 8.16) signaling either a heavy generative EC stack or a runoff-volume gap. Mean overnight dryback across active flower runs <b>17–26 pp absolute</b> — inside the phase target for Mid Flower BULK (15–25 pp absolute) and Late Flower GEN (20–30 pp absolute). Curaleaf NY does <i>not</i> currently emit cumulative drip_volume to AROYA (verified via <code>count_irrigation_events</code> = 0 on NY F1), so the runoff side of the runoff:drip ratio cannot be computed from sensor data alone — Tobin will need the controller logs to close that loop. <b>Status:</b> partial — the substrate side of the conversation is on-target; the runoff side needs controller-side data Tobin owns.</span><span class="es-only"><b>Pedido de Tobin:</b> revisión de runoff. La señal de 14 días: ΔCE diaria 2.0–9.9 mS/cm en el grupo de flor; dryback nocturno 17–26 pp absoluto. Curaleaf NY no emite drip_volume acumulado a AROYA — Tobin necesita los logs del controlador para cerrar el lazo.</span></p>
   </div>
+
+  <div class="verdict good">
+    <div class="v-head"><span class="en-only">✓ Biweekly Ag Advising cadence (Phil Huff · standing since Feb 2026)</span><span class="es-only">✓ Cadencia biweekly de Ag Advising (Phil Huff · activa desde feb 2026)</span></div>
+    <p><span class="en-only">The 14-day window shows <b>44 active harvest groups across 22 flower rooms</b> with a clean phase distribution: 10 Mid Flower BULK, 7 Early Flower GEN, 7 Late Flower GEN / Flush, 6 in stretch, 4 in veg/mom. <b>Phase progression is on the published cadence</b> — every flower room has an HG with an explicit current_phase_name and days_in_phase from the SPA endpoint, meaning the team is actively running the AROYA platform end-to-end (not just collecting telemetry). This is the operational maturity the biweekly conversations have been steering toward. <b>Status:</b> landed.</span><span class="es-only">Ventana de 14 días: 44 HG activos en 22 salas de flor, fases declaradas en plataforma — la madurez operativa que las reuniones biweekly han venido construyendo. <b>Status:</b> aterrizó.</span></p>
+  </div>
+
+  <div class="verdict warn">
+    <div class="v-head"><span class="en-only">◐ NY site trip findings (2026-02-09 → 2026-02-14, Cian on-site)</span><span class="es-only">◐ Hallazgos del viaje al sitio NY (9–14 feb 2026)</span></div>
+    <p><span class="en-only">Site trip noted AROYA platform deployment + environmental monitoring + AUTOMAIT readiness. Current state: <b>786 devices deployed at facility 4412</b>; 27 cultivation rooms emitting 100%-coverage telemetry over the 14-day window; HG roster present at SPA level. <b>Not yet evidenced:</b> AUTOMAIT room-schedule activation per room (Phil&apos;s AUTOMAIT discussion with Jon Hodgson was at the org level). <b>Status:</b> partial — platform deployment landed; automation-side coverage needs a per-room confirm with Jon Hodgson.</span><span class="es-only">El viaje confirmó despliegue de AROYA + AUTOMAIT readiness. 786 dispositivos en 4412, cobertura 100% en 14 días, HG presentes vía SPA. Falta confirmación por sala de AUTOMAIT con Jon Hodgson. <b>Status:</b> parcial.</span></p>
+  </div>
+
+  <div class="verdict bad">
+    <div class="v-head"><span class="en-only">✗ NY F17 (room 16418) — sensor anomaly carried forward from this audit</span><span class="es-only">✗ NY F17 — anomalía de sensor</span></div>
+    <p><span class="en-only"><b>One zone in NY F17 reports pore EC pegged at 30 mS/cm (above any realistic substrate ceiling) and another reports VWC stuck at 0.1%</b>. This was a NEW finding in the 14-day window — both Tobin (fertigation) and Huff (cultivation strategy) should see it before the next Ag Advising. Pull a hand-water audit + probe re-seat on F17 before reading any steering signal off that room. <b>Status:</b> opening this as a commitment to grade in the next 2-week audit.</span><span class="es-only">Una zona en NY F17 reporta CE de poro fijada en 30 mS/cm y otra VWC en 0.1%. Re-asentar las sondas y auditar mano de riego antes de tomar decisiones de manejo sobre F17. <b>Status:</b> commitment abierto para la próxima auditoría.</span></p>
+  </div>
+
+  <div class="verdict warn">
+    <div class="v-head"><span class="en-only">◐ Mom 2 (room 18555) — substrate temp drift carried forward</span><span class="es-only">◐ Mom 2 — deriva de temperatura de sustrato</span></div>
+    <p><span class="en-only">Mom 2 substrate temperature drifted <b>−6.9% across the window with R²=0.80</b> — a clean linear decline, climate-driven. Worth an HVAC walk-through on the mother-room ring before stock plants drop further into a cold zone. <b>Status:</b> opening as a commitment.</span><span class="es-only">Temperatura de sustrato bajó 6.9% R²=0.80 — recomendar paseo HVAC en el anillo de salas madre.</span></p>
+  </div>
+
+  <div class="verdict good">
+    <div class="v-head"><span class="en-only">✓ AUTOMAIT Room Schedules GA / intro meeting (Jon Hodgson · org-wide)</span><span class="es-only">✓ AUTOMAIT Room Schedules GA / intro (Jon Hodgson · org)</span></div>
+    <p><span class="en-only">Org-level AUTOMAIT Room Schedules GA + intro meeting with Jon Hodgson — landed and closed per prior wiki record. Site-by-site activation is the next surface (see prior commitment above).</span><span class="es-only">Intro org-wide cerrada. Activación por sala es la siguiente superficie.</span></p>
+  </div>
+
+  <p class="en-only" style="color:var(--ink-muted);font-size:12px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--border)"><b>Out-of-scope for this facility (cross-MSO, tracked in claude-brain Curaleaf org page):</b> Bellmawr NJ new-build full-stack quote (Joshua Huston / Shane Krusen) · KOP PA H412 climate-station quote (Rebeka Phelps) · AZ Latham 30× dual-sensor Teros (Rickey Routon — Rebeka owns the quote) · cross-site AUTOMAIT coordination (Jon Hodgson). $235K+ pipeline across the 11-site MSO. Critical org-wide deadline: September 2026.</p>
 </section>
 
 <!-- 3. HVAC CAPACITY -->
