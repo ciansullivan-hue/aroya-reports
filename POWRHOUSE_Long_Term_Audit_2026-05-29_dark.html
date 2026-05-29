@@ -250,6 +250,16 @@
  /* Make sure pills are visible in V4 */.pill { display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 600; }
 
 
+ /* ==== Vangarden gold-standard masthead chrome (donor) ==== */.wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}.masthead{background:#1a1c19 !important;color:#fff !important;padding:20px 28px 24px !important;margin:0 0 0 !important;position:relative;overflow:hidden;min-height:80px;border-bottom:none !important;display:block !important}.masthead h1{display:none !important}.masthead.sub{display:none !important}.masthead.meta{display:none !important}.masthead.toolbar{display:none !important}.masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1;flex-wrap:wrap}.lockup{position:relative;display:flex;align-items:center;gap:10px;color:#fff;padding-bottom:14px;flex:0 0 auto}.lockup-mark{font-family:'Inter',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:1;color:#fff}.lockup-glyph{display:inline-block;width:26px;height:26px;position:relative;flex:none}.lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#fff;border-radius:2px}.lockup-glyph::before{top:0;right:0;width:13px;height:13px}.lockup-glyph::after{bottom:0;left:0;width:17px;height:17px;border-top-right-radius:0}.lockup-byline{position:absolute;top:34px;left:0;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;color:#aaa;letter-spacing:0;line-height:1}.controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.ctrl-btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all.12s}.ctrl-btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}.ctrl-btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}.tick{position:absolute;width:7px;height:7px;background:#3a3d35;border-radius:1px;z-index:0}.tick.t1{top:14px;left:42%}.tick.t2{top:14px;left:48%;width:8px;height:8px}.tick.t3{top:14px;right:24%;width:6px;height:6px}.tick.t4{bottom:12px;left:18%}.tick.t5{bottom:12px;left:22%;width:5px;height:5px}.tick.t6{top:46%;right:18px}.tick.t7{bottom:12px;right:32%;width:6px;height:6px}.pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}.pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}.pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px;display:block !important}.pagehead.sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5;display:block !important}.pagehead.meta{margin-top:18px;display:grid !important;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}.pagehead.meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}.pagehead.meta span{padding:6px 0;border-top:1px solid var(--border)}
+ :root[data-theme="dark"].pagehead{border-bottom-color:var(--border)}
+ :root[data-theme="dark"].pagehead-eyebrow{color:var(--olive-2,#cbeeb0)}
+ /* lime-tinted h2 dividers */
+ section h2{position:relative;padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:18px}
+ section h2::after{content:"";position:absolute;left:0;bottom:-1px;width:48px;height:2px;background:var(--olive);border-radius:2px}
+ :root[data-theme="dark"] section h2::after{background:var(--olive-2,#cbeeb0)}
+ /* AROYA report footer brand */.aroya-footer{max-width:1180px;margin:32px auto 0;padding:18px 28px 24px;border-top:1px solid var(--border);color:var(--ink-muted);font-size:11.5px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}.aroya-footer.brand{font-weight:500;color:var(--olive);letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+ :root[data-theme="dark"].aroya-footer.brand{color:var(--olive-2,#cbeeb0)}
+
  /* ==== Table readability override ==== */
  table, table.aroya, table.bp-table { color: var(--ink); font-weight: 500; }
  table th, table.aroya th, table.bp-table th {
@@ -303,16 +313,36 @@
 </head>
 <body>
 <header class="masthead">
- <h1><span class="i18n" data-i18n-en="Powrhouse — Long-Term Cultivation Audit" data-i18n-es="Powrhouse — Auditoría de Cultivo a Largo Plazo">Powrhouse — Long-Term Cultivation Audit</span></h1>
- <div class="sub"><span class="i18n" data-i18n-en="18 months of harvest data · 90 days of environmental telemetry · 1,409 dry-weight rows" data-i18n-es="18 meses de cosechas · 90 días de telemetría ambiental · 1,409 registros de peso seco">18 months of harvest data · 90 days of environmental telemetry · 1,409 dry-weight rows</span></div>
- <div class="meta"><span class="i18n" data-i18n-en="Window: 2024-11-07 → 2026-05-28 (yield) · 2026-02-28 → 2026-05-28 (telemetry)" data-i18n-es="Ventana: 2024-11-07 → 2026-05-28 (rendimiento) · 2026-02-28 → 2026-05-28 (telemetría)">Window: 2024-11-07 → 2026-05-28 (yield) · 2026-02-28 → 2026-05-28 (telemetry)</span> · facility_id 3754 · generated 2026-05-29</div>
- <div class="toolbar">
- <div class="lang-toggle" role="group" aria-label="Language">
- <button id="lang-en" class="active" type="button">EN</button>
- <button id="lang-es" type="button">ES</button>
+ <div class="masthead-inner">
+ <div class="lockup">
+ <span class="lockup-mark">AROYA</span>
+ <span class="lockup-glyph" aria-hidden="true"></span>
+ <span class="lockup-byline">by Addium</span>
+ </div>
+ <div class="controls">
+ <button id="lang-en" class="ctrl-btn active" type="button" data-lang="en">EN</button>
+ <button id="lang-es" class="ctrl-btn" type="button" data-lang="es">ES</button>
+ <button id="theme-light" class="ctrl-btn active" type="button" data-theme="light" style="margin-left:8px">Light</button>
+ <button id="theme-dark" class="ctrl-btn" type="button" data-theme="dark">Dark</button>
  </div>
  </div>
+ <span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span><span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
 </header>
+<div class="pagehead">
+ <div class="pagehead-eyebrow"><span class="i18n" data-i18n-en="AROYA · Long-Term Cultivation Audit · Yield Intelligence" data-i18n-es="AROYA · Auditoría de Cultivo a Largo Plazo · Inteligencia de Rendimiento">AROYA · Long-Term Cultivation Audit · Yield Intelligence</span></div>
+ <h1><span class="i18n" data-i18n-en="PowrHouse — Long-Term Cultivation &amp; Yield Audit" data-i18n-es="PowrHouse — Auditoría de Cultivo y Rendimiento a Largo Plazo">PowrHouse — Long-Term Cultivation &amp; Yield Audit</span></h1>
+ <div class="sub"><span class="i18n" data-i18n-en="18 months of harvest data · 1,409 Airtable dry-weight rows · live AROYA sensor state for 4 flower rooms · biophysics-grounded crop-steering framing" data-i18n-es="18 meses de cosechas · 1,409 registros de peso seco (Airtable) · estado AROYA en vivo de 4 salas · marco de crop-steering biofísico">18 months of harvest data · 1,409 Airtable dry-weight rows · live AROYA sensor state for 4 flower rooms · biophysics-grounded crop-steering framing</span></div>
+ <div class="meta">
+ <span><b><span class="i18n" data-i18n-en="Facility" data-i18n-es="Instalación">Facility</span></b>PowrHouse (ID 3754)</span>
+ <span><b><span class="i18n" data-i18n-en="Window" data-i18n-es="Ventana">Window</span></b>2024-12 → 2026-05 (18 months)</span>
+ <span><b><span class="i18n" data-i18n-en="Rooms" data-i18n-es="Salas">Rooms</span></b>4 flower (POWR 1 – POWR 4)</span>
+ <span><b><span class="i18n" data-i18n-en="Flower footprint" data-i18n-es="Superficie de flora">Flower footprint</span></b>5,120 ft² (1600/880/1760/880)</span>
+ <span><b><span class="i18n" data-i18n-en="Harvest groups" data-i18n-es="Grupos cosecha">Harvest groups</span></b>35 (24 with dry weight)</span>
+ <span><b><span class="i18n" data-i18n-en="Substrate" data-i18n-es="Sustrato">Substrate</span></b>Coco / mixed</span>
+ <span><b><span class="i18n" data-i18n-en="Yield source" data-i18n-es="Fuente de rendimiento">Yield source</span></b>Airtable 1,409 rows (2026-05-28)</span>
+ <span><b><span class="i18n" data-i18n-en="Sensor source" data-i18n-es="Fuente de sensores">Sensor source</span></b>AROYA SPA · facility 3754 (2026-05-29 live)</span>
+ </div>
+</div>
 
 <div class="wrap">
 
@@ -2179,10 +2209,15 @@ document.addEventListener('DOMContentLoaded', function(){
   renderTraitYield();
   renderBestWorstOverlays();
   renderWAGauges();
-  if (typeof renderYieldQualityCharts === 'function') renderYieldQualityCharts();
-  if (typeof renderDensityCharts === 'function') renderDensityCharts();
+  if (typeof renderYieldQualityCharts === "function") renderYieldQualityCharts();
+  if (typeof renderDensityCharts === "function") renderDensityCharts();
 });
 </script>
 
+
+<footer class="aroya-footer">
+ <div><span class="brand">AROYA · by Addium</span> · <span class="i18n" data-i18n-en="PowrHouse Long-Term Cultivation &amp; Yield Audit · facility 3754" data-i18n-es="PowrHouse — Auditoría de Cultivo y Rendimiento a Largo Plazo · instalación 3754">PowrHouse Long-Term Cultivation &amp; Yield Audit · facility 3754</span></div>
+ <div><span class="i18n" data-i18n-en="Generated 2026-05-29 · 1,409 Airtable dry-weight rows · AROYA SPA live sensor state · Sqft from AROYA SPA room config" data-i18n-es="Generado 2026-05-29 · 1,409 registros de peso seco Airtable · estado de sensores AROYA en vivo · superficie desde AROYA SPA">Generated 2026-05-29 · 1,409 Airtable dry-weight rows · AROYA SPA live sensor state · Sqft from AROYA SPA room config</span></div>
+</footer>
 </body>
 </html>
