@@ -6,250 +6,869 @@
 <title>Powrhouse — Long-Term Cultivation Audit — 2026-05-29</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+/* =============================================================
+   AROYA design system — tokens lifted verbatim from
+   aroya-reporting/skills/aroya-design-system/references/aroya-brand.md §5
+   and references/html-design-system.md Part IV.
+   No other CSS source contributes to this stylesheet.
+   ============================================================= */
 
-  :root[data-theme="light"]{
-    --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
-    --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
-    --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
-    --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
-    --attention:#e76f51; --attention-2:#f4a261;
-    --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
-    --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
-    --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51;
-    --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
-    --grid-line: #e8e8e0;
-  }
-  :root[data-theme="dark"]{
-    --bg:#13160f; --bg-2:#1a1e15; --bg-3:#22281c; --border:#2e3624;
-    --ink:#e8ead9; --ink-2:#b9bda5; --ink-muted:#7e836e;
-    --olive:#8aa05c; --olive-2:#a7bb74; --lime:#b9e587; --lime-2:#6b8d3d;
-    --app-blue:#6cb5d8; --app-blue-2:#3a6d80;
-    --attention:#f48066; --attention-2:#f4a261;
-    --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
-    --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
-    --p-rootin:#7fbacd; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#b694ea; --p-ripening:#e76f51;
-    --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 8px 28px rgba(0,0,0,0.45);
-    --grid-line: #2a3220;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0;font:14px/1.5 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","ss03"}
-  a{color:var(--app-blue);text-decoration:none}
-  a:hover{text-decoration:underline}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
-  .masthead{background:#1a1c19;color:#fff;padding:20px 28px 24px;margin:0 -28px 0;position:relative;overflow:hidden;min-height:80px}
-  .masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1}
-  .lockup{position:relative;display:flex;align-items:center;gap:10px;color:#fff;padding-bottom:14px}
-  .lockup-mark{font-family:'Inter',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:1;color:#fff}
-  .lockup-glyph{display:inline-block;width:26px;height:26px;position:relative;flex:none}
-  .lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#fff;border-radius:2px}
-  .lockup-glyph::before{top:0;right:0;width:13px;height:13px}
-  .lockup-glyph::after{bottom:0;left:0;width:17px;height:17px;border-top-right-radius:0}
-  .lockup-byline{position:absolute;top:34px;left:0;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;color:#aaa;letter-spacing:0;line-height:1}
-  .controls{display:flex;gap:6px;align-items:center}
-  .btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
-  .btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
-  .btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
-  .tick{position:absolute;width:7px;height:7px;background:#3a3d35;border-radius:1px;z-index:0}
-  .tick.t1{top:14px;left:42%} .tick.t2{top:14px;left:48%;width:8px;height:8px} .tick.t3{top:14px;right:24%;width:6px;height:6px}
-  .tick.t4{bottom:12px;left:18%} .tick.t5{bottom:12px;left:22%;width:5px;height:5px}
-  .tick.t6{top:46%;right:18px} .tick.t7{bottom:12px;right:32%;width:6px;height:6px}
-  .pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
-  .pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
-  .pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
-  .pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
-  .pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
-  .pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
-  .pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
-  section{margin-top:40px}
-  h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
-  h3{font-size:17px;margin:24px 0 10px;font-weight:600}
-  h4{font-size:14px;margin:18px 0 6px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
-  p{margin:0 0 12px}
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
-  .kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
-  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
-  .kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
-  .kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
-  .kpi .val{font-size:22px;font-weight:700;color:var(--ink)}
-  .kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
-  .kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
-  .card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
-  .phase{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
-  .phase.rootin{background:var(--p-rootin);color:#0c2a35}
-  .phase.veg{background:var(--p-veg);color:#1c3700}
-  .phase.stretch{background:var(--p-stretch);color:#4a1d00}
-  .phase.bulking{background:var(--p-bulking);color:#2c1750}
-  .phase.ripening{background:var(--p-ripening);color:#3c0f00}
-  .phase.dry{background:var(--bg-3);color:var(--ink-muted)}
-  .verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
-  .verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
-  .verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
-  .verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
-  .verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
-  table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
-  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
-  th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
-  tr:last-child td{border-bottom:none}
-  .num{text-align:right;font-variant-numeric:tabular-nums}
-  .pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
-  .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
-  .chartwrap{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 16px 14px;margin:14px 0;box-shadow:var(--card-shadow)}
-  .chartwrap h4{margin-top:0}
-  .chartwrap .legend{font-size:12px;color:var(--ink-muted);margin-top:8px}
-  .chart-canvas{position:relative;height:260px;width:100%}
-  .chart-canvas canvas{max-width:100%}
-  .room-selector{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 18px}
-  .room-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;user-select:none;box-shadow:var(--card-shadow)}
-  .room-chip:hover{border-color:var(--olive-2);transform:translateY(-1px)}
-  .room-chip.active{background:var(--olive);color:#fff;border-color:var(--olive)}
-  .room-chip.active .chip-phase{background:rgba(255,255,255,.22);color:#fff}
-  .room-chip .chip-phase{font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px}
-  .room-chip.bulking{border-color:var(--p-bulking)}
-  .room-chip.ripening{border-color:var(--p-ripening)}
-  .room-chip.stretch{border-color:var(--p-stretch)}
-  .room-chip.veg{border-color:var(--p-veg)}
-  .room-meta{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:0 0 18px;box-shadow:var(--card-shadow)}
-  .room-meta .rm-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:10px}
-  .room-meta h3{margin:0;font-size:18px}
-  .room-meta .rm-targets{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
-  .room-meta .rm-targets b{color:var(--ink)}
-  .room-meta .rm-targets .tgt{display:inline-block;padding:4px 9px;background:var(--bg-3);border-radius:6px}
-  .room-meta .rm-note{margin-top:8px;font-size:13px;color:var(--ink-2);font-style:italic}
-  .room-meta .rm-coverage{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
-  .en .es-only{display:none} .es .en-only{display:none}
-  .rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow)}
-  .rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
-  .rec .owner.grower{background:var(--app-blue)}
-  .rec .owner.process{background:var(--ink-2)}
-  .rec .rphase{color:var(--ink-muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-left:4px}
-  .rec .raction{margin-top:6px;font-weight:500}
-  .rec .rwhy{margin-top:4px;font-size:13px;color:var(--ink-2)}
-  footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
-  .biophys-room{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;box-shadow:var(--card-shadow)}
-  .biophys-room h3{margin:0 0 10px;font-size:17px}
-  .biophys-brief{font-size:13.5px;color:var(--ink-2);margin-bottom:14px;padding:12px 14px;background:var(--bg-3);border-left:3px solid var(--olive);border-radius:0 8px 8px 0;line-height:1.55}
-  .bp-scroll{overflow-x:auto}
-  .bp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
-  .bp-table th{background:var(--bg-3);padding:8px 10px;text-align:left;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1.5px solid var(--border);white-space:nowrap}
-  .bp-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
-  .bp-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .room-charts-full{display:grid;grid-template-columns:1fr;gap:14px;margin:14px 0 6px}
-  .room-chart-card{background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:10px 14px}
-  .room-chart-card h5{margin:0 0 4px;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-  .room-chart-card h5 .chart-note{font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--ink-muted)}
-  .room-chart-canvas{position:relative;height:240px;width:100%}
-  .muted{color:var(--ink-muted);font-style:italic}
-  kbd{font-family:'JetBrains Mono','Monaco',monospace;font-size:11px;padding:1px 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg-3);color:var(--ink-2)}
+:root[data-theme="light"]{
+  /* Brand — references/aroya-brand.md §1 */
+  --aroya-dark-green:       #635e51;
+  --aroya-dark-green-hover: #6c6759;
+  --aroya-vibrant-green:    #cbeeb0;
+  --aroya-vibrant-green-hover: #b7d89e;
+  --aroya-light-green:      #c7c8c2;
+  --aroya-medium-gray:      #46483d;
+  --aroya-light-gray:       #f9f9f9;
+  --aroya-app-blue-1:       #1c2632;
+  --aroya-app-blue-2:       #071538;
+  --aroya-footer-hr:        #c7c7b9;
+  --aroya-attention:        #d0ff00;
 
+  /* Neutrals — references/aroya-brand.md §1 */
+  --aroya-black:    #1a1c19;
+  --aroya-white:    #ffffff;
+  --neutral-900:    #111111;
+  --neutral-800:    #222222;
+  --neutral-700:    #444444;
+  --neutral-500:    #666666;
+  --neutral-400:    #aaaaaa;
+  --neutral-300:    #cccccc;
+  --neutral-200:    #f5f5f5;
+  --neutral-100:    #f9f9f9;
 
-/* === interactive selector block === */
+  /* Semantic aliases used throughout report */
+  --ds-fg:        var(--aroya-black);
+  --ds-fg-muted:  var(--neutral-700);
+  --ds-fg-subtle: var(--neutral-500);
+  --ds-fg-disabled: var(--neutral-400);
+  --ds-bg:        var(--aroya-white);
+  --ds-bg-muted:  var(--aroya-light-gray);
+  --ds-bg-subtle: var(--neutral-200);
+  --ds-border:    #ebebea;
+  --ds-border-strong: var(--neutral-300);
 
-  /* interactive room-selector + compare-toggle */
-  .room-selector{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 18px}
-  .room-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:var(--bg-2);cursor:pointer;font-size:13px;line-height:1.2;transition:all .15s}
-  .room-chip:hover{border-color:var(--olive);transform:translateY(-1px)}
-  .room-chip.active{background:var(--olive);color:#fff;border-color:var(--olive);box-shadow:0 2px 8px rgba(122,158,58,.35)}
-  .room-chip.disabled{opacity:.4;cursor:not-allowed}
-  .room-chip .chip-phase{font-size:10px;opacity:.7;text-transform:uppercase;letter-spacing:.05em}
-  .room-chip.active .chip-phase{opacity:.85}
-  .room-chip.veg, .room-chip.mom{border-color:#9fd96a}
-  .room-chip.stretch{border-color:#f4a261}
-  .room-chip.bulking{border-color:#c5a3ff}
-  .room-chip.ripening{border-color:#e76f51}
-  .compare-toggle{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px dashed var(--border);background:transparent;font-size:12px;color:var(--ink-2);margin-left:8px;cursor:pointer}
-  .compare-toggle input{margin:0}
-  .room-meta{margin:10px 0 6px}
-  .room-meta-card{padding:10px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;font-size:13px}
-  .chartwrap{margin:14px 0}
-  .chartwrap h4{margin:0 0 6px;font-size:14px}
-  .chart-canvas{height:230px;position:relative}
-  .chart-canvas canvas{position:absolute;top:0;left:0;width:100%;height:100%}
+  /* State — references/aroya-brand.md §1 system colors */
+  --ds-success-bg: #cef5ca;  --ds-success-fg: #114e0b;
+  --ds-warning-bg: #fcf8d8;  --ds-warning-fg: #5e5515;
+  --ds-error-bg:   #f8e4e4;  --ds-error-fg:   #3b0b0b;
+  --ds-focus:      #2d62ff;
 
+  /* Phase palette — CLAUDE.md irrigation framing §9 */
+  --ds-phase-rootin:    #a8d5e2;
+  --ds-phase-veg:       #9fd96a;
+  --ds-phase-stretch:   #f4a261;
+  --ds-phase-bulking:   #c5a3ff;
+  --ds-phase-ripening:  #e76f51;
 
-/* ============================================================
-   POWRHOUSE V4 ADAPTER — bridge V4 markup to gold-standard
-   class names; no HTML edits required.
-   ============================================================ */
+  /* Chart canonical tokens — references/charts-design-system.md §III-A */
+  --ds-chart-bg:        var(--aroya-white);
+  --ds-chart-frame:     var(--aroya-black);
+  --ds-chart-target-fill: #f0eee9;
+  --ds-chart-target-edge: #2e7d2e;
+  --ds-chart-data:      #000000;
+  --ds-chart-grid:      #ebebea;
+  --ds-chart-axis:      var(--aroya-black);
 
-/* kpi-grid -> .kpis */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+  /* Layout — 8pt scale, html-design-system.md Part I §4 */
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px;
+  --s-5:24px; --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px;
 
-/* V4 KPI inner uses .lbl / .val / .det -> map to gold .label / .val / .delta */
-.kpi .lbl{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;font-weight:600}
-.kpi .det{font-size:12px;color:var(--ink-2);margin-top:4px;line-height:1.4}
+  /* Type — aroya-brand.md §2; html-design-system.md Part I §3 */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --font-serif: 'Source Serif Pro', Georgia, serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-display: 2.5rem;
 
-/* callout = verdict gradient cards */
-.callout{padding:14px 18px;border-radius:10px;font-weight:500;margin:12px 0;border-left:4px solid var(--olive);background:var(--bg-2);box-shadow:var(--card-shadow)}
-.callout.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,var(--bg-2) 78%);border-color:var(--bad);color:var(--ink)}
-.callout.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,var(--bg-2) 78%);border-color:var(--warn);color:var(--ink)}
-.callout.good{background:linear-gradient(90deg,var(--good-bg) 0%,var(--bg-2) 78%);border-color:var(--good);color:var(--ink)}
-.callout strong{color:var(--ink);font-weight:700}
+  /* Radii — aroya-brand.md §3 */
+  --ds-radius:    12px;
+  --ds-radius-sm: 6px;
+  --ds-radius-lg: 16px;
 
-/* masthead — Powrhouse uses a flat dark header; restyle to match Curaleaf */
-.masthead{background:#1a1c19;color:#fff;padding:24px 28px 26px;margin:0 0 0;position:relative;overflow:hidden;min-height:90px;border-bottom:3px solid var(--lime)}
-.masthead h1{margin:0 0 6px;font:500 26px/1.2 'Inter',sans-serif;letter-spacing:-.018em;color:#fff}
-.masthead .sub{color:#cbcfb9;font-size:14px;line-height:1.5;margin-bottom:6px;max-width:880px}
-.masthead .meta{color:#9ca38b;font-size:12px;letter-spacing:.02em}
-.masthead .toolbar{position:absolute;top:24px;right:28px;display:flex;gap:8px;align-items:center}
-.masthead .lang-toggle{display:inline-flex;border:1px solid #3a3d35;border-radius:8px;overflow:hidden}
-.masthead .lang-toggle button{background:transparent;color:#cccccc;border:none;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
-.masthead .lang-toggle button:hover{background:rgba(203,238,176,.08);color:#cbeeb0}
-.masthead .lang-toggle button.active{background:#cbeeb0;color:#1a1c19}
+  /* Elevation — html-design-system.md Part I §2 (sparingly) */
+  --ds-shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --ds-shadow-md: 0 4px 12px rgba(0,0,0,0.08);
 
-/* numbered section h2 — gold-standard lime underline + olive number chip */
-h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime);display:flex;align-items:baseline;gap:10px;color:var(--ink)}
-h2 .num{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:26px;padding:0 8px;background:var(--olive);color:#fff;border-radius:6px;font-size:13px;font-weight:700;letter-spacing:.02em;flex:none}
+  /* Motion — html-design-system.md Part IV */
+  --ds-dur: 160ms;
+  --ds-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-/* section spacing + soft surface for body content under each h2 */
-section{margin-top:40px}
-.lead{font-size:14.5px;color:var(--ink-2);line-height:1.55;margin:0 0 16px;padding:12px 14px;background:var(--bg-3);border-left:3px solid var(--olive);border-radius:0 8px 8px 0}
+:root[data-theme="dark"]{
+  --aroya-dark-green:       #b7c8a3;        /* lightened olive for dark surfaces */
+  --aroya-dark-green-hover: #cbd8b6;
+  --aroya-vibrant-green:    #cbeeb0;        /* lime stays */
+  --aroya-vibrant-green-hover: #b7d89e;
+  --aroya-light-green:      #59604d;
+  --aroya-medium-gray:      #c4c7ba;
+  --aroya-light-gray:       #1a1c19;
+  --aroya-app-blue-1:       #1c2632;
+  --aroya-app-blue-2:       #071538;
+  --aroya-footer-hr:        #3a3d35;
+  --aroya-attention:        #d0ff00;
 
-/* V4 room-chips alias -> gold .room-selector */
-.room-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 18px}
+  --aroya-black:    #ededea;
+  --aroya-white:    #14160f;
+  --neutral-900:    #f5f5f0;
+  --neutral-800:    #e0e0db;
+  --neutral-700:    #c4c7ba;
+  --neutral-500:    #8a8e7e;
+  --neutral-400:    #5d6155;
+  --neutral-300:    #3a3d35;
+  --neutral-200:    #22241d;
+  --neutral-100:    #1a1c19;
 
-/* targets row inside room cards */
-.targets{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;font-size:12px}
-.targets > span{padding:4px 10px;background:var(--bg-3);border:1px solid var(--border);border-radius:6px;color:var(--ink-2)}
-.targets > span b{color:var(--ink);font-weight:600}
+  --ds-fg:        #ededea;
+  --ds-fg-muted:  #c4c7ba;
+  --ds-fg-subtle: #8a8e7e;
+  --ds-fg-disabled: #5d6155;
+  --ds-bg:        #14160f;
+  --ds-bg-muted:  #1a1c19;
+  --ds-bg-subtle: #22241d;
+  --ds-border:    #2e3128;
+  --ds-border-strong: #3a3d35;
 
-/* chart-wrap card aliases */
-.chart-wrap{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 16px 14px;margin:14px 0;box-shadow:var(--card-shadow);position:relative}
-.chart-wrap.tall{padding-bottom:18px}
-.chart-wrap canvas{max-width:100%}
+  --ds-success-bg: #1e2b15; --ds-success-fg: #b9e587;
+  --ds-warning-bg: #2c2615; --ds-warning-fg: #ecca7a;
+  --ds-error-bg:   #2c1813; --ds-error-fg:   #ff9c84;
+  --ds-focus:      #7886ff;
 
-/* grid-2 layout */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
-@media (max-width:900px){.grid-2{grid-template-columns:1fr}}
+  --ds-phase-rootin:    #7fbacd;
+  --ds-phase-veg:       #9fd96a;
+  --ds-phase-stretch:   #f4a261;
+  --ds-phase-bulking:   #b694ea;
+  --ds-phase-ripening:  #e76f51;
 
-/* footnote / muted */
-.footnote{font-size:12px;color:var(--ink-muted);margin-top:8px;font-style:italic;padding:8px 10px;background:var(--bg-3);border-radius:6px}
+  --ds-chart-bg:        #0b1320;
+  --ds-chart-frame:     #ffffff;
+  --ds-chart-target-fill: #16202c;
+  --ds-chart-target-edge: #8ee168;
+  --ds-chart-data:      #ffffff;
+  --ds-chart-grid:      #2a3220;
+  --ds-chart-axis:      #ffffff;
 
-/* card surface */
-.card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
+  --ds-shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+  --ds-shadow-md: 0 4px 16px rgba(0,0,0,0.45);
+}
 
-/* AROYA wordmark in masthead */
-.aroya{display:inline-block;color:#cbeeb0;font:500 11px/1 'Inter',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;opacity:.85}
+/* Reset — html-design-system.md Part IV */
+*,*::before,*::after { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--ds-fg);
+  background: var(--ds-bg-muted);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11","ss01";
+}
+a { color: var(--ds-focus); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-/* footer */
-footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+/* Tabular numerals everywhere numbers appear — html-design-system.md Part IV */
+.num, td.num, .val, .kpi .val, .mono, .bp-table .num {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
 
-/* keep i18n hidden language correctly */
+/* =============================================================
+   Masthead — composition mode A from aroya-brand.md §7.2 "solid
+   AROYA frame": dark app-blue band, wordmark top-right, corner ticks
+   in brand neutral black. Border-only separation (Part I §2).
+   ============================================================= */
+.masthead{
+  background: var(--aroya-app-blue-1);
+  color: #ededea;
+  padding: var(--s-6) var(--s-7);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ds-border);
+}
+.masthead h1{
+  margin: 0 0 var(--s-2);
+  font: 500 28px/1.2 var(--font-sans);
+  letter-spacing: -0.018em;
+  color: #ffffff;
+}
+.masthead .sub{
+  color: #c9ccc7;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  margin-bottom: var(--s-2);
+  max-width: 880px;
+}
+.masthead .meta{
+  color: #8a8e7e;
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+}
+.masthead .aroya{
+  display: inline-block;
+  color: var(--aroya-vibrant-green);
+  font: 500 11px/1 var(--font-sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-2);
+  opacity: 0.85;
+}
+
+/* EN/ES toolbar — borders not shadows, html-design-system.md §2 */
+.masthead .toolbar{
+  position: absolute;
+  top: var(--s-6); right: var(--s-7);
+  display: flex; gap: var(--s-2); align-items: center;
+}
+.lang-toggle{
+  display: inline-flex;
+  border: 1px solid #3a3d35;
+  border-radius: var(--ds-radius-sm);
+  overflow: hidden;
+}
+.lang-toggle button{
+  background: transparent;
+  color: #cccccc;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font: 500 12px/1 var(--font-sans);
+  letter-spacing: 0.04em;
+  transition: all var(--ds-dur) var(--ds-ease);
+}
+.lang-toggle button:hover{
+  background: rgba(203,238,176,0.08);
+  color: var(--aroya-vibrant-green);
+}
+.lang-toggle button.active{
+  background: var(--aroya-vibrant-green);
+  color: var(--aroya-app-blue-1);
+}
+
+/* =============================================================
+   Layout — Pattern B from html-design-system.md Part II
+   long-scroll report, single column, max-width 1180 (data-heavy)
+   ============================================================= */
+.wrap{
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--s-7) var(--s-9);
+  background: var(--ds-bg);
+}
+
+/* =============================================================
+   Type — html-design-system.md Part I §3
+   "One typeface, three sizes, two weights"
+   AROYA uses 500 medium for H1/H2, NEVER 700 (Part I §3, brand §2)
+   ============================================================= */
+section{ margin-top: var(--s-7); }
+
+h2{
+  font-size: var(--text-xl);
+  font-weight: 500;
+  margin: 0 0 var(--s-4);
+  letter-spacing: -0.01em;
+  color: var(--ds-fg);
+  display: flex; align-items: baseline; gap: var(--s-3);
+  padding-bottom: var(--s-2);
+  /* Lime accent rule — AROYA's signal accent on chrome */
+  border-bottom: 2px solid var(--aroya-vibrant-green);
+}
+/* Section number chip — uses brand primary, white text */
+h2 .num{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 26px;
+  padding: 0 var(--s-2);
+  background: var(--aroya-dark-green);
+  color: #ffffff;
+  border-radius: var(--ds-radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  flex: none;
+}
+
+h3{
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin: var(--s-5) 0 var(--s-2);
+  letter-spacing: -0.005em;
+  color: var(--ds-fg);
+}
+h4{
+  font-size: var(--text-xs);
+  margin: var(--s-4) 0 var(--s-2);
+  font-weight: 500;
+  color: var(--ds-fg-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+p{ margin: 0 0 var(--s-3); }
+
+/* Lead paragraph — section opener, callout treatment */
+.lead{
+  font-size: var(--text-sm);
+  color: var(--ds-fg-muted);
+  line-height: 1.6;
+  margin: 0 0 var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  background: var(--ds-bg-subtle);
+  border-left: 3px solid var(--aroya-dark-green);
+  border-radius: 0 var(--ds-radius-sm) var(--ds-radius-sm) 0;
+}
+
+/* =============================================================
+   KPI cards — html-design-system.md Part V "KPI card" recipe
+   Four pieces vertically: label, value, delta, sparkline.
+   ============================================================= */
+.kpis, .kpi-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--s-3);
+  margin-bottom: var(--s-5);
+}
+.kpi{
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  position: relative;
+  overflow: hidden;
+}
+/* Verdict stripe on left edge — state-color encoded */
+.kpi::before{
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--aroya-dark-green);
+}
+.kpi.good::before { background: var(--ds-success-fg); }
+.kpi.warn::before { background: var(--ds-warning-fg); }
+.kpi.bad::before  { background: var(--ds-error-fg); }
+
+.kpi .label, .kpi .lbl{
+  font-size: var(--text-xs);
+  color: var(--ds-fg-subtle);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 var(--s-2);
+}
+.kpi .val{
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--ds-fg);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.kpi .delta, .kpi .det{
+  font-size: var(--text-xs);
+  color: var(--ds-fg-subtle);
+  margin-top: var(--s-1);
+  font-family: var(--font-mono);
+}
+.kpi.good .val { color: var(--ds-success-fg); }
+.kpi.warn .val { color: var(--ds-warning-fg); }
+.kpi.bad  .val { color: var(--ds-error-fg); }
+
+/* =============================================================
+   Section card — html-design-system.md Part V "Section card"
+   borders, not shadows (§2)
+   ============================================================= */
+.card{
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  padding: var(--s-5) var(--s-5);
+  margin-bottom: var(--s-3);
+}
+
+/* =============================================================
+   Callout / verdict — html-design-system.md Part V state pills
+   plus diverging palette from charts-design-system.md §III
+   ============================================================= */
+.callout, .verdict{
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--ds-radius-sm);
+  font-weight: 400;
+  margin: var(--s-3) 0;
+  border-left: 3px solid var(--aroya-dark-green);
+  background: var(--ds-bg-subtle);
+  color: var(--ds-fg);
+  line-height: 1.55;
+}
+.callout strong, .verdict strong{ font-weight: 500; color: var(--ds-fg); }
+.callout.good, .verdict.good{
+  background: var(--ds-success-bg);
+  border-color: var(--ds-success-fg);
+  color: var(--ds-success-fg);
+}
+.callout.warn, .verdict.warn{
+  background: var(--ds-warning-bg);
+  border-color: var(--ds-warning-fg);
+  color: var(--ds-warning-fg);
+}
+.callout.bad, .verdict.bad, .callout.crit{
+  background: var(--ds-error-bg);
+  border-color: var(--ds-error-fg);
+  color: var(--ds-error-fg);
+}
+.callout.good strong, .verdict.good strong{ color: var(--ds-success-fg); }
+.callout.warn strong, .verdict.warn strong{ color: var(--ds-warning-fg); }
+.callout.bad  strong, .verdict.bad  strong{ color: var(--ds-error-fg); }
+.verdict .v-head{
+  font-weight: 500;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: var(--s-1);
+}
+
+/* =============================================================
+   Tables — html-design-system.md Part I §5 (Airtable rules) +
+   Part V "Data table" recipe.
+   - zebra OFF, hover ON
+   - left-align text, right-align numbers
+   - tabular-nums on .num
+   - header: subtle bg-muted, 11px, 500, uppercase, letterspacing
+   ============================================================= */
+table, .bp-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+  margin: var(--s-3) 0;
+}
+th{
+  text-align: left;
+  background: var(--ds-bg-muted);
+  color: var(--ds-fg-subtle);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--ds-border);
+  white-space: nowrap;
+}
+td{
+  padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--ds-border);
+  color: var(--ds-fg);
+  vertical-align: top;
+}
+tr:hover td{ background: var(--ds-bg-subtle); }
+tr:last-child td{ border-bottom: 1px solid var(--ds-border); }
+.num, th.num, td.num{ text-align: right; }
+.bp-table th{
+  background: var(--ds-bg-muted);
+  border-bottom: 1px solid var(--ds-border);
+}
+.bp-table .num{ white-space: nowrap; }
+
+/* =============================================================
+   Pills — html-design-system.md Part V pill recipe
+   ============================================================= */
+.pill, .phase{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.pill.good   { background: var(--ds-success-bg); color: var(--ds-success-fg); }
+.pill.warn   { background: var(--ds-warning-bg); color: var(--ds-warning-fg); }
+.pill.bad    { background: var(--ds-error-bg);   color: var(--ds-error-fg); }
+.pill.muted  { background: var(--ds-bg-subtle);  color: var(--ds-fg-muted); }
+
+/* Phase pills use phase-coded palette — CLAUDE.md §9 */
+.phase.rootin   { background: var(--ds-phase-rootin);   color: #0c2a35; }
+.phase.veg      { background: var(--ds-phase-veg);      color: #1c3700; }
+.phase.stretch  { background: var(--ds-phase-stretch);  color: #4a1d00; }
+.phase.bulking  { background: var(--ds-phase-bulking);  color: #2c1750; }
+.phase.ripening { background: var(--ds-phase-ripening); color: #3c0f00; }
+.phase.dry      { background: var(--ds-bg-subtle);      color: var(--ds-fg-subtle); }
+
+/* =============================================================
+   Page head / cover — adapted from templates/report.html cover
+   block plus templates/dashboard.html page-head
+   ============================================================= */
+.pagehead{
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--s-6) 0 var(--s-5);
+  border-bottom: 1px solid var(--ds-border);
+  margin-bottom: var(--s-6);
+}
+.pagehead-eyebrow{
+  font: 500 11px/1 var(--font-sans);
+  color: var(--aroya-dark-green);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--s-2);
+}
+.pagehead h1{
+  font: 500 32px/1.15 var(--font-sans);
+  letter-spacing: -0.018em;
+  color: var(--ds-fg);
+  margin: 0 0 var(--s-2);
+}
+.pagehead .sub{
+  color: var(--ds-fg-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+.pagehead .meta{
+  margin-top: var(--s-4);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--s-2) var(--s-5);
+  font-size: var(--text-xs);
+  color: var(--ds-fg-subtle);
+}
+.pagehead .meta b{
+  color: var(--ds-fg-subtle);
+  font-weight: 500;
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+.pagehead .meta span{ padding: var(--s-1) 0; border-top: 1px solid var(--ds-border); }
+
+/* =============================================================
+   Chart wrap — charts-design-system.md §III-A
+   "Chart-in-card layout rule": charts render full-width inside a
+   card; never embedded as thumbnails.
+   ============================================================= */
+.chartwrap, .chart-wrap{
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  padding: var(--s-4);
+  margin: var(--s-3) 0;
+}
+.chartwrap h4, .chart-wrap h4{ margin-top: 0; }
+.chartwrap .legend{
+  font-size: var(--text-xs);
+  color: var(--ds-fg-subtle);
+  margin-top: var(--s-2);
+}
+.chart-canvas{
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+.chart-canvas canvas{
+  max-width: 100%;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute; top: 0; left: 0;
+}
+
+/* Grid layouts */
+.grid-2{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+  margin: var(--s-3) 0;
+}
+@media (max-width: 900px){ .grid-2{ grid-template-columns: 1fr; } }
+
+/* =============================================================
+   Room selector chips — pattern from V4 markup but restyled per
+   html-design-system.md pill / button conventions
+   ============================================================= */
+.room-selector, .room-chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  align-items: center;
+  margin: var(--s-3) 0 var(--s-4);
+}
+.room-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  color: var(--ds-fg);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 400;
+  line-height: 1.2;
+  transition: all var(--ds-dur) var(--ds-ease);
+  user-select: none;
+}
+.room-chip:hover{
+  border-color: var(--aroya-dark-green);
+  background: var(--ds-bg-muted);
+}
+.room-chip.active{
+  background: var(--aroya-dark-green);
+  color: #ffffff;
+  border-color: var(--aroya-dark-green);
+}
+.room-chip.active .chip-phase{
+  background: rgba(255,255,255,0.18);
+  color: #ffffff;
+}
+.room-chip.disabled{ opacity: 0.4; cursor: not-allowed; }
+.room-chip .chip-phase{
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-bg-subtle);
+  color: var(--ds-fg-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+/* Phase border accents on chips */
+.room-chip.rootin   { border-color: var(--ds-phase-rootin); }
+.room-chip.veg, .room-chip.mom{ border-color: var(--ds-phase-veg); }
+.room-chip.stretch  { border-color: var(--ds-phase-stretch); }
+.room-chip.bulking  { border-color: var(--ds-phase-bulking); }
+.room-chip.ripening { border-color: var(--ds-phase-ripening); }
+
+.compare-toggle{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px dashed var(--ds-border-strong);
+  background: transparent;
+  font-size: var(--text-xs);
+  color: var(--ds-fg-muted);
+  margin-left: var(--s-2);
+  cursor: pointer;
+}
+.compare-toggle input{ margin: 0; }
+
+/* Room meta card */
+.room-meta{
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  padding: var(--s-4);
+  margin: 0 0 var(--s-4);
+}
+.room-meta .rm-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-bottom: var(--s-2);
+}
+.room-meta h3{ margin: 0; font-size: var(--text-base); }
+.room-meta .rm-targets{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  font-size: var(--text-xs);
+  color: var(--ds-fg-muted);
+  margin-top: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px dashed var(--ds-border);
+}
+.room-meta .rm-targets b{ color: var(--ds-fg); font-weight: 500; }
+.room-meta .rm-targets .tgt{
+  display: inline-block;
+  padding: 4px 9px;
+  background: var(--ds-bg-subtle);
+  border-radius: var(--ds-radius-sm);
+}
+.room-meta .rm-note{
+  margin-top: var(--s-2);
+  font-size: var(--text-sm);
+  color: var(--ds-fg-muted);
+  font-style: italic;
+}
+.room-meta .rm-coverage{
+  font-size: 10px;
+  color: var(--ds-fg-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: var(--s-1);
+}
+.room-meta-card{
+  padding: var(--s-3);
+  background: var(--ds-bg-subtle);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-sm);
+  font-size: var(--text-sm);
+}
+
+/* Targets row */
+.targets{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin: var(--s-2) 0;
+  font-size: var(--text-xs);
+}
+.targets > span{
+  padding: 4px 10px;
+  background: var(--ds-bg-subtle);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-sm);
+  color: var(--ds-fg-muted);
+}
+.targets > span b{ color: var(--ds-fg); font-weight: 500; }
+
+/* =============================================================
+   Biophys / room env — sub-card pattern, lime accent on lead
+   ============================================================= */
+.biophys-room{
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  padding: var(--s-4) var(--s-5);
+  margin: var(--s-4) 0;
+}
+.biophys-room h3{ margin: 0 0 var(--s-2); font-size: var(--text-base); }
+.biophys-brief{
+  font-size: var(--text-sm);
+  color: var(--ds-fg-muted);
+  margin-bottom: var(--s-3);
+  padding: var(--s-3) var(--s-3);
+  background: var(--ds-bg-subtle);
+  border-left: 3px solid var(--aroya-vibrant-green);
+  border-radius: 0 var(--ds-radius-sm) var(--ds-radius-sm) 0;
+  line-height: 1.55;
+}
+.bp-scroll{ overflow-x: auto; }
+.room-charts-full{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+  margin: var(--s-3) 0;
+}
+.room-chart-card{
+  background: var(--ds-bg-subtle);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-sm);
+  padding: var(--s-2) var(--s-3);
+}
+.room-chart-card h5{
+  margin: 0 0 var(--s-1);
+  font-size: 11px;
+  color: var(--ds-fg-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+}
+.room-chart-card h5 .chart-note{
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ds-fg-subtle);
+}
+.room-chart-canvas{
+  position: relative;
+  height: 240px;
+  width: 100%;
+}
+
+/* =============================================================
+   Recommendation card
+   ============================================================= */
+.rec{
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-border);
+  margin-bottom: var(--s-2);
+}
+.rec .owner{
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--ds-radius-sm);
+  background: var(--aroya-dark-green);
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-right: var(--s-2);
+}
+.rec .owner.grower  { background: var(--ds-focus); }
+.rec .owner.process { background: var(--aroya-medium-gray); }
+.rec .rphase{
+  color: var(--ds-fg-subtle);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-left: var(--s-1);
+}
+.rec .raction{ margin-top: var(--s-1); font-weight: 500; color: var(--ds-fg); }
+.rec .rwhy{ margin-top: var(--s-1); font-size: var(--text-sm); color: var(--ds-fg-muted); }
+
+/* =============================================================
+   Footnote / muted / footer
+   ============================================================= */
+.footnote{
+  font-size: var(--text-xs);
+  color: var(--ds-fg-subtle);
+  margin-top: var(--s-2);
+  font-style: italic;
+  padding: var(--s-2) var(--s-3);
+  background: var(--ds-bg-subtle);
+  border-radius: var(--ds-radius-sm);
+}
+.muted{ color: var(--ds-fg-subtle); font-style: italic; }
+footer{
+  margin-top: var(--s-8);
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--ds-fg-subtle);
+  padding: var(--s-6) 0 0;
+  border-top: 1px solid var(--ds-border);
+}
+
+kbd{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 1px 5px;
+  border: 1px solid var(--ds-border);
+  border-radius: 4px;
+  background: var(--ds-bg-subtle);
+  color: var(--ds-fg-muted);
+}
+
+/* i18n hide rules */
 html[data-lang="en"] [data-i18n-es]:not([data-i18n-en]),
-html[data-lang="es"] [data-i18n-en]:not([data-i18n-es]){display:none}
-
-/* sticky toolbar + theme button visibility (V4 ships only EN/ES toggle) */
-.lang-toggle button{cursor:pointer}
-
-/* Chip-phase color borders on V4 room chips */
-.room-chip.veg, .room-chip.mom{border-color:var(--p-veg)}
-.room-chip.stretch{border-color:var(--p-stretch)}
-.room-chip.bulking{border-color:var(--p-bulking)}
-.room-chip.ripening{border-color:var(--p-ripening)}
-.room-chip.rootin{border-color:var(--p-rootin)}
-
-/* table polish */
-table.bp-table th, table th{background:var(--bg-3)}
-
+html[data-lang="es"] [data-i18n-en]:not([data-i18n-es]){ display: none; }
+.en .es-only{ display: none; }
+.es .en-only{ display: none; }
 </style>
 </head>
 <body>
@@ -1666,5 +2285,38 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
+<script>
+/* AROYA design system — Chart.js defaults
+   Source: aroya-design-system/references/charts-design-system.md Part IV */
+(function applyAroyaChartDefaults(){
+  if (typeof Chart === 'undefined') return;
+  var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  var fg       = dark ? '#ededea' : '#1a1c19';
+  var fgSubtle = dark ? '#8a8e7e' : '#666666';
+  var fgMuted  = dark ? '#c4c7ba' : '#444444';
+  var border   = dark ? '#2a3220' : '#ebebea';
+  var bg       = dark ? '#1a1c19' : '#ffffff';
+
+  Chart.defaults.font.family = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = fgMuted;
+  Chart.defaults.borderColor = border;
+  Chart.defaults.plugins.legend.labels.boxWidth = 12;
+  Chart.defaults.plugins.legend.labels.boxHeight = 12;
+  Chart.defaults.plugins.legend.labels.color = fgMuted;
+  Chart.defaults.plugins.tooltip.backgroundColor = bg;
+  Chart.defaults.plugins.tooltip.titleColor = fg;
+  Chart.defaults.plugins.tooltip.bodyColor = fgMuted;
+  Chart.defaults.plugins.tooltip.borderColor = border;
+  Chart.defaults.plugins.tooltip.borderWidth = 1;
+  Chart.defaults.plugins.tooltip.padding = 10;
+  Chart.defaults.plugins.tooltip.cornerRadius = 6;
+  Chart.defaults.plugins.tooltip.titleFont = { weight: '500' };
+  Chart.defaults.plugins.tooltip.bodyFont  = { family: "JetBrains Mono, monospace" };
+
+  /* AROYA categorical palette — references/aroya-brand.md §5 */
+  window.AROYA_PALETTE = ['#635e51', '#2d62ff', '#cbeeb0', '#dd23bb', '#46483d', '#7886ff'];
+})();
+</script>
 </body>
 </html>
