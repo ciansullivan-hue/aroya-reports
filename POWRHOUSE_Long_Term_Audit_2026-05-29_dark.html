@@ -1887,7 +1887,7 @@ function datasetForRoom(rid, key, label, color, alpha){
     borderColor: color,
     backgroundColor: alpha ? color + '33' : color,
     tension: 0.25,
-    spanGaps: true,
+    spanGaps: false,
     pointRadius: 1,
     borderWidth: 2,
   };
@@ -2023,11 +2023,14 @@ function renderGradeRoomYear(){
   var a26 = rooms.map(function(r){ return YIELD_BY_ROOM_YEAR[r]['2026'].a; });
   var m25 = rooms.map(function(r){ return YIELD_BY_ROOM_YEAR[r]['2025'].mold; });
   var m26 = rooms.map(function(r){ return YIELD_BY_ROOM_YEAR[r]['2026'].mold; });
+  // Mold % is plotted as POINTS only (no connecting line) — categorical room
+  // axis is not a time series, so a connecting line creates a meaningless
+  // diagonal between rooms. Use showLine:false + visible pointRadius.
   makeChart('chart_grade_room_year', 'bar', rooms, [
     {label:'A-grade% 2025', data:a25, backgroundColor:olive+'cc', borderColor:olive, borderWidth:1, yAxisID:'y'},
     {label:'A-grade% 2026', data:a26, backgroundColor:lime+'cc', borderColor:lime, borderWidth:1, yAxisID:'y'},
-    {label:'mold% 2025', data:m25, type:'line', borderColor:rust, backgroundColor:'transparent', borderWidth:2, pointRadius:4, borderDash:[5,4], yAxisID:'y1'},
-    {label:'mold% 2026', data:m26, type:'line', borderColor:rust, backgroundColor:rust+'22', borderWidth:2, pointRadius:4, yAxisID:'y1'}
+    {label:'mold% 2025', data:m25, type:'line', showLine:false, borderColor:rust, backgroundColor:'#ffffff', pointBackgroundColor:'#ffffff', pointBorderColor:rust, pointBorderWidth:2, pointRadius:7, pointHoverRadius:9, pointStyle:'circle', yAxisID:'y1'},
+    {label:'mold% 2026', data:m26, type:'line', showLine:false, borderColor:rust, backgroundColor:rust, pointBackgroundColor:rust, pointBorderColor:rust, pointBorderWidth:2, pointRadius:7, pointHoverRadius:9, pointStyle:'circle', yAxisID:'y1'}
   ], {
     scales:{
       y:{ position:'left', title:{display:true,text:'A-grade % of total'}, min:40, max:80 },
