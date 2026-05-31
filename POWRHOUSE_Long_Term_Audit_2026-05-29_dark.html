@@ -589,6 +589,85 @@ Raw lbs hide room-size effects. POWR 1 and POWR 3 are ~1,600–1,760 ft² each; 
 </section>
 
 
+<section id="financial">
+<h2><span class="num">4d.</span><span class="i18n" data-i18n-en="Financial analysis — what the harvest dataset is worth" data-i18n-es="Análisis financiero — qué vale el conjunto de datos">Financial analysis — what the harvest dataset is worth</span></h2>
+
+<div class="callout warn" style="margin-bottom:18px">
+ <strong><span class="i18n" data-i18n-en="Input assumption" data-i18n-es="Supuesto de entrada">Input assumption</span></strong> ·
+ <span class="i18n"
+ data-i18n-en="$900 / $1,000 / $1,100 per lb wholesale, applied uniformly across all sellable lbs (A-grade + smalls). No buyer, contract, or quality-tier pricing data is encoded — this is an external assumption to be replaced with PowrHouse's actual price band when available. Mold lbs are excluded from revenue and shown as a separate loss line."
+ data-i18n-es="$900 / $1,000 / $1,100 por libra mayorista, aplicado uniformemente a todas las lbs vendibles. Sin datos de comprador, contrato o niveles — es un supuesto externo para reemplazar con la banda real de PowrHouse. Las libras con moho se excluyen de los ingresos y aparecen como línea de pérdida separada.">$900 / $1,000 / $1,100 per lb wholesale, applied uniformly across all sellable lbs (A-grade + smalls). No buyer, contract, or quality-tier pricing data is encoded — this is an external assumption to be replaced with PowrHouse's actual price band when available. Mold lbs are excluded from revenue and shown as a separate loss line.</span>
+</div>
+
+<!-- F1: Facility-level KPI strip -->
+<div class="kpi-grid" id="fin_kpis"></div>
+
+<!-- F2: Revenue by room (low/mid/high) -->
+<div class="block">
+ <h4 class="i18n" data-i18n-en="Revenue by room — low / mid / high price band" data-i18n-es="Ingresos por sala — banda baja / media / alta">Revenue by room — low / mid / high price band</h4>
+ <div class="sub i18n" data-i18n-en="18-month sellable lbs × $900 / $1,000 / $1,100. Each room shows a grouped bar across the three price points." data-i18n-es="Libras vendibles de 18 meses × $900 / $1,000 / $1,100.">18-month sellable lbs × $900 / $1,000 / $1,100. Each room shows a grouped bar across the three price points.</div>
+ <div class="chart-canvas" style="height:340px"><canvas id="chart_fin_room_rev"></canvas></div>
+ <table class="aroya" style="margin-top:10px">
+ <thead><tr>
+ <th>Room</th>
+ <th class="num">Sellable lbs (18-mo)</th>
+ <th class="num">Mold lbs</th>
+ <th class="num">Revenue @ $900</th>
+ <th class="num">Revenue @ $1,000</th>
+ <th class="num">Revenue @ $1,100</th>
+ <th class="num">Mold loss @ $1,000</th>
+ </tr></thead>
+ <tbody id="fin_room_tbody"></tbody>
+ </table>
+</div>
+
+<!-- F3: Cultivar leaderboard re-sorted by revenue -->
+<div class="block">
+ <h4 class="i18n" data-i18n-en="Cultivar revenue leaderboard — sorted by revenue, not just yield" data-i18n-es="Tabla de ingresos por cultivar — ordenado por ingresos">Cultivar revenue leaderboard — sorted by revenue, not just yield</h4>
+ <div class="sub i18n" data-i18n-en="Cultivars ≥50 lb sellable, ranked by mid-band ($1,000/lb) revenue. Bars tinted rust where mold ≥ 1%. The high-A-grade-but-lower-volume cultivars (Ztopia, LCZ) sit lower than gross-volume leaders (Frosted Cherries, ADL)." data-i18n-es="Cultivares ≥50 lb, ordenados por ingresos a $1,000/lb. Barras óxido donde moho ≥ 1%.">Cultivars ≥50 lb sellable, ranked by mid-band ($1,000/lb) revenue. Bars tinted rust where mold ≥ 1%. The high-A-grade-but-lower-volume cultivars (Ztopia, LCZ) sit lower than gross-volume leaders (Frosted Cherries, ADL).</div>
+ <div class="chart-canvas" style="height:520px"><canvas id="chart_fin_cultivar_rev"></canvas></div>
+</div>
+
+<!-- F4: YoY revenue delta (2025 vs 2026) -->
+<div class="block">
+ <h4 class="i18n" data-i18n-en="Year-over-year revenue delta — the A-grade slip in dollars" data-i18n-es="Delta interanual de ingresos — la caída de calidad A en dólares">Year-over-year revenue delta — the A-grade slip in dollars</h4>
+ <div class="sub i18n" data-i18n-en="2025 vs 2026 (partial year) sellable revenue at $1,000/lb, per room. The ~5 pp facility A-grade slide and the rank flip are framed in revenue terms here." data-i18n-es="2025 vs 2026 (año parcial) en $1,000/lb por sala.">2025 vs 2026 (partial year) sellable revenue at $1,000/lb, per room. The ~5 pp facility A-grade slide and the rank flip are framed in revenue terms here.</div>
+ <div class="chart-canvas" style="height:320px"><canvas id="chart_fin_yoy"></canvas></div>
+ <table class="aroya" style="margin-top:10px">
+ <thead><tr>
+ <th>Room</th>
+ <th class="num">2025 Rev @ $1,000</th>
+ <th class="num">2026 Rev @ $1,000 (partial)</th>
+ <th class="num">Δ (2026 − 2025)</th>
+ <th class="num">A-grade 2025</th>
+ <th class="num">A-grade 2026</th>
+ <th class="num">Δ A-grade pp</th>
+ </tr></thead>
+ <tbody id="fin_yoy_tbody"></tbody>
+ </table>
+ <p class="footnote i18n"
+ data-i18n-en="2026 figures are partial-year (data through 2026-05-28) — direct YoY comparison is biased by the incomplete cycle. The A-grade pp delta is the run-rate quality signal independent of year-to-date volume."
+ data-i18n-es="2026 es parcial (hasta 2026-05-28).">2026 figures are partial-year (data through 2026-05-28) — direct YoY comparison is biased by the incomplete cycle. The A-grade pp delta is the run-rate quality signal independent of year-to-date volume.</p>
+</div>
+
+<!-- F5: $/sqft per cycle + $/light per cycle table -->
+<div class="block">
+ <h4 class="i18n" data-i18n-en="$/ft² per cycle and $/light per cycle" data-i18n-es="$/ft² por ciclo y $/lámpara por ciclo">$/ft² per cycle and $/light per cycle</h4>
+ <div class="sub i18n" data-i18n-en="Average lb/cycle × $1,000/lb ÷ room footprint. $/light requires per-room flowering-fixture count, which is NOT in AROYA's room-config — labelled inline." data-i18n-es="lb/ciclo × $1,000 ÷ ft². $/lámpara requiere conteo de lámparas (no disponible en AROYA).">Average lb/cycle × $1,000/lb ÷ room footprint. $/light requires per-room flowering-fixture count, which is NOT in AROYA's room-config — labelled inline.</div>
+ <table class="aroya" style="margin-top:10px">
+ <thead><tr>
+ <th>Room</th>
+ <th class="num">ft²</th>
+ <th class="num">Avg lb/cycle</th>
+ <th class="num">$/ft² per cycle</th>
+ <th class="num">$/light per cycle</th>
+ </tr></thead>
+ <tbody id="fin_density_tbody"></tbody>
+ </table>
+</div>
+</section>
+
+
 
 
 <section id="hg-ledger">
@@ -2119,6 +2198,159 @@ function renderDensityCharts(){
   renderCultivarGradeYieldBubble();
 }
 
+
+function renderFinKpis(){
+  var rooms = ['POWR 1','POWR 2','POWR 3','POWR 4'];
+  var totalSellable = 0, totalMold = 0;
+  rooms.forEach(function(r){
+    ['2025','2026'].forEach(function(y){
+      var ry = YIELD_BY_ROOM_YEAR[r] && YIELD_BY_ROOM_YEAR[r][y];
+      if(!ry) return;
+      totalSellable += ry.sellable;
+      // Mold lbs derived: total × mold/100
+      totalMold += ry.total * (ry.mold/100);
+    });
+  });
+  var revLow = totalSellable * 900;
+  var revMid = totalSellable * 1000;
+  var revHigh = totalSellable * 1100;
+  var moldLoss = totalMold * 1000;
+  function fmt(n){ return '$' + Math.round(n).toLocaleString(); }
+  var rev2025 = YIELD_BY_ROOM_YEAR ? rooms.reduce(function(s,r){var ry=YIELD_BY_ROOM_YEAR[r]&&YIELD_BY_ROOM_YEAR[r]['2025'];return s+(ry?ry.sellable*1000:0);},0) : 0;
+  var rev2026 = YIELD_BY_ROOM_YEAR ? rooms.reduce(function(s,r){var ry=YIELD_BY_ROOM_YEAR[r]&&YIELD_BY_ROOM_YEAR[r]['2026'];return s+(ry?ry.sellable*1000:0);},0) : 0;
+  var kpis = [
+    {cls:'kpi good', label:'18-mo revenue (mid)', val:fmt(revMid), det:'@ $1,000/lb · range '+fmt(revLow)+' → '+fmt(revHigh)},
+    {cls:'kpi', label:'18-mo sellable', val:Math.round(totalSellable).toLocaleString()+' lb', det:'A-grade + smalls; mold excluded'},
+    {cls:'kpi warn', label:'Mold loss (mid)', val:fmt(moldLoss), det:Math.round(totalMold)+' lb × $1,000'},
+    {cls:'kpi', label:'2025 revenue (mid)', val:fmt(rev2025), det:'12 mo @ $1,000/lb'},
+    {cls:'kpi warn', label:'2026 revenue (partial)', val:fmt(rev2026), det:'5 mo @ $1,000/lb · A-grade 65.3% vs 70.2%'}
+  ];
+  var html = kpis.map(function(k){
+    return '<div class="'+k.cls+'"><div class="lbl">'+k.label+'</div><div class="val">'+k.val+'</div><div class="det">'+k.det+'</div></div>';
+  }).join('');
+  var c = document.getElementById('fin_kpis'); if(c) c.innerHTML = html;
+}
+
+function renderFinRoomRevenue(){
+  var rooms = ['POWR 1','POWR 2','POWR 3','POWR 4'];
+  var olive = cssVar('--olive'), lime = cssVar('--lime'), attn = cssVar('--attention');
+  var totalsByRoom = rooms.map(function(r){
+    var s2025 = YIELD_BY_ROOM_YEAR[r] && YIELD_BY_ROOM_YEAR[r]['2025'] ? YIELD_BY_ROOM_YEAR[r]['2025'].sellable : 0;
+    var s2026 = YIELD_BY_ROOM_YEAR[r] && YIELD_BY_ROOM_YEAR[r]['2026'] ? YIELD_BY_ROOM_YEAR[r]['2026'].sellable : 0;
+    var t2025 = YIELD_BY_ROOM_YEAR[r] && YIELD_BY_ROOM_YEAR[r]['2025'] ? YIELD_BY_ROOM_YEAR[r]['2025'].total : 0;
+    var t2026 = YIELD_BY_ROOM_YEAR[r] && YIELD_BY_ROOM_YEAR[r]['2026'] ? YIELD_BY_ROOM_YEAR[r]['2026'].total : 0;
+    var mold2025 = YIELD_BY_ROOM_YEAR[r] && YIELD_BY_ROOM_YEAR[r]['2025'] ? YIELD_BY_ROOM_YEAR[r]['2025'].mold : 0;
+    var mold2026 = YIELD_BY_ROOM_YEAR[r] && YIELD_BY_ROOM_YEAR[r]['2026'] ? YIELD_BY_ROOM_YEAR[r]['2026'].mold : 0;
+    var sellable = s2025 + s2026;
+    var moldLbs = (t2025 * mold2025/100) + (t2026 * mold2026/100);
+    return {room:r, sellable:sellable, moldLbs:moldLbs};
+  });
+  makeChart('chart_fin_room_rev', 'bar', rooms, [
+    {label:'Revenue @ $900',  data:totalsByRoom.map(function(t){return Math.round(t.sellable*900);}),  backgroundColor:olive+'66', borderColor:olive, borderWidth:1},
+    {label:'Revenue @ $1,000', data:totalsByRoom.map(function(t){return Math.round(t.sellable*1000);}), backgroundColor:olive+'cc', borderColor:olive, borderWidth:1},
+    {label:'Revenue @ $1,100', data:totalsByRoom.map(function(t){return Math.round(t.sellable*1100);}), backgroundColor:lime+'cc', borderColor:lime, borderWidth:1}
+  ], {
+    plugins:{ tooltip:{ callbacks:{ label:function(c){ return c.dataset.label+': $'+Math.round(c.parsed.y).toLocaleString(); }}}},
+    scales:{ y:{ title:{display:true,text:'revenue ($)'}, beginAtZero:true, ticks:{ callback:function(v){ return '$'+(v/1000).toFixed(0)+'k'; } } } }
+  });
+  // Populate table
+  var tbody = document.getElementById('fin_room_tbody');
+  if(tbody){
+    tbody.innerHTML = totalsByRoom.map(function(t){
+      return '<tr>'
+        + '<td>'+t.room+'</td>'
+        + '<td class="num">'+Math.round(t.sellable).toLocaleString()+'</td>'
+        + '<td class="num">'+t.moldLbs.toFixed(1)+'</td>'
+        + '<td class="num">$'+Math.round(t.sellable*900).toLocaleString()+'</td>'
+        + '<td class="num">$'+Math.round(t.sellable*1000).toLocaleString()+'</td>'
+        + '<td class="num">$'+Math.round(t.sellable*1100).toLocaleString()+'</td>'
+        + '<td class="num">$'+Math.round(t.moldLbs*1000).toLocaleString()+'</td>'
+        + '</tr>';
+    }).join('');
+  }
+}
+
+function renderFinCultivarRevenue(){
+  var olive = cssVar('--olive'), rust = cssVar('--attention');
+  var rows = YIELD_BY_CULTIVAR.slice().sort(function(a,b){ return b.sellable*1000 - a.sellable*1000; });
+  var labels = rows.map(function(r){ return r.c; });
+  var data = rows.map(function(r){ return Math.round(r.sellable*1000); });
+  var bg = rows.map(function(r){ return (r.mold >= 1.0 ? rust : olive) + 'cc'; });
+  var bd = rows.map(function(r){ return r.mold >= 1.0 ? rust : olive; });
+  makeChart('chart_fin_cultivar_rev', 'bar', labels, [
+    {label:'Revenue @ $1,000/lb (18-mo total)', data:data, backgroundColor:bg, borderColor:bd, borderWidth:1}
+  ], {
+    indexAxis:'y',
+    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:function(c){
+      var r = rows[c.dataIndex];
+      return [r.c, 'Revenue @ $1,000: $'+Math.round(r.sellable*1000).toLocaleString(), 'Sellable: '+r.sellable.toFixed(0)+' lb · A-grade '+r.a.toFixed(1)+'% · mold '+r.mold.toFixed(2)+'%', 'Low/mid/high: $'+Math.round(r.sellable*900).toLocaleString()+' / $'+Math.round(r.sellable*1000).toLocaleString()+' / $'+Math.round(r.sellable*1100).toLocaleString()];
+    }}}},
+    scales:{ x:{ title:{display:true,text:'revenue @ $1,000/lb · 18-mo (rust = mold ≥ 1%)'}, ticks:{ callback:function(v){ return '$'+(v/1000).toFixed(0)+'k'; } } }, y:{ ticks:{ font:{size:10} } } }
+  });
+}
+
+function renderFinYoY(){
+  var rooms = ['POWR 1','POWR 2','POWR 3','POWR 4'];
+  var olive = cssVar('--olive'), attn = cssVar('--attention');
+  var rev2025 = rooms.map(function(r){ var ry=YIELD_BY_ROOM_YEAR[r]&&YIELD_BY_ROOM_YEAR[r]['2025']; return ry ? Math.round(ry.sellable*1000) : 0; });
+  var rev2026 = rooms.map(function(r){ var ry=YIELD_BY_ROOM_YEAR[r]&&YIELD_BY_ROOM_YEAR[r]['2026']; return ry ? Math.round(ry.sellable*1000) : 0; });
+  makeChart('chart_fin_yoy', 'bar', rooms, [
+    {label:'2025 revenue @ $1,000', data:rev2025, backgroundColor:olive+'cc', borderColor:olive, borderWidth:1},
+    {label:'2026 revenue @ $1,000 (partial)', data:rev2026, backgroundColor:attn+'cc', borderColor:attn, borderWidth:1}
+  ], {
+    plugins:{ tooltip:{ callbacks:{ label:function(c){ return c.dataset.label+': $'+Math.round(c.parsed.y).toLocaleString(); }}}},
+    scales:{ y:{ title:{display:true,text:'revenue ($)'}, beginAtZero:true, ticks:{ callback:function(v){ return '$'+(v/1000).toFixed(0)+'k'; } } } }
+  });
+  var tbody = document.getElementById('fin_yoy_tbody');
+  if(tbody){
+    tbody.innerHTML = rooms.map(function(r,i){
+      var ry25 = YIELD_BY_ROOM_YEAR[r]['2025'];
+      var ry26 = YIELD_BY_ROOM_YEAR[r]['2026'];
+      var delta = rev2026[i] - rev2025[i];
+      var deltaA = ry26.a - ry25.a;
+      var dColor = delta < 0 ? 'color:#b04a37' : 'color:#3f6e29';
+      var dAColor = deltaA < 0 ? 'color:#b04a37' : 'color:#3f6e29';
+      return '<tr>'
+        + '<td>'+r+'</td>'
+        + '<td class="num">$'+rev2025[i].toLocaleString()+'</td>'
+        + '<td class="num">$'+rev2026[i].toLocaleString()+'</td>'
+        + '<td class="num" style="'+dColor+';font-weight:600">'+(delta>=0?'+':'')+'$'+delta.toLocaleString()+'</td>'
+        + '<td class="num">'+ry25.a.toFixed(1)+'%</td>'
+        + '<td class="num">'+ry26.a.toFixed(1)+'%</td>'
+        + '<td class="num" style="'+dAColor+';font-weight:600">'+(deltaA>=0?'+':'')+deltaA.toFixed(1)+' pp</td>'
+        + '</tr>';
+    }).join('');
+  }
+}
+
+function renderFinDensityTable(){
+  var rooms = ['POWR 1','POWR 2','POWR 3','POWR 4'];
+  var sumByRoom = window.YIELD && YIELD.room_summary ? YIELD.room_summary : {};
+  var tbody = document.getElementById('fin_density_tbody');
+  if(!tbody) return;
+  tbody.innerHTML = rooms.map(function(r){
+    var sqft = ROOM_SQFT[r] || 0;
+    var avg = sumByRoom[r] ? sumByRoom[r].avg_lbs_per_hg : 0;
+    var revPerCycle = avg * 1000;
+    var revPerSqftCycle = sqft ? (revPerCycle / sqft) : 0;
+    return '<tr>'
+      + '<td>'+r+'</td>'
+      + '<td class="num">'+(sqft || '<em>—</em>')+'</td>'
+      + '<td class="num">'+(avg ? avg.toFixed(1) : '—')+'</td>'
+      + '<td class="num">$'+revPerSqftCycle.toFixed(0)+'</td>'
+      + '<td class="num"><em style="color:var(--ink-muted);font-size:.85em">light count not on file in AROYA</em></td>'
+      + '</tr>';
+  }).join('');
+}
+
+function renderFinancialCharts(){
+  renderFinKpis();
+  renderFinRoomRevenue();
+  renderFinCultivarRevenue();
+  renderFinYoY();
+  renderFinDensityTable();
+}
+
 function renderCultivarLadder(){
   var rows = YIELD.cultivar_rows.slice(0, 30);
   var labels = rows.map(function(r){ return r.cultivar+' (n='+r.appearances+')'; });
@@ -2211,6 +2443,7 @@ document.addEventListener('DOMContentLoaded', function(){
   renderWAGauges();
   if (typeof renderYieldQualityCharts === "function") renderYieldQualityCharts();
   if (typeof renderDensityCharts === "function") renderDensityCharts();
+  if (typeof renderFinancialCharts === "function") renderFinancialCharts();
 });
 </script>
 
