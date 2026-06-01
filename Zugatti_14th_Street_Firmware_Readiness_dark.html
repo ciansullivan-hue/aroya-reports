@@ -20,6 +20,13 @@
     #dt{font-size:12.5px} #dt th{background:var(--head);text-align:left;padding:9px 8px;position:sticky;top:0;cursor:pointer;border-bottom:1px solid var(--line);white-space:nowrap}
     #dt td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top} #dt tr:nth-child(even) td{background:var(--row)}
     #dt tr.resolved td{opacity:.5} #dt tr.resolved .ser{text-decoration:line-through}
+    #dt tr.mk td{box-shadow:inset 3px 0 0 var(--olive)}
+    #dt tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.06)!important}
+    .scur{display:inline-block;margin-top:4px;font-size:10.5px;font-weight:600;border-radius:5px;padding:1px 6px}
+    .tally{position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;gap:18px;align-items:center;
+      background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+    .tally .big{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+    .tally .t{font-size:12px;color:var(--sub)} .tally .t b{color:var(--ink);font-size:14px;font-variant-numeric:tabular-nums}
     .chip{display:inline-block;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;white-space:nowrap}
     .mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:11.5px} .tick{font-variant-numeric:tabular-nums}
     .sok{color:#2f8f2a;font-weight:600} .soff{color:#c0392b;font-weight:600} .sdim{color:var(--sub)}
@@ -90,12 +97,20 @@
   <select id="fc" onchange="render()"><option value="">All classes</option></select>
   <select id="fr" onchange="render()"><option value="">All rooms</option></select>
   <select id="fs" onchange="render()"><option value="">All sensor states</option><option value="offline">Sensor offline (radio up)</option><option value="ok">Sensor OK</option><option value="no_sensor">No sensor</option></select>
+  <label style="font-size:12.5px;color:var(--sub)"><input type="checkbox" id="eligOnly" onchange="render()"> Upgrade-eligible (TEROS-12) only</label>
   <label style="font-size:12.5px;color:var(--sub)"><input type="checkbox" id="hideRes" onchange="render()"> Hide resolved</label>
   <button class="btn" onclick="exportJSON()">Export status</button>
   <button class="btn alt" onclick="document.getElementById('imp').click()">Import</button>
   <input type="file" id="imp" accept="application/json" style="display:none" onchange="importJSON(event)">
   <button class="btn alt" onclick="clearAll()">Reset</button>
   <span class="savebanner" id="resCount"></span>
+</div>
+<div class="tally">
+  <span class="big" id="tMark">0</span><span class="t">marked for upgrade quote</span>
+  <span class="t">Single <b id="tSingle">0</b></span><span class="t">Dual <b id="tDual">0</b></span>
+  <span class="t">Trade-in <b id="tCost">$0</b></span>
+  <span class="t">You save <b id="tSave" class="sok">$0</b> vs MSRP <b id="tMsrp">$0</b></span>
+  <span class="t" style="margin-left:auto">Resolved <b id="tRes">0</b></span>
 </div>
 <div style="overflow:auto"><table id="dt"><thead><tr>
   <th data-k="serial">Device (operator sees)</th><th data-k="class">Class</th><th data-k="bucket">Readiness</th>
@@ -146,11 +161,20 @@ function recompute(){
   document.getElementById('pMarked').textContent=single+dual;
   const cost=single*SINGLE_NET+dual*DUAL_NET;
   const msrp=single*SINGLE_MSRP+dual*DUAL_MSRP;
+  const sav=single*SINGLE_SAVE+dual*DUAL_SAVE;
   document.getElementById('pCost').textContent=fmt(cost);
   document.getElementById('pMsrp').textContent=fmt(msrp);
-  document.getElementById('pSave').textContent=fmt(single*SINGLE_SAVE+dual*DUAL_SAVE);
-  const resolved=Object.values(OV).filter(o=>o.status).length;
-  document.getElementById('resCount').textContent=resolved?`${resolved} device(s) marked by you`:"";
+  document.getElementById('pSave').textContent=fmt(sav);
+  const resolved=Object.values(OV).filter(o=>o.status&&o.status!=='upgrade_single'&&o.status!=='upgrade_dual').length;
+  document.getElementById('resCount').textContent="";
+  // sticky tally near the table
+  document.getElementById('tMark').textContent=single+dual;
+  document.getElementById('tSingle').textContent=single;
+  document.getElementById('tDual').textContent=dual;
+  document.getElementById('tCost').textContent=fmt(cost);
+  document.getElementById('tSave').textContent=fmt(sav);
+  document.getElementById('tMsrp').textContent=fmt(msrp);
+  document.getElementById('tRes').textContent=resolved;
 }
 
 function uniq(k){return [...new Set(U.map(d=>d[k]).filter(x=>x!=null))];}
@@ -175,6 +199,16 @@ function selectHTML(d){
   const o=opts.map(s=>`<option value="${s[0]}"${s[0]===cur?' selected':''}>${s[1]}</option>`).join("");
   return `<select class="ssel${cur?' set':''}" data-ser="${d.serial}" onchange="setStatus(this)">${o}</select>`;
 }
+function statusChip(st){
+  if(!st)return "";
+  const m={revived:["✓ Fixed / reporting","#cef5ca","#114e0b"],
+    scheduled:["◐ Scheduled","#fcf3cf","#6b5d12"],
+    upgrade_single:["⬆ Upgrade Single · $319 (save $100 vs MSRP)","#d9e5ff","#08326b"],
+    upgrade_dual:["⬆ Upgrade Dual · $458 (save $150 vs MSRP)","#d9e5ff","#08326b"],
+    wontfix:["✕ Won't fix / retire","#f8e0e0","#3b0b0b"]};
+  const c=m[st];if(!c)return "";
+  return `<br><span class="scur" style="background:${c[1]};color:${c[2]}">${c[0]}</span>`;
+}
 function setStatus(sel){
   const ser=sel.dataset.ser, v=sel.value;
   if(v) OV[ser]={status:v,ts:new Date().toISOString()}; else delete OV[ser];
@@ -184,8 +218,10 @@ function render(){
   const q=document.getElementById('q').value.toLowerCase();
   const fb=document.getElementById('fb').value,fc=document.getElementById('fc').value,fr=document.getElementById('fr').value,fs=document.getElementById('fs').value;
   const hideRes=document.getElementById('hideRes').checked;
+  const eligOnly=document.getElementById('eligOnly').checked;
   let rows=U.filter(d=>{
     const st=(OV[d.serial]||{}).status||"";
+    if(eligOnly&&!isSub(d))return false;
     if(hideRes&&(st==='revived'||st==='wontfix'))return false;
     if(fb&&d.bucket!==fb)return false;if(fc&&d.class!==fc)return false;if(fr&&d.room!==fr)return false;if(fs&&d.sensor_status!==fs)return false;
     if(q){const blob=(d.serial+" "+(d.device_name||"")+" "+d.room+" "+(d.sensor_serial||"")+" "+d.class+" "+(d.failure||"")+" "+(d.action||"")).toLowerCase();if(!blob.includes(q))return false;}
@@ -198,15 +234,17 @@ function render(){
   document.getElementById('tb').innerHTML=rows.map(d=>{
     const st=(OV[d.serial]||{}).status||"";
     const resolved=(st==='revived'||st==='wontfix');
+    const isUp=(st==='upgrade_single'||st==='upgrade_dual');
+    const rowcls=resolved?'resolved':(isUp?'mkup':(st?'mk':''));
     const nm=d.device_name&&String(d.device_name)!==String(d.serial)?` <span class="sdim">(${String(d.device_name).replace(/</g,'&lt;')})</span>`:'';
-    return `<tr class="${resolved?'resolved':''}">
+    return `<tr class="${rowcls}">
     <td><span class="mono ser"><b>${d.serial}</b></span>${nm}</td>
     <td class="sdim">${CL[d.class]}</td><td>${chip(d.bucket)}</td><td>${d.room||''}</td>
     <td>${sensorCell(d)}</td>
     <td class="tick">${d.battery_p05??''}</td><td class="tick">${d.signal_p05??''}</td>
     <td class="tick">${d.gaps_over_60??''}</td><td class="tick">${d.hours_since_last??''}</td>
     <td><span>${(d.failure||'').replace(/</g,'&lt;')}</span> <span class="sdim">${(d.action||'').replace(/</g,'&lt;')}</span></td>
-    <td>${selectHTML(d)}</td></tr>`;}).join("");
+    <td>${selectHTML(d)}${statusChip(st)}</td></tr>`;}).join("");
 }
 function exportJSON(){
   const sgl=Object.entries(OV).filter(([s,o])=>o.status==='upgrade_single').map(([s])=>s);
