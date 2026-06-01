@@ -31,6 +31,16 @@
     .chip{display:inline-block;border-radius:6px;padding:1px 7px;font-size:11px;font-weight:600;white-space:nowrap}
     .mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:11.5px}
     .callout{border-left:4px solid var(--olive);background:var(--bg);border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0}
+    .plan{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px}
+    .pcard .pn.sok{color:#2f8f2a} .pcard .pn.soff{color:#c0392b}
+    .pricefix{font-size:13px;color:var(--ink)} .pricefix .sdim{font-size:11.5px}
+    .btn{background:var(--olive);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer} .btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+    .upg{width:18px;height:18px;cursor:pointer;accent-color:#2d62ff;vertical-align:middle}
+    .upgm{margin-left:5px;font-size:11px;border:1px solid #2d62ff;border-radius:5px;padding:2px 4px;background:var(--card);color:var(--ink)}
+    #dt tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.06)!important}
+    .tally{position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+    .tally .big{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums} .tally .t{font-size:12px;color:var(--sub)} .tally .t b{color:var(--ink);font-size:14px;font-variant-numeric:tabular-nums}
+    .savebanner{font-size:12px;color:var(--sub)}
     .foot{color:var(--sub);font-size:11.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:14px}
     .switch{position:fixed;top:14px;right:16px;font-size:12px}
     .switch a{color:var(--sub);text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:5px 10px;background:var(--card)}
@@ -161,6 +171,27 @@ QPC · SRBD · 5A · 4B · Bryant · GB2 · org 34</div>
           <table class="roomtab"><tbody><tr><td class="rm">Atmos-14 climate sensor</td><td style="width:38%"><div class="bar"><span class="seg" style="width:100.00%;background:#c0392b" title="Offline / can't flash: 7"></span></div></td><td class="ct">7</td><td class="chips"><span class="mini" style="background:#f8e0e0;color:#3b0b0b">7</span></td></tr></tbody></table>
         </div>
 
+<h2>TEROS One upgrade planner</h2>
+<div class="card">
+  <div style="font-size:13px;color:var(--sub);margin-bottom:10px">TEROS One replaces the TEROS-12 substrate sensor and ships WP5-native. In the device table below, tick the <b>“Upgrade?”</b> box on any TEROS-12 — <b>including working ones</b>, and especially the dark / &gt;1-yr-offline units that fall under the trade-in decision — then choose <b>Dual or Single</b>. The quote totals automatically from your picks. Pricing is fixed (trade-in includes the $150/$100 discount per device).</div>
+  <div class="plan">
+    <div class="pcard"><div class="pn" id="pElig">—</div><div class="pl">TEROS-12 substrate sensors (upgrade-eligible)</div></div>
+    <div class="pcard"><div class="pn sok" id="pFunc">—</div><div class="pl">Reporting now (clean trade-in)</div></div>
+    <div class="pcard"><div class="pn soff" id="pNonf">—</div><div class="pl">Dark today (offline trade-in)</div></div>
+    <div class="pcard" style="border-color:var(--olive);border-width:2px"><div class="pn" id="pMarked">0</div><div class="pl">Ticked for upgrade quote</div></div>
+  </div>
+  <div class="pricefix" style="display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px">
+    <div>TEROS One <b>Dual</b> &nbsp;<b style="font-size:15px">$458</b> trade-in &nbsp;<span class="sdim">$608 MSRP · save $150</span></div>
+    <div>TEROS One <b>Single</b> &nbsp;<b style="font-size:15px">$319</b> trade-in &nbsp;<span class="sdim">$419 MSRP · save $100</span></div>
+  </div>
+  <div class="plan">
+    <div class="pcard"><div class="pn" id="pNSingle">0</div><div class="pl">→ Single @ $319 ea</div></div>
+    <div class="pcard"><div class="pn" id="pNDual">0</div><div class="pl">→ Dual @ $458 ea</div></div>
+    <div class="pcard"><div class="pn" id="pCost">$0</div><div class="pl">Trade-in quote total (<span id="pMsrp">$0</span> at MSRP)</div></div>
+    <div class="pcard"><div class="pn sok" id="pSave">$0</div><div class="pl">You save vs MSRP — time-limited</div></div>
+  </div>
+</div>
+
 <h2>Every device — readiness, March status &amp; recommended action</h2>
 <div class="controls">
   <input type="text" id="q" placeholder="Search serial, building, room, action…" oninput="render()">
@@ -171,13 +202,25 @@ QPC · SRBD · 5A · 4B · Bryant · GB2 · org 34</div>
     <option value="regressed">Regressed (was online)</option><option value="recovered">Recovered</option>
     <option value="still_dark">Still dark</option><option value="still_online">Still online</option>
     <option value="new_since_march">New since March</option></select>
+  <label style="font-size:12.5px;color:var(--sub)"><input type="checkbox" id="eligOnly" onchange="render()"> TEROS-12 only</label>
+  <button class="btn" onclick="exportJSON()">Export upgrade list</button>
+  <button class="btn alt" onclick="document.getElementById('imp').click()">Import</button>
+  <input type="file" id="imp" accept="application/json" style="display:none" onchange="importJSON(event)">
+  <button class="btn alt" onclick="clearUpg()">Reset ticks</button>
   <span class="sdim" id="cnt"></span>
+</div>
+<div class="tally">
+  <span class="big" id="tMark">0</span><span class="t">ticked for upgrade</span>
+  <span class="t">Single <b id="tNS">0</b></span><span class="t">Dual <b id="tND">0</b></span>
+  <span class="t">Quote <b id="tCost">$0</b></span>
+  <span class="t">Save <b id="tSave" class="sok">$0</b> vs MSRP</span>
+  <span class="savebanner" id="syncState" style="margin-left:auto"></span>
 </div>
 <div style="overflow:auto;max-height:680px"><table id="dt"><thead><tr>
   <th data-k="s">Serial</th><th data-k="b">Building</th><th data-k="c">Class</th><th data-k="bk">Readiness</th>
   <th data-k="rm">Room</th><th data-k="bat">Batt</th><th data-k="sig">RSSI</th><th data-k="h">Last (h)</th>
   <th data-k="ms">March</th><th data-k="md">Days off (Mar)</th><th data-k="df">Diff</th>
-  <th data-k="f">Most-likely failure / action</th>
+  <th data-k="f">Most-likely failure / action</th><th style="text-align:center">Upgrade?</th>
 </tr></thead><tbody id="tb"></tbody></table></div>
 
 <div class="foot">
@@ -195,16 +238,73 @@ const U=[{"s": "16684-01-913", "b": "NorCal QPC", "c": "atm14", "bk": "RED_BROKE
 const ORDER=["GREEN_SAIL","LIME_WILL","AMBER_MIGHT","ORANGE_WONT","RED_BROKEN","GREY_NA"];
 const RANK={RED_BROKEN:0,ORANGE_WONT:1,GREY_NA:1.5,AMBER_MIGHT:2,LIME_WILL:3,GREEN_SAIL:4};
 const CLL={node:"Node",climate_station:"Climate stn",repeater:"Repeater",gateway:"Gateway",sink:"Sink",ter12:"TEROS-12",atm14:"Atmos-14",pyr:"Pyranometer"};
+// Fixed TEROS One trade-in pricing (matches Zugatti)
+const DUAL_NET=458,SINGLE_NET=319,DUAL_MSRP=608,SINGLE_MSRP=419,DUAL_SAVE=150,SINGLE_SAVE=100;
+const UKEY="aroya_norcal_campus_upgrades_v1";
+let UPG={};
+(function(){try{UPG=JSON.parse(localStorage.getItem(UKEY))||{};}catch(e){}})();
+function saveUpg(){try{localStorage.setItem(UKEY,JSON.stringify(UPG));}catch(e){}}
+function modelOf(s){return (UPG[s]&&UPG[s].model)||null;}
+function isSub(u){return u.c==='ter12';}
+function fmt(n){return "$"+Math.round(n).toLocaleString();}
 let sortK="bk",sortDir=1;
 function uniq(k){return [...new Set(U.map(u=>u[k]).filter(x=>x!=null))].sort();}
 function fillSel(id,vals,lab){const s=document.getElementById(id);vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=lab?lab(v):v;s.appendChild(o);});}
 fillSel('fb',uniq('b'));fillSel('fk',ORDER,v=>SHORT[v]);fillSel('fc',uniq('c'),v=>CLL[v]||v);
 function fnum(x,d){return (x==null||x==='')?'<span class=sdim>—</span>':(typeof x==='number'?x.toFixed(d):x);}
+function recompute(){
+  const sub=U.filter(isSub);
+  const func=sub.filter(u=>u.rep).length;
+  document.getElementById('pElig').textContent=sub.length;
+  document.getElementById('pFunc').textContent=func;
+  document.getElementById('pNonf').textContent=sub.length-func;
+  let nS=0,nD=0;
+  Object.keys(UPG).forEach(s=>{const m=modelOf(s);if(m==='single')nS++;else if(m)nD++;});
+  const N=nS+nD,cost=nS*SINGLE_NET+nD*DUAL_NET,msrp=nS*SINGLE_MSRP+nD*DUAL_MSRP,sav=nS*SINGLE_SAVE+nD*DUAL_SAVE;
+  document.getElementById('pMarked').textContent=N;
+  document.getElementById('pNSingle').textContent=nS;document.getElementById('pNDual').textContent=nD;
+  document.getElementById('pCost').textContent=fmt(cost);document.getElementById('pMsrp').textContent=fmt(msrp);
+  document.getElementById('pSave').textContent=fmt(sav);
+  document.getElementById('tMark').textContent=N;document.getElementById('tNS').textContent=nS;
+  document.getElementById('tND').textContent=nD;document.getElementById('tCost').textContent=fmt(cost);
+  document.getElementById('tSave').textContent=fmt(sav);
+}
+function upgBox(u){
+  if(!isSub(u))return '<span class="sdim">—</span>';
+  const m=modelOf(u.s),on=!!m;
+  const sel=on?` <select class="upgm" data-ser="${u.s}" onchange="setUpgModel(this)">`
+    +`<option value="dual"${m==='dual'?' selected':''}>Dual $458</option>`
+    +`<option value="single"${m==='single'?' selected':''}>Single $319</option></select>`:'';
+  return `<input type="checkbox" class="upg" data-ser="${u.s}" ${on?'checked':''} onchange="toggleUpg(this)" title="Count this TEROS-12 for a TEROS One upgrade quote">${sel}`;
+}
+function toggleUpg(cb){const s=cb.dataset.ser;UPG[s]=cb.checked?{model:modelOf(s)||'dual'}:undefined;if(!cb.checked)delete UPG[s];saveUpg();recompute();render();}
+function setUpgModel(sel){UPG[sel.dataset.ser]={model:sel.value};saveUpg();recompute();render();}
+function clearUpg(){if(confirm('Clear all upgrade ticks?')){UPG={};saveUpg();recompute();render();}}
+function exportJSON(){
+  const sgl=Object.keys(UPG).filter(s=>modelOf(s)==='single');
+  const dl=Object.keys(UPG).filter(s=>{const m=modelOf(s);return m&&m!=='single';});
+  const payload={customer:"NorCal Cannabis (campus)",org:34,exported_at:new Date().toISOString(),
+    teros_one_pricing:{dual_trade_in:DUAL_NET,single_trade_in:SINGLE_NET,dual_msrp:DUAL_MSRP,single_msrp:SINGLE_MSRP},
+    upgrade_models:UPG,
+    summary:{ticked_for_upgrade:sgl.length+dl.length,upgrade_single:sgl.length,upgrade_dual:dl.length,
+      upgrade_single_serials:sgl,upgrade_dual_serials:dl,
+      quote_trade_in_total:sgl.length*SINGLE_NET+dl.length*DUAL_NET,
+      quote_msrp_total:sgl.length*SINGLE_MSRP+dl.length*DUAL_MSRP,
+      save_vs_msrp:sgl.length*SINGLE_SAVE+dl.length*DUAL_SAVE}};
+  const blob=new Blob([JSON.stringify(payload,null,1)],{type:"application/json"});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download="norcal_campus_teros_one_quote_"+new Date().toISOString().slice(0,10)+".json";a.click();
+}
+function importJSON(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const p=JSON.parse(r.result);if(p.upgrade_models){Object.keys(p.upgrade_models).forEach(s=>{const e=p.upgrade_models[s];if(e&&e.model)UPG[s]={model:e.model};});}saveUpg();recompute();render();}catch(e){alert('Could not read that file.');}};
+  r.readAsText(f);}
 function render(){
   const q=document.getElementById('q').value.toLowerCase();
   const fb=document.getElementById('fb').value,fk=document.getElementById('fk').value,
         fc=document.getElementById('fc').value,fd=document.getElementById('fd').value;
+  const eligOnly=document.getElementById('eligOnly').checked;
   let rows=U.filter(u=>(!fb||u.b===fb)&&(!fk||u.bk===fk)&&(!fc||u.c===fc)&&(!fd||u.df===fd)&&
+    (!eligOnly||isSub(u))&&
     (!q||(`${u.s} ${u.b} ${u.rm} ${u.f} ${u.a}`).toLowerCase().includes(q)));
   rows.sort((a,b)=>{let x=a[sortK],y=b[sortK];if(sortK==='bk'){x=RANK[x];y=RANK[y];}
     if(x==null)x=sortK==='bk'?9:'';if(y==null)y=sortK==='bk'?9:'';
@@ -214,15 +314,17 @@ function render(){
     const c=COL[u.bk];const chip=`<span class=chip style="background:${c[0]};color:${c[1]}">${SHORT[u.bk]}</span>`;
     const md=u.ms==='offline'?`<span class=soff>offline</span>`:(u.ms==='online'?`<span class=sok>online</span>`:'<span class=sdim>—</span>');
     const dfc={regressed:'soff',recovered:'sok'}[u.df]||'sdim';
-    return `<tr><td class=mono>${u.s||''}</td><td>${u.b.replace('NorCal ','')}</td><td>${CLL[u.c]||u.c}</td>
+    const up=!!modelOf(u.s);
+    return `<tr class="${up?'mkup':''}"><td class=mono>${u.s||''}</td><td>${u.b.replace('NorCal ','')}</td><td>${CLL[u.c]||u.c}</td>
       <td>${chip}</td><td>${u.rm||''}</td><td class=tick>${fnum(u.bat,2)}</td><td class=tick>${fnum(u.sig,0)}</td>
       <td class=tick>${fnum(u.h,0)}</td><td>${md}</td><td class=tick>${fnum(u.md,0)}</td>
-      <td class="${dfc}">${u.df.replace(/_/g,' ')}</td><td style="max-width:380px">${(u.f||'')} <i class=sdim>${u.a||''}</i></td></tr>`;
+      <td class="${dfc}">${u.df.replace(/_/g,' ')}</td><td style="max-width:380px">${(u.f||'')} <i class=sdim>${u.a||''}</i></td>
+      <td style="text-align:center">${upgBox(u)}</td></tr>`;
   }).join('');
   document.getElementById('cnt').textContent=`${rows.length} devices`+(rows.length>2500?' (showing first 2500)':'');
 }
 document.querySelectorAll('#dt th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(!k)return;
   if(sortK===k)sortDir*=-1;else{sortK=k;sortDir=1;}render();});
-render();
+recompute();render();
 </script>
 </body></html>
