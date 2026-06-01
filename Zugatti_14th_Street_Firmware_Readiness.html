@@ -31,6 +31,8 @@
     .pricegrid{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 4px;font-size:13px}
     .pricegrid label{display:flex;flex-direction:column;gap:3px;color:var(--sub);font-size:11.5px}
     .pricegrid input{width:92px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 7px;font-size:13px;font-variant-numeric:tabular-nums}
+    .pricefix{font-size:13px;color:var(--ink)} .pricefix .sdim{font-size:11.5px}
+    .pcard .pn.rng{font-size:18px}
     .ssel{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:11.5px;max-width:170px}
     .ssel.set{border-color:var(--olive);font-weight:600}
     .savebanner{font-size:12px;color:var(--sub);margin-top:8px}
@@ -48,24 +50,22 @@
 
 <h2>TEROS One upgrade planner</h2>
 <div class="card">
-  <div style="font-size:13px;color:var(--sub);margin-bottom:8px">TEROS One replaces the TEROS-12 substrate sensors. Mark devices for upgrade in the table below (the “Your status” column) and this updates live. Trade-in pricing is editable — set it to your current quote.</div>
+  <div style="font-size:13px;color:var(--sub);margin-bottom:10px">TEROS One replaces the TEROS-12 substrate sensor. In the table below, mark any TEROS-12 — <b>including working ones</b> — as <b>Upgrade → Single</b> or <b>Upgrade → Dual</b>. The quote totals from your picks; the saving depends on which model you choose. Pricing is fixed (below).</div>
   <div class="plan">
     <div class="pcard"><div class="pn" id="pElig">—</div><div class="pl">TEROS-12 substrate sensors (upgrade-eligible)</div></div>
     <div class="pcard"><div class="pn sok" id="pFunc">—</div><div class="pl">Functional now (clean trade-in)</div></div>
     <div class="pcard"><div class="pn soff" id="pNonf">—</div><div class="pl">Not functional today</div></div>
-    <div class="pcard"><div class="pn" id="pMarked">0</div><div class="pl">Marked for upgrade (you)</div></div>
+    <div class="pcard" style="border-color:var(--olive);border-width:2px"><div class="pn" id="pMarked">0</div><div class="pl">Marked for an upgrade quote</div></div>
   </div>
-  <div class="pricegrid">
-    <label>Dual MSRP $<input type="number" id="msrpDual" value="608"></label>
-    <label>Dual trade-in discount $<input type="number" id="discDual" value="150"></label>
-    <label>Single MSRP $<input type="number" id="msrpSingle" value="419"></label>
-    <label>Single trade-in discount $<input type="number" id="discSingle" value="100"></label>
+  <div class="pricegrid" style="margin-top:12px;gap:24px">
+    <div class="pricefix">TEROS One <b>Dual</b> &nbsp;<b style="font-size:15px">$458</b> trade-in &nbsp;<span class="sdim">$608 MSRP · save $150</span></div>
+    <div class="pricefix">TEROS One <b>Single</b> &nbsp;<b style="font-size:15px">$319</b> trade-in &nbsp;<span class="sdim">$419 MSRP · save $100</span></div>
   </div>
-  <div class="plan" style="grid-template-columns:repeat(4,1fr)">
-    <div class="pcard"><div class="pn" id="pDual">0</div><div class="pl">→ Dual @ <span id="netDual">$458</span> ea (trade-in)</div></div>
-    <div class="pcard"><div class="pn" id="pSingle">0</div><div class="pl">→ Single @ <span id="netSingle">$319</span> ea (trade-in)</div></div>
-    <div class="pcard"><div class="pn" id="pCost">$0</div><div class="pl">Upgrade cost at trade-in pricing</div></div>
-    <div class="pcard"><div class="pn sok" id="pSave">$0</div><div class="pl">You save vs MSRP (<span id="pMsrp">$0</span>) — trade-in offer, act now</div></div>
+  <div class="plan">
+    <div class="pcard"><div class="pn" id="pSingle">0</div><div class="pl">→ Single @ $319 ea</div></div>
+    <div class="pcard"><div class="pn" id="pDual">0</div><div class="pl">→ Dual @ $458 ea</div></div>
+    <div class="pcard"><div class="pn" id="pCost">$0</div><div class="pl">Trade-in quote total (<span id="pMsrp">$0</span> at MSRP)</div></div>
+    <div class="pcard"><div class="pn sok" id="pSave">$0</div><div class="pl">You save vs MSRP — time-limited offer</div></div>
   </div>
 </div>
 
@@ -121,44 +121,34 @@ let sortK="room2",sortDir=1;
 const RANK={RED_BROKEN:0,ORANGE_WONT:1,GREY_NA:1.5,AMBER_MIGHT:2,LIME_WILL:3,GREEN_SAIL:4};
 const CR={node:0,climate_station:1,repeater:2,gateway:3,sink:4,orphan_sensor:5};
 const STATUS=[["","—"],["revived","✓ Fixed / reporting"],["scheduled","◐ Scheduled fix"],
-  ["upgrade_dual","⬆ Upgrade → TEROS One Dual"],["upgrade_single","⬆ Upgrade → TEROS One Single"],
+  ["upgrade_single","⬆ Upgrade → Single ($319)"],["upgrade_dual","⬆ Upgrade → Dual ($458)"],
   ["wontfix","✕ Won't fix / retire"]];
 const STATUS_NOSUB=STATUS.filter(s=>!s[0].startsWith("upgrade"));
+// Fixed TEROS One trade-in pricing
+const DUAL_NET=458,SINGLE_NET=319,DUAL_MSRP=608,SINGLE_MSRP=419,DUAL_SAVE=150,SINGLE_SAVE=100;
 function load(k,def){try{return JSON.parse(localStorage.getItem(k))||def;}catch(e){return def;}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 let OV=load(SKEY,{});            // serial -> {status, ts}
-let PR=load(PKEY,{msrpDual:608,discDual:150,msrpSingle:419,discSingle:100});
 function isSub(u){return u.sensor_type==='ter12';}
-
-function applyPriceInputs(){
-  ['msrpDual','discDual','msrpSingle','discSingle'].forEach(id=>{document.getElementById(id).value=PR[id];});
-}
-function readPriceInputs(){
-  ['msrpDual','discDual','msrpSingle','discSingle'].forEach(id=>{PR[id]=parseFloat(document.getElementById(id).value)||0;});
-  save(PKEY,PR);
-}
 function fmt(n){return "$"+Math.round(n).toLocaleString();}
+function rng(lo,hi){return lo===hi?fmt(lo):fmt(lo)+"–"+fmt(hi);}
 
 function recompute(){
   const sub=U.filter(isSub);
   const func=sub.filter(u=>u.sensor_status==='ok').length;
-  const nonf=sub.length-func;
   document.getElementById('pElig').textContent=sub.length;
   document.getElementById('pFunc').textContent=func;
-  document.getElementById('pNonf').textContent=nonf;
-  const netDual=PR.msrpDual-PR.discDual, netSingle=PR.msrpSingle-PR.discSingle;
-  document.getElementById('netDual').textContent=fmt(netDual);
-  document.getElementById('netSingle').textContent=fmt(netSingle);
-  let dual=0,single=0;
-  Object.values(OV).forEach(o=>{if(o.status==='upgrade_dual')dual++;else if(o.status==='upgrade_single')single++;});
-  const cost=dual*netDual+single*netSingle;
-  const msrp=dual*PR.msrpDual+single*PR.msrpSingle;
-  document.getElementById('pDual').textContent=dual;
+  document.getElementById('pNonf').textContent=sub.length-func;
+  let single=0,dual=0;
+  Object.values(OV).forEach(o=>{if(o.status==='upgrade_single')single++;else if(o.status==='upgrade_dual')dual++;});
   document.getElementById('pSingle').textContent=single;
-  document.getElementById('pMarked').textContent=dual+single;
+  document.getElementById('pDual').textContent=dual;
+  document.getElementById('pMarked').textContent=single+dual;
+  const cost=single*SINGLE_NET+dual*DUAL_NET;
+  const msrp=single*SINGLE_MSRP+dual*DUAL_MSRP;
   document.getElementById('pCost').textContent=fmt(cost);
   document.getElementById('pMsrp').textContent=fmt(msrp);
-  document.getElementById('pSave').textContent=fmt(dual*PR.discDual+single*PR.discSingle);
+  document.getElementById('pSave').textContent=fmt(single*SINGLE_SAVE+dual*DUAL_SAVE);
   const resolved=Object.values(OV).filter(o=>o.status).length;
   document.getElementById('resCount').textContent=resolved?`${resolved} device(s) marked by you`:"";
 }
@@ -219,22 +209,26 @@ function render(){
     <td>${selectHTML(d)}</td></tr>`;}).join("");
 }
 function exportJSON(){
+  const sgl=Object.entries(OV).filter(([s,o])=>o.status==='upgrade_single').map(([s])=>s);
+  const dl=Object.entries(OV).filter(([s,o])=>o.status==='upgrade_dual').map(([s])=>s);
   const payload={facility_id:"2704",facility_name:"Zugatti: 14th Street",exported_at:new Date().toISOString(),
-    pricing:PR, overrides:OV,
-    summary:{marked:Object.values(OV).filter(o=>o.status).length,
-      upgrade_dual:Object.values(OV).filter(o=>o.status==='upgrade_dual').length,
-      upgrade_single:Object.values(OV).filter(o=>o.status==='upgrade_single').length}};
+    teros_one_pricing:{dual_trade_in:DUAL_NET,single_trade_in:SINGLE_NET,dual_msrp:DUAL_MSRP,single_msrp:SINGLE_MSRP},
+    overrides:OV,
+    summary:{marked_total:Object.values(OV).filter(o=>o.status).length,
+      upgrade_single:sgl.length, upgrade_dual:dl.length, marked_for_upgrade:sgl.length+dl.length,
+      upgrade_single_serials:sgl, upgrade_dual_serials:dl,
+      quote_trade_in_total:sgl.length*SINGLE_NET+dl.length*DUAL_NET,
+      quote_msrp_total:sgl.length*SINGLE_MSRP+dl.length*DUAL_MSRP}};
   const blob=new Blob([JSON.stringify(payload,null,1)],{type:"application/json"});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download="zugatti_2704_status_"+new Date().toISOString().slice(0,10)+".json";a.click();
 }
 function importJSON(ev){
   const f=ev.target.files[0];if(!f)return;const r=new FileReader();
-  r.onload=()=>{try{const p=JSON.parse(r.result);if(p.overrides){OV=p.overrides;save(SKEY,OV);}if(p.pricing){PR=p.pricing;save(PKEY,PR);applyPriceInputs();}recompute();render();}catch(e){alert("Could not read that file.");}};
+  r.onload=()=>{try{const p=JSON.parse(r.result);if(p.overrides){OV=p.overrides;save(SKEY,OV);}recompute();render();}catch(e){alert("Could not read that file.");}};
   r.readAsText(f);
 }
 function clearAll(){if(confirm("Clear all your status marks for this facility?")){OV={};save(SKEY,OV);recompute();render();}}
 document.querySelectorAll('#dt th').forEach(th=>{if(th.dataset.k)th.addEventListener('click',()=>{const k=th.dataset.k;if(sortK===k)sortDir*=-1;else{sortK=k;sortDir=1;}render();});});
-['msrpDual','discDual','msrpSingle','discSingle'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{readPriceInputs();recompute();}));
-applyPriceInputs();initSel();recompute();render();
+initSel();recompute();render();
 </script></body></html>
