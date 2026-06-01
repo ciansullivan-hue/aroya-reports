@@ -309,6 +309,42 @@
  }
  @media (max-width:430px){.pagehead h1{font-size:20px}.chart-canvas{height:240px !important}
  }
+
+  /* === Final-merge CSS additions === */
+  /* Selector-bug fixes: parallel build used `.pagehead.meta` (compound) instead of `.pagehead .meta` (descendant) */
+  .pagehead .meta{margin-top:18px;display:grid!important;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+  .pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+  .pagehead .meta span{padding:6px 0;border-top:1px solid var(--border);display:block}
+  .pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
+  /* h2 lime underline + olive num pill — replaces any prior border-bottom on h2 */
+  h2{position:relative;padding-bottom:10px!important;border-bottom:2px solid var(--lime)!important;font-family:'Inter',sans-serif;font-weight:500;font-size:22px;letter-spacing:-.012em;color:var(--ink);margin:40px 0 18px}
+  h2 .num{display:inline-block;font:500 11px/1 'Inter',sans-serif;letter-spacing:.06em;color:#fff;background:var(--olive);padding:4px 7px;border-radius:4px;margin-right:10px;vertical-align:middle;text-transform:uppercase}
+  /* Cross-comparison scatter section */
+  #cross-comparison .scatter-wrap{display:grid;grid-template-columns:1fr;gap:18px;margin:14px 0 8px}
+  #cross-comparison .scatter-card{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;box-shadow:var(--card-shadow,0 1px 3px rgba(0,0,0,0.04))}
+  #cross-comparison .scatter-card h4{margin:0 0 4px;font-family:'Inter',sans-serif;font-weight:500;font-size:14px;color:var(--ink)}
+  #cross-comparison .scatter-card .sub{font-size:12px;color:var(--ink-2);margin-bottom:10px;line-height:1.45}
+  #cross-comparison .scatter-card .chart-canvas{height:380px;position:relative}
+  .dq-inline{font-style:italic;font-size:11px;color:var(--ink-muted);font-weight:400;display:block;margin-top:2px;letter-spacing:0;line-height:1.4}
+  /* Mobile collapse */
+  .collapse-btn{display:none;background:var(--olive);color:#fff;border:0;padding:10px 14px;border-radius:6px;font:500 11px/1 'Inter',sans-serif;letter-spacing:.06em;margin:0 0 14px;cursor:pointer;text-transform:uppercase;width:100%;text-align:left}
+  .collapse-btn:hover{background:var(--olive-2)}
+  .collapse-btn::after{content:" ▾";float:right;color:#cbeeb0}
+  .mobile-collapsed .collapse-btn::after{content:" ▸";float:right}
+  @media (max-width: 760px){
+    .collapse-btn{display:block}
+    .mobile-collapsed > *:not(h2):not(.collapse-btn){display:none!important}
+    .pagehead .meta{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px 16px;font-size:12px}
+    .kpi-grid,.kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+    #cross-comparison .scatter-card .chart-canvas{height:340px}
+  }
+  @media (max-width: 520px){
+    .pagehead .meta{grid-template-columns:1fr!important;gap:4px 0;font-size:11.5px}
+    .kpi-grid,.kpis{grid-template-columns:1fr!important}
+    #cross-comparison .scatter-card .chart-canvas{height:300px}
+    h2{font-size:18px;margin:30px 0 14px}
+    h2 .num{font-size:10px;padding:3px 6px}
+  }
 </style>
 </head>
 <body>
@@ -336,7 +372,7 @@
  <span><b><span class="i18n" data-i18n-en="Facility" data-i18n-es="Instalación">Facility</span></b>PowrHouse (ID 3754)</span>
  <span><b><span class="i18n" data-i18n-en="Window" data-i18n-es="Ventana">Window</span></b>2024-12 → 2026-05 (18 months)</span>
  <span><b><span class="i18n" data-i18n-en="Rooms" data-i18n-es="Salas">Rooms</span></b>4 flower (POWR 1 – POWR 4)</span>
- <span><b><span class="i18n" data-i18n-en="Flower footprint" data-i18n-es="Superficie de flora">Flower footprint</span></b>5,120 ft² (1600/880/1760/880)</span>
+ <span><b><span class="i18n" data-i18n-en="Flower footprint" data-i18n-es="Superficie de flora">Flower footprint</span></b>5,120 ft² <em class="dq-inline" style="display:inline;font-size:10.5px;margin-left:6px">(derived: zones × 176 ft²; not a verified field in AROYA room-config)</em></span>
  <span><b><span class="i18n" data-i18n-en="Harvest groups" data-i18n-es="Grupos cosecha">Harvest groups</span></b>35 (24 with dry weight)</span>
  <span><b><span class="i18n" data-i18n-en="Substrate" data-i18n-es="Sustrato">Substrate</span></b>Coco / mixed</span>
  <span><b><span class="i18n" data-i18n-en="Yield source" data-i18n-es="Fuente de rendimiento">Yield source</span></b>Airtable 1,409 rows (2026-05-28)</span>
@@ -667,8 +703,27 @@ Raw lbs hide room-size effects. POWR 1 and POWR 3 are ~1,600–1,760 ft² each; 
 </div>
 </section>
 
-
-
+<section id="cross-comparison">
+<h2><span class="num">4c.</span><span class="i18n" data-i18n-en="Quality × Yield × Mold — cross-comparison" data-i18n-es="Calidad × Rendimiento × Moho — comparación cruzada">Quality × Yield × Mold — cross-comparison</span></h2>
+<p class="lead i18n" data-i18n-en="Two views of the same question — does more yield cost quality, and does mold rise with either? Each bubble plots A-grade% (y) vs sellable lb (x) with mold% as bubble size. The B-grade column is empty in this Airtable pull (B-grade lbs read as 0 across all 1,409 rows), so the quality axis is A-grade% rather than A:B ratio." data-i18n-es="Dos vistas de la misma pregunta — ¿más rendimiento cuesta calidad y el moho sube con cualquiera? Cada burbuja muestra calidad A% (y) vs lb vendibles (x) con moho% como tamaño. La columna B-grade está vacía en este pull, por lo que el eje de calidad es A%, no A:B.">Two views of the same question — does more yield cost quality, and does mold rise with either? Each bubble plots <strong>A-grade% (y)</strong> vs <strong>sellable lb (x)</strong> with <strong>mold% as bubble size</strong>. The B-grade column is empty in this Airtable pull (B-grade lbs read as 0 across all 1,409 rows), so the quality axis is A-grade% rather than A:B ratio.</p>
+<div class="scatter-wrap">
+  <div class="scatter-card">
+    <h4 class="i18n" data-i18n-en="By cultivar — 20 cultivars ≥50 lb sellable across 18 months" data-i18n-es="Por cultivar — 20 cultivares ≥50 lb vendibles en 18 meses">By cultivar — 20 cultivars ≥50 lb sellable across 18 months</h4>
+    <div class="sub i18n" data-i18n-en="x = sellable lb (total) · y = A-grade % of total harvested · bubble area = mold % of total. Green = mold &lt;1%; rust = mold ≥1%. Hover for cultivar name and the rooms it appeared in." data-i18n-es="x = lb vendibles · y = calidad A% · área = moho%. Verde = moho &lt;1%; óxido = moho ≥1%.">x = sellable lb (total) · y = A-grade % of total harvested · bubble area = mold % of total. Green = mold &lt;1%; rust = mold ≥1%. Hover for cultivar name and the rooms it appeared in.</div>
+    <div class="chart-canvas"><canvas id="chart_cross_cultivar"></canvas></div>
+    <div class="dq-inline"><span class="i18n" data-i18n-en="Cultivars span all 4 rooms — values are 18-month cumulative cultivar totals, not normalized to canopy area" data-i18n-es="Los cultivares cruzan las 4 salas — valores son totales acumulativos de 18 meses, no normalizados a área de dosel">Cultivars span all 4 rooms — values are 18-month cumulative cultivar totals, not normalized to canopy area</span></div>
+  </div>
+  <div class="scatter-card">
+    <h4 class="i18n" data-i18n-en="By room × year — 8 points, 2025 vs 2026 quality–yield posture" data-i18n-es="Por sala × año — 8 puntos, postura calidad–rendimiento 2025 vs 2026">By room × year — 8 points, 2025 vs 2026 quality–yield posture</h4>
+    <div class="sub i18n" data-i18n-en="x = sellable lb · y = A-grade % · bubble area = mold % · solid = 2025 · ring = 2026 · color = room. The 2025/2026 pairing shows the POWR 1↔POWR 3 rank-flip at a glance." data-i18n-es="x = lb vendibles · y = calidad A% · área = moho% · sólido = 2025 · contorno = 2026 · color = sala.">x = sellable lb · y = A-grade % · bubble area = mold % · solid = 2025 · ring = 2026 · color = room. The 2025/2026 pairing shows the POWR 1↔POWR 3 rank-flip at a glance.</div>
+    <div class="chart-canvas"><canvas id="chart_cross_room_year"></canvas></div>
+  </div>
+</div>
+<div class="callout">
+  <div class="v-head"><span class="i18n" data-i18n-en="What to read from the scatter" data-i18n-es="Qué leer del scatter">What to read from the scatter</span></div>
+  <span class="i18n" data-i18n-en="The cultivar plot shows volume and quality are NOT negatively correlated — Bolo, Frosted Cherries, Golden Ticket and ADL each sit at &gt;300 lb sellable AND ≥66% A-grade, while the laggards (Herijuana 2.0, Zangria, Orange Malt) are low-volume and low-quality, undermining any &quot;ran for tonnage and lost quality&quot; story. Mold concentrates in dense high-A cultivars (Lipsmackerz #4 at 280 lb / 69.3% A / 2.94% mold; Ztopia at 253 lb / 75.0% A / 0.07% mold is the counter-example) — read mold as environment × density, not strain defect. The room-year plot tells the rank-flip cleanly: POWR 1 2025 anchors top-right; POWR 3 2026 climbs while POWR 4 2026 drops into the worst corner." data-i18n-es="El gráfico de cultivares muestra que volumen y calidad NO están negativamente correlacionados — Bolo, Frosted Cherries, Golden Ticket y ADL están en &gt;300 lb vendibles Y ≥66% A. El moho se concentra en cultivares densos de alta calidad. El gráfico sala-año muestra el cambio de ranking POWR 1↔POWR 3.">The cultivar plot shows volume and quality are NOT negatively correlated — Bolo, Frosted Cherries, Golden Ticket and ADL each sit at &gt;300 lb sellable AND ≥66% A-grade, while the laggards (Herijuana 2.0, Zangria, Orange Malt) are low-volume and low-quality, undermining any "ran for tonnage and lost quality" story. Mold concentrates in dense high-A cultivars (Lipsmackerz #4 at 280 lb / 69.3% A / 2.94% mold; Ztopia at 253 lb / 75.0% A / 0.07% mold is the counter-example) — read mold as environment × density, not strain defect. The room-year plot tells the rank-flip cleanly: POWR 1 2025 anchors top-right; POWR 3 2026 climbs while POWR 4 2026 drops into the worst corner.</span>
+</div>
+</section>
 
 <section id="hg-ledger">
 <h2><span class="num">5.</span><span class="i18n" data-i18n-en="Harvest groups — long-term cycle ledger" data-i18n-es="Grupos de cosecha — ciclo a largo plazo">Harvest groups — long-term cycle ledger</span></h2>
@@ -2455,5 +2510,140 @@ document.addEventListener('DOMContentLoaded', function(){
  <div><span class="brand">AROYA · by Addium</span> · <span class="i18n" data-i18n-en="PowrHouse Long-Term Cultivation &amp; Yield Audit · facility 3754" data-i18n-es="PowrHouse — Auditoría de Cultivo y Rendimiento a Largo Plazo · instalación 3754">PowrHouse Long-Term Cultivation &amp; Yield Audit · facility 3754</span></div>
  <div><span class="i18n" data-i18n-en="Generated 2026-05-29 · 1,409 Airtable dry-weight rows · AROYA SPA live sensor state · Sqft from AROYA SPA room config" data-i18n-es="Generado 2026-05-29 · 1,409 registros de peso seco Airtable · estado de sensores AROYA en vivo · superficie desde AROYA SPA">Generated 2026-05-29 · 1,409 Airtable dry-weight rows · AROYA SPA live sensor state · Sqft from AROYA SPA room config</span></div>
 </footer>
+<script>
+// ===== Cross-comparison scatter + mobile collapse =====
+(function(){
+  function cssVar(n){ try { return (getComputedStyle(document.documentElement).getPropertyValue(n)||'').trim(); } catch(e){ return ''; } }
+  function moldToR(m){ m = Math.max(0, Number(m)||0); return 5 + Math.sqrt(m) * 9; }
+
+  function drawCharts(){
+    if (typeof Chart === 'undefined') return;
+    var COLOR_OLIVE = cssVar('--olive')||'#3f4e2b';
+    var COLOR_LIME  = cssVar('--lime')||'#9fd96a';
+    var COLOR_BLUE  = cssVar('--app-blue')||'#1f78b4';
+    var COLOR_ATTN  = cssVar('--attention')||'#e76f51';
+    var COLOR_MUTED = cssVar('--ink-muted')||'#7a8175';
+
+    // ---- chart 1: cultivar ----
+    var elC = document.getElementById('chart_cross_cultivar');
+    var cultData = window.YIELD_BY_CULTIVAR || [];
+    if (elC && cultData.length) {
+      var pts = cultData.filter(function(d){ return Number(d.sellable_lbs||d.sellable||0) >= 50; }).map(function(d){
+        var sell = Number(d.sellable_lbs||d.sellable||0);
+        var a = Number(d.a_grade_pct||d.a||0);
+        var mold = Number(d.mold_pct||d.mold||0);
+        var name = d.cultivar || d.c || '';
+        return { x:sell, y:a, r:moldToR(mold), meta:{c:name,a:a,mold:mold,sellable:sell} };
+      });
+      try {
+        new Chart(elC, {
+          type:'bubble',
+          data:{ datasets:[{
+            label:'Cultivar (≥50 lb sellable)',
+            data:pts,
+            backgroundColor:pts.map(function(p){ return p.meta.mold>=1?'rgba(231,111,81,0.55)':'rgba(159,217,106,0.55)'; }),
+            borderColor:pts.map(function(p){ return p.meta.mold>=1?COLOR_ATTN:COLOR_OLIVE; }),
+            borderWidth:1.5
+          }]},
+          options:{
+            responsive:true, maintainAspectRatio:false, layout:{padding:4},
+            scales:{
+              x:{type:'linear', title:{display:true,text:'Sellable lb (18-mo cultivar total)',color:COLOR_MUTED,font:{size:11}}, grid:{color:'rgba(127,127,127,0.10)'}, ticks:{color:COLOR_MUTED,font:{size:10}}},
+              y:{title:{display:true,text:'A-grade % of total harvested',color:COLOR_MUTED,font:{size:11}}, min:50,max:80, grid:{color:'rgba(127,127,127,0.10)'}, ticks:{color:COLOR_MUTED,font:{size:10},callback:function(v){return v+'%';}}}
+            },
+            plugins:{
+              legend:{display:false},
+              tooltip:{callbacks:{label:function(ctx){ var m=ctx.raw.meta; return [m.c,'A-grade: '+m.a.toFixed(1)+'%','Mold: '+m.mold.toFixed(2)+'%','Sellable: '+m.sellable.toFixed(1)+' lb']; }}}
+            }
+          }
+        });
+      } catch(e) { console && console.warn && console.warn('chart_cross_cultivar failed:', e); }
+    }
+
+    // ---- chart 2: room × year ----
+    var elR = document.getElementById('chart_cross_room_year');
+    if (elR && window.YIELD_BY_ROOM_YEAR) {
+      var ROOM_COLOR = { 'POWR 1':COLOR_OLIVE, 'POWR 2':COLOR_BLUE, 'POWR 3':COLOR_LIME, 'POWR 4':COLOR_ATTN, 'Powr1':COLOR_OLIVE, 'Powr2':COLOR_BLUE, 'Powr3':COLOR_LIME, 'Powr4':COLOR_ATTN };
+      var pts2 = [];
+      // YIELD_BY_ROOM_YEAR could be an object keyed by room→year, or an array of rows
+      var src = window.YIELD_BY_ROOM_YEAR;
+      if (Array.isArray(src)) {
+        src.forEach(function(d){
+          var room = d.room||d.r; var year = d.year||d.y;
+          var sell = Number(d.sellable_lbs||d.sellable||0);
+          var a = Number(d.a_grade_pct_of_total||d.a||0);
+          var mold = Number(d.mold_pct_of_total||d.mold||0);
+          if (!sell || !a) return;
+          pts2.push({ x:sell, y:a, r:moldToR(mold), meta:{room:room,year:year,sellable:sell,a:a,mold:mold} });
+        });
+      } else {
+        Object.keys(src).forEach(function(room){
+          ['2025','2026'].forEach(function(year){
+            var d = src[room] && src[room][year];
+            if (!d) return;
+            var sell = Number(d.sellable||d.sellable_lbs||0);
+            var a = Number(d.a||d.a_grade_pct||0);
+            var mold = Number(d.mold||d.mold_pct||0);
+            pts2.push({ x:sell, y:a, r:moldToR(mold), meta:{room:room,year:year,sellable:sell,a:a,mold:mold} });
+          });
+        });
+      }
+      try {
+        new Chart(elR, {
+          type:'bubble',
+          data:{ datasets:[{
+            label:'Room × Year',
+            data:pts2,
+            backgroundColor:pts2.map(function(p){ var c=ROOM_COLOR[p.meta.room]||COLOR_OLIVE; return p.meta.year==='2025'||p.meta.year===2025?c+'cc':'rgba(0,0,0,0)'; }),
+            borderColor:pts2.map(function(p){ return ROOM_COLOR[p.meta.room]||COLOR_OLIVE; }),
+            borderWidth:2
+          }]},
+          options:{
+            responsive:true, maintainAspectRatio:false, layout:{padding:4},
+            scales:{
+              x:{type:'linear', title:{display:true,text:'Sellable lb (room-year total)',color:COLOR_MUTED,font:{size:11}}, grid:{color:'rgba(127,127,127,0.10)'}, ticks:{color:COLOR_MUTED,font:{size:10}}},
+              y:{title:{display:true,text:'A-grade % of total harvested',color:COLOR_MUTED,font:{size:11}}, min:55,max:80, grid:{color:'rgba(127,127,127,0.10)'}, ticks:{color:COLOR_MUTED,font:{size:10},callback:function(v){return v+'%';}}}
+            },
+            plugins:{
+              legend:{display:false},
+              tooltip:{callbacks:{label:function(ctx){ var m=ctx.raw.meta; return [m.room+' · '+m.year,'A-grade: '+m.a.toFixed(1)+'%','Mold: '+m.mold.toFixed(2)+'%','Sellable: '+m.sellable.toFixed(1)+' lb']; }}}
+            }
+          }
+        });
+      } catch(e) { console && console.warn && console.warn('chart_cross_room_year failed:', e); }
+    }
+  }
+
+  function setupCollapse(){
+    if (window.innerWidth > 760) return;
+    var ids = ['biophysics','bestworst','traits','wa','dq','notes','irrigation','hvac','financial'];
+    ids.forEach(function(id){
+      var sec = document.getElementById(id);
+      if (!sec) return;
+      var h2 = sec.querySelector('h2');
+      if (!h2) return;
+      if (sec.querySelector('.collapse-btn')) return;
+      var btn = document.createElement('button');
+      btn.className = 'collapse-btn';
+      btn.type = 'button';
+      btn.textContent = 'Tap to expand';
+      btn.addEventListener('click', function(){
+        sec.classList.toggle('mobile-collapsed');
+        btn.textContent = sec.classList.contains('mobile-collapsed') ? 'Tap to expand' : 'Tap to collapse';
+        window.dispatchEvent(new Event('resize'));
+      });
+      if (h2.nextSibling) h2.parentNode.insertBefore(btn, h2.nextSibling); else h2.parentNode.appendChild(btn);
+      sec.classList.add('mobile-collapsed');
+    });
+  }
+
+  function runAll(){ drawCharts(); setupCollapse(); }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(runAll, 50);
+  } else {
+    window.addEventListener('load', runAll);
+  }
+})();
+</script>
 </body>
 </html>
