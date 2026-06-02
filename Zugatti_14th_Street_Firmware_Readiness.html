@@ -57,24 +57,24 @@
 <div class="card"><b>Mesh backbone:</b> 90 units are actively reaching the cloud, so the mesh uplink is up and an OTA push has a path into the live fleet. Verify the sinks/gateways in the AROYA app before pushing — a push that re-elects a dead root can strand a room.</div>
 <h2>Fleet composition &amp; sensor coverage</h2><div class="card">Your fleet lists 20 radios as “repeaters”, but the serial prefix tells the real story: <b>6 are range-extenders only (H110…)</b> and <b>14 are climate stations (H111…)</b> — a repeater-class radio with an Atmos-14 attached. Of the 14 climate stations, <b>5 are fully healthy</b>, <b>1 have the Atmos-14 offline while the radio is up</b> (reseat/replace the sensor — the radio still takes firmware), and <b>8 are entirely dark</b>. Across the 130 substrate nodes, 68 have a reporting TEROS-12, <b>12 are alive but the probe isn’t reporting</b> (reseat the probe), 46 are dark with the node, and 4 have no probe paired.</div>
 
-<h2>TEROS One upgrade planner</h2>
+<h2>TEROS One &amp; Climate One upgrade planner</h2>
 <div class="card">
-  <div style="font-size:13px;color:var(--sub);margin-bottom:10px">TEROS One replaces the TEROS-12 substrate sensor. In the table below, tick the <b>“Upgrade?”</b> box on any TEROS-12 — <b>including working ones</b> — then choose <b>Dual or Single</b> for that sensor. The quote totals exactly from your picks. Pricing is fixed (below).</div>
+  <div style="font-size:13px;color:var(--sub);margin-bottom:10px">Tick the <b>“Upgrade?”</b> box on any sensor — <b>including working ones</b>. <b>TEROS-12</b> → TEROS One (choose Dual or Single per sensor); <b>Atmos-14</b> → Climate One. The quote totals exactly from your picks. Pricing is fixed (below).</div>
   <div class="plan">
-    <div class="pcard"><div class="pn" id="pElig">—</div><div class="pl">TEROS-12 substrate sensors (upgrade-eligible)</div></div>
-    <div class="pcard"><div class="pn sok" id="pFunc">—</div><div class="pl">Functional now (clean trade-in)</div></div>
-    <div class="pcard"><div class="pn soff" id="pNonf">—</div><div class="pl">Not functional today</div></div>
-    <div class="pcard" style="border-color:var(--olive);border-width:2px"><div class="pn" id="pMarked">0</div><div class="pl">Ticked for upgrade quote</div></div>
+    <div class="pcard"><div class="pn" id="pElig">—</div><div class="pl">TEROS-12 sensors (→ TEROS One)</div></div>
+    <div class="pcard"><div class="pn" id="pClim">—</div><div class="pl">Atmos-14 sensors (→ Climate One)</div></div>
+    <div class="pcard"><div class="pn" id="pMarked">0</div><div class="pl">Ticked for upgrade quote</div></div>
+    <div class="pcard" style="border-color:var(--olive);border-width:2px"><div class="pn" id="pGrand">$0</div><div class="pl">Total trade-in quote</div></div>
   </div>
-  <div class="pricegrid" style="margin-top:12px;gap:24px">
-    <div class="pricefix">TEROS One <b>Dual</b> &nbsp;<b style="font-size:15px">$458</b> trade-in &nbsp;<span class="sdim">$608 MSRP · save $150</span></div>
-    <div class="pricefix">TEROS One <b>Single</b> &nbsp;<b style="font-size:15px">$319</b> trade-in &nbsp;<span class="sdim">$419 MSRP · save $100</span></div>
+  <div class="pricegrid" style="margin-top:12px;gap:22px">
+    <div class="pricefix">TEROS One <b>Dual</b> <b style="font-size:15px">$458</b> <span class="sdim">$608 MSRP · save $150</span></div>
+    <div class="pricefix">TEROS One <b>Single</b> <b style="font-size:15px">$319</b> <span class="sdim">$419 MSRP · save $100</span></div>
+    <div class="pricefix">Climate One <b style="font-size:15px">$419</b> <span class="sdim">$569 MSRP · save $150</span></div>
   </div>
-  <div class="plan">
-    <div class="pcard"><div class="pn" id="pNSingle">0</div><div class="pl">→ Single @ $319 ea</div></div>
-    <div class="pcard"><div class="pn" id="pNDual">0</div><div class="pl">→ Dual @ $458 ea</div></div>
-    <div class="pcard"><div class="pn" id="pCost">$0</div><div class="pl">Trade-in quote total (<span id="pMsrp">$0</span> at MSRP)</div></div>
-    <div class="pcard"><div class="pn sok" id="pSave">$0</div><div class="pl">You save vs MSRP — time-limited offer</div></div>
+  <div class="plan" style="grid-template-columns:repeat(3,1fr)">
+    <div class="pcard"><div class="pn" id="pCostT">$0</div><div class="pl"><b>TEROS One</b>: <span id="pNSingle">0</span> single + <span id="pNDual">0</span> dual — save <span class="sok" id="pSaveT">$0</span></div></div>
+    <div class="pcard"><div class="pn" id="pCostC">$0</div><div class="pl"><b>Climate One</b>: <span id="pNC1">0</span> × $419 — save <span class="sok" id="pSaveC">$0</span></div></div>
+    <div class="pcard"><div class="pn sok" id="pSaveTotal">$0</div><div class="pl">Total saving vs MSRP (<span id="pMsrpTotal">$0</span>) — time-limited</div></div>
   </div>
 </div>
 
@@ -99,7 +99,7 @@
   <select id="fc" onchange="render()"><option value="">All classes</option></select>
   <select id="fr" onchange="render()"><option value="">All rooms</option></select>
   <select id="fs" onchange="render()"><option value="">All sensor states</option><option value="offline">Sensor offline (radio up)</option><option value="ok">Sensor OK</option><option value="no_sensor">No sensor</option></select>
-  <label style="font-size:12.5px;color:var(--sub)"><input type="checkbox" id="eligOnly" onchange="render()"> Upgrade-eligible (TEROS-12) only</label>
+  <label style="font-size:12.5px;color:var(--sub)"><input type="checkbox" id="eligOnly" onchange="render()"> Upgrade-eligible only (TEROS-12 + Atmos-14)</label>
   <label style="font-size:12.5px;color:var(--sub)"><input type="checkbox" id="hideRes" onchange="render()"> Hide resolved</label>
   <button class="btn" onclick="exportJSON()">Export status</button>
   <button class="btn alt" onclick="document.getElementById('imp').click()">Import</button>
@@ -110,8 +110,8 @@
 </div>
 <div class="tally">
   <span class="big" id="tMark">0</span><span class="t">ticked for upgrade</span>
-  <span class="t">Single <b id="tNS">0</b></span><span class="t">Dual <b id="tND">0</b></span>
-  <span class="t">Quote <b id="tCost">$0</b></span>
+  <span class="t">TEROS One <b id="tCostT">$0</b></span><span class="t">Climate One <b id="tCostC">$0</b></span>
+  <span class="t">Total quote <b id="tCost">$0</b></span>
   <span class="t">Save <b id="tSave" class="sok">$0</b> vs MSRP</span>
   <span class="t" style="margin-left:auto">Resolved <b id="tRes">0</b></span>
 </div>
@@ -143,8 +143,9 @@ const CR={node:0,climate_station:1,repeater:2,gateway:3,sink:4,orphan_sensor:5};
 const STATUS=[["","—"],["revived","✓ Fixed / reporting"],["scheduled","◐ Scheduled fix"],
   ["wontfix","✕ Won't fix / retire"]];
 const STATUS_NOSUB=STATUS;
-// Fixed TEROS One trade-in pricing
+// Fixed trade-in pricing — TEROS One (substrate) + Climate One (climate)
 const DUAL_NET=458,SINGLE_NET=319,DUAL_MSRP=608,SINGLE_MSRP=419,DUAL_SAVE=150,SINGLE_SAVE=100;
+const C1_NET=419,C1_MSRP=569,C1_SAVE=150;
 // ---- cross-device state: shared store + local cache, per-entry last-write-wins ----
 // OV[serial]={status, ts}   status "" = cleared (tombstone)
 // UPG[serial]={model, ts}   model null = unchecked (tombstone)
@@ -153,7 +154,9 @@ let OV={}, UPG={};
 function saveCache(){try{localStorage.setItem(CACHE,JSON.stringify({ov:OV,upg:UPG}));}catch(e){}}
 function statusOf(s){return (OV[s]&&OV[s].status)||"";}
 function modelOf(s){return (UPG[s]&&UPG[s].model)||null;}
-function isSub(u){return u.sensor_type==='ter12';}
+function isSub(u){return u.sensor_type==='ter12';}          // TEROS-12 -> TEROS One
+function isClimate(u){return u.sensor_type==='atm14';}      // Atmos-14 -> Climate One
+function isUpgEligible(u){return isSub(u)||isClimate(u);}
 function fmt(n){return "$"+Math.round(n).toLocaleString();}
 function setSync(t,cls){const e=document.getElementById('syncState');if(e){e.textContent=t;e.className='savebanner '+(cls||'');}}
 function mergeTs(local,remote){const out={};const ks=new Set([...Object.keys(local||{}),...Object.keys(remote||{})]);
@@ -181,31 +184,24 @@ async function pullOnly(){
 }
 
 function recompute(){
-  const sub=U.filter(isSub);
-  const func=sub.filter(u=>u.sensor_status==='ok').length;
-  document.getElementById('pElig').textContent=sub.length;
-  document.getElementById('pFunc').textContent=func;
-  document.getElementById('pNonf').textContent=sub.length-func;
-  let nS=0,nD=0;
-  Object.keys(UPG).forEach(s=>{const m=modelOf(s);if(m==='single')nS++;else if(m)nD++;});
-  const N=nS+nD;
-  const cost=nS*SINGLE_NET+nD*DUAL_NET;
-  const msrp=nS*SINGLE_MSRP+nD*DUAL_MSRP;
-  const sav=nS*SINGLE_SAVE+nD*DUAL_SAVE;
-  document.getElementById('pMarked').textContent=N;
-  document.getElementById('pNSingle').textContent=nS;
-  document.getElementById('pNDual').textContent=nD;
-  document.getElementById('pCost').textContent=fmt(cost);
-  document.getElementById('pMsrp').textContent=fmt(msrp);
-  document.getElementById('pSave').textContent=fmt(sav);
+  const SET=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  SET('pElig', U.filter(isSub).length);
+  SET('pClim', U.filter(isClimate).length);
+  // tally upgrade picks by product
+  let nS=0,nD=0,nC1=0;
+  Object.keys(UPG).forEach(s=>{const m=modelOf(s);if(m==='single')nS++;else if(m==='c1')nC1++;else if(m)nD++;});
+  const N=nS+nD+nC1;
+  const costT=nS*SINGLE_NET+nD*DUAL_NET, saveT=nS*SINGLE_SAVE+nD*DUAL_SAVE, msrpT=nS*SINGLE_MSRP+nD*DUAL_MSRP;
+  const costC=nC1*C1_NET, saveC=nC1*C1_SAVE, msrpC=nC1*C1_MSRP;
+  const grand=costT+costC, saveAll=saveT+saveC, msrpAll=msrpT+msrpC;
+  SET('pMarked',N);
+  SET('pNSingle',nS); SET('pNDual',nD); SET('pCostT',fmt(costT)); SET('pSaveT',fmt(saveT));
+  SET('pNC1',nC1); SET('pCostC',fmt(costC)); SET('pSaveC',fmt(saveC));
+  SET('pGrand',fmt(grand)); SET('pSaveTotal',fmt(saveAll)); SET('pMsrpTotal',fmt(msrpAll));
   // sticky tally near the table
-  document.getElementById('tMark').textContent=N;
-  document.getElementById('tNS').textContent=nS;
-  document.getElementById('tND').textContent=nD;
-  document.getElementById('tCost').textContent=fmt(cost);
-  document.getElementById('tSave').textContent=fmt(sav);
-  const resolved=Object.keys(OV).filter(s=>statusOf(s)).length;
-  document.getElementById('tRes').textContent=resolved;
+  SET('tMark',N); SET('tCostT',fmt(costT)); SET('tCostC',fmt(costC));
+  SET('tCost',fmt(grand)); SET('tSave',fmt(saveAll));
+  SET('tRes', Object.keys(OV).filter(s=>statusOf(s)).length);
 }
 
 function uniq(k){return [...new Set(U.map(d=>d[k]).filter(x=>x!=null))];}
@@ -239,17 +235,23 @@ function statusChip(st){
   return `<br><span class="scur" style="background:${c[1]};color:${c[2]}">${c[0]}</span>`;
 }
 function upgBox(d){
-  if(!isSub(d)) return '<span class="sdim">—</span>';
-  const m=modelOf(d.serial);      // null | 'single' | 'dual'
+  if(!isUpgEligible(d)) return '<span class="sdim">—</span>';
+  const m=modelOf(d.serial);      // null | 'single' | 'dual' | 'c1'
   const on=!!m;
-  const modelSel=on?` <select class="upgm" data-ser="${d.serial}" onchange="setUpgModel(this)">`
-    +`<option value="dual"${m==='dual'?' selected':''}>Dual $458</option>`
-    +`<option value="single"${m==='single'?' selected':''}>Single $319</option></select>`:'';
-  return `<input type="checkbox" class="upg" data-ser="${d.serial}" ${on?'checked':''} onchange="toggleUpg(this)" title="Count this sensor for a TEROS One upgrade quote">${modelSel}`;
+  let extra='';
+  if(on){
+    if(isSub(d)) extra=` <select class="upgm" data-ser="${d.serial}" onchange="setUpgModel(this)">`
+      +`<option value="dual"${m==='dual'?' selected':''}>Dual $458</option>`
+      +`<option value="single"${m==='single'?' selected':''}>Single $319</option></select>`;
+    else extra=` <span class="scur" style="background:#d9e5ff;color:#08326b">Climate One $419</span>`;
+  }
+  const title=isSub(d)?'Count for a TEROS One upgrade quote':'Count for a Climate One upgrade quote';
+  return `<input type="checkbox" class="upg" data-ser="${d.serial}" ${on?'checked':''} onchange="toggleUpg(this)" title="${title}">${extra}`;
 }
 function toggleUpg(cb){
   const ser=cb.dataset.ser;
-  if(cb.checked) UPG[ser]={model:modelOf(ser)||'dual',ts:Date.now()}; else UPG[ser]={model:null,ts:Date.now()};
+  const dflt=(()=>{const d=U.find(x=>x.serial===ser);return d&&isClimate(d)?'c1':'dual';})();
+  if(cb.checked) UPG[ser]={model:modelOf(ser)||dflt,ts:Date.now()}; else UPG[ser]={model:null,ts:Date.now()};
   scheduleSync();
 }
 function setUpgModel(sel){
@@ -265,7 +267,7 @@ function render(){
   const eligOnly=document.getElementById('eligOnly').checked;
   let rows=U.filter(d=>{
     const st=statusOf(d.serial);
-    if(eligOnly&&!isSub(d))return false;
+    if(eligOnly&&!isUpgEligible(d))return false;
     if(hideRes&&(st==='revived'||st==='wontfix'))return false;
     if(fb&&d.bucket!==fb)return false;if(fc&&d.class!==fc)return false;if(fr&&d.room!==fr)return false;if(fs&&d.sensor_status!==fs)return false;
     if(q){const blob=(d.serial+" "+(d.device_name||"")+" "+d.room+" "+(d.sensor_serial||"")+" "+d.class+" "+(d.failure||"")+" "+(d.action||"")).toLowerCase();if(!blob.includes(q))return false;}
@@ -281,8 +283,9 @@ function render(){
     const resolved=(st==='revived'||st==='wontfix');
     const rowcls=up?'mkup':(resolved?'resolved':(st?'mk':''));
     const nm=d.device_name&&String(d.device_name)!==String(d.serial)?` <span class="sdim">(${String(d.device_name).replace(/</g,'&lt;')})</span>`:'';
+    const subdev=(d.sensor_serial&&d.sensor_serial!==d.serial)?`<br><span class="sdim" style="font-size:11px">&#8627; ${d.sensor_type==='ter12'?'TEROS-12':'Atmos-14'} ${d.sensor_serial}</span>`:'';
     return `<tr class="${rowcls}">
-    <td><span class="mono ser"><b>${d.serial}</b></span>${nm}</td>
+    <td><span class="mono ser"><b>${d.serial}</b></span>${nm}${subdev}</td>
     <td class="sdim">${CL[d.class]}</td><td>${chip(d.bucket)}</td><td>${d.room||''}</td>
     <td>${sensorCell(d)}</td>
     <td class="tick">${d.battery_p05??''}</td><td class="tick">${d.signal_p05??''}</td>
@@ -293,16 +296,19 @@ function render(){
 }
 function exportJSON(){
   const sgl=Object.keys(UPG).filter(s=>modelOf(s)==='single');
-  const dl=Object.keys(UPG).filter(s=>{const m=modelOf(s);return m&&m!=='single';});
+  const dl=Object.keys(UPG).filter(s=>modelOf(s)==='dual');
+  const c1=Object.keys(UPG).filter(s=>modelOf(s)==='c1');
+  const quote=sgl.length*SINGLE_NET+dl.length*DUAL_NET+c1.length*C1_NET;
+  const msrp=sgl.length*SINGLE_MSRP+dl.length*DUAL_MSRP+c1.length*C1_MSRP;
   const payload={facility_id:"2704",facility_name:"Zugatti: 14th Street",exported_at:new Date().toISOString(),
-    teros_one_pricing:{dual_trade_in:DUAL_NET,single_trade_in:SINGLE_NET,dual_msrp:DUAL_MSRP,single_msrp:SINGLE_MSRP},
+    pricing:{teros_one_dual:DUAL_NET,teros_one_single:SINGLE_NET,climate_one:C1_NET,
+      msrp:{teros_one_dual:DUAL_MSRP,teros_one_single:SINGLE_MSRP,climate_one:C1_MSRP}},
     status_overrides:OV, upgrade_models:UPG,
     summary:{status_marked:Object.keys(OV).filter(s=>statusOf(s)).length,
-      ticked_for_upgrade:sgl.length+dl.length, upgrade_single:sgl.length, upgrade_dual:dl.length,
-      upgrade_single_serials:sgl, upgrade_dual_serials:dl,
-      quote_trade_in_total:sgl.length*SINGLE_NET+dl.length*DUAL_NET,
-      quote_msrp_total:sgl.length*SINGLE_MSRP+dl.length*DUAL_MSRP,
-      save_vs_msrp:sgl.length*SINGLE_SAVE+dl.length*DUAL_SAVE}};
+      ticked_for_upgrade:sgl.length+dl.length+c1.length,
+      teros_one_single:sgl.length, teros_one_dual:dl.length, climate_one:c1.length,
+      teros_one_single_serials:sgl, teros_one_dual_serials:dl, climate_one_serials:c1,
+      quote_trade_in_total:quote, quote_msrp_total:msrp, save_vs_msrp:msrp-quote}};
   const blob=new Blob([JSON.stringify(payload,null,1)],{type:"application/json"});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download="aroya_2704_status_"+new Date().toISOString().slice(0,10)+".json";a.click();
