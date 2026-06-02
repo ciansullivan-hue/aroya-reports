@@ -61,24 +61,39 @@
 <div class="callout">
   <b>Headline.</b> Across the six NorCal sites there are <b>1187</b> physical units (radios) carrying <b>1917</b>
   total devices once the TEROS-12 substrate probes and Atmos-14 climate sensors are folded into the nodes and climate
-  stations they plug into. <b>263</b> units are online and would take WP5 in their building’s window; <b>913</b>
-  are dark and cannot be flashed until physically recovered or retired. The Feb-2026 plan logged <b>330</b>
-  offline across the five update buildings and the March export showed more; the live pull confirms the fleet has kept
-  eroding — <b>105</b> units that were online in March are now dark vs <b>5</b> recovered.
+  stations they plug into. The firmware update is delivered <b>remotely over the air (OTAP)</b> — and a device only
+  receives it if it is <b>online and meeting the prerequisites</b> at the moment of the scheduled push. Right now
+  <b>263</b> units meet that bar; <b>913</b> are offline and would be <b>skipped — and any device left offline
+  during the push stops working afterward and isn’t warranty-eligible</b>, so every one has to be brought online to the
+  criteria or deliberately retired first. The live pull shows the offline population has kept growing since planning began
+  — <b>105</b> units that were online in March are now dark vs only <b>5</b> recovered.
 </div>
 
-<h2>The update method — cable-based, one building at a time (Gateway Isolation)</h2>
-<div class="card">WP4 is a legacy protocol that blocks onboarding of new AROYA hardware, so the campus must move to WP5.
-The update is <b>physical / cable-based</b>, run <b>one building at a time</b>: every other building’s gateway is powered
-down so it can’t catch the update, the target building’s online devices are flashed, verified, then the next building’s
-gateway is powered on. <b>Only online devices receive WP5</b>; anything dark stays on WP4 and must be triaged — the flash
-itself is 15–30 min per building once inventory is clean.</div>
+<h2>How the update works — remote OTAP (Over-The-Air Programming)</h2>
+<div class="card">
+  The firmware update is pushed <b>over the air by AROYA</b> — it is <b>not</b> a physical, plug-into-each-device job and
+  does <b>not</b> require an onsite visit. AROYA schedules and runs it remotely through the gateway; the system sees a brief
+  downtime during the window. A device only receives the update if, <b>at the moment of the push</b>, it is:
+  <ul style="margin:8px 0 6px 18px;padding:0">
+    <li><b>Online</b> and communicating with the gateway</li>
+    <li><b>Battery ≥ 30%</b></li>
+    <li><b>Signal strength ≥ 50%</b></li>
+  </ul>
+  <b>Run-of-show:</b> (1) AROYA ships a new gateway + troubleshooting materials to bring as many devices online as possible;
+  the gateway goes on the LAN powered by its gigabit PoE injector. (2) Bring every device you want updated online and to the
+  battery/signal criteria. (3) Short call to decide which devices to <b>retire</b> before the push. (4) Once the new gateway
+  shows online in the AROYA dashboard, unplug the old gateway so it is offline during the update. (5) AROYA schedules and runs
+  the push — no onsite presence needed.
+  <div style="margin-top:8px;color:#7a3c0c"><b>⚠ Critical:</b> any device left <b>offline during the push no longer works afterward</b>,
+  and offline devices are <b>not eligible for warranty replacement</b>. That is the whole point of the offline audit below —
+  bring devices up to the criteria, or deliberately retire/trade them in first.</div>
+</div>
 
 <h2>Offline-device decision framework</h2>
 <div class="card"><div class="dgrid">
-  <div class="pcard"><div class="pn">1 · Retire</div><div class="pl">Decommissioned area / permanently broken / not cost-effective (best for Bryant). Remove from AROYA — no cost.</div></div>
-  <div class="pcard"><div class="pn">2 · Troubleshoot</div><div class="pl">Active area <b>and</b> offline &lt; 12 months. Replace battery / check signal, bring online before the flash.</div></div>
-  <div class="pcard"><div class="pn">3 · Trade-in</div><div class="pl">Needed but broken/old or offline &gt; 12 months. Add to the trade-in quote (<b>$150 off</b>), then retire.</div></div>
+  <div class="pcard"><div class="pn">1 · Bring online</div><div class="pl">Needed in production and recoverable. Battery swap / signal fix to get it <b>online, ≥30% battery, ≥50% signal</b> before the push so it receives the update.</div></div>
+  <div class="pcard"><div class="pn">2 · Retire</div><div class="pl">Decommissioned area / permanently broken / not worth recovering (most of Bryant). Remove from AROYA before the push so it is intentionally excluded — no cost.</div></div>
+  <div class="pcard"><div class="pn">3 · Trade-in</div><div class="pl">Needed but broken/old or offline &gt; 12 months. Add to the trade-in quote (<b>$150 off</b>), then retire the old unit.</div></div>
 </div></div>
 
 <h2>TEROS One &amp; Climate One upgrade planner</h2>
@@ -103,14 +118,13 @@ itself is 15–30 min per building once inventory is clean.</div>
   </div>
 </div>
 
-<h2>Recommended building sequence</h2>
+<h2>Recommended rollout order (by readiness)</h2>
 <div class="card"><ol class="seqlist"><li><b>NorCal QPC</b></li><li><b>NorCal SRBD</b></li><li><b>NorCal 5A</b></li><li><b>NorCal 4B</b></li><li><b>NorCal Bryant</b></li></ol>
-<div class="sdim" style="font-size:12.5px;margin-top:6px">QPC first to test the process, then SRBD, 5A, 4B (most complex), Bryant last (retire). GB2 is a 7-sensor data-only site.</div></div>
-
-<h2>Two-day onsite schedule (Feb campus plan)</h2>
-<div class="card"><table class="sched"><thead><tr><th>Day</th><th>Time</th><th>Building</th><th>Task</th><th>Est.</th></tr></thead>
-<tbody><tr><td>Day 1</td><td class='tick'>9:00–12:00</td><td class='rm'>QPC</td><td>Inventory audit, offline decisions, firmware update</td><td class='ct'>2.5 h</td></tr><tr><td>Day 1</td><td class='tick'>12:00–15:30</td><td class='rm'>SRBD</td><td>Inventory audit, offline decisions, firmware update</td><td class='ct'>3.5 h</td></tr><tr><td>Day 1</td><td class='tick'>16:00–17:00</td><td class='rm'>5A</td><td>Partial inventory work</td><td class='ct'>1.0 h</td></tr><tr><td>Day 2</td><td class='tick'>9:00–10:30</td><td class='rm'>5A</td><td>Complete inventory + firmware update</td><td class='ct'>1.5 h</td></tr><tr><td>Day 2</td><td class='tick'>10:30–11:00</td><td class='rm'>Bryant</td><td>Retirement decision + execution</td><td class='ct'>0.5 h</td></tr><tr><td>Day 2</td><td class='tick'>11:00–17:00</td><td class='rm'>4B</td><td>Complete inventory + update (most complex)</td><td class='ct'>6.0 h</td></tr></tbody></table>
-<div class="sdim" style="font-size:12px;margin-top:6px">Pre-update: recover Building 4B’s offline gateways first, verify active gateways online, prep the trade-in list, confirm Bryant decommissioned.</div></div>
+<div class="sdim" style="font-size:12.5px;margin-top:6px">Each building has its own gateway/network, so AROYA can schedule the OTAP push building-by-building as each one’s online
+fleet meets the criteria. Suggested order: QPC and SRBD first (best recovery potential), then 5A and 4B (largest offline
+counts to work through), and <b>Bryant retired wholesale</b> (all units dark — decommissioned). GB2 is a 7-sensor data-only
+site. There is no onsite visit — this order is just the sequence in which to get each building’s devices online and then
+schedule its remote push.</div></div>
 
 <h2>Live vs. March — per building</h2>
 <div class="card"><table class="sched"><thead><tr>
