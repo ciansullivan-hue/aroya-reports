@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bloomfield Building 1 — Pre-WP5 Firmware Update Readiness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1117;--card:#161b22;--ink:#e6e6df;--sub:#9aa0a6;--line:#30363d;--row:#0f141a;--head:#1c222a;
+--olive:#b7af9b;--lime:#cbeeb0;--app-blue:#7aa2ff;--attn:#ff6b5b;
+--green:#5acc4d;--amber:#e6b342;--red:#ff6b5b;--grey:#787f88;}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 22px 80px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);font-weight:600}
+h1{font-weight:600;font-size:26px;margin:6px 0 4px}
+h2{font-weight:600;font-size:17px;margin:32px 0 12px;border-left:4px solid var(--olive);padding-left:10px}
+h3{font-weight:600;font-size:14px;margin:18px 0 6px;color:var(--sub);text-transform:uppercase;letter-spacing:.06em}
+.meta{color:var(--sub);font-size:12.5px}
+.banner{background:#3a2e0a;border:1px solid #6b5417;color:#f0d885;border-radius:10px;padding:12px 14px;margin:18px 0 6px;font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:22px 0 8px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 12px;text-align:center;position:relative}
+.kpi-n{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi-l{font-size:12px;color:var(--sub);margin-top:2px}
+.kpi.green{border-color:var(--green)} .kpi.green .kpi-n{color:var(--green)}
+.kpi.lime{border-color:var(--lime)} .kpi.amber{border-color:var(--amber)} .kpi.amber .kpi-n{color:var(--amber)}
+.kpi.red{border-color:var(--red)} .kpi.red .kpi-n{color:var(--red)}
+.kpi.grey .kpi-n{color:var(--grey)}
+.kpi.blue{border-color:var(--app-blue)} .kpi.blue .kpi-n{color:var(--app-blue)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.callout{border-left:4px solid var(--app-blue);background:var(--row);padding:12px 14px;border-radius:8px;margin:14px 0;font-size:13px}
+.callout.warn{border-color:#e0792a;background:#2a1f0d}
+.callout.alert{border-color:var(--attn);background:#2b1411}
+.chip{display:inline-block;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;white-space:nowrap}
+.chip.blue{background:#1c2547;color:#a8c0ff}
+.chip.grey{background:#22272d;color:#9aa0a6}
+.mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:11.5px}
+.tally{position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+.tally .big{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.tally .t{font-size:12px;color:var(--sub)} .tally .t b{color:var(--ink);font-size:14px;font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse}
+#dt{font-size:12.5px} #dt th{background:var(--head);text-align:left;padding:9px 8px;position:sticky;top:54px;cursor:pointer;border-bottom:1px solid var(--line);white-space:nowrap}
+#dt td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top} #dt tr:nth-child(even) td{background:var(--row)}
+#dt .upg{width:18px;height:18px;cursor:pointer;accent-color:var(--app-blue);vertical-align:middle}
+.ssel{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:11.5px;max-width:170px}
+.savebanner{position:fixed;bottom:14px;right:14px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:12px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.savebanner.ok{color:var(--green)} .savebanner.err{color:var(--red)}
+.plan{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px}
+.pcard{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.pcard .pn{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.pcard .pl{font-size:12px;color:var(--sub)}
+.seqlist{margin:0;padding-left:18px} .seqlist li{margin:4px 0}
+.foot{color:var(--sub);font-size:11.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:14px}
+.roomtab td{padding:8px;border-bottom:1px solid var(--line)}
+.roomtab .rm{font-weight:600} .roomtab .ct{text-align:right;font-variant-numeric:tabular-nums;color:var(--sub)}
+.btn{background:var(--olive);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
+.controls input[type=text]{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;flex:1;min-width:200px}
+@media (max-width:880px){.kpis{grid-template-columns:repeat(3,1fr)} .plan{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="eyebrow">AROYA · Pre-WP5 Firmware Update Readiness</div>
+<h1>Bloomfield Building 1 <span style="color:var(--sub);font-weight:400">· Facility 2872</span></h1>
+<div class="meta">Generated 2026-06-04 · 1 WP4 gateway (H2100002390) · Pre-WP5 push assessment</div>
+
+<div class="banner">
+  <b>How this audit works:</b> the upcoming firmware update is <b>WP4 &rarr; WP5</b>, pushed over the air by gateway <span class="mono">H2100002390</span> to every device online at the scheduled time. Go/no-go per device is <b>online + battery &ge; 30% + signal &ge; 50%</b> at the moment of the push. Devices that don't meet the threshold simply <b>won't receive WP5 and stay on WP4 &mdash; they are not harmed</b> and you can bring them along later by reverting the gateway to WP4 temporarily and re-running the push. <b>Remote is the default; no site visit is assumed.</b>
+</div>
+
+<div class="callout alert">
+  <b>&#9888; Telemetry pull blocked during this run.</b> The <span class="mono">portal_api/devices/?facility_id=2872</span> pull &mdash; the source of per-device firmware, online/battery/RSSI/last-comm, and the retired-pool upgrade list &mdash; could not complete because the local AROYA portal browser bridge went offline mid-swarm at ~01:44 UTC and did not recover within this agent's wall-clock budget. The verified facts in this report come from the AROYA public_api room/zone record (which uses an independent path); everything that depends on device-level telemetry is marked <b>NEEDS TELEMETRY REFRESH</b>. <b>Re-run the portal_api pull within 24 h of the scheduled push</b> to bucket every active device into green / lime / amber / red and to size the retired TEROS-12 / Atmos-14 upgrade pool against the fixed AROYA trade-in pricing ($419 each &mdash; $569 MSRP minus $150 trade-in credit).
+</div>
+
+<div class="kpis">
+  <div class="kpi green"><div class="kpi-n">&mdash;</div><div class="kpi-l">GREEN &mdash; Will sail through (online + batt &ge; 50% + sig &ge; 70%)</div></div>
+  <div class="kpi lime"><div class="kpi-n">&mdash;</div><div class="kpi-l">YELLOW &mdash; Recoverable (above threshold but tight)</div></div>
+  <div class="kpi amber"><div class="kpi-n">&mdash;</div><div class="kpi-l">AMBER &mdash; Borderline (below threshold; wake/move before push)</div></div>
+  <div class="kpi red"><div class="kpi-n">&mdash;</div><div class="kpi-l">RED &mdash; Won't receive WP5 (offline / dead battery)</div></div>
+  <div class="kpi grey"><div class="kpi-n">&mdash;</div><div class="kpi-l">Retired / upgrade-pool (TEROS One eligible)</div></div>
+  <div class="kpi blue"><div class="kpi-n">1</div><div class="kpi-l">WP4 gateway (upgrade target)</div></div>
+</div>
+
+<h2>What we know from the public_api</h2>
+<div class="card">
+  <div class="plan">
+    <div class="pcard"><div class="pn">11</div><div class="pl">Rooms on file (9 flower + 1 veg + 1 dry)</div></div>
+    <div class="pcard"><div class="pn">69</div><div class="pl">Zones / cultivation sections</div></div>
+    <div class="pcard"><div class="pn">1</div><div class="pl">WP4 gateway (<span class="mono">H2100002390</span>)</div></div>
+    <div class="pcard"><div class="pn">SOILLESS</div><div class="pl">Substrate type across all rooms</div></div>
+  </div>
+  <p class="meta" style="margin-top:12px">Bloomfield Building 1 is laid out as a uniform 9-room flower block (Room 1&ndash;9, each with 5 zones), a 24-zone Veg 1 (3-tier rack layout: tables 1&ndash;14, bottom 15&ndash;19, top 20&ndash;24), and a 3-zone Dry Room 1 (back / center / front). Total 69 zones &mdash; consistent with a mid-sized commercial cultivation footprint that would typically host on the order of 100&ndash;180 AROYA devices (1 substrate node + 1 TEROS-12 per zone in flower, plus repeaters, climate sensors, and the gateway + sink). The exact device count and per-device telemetry will be confirmed by the portal_api refresh below.</p>
+</div>
+
+<h2>Room &amp; zone layout</h2>
+<div class="card">
+  <table class="roomtab">
+    <thead><tr><th class="rm">Room</th><th>Type</th><th>Substrate</th><th class="ct">Zones</th></tr></thead>
+    <tbody>
+      <tr><td class="rm">Room 1</td><td>Flower (OTHER)</td><td>Soilless</td><td class="ct">5</td></tr>
+      <tr><td class="rm">Room 2</td><td>Flower (OTHER)</td><td>Soilless</td><td class="ct">5</td></tr>
+      <tr><td class="rm">Room 3</td><td>Flower (OTHER)</td><td>Soilless</td><td class="ct">5</td></tr>
+      <tr><td class="rm">Room 4</td><td>Flower (OTHER)</td><td>Soilless</td><td class="ct">5</td></tr>
+      <tr><td class="rm">Room 5</td><td>Flower (OTHER)</td><td>Soilless</td><td class="ct">5</td></tr>
+      <tr><td class="rm">Room 6</td><td>Flower (OTHER)</td><td>Soilless</td><td class="ct">5</td></tr>
+      <tr><td class="rm">Room 7</td><td>Flower (OTHER)</td><td>Soilless</td><td class="ct">5</td></tr>
+      <tr><td class="rm">Room 8</td><td>Flower (OTHER)</td><td>Soilless</td><td class="ct">5</td></tr>
+      <tr><td class="rm">Room 9</td><td>Flower (OTHER)</td><td>Soilless</td><td class="ct">5</td></tr>
+      <tr><td class="rm">Veg 1</td><td>Veg</td><td>Soilless</td><td class="ct">24</td></tr>
+      <tr><td class="rm">Dry Room 1</td><td>Dry</td><td>Soilless</td><td class="ct">3</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Sibling facility &mdash; Bloomfield Building 2 (Facility 2806)</h2>
+<div class="card">
+  <p>Bloomfield operates a sister facility &mdash; <b>Bloomfield Building 2 (Facility 2806, gateway <span class="mono">H2100002306</span>)</b> &mdash; audited in parallel as part of this same WP4 firmware tranche. Both buildings show the same Addium-internal correspondence pattern (no external POC surfaced from the email pull). <b>Recommendation:</b> coordinate the WP4 &rarr; WP5 push for Building 1 and Building 2 in a single window so the operator only has to walk one go/no-go sequence and the rollback plan is shared between both gateways. The shipped Building 2 report lives at <span class="mono">https://ciansullivan-hue.github.io/aroya-reports/Bloomfield_Building_2_Firmware_Readiness.html</span> (publish time and exact URL depend on the Building 2 agent's completion).</p>
+</div>
+
+<h2>Recommended firmware-push sequence</h2>
+<div class="card">
+  <ol class="seqlist">
+    <li><b>T-7 days &middot; Notify operations.</b> Confirm the push date with the Bloomfield grow team for <b>both buildings together</b>. Remind them that any node deliberately powered down or out-of-mesh at push time stays on WP4 and can be migrated later &mdash; there's no irreversible window. Offline devices are not harmed.</li>
+    <li><b>T-24 h &middot; Telemetry refresh (BLOCKING for this audit).</b> Pull live battery / signal / last-comm via portal_api <span class="mono">/devices/?facility_id=2872&amp;retired=false</span> AND <span class="mono">&amp;retired=true</span> for every device, bucket into green / lime / amber / red, and surface any node below the 30%-battery or 50%-signal go/no-go threshold so the on-site team can wake / re-seat / move the repeater before the push.</li>
+    <li><b>T-2 h &middot; Mesh prep.</b> Confirm the repeater (H11-prefix) ring is fully online and that the sink + gateway <span class="mono">H2100002390</span> are reachable. Repeaters carry the WP5 image to the nodes and update first.</li>
+    <li><b>T-0 &middot; WP4 &rarr; WP5 push from gateway H2100002390.</b> Each online device picks up WP5 within the push window. Anything offline simply stays on WP4 &mdash; no damage, no warranty issue, no time-bounded recovery window.</li>
+    <li><b>T+24 h &middot; Verify.</b> Pull device list a second time. Any device still on WP4 that should have updated &rarr; check it's online + batt + sig; if it's healthy and stuck, re-issue the push to it. Anything still offline &rarr; flag for retire-trade-in or bring it online before re-running.</li>
+    <li><b>If rollback is needed:</b> revert gateway <span class="mono">H2100002390</span> to WP4 from the AROYA portal and the entire mesh rolls back. There is no time limit on the rollback.</li>
+  </ol>
+</div>
+
+<h2>Sensor upgrade planner &mdash; TEROS One &amp; Climate One</h2>
+<div class="card">
+  <p>Pricing is fixed at the standard AROYA upgrade tariff:</p>
+  <div class="plan">
+    <div class="pcard"><div class="pn">$419</div><div class="pl">TEROS One Single &mdash; $569 MSRP minus $150 trade-in credit per legacy TEROS-12</div></div>
+    <div class="pcard"><div class="pn">$419</div><div class="pl">Climate One &mdash; $569 MSRP minus $150 trade-in credit per legacy Atmos-14</div></div>
+    <div class="pcard"><div class="pn">&mdash;</div><div class="pl">Retired TEROS-12 (eligible for TEROS One trade-in)</div></div>
+    <div class="pcard"><div class="pn">&mdash;</div><div class="pl">Retired Atmos-14 (eligible for Climate One trade-in)</div></div>
+  </div>
+  <p class="meta" style="margin-top:10px">Retired-pool sizing requires the <span class="mono">portal_api/devices/?facility_id=2872&amp;retired=true</span> pull. Once that lands, every retired atm14 / ter12 whose host puck node is also flagged retired becomes an upgrade-eligible row in the device table below. Tick the <b>Upgrade?</b> column to build the order list. Quote totals and unit selection (Single vs Dual TEROS One) persist live across every device that opens this report URL.</p>
+</div>
+
+<h2>Per-device table &mdash; live cross-device sync</h2>
+<div class="controls">
+  <input type="text" id="q" placeholder="Filter by serial, model, bucket, room, zone, status&hellip;">
+  <button class="btn alt" id="exportBtn">Export state (JSON)</button>
+  <button class="btn alt" id="importBtn">Import state</button>
+  <input type="file" id="importFile" style="display:none" accept="application/json">
+</div>
+<div class="tally" id="tally">
+  <div><span class="big" id="t-shown">0</span> <span class="t">shown</span></div>
+  <div><span class="t">Upgrade ticked: <b id="t-upg">0</b></span></div>
+  <div><span class="t">TEROS One: <b id="t-ter">0</b></span></div>
+  <div><span class="t">Climate One: <b id="t-cl">0</b></span></div>
+  <div><span class="t">Quote running total: <b id="t-total">$0</b></span></div>
+  <div style="margin-left:auto"><span class="t">Live sync: <b id="sync-status">&hellip;</b></span></div>
+</div>
+<div class="card" style="padding:0;overflow:hidden">
+  <table id="dt">
+    <thead><tr>
+      <th data-k="serial">Serial</th>
+      <th data-k="model">Model</th>
+      <th data-k="room">Room</th>
+      <th data-k="zone">Zone</th>
+      <th data-k="bucket">Bucket</th>
+      <th>Why / what to do</th>
+      <th>Upgrade?</th>
+      <th>Dual / Single quote</th>
+      <th>Status</th>
+    </tr></thead>
+    <tbody id="dt-body"></tbody>
+  </table>
+</div>
+
+<div class="callout warn">
+  <b>Per-device rows pending telemetry refresh.</b> The table above is wired up for cross-device sync, filter, sort, and the Upgrade?/Dual/Single quote total &mdash; but it currently shows only the WP4 gateway because the portal_api active+retired device pulls were blocked by the browser-bridge outage. After the operator re-runs <span class="mono">opencli aroya raw --path '/portal_api/devices/?facility_id=2872&amp;retired=false&amp;pagination=0'</span> and <span class="mono">--retired=true</span> the U[] array at the bottom of this file can be re-populated and the same URL will continue to hold operator state for every device.
+</div>
+
+<div class="foot">
+  <b>Data quality:</b> verified from AROYA public_api <span class="mono">/rooms/?facility=2872</span> (rooms + zones) on 2026-06-04 and from the canonical WP4 Gateways sheet (gateway serial). Live battery / signal / last-comm telemetry and the retired-pool count were not pulled because the local AROYA portal browser bridge disconnected mid-swarm. Re-run the portal_api pull within 24 h of the push.<br>
+  <b>Firmware language:</b> WP4 &rarr; WP5 OTAP. Offline devices stay on WP4, are not harmed, and can be brought along later via a temporary gateway revert. Remote push; no on-site visit assumed.<br>
+  <b>State sync:</b> every check / dropdown you set in the table above is saved to <span class="mono">aroya-report-sync.ciansul.workers.dev/2872</span> within 1 s and replays on any other device that opens this URL. Use the Export button to download a JSON snapshot for the change record.
+</div>
+</div>
+<div class="savebanner" id="savebanner" style="display:none"></div>
+
+<script>
+const SYNC_URL = "https://aroya-report-sync.ciansul.workers.dev/2872";
+const CACHE = "aroya_2872_state_v2";
+const U = [
+  {
+    "serial": "H2100002390",
+    "model": "gateway",
+    "class_label": "Gateway (mesh → cloud)",
+    "room": "(facility)",
+    "zone": "(facility)",
+    "bucket": "GATEWAY_WP4",
+    "bucket_label": "WP4 gateway (upgrade target)",
+    "note": "WP4 gateway H2100002390 — this is the device that pushes WP5 firmware to every online node at the scheduled time. Source: canonical WP4 Gateways sheet.",
+    "action": "Schedule the WP4 → WP5 push. Confirm a clean rollback plan (revert the gateway to WP4 anytime if recovery is needed).",
+    "is_gateway": true,
+    "upgrade_eligible": false
+  }
+];
+
+const PRICE_SINGLE = 419;
+const PRICE_DUAL = 838;
+const BUCKET_CHIP = {
+  "GREEN_READY":  {cls:"chip", style:"background:#1f3a1c;color:#9be38e", label:"GREEN"},
+  "YELLOW_RECOV": {cls:"chip", style:"background:#26331a;color:#c2e58a", label:"YELLOW"},
+  "AMBER_BORDER": {cls:"chip", style:"background:#3a2f13;color:#f0d885", label:"AMBER"},
+  "RED_OFFLINE":  {cls:"chip", style:"background:#3a1715;color:#ff9b8e", label:"RED"},
+  "GATEWAY_WP4":  {cls:"chip blue",  style:"", label:"GATEWAY"},
+  "RETIRED_POOL": {cls:"chip grey",  style:"", label:"RETIRED"},
+  "NEED_TELEMETRY": {cls:"chip grey", style:"", label:"PENDING"}
+};
+
+let STATE = {};
+function loadLocal(){
+  try{ const j = localStorage.getItem(CACHE); if(j) STATE = JSON.parse(j); }catch(e){}
+}
+function saveLocal(){
+  try{ localStorage.setItem(CACHE, JSON.stringify(STATE)); }catch(e){}
+}
+function setStatus(txt, cls){
+  const s = document.getElementById('sync-status'); if(!s) return;
+  s.textContent = txt; s.className = cls || '';
+}
+
+async function pullRemote(){
+  try{
+    const r = await fetch(SYNC_URL, {method:'GET'});
+    if(!r.ok){ setStatus('local only','err'); return; }
+    const remote = await r.json();
+    if(remote && typeof remote === 'object'){
+      // last-write-wins merge per device key
+      for(const k of Object.keys(remote)){
+        const rv = remote[k];
+        const lv = STATE[k];
+        if(!lv || (rv.ts||0) > (lv.ts||0)) STATE[k] = rv;
+      }
+      saveLocal();
+      setStatus('Synced ✓','ok');
+    }
+  }catch(e){ setStatus('local only','err'); }
+}
+let pushTimer = null;
+function pushRemote(){
+  clearTimeout(pushTimer);
+  pushTimer = setTimeout(async ()=>{
+    try{
+      await fetch(SYNC_URL, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(STATE)});
+      setStatus('Synced ✓','ok');
+    }catch(e){ setStatus('save failed','err'); }
+  }, 600);
+}
+
+function render(){
+  const q = (document.getElementById('q').value||'').toLowerCase().trim();
+  const body = document.getElementById('dt-body');
+  body.innerHTML = '';
+  let shown=0, upg=0, ter=0, cl=0, tot=0;
+  for(const d of U){
+    const txt = [d.serial,d.model,d.room,d.zone,d.bucket_label].join(' ').toLowerCase();
+    if(q && !txt.includes(q)) continue;
+    shown++;
+    const st = STATE[d.serial] || {};
+    if(st.upg) upg++;
+    if(st.upg && d.upgrade_eligible){
+      if(d.model === 'ter12'){
+        ter += (st.qty==='dual'?2:1);
+        tot += (st.qty==='dual'?PRICE_DUAL:PRICE_SINGLE);
+      } else if(d.model === 'atm14'){
+        cl++;
+        tot += PRICE_SINGLE;
+      }
+    }
+    const bc = BUCKET_CHIP[d.bucket] || BUCKET_CHIP.NEED_TELEMETRY;
+    const upgCell = d.upgrade_eligible
+      ? '<input type="checkbox" class="upg" data-s="'+d.serial+'" '+(st.upg?'checked':'')+'>'
+      : '<span class="meta">&mdash;</span>';
+    const qtyCell = (d.upgrade_eligible && d.model==='ter12')
+      ? '<select class="ssel" data-q="'+d.serial+'"><option value="single"'+(st.qty==='single'||!st.qty?' selected':'')+'>Single $'+PRICE_SINGLE+'</option><option value="dual"'+(st.qty==='dual'?' selected':'')+'>Dual $'+PRICE_DUAL+'</option></select>'
+      : (d.upgrade_eligible && d.model==='atm14' ? '<span class="meta">$'+PRICE_SINGLE+'</span>' : '<span class="meta">&mdash;</span>');
+    const statusSel = '<select class="ssel" data-st="'+d.serial+'">'
+      + '<option value=""'+(!st.status?' selected':'')+'>(set)</option>'
+      + '<option value="confirmed"'+(st.status==='confirmed'?' selected':'')+'>Confirmed</option>'
+      + '<option value="recovered"'+(st.status==='recovered'?' selected':'')+'>Recovered</option>'
+      + '<option value="excluded"'+(st.status==='excluded'?' selected':'')+'>Excluded</option>'
+      + '<option value="needs-visit"'+(st.status==='needs-visit'?' selected':'')+'>Needs visit</option>'
+      + '</select>';
+    body.insertAdjacentHTML('beforeend',
+      '<tr><td><span class="mono">'+d.serial+'</span></td>'
+      +'<td>'+(d.class_label||d.model)+'</td>'
+      +'<td>'+d.room+'</td><td>'+d.zone+'</td>'
+      +'<td><span class="'+bc.cls+'" style="'+bc.style+'">'+bc.label+'</span></td>'
+      +'<td>'+d.note+'<br><b style="color:var(--app-blue)">'+d.action+'</b></td>'
+      +'<td style="text-align:center">'+upgCell+'</td>'
+      +'<td>'+qtyCell+'</td>'
+      +'<td>'+statusSel+'</td></tr>');
+  }
+  document.getElementById('t-shown').textContent = shown;
+  document.getElementById('t-upg').textContent = upg;
+  document.getElementById('t-ter').textContent = ter;
+  document.getElementById('t-cl').textContent = cl;
+  document.getElementById('t-total').textContent = '$'+tot.toLocaleString();
+}
+
+function wireEvents(){
+  document.getElementById('q').addEventListener('input', render);
+  document.getElementById('dt-body').addEventListener('change', (e)=>{
+    const t = e.target;
+    if(t.classList.contains('upg')){
+      const s = t.dataset.s;
+      STATE[s] = Object.assign({}, STATE[s]||{}, {upg: t.checked, ts: Date.now()});
+    } else if(t.dataset.q){
+      const s = t.dataset.q;
+      STATE[s] = Object.assign({}, STATE[s]||{}, {qty: t.value, ts: Date.now()});
+    } else if(t.dataset.st){
+      const s = t.dataset.st;
+      STATE[s] = Object.assign({}, STATE[s]||{}, {status: t.value, ts: Date.now()});
+    }
+    saveLocal();
+    pushRemote();
+    render();
+  });
+  document.getElementById('exportBtn').addEventListener('click', ()=>{
+    const blob = new Blob([JSON.stringify(STATE,null,2)],{type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'bloomfield_b1_firmware_state.json'; a.click();
+  });
+  document.getElementById('importBtn').addEventListener('click', ()=> document.getElementById('importFile').click());
+  document.getElementById('importFile').addEventListener('change', (e)=>{
+    const f = e.target.files[0]; if(!f) return;
+    const r = new FileReader();
+    r.onload = ()=>{ try{ const incoming = JSON.parse(r.result); for(const k of Object.keys(incoming)){ const lv=STATE[k]; const rv=incoming[k]; if(!lv || (rv.ts||0)>(lv.ts||0)) STATE[k]=rv; } saveLocal(); pushRemote(); render(); }catch(err){} };
+    r.readAsText(f);
+  });
+  window.addEventListener('focus', pullRemote);
+  setInterval(pullRemote, 20000);
+}
+
+loadLocal();
+render();
+wireEvents();
+pullRemote();
+</script>
+</body>
+</html>
