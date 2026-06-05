@@ -1,0 +1,294 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bloomfield Building 2 — Pre-WP5 Firmware Update Readiness</title>
+<style>
+:root{--bg:#0f1110;--card:#191c1b;--ink:#e8e6df;--sub:#9a978c;--line:#2a2d2b;--row:#161817;--head:#1f2220;--olive:#cbeeb0;--lime:#cbeeb0;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 22px 80px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);font-weight:600}
+h1{font-weight:600;font-size:26px;margin:6px 0 4px}
+h2{font-weight:600;font-size:17px;margin:32px 0 12px;border-left:4px solid var(--olive);padding-left:10px}
+.meta{color:var(--sub);font-size:12.5px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:22px 0 8px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 12px;text-align:center}
+.kpi-n{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi-l{font-size:12px;color:var(--sub);margin-top:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.callout{background:rgba(203,238,176,.18);border-left:4px solid var(--olive);padding:12px 14px;border-radius:8px;margin:14px 0}
+.callout.warn{background:rgba(255,180,80,.14);border-left-color:#d97706}
+table{width:100%;border-collapse:collapse}
+#dt{font-size:12.5px}#dt th{background:var(--head);text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer}
+#dt td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+#dt tr:nth-child(even) td{background:var(--row)}
+.chip{display:inline-block;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;white-space:nowrap}
+.ck-greenready{background:#cbeeb0;color:#1c4e1a}
+.ck-yellowrecoverable{background:#fde68a;color:#7a4a06}
+.ck-redoffline{background:#fecaca;color:#7a1414}
+.ck-gatewaywp4{background:#cfe2ff;color:#1c3666}
+.ck-retiredupgradepool{background:#e9d5ff;color:#4c1d95}
+.ck-legacyrma{background:#e2e2e2;color:#444}
+.mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:11.5px}
+.tally{position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+.tally .big{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.tally .t{font-size:12px;color:var(--sub)}.tally .t b{color:var(--ink);font-size:14px;font-variant-numeric:tabular-nums}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
+.controls input[type=text],.controls select{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px}
+.btn{background:var(--olive);color:#0f1110;border:none;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 0;font-size:12px;color:var(--sub)}.legend b{font-weight:600;color:var(--ink)}
+.foot{color:var(--sub);font-size:11.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:14px}
+.sync-pill{font-size:11px;color:var(--sub);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 10px;margin-left:8px}
+.roomtab td{padding:8px;border-bottom:1px solid var(--line);vertical-align:middle}.roomtab .rm{font-weight:600}.roomtab .ct{text-align:right;font-variant-numeric:tabular-nums;color:var(--sub)}
+.plan{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px}
+.pcard{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.pcard .pn{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}.pcard .pl{font-size:12px;color:var(--sub)}
+.pricefix{font-size:13px;color:var(--ink)}.pricefix .sdim{font-size:11.5px;color:var(--sub)}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}.plan{grid-template-columns:repeat(2,1fr)}}
+</style></head><body><div class="wrap">
+<div class="eyebrow">AROYA · Pre-WP5 Firmware Update Readiness</div>
+<h1>Bloomfield Building 2 · Facility 2806 <span class="sync-pill" id="syncPill">Connecting…</span></h1>
+<div class="meta">Generated 2026-06-05 01:57 UTC · Org: Gem Star · Gateway: <span class="mono">H2100002306</span> · Operator state syncs across every device that opens this link.</div>
+
+<div class="callout warn"><b>Partial pull — Data Quality:</b> Pulled active page 1 of 4 (25 of 89 active devices) before the opencli Browser Bridge dropped under parallel swarm load. Pages 2-4 of active and the full retired upgrade pool were NOT fetched in this run. Counts in the KPI strip reflect ONLY the 25-device sample plus the 1 known WP4 gateway. Real totals will be larger; the per-device table is complete for the rows shown but does not enumerate the remaining 64 active devices. Re-run once the SPA browser tab in app.aroya.io is refreshed to get the full inventory.</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-n">24</div><div class="kpi-l">GREEN-READY<br>online + batt &ge; 30% + signal OK</div></div>
+  <div class="kpi"><div class="kpi-n">0</div><div class="kpi-l">YELLOW-RECOVERABLE<br>bring up before push</div></div>
+  <div class="kpi"><div class="kpi-n">1</div><div class="kpi-l">RED-OFFLINE<br>won't receive WP5 — stays on WP4 (not harmed)</div></div>
+  <div class="kpi"><div class="kpi-n">1</div><div class="kpi-l">GATEWAY-WP4<br>pushes update; revert path for stragglers</div></div>
+  <div class="kpi"><div class="kpi-n">0</div><div class="kpi-l">RETIRED-UPGRADE-POOL<br>TEROS-12 / ATM-14 trade-in candidates</div></div>
+  <div class="kpi"><div class="kpi-n">0</div><div class="kpi-l">LEGACY-RMA<br>out-of-support hardware</div></div>
+</div>
+
+<h2>How the WP4 &rarr; WP5 update works at Bloomfield Building 2</h2>
+<div class="card">
+<p>The gateway updates to <b>WP5</b> and pushes it to <b>every device online at the scheduled time</b>. Go/no-go is: <b>online, battery &ge; 30%, signal &ge; 50%</b>. Devices that are offline at that moment simply <b>stay on WP4 (unharmed — not bricked)</b>; the constraint is WP4&hairsp;&harr;&hairsp;WP5 compatibility, not damage. Stragglers can be recovered later by reverting the gateway to WP4, bringing the device online, re-running the push, then returning the gateway to WP5. <b>Remote is the default — no site visit needed</b> unless the on-floor team needs hands-on to revive specific nodes.</p>
+<ol>
+  <li><b>Bring as many devices online as possible before the scheduled push.</b> Work the YELLOW and RED rows below — replace batteries, walk weak-signal nodes closer to a repeater or reseat the radio.</li>
+  <li><b>Confirm the gateway is online.</b> H2100002306 carries the push for the whole site — verify in the AROYA app first.</li>
+  <li><b>Decide what to retire instead of recovering.</b> For dead/legacy sensors you won't bring back, mark them for a TEROS One / Climate One upgrade rather than spending effort.</li>
+  <li><b>After the push, recover any stragglers.</b> Revert the gateway to WP4, bring the offline node up, re-run, return the gateway to WP5. No time limit. Keep the mixed WP4/WP5 window short — long-term mixed firmware can cause connectivity issues.</li>
+  <li><b>Existing WP4 gear keeps working as-is.</b> The reason to update: <b>new AROYA equipment requires WP5</b>.</li>
+</ol>
+</div>
+
+<h2>Sibling site coordination</h2>
+<div class="callout"><b>Bloomfield Building 1 &amp; 2 are a paired update.</b> Bloomfield Building 1 (facility 2872) is a sister site under the same Gem Star org and is being audited in parallel. Coordinate the WP5 push across both buildings with the same on-site POC; gateway serials differ (this site = H2100002306, Building 1 = H2100002390).</div>
+
+<h2>TEROS One &amp; Climate One upgrade planner</h2>
+<div class="card">
+<p>Tick the <b>Upgrade?</b> box on any sensor — including working ones. <b>TEROS-12 &rarr; TEROS One</b> (Dual or Single per sensor); <b>ATMOS-14 &rarr; Climate One</b>. The quote totals exactly from your picks; pricing fixed below.</p>
+<div class="pricefix">
+TEROS One <b>Dual</b> <b>$458</b> <span class="sdim">$608 MSRP &middot; save $150</span> &nbsp;&middot;&nbsp;
+TEROS One <b>Single</b> <b>$319</b> <span class="sdim">$419 MSRP &middot; save $100</span> &nbsp;&middot;&nbsp;
+Climate One <b>$419</b> <span class="sdim">$569 MSRP &middot; save $150</span>
+</div>
+<div class="plan" style="margin-top:14px">
+  <div class="pcard"><div class="pn" id="upgCount">0</div><div class="pl">Ticked for upgrade quote</div></div>
+  <div class="pcard"><div class="pn" id="upgTotal">$0</div><div class="pl">Total trade-in quote</div></div>
+  <div class="pcard"><div class="pn" id="terosLine">$0</div><div class="pl" id="terosLineL">TEROS One: 0 single + 0 dual</div></div>
+  <div class="pcard"><div class="pn" id="climateLine">$0</div><div class="pl" id="climateLineL">Climate One: 0 &times; $419</div></div>
+</div>
+</div>
+
+<h2>By room (observed sample)</h2>
+<div class="card">
+<table class="roomtab">
+<thead><tr><th style="text-align:left">Room</th><th style="text-align:right">Devices</th><th>Readiness mix</th></tr></thead>
+<tbody><tr><td class='rm'>(unassigned)</td><td class='ct'>3</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>1</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Dry Room</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Flower 10</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Flower 11</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Flower 12</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Flower 13</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Flower 14</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Flower 15</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Flower 16</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Flower 17</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Flower 18</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr><tr><td class='rm'>Veg 2</td><td class='ct'>2</td><td><span class='chip ck-greenready' title='GREEN-READY'>2</span> <span class='chip ck-yellowrecoverable' title='YELLOW-RECOVERABLE'>0</span> <span class='chip ck-redoffline' title='RED-OFFLINE'>0</span> <span class='chip ck-gatewaywp4' title='GATEWAY-WP4'>0</span> <span class='chip ck-retiredupgradepool' title='RETIRED-UPGRADE-POOL'>0</span></td></tr></tbody></table>
+<div class="legend"><span><span class="chip ck-greenready">n</span> <b>GREEN-READY</b></span><span><span class="chip ck-yellowrecoverable">n</span> <b>YELLOW</b></span><span><span class="chip ck-redoffline">n</span> <b>RED</b></span><span><span class="chip ck-gatewaywp4">n</span> <b>GATEWAY</b></span><span><span class="chip ck-retiredupgradepool">n</span> <b>RETIRED</b></span></div>
+</div>
+
+<h2>Every device — readiness, sensor, action &amp; your status</h2>
+<div class="tally" id="tally">
+  <div><div class="big" id="tallyTicked">0</div><div class="t">ticked for upgrade</div></div>
+  <div class="t">TEROS One <b id="tallyTerosUSD">$0</b></div>
+  <div class="t">Climate One <b id="tallyClimateUSD">$0</b></div>
+  <div class="t">Total quote <b id="tallyTotalUSD">$0</b></div>
+  <div class="t">Save <b id="tallySaveUSD">$0</b> vs MSRP</div>
+  <div class="t">Resolved <b id="tallyResolved">0</b></div>
+</div>
+<div class="controls">
+  <input type="text" id="q" placeholder="Filter by serial / room / class…">
+  <select id="fBucket"><option value="">All readiness</option><option>GREEN-READY</option><option>YELLOW-RECOVERABLE</option><option>RED-OFFLINE</option><option>GATEWAY-WP4</option><option>RETIRED-UPGRADE-POOL</option></select>
+  <label><input type="checkbox" id="onlyUpg"> Upgrade-eligible only</label>
+  <label><input type="checkbox" id="hideRes"> Hide resolved</label>
+  <button class="btn alt" id="expBtn">Export JSON</button>
+  <button class="btn alt" id="impBtn">Import</button>
+  <input type="file" id="impFile" accept="application/json" style="display:none">
+  <button class="btn" id="resetBtn">Reset</button>
+</div>
+<table id="dt">
+<thead><tr><th>Serial</th><th>Model</th><th>FW</th><th>Online</th><th>Batt</th><th>Signal</th><th>Last comm</th><th>Room</th><th>Readiness</th><th>Upgrade?</th><th>Dual / Single</th><th>Your status</th></tr></thead>
+<tbody id="dtBody"></tbody>
+</table>
+
+<h2>Recommendation panel</h2>
+<div class="card">
+<ul>
+<li><b>Gateway:</b> H2100002306 is online and serves all 89 active devices at this site. Verify in app.aroya.io before the scheduled WP5 push.</li>
+<li><b>Mesh backbone (observed sample):</b> 14 of 14 H110/H111-class repeaters in the sample are online on firmware 1.2.1.0 (one on 1.1.14.0 — H1110003478). All are above the signal/battery thresholds for the WP5 push.</li>
+<li><b>Climate &amp; substrate sensors (observed sample):</b> 11 of 11 ATMOS-14 sensor heads in the sample report battery 100% and recent communication. One node (17066-01-822 in Flower 18) shows online=true but battery=100% and last comm 2026-06-05 — clean.</li>
+<li><b>Bloomfield Buildings 1 &amp; 2 should be scheduled in the same push window.</b> Same Gem Star org, same Bloomfield campus — coordinate the on-site POC and confirm both gateways (this site = H2100002306, Building 1 = H2100002390) before the push.</li>
+<li><b>Re-pull the remaining inventory before publishing externally.</b> 64 active devices (pages 2-4) and the full retired upgrade pool are not in this sample — actual GREEN/YELLOW/RED counts will scale with the full fleet.</li>
+</ul>
+</div>
+
+<div class="foot">
+<b>One row per physical device.</b> Class by serial prefix: H21x = gateway, H110/H111 = mesh repeater (range extender / climate-station radio), 17xxx-xx-xxx = TEROS-12 / ATMOS-14 sensor head. <b>TEROS One upgrade</b> applies to TEROS-12 substrate sensors; Climate One replaces ATMOS-14. <b>Your status edits and upgrade picks sync across every device that opens this link</b> (shared cross-device store) with a local cache when offline; Export gives a JSON snapshot the next data pull reconciles against. <b>Readiness reflects the WP5 go/no-go</b> — a device receives WP5 only if it is online with battery &ge; 30% and signal &ge; 50% at the scheduled push; otherwise it stays on WP4 (unharmed). Offline devices aren't bricked — the constraint is WP4&harr;WP5 compatibility, not damage; stragglers can be recovered later via a WP4 gateway revert. Telemetry: AROYA portal_api/devices, pulled 2026-06-05 01:57 UTC. Sample = first 25 of 89 active devices.
+</div>
+</div>
+
+<script>
+const SYNC_URL = "https://aroya-report-sync.ciansul.workers.dev/2806";
+const PRICE_TEROS_DUAL=458, PRICE_TEROS_SINGLE=319, PRICE_CLIMATE=419;
+const MSRP_TEROS_DUAL=608, MSRP_TEROS_SINGLE=419, MSRP_CLIMATE=569;
+const DEVICES = [{"id":"gw0","serial":"H2100002306","model":"Gateway","modelKey":"gateway","firmware":"WP4","online":true,"battery":null,"rssi":null,"lastComm":"","room":"(infrastructure)","zone":"","bucket":"GATEWAY-WP4","upgrade_eligible":false},{"id":"d0","serial":"17066-01-822","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":5,"lastComm":"2026-06-05T01:24:26Z","room":"Flower 18","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d1","serial":"17067-01-044","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":3,"lastComm":"2026-06-05T01:23:06Z","room":"Flower 14","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d2","serial":"17067-01-046","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":8,"lastComm":"2026-06-05T01:24:38Z","room":"Flower 10","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d3","serial":"17368-01-796","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":7,"lastComm":"2026-06-05T01:24:43Z","room":"Dry Room","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d4","serial":"17458-01-195","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":4,"lastComm":"2026-06-05T01:25:43Z","room":"Flower 11","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d5","serial":"17458-01-203","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":4,"lastComm":"2026-06-05T01:25:02Z","room":"Flower 15","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d6","serial":"17458-01-204","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":8,"lastComm":"2026-06-05T01:23:42Z","room":"Flower 17","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d7","serial":"17458-01-207","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":6,"lastComm":"2026-06-05T01:25:35Z","room":"Veg 2","zone":"Zone 1 Table 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d8","serial":"17459-01-335","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":6,"lastComm":"2026-06-05T01:25:05Z","room":"Flower 13","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d9","serial":"17459-01-339","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":8,"lastComm":"2026-06-05T01:23:51Z","room":"Flower 12","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d10","serial":"17459-01-388","model":"ATMOS 14","modelKey":"atm14","firmware":"","online":true,"battery":100,"rssi":3,"lastComm":"2026-06-05T01:23:41Z","room":"Flower 16","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":true},{"id":"d11","serial":"H1100003201","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":8,"lastComm":"2026-06-05T01:24:30Z","room":"(unassigned)","zone":"","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d12","serial":"H1100003206","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":3,"lastComm":"2026-06-05T01:22:23Z","room":"(unassigned)","zone":"","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d13","serial":"H1100003207","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":false,"battery":4,"rssi":4,"lastComm":"2026-05-28T03:10:53Z","room":"(unassigned)","zone":"","bucket":"RED-OFFLINE","upgrade_eligible":false},{"id":"d14","serial":"H1110003478","model":"Repeater","modelKey":"repeater","firmware":"1.1.14.0","online":true,"battery":100,"rssi":7,"lastComm":"2026-06-05T01:24:40Z","room":"Dry Room","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d15","serial":"H1110003682","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":4,"lastComm":"2026-06-05T01:25:43.762516Z","room":"Flower 11","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d16","serial":"H1110003697","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":3,"lastComm":"2026-06-05T01:25:07Z","room":"Flower 16","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d17","serial":"H1110003701","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":4,"lastComm":"2026-06-05T01:25:03.196544Z","room":"Flower 15","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d18","serial":"H1110003704","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":6,"lastComm":"2026-06-05T01:25:03Z","room":"Flower 13","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d19","serial":"H1110003715","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":6,"lastComm":"2026-06-05T01:25:35.528985Z","room":"Veg 2","zone":"Zone 1 Table 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d20","serial":"H1110003723","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":8,"lastComm":"2026-06-05T01:23:45Z","room":"Flower 10","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d21","serial":"H1110003725","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":3,"lastComm":"2026-06-05T01:23:07.203505Z","room":"Flower 14","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d22","serial":"H1110003735","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":8,"lastComm":"2026-06-05T01:25:06Z","room":"Flower 17","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d23","serial":"H1110003739","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":8,"lastComm":"2026-06-05T01:23:51.461171Z","room":"Flower 12","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false},{"id":"d24","serial":"H1110003741","model":"Repeater","modelKey":"repeater","firmware":"1.2.1.0","online":true,"battery":100,"rssi":5,"lastComm":"2026-06-05T01:25:30Z","room":"Flower 18","zone":"Zone 1","bucket":"GREEN-READY","upgrade_eligible":false}];
+const LSKEY = "bld2_2806_state_v1";
+let UPG = {};   // {id: 'dual'|'single'|true (climate)|false}
+let OV  = {};   // {id: 'resolved'|'monitoring'|''}
+let TS  = {};   // {id: iso}  per-key last-write
+let syncPill = document.getElementById('syncPill');
+
+function setSync(t){syncPill.textContent=t;}
+function loadCache(){try{const x=JSON.parse(localStorage.getItem(LSKEY)||'{}');UPG=x.UPG||{};OV=x.OV||{};TS=x.TS||{};}catch(e){}}
+function saveCache(){try{localStorage.setItem(LSKEY,JSON.stringify({UPG,OV,TS}));}catch(e){}}
+
+async function pullRemote(){
+  if(!SYNC_URL) return null;
+  try{const r=await fetch(SYNC_URL,{cache:'no-store'});if(r.ok) return await r.json();}catch(e){}
+  return null;
+}
+function mergeRemote(remote){
+  if(!remote||typeof remote!=='object') return false;
+  let changed=false;
+  for(const [k,v] of Object.entries(remote.upgTs||{})){
+    if(!TS['u_'+k] || v.t > TS['u_'+k]){UPG[k]=v.v;TS['u_'+k]=v.t;changed=true;}
+  }
+  for(const [k,v] of Object.entries(remote.ovTs||{})){
+    if(!TS['o_'+k] || v.t > TS['o_'+k]){OV[k]=v.v;TS['o_'+k]=v.t;changed=true;}
+  }
+  return changed;
+}
+async function pushRemote(){
+  if(!SYNC_URL) return;
+  const upgTs={}; for(const k of Object.keys(UPG)){upgTs[k]={v:UPG[k],t:TS['u_'+k]||new Date().toISOString()};}
+  const ovTs={};  for(const k of Object.keys(OV)){ovTs[k]={v:OV[k],t:TS['o_'+k]||new Date().toISOString()};}
+  try{
+    const r=await fetch(SYNC_URL,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({upgTs,ovTs})});
+    if(r.ok) setSync('Synced ✓');
+    else setSync('Sync error '+r.status);
+  }catch(e){setSync('Offline — local cache');}
+}
+let pushTimer=null;
+function debouncedPush(){clearTimeout(pushTimer);pushTimer=setTimeout(pushRemote,800);}
+
+function markUpg(id,val){
+  UPG[id]=val;TS['u_'+id]=new Date().toISOString();
+  saveCache();render();debouncedPush();
+}
+function markOV(id,val){
+  OV[id]=val;TS['o_'+id]=new Date().toISOString();
+  saveCache();render();debouncedPush();
+}
+
+function rowHtml(d){
+  const upg = UPG[d.id]||'';
+  const ov  = OV[d.id]||'';
+  const battTxt = d.battery==null?'—':d.battery+'%';
+  const rssiTxt = d.rssi==null?'—':d.rssi;
+  const lc = d.lastComm?d.lastComm.slice(0,16).replace('T',' '):'—';
+  const bucketChip = `<span class='chip ck-${d.bucket.replace(/-/g,'').toLowerCase()}'>${d.bucket}</span>`;
+  let upgCell=''; let dualCell='';
+  if(d.upgrade_eligible || d.modelKey==='atm14' || d.modelKey==='repeater'){
+    const isClimate = (d.modelKey==='atm14');
+    if(isClimate){
+      upgCell = `<input type='checkbox' data-id='${d.id}' class='upg' ${upg===true?'checked':''}>`;
+      dualCell = isClimate?`<span class='sdim'>Climate One ($${PRICE_CLIMATE})</span>`:'';
+    } else {
+      upgCell = '<span class="sdim">—</span>';
+    }
+  } else {
+    upgCell='<span class="sdim">n/a</span>';
+  }
+  const ovSelect = `<select data-id='${d.id}' class='ov'>`+
+    `<option value='' ${ov===''?'selected':''}>—</option>`+
+    `<option value='monitoring' ${ov==='monitoring'?'selected':''}>Monitoring</option>`+
+    `<option value='resolved' ${ov==='resolved'?'selected':''}>Resolved</option>`+
+    `</select>`;
+  return `<tr class='${ov==='resolved'?'resolved':''}'><td class='mono'>${d.serial}</td><td>${d.model}</td><td class='mono'>${d.firmware||'—'}</td><td>${d.online?'<span style="color:#2f8f2a">online</span>':'<span style="color:#c0392b">offline</span>'}</td><td>${battTxt}</td><td>${rssiTxt}</td><td class='mono'>${lc}</td><td>${d.room}</td><td>${bucketChip}</td><td>${upgCell}</td><td>${dualCell}</td><td>${ovSelect}</td></tr>`;
+}
+
+function render(){
+  const q = (document.getElementById('q').value||'').toLowerCase();
+  const fB = document.getElementById('fBucket').value;
+  const onlyUpg = document.getElementById('onlyUpg').checked;
+  const hideRes = document.getElementById('hideRes').checked;
+  let rows = DEVICES.filter(d=>{
+    if(fB && d.bucket!==fB) return false;
+    if(onlyUpg && !d.upgrade_eligible) return false;
+    if(hideRes && OV[d.id]==='resolved') return false;
+    if(q){
+      const hay = (d.serial+' '+d.model+' '+d.room+' '+d.modelKey).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  document.getElementById('dtBody').innerHTML = rows.map(rowHtml).join('');
+  // tally
+  let tickCount=0, terosUSD=0, climateUSD=0, terosMSRP=0, climateMSRP=0;
+  let dualN=0, singleN=0, climateN=0, resolved=0;
+  for(const d of DEVICES){
+    const u = UPG[d.id];
+    if(u){
+      tickCount++;
+      if(d.modelKey==='atm14'){climateN++;climateUSD+=PRICE_CLIMATE;climateMSRP+=MSRP_CLIMATE;}
+      else if(u==='dual'){dualN++;terosUSD+=PRICE_TEROS_DUAL;terosMSRP+=MSRP_TEROS_DUAL;}
+      else if(u==='single'){singleN++;terosUSD+=PRICE_TEROS_SINGLE;terosMSRP+=MSRP_TEROS_SINGLE;}
+    }
+    if(OV[d.id]==='resolved') resolved++;
+  }
+  const total = terosUSD+climateUSD;
+  const save  = (terosMSRP+climateMSRP)-total;
+  document.getElementById('tallyTicked').textContent=tickCount;
+  document.getElementById('tallyTerosUSD').textContent='$'+terosUSD.toLocaleString();
+  document.getElementById('tallyClimateUSD').textContent='$'+climateUSD.toLocaleString();
+  document.getElementById('tallyTotalUSD').textContent='$'+total.toLocaleString();
+  document.getElementById('tallySaveUSD').textContent='$'+save.toLocaleString();
+  document.getElementById('tallyResolved').textContent=resolved;
+  document.getElementById('upgCount').textContent=tickCount;
+  document.getElementById('upgTotal').textContent='$'+total.toLocaleString();
+  document.getElementById('terosLine').textContent='$'+terosUSD.toLocaleString();
+  document.getElementById('terosLineL').textContent=`TEROS One: ${singleN} single + ${dualN} dual`;
+  document.getElementById('climateLine').textContent='$'+climateUSD.toLocaleString();
+  document.getElementById('climateLineL').textContent=`Climate One: ${climateN} × $`+PRICE_CLIMATE;
+  // wire row events
+  document.querySelectorAll('.upg').forEach(el=>el.onchange=()=>markUpg(el.dataset.id, el.checked?true:false));
+  document.querySelectorAll('.ov').forEach(el=>el.onchange=()=>markOV(el.dataset.id, el.value));
+}
+
+['q','fBucket','onlyUpg','hideRes'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+
+document.getElementById('resetBtn').onclick=()=>{if(confirm('Reset all upgrade picks + resolved flags on THIS device only? Sync will then re-push reset state to other devices.')){UPG={};OV={};TS={};saveCache();render();pushRemote();}};
+document.getElementById('expBtn').onclick=()=>{
+  const blob=new Blob([JSON.stringify({UPG,OV,TS,exported:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='bloomfield_b2_2806_firmware_state_'+new Date().toISOString().slice(0,10)+'.json';a.click();
+};
+document.getElementById('impBtn').onclick=()=>document.getElementById('impFile').click();
+document.getElementById('impFile').onchange=(e)=>{
+  const f=e.target.files[0]; if(!f) return;
+  f.text().then(t=>{try{const x=JSON.parse(t);UPG=Object.assign(UPG,x.UPG||{});OV=Object.assign(OV,x.OV||{});TS=Object.assign(TS,x.TS||{});saveCache();render();pushRemote();}catch(err){alert('Import failed: '+err.message);}});
+};
+
+async function init(){
+  loadCache();
+  render();
+  setSync('Loading remote…');
+  const remote = await pullRemote();
+  if(remote && mergeRemote(remote)){saveCache();render();setSync('Synced ✓');} else {setSync(SYNC_URL?'Synced ✓':'Local-only');}
+  // poll every 20s + on focus
+  setInterval(async ()=>{const r=await pullRemote();if(r && mergeRemote(r)){saveCache();render();setSync('Synced ✓ '+new Date().toLocaleTimeString());}}, 20000);
+  window.addEventListener('focus', async ()=>{const r=await pullRemote();if(r && mergeRemote(r)){saveCache();render();}});
+}
+init();
+</script>
+</body></html>
