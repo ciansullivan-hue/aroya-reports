@@ -1,0 +1,313 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ACK Natural: Nantucket — Pre-WP5 Firmware Update Readiness</title>
+<style>:root{--bg:#f4f4ef;--card:#fff;--ink:#1a1c19;--sub:#666;--line:#e6e6df;--row:#fafaf6;--head:#f0f0e8;--olive:#635e51;--lime:#cbeeb0;--app-blue:#2d62ff;--attention:#c0392b;}*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 22px 80px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);font-weight:600}
+h1{font-weight:600;font-size:26px;margin:6px 0 4px}
+h2{font-weight:600;font-size:17px;margin:32px 0 12px;border-left:4px solid var(--olive);padding-left:10px}
+.meta{color:var(--sub);font-size:12.5px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:22px 0 8px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 12px;text-align:center}
+.kpi-n{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi-l{font-size:12px;color:var(--sub);margin-top:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.callout{border-left:4px solid var(--app-blue);background:var(--row);padding:12px 14px;border-radius:8px;margin:14px 0;font-size:13px}
+.callout.warn{border-color:#e0792a}
+.callout.alert{border-color:var(--attention)}
+.callout.island{border-color:#2b8aa8;background:rgba(43,138,168,.07)}
+table{width:100%;border-collapse:collapse}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 0;font-size:12px;color:var(--sub)} .legend b{font-weight:600;color:var(--ink)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
+.controls input[type=text],.controls select{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px}
+#q{flex:1;min-width:200px}
+.btn{background:var(--olive);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+#dt{font-size:12.5px}
+#dt th{background:var(--head);text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer}
+#dt td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+#dt tr:nth-child(even) td{background:var(--row)}
+#dt tr.mkup td{box-shadow:inset 3px 0 0 var(--app-blue);background:rgba(45,98,255,.06)!important}
+.chip{display:inline-block;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;white-space:nowrap}
+.mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:11.5px}
+.savebanner{font-size:12px;color:var(--sub);margin-top:8px}
+.savebanner.ok{color:#2f8f2a;font-weight:600}
+.savebanner.err{color:var(--attention)}
+.foot{color:var(--sub);font-size:11.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:14px}
+.tally{position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;gap:18px;align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+.tally .big{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.tally .t{font-size:12px;color:var(--sub)} .tally .t b{color:var(--ink);font-size:14px;font-variant-numeric:tabular-nums}
+.upg{width:18px;height:18px;cursor:pointer;accent-color:var(--app-blue);vertical-align:middle}
+.upgm{margin-top:4px;font-size:11px;border:1px solid var(--app-blue);border-radius:5px;padding:2px 4px;background:var(--card);color:var(--ink)}
+.ssel{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:11.5px;max-width:170px}
+.ssel.set{border-color:var(--olive);font-weight:600}
+.pricegrid{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 4px;font-size:13px}
+.pricefix{font-size:13px;color:var(--ink)} .pricefix .sdim{font-size:11.5px;color:var(--sub)}
+.plan{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+.pcard{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.pcard .pn{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.pcard .pl{font-size:12px;color:var(--sub)}
+.mix{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
+.mix .m{background:var(--row);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center}
+.mix .mn{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.mix .ml{font-size:11px;color:var(--sub)}</style></head><body><div class="wrap">
+
+<div class="eyebrow">AROYA · Pre-WP5 Firmware Update Readiness</div>
+<h1>ACK Natural: Nantucket · Facility 2817</h1>
+<div class="meta">Generated 2026-06-05 01:58 UTC · 1 WP4 gateway (H2100002330) · 118 active devices on file · <b>this report scored against a 25-device sample (page 1)</b> — see Data Quality.</div>
+
+<div class="kpis">
+  <div class="kpi" style="border-top:4px solid #2f8f2a"><div class="kpi-n">10</div><div class="kpi-l">GREEN — Will receive WP5</div></div>
+  <div class="kpi" style="border-top:4px solid #d6b220"><div class="kpi-n">0</div><div class="kpi-l">YELLOW — Recoverable</div></div>
+  <div class="kpi" style="border-top:4px solid var(--attention)"><div class="kpi-n">6</div><div class="kpi-l">RED — Offline / stays on WP4</div></div>
+  <div class="kpi" style="border-top:4px solid var(--app-blue)"><div class="kpi-n">1</div><div class="kpi-l">GATEWAY — WP4 to flash</div></div>
+  <div class="kpi" style="border-top:4px solid #8a8c80"><div class="kpi-n">0</div><div class="kpi-l">Retired — Upgrade pool</div></div>
+  <div class="kpi" style="border-top:4px solid #555"><div class="kpi-n">8</div><div class="kpi-l">Legacy &gt;90d dark — retire</div></div>
+</div>
+<div class="legend">
+  <span><b>GREEN</b> online &amp; healthy → ready for WP5</span>
+  <span><b>YELLOW</b> online but battery/signal marginal — shore up first</span>
+  <span><b>RED</b> offline ≤90d — bring up, or stays on WP4 unharmed</span>
+  <span><b>GATEWAY</b> WP4 gateway scheduled for WP5 push</span>
+  <span><b>LEGACY</b> dark &gt;90d → retire-trade-in (TEROS One / Climate One) over recovery</span>
+</div>
+
+<div class="callout island"><b>Island-logistics note (ACK = Nantucket airport code):</b> Nantucket is a 30-mile ferry / charter from the mainland, so an on-site visit is materially more expensive than a typical mainland push. <b>Default to remote OTAP</b> with grow-team verification in the AROYA app. Reserve a site visit only for the WP4 gateway swap if the swap-out option is chosen, or if a critical mass of online devices needs hands-on revival. Most LEGACY (&gt;90 d dark) devices are better retired than ferried back.</div>
+
+<div class="card">
+  <b>Mesh backbone (from 25-device sample):</b> 1 gateway (<span class="mono">H2100002330</span>), 0 sink, 9 repeaters (mixed range-extenders H110 / climate stations H111), 10 substrate nodes, 0 TEROS-12 probes, 5 ATMOS 14 sensors. Population scaled to 118 active devices on file. The gateway updates to WP5 and pushes the new firmware to every device online at the scheduled time. Devices that are offline at push time <b>stay on WP4 — they are not harmed</b>. Bring them online before the push to receive WP5; otherwise recover later via WP4 gateway revert, or retire / trade in.
+  <div class="mix">
+    <div class="m"><div class="mn">1</div><div class="ml">Gateway</div></div>
+    <div class="m"><div class="mn">0</div><div class="ml">Sink</div></div>
+    <div class="m"><div class="mn">9</div><div class="ml">Repeater / climate radio</div></div>
+    <div class="m"><div class="mn">10</div><div class="ml">Substrate node</div></div>
+    <div class="m"><div class="mn">0</div><div class="ml">TEROS-12 probe</div></div>
+    <div class="m"><div class="mn">5</div><div class="ml">ATMOS 14</div></div>
+  </div>
+</div>
+
+<h2>WP4 → WP5 OTAP — what happens at the scheduled push</h2>
+<div class="card">
+  <ul style="margin:0;padding-left:20px">
+    <li>AROYA pushes WP5 over the air from the gateway. <b>No site visit is required by default</b> — the gateway flashes itself and propagates to every device online at the scheduled minute. Remote is the default; a site visit is the exception.</li>
+    <li><b>Go / no-go per device:</b> online at push time, battery ≥ 30 %, signal (RSSI) ≥ 5 (per AROYA mesh classification).</li>
+    <li><b>Offline devices stay on WP4 — they are not bricked or harmed.</b> They keep running on WP4 firmware. To bring them onto WP5 later: (a) bring the device online before the next scheduled push, or (b) revert the gateway to WP4 temporarily and re-run the push.</li>
+    <li><b>Recovery is reversible:</b> a gateway can be reverted to WP4 with no time limit — stragglers can always be picked up later. The constraint is WP4 ↔ WP5 compatibility, not damage.</li>
+    <li>Battery-class devices (substrate nodes + TEROS-12 probes) are the only ones on battery; everything else (gateway, sink, repeaters, atm14 climate stations) is PoE. PoE devices generally come back online automatically with cable / power restored.</li>
+  </ul>
+</div>
+
+<h2>Action plan — remote-first, island-aware</h2>
+<div class="plan">
+  <div class="pcard"><div class="pn">1</div><div class="pl">Open <span class="mono">app.aroya.io</span> · Facility 2817 · verify gateway H2100002330 + sink + repeaters are online. The 25-device sample shows the gateway online with active comms in the last minute — mesh backbone is alive.</div></div>
+  <div class="pcard"><div class="pn">2</div><div class="pl">Walk the remaining ~93 devices in app (this report only sampled page 1). Flag any battery &lt; 30 % or signal &lt; 5 for swap-or-leave. Long-offline (&gt;90 d) devices are better retired than recovered, especially given ferry logistics.</div></div>
+  <div class="pcard"><div class="pn">3</div><div class="pl">Schedule the WP4 → WP5 push for facility 2817 remotely once in-app green count is confirmed. Mark devices for retire / trade-in (TEROS One $419, Climate One $419) using the checkboxes below; state syncs across every device that opens this report.</div></div>
+</div>
+
+<h2>Device inventory — 25 of 118 active devices (page-1 sample)</h2>
+<div class="callout warn">This report shows the first 25 of 118 active devices at the facility — the remaining 93 could not be pulled because the opencli browser bridge failed mid-run under parallel-agent load (see Data Quality). The retired-pool view (TEROS-12 / Atmos-14 retired but host node retired-flag) also requires a fresh portal_api session. Use the checkboxes to mark a device for upgrade (TEROS-12 → TEROS One, Atmos-14 → Climate One). Dropdown records operator status. All edits sync across every device that opens this report via <span class="mono">https://aroya-report-sync.ciansul.workers.dev/2817</span>.</div>
+
+<div class="tally">
+  <div><span class="big" id="t_total">25</span> <span class="t">devices on this page (sample) · 118 total active</span></div>
+  <div><span class="t">Marked for upgrade: <b id="t_upg">0</b></span></div>
+  <div><span class="t">Marked revived: <b id="t_rev">0</b></span></div>
+  <div><span class="t">Marked scheduled: <b id="t_sch">0</b></span></div>
+  <div><span class="t">Marked won't-fix: <b id="t_wf">0</b></span></div>
+  <div style="margin-left:auto"><span class="savebanner" id="syncState">Loading…</span></div>
+</div>
+
+<div class="controls">
+  <input type="text" id="q" placeholder="Filter serial, room, model, bucket…">
+  <select id="fmodel"><option value="">all models</option><option>node</option><option>ter12</option><option>atm14</option><option>repeater</option><option>gateway</option><option>sink</option></select>
+  <select id="fbucket"><option value="">all buckets</option><option value="GREEN-READY">GREEN-READY</option><option value="YELLOW-RECOVERABLE">YELLOW-RECOVERABLE</option><option value="RED-OFFLINE">RED-OFFLINE</option><option value="GATEWAY-WP4">GATEWAY-WP4</option><option value="LEGACY-RMA">LEGACY-RMA</option></select>
+  <button class="btn alt" onclick="exportState()">Export</button>
+  <button class="btn alt" onclick="document.getElementById('importFile').click()">Import</button>
+  <input type="file" id="importFile" style="display:none" accept=".json" onchange="importState(event)">
+</div>
+
+<div style="overflow-x:auto">
+<table id="dt"><thead><tr>
+  <th data-k="serial">Serial</th>
+  <th data-k="model">Model</th>
+  <th data-k="class_label">Class</th>
+  <th data-k="room_name">Room / Zone</th>
+  <th data-k="bucket">Bucket</th>
+  <th data-k="online">Online</th>
+  <th data-k="battery">Batt %</th>
+  <th data-k="rssi">RSSI</th>
+  <th data-k="hours_since">Last (h)</th>
+  <th data-k="fw_version">FW</th>
+  <th data-k="upg">Upgrade?</th>
+  <th>Trade-in quote</th>
+  <th>Operator status</th>
+</tr></thead><tbody id="rows"></tbody></table></div>
+
+<h2>Trade-in pricing — fixed</h2>
+<div class="card pricefix">
+  <div class="pricegrid">
+    <div><b>TEROS One (substrate)</b><br>MSRP $569 · <b>$150 off → $419</b><br><span class="sdim">Replaces a retired TEROS-12 whose host node is also retired.</span></div>
+    <div><b>Climate One (climate)</b><br>MSRP $569 · <b>$150 off → $419</b><br><span class="sdim">Replaces an ATMOS 14 sensor; PoE.</span></div>
+  </div>
+</div>
+
+<h2>Data quality &amp; what's missing from this view</h2>
+<div class="card">
+  <ul style="margin:0;padding-left:20px">
+    <li><b>Only 25 of 118 active devices pulled:</b> the opencli portal_api adapter served page 1 (25 devices, sequential pagination), then the Chrome browser bridge that opencli rides on disconnected under concurrent load from the parallel-agent swarm and did not recover within the session budget. The 93 unpulled devices are real — they appear in the <span class="mono">/portal_api/devices/?facility_id=2817&amp;retired=false</span> pagination count (5 pages × 25). Re-pull pages 2–5 in a single quiet session and re-render before scheduling the push.</li>
+    <li><b>Retired-pool view not pulled:</b> the retired TEROS-12 / ATMOS 14 inventory whose host puck node is also retired (the TEROS One / Climate One upgrade pool) lives at <span class="mono">/portal_api/devices/?facility_id=2817&amp;retired=true</span>. Same browser-bridge failure mode; this is the gap that decides whether the retired-trade-in column shows 0 or 20+ candidates. Re-pull with a clean session.</li>
+    <li><b>Firmware version field empty for non-repeater devices in the sample:</b> the <span class="mono">version</span> attribute on the 25 devices reads as <span class="mono">null</span> for atm14 sensors and as <span class="mono">1.2.1.0</span> for repeaters / nodes (the WP4-era firmware). Repeaters carry the firmware string; battery-class endpoints don't expose it on this endpoint shape.</li>
+    <li><b>Bucket thresholds (sample-derived):</b> GREEN = online + (battery ≥ 30 % or PoE) + RSSI ≥ 5. YELLOW = online but battery &lt; 30 % or RSSI &lt; 4. RED = offline ≤ 90 d. LEGACY-RMA = offline &gt; 90 d (i.e. last communication before 2026-03-07). LEGACY-RMA dominates the sample because ACK has many 2024-era atm14 / node devices that have not phoned home in 12–24 months.</li>
+    <li><b>Single token tenancy:</b> repeat the pull with the customer-facing AROYA portal token before publishing externally — a different operator login may have authoritative access to additional devices or a different retired-flag view.</li>
+    <li><b>Email/relationship context:</b> the email-context agent returned a cold-contact result for ACK Natural — no firmware-related correspondence on file in the Addium inbox. The customer has not been pre-briefed on the WP4 → WP5 push; coordinate with the org's primary contact (likely from the AROYA portal CRM tab) before scheduling.</li>
+  </ul>
+</div>
+
+<div class="foot">
+  WP4 → WP5 OTAP firmware update · sample of 25/118 active devices on facility 2817 (ACK Natural: Nantucket) · classification scored against AROYA mesh go/no-go (online, battery ≥ 30 %, RSSI ≥ 5) · state persisted via <span class="mono">https://aroya-report-sync.ciansul.workers.dev/2817</span> · per-entry timestamped last-write-wins · localStorage offline cache · re-verify in <span class="mono">app.aroya.io</span> before scheduling.
+</div>
+
+</div>
+<script>
+const DEVS=[{"id":38016,"serial":"A14G200000109","device_name":"A14G200000109","model":"atm14","class_label":"ATMOS 14 climate sensor","room_id":5914,"room_name":"Veg/Mom","zone_name":"Zone 3","online":true,"battery":100,"rssi":8,"last_comm":"2026-06-05T01:23:55Z","hours_since":0.6,"fw_version":"","hw_version":"","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":true,"upg_target":"Climate One"},{"id":38013,"serial":"A14G200000141","device_name":"A14G200000141","model":"atm14","class_label":"ATMOS 14 climate sensor","room_id":null,"room_name":"(unassigned)","zone_name":"","online":false,"battery":7,"rssi":8,"last_comm":"2024-03-12T17:35:57Z","hours_since":19544.4,"fw_version":"","hw_version":"","bucket":"LEGACY-RMA","bucket_label":"Legacy / >90d dark \u2014 retire / trade-in candidate","upg_eligible":true,"upg_target":"Climate One"},{"id":38015,"serial":"A14G200000157","device_name":"A14G200000157","model":"atm14","class_label":"ATMOS 14 climate sensor","room_id":5916,"room_name":"Flower 2","zone_name":"Zone 4 Bottom","online":false,"battery":5,"rssi":8,"last_comm":"2026-03-31T14:47:30Z","hours_since":1571.2,"fw_version":"","hw_version":"","bucket":"RED-OFFLINE","bucket_label":"RED \u2014 Offline, stays on WP4 (recover or retire)","upg_eligible":true,"upg_target":"Climate One"},{"id":38014,"serial":"A14G200000343","device_name":"A14G200000343","model":"atm14","class_label":"ATMOS 14 climate sensor","room_id":5916,"room_name":"Flower 2","zone_name":"Zone 4 Top","online":false,"battery":5,"rssi":8,"last_comm":"2026-04-01T16:14:36Z","hours_since":1545.7,"fw_version":"","hw_version":"","bucket":"RED-OFFLINE","bucket_label":"RED \u2014 Offline, stays on WP4 (recover or retire)","upg_eligible":true,"upg_target":"Climate One"},{"id":38120,"serial":"A14G200000361","device_name":"A14G200000361","model":"atm14","class_label":"ATMOS 14 climate sensor","room_id":5915,"room_name":"Flower 1","zone_name":"Zone 4 Bottom","online":false,"battery":4,"rssi":7,"last_comm":"2024-07-04T01:57:22Z","hours_since":16824.0,"fw_version":"","hw_version":"","bucket":"LEGACY-RMA","bucket_label":"Legacy / >90d dark \u2014 retire / trade-in candidate","upg_eligible":true,"upg_target":"Climate One"},{"id":38006,"serial":"H1100003279","device_name":"H1100003279","model":"repeater","class_label":"Repeater / climate station radio","room_id":5914,"room_name":"Veg/Mom","zone_name":"","online":true,"battery":100,"rssi":8,"last_comm":"2026-06-05T01:24:34.518009Z","hours_since":0.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":false,"upg_target":null},{"id":38008,"serial":"H1100003280","device_name":"H1100003280","model":"repeater","class_label":"Repeater / climate station radio","room_id":null,"room_name":"(unassigned)","zone_name":"","online":false,"battery":100,"rssi":8,"last_comm":"2021-05-14T18:17:30.425349Z","hours_since":44335.7,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"LEGACY-RMA","bucket_label":"Legacy / >90d dark \u2014 retire / trade-in candidate","upg_eligible":false,"upg_target":null},{"id":38007,"serial":"H1100003281","device_name":"H1100003281","model":"repeater","class_label":"Repeater / climate station radio","room_id":5916,"room_name":"Flower 2","zone_name":"","online":true,"battery":100,"rssi":8,"last_comm":"2026-06-05T01:24:37.653438Z","hours_since":0.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":false,"upg_target":null},{"id":38005,"serial":"H1100003282","device_name":"H1100003282","model":"repeater","class_label":"Repeater / climate station radio","room_id":5914,"room_name":"Veg/Mom","zone_name":"","online":true,"battery":100,"rssi":8,"last_comm":"2026-06-05T01:22:33Z","hours_since":0.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":false,"upg_target":null},{"id":38010,"serial":"H1110003829","device_name":"Flower 2 Top","model":"repeater","class_label":"Repeater / climate station radio","room_id":5916,"room_name":"Flower 2","zone_name":"Zone 4 Top","online":false,"battery":5,"rssi":8,"last_comm":"2026-04-01T16:17:00Z","hours_since":1545.7,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"RED-OFFLINE","bucket_label":"RED \u2014 Offline, stays on WP4 (recover or retire)","upg_eligible":false,"upg_target":null},{"id":38011,"serial":"H1110003834","device_name":"Flower 2 Bottom","model":"repeater","class_label":"Repeater / climate station radio","room_id":5916,"room_name":"Flower 2","zone_name":"Zone 4 Bottom","online":false,"battery":5,"rssi":8,"last_comm":"2026-03-31T14:55:25Z","hours_since":1571.1,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"RED-OFFLINE","bucket_label":"RED \u2014 Offline, stays on WP4 (recover or retire)","upg_eligible":false,"upg_target":null},{"id":38115,"serial":"H1110003835","device_name":"H1110003835","model":"repeater","class_label":"Repeater / climate station radio","room_id":5915,"room_name":"Flower 1","zone_name":"Zone 4 Bottom","online":false,"battery":4,"rssi":7,"last_comm":"2024-07-04T02:07:43.984963Z","hours_since":16823.8,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"LEGACY-RMA","bucket_label":"Legacy / >90d dark \u2014 retire / trade-in candidate","upg_eligible":false,"upg_target":null},{"id":38009,"serial":"H1110003836","device_name":"H1110003836","model":"repeater","class_label":"Repeater / climate station radio","room_id":null,"room_name":"(unassigned)","zone_name":"","online":false,"battery":7,"rssi":8,"last_comm":"2024-10-19T19:03:45.393061Z","hours_since":14238.9,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"LEGACY-RMA","bucket_label":"Legacy / >90d dark \u2014 retire / trade-in candidate","upg_eligible":false,"upg_target":null},{"id":38012,"serial":"H1110003850","device_name":"H1110003850","model":"repeater","class_label":"Repeater / climate station radio","room_id":5914,"room_name":"Veg/Mom","zone_name":"Zone 3","online":true,"battery":100,"rssi":8,"last_comm":"2026-06-05T01:23:43Z","hours_since":0.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":false,"upg_target":null},{"id":38004,"serial":"H2100002330","device_name":"H2100002330","model":"gateway","class_label":"Gateway (mesh \u2192 cloud)","room_id":null,"room_name":"(unassigned)","zone_name":"","online":true,"battery":0,"rssi":0,"last_comm":"2026-06-05T01:25:10.638698Z","hours_since":0.6,"fw_version":"","hw_version":"","bucket":"GATEWAY-WP4","bucket_label":"Gateway (WP4 to flash)","upg_eligible":false,"upg_target":null},{"id":38036,"serial":"H3110015215","device_name":"jet fuel gelato","model":"node","class_label":"Substrate node (radio host)","room_id":5914,"room_name":"Veg/Mom","zone_name":"Zone 3","online":true,"battery":93,"rssi":7,"last_comm":"2026-06-05T01:24:30Z","hours_since":0.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":false,"upg_target":null},{"id":38069,"serial":"H3110015363","device_name":"H3110015363PC","model":"node","class_label":"Substrate node (radio host)","room_id":5915,"room_name":"Flower 1","zone_name":"Zone 2 Top","online":false,"battery":0,"rssi":8,"last_comm":"2026-05-27T16:57:21.813244Z","hours_since":201.0,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"RED-OFFLINE","bucket_label":"RED \u2014 Offline, stays on WP4 (recover or retire)","upg_eligible":false,"upg_target":null},{"id":38075,"serial":"H3110015364","device_name":"H3110015364 low","model":"node","class_label":"Substrate node (radio host)","room_id":5914,"room_name":"Veg/Mom","zone_name":"","online":false,"battery":1,"rssi":5,"last_comm":"2026-04-05T23:27:52.834835Z","hours_since":1442.5,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"RED-OFFLINE","bucket_label":"RED \u2014 Offline, stays on WP4 (recover or retire)","upg_eligible":false,"upg_target":null},{"id":38067,"serial":"H3110015367","device_name":"H3110015367mom","model":"node","class_label":"Substrate node (radio host)","room_id":5914,"room_name":"Veg/Mom","zone_name":"Zone 3","online":false,"battery":0,"rssi":8,"last_comm":"2024-12-04T00:25:03.913970Z","hours_since":13153.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"LEGACY-RMA","bucket_label":"Legacy / >90d dark \u2014 retire / trade-in candidate","upg_eligible":false,"upg_target":null},{"id":38032,"serial":"H3110015368","device_name":"H3110015368DP","model":"node","class_label":"Substrate node (radio host)","room_id":5915,"room_name":"Flower 1","zone_name":"Zone 2 Top","online":false,"battery":11,"rssi":7,"last_comm":"2025-10-30T15:03:45.142691Z","hours_since":5218.9,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"LEGACY-RMA","bucket_label":"Legacy / >90d dark \u2014 retire / trade-in candidate","upg_eligible":false,"upg_target":null},{"id":38045,"serial":"H3110015369","device_name":"H3110015369 DDC","model":"node","class_label":"Substrate node (radio host)","room_id":5915,"room_name":"Flower 1","zone_name":"Zone 3 Top","online":true,"battery":80,"rssi":8,"last_comm":"2026-06-05T01:24:01.690058Z","hours_since":0.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":false,"upg_target":null},{"id":38071,"serial":"H3110015371","device_name":"TW","model":"node","class_label":"Substrate node (radio host)","room_id":5916,"room_name":"Flower 2","zone_name":"Zone 8 Top","online":true,"battery":89,"rssi":8,"last_comm":"2026-06-05T01:24:22Z","hours_since":0.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":false,"upg_target":null},{"id":38030,"serial":"H3110015372","device_name":"cheeze","model":"node","class_label":"Substrate node (radio host)","room_id":5916,"room_name":"Flower 2","zone_name":"Zone 2 Top","online":true,"battery":73,"rssi":8,"last_comm":"2026-06-05T01:23:26Z","hours_since":0.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":false,"upg_target":null},{"id":38099,"serial":"H3110015374","device_name":"MB15","model":"node","class_label":"Substrate node (radio host)","room_id":5916,"room_name":"Flower 2","zone_name":"Zone 5 Top","online":true,"battery":100,"rssi":5,"last_comm":"2026-06-05T01:22:45Z","hours_since":0.6,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"GREEN-READY","bucket_label":"GREEN \u2014 Will receive WP5","upg_eligible":false,"upg_target":null},{"id":38018,"serial":"H3110015377","device_name":"Mac","model":"node","class_label":"Substrate node (radio host)","room_id":5916,"room_name":"Flower 2","zone_name":"Zone 3 Top","online":false,"battery":0,"rssi":7,"last_comm":"2026-01-01T14:03:18.014410Z","hours_since":3707.9,"fw_version":"1.2.1.0","hw_version":"01.00-B","bucket":"LEGACY-RMA","bucket_label":"Legacy / >90d dark \u2014 retire / trade-in candidate","upg_eligible":false,"upg_target":null}];
+const SYNC_URL="https://aroya-report-sync.ciansul.workers.dev/2817";
+const CACHE="aroya_2817_state_v2";
+const STATUS=[["","—"],["revived","✓ Fixed / reporting"],["scheduled","◐ Scheduled fix"],["wontfix","✕ Won't fix / retire"]];
+const TER_PRICE=419, CLIM_PRICE=419;
+let OV={}, UPG={};
+(function(){try{const c=JSON.parse(localStorage.getItem(CACHE));if(c){OV=c.ov||{};UPG=c.upg||{};}}catch(e){}})();
+function saveCache(){try{localStorage.setItem(CACHE,JSON.stringify({ov:OV,upg:UPG}));}catch(e){}}
+function statusOf(s){return (OV[s]&&OV[s].status)||"";}
+function modelOf(s){return (UPG[s]&&UPG[s].model)||null;}
+function isUpgEligible(d){return d.model==='ter12'||d.model==='atm14';}
+function setSync(t,cls){const e=document.getElementById('syncState');if(e){e.textContent=t;e.className='savebanner '+(cls||'');}}
+function mergeTs(local,remote){const out={};const ks=new Set([...Object.keys(local||{}),...Object.keys(remote||{})]);
+  ks.forEach(k=>{const a=local[k],b=remote[k];out[k]=(!a)?b:(!b)?a:(((b.ts||0)>(a.ts||0))?b:a);});return out;}
+let _st=null;
+function scheduleSync(){saveCache();render();clearTimeout(_st);_st=setTimeout(syncNow,700);}
+async function syncNow(){
+  if(!SYNC_URL){saveCache();render();setSync('Saved locally','');return;}
+  setSync('Saving…');
+  let remote=null;
+  try{const r=await fetch(SYNC_URL,{cache:'no-store'});if(r.ok)remote=await r.json();}catch(e){}
+  if(remote){OV=mergeTs(OV,remote.ov||{});UPG=mergeTs(UPG,remote.upg||{});}
+  saveCache();
+  try{
+    const w=await fetch(SYNC_URL,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({ov:OV,upg:UPG})});
+    if(w.ok){setSync('Synced ✓','ok');}else{setSync('Sync error '+w.status,'err');}
+  }catch(e){setSync('Offline (cached)','err');}
+  render();
+}
+async function pullSync(){
+  if(!SYNC_URL){render();return;}
+  setSync('Loading…');
+  try{
+    const r=await fetch(SYNC_URL,{cache:'no-store'});
+    if(r.ok){const remote=await r.json();OV=mergeTs(OV,remote.ov||{});UPG=mergeTs(UPG,remote.upg||{});saveCache();setSync('Synced ✓','ok');}
+    else{setSync('Offline (cached)','err');}
+  }catch(e){setSync('Offline (cached)','err');}
+  render();
+}
+function exportState(){
+  const blob=new Blob([JSON.stringify({ov:OV,upg:UPG,facility_id:2817,exported_at:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ack_natural_2817_firmware_state.json';a.click();
+}
+function importState(ev){
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.ov)OV=mergeTs(OV,d.ov);if(d.upg)UPG=mergeTs(UPG,d.upg);saveCache();scheduleSync();}catch(e){alert('Bad import file');}};r.readAsText(f);
+}
+function setStatus(serial,val){
+  const ts=Date.now();
+  OV[serial]={status:val||'',ts};
+  scheduleSync();
+}
+function setUpg(serial,model){
+  const ts=Date.now();
+  UPG[serial]={model:model||null,ts};
+  scheduleSync();
+}
+let sortK='serial',sortDir=1;
+function bucketChip(b){
+  if(b==='GATEWAY-WP4')return '<span class="chip" style="background:rgba(45,98,255,.18);color:var(--app-blue)">GATEWAY-WP4</span>';
+  if(b==='GREEN-READY')return '<span class="chip" style="background:rgba(47,143,42,.18);color:#2f8f2a">GREEN-READY</span>';
+  if(b==='YELLOW-RECOVERABLE')return '<span class="chip" style="background:rgba(214,178,32,.20);color:#a68a18">YELLOW</span>';
+  if(b==='RED-OFFLINE')return '<span class="chip" style="background:rgba(192,57,43,.18);color:var(--attention)">RED-OFFLINE</span>';
+  if(b==='LEGACY-RMA')return '<span class="chip" style="background:rgba(85,85,85,.18);color:var(--sub)">LEGACY-RMA</span>';
+  return '<span class="chip">'+b+'</span>';
+}
+function render(){
+  const q=(document.getElementById('q').value||'').toLowerCase();
+  const fm=document.getElementById('fmodel').value;
+  const fb=document.getElementById('fbucket').value;
+  let rows=DEVS.filter(d=>{
+    if(fm&&d.model!==fm)return false;
+    if(fb&&d.bucket!==fb)return false;
+    if(q){
+      const hay=(d.serial+' '+d.device_name+' '+d.model+' '+d.class_label+' '+d.room_name+' '+d.zone_name+' '+d.bucket).toLowerCase();
+      if(!hay.includes(q))return false;
+    }
+    return true;
+  });
+  rows.sort((a,b)=>{
+    const va=a[sortK]==null?'':a[sortK],vb=b[sortK]==null?'':b[sortK];
+    if(va<vb)return -1*sortDir;if(va>vb)return 1*sortDir;return 0;
+  });
+  let upgN=0,rev=0,sch=0,wf=0;
+  DEVS.forEach(d=>{
+    if(modelOf(d.serial))upgN++;
+    const s=statusOf(d.serial);
+    if(s==='revived')rev++;else if(s==='scheduled')sch++;else if(s==='wontfix')wf++;
+  });
+  document.getElementById('t_upg').textContent=upgN;
+  document.getElementById('t_rev').textContent=rev;
+  document.getElementById('t_sch').textContent=sch;
+  document.getElementById('t_wf').textContent=wf;
+  const tb=document.getElementById('rows');
+  tb.innerHTML=rows.map(d=>{
+    const upg=modelOf(d.serial);
+    const upgClass=upg?'mkup':'';
+    const status=statusOf(d.serial);
+    const eligible=isUpgEligible(d);
+    const upgTarget=d.model==='ter12'?'TEROS One':(d.model==='atm14'?'Climate One':'');
+    const upgChecked=upg?'checked':'';
+    const upgInput=eligible?
+      `<input type="checkbox" class="upg" ${upgChecked} onchange="setUpg('${d.serial}', this.checked?'${upgTarget}':null)">`:
+      '<span class="sdim">—</span>';
+    const upgM=upg?`<div class="upgm">→ ${upg}</div>`:'';
+    const price=d.model==='ter12'?TER_PRICE:(d.model==='atm14'?CLIM_PRICE:0);
+    const quote=upg?`<div class="mono">$${price}</div>`:'<span class="sdim">—</span>';
+    const opts=STATUS.map(([v,l])=>`<option value="${v}" ${status===v?'selected':''}>${l}</option>`).join('');
+    const sselClass=status?'ssel set':'ssel';
+    const onlineChip=d.online?'<span class="chip" style="background:rgba(47,143,42,.18);color:#2f8f2a">on</span>':'<span class="chip" style="background:rgba(192,57,43,.16);color:var(--attention)">off</span>';
+    const battTxt=d.battery==null?'—':(d.battery+'%');
+    const lastH=d.hours_since==null?'—':(d.hours_since<24?d.hours_since.toFixed(1):Math.round(d.hours_since/24)+'d');
+    const roomCell=d.room_name+(d.zone_name?` <span class="sdim">/ ${d.zone_name}</span>`:'');
+    return `<tr class="${upgClass}">
+      <td class="mono">${d.serial}</td>
+      <td>${d.model}</td>
+      <td>${d.class_label}</td>
+      <td>${roomCell}</td>
+      <td>${bucketChip(d.bucket)}</td>
+      <td>${onlineChip}</td>
+      <td>${battTxt}</td>
+      <td>${d.rssi==null?'—':d.rssi}</td>
+      <td>${lastH}</td>
+      <td class="mono">${d.fw_version||'—'}</td>
+      <td>${upgInput}${upgM}</td>
+      <td>${quote}</td>
+      <td><select class="${sselClass}" onchange="setStatus('${d.serial}', this.value)">${opts}</select></td>
+    </tr>`;
+  }).join('');
+}
+document.getElementById('q').addEventListener('input',render);
+document.getElementById('fmodel').addEventListener('change',render);
+document.getElementById('fbucket').addEventListener('change',render);
+document.querySelectorAll('#dt th').forEach(th=>{
+  const k=th.dataset.k;if(!k)return;
+  th.addEventListener('click',()=>{if(sortK===k)sortDir=-sortDir;else{sortK=k;sortDir=1;}render();});
+});
+pullSync();
+setInterval(syncNow,20000);
+window.addEventListener('focus',pullSync);
+</script>
+</body></html>
