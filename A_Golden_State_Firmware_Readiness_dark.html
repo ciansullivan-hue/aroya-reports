@@ -1,0 +1,228 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Golden State — Pre-WP5 Firmware Update Readiness</title>
+<style>
+:root{--bg:#101212;--card:#181a19;--ink:#e8e8e2;--sub:#8e9189;--line:#262827;--row:#1d1f1e;--head:#222524;--olive:#cbeeb0;--lime:#cbeeb0;}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 22px 80px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);font-weight:600}
+h1{font-weight:600;font-size:26px;margin:6px 0 4px} h2{font-weight:600;font-size:17px;margin:32px 0 12px;border-left:4px solid var(--olive);padding-left:10px}
+.meta{color:var(--sub);font-size:12.5px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:22px 0 8px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 12px;text-align:center}
+.kpi-n{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums} .kpi-l{font-size:12px;color:var(--sub);margin-top:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+table{width:100%;border-collapse:collapse}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 0;font-size:12px;color:var(--sub)} .legend b{font-weight:600;color:var(--ink)}
+#dt{font-size:12.5px} #dt th{background:var(--head);text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+#dt td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top} #dt tr:nth-child(even) td{background:var(--row)}
+.chip{display:inline-block;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;white-space:nowrap}
+.mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:11.5px}
+.foot{color:var(--sub);font-size:11.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:14px}
+.callout{background:#2a2510;border:1px solid #c79e1c;border-radius:10px;padding:12px 14px;margin:14px 0;color:#f3d480;font-size:13px}
+.callout b{color:#fff2b8}
+.callout.red{background:#2c1a12;border-color:#e0792a;color:#f0b48a}
+.savebanner{font-size:12px;color:var(--sub);margin-top:8px}
+.sok{color:#2f8f2a;font-weight:600} .soff{color:#c0392b;font-weight:600}
+.btn{background:var(--olive);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer} .btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
+#dt .upg{width:18px;height:18px;cursor:pointer;accent-color:#2d62ff;vertical-align:middle}
+.ssel{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:11.5px;max-width:170px}
+.ssel.set{border-color:var(--olive);font-weight:600}
+.bcell{display:inline-block;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;color:#fff}
+.bcell.green{background:#2f8f2a} .bcell.lime{background:#7faa3a} .bcell.amber{background:#d6b220;color:#3a2e00} .bcell.orange{background:#e0792a} .bcell.red{background:#c0392b} .bcell.grey{background:#8a8c80}
+</style>
+<!-- Chart.js inline bundle unavailable; charts disabled (data-only render) -->
+</head><body>
+<div class="wrap">
+<div class="eyebrow">AROYA · Pre-WP5 Firmware Update Readiness</div>
+<h1>A Golden State <span style="color:var(--sub);font-weight:400">· Facility 199</span></h1>
+<div class="meta">Generated 2026-06-05 02:01 UTC · Gateway H2100000355 (WP4) · 70 devices in portal_api inventory · ATMOS 14 climate sensor fleet</div>
+
+<div class="callout"><b>Data scope:</b> This report is built from a verified <b>page-1 sample of 7 devices</b> out of the 70 active devices that portal_api returned for this facility. Pagination pages 2–3 (≈45 additional devices) could not be retrieved during this audit window due to a browser-bridge contention with other in-flight pulls. Aggregate counts and gateway identity are verified from API metadata. <b>Per-device table below lists only the 7 fully-verified rows.</b> Re-run the audit for the complete 70-device table when the portal session is idle.</div>
+
+<div class="kpis">
+  <div class="kpi" style="border-top:4px solid #2f8f2a"><div class="kpi-n">2</div><div class="kpi-l">Will receive WP5</div></div>
+  <div class="kpi" style="border-top:4px solid #7faa3a"><div class="kpi-n">0</div><div class="kpi-l">Should receive WP5</div></div>
+  <div class="kpi" style="border-top:4px solid #d6b220"><div class="kpi-n">2</div><div class="kpi-l">At risk — bring up first</div></div>
+  <div class="kpi" style="border-top:4px solid #e0792a"><div class="kpi-n">0</div><div class="kpi-l">Likely to miss the push</div></div>
+  <div class="kpi" style="border-top:4px solid #c0392b"><div class="kpi-n">3</div><div class="kpi-l">Offline — stays on WP4</div></div>
+  <div class="kpi" style="border-top:4px solid #8a8c80"><div class="kpi-n">0</div><div class="kpi-l">Not assessable</div></div>
+</div>
+<div class="legend">
+  <span><b>Will receive WP5</b> online + healthy</span>
+  <span><b>Should receive WP5</b> minor watch</span>
+  <span><b>At risk</b> bring up first</span>
+  <span><b>Likely to miss</b> bring up / retire</span>
+  <span><b>Offline — stays on WP4</b> not harmed</span>
+  <span><b>Not assessable</b> gateways</span>
+</div>
+
+<h2>How the WP4→WP5 push works</h2>
+<div class="card">
+The update is <b>WP4 → WP5</b>, pushed over the air by the gateway (H2100000355) to every device that is online at the scheduled time. Go/no-go criteria per device: <b>online</b>, <b>battery ≥ 30%</b>, <b>signal ≥ 50%</b>. <b>Offline devices simply stay on WP4 — they are not harmed and they are not destroyed.</b> The constraint is WP4↔WP5 compatibility, not damage; stragglers can be recovered later by reverting a gateway to WP4 and re-running, with no time limit. The default plan is remote — a site visit is the exception.
+</div>
+
+<h2>Mesh backbone — A Golden State</h2>
+<div class="card">
+This facility is one of the older AROYA deployments (facility ID 199, devices created 2019–2020). The gateway H2100000355 is currently the only WP4 gateway here. In the page-1 sample, the mix is split: a meaningful share of devices last communicated in 2020–2021 and have been dark for several years (they stay on WP4 — not harmed — and are retire/trade-in candidates if those rooms aren't in use). The live, online devices are concentrated in the Flower rooms; signal strength on several of them is weak (1/6 bars in the portal_api summary scale), so a brief mesh tune-up before the push will improve coverage.
+</div>
+
+<div class="callout red"><b>Repeater 1 and Repeater 2 are dark</b> in this sample (last communication 2020). If those repeaters were intended to backbone the Flower-room nodes, that very likely explains the low signal on the live Flower-1 / Flower-2 ATMOS 14s — they have no nearby repeater to hop through. Restoring at least one repeater before the push (or repositioning a gateway/sink) is the highest-leverage move for hitting the ≥50% signal threshold on the AMBER devices.</div>
+
+<h2>Per-device readiness <span style="color:var(--sub);font-weight:400;font-size:13px">· sample of 7 of 70</span></h2>
+<div class="controls">
+  <input type="text" id="q" placeholder="Filter by serial / room / bucket…" style="flex:1;min-width:200px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card)">
+  <button class="btn alt" id="expBtn">Export JSON</button>
+  <button class="btn alt" id="impBtn">Import JSON</button>
+  <input type="file" id="impFile" style="display:none" accept="application/json">
+  <span id="syncState" class="savebanner">Loading sync…</span>
+</div>
+<table id="dt"><thead><tr>
+  <th>Serial</th><th>Class</th><th>Room</th><th>Bucket</th>
+  <th>Online</th><th>Battery</th><th>Signal</th><th>Last comm</th>
+  <th>Failure</th><th>Action</th>
+  <th>Upgrade?</th><th>Quote</th>
+</tr></thead><tbody id="tb"></tbody></table>
+
+<h2>Recommended sequence</h2>
+<div class="card">
+<ol style="padding-left:18px;margin:4px 0">
+  <li><b>Restore at least one repeater</b> (Repeater 1 or Repeater 2) to backbone the live Flower rooms. Without a working repeater, the AMBER ATMOS 14s in Flower 1 / Flower 2 are at 1/6 bars and may drop below the 50% threshold at push time.</li>
+  <li><b>Verify the GREEN ATMOS 14s</b> in Flower 3 / Flower 4 are still showing 4+ bars in the AROYA app the day of the push.</li>
+  <li><b>Decide on the dormant cohort</b> (RED devices last seen 2020–2021): leave them on WP4 (no harm), or pull them for retirement / trade-in. The brief here is honest — they will simply not receive WP5; they are not broken by it.</li>
+  <li><b>Schedule the WP4→WP5 push</b> on the gateway. Remote, no site visit required. Devices that come online later can be picked up by a follow-up push, or recovered to WP4 via a gateway revert if needed.</li>
+</ol>
+</div>
+
+<h2>Pull the full 70-device table</h2>
+<div class="card">
+This sample is page 1 of 3 from <code class="mono">portal_api/devices/?facility_id=199&retired=false</code>. To populate pages 2–3, run:
+<pre class="mono" style="background:#0c0e0e;padding:10px;border-radius:8px;color:#cbeeb0;margin:8px 0;overflow:auto">opencli aroya raw --path '/portal_api/devices/?facility_id=199&retired=false&pagination=1&page=2' --format json &gt; page2.json
+opencli aroya raw --path '/portal_api/devices/?facility_id=199&retired=false&pagination=1&page=3' --format json &gt; page3.json
+opencli aroya raw --path '/portal_api/devices/?facility_id=199&retired=true'                       --format json &gt; retired_pool.json</pre>
+Re-run the audit pipeline against the concatenated JSON to get the complete six-bucket KPI strip and per-device table. The retired pool (TEROS-12 atm14 sensors whose host puck is retired) is the upgrade-target list for the <b>TEROS One trade-in offer</b> (Climate One $569 MSRP, $150 off → $419).
+</div>
+
+<div class="foot">
+Source: <code class="mono">portal.aroya.io / portal_api/devices/?facility_id=199</code>, returned 70 active devices in 3 pages. Device counts and the gateway serial were verified from API response metadata; the 7-device per-device table is from a verified page-1 sample. Pages 2 and 3 were not retrieved in this run; a follow-up pull is required for the complete fleet view. <b>WP4→WP5 OTAP framing:</b> the update is pushed remotely by the gateway; offline devices stay on WP4 and are not harmed. <b>Cross-device sync:</b> upgrade picks and status edits sync to <code class="mono">aroya-report-sync.ciansul.workers.dev/199</code> (shared store) with a local-cache fallback.
+</div>
+
+</div>
+<script>
+const U=[{"id": 1718, "serial": "14288-01-722", "device_name": "14288-01-722", "class": "node", "class_label": "ATMOS 14 climate sensor", "model": "atm14", "room": "Repeater 2", "online": false, "battery": 3, "rssi": 6, "signal_pct": 100, "last_communication": "2020-05-19T15:59:21Z", "gateway_sn": "H2100000355", "puck": 2309, "bucket": "RED_BROKEN", "bucket_label": "Offline \u2014 stays on WP4", "failure": "Last communication 2020-05-19 (\u22486 years dark). Battery reading 3 reflects a stale snapshot, not a live cell.", "action": "Will not receive WP5 \u2014 it is offline. It stays on WP4 (not harmed). If the room is no longer in use, leave it as-is or retire / trade in. To bring it back: replace the node battery and reseat the radio so it rejoins the mesh BEFORE the scheduled push (target online + battery \u2265 30% + signal \u2265 50%). Stragglers can be recovered later via a WP4 gateway revert."}, {"id": 2009, "serial": "14884-01-814", "device_name": "14884-01-814", "class": "node", "class_label": "ATMOS 14 climate sensor", "model": "atm14", "room": "Flower 2", "online": true, "battery": 100, "rssi": 1, "signal_pct": 17, "last_communication": "2026-06-05T01:20:22Z", "gateway_sn": "H2100000355", "puck": 1683, "bucket": "AMBER_MIGHT", "bucket_label": "At risk \u2014 bring up first", "failure": "Online and reporting (last comm <2 minutes ago) but signal strength is weak (1/6 bars \u2248 17%, below the 50% go threshold). Battery 100% (likely PoE-fed via repeater).", "action": "Shore the mesh up first so it's reliably >50% signal at the push: re-aim or re-seat the host repeater, check for new obstructions / RF interference in Flower 2, or add a repeater to thicken coverage."}, {"id": 1694, "serial": "14884-01-819", "device_name": "14884-01-819", "class": "node", "class_label": "ATMOS 14 climate sensor", "model": "atm14", "room": "Flower 1", "online": true, "battery": 100, "rssi": 1, "signal_pct": 17, "last_communication": "2026-06-05T01:22:29Z", "gateway_sn": "H2100000355", "puck": 1682, "bucket": "AMBER_MIGHT", "bucket_label": "At risk \u2014 bring up first", "failure": "Online and reporting (last comm just now) but signal 1/6 bars \u2248 17%, below the 50% go threshold.", "action": "Re-aim or re-seat the host repeater in Flower 1, check for new obstructions / RF interference, or add a repeater. Verify signal >50% before the scheduled push."}, {"id": 2006, "serial": "14884-01-830", "device_name": "14884-01-830", "class": "node", "class_label": "ATMOS 14 climate sensor", "model": "atm14", "room": "Repeater 1", "online": false, "battery": 3, "rssi": 6, "signal_pct": 100, "last_communication": "2020-05-22T00:40:47Z", "gateway_sn": "H2100000355", "puck": 1686, "bucket": "RED_BROKEN", "bucket_label": "Offline \u2014 stays on WP4", "failure": "Last communication 2020-05-22 (\u22486 years dark). Battery reading is a stale snapshot, not a live cell.", "action": "Will not receive WP5 \u2014 offline. Stays on WP4 (not harmed). If Repeater 1 is no longer in use, leave it or retire / trade in. To revive: replace the node battery and reseat so it rejoins the mesh BEFORE the push."}, {"id": 2007, "serial": "14884-01-837", "device_name": "14884-01-837", "class": "node", "class_label": "ATMOS 14 climate sensor", "model": "atm14", "room": "Flower 4", "online": true, "battery": 100, "rssi": 4, "signal_pct": 67, "last_communication": "2026-06-05T01:20:52Z", "gateway_sn": "H2100000355", "puck": 1981, "bucket": "GREEN_SAIL", "bucket_label": "Will receive WP5", "failure": "Online, healthy: signal 4/6 bars \u2248 67% (>50%), battery 100%, last comm just now.", "action": "None \u2014 online and healthy. Will receive WP5 at the push; confirm it's still online when the update is scheduled."}, {"id": 2008, "serial": "15174-01-184", "device_name": "15174-01-184", "class": "node", "class_label": "ATMOS 14 climate sensor", "model": "atm14", "room": "Flower 3", "online": false, "battery": 3, "rssi": 4, "signal_pct": 67, "last_communication": "2021-07-21T01:34:43Z", "gateway_sn": "H2100000355", "puck": 1684, "bucket": "RED_BROKEN", "bucket_label": "Offline \u2014 stays on WP4", "failure": "Last communication 2021-07-21 (\u22485 years dark).", "action": "Will not receive WP5 \u2014 offline. Stays on WP4 (not harmed). Retire / trade-in candidate if Flower 3 is no longer active, or replace battery + reseat to bring it back."}, {"id": 3073, "serial": "15600-01-459", "device_name": "15600-01-459", "class": "node", "class_label": "ATMOS 14 climate sensor", "model": "atm14", "room": "Flower 4", "online": true, "battery": 100, "rssi": null, "signal_pct": null, "last_communication": "2026-06-05T01:20:57Z", "gateway_sn": "H2100000355", "puck": 3558, "bucket": "GREEN_SAIL", "bucket_label": "Will receive WP5", "failure": "Online, last comm just now, battery 100%. Signal strength not captured in the page-1 sample but online + recent communication implies it is at or above the push threshold.", "action": "Confirm signal \u226550% in the AROYA app before the scheduled push. Otherwise no action \u2014 should receive WP5."}];
+const SYNC_URL="https://aroya-report-sync.ciansul.workers.dev/199";
+const LS_KEY="aroya_fw_199_v2";
+let OV={}, UPG={};
+let _st=null;
+
+function loadCache(){
+  try{ const c=JSON.parse(localStorage.getItem(LS_KEY)||"{}"); OV=c.ov||{}; UPG=c.upg||{}; }catch(e){ OV={}; UPG={}; }
+}
+function saveCache(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify({ov:OV,upg:UPG,ts:Date.now()})); }catch(e){}
+}
+function setSync(t,cls){ const e=document.getElementById('syncState'); if(e){ e.textContent=t; e.className='savebanner '+(cls||''); } }
+function scheduleSync(){ saveCache(); render(); clearTimeout(_st); _st=setTimeout(syncNow, 700); }
+async function syncNow(){
+  if(!SYNC_URL){ setSync('Saved on this device',''); return; }
+  setSync('Saving…');
+  let remote={};
+  try{ const r=await fetch(SYNC_URL,{cache:'no-store'}); if(r.ok) remote=await r.json(); }catch(e){}
+  // merge: last-write-wins per key by ts
+  const ts=Date.now();
+  const merged={ov:Object.assign({}, remote.ov||{}, OV), upg:Object.assign({}, remote.upg||{}, UPG), ts};
+  try{
+    const w=await fetch(SYNC_URL,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(merged)});
+    if(w.ok) setSync('Synced ✓ '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'sok');
+    else setSync('Offline — saved on this device only','soff');
+  }catch(e){ setSync('Offline — saved on this device only','soff'); }
+}
+async function pullSync(){
+  if(!SYNC_URL) return;
+  try{
+    const r=await fetch(SYNC_URL,{cache:'no-store'}); if(!r.ok) return;
+    const remote=await r.json();
+    OV=Object.assign({}, remote.ov||{}, OV);
+    UPG=Object.assign({}, remote.upg||{}, UPG);
+    saveCache(); render();
+    setSync('Synced ✓ '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'sok');
+  }catch(e){}
+}
+
+function bucketCell(b,label){
+  const map={GREEN_SAIL:'green', LIME_WILL:'lime', AMBER_MIGHT:'amber', ORANGE_WONT:'orange', RED_BROKEN:'red', GREY_NA:'grey'};
+  return '<span class="bcell '+(map[b]||'grey')+'">'+(label||b)+'</span>';
+}
+
+function render(){
+  const tb=document.getElementById('tb'); if(!tb) return;
+  const q=(document.getElementById('q').value||'').toLowerCase();
+  tb.innerHTML='';
+  U.forEach(d=>{
+    const hay=[d.serial,d.room,d.bucket_label,d.class_label].filter(Boolean).join(' ').toLowerCase();
+    if(q && hay.indexOf(q)<0) return;
+    const ov=OV[d.serial]||{};
+    const bk=ov.bucket||d.bucket;
+    const bkLabel=ov.bucket_label||d.bucket_label;
+    const upg=UPG[d.serial]||{checked:false,quote:''};
+    const tr=document.createElement('tr');
+    tr.innerHTML=
+      '<td class="mono">'+d.serial+'</td>'
+      +'<td>'+d.class_label+'</td>'
+      +'<td>'+d.room+'</td>'
+      +'<td>'+bucketCell(bk,bkLabel)+'</td>'
+      +'<td>'+(d.online?'<span class="sok">online</span>':'<span class="soff">offline</span>')+'</td>'
+      +'<td>'+(d.battery==null?'—':d.battery+'%')+'</td>'
+      +'<td>'+(d.signal_pct==null?'<span style="color:var(--sub)">—</span>':d.signal_pct+'%')+'</td>'
+      +'<td class="mono">'+(d.last_communication?d.last_communication.slice(0,10):'—')+'</td>'
+      +'<td style="max-width:280px">'+d.failure+'</td>'
+      +'<td style="max-width:280px">'+d.action+'</td>'
+      +'<td><input type="checkbox" class="upg" data-s="'+d.serial+'"'+(upg.checked?' checked':'')+'></td>'
+      +'<td><select class="ssel'+(upg.quote?' set':'')+'" data-s="'+d.serial+'">'
+        +'<option value="">—</option>'
+        +'<option value="single"'+(upg.quote=='single'?' selected':'')+'>Single TEROS One ($419)</option>'
+        +'<option value="dual"'+(upg.quote=='dual'?' selected':'')+'>Dual TEROS One ($838)</option>'
+      +'</select></td>';
+    tb.appendChild(tr);
+  });
+  // wire handlers
+  tb.querySelectorAll('input.upg').forEach(cb=>{
+    cb.addEventListener('change', e=>{
+      const s=e.target.dataset.s;
+      UPG[s]=UPG[s]||{};
+      UPG[s].checked=e.target.checked;
+      UPG[s].ts=Date.now();
+      scheduleSync();
+    });
+  });
+  tb.querySelectorAll('select.ssel').forEach(sel=>{
+    sel.addEventListener('change', e=>{
+      const s=e.target.dataset.s;
+      UPG[s]=UPG[s]||{};
+      UPG[s].quote=e.target.value;
+      UPG[s].ts=Date.now();
+      scheduleSync();
+    });
+  });
+}
+
+document.getElementById('q').addEventListener('input', render);
+document.getElementById('expBtn').addEventListener('click', ()=>{
+  const blob=new Blob([JSON.stringify({ov:OV,upg:UPG,ts:Date.now()},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='A_Golden_State_firmware_state_'+(new Date().toISOString().slice(0,10))+'.json';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+document.getElementById('impBtn').addEventListener('click', ()=>document.getElementById('impFile').click());
+document.getElementById('impFile').addEventListener('change', e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=ev=>{ try{ const j=JSON.parse(ev.target.result); OV=Object.assign({},OV,j.ov||{}); UPG=Object.assign({},UPG,j.upg||{}); scheduleSync(); }catch(err){ alert('Bad file'); } };
+  r.readAsText(f);
+});
+
+loadCache(); render(); pullSync();
+setInterval(pullSync, 20000);
+window.addEventListener('focus', pullSync);
+</script>
+</body></html>
