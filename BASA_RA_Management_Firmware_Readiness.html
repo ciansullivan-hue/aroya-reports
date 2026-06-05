@@ -1,0 +1,283 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BASA: RA Management — Pre-WP5 Firmware Update Readiness</title>
+<style>:root{--bg:#f4f4ef;--card:#fff;--ink:#1a1c19;--sub:#666;--line:#e6e6df;--row:#fafaf6;--head:#f0f0e8;--olive:#635e51;--lime:#cbeeb0;--app-blue:#2d62ff;--attention:#c0392b;}*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 22px 80px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);font-weight:600}
+h1{font-weight:600;font-size:26px;margin:6px 0 4px}
+h2{font-weight:600;font-size:17px;margin:32px 0 12px;border-left:4px solid var(--olive);padding-left:10px}
+.meta{color:var(--sub);font-size:12.5px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:22px 0 8px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 12px;text-align:center}
+.kpi-n{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi-l{font-size:12px;color:var(--sub);margin-top:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.callout{border-left:4px solid var(--app-blue);background:var(--row);padding:12px 14px;border-radius:8px;margin:14px 0;font-size:13px}
+.callout.warn{border-color:#e0792a}
+.callout.alert{border-color:var(--attention)}
+table{width:100%;border-collapse:collapse}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 0;font-size:12px;color:var(--sub)} .legend b{font-weight:600;color:var(--ink)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
+.controls input[type=text],.controls select{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px}
+#q{flex:1;min-width:200px}
+.btn{background:var(--olive);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+#dt{font-size:12.5px}
+#dt th{background:var(--head);text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer}
+#dt td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+#dt tr:nth-child(even) td{background:var(--row)}
+#dt tr.mkup td{box-shadow:inset 3px 0 0 var(--app-blue);background:rgba(45,98,255,.06)!important}
+.chip{display:inline-block;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;white-space:nowrap}
+.mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:11.5px}
+.savebanner{font-size:12px;color:var(--sub);margin-top:8px}
+.savebanner.ok{color:#2f8f2a;font-weight:600}
+.savebanner.err{color:var(--attention)}
+.foot{color:var(--sub);font-size:11.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:14px}
+.tally{position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;gap:18px;align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+.tally .big{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.tally .t{font-size:12px;color:var(--sub)} .tally .t b{color:var(--ink);font-size:14px;font-variant-numeric:tabular-nums}
+.upg{width:18px;height:18px;cursor:pointer;accent-color:var(--app-blue);vertical-align:middle}
+.upgm{margin-top:4px;font-size:11px;border:1px solid var(--app-blue);border-radius:5px;padding:2px 4px;background:var(--card);color:var(--ink)}
+.ssel{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:11.5px;max-width:170px}
+.ssel.set{border-color:var(--olive);font-weight:600}
+.pricegrid{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 4px;font-size:13px}
+.pricefix{font-size:13px;color:var(--ink)} .pricefix .sdim{font-size:11.5px;color:var(--sub)}
+.plan{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+.pcard{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.pcard .pn{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.pcard .pl{font-size:12px;color:var(--sub)}</style></head><body><div class="wrap">
+
+<div class="eyebrow">AROYA · Pre-WP5 Firmware Update Readiness</div>
+<h1>BASA: RA Management <span style="color:var(--sub);font-weight:400">· Facility 2553</span></h1>
+<div class="meta">Generated 2026-06-05 01:33:24 UTC · 59 devices on file · 1 WP4 gateway (H2100002136)</div>
+
+<div class="kpis">
+  <div class="kpi" style="border-top:4px solid #2f8f2a"><div class="kpi-n">0</div><div class="kpi-l">GREEN — Will receive WP5</div></div>
+  <div class="kpi" style="border-top:4px solid #d6b220"><div class="kpi-n">0</div><div class="kpi-l">YELLOW — Recoverable</div></div>
+  <div class="kpi" style="border-top:4px solid #c0392b"><div class="kpi-n">0</div><div class="kpi-l">RED — Offline / stays on WP4</div></div>
+  <div class="kpi" style="border-top:4px solid var(--app-blue)"><div class="kpi-n">1</div><div class="kpi-l">GATEWAY — WP4 to flash</div></div>
+  <div class="kpi" style="border-top:4px solid #8a8c80"><div class="kpi-n">0</div><div class="kpi-l">Retired — Upgrade pool</div></div>
+  <div class="kpi" style="border-top:4px solid #555"><div class="kpi-n">0</div><div class="kpi-l">Legacy — RMA</div></div>
+</div>
+<div class="legend">
+  <span><b>GREEN</b> online &amp; healthy → ready for WP5</span>
+  <span><b>YELLOW</b> bring up first (battery/signal) before push</span>
+  <span><b>RED</b> offline — stays on WP4 unharmed; recover later or trade in</span>
+  <span><b>GATEWAY</b> WP4 gateway scheduled for WP5 push</span>
+  <span><b>RETIRED</b> retired TEROS-12 / Atmos-14 → TEROS One / Climate One trade-in</span>
+</div>
+
+<div class="callout alert">
+  <b>Important — Facility status:</b> All 59 devices in this inventory currently return <b>no telemetry</b> via the AROYA public_api chart endpoint across every window tested from June 2025 through June 2026. The 10 configured rooms (Veg, Flower 1, Dry Room, MGF Rooms A–I) all read null on temp / VWC / VPD over the last 24 h. <b>This facility appears dormant on this token's view.</b> All 58 non-gateway devices are flagged <b>Pending verify in app</b> — the live battery / signal / lastComm read must be pulled inside app.aroya.io before scheduling the WP4 → WP5 push. <i>The retired-upgrade pool view (TEROS-12 / Atmos-14 retired but host node retired flag) needs portal_api access not available from this run.</i>
+</div>
+
+<div class="card">
+  <b>Mesh backbone:</b> 1 gateway (<span class="mono">H2100002136</span>), 1 sink, 4 repeaters, 25 substrate nodes, 25 TEROS-12 probes, 3 Atmos-14 sensors. The gateway updates to WP5 and pushes the new firmware to every device online at the scheduled time. Devices that are offline at push time <b>stay on WP4 — they are not harmed</b>. Bring them online before the push to receive WP5; otherwise recover later via WP4 gateway revert, or retire / trade in.
+</div>
+
+<h2>WP4 → WP5 OTAP — what happens at the scheduled push</h2>
+<div class="card">
+  <ul style="margin:0;padding-left:20px">
+    <li>AROYA pushes WP5 over the air from the gateway. <b>No site visit is required by default</b>; the gateway flashes itself and propagates to every device online at the scheduled minute.</li>
+    <li><b>Go / no-go per device:</b> online at push time, battery ≥ 30 %, signal (RSSI) ≥ 50 %.</li>
+    <li><b>Offline devices stay on WP4 — they are not bricked.</b> They keep running on WP4 firmware. To bring them onto WP5 later, either (a) bring the device online before the next scheduled push, or (b) revert the gateway to WP4 temporarily and re-run the push.</li>
+    <li><b>Recovery is reversible:</b> a gateway can be reverted to WP4 with no time limit, so stragglers can always be picked up later.</li>
+    <li>Battery-class devices (substrate nodes + TEROS-12 probes) are the only ones on battery; everything else (gateway, sink, repeaters, atm14 climate stations) is PoE. PoE devices generally come back online automatically with cable / power restored.</li>
+  </ul>
+</div>
+
+<h2>Action plan</h2>
+<div class="plan">
+  <div class="pcard"><div class="pn">1</div><div class="pl">Open app.aroya.io · Facility 2553 · verify gateway H2100002136 + sink + 4 repeaters are online. Without the mesh backbone alive the push will not propagate.</div></div>
+  <div class="pcard"><div class="pn">2</div><div class="pl">Walk the 25 substrate nodes + 25 TEROS-12 probes in app — confirm each shows recent lastComm, battery ≥ 30 %, signal ≥ 50 %. Anything red gets one of: bring online, swap battery, replace, or accept it stays on WP4.</div></div>
+  <div class="pcard"><div class="pn">3</div><div class="pl">Schedule the WP4 → WP5 push for facility 2553 once the in-app verification confirms green-readiness counts. Mark devices to retire / trade in here using the checkboxes below; the state syncs across every device that opens this report.</div></div>
+</div>
+
+<h2>Device inventory (59 devices)</h2>
+<div class="callout warn">Use the checkboxes to mark a device for upgrade (TEROS-12 → TEROS One, Atmos-14 → Climate One). The dropdown next to each row records the operator status (revived, scheduled, won't fix). All edits sync across devices via <span class="mono">https://aroya-report-sync.ciansul.workers.dev/2553</span>.</div>
+
+<div class="tally">
+  <div><span class="big" id="t_total">59</span> <span class="t">devices on file</span></div>
+  <div><span class="t">Marked for upgrade: <b id="t_upg">0</b></span></div>
+  <div><span class="t">Marked revived: <b id="t_rev">0</b></span></div>
+  <div><span class="t">Marked scheduled: <b id="t_sch">0</b></span></div>
+  <div><span class="t">Marked won't-fix: <b id="t_wf">0</b></span></div>
+  <div style="margin-left:auto"><span class="savebanner" id="syncState">Loading…</span></div>
+</div>
+
+<div class="controls">
+  <input type="text" id="q" placeholder="Filter serial, room, model, bucket…">
+  <select id="fmodel"><option value="">all models</option><option>node</option><option>ter12</option><option>atm14</option><option>repeater</option><option>gateway</option><option>sink</option></select>
+  <select id="fbucket"><option value="">all buckets</option><option>GATEWAY-WP4</option><option>PENDING-VERIFY</option></select>
+  <button class="btn alt" onclick="exportState()">Export</button>
+  <button class="btn alt" onclick="document.getElementById('importFile').click()">Import</button>
+  <input type="file" id="importFile" style="display:none" accept=".json" onchange="importState(event)">
+</div>
+
+<div style="overflow-x:auto">
+<table id="dt"><thead><tr>
+  <th data-k="serial">Serial</th>
+  <th data-k="model">Model</th>
+  <th data-k="class_label">Class</th>
+  <th data-k="room_name">Room</th>
+  <th data-k="bucket">Bucket</th>
+  <th data-k="upg">Upgrade?</th>
+  <th>Trade-in quote</th>
+  <th>Operator status</th>
+</tr></thead><tbody id="rows"></tbody></table></div>
+
+<h2>Trade-in pricing — fixed</h2>
+<div class="card pricefix">
+  <div class="pricegrid">
+    <div><b>TEROS One (substrate)</b><br>MSRP $569 · <b>$150 off → $419</b> (dual sensor)<br><span class="sdim">Replaces a retired TEROS-12 whose host node is also retired.</span></div>
+    <div><b>Climate One (climate)</b><br>MSRP $569 · <b>$150 off → $419</b> (single sensor)<br><span class="sdim">Replaces an Atmos-14 sensor; PoE.</span></div>
+  </div>
+</div>
+
+<h2>Data quality &amp; what's missing from this view</h2>
+<div class="card">
+  <ul style="margin:0;padding-left:20px">
+    <li><b>portal_api retired-pool view not pulled:</b> the retired-TEROS-12 / Atmos-14 inventory (with host-node retired-flag) lives in <span class="mono">/portal_api/devices/?facility_id=2553&amp;retired=true</span>, which requires the portal.aroya.io browser-session token (not available in this run). The upgrade-pool figure should be re-pulled with opencli before the customer call.</li>
+    <li><b>Per-device firmware / battery / RSSI / lastComm not pulled:</b> the public_api <span class="mono">/devices/{id}/chart/</span> endpoint returned empty across every test window (June 2025 → June 2026). Per-device telemetry must come from the AROYA app or from <span class="mono">/portal_api/devices/?facility_id=2553</span>.</li>
+    <li><b>Room assignments incomplete:</b> only 2 of 59 devices are assigned to a room (both in Veg); the other 57 are unassigned in this token's view. This is the strongest signal that the facility is partially or fully dormant.</li>
+    <li><b>Single token may have limited tenancy view:</b> if a different operator token has authoritative access, repeat the inventory pull with that token before scheduling the push.</li>
+  </ul>
+</div>
+
+<div class="foot">
+  WP4 → WP5 OTAP firmware update. State persisted via <span class="mono">https://aroya-report-sync.ciansul.workers.dev/2553</span> · per-entry timestamped last-write-wins · localStorage offline cache · this report was generated against the AROYA public_api token and should be re-verified inside app.aroya.io before scheduling.
+</div>
+
+</div>
+<script>
+const DEVS=[{"id":22141,"serial":"16781-01-501","model":"atm14","class":"atm14_orphan","class_label":"Atmos-14 sensor","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"Climate One"},{"id":22140,"serial":"16781-01-516","model":"atm14","class":"atm14_orphan","class_label":"Atmos-14 sensor","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"Climate One"},{"id":22137,"serial":"16782-01-620","model":"atm14","class":"unknown","class_label":"Unknown (16782-)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"Climate One"},{"id":22134,"serial":"H1100002297","model":"repeater","class":"repeater","class_label":"Repeater (legacy H110)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22139,"serial":"H1110002826","model":"repeater","class":"repeater","class_label":"Repeater (range extender)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22136,"serial":"H1110002828","model":"repeater","class":"repeater","class_label":"Repeater (range extender)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22138,"serial":"H1110002832","model":"repeater","class":"repeater","class_label":"Repeater (range extender)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22133,"serial":"H2100002136","model":"gateway","class":"gateway","class_label":"Gateway (mesh \u2192 cloud)","room_id":null,"room_name":"(unassigned)","bucket":"GATEWAY-WP4","bucket_label":"Gateway (WP4 \u2014 to be flashed)","upg_eligible":false,"upg_target":null},{"id":22143,"serial":"H3110006998","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22179,"serial":"H3110008091","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22168,"serial":"H3110008093","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22211,"serial":"H3110008096","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22152,"serial":"H3110008119","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22172,"serial":"H3110008120","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22177,"serial":"H3110008121","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22162,"serial":"H3110008152","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22153,"serial":"H3110008155","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22159,"serial":"H3110008159","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22165,"serial":"H3110008161","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22151,"serial":"H3110008162","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22223,"serial":"H3110008184","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22219,"serial":"H3110008189","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22227,"serial":"H3110008191","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22208,"serial":"H3110008195","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22156,"serial":"H3110008197","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22215,"serial":"H3110008198","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":4555,"room_name":"Veg","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22183,"serial":"H3110008200","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22198,"serial":"H3110008204","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22195,"serial":"H3110008205","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22188,"serial":"H3110008206","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22204,"serial":"H3110008209","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22192,"serial":"H3110008211","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":29971,"serial":"H3110011806","model":"node","class":"node","class_label":"Substrate node (radio host)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22127,"serial":"SINKH2100002136","model":"sink","class":"sink","class_label":"Sink (mesh root)","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":false,"upg_target":null},{"id":22212,"serial":"T12-00037653","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22216,"serial":"T12-00037655","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22225,"serial":"T12-00037657","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22175,"serial":"T12-00037662","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22209,"serial":"T12-00037663","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22170,"serial":"T12-00037667","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22182,"serial":"T12-00037670","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22220,"serial":"T12-00037671","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22178,"serial":"T12-00037689","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22186,"serial":"T12-00037736","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22201,"serial":"T12-00037746","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22164,"serial":"T12-00037784","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22206,"serial":"T12-00037793","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22193,"serial":"T12-00037796","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22189,"serial":"T12-00037801","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22197,"serial":"T12-00037804","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22234,"serial":"T12-00037809","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22237,"serial":"T12-00037842","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22231,"serial":"T12-00037845","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":4555,"room_name":"Veg","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22228,"serial":"T12-00037848","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22157,"serial":"T12-00037850","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22161,"serial":"T12-00037853","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":22146,"serial":"T12-00037902","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":24481,"serial":"T12-00040636","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"},{"id":29972,"serial":"T12-00048678","model":"ter12","class":"ter12_probe","class_label":"TEROS-12 substrate probe","room_id":null,"room_name":"(unassigned)","bucket":"PENDING-VERIFY","bucket_label":"Pending verify in app","upg_eligible":true,"upg_target":"TEROS One"}];
+const SYNC_URL="https://aroya-report-sync.ciansul.workers.dev/2553";
+const CACHE="aroya_2553_state_v2";
+const STATUS=[["","—"],["revived","✓ Fixed / reporting"],["scheduled","◐ Scheduled fix"],["wontfix","✕ Won't fix / retire"]];
+const DUAL_NET=419,SINGLE_NET=419;
+let OV={}, UPG={};
+(function(){try{const c=JSON.parse(localStorage.getItem(CACHE));if(c){OV=c.ov||{};UPG=c.upg||{};}}catch(e){}})();
+function saveCache(){try{localStorage.setItem(CACHE,JSON.stringify({ov:OV,upg:UPG}));}catch(e){}}
+function statusOf(s){return (OV[s]&&OV[s].status)||"";}
+function modelOf(s){return (UPG[s]&&UPG[s].model)||null;}
+function isUpgEligible(d){return d.model==='ter12'||d.model==='atm14';}
+function setSync(t,cls){const e=document.getElementById('syncState');if(e){e.textContent=t;e.className='savebanner '+(cls||'');}}
+function mergeTs(local,remote){const out={};const ks=new Set([...Object.keys(local||{}),...Object.keys(remote||{})]);
+  ks.forEach(k=>{const a=local[k],b=remote[k];out[k]=(!a)?b:(!b)?a:(((b.ts||0)>(a.ts||0))?b:a);});return out;}
+let _st=null;
+function scheduleSync(){saveCache();render();clearTimeout(_st);_st=setTimeout(syncNow,700);}
+async function syncNow(){
+  if(!SYNC_URL){saveCache();render();setSync('Saved locally','');return;}
+  setSync('Saving…');
+  let remote=null;
+  try{const r=await fetch(SYNC_URL,{cache:'no-store'});if(r.ok)remote=await r.json();}catch(e){}
+  if(remote){OV=mergeTs(OV,remote.ov||{});UPG=mergeTs(UPG,remote.upg||{});}
+  saveCache();
+  try{
+    const w=await fetch(SYNC_URL,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({ov:OV,upg:UPG})});
+    if(w.ok){setSync('Synced ✓','ok');}else{setSync('Sync error '+w.status,'err');}
+  }catch(e){setSync('Offline (cached)','err');}
+  render();
+}
+async function pullSync(){
+  if(!SYNC_URL){render();return;}
+  setSync('Loading…');
+  try{
+    const r=await fetch(SYNC_URL,{cache:'no-store'});
+    if(r.ok){const remote=await r.json();OV=mergeTs(OV,remote.ov||{});UPG=mergeTs(UPG,remote.upg||{});saveCache();setSync('Synced ✓','ok');}
+    else{setSync('Offline (cached)','err');}
+  }catch(e){setSync('Offline (cached)','err');}
+  render();
+}
+function exportState(){
+  const blob=new Blob([JSON.stringify({ov:OV,upg:UPG,facility_id:2553,exported_at:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='basa_ra_management_firmware_state.json';a.click();
+}
+function importState(ev){
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.ov)OV=mergeTs(OV,d.ov);if(d.upg)UPG=mergeTs(UPG,d.upg);saveCache();scheduleSync();}catch(e){alert('Bad import file');}};r.readAsText(f);
+}
+function setStatus(serial,val){
+  const ts=Date.now();
+  if(val){OV[serial]={status:val,ts};}else{OV[serial]={status:'',ts};}
+  scheduleSync();
+}
+function setUpg(serial,model){
+  const ts=Date.now();
+  if(model){UPG[serial]={model,ts};}else{UPG[serial]={model:null,ts};}
+  scheduleSync();
+}
+let sortK='serial',sortDir=1;
+function bucketChip(b){
+  if(b==='GATEWAY-WP4')return '<span class="chip" style="background:rgba(45,98,255,.15);color:var(--app-blue)">GATEWAY-WP4</span>';
+  if(b==='PENDING-VERIFY')return '<span class="chip" style="background:rgba(214,178,32,.15);color:#a68a18">PENDING-VERIFY</span>';
+  return '<span class="chip">'+b+'</span>';
+}
+function render(){
+  const q=(document.getElementById('q').value||'').toLowerCase();
+  const fm=document.getElementById('fmodel').value;
+  const fb=document.getElementById('fbucket').value;
+  let rows=DEVS.filter(d=>{
+    if(fm&&d.model!==fm)return false;
+    if(fb&&d.bucket!==fb)return false;
+    if(q){
+      const hay=(d.serial+' '+d.model+' '+d.class_label+' '+d.room_name+' '+d.bucket).toLowerCase();
+      if(!hay.includes(q))return false;
+    }
+    return true;
+  });
+  rows.sort((a,b)=>{
+    const va=a[sortK]||'',vb=b[sortK]||'';
+    if(va<vb)return -1*sortDir;if(va>vb)return 1*sortDir;return 0;
+  });
+  let upgN=0,rev=0,sch=0,wf=0;
+  DEVS.forEach(d=>{
+    if(modelOf(d.serial))upgN++;
+    const s=statusOf(d.serial);
+    if(s==='revived')rev++;else if(s==='scheduled')sch++;else if(s==='wontfix')wf++;
+  });
+  document.getElementById('t_upg').textContent=upgN;
+  document.getElementById('t_rev').textContent=rev;
+  document.getElementById('t_sch').textContent=sch;
+  document.getElementById('t_wf').textContent=wf;
+  const tb=document.getElementById('rows');
+  tb.innerHTML=rows.map(d=>{
+    const upg=modelOf(d.serial);
+    const upgClass=upg?'mkup':'';
+    const status=statusOf(d.serial);
+    const eligible=isUpgEligible(d);
+    const upgTarget=d.model==='ter12'?'TEROS One':(d.model==='atm14'?'Climate One':'');
+    const upgChecked=upg?'checked':'';
+    const upgInput=eligible?
+      `<input type="checkbox" class="upg" ${upgChecked} onchange="setUpg('${d.serial}', this.checked?'${upgTarget}':null)">`:
+      '<span class="sdim">—</span>';
+    const upgM=upg?`<div class="upgm">→ ${upg}</div>`:'';
+    const quote=upg?`<div class="mono">$${DUAL_NET}</div>`:'<span class="sdim">—</span>';
+    const opts=STATUS.map(([v,l])=>`<option value="${v}" ${status===v?'selected':''}>${l}</option>`).join('');
+    const sselClass=status?'ssel set':'ssel';
+    return `<tr class="${upgClass}">
+      <td class="mono">${d.serial}</td>
+      <td>${d.model}</td>
+      <td>${d.class_label}</td>
+      <td>${d.room_name}</td>
+      <td>${bucketChip(d.bucket)}</td>
+      <td>${upgInput}${upgM}</td>
+      <td>${quote}</td>
+      <td><select class="${sselClass}" onchange="setStatus('${d.serial}', this.value)">${opts}</select></td>
+    </tr>`;
+  }).join('');
+}
+document.getElementById('q').addEventListener('input',render);
+document.getElementById('fmodel').addEventListener('change',render);
+document.getElementById('fbucket').addEventListener('change',render);
+document.querySelectorAll('#dt th').forEach(th=>{
+  const k=th.dataset.k;if(!k)return;
+  th.addEventListener('click',()=>{if(sortK===k)sortDir=-sortDir;else{sortK=k;sortDir=1;}render();});
+});
+// Initial load + sync wiring
+pullSync();
+setInterval(syncNow,20000);
+window.addEventListener('focus',pullSync);
+</script>
+</body></html>
