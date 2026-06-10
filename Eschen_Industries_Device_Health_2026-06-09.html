@@ -132,16 +132,42 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
 
 /* ── Footer ── */
 .foot{color:var(--sub);font-size:11.5px;margin-top:36px;border-top:1px solid var(--line);padding-top:14px}
+
+/* ── Wordmark ── */
+.mast-row{display:flex;justify-content:space-between;align-items:flex-start}
+.mast-left{flex:1}
+.wordmark{display:flex;align-items:center;gap:8px;padding-top:2px}
+.wordmark-glyph{display:grid;grid-template-columns:repeat(3,7px);grid-template-rows:repeat(3,7px);gap:2px}
+.g1{background:#3d3a32;border-radius:2px}
+.g0{background:transparent}
+.wordmark-text{display:flex;flex-direction:column;line-height:1.1}
+.wordmark-name{font-size:14px;font-weight:600;letter-spacing:.04em;color:#3d3a32}
+.wordmark-by{font-size:9px;font-weight:400;color:#999;letter-spacing:.06em;text-transform:uppercase}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <!-- ── Masthead ── -->
-<div class="eyebrow">AROYA · Device Health Report</div>
-<h1>Eschen Industries <span>· Facility 2851</span></h1>
-<div class="meta">Generated 2026-06-09 · 244 active devices · WP4→WP5 firmware readiness · warranty eligibility · TEROS One trade-in</div>
-<div id="syncState" class="savebanner">Connecting…</div>
+<div class="mast-row">
+  <div class="mast-left">
+    <div class="eyebrow">AROYA · Device Health Report</div>
+    <h1>Eschen Industries <span>· Facility 2851</span></h1>
+    <div class="meta">Generated 2026-06-09 · 244 active devices · WP4→WP5 firmware readiness · warranty eligibility · TEROS One trade-in</div>
+    <div id="syncState" class="savebanner">Connecting…</div>
+  </div>
+  <div class="wordmark">
+    <div class="wordmark-glyph">
+      <div class="g1"></div><div class="g1"></div><div class="g1"></div>
+      <div class="g0"></div><div class="g1"></div><div class="g0"></div>
+      <div class="g0"></div><div class="g1"></div><div class="g0"></div>
+    </div>
+    <div class="wordmark-text">
+      <span class="wordmark-name">AROYA</span>
+      <span class="wordmark-by">by Addium</span>
+    </div>
+  </div>
+</div>
 
 <!-- ── KPI strip ── -->
 <div class="kpis">
@@ -163,8 +189,9 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
 
 <!-- ════ FIRMWARE ════════════════════════════════════════════════ -->
 <div class="panel on" id="panel-fw">
-  <div class="card info"><strong>How the WP5 push works:</strong> The gateway sends WP5 over-the-air to every node that is online at the scheduled push time with battery ≥ 30 % and signal ≥ 50 %. Nodes that are offline simply stay on WP4 — not harmed, not bricked. Bring offline nodes online before the push to include them. Any that miss it can be recovered later via a WP4 gateway revert + re-run with no time limit.</div>
+  <div class="card info"><strong>How the WP5 push works:</strong> The gateway sends WP5 over-the-air to every node that is online at the scheduled push time with battery ≥ 30 % and signal ≥ 50 %. Nodes that are offline simply stay on WP4 — not harmed, not bricked. Bring offline nodes online before the push to include them. Any that miss it can be recovered later via a WP4 gateway revert + re-run with no time limit. <strong>Target WP5 version: <span class="mono">2.2.1.0</span></strong> (all 39 devices already on WP5 are running this version). WP4 fleet splits across two sub-versions: <span class="mono">1.2.2.0</span> (29 devices) and <span class="mono">1.2.1.0</span> (12 devices) — both receive the same WP5 push; no separate action needed per sub-version.</div>
   <div class="card warn"><strong>Large Dry has 6 of the 17 offline WP4 nodes.</strong> All created June 2021. That room will remain on WP4 unless those nodes come online before the push — WP4 and WP5 nodes cannot relay for each other in the same subnet.</div>
+  <div class="card" style="border-left:3px solid var(--olive)"><strong>The "41 ready for WP5" and the "41 TEROS-12 trade-ins" are not the same 41 devices</strong> — it's a numerical coincidence. The firmware update applies to <em>radio nodes</em> (H3xx serial prefix) that carry WP4 firmware. The TEROS-12 trade-in applies to <em>substrate sensors</em> (ter12 model) plugged into those nodes. These are separate physical hardware on the same assembly; replacing or upgrading the sensor does not affect the node's firmware, and vice versa. If you want to retire a sensor <em>before</em> the firmware push, do so via a WP4 gateway revert so the node stays eligible.</div>
 
   <div class="controls">
     <input type="text" id="fw-q" placeholder="Filter by serial or room…" oninput="filterFW()">
