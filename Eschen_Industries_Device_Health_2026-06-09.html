@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eschen Industries — Device Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --olive:#635e51;--olive-h:#6c6759;--lime:#cbeeb0;--lime-h:#b7d89e;
+  --app-dark:#1c2632;--app-darker:#071538;--warm-gray:#c7c8c2;
+  --bg:#f9f9f9;--card:#fff;--border:#ebebea;
+  --t1:#1a1c19;--t2:#444;--t3:#888;
+  --ok-bg:#cef5ca;--ok-fg:#114e0b;
+  --wa-bg:#fcf8d8;--wa-fg:#5e5515;
+  --er-bg:#f8e4e4;--er-fg:#3b0b0b;
+  --r:12px;--font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono','Courier New',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--font);font-size:14px;color:var(--t1);line-height:1.5}
+
+/* ── header ── */
+.hdr{background:var(--app-dark);color:#fff;padding:18px 28px 14px}
+.hdr h1{font-size:1.2rem;font-weight:500;letter-spacing:-.02em}
+.hdr .sub{font-size:.8rem;color:var(--warm-gray);margin-top:3px}
+.savebanner{font-size:.75rem;margin-top:8px;padding:4px 10px;border-radius:6px;display:inline-block;background:rgba(255,255,255,.1);color:var(--warm-gray)}
+.savebanner.sok{background:rgba(203,238,176,.15);color:#9fd96a}
+.savebanner.soff{background:rgba(255,180,100,.12);color:#f4a25e}
+
+/* ── kpi strip ── */
+.kpis{display:flex;gap:10px;padding:14px 28px;background:var(--app-darker);flex-wrap:wrap}
+.kpi{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:10px 16px;min-width:130px}
+.kpi .v{font-size:1.55rem;font-weight:500;color:var(--lime);font-variant-numeric:tabular-nums}
+.kpi .l{font-size:.72rem;color:var(--warm-gray);margin-top:2px}
+.kpi.warn .v{color:#f4c542}.kpi.alert .v{color:#f47c42}
+
+/* ── tabs ── */
+.tabs{display:flex;border-bottom:1px solid var(--border);background:#fff;padding:0 28px}
+.tab{padding:12px 16px;font-size:.83rem;font-weight:500;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;transition:color .12s}
+.tab:hover{color:var(--olive)}.tab.on{color:var(--olive);border-bottom-color:var(--olive)}
+
+/* ── panels ── */
+.panel{display:none;padding:22px 28px}.panel.on{display:block}
+
+/* ── banners ── */
+.note{border-radius:var(--r);padding:11px 14px;margin-bottom:14px;font-size:.81rem;border-left:3px solid}
+.note.info{background:#e8f0ff;border-color:#2d62ff;color:#0b2b7a}
+.note.warn{background:var(--wa-bg);border-color:#e6c800;color:var(--wa-fg)}
+.note.urgent{background:var(--er-bg);border-color:#c0392b;color:var(--er-fg)}
+
+/* ── section title ── */
+.stitle{font-size:.88rem;font-weight:500;color:var(--olive);margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;font-size:.7rem;font-weight:500}
+.bg{background:var(--ok-bg);color:var(--ok-fg)}.by{background:var(--wa-bg);color:var(--wa-fg)}.br{background:var(--er-bg);color:var(--er-fg)}.bn{background:#eee;color:#555}
+
+/* ── cards ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:18px}
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:12px 15px}
+.card .cv{font-size:1.3rem;font-weight:500;font-variant-numeric:tabular-nums}
+.card .cl{font-size:.72rem;color:var(--t3);margin-top:2px}
+.card.cg{border-left:3px solid #2dab47}.card.cy{border-left:3px solid #e6b800}
+.card.cr{border-left:3px solid #c0392b}.card.cb{border-left:3px solid #2d62ff}
+
+/* ── tables ── */
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border);margin-bottom:18px}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+thead{background:var(--olive);color:#fff}
+thead th{padding:9px 11px;text-align:left;font-weight:500;font-size:.75rem;letter-spacing:.03em;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#f6f7f5}
+tbody td{padding:7px 11px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sn{font-family:var(--mono);font-size:.76rem;color:var(--olive)}
+.rm{color:var(--t2)}
+
+/* ── status pills ── */
+.pill{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;font-size:.7rem;font-weight:500}
+.p-ok{background:var(--ok-bg);color:var(--ok-fg)}
+.p-off{background:var(--er-bg);color:var(--er-fg)}
+.p-wp5{background:#dde9ff;color:#1a3a99}
+.p-exp{background:#f3e8e8;color:#8b1a1a}
+.p-act{background:var(--ok-bg);color:var(--ok-fg)}
+.p-urg{background:#fff0e0;color:#a0470a}
+.p-warn{background:var(--wa-bg);color:var(--wa-fg)}
+
+/* ── status select ── */
+.ssel{font-size:.75rem;padding:3px 6px;border:1px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;color:var(--t1);font-family:var(--font)}
+.ssel:focus{outline:2px solid var(--olive)}
+.ssel.done{background:var(--ok-bg);border-color:#7dc87d;color:var(--ok-fg)}
+.ssel.sched{background:var(--wa-bg);border-color:#c8b200;color:var(--wa-fg)}
+.ssel.wfix{background:#f0e8e8;border-color:#c08080;color:#5a1a1a}
+.ssel.selected{background:var(--ok-bg);border-color:#7dc87d;color:var(--ok-fg)}
+
+/* ── trade-in room accordion ── */
+.roomg{margin-bottom:4px}
+.roomh{background:#f3f4f0;border:1px solid var(--border);border-radius:8px;padding:8px 13px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:.8rem;font-weight:500;color:var(--t1)}
+.roomh:hover{background:#eceee8}
+.roomh .rc{font-size:.73rem;color:var(--t3)}
+.roomb{display:none;padding:4px 0 6px 0}.roomb.open{display:block}
+
+/* ── pricing box ── */
+.pbox{background:var(--app-dark);color:#fff;border-radius:var(--r);padding:16px 22px;margin-bottom:18px;display:flex;gap:28px;flex-wrap:wrap}
+.pline .pl{font-size:.71rem;color:var(--warm-gray)}
+.pline .pv{font-size:1.2rem;font-weight:500;color:var(--lime);font-variant-numeric:tabular-nums}
+.pline .pv.stk{text-decoration:line-through;color:#666;font-size:.95rem}
+.pline .pv.net{color:#f4c542}
+
+/* ── toolbar ── */
+.toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.btn{padding:5px 12px;font-size:.76rem;font-weight:500;border:1px solid var(--border);border-radius:7px;background:#fff;cursor:pointer;color:var(--t2)}
+.btn:hover{background:#f0f1ec;border-color:#b0b0a8}
+
+/* ── row dim on resolved ── */
+tr.dim td{opacity:.45}
+
+@media(prefers-color-scheme:dark){
+  body{background:#111;color:#ddd}
+  .panel,.card{background:#1a1c19}.tabs{background:#1a1c19;border-color:#333}
+  .tab{color:#999}.tab.on{color:var(--lime);border-bottom-color:var(--lime)}
+  .tw{border-color:#333}.tbody tr{border-color:#333}
+  tbody tr:hover{background:#222}.card{border-color:#333}
+  .roomh{background:#222;border-color:#333}.roomh:hover{background:#2a2a22}
+  .ssel{background:#252620;color:#ddd;border-color:#444}
+  .btn{background:#252620;border-color:#444;color:#ccc}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Eschen Industries — Device Health Report</h1>
+  <div class="sub">Facility 2851 · 244 active devices · Report date 2026-06-09</div>
+  <div id="syncState" class="savebanner">Connecting…</div>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="v">41</div><div class="l">WP4 nodes ready for push</div></div>
+  <div class="kpi warn"><div class="v">17</div><div class="l">WP4 offline — need online</div></div>
+  <div class="kpi"><div class="v">39</div><div class="l">Already on WP5</div></div>
+  <div class="kpi alert"><div class="v" id="kpiDays">64d</div><div class="l">Until first H421 warranty expires</div></div>
+  <div class="kpi warn"><div class="v">46</div><div class="l">H421/EE894 under warranty</div></div>
+  <div class="kpi"><div class="v">41</div><div class="l">ter12 trade-in eligible</div></div>
+  <div class="kpi"><div class="v" id="kpiSel">$0</div><div class="l" id="kpiSelLbl">Selected for upgrade</div></div>
+</div>
+
+<div class="tabs">
+  <div class="tab on" onclick="showTab('fw',this)">🔄 Firmware (WP4→WP5)</div>
+  <div class="tab" onclick="showTab('warranty',this)">🛡 Warranty</div>
+  <div class="tab" onclick="showTab('tradein',this)">🔁 TEROS One Trade-In</div>
+</div>
+
+<!-- ═══ FIRMWARE ═══════════════════════════════════════════════════ -->
+<div class="panel on" id="panel-fw">
+  <div class="note info"><strong>How the push works:</strong> The gateway sends the WP5 firmware OTA to every node that is online at the scheduled time with battery ≥ 30 % and signal ≥ 50 %. Offline nodes stay on WP4 — not harmed, not bricked. Bring them online before the push to include them. Devices that miss it can be recovered later via a WP4 gateway revert + re-run.</div>
+  <div class="note warn"><strong>Large Dry has 6 offline WP4 nodes.</strong> All created June 2021. This room will stay split WP4/WP5 unless those nodes come online before the push — WP4 and WP5 nodes can't relay for each other.</div>
+
+  <div class="cards">
+    <div class="card cg"><div class="cv">41</div><div class="cl">Ready — will receive WP5</div></div>
+    <div class="card cy"><div class="cv">17</div><div class="cl">Offline — bring online first</div></div>
+    <div class="card cb"><div class="cv">39</div><div class="cl">Already on WP5 (2.x fw)</div></div>
+    <div class="card"><div class="cv" id="naCount">—</div><div class="cl">Sensors, repeaters, gateways</div></div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="exportState()">⬇ Export state</button>
+    <input id="importFile" type="file" accept=".json" style="display:none" onchange="importState(event)">
+    <button class="btn" onclick="document.getElementById('importFile').click()">⬆ Import state</button>
+    <button class="btn" onclick="resetAll()">↺ Reset all</button>
+  </div>
+
+  <div class="stitle">✅ WP4 Ready — Will Receive WP5 <span class="badge bg">41</span></div>
+  <p style="font-size:.77rem;color:var(--t3);margin-bottom:8px">Mark each device as you pre-verify it. Status syncs live across all team devices.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Pre-verified?</th><th>Serial</th><th>Model</th><th>Room</th><th>FW</th><th>Battery</th><th>RSSI</th></tr></thead>
+    <tbody id="tb-ready"></tbody>
+  </table></div>
+
+  <div class="stitle">⚠️ Offline WP4 — Bring Online Before Push <span class="badge br">17</span></div>
+  <div class="tw"><table>
+    <thead><tr><th>Status</th><th>Serial</th><th>Model</th><th>Room</th><th>FW</th><th>Created</th></tr></thead>
+    <tbody id="tb-offline"></tbody>
+  </table></div>
+
+  <div class="stitle">✓ Already on WP5 — No Action Needed <span class="badge bn">39</span></div>
+  <div class="tw"><table>
+    <thead><tr><th>Serial</th><th>Model</th><th>Room</th><th>FW</th><th>Online</th></tr></thead>
+    <tbody id="tb-wp5"></tbody>
+  </table></div>
+</div>
+
+<!-- ═══ WARRANTY ══════════════════════════════════════════════════ -->
+<div class="panel" id="panel-warranty">
+  <div class="note urgent"><strong>Action needed:</strong> 23 H421 CO2 hubs expire starting <strong>Aug 12 2026 (64 days)</strong>. If any unit is experiencing CO2 sensor failure, file the warranty claim before that date. The 23 paired EE894 sensors carry the same window.</div>
+  <div class="note info"><strong>Rules applied:</strong> H311 serial prefix = 3-year · H421 hub / EE894 CO2 sensor = 2-year (CO2 failure) · All others (H321, H341, H344, ter12, ter15, atm14, repeater, gateway) = 1-year. Dates from AROYA portal <em>createdOn</em> field.</div>
+
+  <div class="cards">
+    <div class="card cy"><div class="cv">46</div><div class="cl">H421/EE894 active (2-yr CO2) — first expires Aug 12</div></div>
+    <div class="card cr"><div class="cv">48</div><div class="cl">H311 expired (3-yr, created ~Jun 2021)</div></div>
+    <div class="card cr"><div class="cv">150</div><div class="cl">Standard expired (1-yr, created 2021–22)</div></div>
+  </div>
+
+  <div class="stitle">🛡 H421 Hubs — Active Warranty (soonest first) <span class="badge bg">23</span></div>
+  <div class="tw"><table>
+    <thead><tr><th>Claim status</th><th>Serial</th><th>Room</th><th>Created</th><th>Expires</th><th>Days left</th></tr></thead>
+    <tbody id="tb-h421warranty"></tbody>
+  </table></div>
+
+  <div class="stitle">📋 Full Warranty Ledger
+    <span style="margin-left:auto">
+      <select id="warrantyFilter" onchange="renderWarrantyLedger()" style="font-size:.75rem;padding:3px 7px;border:1px solid var(--border);border-radius:6px;background:#fff">
+        <option value="all">All devices</option>
+        <option value="ACTIVE">Active only</option>
+        <option value="EXPIRED">Expired only</option>
+      </select>
+    </span>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Serial</th><th>Model</th><th>Room</th><th>Category</th><th>Created</th><th>Expires</th><th>Status</th></tr></thead>
+    <tbody id="tb-ledger"></tbody>
+  </table></div>
+</div>
+
+<!-- ═══ TRADE-IN ═══════════════════════════════════════════════════ -->
+<div class="panel" id="panel-tradein">
+  <div class="note info"><strong>TEROS One upgrade path:</strong> Each TEROS-12 (ter12) substrate probe qualifies for trade-in toward the TEROS One. Submit the old unit for a $150 discount off the $569 list price — net $419/unit. Check boxes below to track which units you want to upgrade. Selection syncs across all devices in real time.</div>
+
+  <div class="pbox">
+    <div class="pline"><div class="pl">List price / unit</div><div class="pv stk">$569</div></div>
+    <div class="pline"><div class="pl">Trade-in discount</div><div class="pv" style="color:#f4c542">– $150</div></div>
+    <div class="pline"><div class="pl">Net per unit</div><div class="pv net">$419</div></div>
+    <div class="pline"><div class="pl">Full fleet (41 units, list)</div><div class="pv stk">$23,329</div></div>
+    <div class="pline"><div class="pl">Full fleet (after trade-in)</div><div class="pv">$17,179</div></div>
+    <div class="pline"><div class="pl" id="selLbl2">Selected (0 units)</div><div class="pv" id="selTotal2" style="color:var(--lime)">$0</div></div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="exportState()">⬇ Export state</button>
+    <input id="importFile2" type="file" accept=".json" style="display:none" onchange="importState(event)">
+    <button class="btn" onclick="document.getElementById('importFile2').click()">⬆ Import state</button>
+    <button class="btn" onclick="selectAllTer12()">☑ Select all</button>
+    <button class="btn" onclick="clearTer12()">☐ Clear all</button>
+  </div>
+
+  <div class="stitle">TEROS-12 Candidates by Room (41 total)</div>
+  <div id="tradein-rooms"></div>
+</div>
+
+<!-- ═══ SCRIPT ═══════════════════════════════════════════════════════ -->
+<script>
+/* ── Data ──────────────────────────────────────────────────────── */
+const WP4_READY   = [{"sn": "H3210013198", "room": "Veg Room", "model": "node", "fw": "1.2.2.0", "battery": 80, "rssi": 7, "online": true, "created": "2022-08-05"}, {"sn": "H3410001359", "room": "Bloom 5", "model": "node", "fw": "1.2.1.0", "battery": 100, "rssi": 4, "online": true, "created": "2023-07-31"}, {"sn": "H3410001362", "room": "Bloom 6", "model": "node", "fw": "1.2.1.0", "battery": 100, "rssi": 1, "online": true, "created": "2023-07-31"}, {"sn": "H3410001364", "room": "Bloom 6", "model": "node", "fw": "1.2.1.0", "battery": 100, "rssi": 1, "online": true, "created": "2023-07-31"}, {"sn": "H3410001373", "room": "Bloom 5", "model": "node", "fw": "1.2.1.0", "battery": 100, "rssi": 8, "online": true, "created": "2023-07-31"}, {"sn": "H3410001391", "room": "Bloom 5", "model": "node", "fw": "1.2.1.0", "battery": 100, "rssi": 1, "online": true, "created": "2023-07-31"}, {"sn": "H3410001442", "room": "Bloom 6", "model": "node", "fw": "1.2.1.0", "battery": 100, "rssi": 1, "online": true, "created": "2023-07-31"}, {"sn": "H3410001457", "room": "Bloom 6", "model": "node", "fw": "1.2.1.0", "battery": 100, "rssi": 7, "online": true, "created": "2023-07-31"}, {"sn": "H3410001491", "room": "Bloom 5", "model": "node", "fw": "1.2.1.0", "battery": 100, "rssi": 4, "online": true, "created": "2023-07-31"}, {"sn": "H3440006451", "room": "Bloom 1", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006451-2", "room": "Bloom 1", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006452", "room": "Bloom 1", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 2, "online": true, "created": "2024-08-27"}, {"sn": "H3440006452-2", "room": "Bloom 1", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 2, "online": true, "created": "2024-08-27"}, {"sn": "H3440006454", "room": "Bloom 1", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006454-2", "room": "Bloom 1", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006455", "room": "Bloom 2", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006455-2", "room": "Bloom 2", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006456", "room": "Bloom 2", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006456-2", "room": "Bloom 2", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006457", "room": "Bloom 2", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006457-2", "room": "Bloom 2", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": true, "created": "2024-08-27"}, {"sn": "H3440006458", "room": "Bloom 7", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 6, "online": true, "created": "2024-08-27"}, {"sn": "H3440006458-2", "room": "Bloom 7", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 6, "online": true, "created": "2024-08-27"}, {"sn": "H4210002608", "room": "Bloom 6", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 2, "online": true, "created": "2024-08-12"}, {"sn": "H4210002629", "room": "Veg Room", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 1, "online": true, "created": "2024-08-12"}, {"sn": "H4210002676", "room": "Bloom 7", "model": "h421", "fw": "1.2.1.0", "battery": 0, "rssi": 1, "online": true, "created": "2024-08-22"}, {"sn": "H4210002686", "room": "Bloom 5", "model": "h421", "fw": "1.2.1.0", "battery": 0, "rssi": 3, "online": true, "created": "2024-08-22"}, {"sn": "H4210002695", "room": "clone", "model": "h421", "fw": "1.2.1.0", "battery": 0, "rssi": 4, "online": true, "created": "2024-08-22"}, {"sn": "H4210002700", "room": "clone", "model": "h421", "fw": "1.2.1.0", "battery": 0, "rssi": 1, "online": true, "created": "2024-08-22"}, {"sn": "H4210004274", "room": "Bloom 1", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 1, "online": true, "created": "2025-05-29"}, {"sn": "H4210004276", "room": "Bloom 2", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 1, "online": true, "created": "2025-05-29"}, {"sn": "H4210004290", "room": "Bloom 4", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 2, "online": true, "created": "2025-05-29"}, {"sn": "H4210004718", "room": "clone", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 3, "online": true, "created": "2025-09-16"}, {"sn": "H4210004719", "room": "Bloom 2", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 7, "online": true, "created": "2025-09-16"}, {"sn": "H4210005008", "room": "Bloom 6", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 2, "online": true, "created": "2025-10-08"}, {"sn": "H4210005011", "room": "Bloom 5", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 8, "online": true, "created": "2025-10-08"}, {"sn": "H4210005017", "room": "Veg Co2", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 8, "online": true, "created": "2025-10-08"}, {"sn": "H4210005026", "room": "Bloom 7", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 8, "online": true, "created": "2025-10-08"}, {"sn": "H4210005029", "room": "Bloom 3", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 1, "online": true, "created": "2025-10-08"}, {"sn": "H4210005032", "room": "Bloom 1", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 1, "online": true, "created": "2025-10-08"}, {"sn": "H4210005035", "room": "Bloom 4", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 3, "online": true, "created": "2025-10-08"}];
+const WP4_OFFLINE = [{"sn": "H3110016961", "room": "Large Dry", "model": "node", "fw": "1.2.1.0", "battery": 2, "rssi": 7, "online": false, "created": "2021-06-21"}, {"sn": "H3110016973", "room": "Large Dry", "model": "node", "fw": "1.2.1.0", "battery": 63, "rssi": 1, "online": false, "created": "2021-06-21"}, {"sn": "H3110016979", "room": "Large Dry", "model": "node", "fw": "1.2.1.0", "battery": 2, "rssi": 3, "online": false, "created": "2021-06-21"}, {"sn": "H3110016982", "room": "Large Dry", "model": "node", "fw": "1.2.1.0", "battery": 2, "rssi": 4, "online": false, "created": "2021-06-21"}, {"sn": "H3110016987", "room": "Unassigned", "model": "node", "fw": "1.2.1.0", "battery": 82, "rssi": 0, "online": false, "created": "2021-06-21"}, {"sn": "H3110017008", "room": "Unassigned", "model": "node", "fw": "1.2.1.0", "battery": 82, "rssi": 2, "online": false, "created": "2021-06-21"}, {"sn": "H3110017012", "room": "Unassigned", "model": "node", "fw": "1.2.1.0", "battery": 2, "rssi": 6, "online": false, "created": "2021-06-21"}, {"sn": "H3110017023", "room": "Unassigned", "model": "node", "fw": "1.2.1.0", "battery": 3, "rssi": 5, "online": false, "created": "2021-06-21"}, {"sn": "H3110017044", "room": "Large Dry", "model": "node", "fw": "1.2.1.0", "battery": 0, "rssi": 5, "online": false, "created": "2021-06-21"}, {"sn": "H3210013169", "room": "Large Dry", "model": "node", "fw": "1.2.2.0", "battery": 1, "rssi": 6, "online": false, "created": "2022-08-05"}, {"sn": "H3440006453", "room": "Bloom 1", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": false, "created": "2024-08-27"}, {"sn": "H3440006453-2", "room": "Bloom 1", "model": "node", "fw": "1.2.2.0", "battery": 100, "rssi": 1, "online": false, "created": "2024-08-27"}, {"sn": "H4210002606", "room": "Unassigned", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 3, "online": false, "created": "2024-08-12"}, {"sn": "H4210002671", "room": "Unassigned", "model": "h421", "fw": "1.2.1.0", "battery": 0, "rssi": 5, "online": false, "created": "2024-08-22"}, {"sn": "H4210004264", "room": "Unassigned", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 2, "online": false, "created": "2025-05-29"}, {"sn": "H4210004272", "room": "Unassigned", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 1, "online": false, "created": "2025-05-29"}, {"sn": "H4210004722", "room": "Unassigned", "model": "h421", "fw": "1.2.2.0", "battery": 0, "rssi": 2, "online": false, "created": "2025-09-16"}];
+const WP5_DONE    = [{"sn": "H3110016956", "room": "Bloom 1", "model": "node", "fw": "2.2.1.0", "battery": 84, "rssi": 2, "online": true, "created": "2021-06-21"}, {"sn": "H3110016958", "room": "Bloom 2", "model": "node", "fw": "2.2.1.0", "battery": 66, "rssi": 7, "online": true, "created": "2021-06-21"}, {"sn": "H3110016962", "room": "Bloom 7", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 2, "online": true, "created": "2021-06-21"}, {"sn": "H3110016963", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 2, "online": true, "created": "2021-06-21"}, {"sn": "H3110016964", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 54, "rssi": 7, "online": true, "created": "2021-06-21"}, {"sn": "H3110016965", "room": "test room", "model": "node", "fw": "2.2.1.0", "battery": 89, "rssi": 4, "online": false, "created": "2021-06-21"}, {"sn": "H3110016966", "room": "Bloom 3", "model": "node", "fw": "2.2.1.0", "battery": 77, "rssi": 6, "online": true, "created": "2021-06-21"}, {"sn": "H3110016967", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 74, "rssi": 8, "online": true, "created": "2021-06-21"}, {"sn": "H3110016968", "room": "Bloom 2", "model": "node", "fw": "2.2.1.0", "battery": 89, "rssi": 8, "online": true, "created": "2021-06-21"}, {"sn": "H3110016969", "room": "Bloom 3", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 6, "online": true, "created": "2021-06-21"}, {"sn": "H3110016970", "room": "Bloom 3", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 5, "online": true, "created": "2021-06-21"}, {"sn": "H3110016971", "room": "Bloom 7", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 7, "online": true, "created": "2021-06-21"}, {"sn": "H3110016972", "room": "Bloom 3", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 4, "online": true, "created": "2021-06-21"}, {"sn": "H3110016976", "room": "Bloom 5", "model": "node", "fw": "2.2.1.0", "battery": 76, "rssi": 1, "online": true, "created": "2021-06-21"}, {"sn": "H3110016983", "room": "test room", "model": "node", "fw": "2.2.1.0", "battery": 86, "rssi": 2, "online": true, "created": "2021-06-21"}, {"sn": "H3110016988", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 66, "rssi": 6, "online": true, "created": "2021-06-21"}, {"sn": "H3110016989", "room": "Bloom 3", "model": "node", "fw": "2.2.1.0", "battery": 83, "rssi": 5, "online": true, "created": "2021-06-21"}, {"sn": "H3110016999", "room": "Bloom 4", "model": "node", "fw": "2.2.1.0", "battery": 78, "rssi": 1, "online": true, "created": "2021-06-21"}, {"sn": "H3110017000", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 84, "rssi": 8, "online": true, "created": "2021-06-21"}, {"sn": "H3110017005", "room": "Bloom 7", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 1, "online": true, "created": "2021-06-21"}, {"sn": "H3110017013", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 5, "online": false, "created": "2021-06-21"}, {"sn": "H3110017014", "room": "Bloom 4", "model": "node", "fw": "2.2.1.0", "battery": 76, "rssi": 6, "online": true, "created": "2021-06-21"}, {"sn": "H3110017017", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 71, "rssi": 7, "online": true, "created": "2021-06-21"}, {"sn": "H3110017018", "room": "Bloom 4", "model": "node", "fw": "2.2.1.0", "battery": 77, "rssi": 5, "online": true, "created": "2021-06-21"}, {"sn": "H3110017022", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 94, "rssi": 7, "online": true, "created": "2021-06-21"}, {"sn": "H3110017025", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 69, "rssi": 5, "online": true, "created": "2021-06-21"}, {"sn": "H3110017027", "room": "Bloom 5", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 5, "online": true, "created": "2021-06-21"}, {"sn": "H3110017034", "room": "Bloom 7", "model": "node", "fw": "2.2.1.0", "battery": 91, "rssi": 6, "online": true, "created": "2021-06-21"}, {"sn": "H3110017042", "room": "test room", "model": "node", "fw": "2.2.1.0", "battery": 86, "rssi": 3, "online": true, "created": "2021-06-21"}, {"sn": "H3110017047", "room": "Bloom 4", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 6, "online": true, "created": "2021-06-21"}, {"sn": "H3110017053", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 79, "rssi": 3, "online": true, "created": "2021-06-21"}, {"sn": "H3210013136", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 88, "rssi": 1, "online": true, "created": "2022-08-05"}, {"sn": "H3210013165", "room": "test room", "model": "node", "fw": "2.2.1.0", "battery": 60, "rssi": 1, "online": true, "created": "2022-08-05"}, {"sn": "H3210013195", "room": "Bloom 4", "model": "node", "fw": "2.2.1.0", "battery": 68, "rssi": 1, "online": true, "created": "2022-08-05"}, {"sn": "H3210013196", "room": "test room", "model": "node", "fw": "2.2.1.0", "battery": 94, "rssi": 3, "online": true, "created": "2022-08-05"}, {"sn": "H3210013209", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 73, "rssi": 2, "online": true, "created": "2022-08-05"}, {"sn": "H3210013213", "room": "Veg Room", "model": "node", "fw": "2.2.1.0", "battery": 62, "rssi": 1, "online": true, "created": "2022-08-05"}, {"sn": "H3210013214", "room": "Bloom 5", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 3, "online": true, "created": "2022-08-05"}, {"sn": "H3210013219", "room": "Bloom 6", "model": "node", "fw": "2.2.1.0", "battery": 100, "rssi": 1, "online": true, "created": "2022-08-05"}];
+const TER12       = [{"sn": "H3410001359-ter12", "room": "Bloom 5", "zone": "Zone 4", "created": "2023-07-31", "age": 2.9, "online": true}, {"sn": "H3410001362-ter12", "room": "Bloom 6", "zone": "Zone 1", "created": "2023-07-31", "age": 2.9, "online": true}, {"sn": "H3410001364-ter12", "room": "Bloom 6", "zone": "Zone 2", "created": "2023-07-31", "age": 2.9, "online": true}, {"sn": "H3410001373-ter12", "room": "Bloom 5", "zone": "Zone 3", "created": "2023-07-31", "age": 2.9, "online": true}, {"sn": "H3410001391-ter12", "room": "Bloom 5", "zone": "Zone 2", "created": "2023-07-31", "age": 2.9, "online": true}, {"sn": "H3410001442-ter12", "room": "Bloom 6", "zone": "Zone 3", "created": "2023-07-31", "age": 2.9, "online": true}, {"sn": "H3410001457-ter12", "room": "Bloom 6", "zone": "Zone 4", "created": "2023-07-31", "age": 2.9, "online": true}, {"sn": "H3410001491-ter12", "room": "Bloom 5", "zone": "Zone 1", "created": "2023-07-31", "age": 2.9, "online": true}, {"sn": "T12-00057494", "room": "Veg Room", "zone": "Zone 8 bottom", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00057496", "room": "Bloom 7", "zone": "Zone 3", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00057497", "room": "Unassigned", "zone": "", "created": "2021-06-21", "age": 5.0, "online": false}, {"sn": "T12-00057498", "room": "Unassigned", "zone": "", "created": "2021-06-21", "age": 5.0, "online": false}, {"sn": "T12-00057500", "room": "Veg Room", "zone": "Zone 10 bottom", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00057508", "room": "Bloom 5", "zone": "Zone 2", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00057510", "room": "Bloom 2", "zone": "Zone 2", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00057511", "room": "Unassigned", "zone": "", "created": "2021-06-21", "age": 5.0, "online": false}, {"sn": "T12-00057518", "room": "Veg Room", "zone": "Zone 3 bottom", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00057521", "room": "Veg Room", "zone": "Zone 11 mothers 2", "created": "2021-06-21", "age": 5.0, "online": false}, {"sn": "T12-00057522", "room": "Bloom 4", "zone": "Zone 1", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00057523", "room": "test room", "zone": "Zone 1", "created": "2021-06-21", "age": 5.0, "online": false}, {"sn": "T12-00057524", "room": "Bloom 3", "zone": "Zone 2", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00057611", "room": "Veg Room", "zone": "Zone 11 mothers 2", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00057715", "room": "Bloom 5", "zone": "Zone 4", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058358", "room": "Bloom 3", "zone": "Zone 1", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058369", "room": "Veg Room", "zone": "Zone 6 top", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058390", "room": "Bloom 7", "zone": "Zone 4", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058399", "room": "Veg Room", "zone": "Zone 12 upper mother", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058429", "room": "Bloom 3", "zone": "Zone 3", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058533", "room": "Bloom 4", "zone": "Zone 3", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058543", "room": "Unassigned", "zone": "", "created": "2021-06-21", "age": 5.0, "online": false}, {"sn": "T12-00058558", "room": "Bloom 4", "zone": "Zone 2", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058578", "room": "Veg Room", "zone": "Zone 2 top", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058697", "room": "Veg Room", "zone": "Zone 1 bottom", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058717", "room": "Veg Room", "zone": "Zone 4top", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058723", "room": "Bloom 4", "zone": "Zone 4", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058727", "room": "Bloom 7", "zone": "Zone 2", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058735", "room": "Bloom 3", "zone": "Zone 4", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058746", "room": "Veg Room", "zone": "Zone 5 bottom", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058754", "room": "Veg Room", "zone": "Zone 7 mothers1", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00058757", "room": "Veg Room", "zone": "Zone 9 top", "created": "2021-06-21", "age": 5.0, "online": true}, {"sn": "T12-00106700", "room": "Bloom 5", "zone": "Zone 4", "created": "2022-08-05", "age": 3.8, "online": false}];
+const H421_ACTIVE = [{"sn": "H4210002606", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-12", "expiry": "2026-08-12", "daysRem": 64}, {"sn": "H4210002608", "model": "h421", "room": "Bloom 6", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-12", "expiry": "2026-08-12", "daysRem": 64}, {"sn": "H4210002629", "model": "h421", "room": "Veg Room", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-12", "expiry": "2026-08-12", "daysRem": 64}, {"sn": "H4210002671", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002676", "model": "h421", "room": "Bloom 7", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002686", "model": "h421", "room": "Bloom 5", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002695", "model": "h421", "room": "clone", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002700", "model": "h421", "room": "clone", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210004264", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004272", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004274", "model": "h421", "room": "Bloom 1", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004276", "model": "h421", "room": "Bloom 2", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004290", "model": "h421", "room": "Bloom 4", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004718", "model": "h421", "room": "clone", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-09-16", "expiry": "2027-09-16", "daysRem": 464}, {"sn": "H4210004719", "model": "h421", "room": "Bloom 2", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-09-16", "expiry": "2027-09-16", "daysRem": 464}, {"sn": "H4210004722", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-09-16", "expiry": "2027-09-16", "daysRem": 464}, {"sn": "H4210005008", "model": "h421", "room": "Bloom 6", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005011", "model": "h421", "room": "Bloom 5", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005017", "model": "h421", "room": "Veg Co2", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005026", "model": "h421", "room": "Bloom 7", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005029", "model": "h421", "room": "Bloom 3", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005032", "model": "h421", "room": "Bloom 1", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005035", "model": "h421", "room": "Bloom 4", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}];
+const WARRANTY_ALL= [{"sn": "H4210005008", "model": "h421", "room": "Bloom 6", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005008S", "model": "ee894", "room": "Bloom 6", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005011", "model": "h421", "room": "Bloom 5", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005011S", "model": "ee894", "room": "Bloom 5", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005017", "model": "h421", "room": "Veg Co2", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005017S", "model": "ee894", "room": "Veg Co2", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005026", "model": "h421", "room": "Bloom 7", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005026S", "model": "ee894", "room": "Bloom 7", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005029", "model": "h421", "room": "Bloom 3", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005029S", "model": "ee894", "room": "Bloom 3", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005032", "model": "h421", "room": "Bloom 1", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005032S", "model": "ee894", "room": "Bloom 1", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005035", "model": "h421", "room": "Bloom 4", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210005035S", "model": "ee894", "room": "Bloom 4", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-10-08", "expiry": "2027-10-08", "daysRem": 486}, {"sn": "H4210004718", "model": "h421", "room": "clone", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-09-16", "expiry": "2027-09-16", "daysRem": 464}, {"sn": "H4210004718S", "model": "ee894", "room": "clone", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-09-16", "expiry": "2027-09-16", "daysRem": 464}, {"sn": "H4210004719", "model": "h421", "room": "Bloom 2", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-09-16", "expiry": "2027-09-16", "daysRem": 464}, {"sn": "H4210004719S", "model": "ee894", "room": "Bloom 2", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-09-16", "expiry": "2027-09-16", "daysRem": 464}, {"sn": "H4210004722", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-09-16", "expiry": "2027-09-16", "daysRem": 464}, {"sn": "H4210004722S", "model": "ee894", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-09-16", "expiry": "2027-09-16", "daysRem": 464}, {"sn": "H4210004264", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004264S", "model": "ee894", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004272", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004272S", "model": "ee894", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004274", "model": "h421", "room": "Bloom 1", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004274S", "model": "ee894", "room": "Bloom 1", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004276", "model": "h421", "room": "Bloom 2", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004276S", "model": "ee894", "room": "Bloom 2", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004290", "model": "h421", "room": "Bloom 4", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210004290S", "model": "ee894", "room": "Bloom 4", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2025-05-29", "expiry": "2027-05-29", "daysRem": 354}, {"sn": "H4210002671", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002671S", "model": "ee894", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002676", "model": "h421", "room": "Bloom 7", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002676S", "model": "ee894", "room": "Bloom 7", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002686", "model": "h421", "room": "Bloom 5", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002686S", "model": "ee894", "room": "Bloom 5", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002695", "model": "h421", "room": "clone", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002695S", "model": "ee894", "room": "clone", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002700", "model": "h421", "room": "clone", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002700S", "model": "ee894", "room": "clone", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-22", "expiry": "2026-08-22", "daysRem": 74}, {"sn": "H4210002606", "model": "h421", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-12", "expiry": "2026-08-12", "daysRem": 64}, {"sn": "H4210002606S", "model": "ee894", "room": "\u2014", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-12", "expiry": "2026-08-12", "daysRem": 64}, {"sn": "H4210002608", "model": "h421", "room": "Bloom 6", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-12", "expiry": "2026-08-12", "daysRem": 64}, {"sn": "H4210002608S", "model": "ee894", "room": "Bloom 6", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-12", "expiry": "2026-08-12", "daysRem": 64}, {"sn": "H4210002629", "model": "h421", "room": "Veg Room", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-12", "expiry": "2026-08-12", "daysRem": 64}, {"sn": "H4210002629S", "model": "ee894", "room": "Veg Room", "cat": "H421/EE894 CO2 (2-year)", "status": "ACTIVE", "created": "2024-08-12", "expiry": "2026-08-12", "daysRem": 64}, {"sn": "H3400001340", "model": "repeater", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-30", "expiry": "2025-08-30", "daysRem": -283}, {"sn": "H3400001341", "model": "repeater", "room": "test room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-30", "expiry": "2025-08-30", "daysRem": -283}, {"sn": "H2100005305", "model": "gateway", "room": "clone", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-28", "expiry": "2025-08-28", "daysRem": -285}, {"sn": "SINKH2100005305", "model": "sink", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-28", "expiry": "2025-08-28", "daysRem": -285}, {"sn": "H2100005135", "model": "gateway", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006451", "model": "node", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006451-2", "model": "node", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006451-2-ter15", "model": "ter15", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006451-ter15", "model": "ter15", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006452", "model": "node", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006452-2", "model": "node", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006452-2-ter15", "model": "ter15", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006452-ter15", "model": "ter15", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006453", "model": "node", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006453-2", "model": "node", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006453-2-ter15", "model": "ter15", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006453-ter15", "model": "ter15", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006454", "model": "node", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006454-2", "model": "node", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006454-2-ter15", "model": "ter15", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006454-ter15", "model": "ter15", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006455", "model": "node", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006455-2", "model": "node", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006455-2-ter15", "model": "ter15", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006455-ter15", "model": "ter15", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006456", "model": "node", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006456-2", "model": "node", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006456-2-ter15", "model": "ter15", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006456-ter15", "model": "ter15", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006457", "model": "node", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006457-2", "model": "node", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006457-2-ter15", "model": "ter15", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006457-ter15", "model": "ter15", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006458", "model": "node", "room": "Bloom 7", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006458-2", "model": "node", "room": "Bloom 7", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006458-2-ter15", "model": "ter15", "room": "Bloom 7", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3440006458-ter15", "model": "ter15", "room": "Bloom 7", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "SINKH2100005135", "model": "sink", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2024-08-27", "expiry": "2025-08-27", "daysRem": -286}, {"sn": "H3410001359", "model": "node", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001359-ter12", "model": "ter12", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001362", "model": "node", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001362-ter12", "model": "ter12", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001364", "model": "node", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001364-ter12", "model": "ter12", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001373", "model": "node", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001373-ter12", "model": "ter12", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001391", "model": "node", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001391-ter12", "model": "ter12", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001442", "model": "node", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001442-ter12", "model": "ter12", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001457", "model": "node", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001457-ter12", "model": "ter12", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001491", "model": "node", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3410001491-ter12", "model": "ter12", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2023-07-31", "expiry": "2024-07-31", "daysRem": -678}, {"sn": "H3110016956", "model": "node", "room": "Bloom 1", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016956-es-2", "model": "es-2", "room": "Bloom 1", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016958", "model": "node", "room": "Bloom 2", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016958-es-2", "model": "es-2", "room": "Bloom 2", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016961", "model": "node", "room": "Large Dry", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016962", "model": "node", "room": "Bloom 7", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016963", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016964", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016965", "model": "node", "room": "test room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016966", "model": "node", "room": "Bloom 3", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016967", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016968", "model": "node", "room": "Bloom 2", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016969", "model": "node", "room": "Bloom 3", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016970", "model": "node", "room": "Bloom 3", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016970-es-2", "model": "es-2", "room": "Bloom 3", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016971", "model": "node", "room": "Bloom 7", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016972", "model": "node", "room": "Bloom 3", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016973", "model": "node", "room": "Large Dry", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016976", "model": "node", "room": "Bloom 5", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016976-es-2", "model": "es-2", "room": "Bloom 5", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016979", "model": "node", "room": "Large Dry", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016979-es-2", "model": "es-2", "room": "Large Dry", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016982", "model": "node", "room": "Large Dry", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016982-es-2", "model": "es-2", "room": "Large Dry", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016983", "model": "node", "room": "test room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016983-es-2", "model": "es-2", "room": "test room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016987", "model": "node", "room": "\u2014", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016988", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016989", "model": "node", "room": "Bloom 3", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110016999", "model": "node", "room": "Bloom 4", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017000", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017005", "model": "node", "room": "Bloom 7", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017005-es-2", "model": "es-2", "room": "Bloom 7", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017008", "model": "node", "room": "\u2014", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017012", "model": "node", "room": "\u2014", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017013", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017014", "model": "node", "room": "Bloom 4", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017017", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017018", "model": "node", "room": "Bloom 4", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017022", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017023", "model": "node", "room": "\u2014", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017025", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017027", "model": "node", "room": "Bloom 5", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017034", "model": "node", "room": "Bloom 7", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017042", "model": "node", "room": "test room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017044", "model": "node", "room": "Large Dry", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017047", "model": "node", "room": "Bloom 4", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3110017053", "model": "node", "room": "Veg Room", "cat": "H311 (3-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2024-06-21", "daysRem": -718}, {"sn": "H3210013136-es-2", "model": "es-2", "room": "Veg Co2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-10-25", "expiry": "2023-10-25", "daysRem": -958}, {"sn": "H3210013165-es-2", "model": "es-2", "room": "test room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-10-25", "expiry": "2023-10-25", "daysRem": -958}, {"sn": "H3210013169-es-2", "model": "es-2", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-10-25", "expiry": "2023-10-25", "daysRem": -958}, {"sn": "H3210013195-es-2", "model": "es-2", "room": "Bloom 4", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-10-25", "expiry": "2023-10-25", "daysRem": -958}, {"sn": "H3210013196-es-2", "model": "es-2", "room": "test room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-10-25", "expiry": "2023-10-25", "daysRem": -958}, {"sn": "H3210013209-es-2", "model": "es-2", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-10-25", "expiry": "2023-10-25", "daysRem": -958}, {"sn": "H3210013213-es-2", "model": "es-2", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-10-25", "expiry": "2023-10-25", "daysRem": -958}, {"sn": "H3210013219-es-2", "model": "es-2", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-10-25", "expiry": "2023-10-25", "daysRem": -958}, {"sn": "H1100004955", "model": "repeater", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-09-27", "expiry": "2023-09-27", "daysRem": -986}, {"sn": "H1100004965", "model": "repeater", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-09-27", "expiry": "2023-09-27", "daysRem": -986}, {"sn": "H3210013136", "model": "node", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H3210013165", "model": "node", "room": "test room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H3210013169", "model": "node", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H3210013195", "model": "node", "room": "Bloom 4", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H3210013196", "model": "node", "room": "test room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H3210013198", "model": "node", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H3210013209", "model": "node", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H3210013213", "model": "node", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H3210013214", "model": "node", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H3210013219", "model": "node", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "T12-00106700", "model": "ter12", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-08-05", "expiry": "2023-08-05", "daysRem": -1039}, {"sn": "H1100003823", "model": "repeater", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2022-03-09", "expiry": "2023-03-09", "daysRem": -1188}, {"sn": "A14G200000528", "model": "atm14", "room": "Small Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "A14G200000624", "model": "atm14", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "A14G200000634", "model": "atm14", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "A14G200000642", "model": "atm14", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "A14G200000657", "model": "atm14", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "A14G200000670", "model": "atm14", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "A14G200000680", "model": "atm14", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "A14G200000683", "model": "atm14", "room": "Small Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003447", "model": "repeater", "room": "clone", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003448", "model": "repeater", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003449", "model": "repeater", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003450", "model": "repeater", "room": "Bloom 7", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003450-es-2", "model": "es-2", "room": "Bloom 7", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003451", "model": "repeater", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003451-es-2", "model": "es-2", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003452", "model": "repeater", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003452-es-2", "model": "es-2", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003453", "model": "repeater", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003453-es-2", "model": "es-2", "room": "Bloom 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003454", "model": "repeater", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003454-es-2", "model": "es-2", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003455", "model": "repeater", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003455-es-2", "model": "es-2", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003456", "model": "repeater", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003456-es-2", "model": "es-2", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003457", "model": "repeater", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003457-es-2", "model": "es-2", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003458", "model": "repeater", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1110004010", "model": "repeater", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1110004015", "model": "repeater", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1110004046", "model": "repeater", "room": "Small Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1110004047", "model": "repeater", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1110004048", "model": "repeater", "room": "outdoors", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1110004052", "model": "repeater", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1110004054", "model": "repeater", "room": "Large Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1110004078", "model": "repeater", "room": "Small Dry", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H2100002368", "model": "gateway", "room": "Bloom 6", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "SINKH2100002368", "model": "sink", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057494", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057496", "model": "ter12", "room": "Bloom 7", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057497", "model": "ter12", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057498", "model": "ter12", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057500", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057508", "model": "ter12", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057510", "model": "ter12", "room": "Bloom 2", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057511", "model": "ter12", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057518", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057521", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057522", "model": "ter12", "room": "Bloom 4", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057523", "model": "ter12", "room": "test room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057524", "model": "ter12", "room": "Bloom 3", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057611", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00057715", "model": "ter12", "room": "Bloom 5", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058358", "model": "ter12", "room": "Bloom 3", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058369", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058390", "model": "ter12", "room": "Bloom 7", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058399", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058429", "model": "ter12", "room": "Bloom 3", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058533", "model": "ter12", "room": "Bloom 4", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058543", "model": "ter12", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058558", "model": "ter12", "room": "Bloom 4", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058578", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058697", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058717", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058723", "model": "ter12", "room": "Bloom 4", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058727", "model": "ter12", "room": "Bloom 7", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058735", "model": "ter12", "room": "Bloom 3", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058746", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058754", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "T12-00058757", "model": "ter12", "room": "Veg Room", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-06-21", "expiry": "2022-06-21", "daysRem": -1449}, {"sn": "H1100003051", "model": "repeater", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-04-05", "expiry": "2022-04-05", "daysRem": -1526}, {"sn": "H1100003083", "model": "repeater", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-04-05", "expiry": "2022-04-05", "daysRem": -1526}, {"sn": "H1100003136", "model": "repeater", "room": "\u2014", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-04-05", "expiry": "2022-04-05", "daysRem": -1526}, {"sn": "H1100003139", "model": "repeater", "room": "Flower 1", "cat": "Standard (1-year)", "status": "EXPIRED", "created": "2021-04-05", "expiry": "2022-04-05", "daysRem": -1526}];
+
+/* ── Cross-device sync — gold-standard pattern ────────────────── */
+const FACILITY  = "2851";
+const SYNC_URL  = "https://aroya-report-sync.ciansul.workers.dev/" + FACILITY;
+const CACHE_KEY = "aroya_eschen_" + FACILITY + "_v1";
+
+// OV[key]={status, ts}  — firmware status, warranty claim status
+// UPG[sn]={model, ts}   — trade-in selection ('teros_one' | null)
+let OV = {}, UPG = {};
+(function(){
+  try{const c=JSON.parse(localStorage.getItem(CACHE_KEY));if(c){OV=c.ov||{};UPG=c.upg||{};}}
+  catch(e){}
+})();
+
+function saveCache(){try{localStorage.setItem(CACHE_KEY,JSON.stringify({ov:OV,upg:UPG}));}catch(e){}}
+function ov(k){return(OV[k]&&OV[k].status)||"";}
+function upg(sn){return(UPG[sn]&&UPG[sn].model)||null;}
+function setSync(t,cls){const e=document.getElementById('syncState');if(e){e.textContent=t;e.className='savebanner '+(cls||'');}}
+
+function mergeTs(local,remote){
+  const out={};
+  const ks=new Set([...Object.keys(local||{}),...Object.keys(remote||{})]);
+  ks.forEach(k=>{const a=local[k],b=remote[k];out[k]=(!a)?b:(!b)?a:(((b.ts||0)>(a.ts||0))?b:a);});
+  return out;
+}
+
+let _st=null;
+function scheduleSync(){saveCache();recompute();render();clearTimeout(_st);_st=setTimeout(syncNow,700);}
+
+async function syncNow(){
+  if(!SYNC_URL){saveCache();recompute();render();setSync('Saved on this device','');return;}
+  setSync('Saving…');
+  let remote={};
+  try{const r=await fetch(SYNC_URL,{cache:'no-store'});if(r.ok)remote=await r.json();}catch(e){}
+  OV=mergeTs(OV,remote.ov||{});UPG=mergeTs(UPG,remote.upg||{});
+  saveCache();
+  try{
+    const w=await fetch(SYNC_URL,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({ov:OV,upg:UPG})});
+    if(w.ok)setSync('Synced ✓ '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'sok');
+    else setSync('Offline — saved on this device only','soff');
+  }catch(e){setSync('Offline — saved on this device only','soff');}
+}
+
+async function pullOnly(){
+  if(!SYNC_URL)return;
+  try{
+    const r=await fetch(SYNC_URL,{cache:'no-store'});if(!r.ok)return;
+    const remote=await r.json();
+    OV=mergeTs(OV,remote.ov||{});UPG=mergeTs(UPG,remote.upg||{});
+    saveCache();recompute();render();
+    setSync('Synced ✓ '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'sok');
+  }catch(e){}
+}
+
+/* ── Export / Import / Reset ──────────────────────────────────── */
+function exportState(){
+  const blob=new Blob([JSON.stringify({ov:OV,upg:UPG},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='eschen_'+FACILITY+'_state.json';a.click();
+}
+function importState(ev){
+  const file=ev.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{try{const p=JSON.parse(e.target.result);
+    const now=Date.now();
+    if(p.ov){Object.keys(p.ov).forEach(k=>{const v=p.ov[k];OV[k]=(v&&typeof v==='object'&&'status'in v)?{status:v.status,ts:typeof v.ts==='number'?v.ts:now}:{status:String(v||''),ts:now};});}
+    if(p.upg){Object.keys(p.upg).forEach(k=>{const v=p.upg[k];UPG[k]=(v&&typeof v==='object'&&'model'in v)?{model:v.model,ts:typeof v.ts==='number'?v.ts:now}:{model:String(v),ts:now};});}
+    saveCache();syncNow();
+  }catch(e){alert('Could not read that file.');}}; 
+  reader.readAsText(file);
+  ev.target.value='';
+}
+function resetAll(){
+  if(!confirm('Reset all status selections?'))return;
+  const now=Date.now();
+  Object.keys(OV).forEach(k=>OV[k]={status:'',ts:now});
+  Object.keys(UPG).forEach(k=>UPG[k]={model:null,ts:now});
+  scheduleSync();
+}
+
+/* ── State change helpers ─────────────────────────────────────── */
+function setOV(key,val){OV[key]={status:val,ts:Date.now()};scheduleSync();}
+function setUPG(sn,val){UPG[sn]={model:val||null,ts:Date.now()};scheduleSync();}
+function toggleUPG(sn,checked){UPG[sn]={model:checked?'teros_one':null,ts:Date.now()};scheduleSync();}
+function selectAllTer12(){TER12.forEach(d=>UPG[d.sn]={model:'teros_one',ts:Date.now()});scheduleSync();}
+function clearTer12(){TER12.forEach(d=>UPG[d.sn]={model:null,ts:Date.now()});scheduleSync();}
+
+/* ── Tabs ─────────────────────────────────────────────────────── */
+function showTab(name,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('panel-'+name).classList.add('on');
+  el.classList.add('on');
+}
+
+/* ── Build tables (called once) ───────────────────────────────── */
+function buildTables(){
+  document.getElementById('naCount').textContent = 244 - WP4_READY.length - WP4_OFFLINE.length - WP5_DONE.length;
+
+  // ── WP4 ready
+  document.getElementById('tb-ready').innerHTML = WP4_READY.map(d=>`
+  <tr data-sn="${d.sn}" data-type="fw_ready">
+    <td><select class="ssel" data-key="fw_ready_${d.sn}" onchange="setOV('fw_ready_${d.sn}',this.value)">
+      <option value="">— Pending</option>
+      <option value="verified">✓ Pre-verified</option>
+      <option value="scheduled">◐ Scheduled</option>
+      <option value="skip">✕ Skip this push</option>
+    </select></td>
+    <td class="sn">${d.sn}</td>
+    <td>${d.model}</td>
+    <td class="rm">${d.room}</td>
+    <td style="font-family:var(--mono);font-size:.75rem">${d.fw}</td>
+    <td>${d.battery!==null?d.battery+'%':'—'}</td>
+    <td>${d.rssi!==null?d.rssi+' dBm':'—'}</td>
+  </tr>`).join('');
+
+  // ── WP4 offline
+  document.getElementById('tb-offline').innerHTML = WP4_OFFLINE.map(d=>`
+  <tr data-sn="${d.sn}" data-type="fw_offline">
+    <td><select class="ssel" data-key="fw_offline_${d.sn}" onchange="setOV('fw_offline_${d.sn}',this.value)">
+      <option value="">— Needs action</option>
+      <option value="online_confirmed">✓ Back online</option>
+      <option value="scheduled">◐ Scheduled visit</option>
+      <option value="wontfix">✕ Won't fix / retire</option>
+    </select></td>
+    <td class="sn">${d.sn}</td>
+    <td>${d.model}</td>
+    <td class="rm">${d.room}</td>
+    <td style="font-family:var(--mono);font-size:.75rem">${d.fw}</td>
+    <td>${d.created}</td>
+  </tr>`).join('');
+
+  // ── WP5 done
+  document.getElementById('tb-wp5').innerHTML = WP5_DONE.map(d=>`
+  <tr>
+    <td class="sn">${d.sn}</td>
+    <td>${d.model}</td>
+    <td class="rm">${d.room}</td>
+    <td style="font-family:var(--mono);font-size:.75rem">${d.fw}</td>
+    <td>${d.online?'<span class="pill p-ok">Online</span>':'<span class="pill p-warn">Offline</span>'}</td>
+  </tr>`).join('');
+
+  // ── H421 warranty
+  document.getElementById('tb-h421warranty').innerHTML = H421_ACTIVE.map(d=>`
+  <tr data-sn="${d.sn}">
+    <td><select class="ssel" data-key="warranty_${d.sn}" onchange="setOV('warranty_${d.sn}',this.value)">
+      <option value="">— Monitor</option>
+      <option value="claim_filed">✓ Claim filed</option>
+      <option value="resolved">✓ Resolved</option>
+      <option value="no_issue">◐ No current issue</option>
+    </select></td>
+    <td class="sn">${d.sn}</td>
+    <td class="rm">${d.room}</td>
+    <td>${d.created}</td>
+    <td>${d.expiry||'—'}</td>
+    <td>${d.daysRem!==null?d.daysRem:'—'}</td>
+  </tr>`).join('');
+
+  // ── Trade-in rooms
+  const rooms={};
+  TER12.forEach(d=>{const r=d.room||'Unassigned';(rooms[r]=rooms[r]||[]).push(d);});
+  document.getElementById('tradein-rooms').innerHTML = Object.keys(rooms).sort().map(room=>{
+    const devs=rooms[room];
+    const rows=devs.map(d=>`
+    <tr data-sn="${d.sn}">
+      <td><input type="checkbox" class="ti-cb" data-sn="${d.sn}" onchange="toggleUPG('${d.sn}',this.checked)" style="width:16px;height:16px;cursor:pointer;accent-color:var(--olive)"></td>
+      <td class="sn">${d.sn}</td>
+      <td class="rm">${d.zone||'—'}</td>
+      <td>${d.created}</td>
+      <td>${d.age!==null?d.age+' yr':'—'}</td>
+      <td>${d.online?'<span class="pill p-ok">Online</span>':'<span class="pill p-warn">Offline</span>'}</td>
+    </tr>`).join('');
+    return `<div class="roomg">
+      <div class="roomh" onclick="this.nextElementSibling.classList.toggle('open')">
+        <span>${room}</span><span class="rc">${devs.length} ter12</span>
+      </div>
+      <div class="roomb">
+        <div class="tw" style="margin:3px 0 6px 0"><table>
+          <thead><tr><th>Upgrade?</th><th>Serial</th><th>Zone</th><th>Created</th><th>Age</th><th>Status</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  renderWarrantyLedger();
+}
+
+/* ── render() — in-place update of all select values + row styling ── */
+function render(){
+  // FW ready selects
+  document.querySelectorAll('[data-key^="fw_ready_"]').forEach(sel=>{
+    const k=sel.dataset.key;const v=ov(k);sel.value=v;
+    sel.className='ssel '+(v==='verified'?'done':v==='scheduled'?'sched':v==='skip'?'wfix':'');
+    const tr=sel.closest('tr');if(tr)tr.classList.toggle('dim',v==='skip');
+  });
+  // FW offline selects
+  document.querySelectorAll('[data-key^="fw_offline_"]').forEach(sel=>{
+    const k=sel.dataset.key;const v=ov(k);sel.value=v;
+    sel.className='ssel '+(v==='online_confirmed'?'done':v==='scheduled'?'sched':v==='wontfix'?'wfix':'');
+    const tr=sel.closest('tr');if(tr)tr.classList.toggle('dim',v==='wontfix');
+  });
+  // Warranty selects
+  document.querySelectorAll('[data-key^="warranty_"]').forEach(sel=>{
+    const k=sel.dataset.key;const v=ov(k);sel.value=v;
+    sel.className='ssel '+(v==='claim_filed'||v==='resolved'?'done':v==='no_issue'?'sched':'');
+  });
+  // Trade-in checkboxes
+  document.querySelectorAll('.ti-cb').forEach(cb=>{
+    const sn=cb.dataset.sn;const checked=upg(sn)==='teros_one';
+    cb.checked=checked;
+    const tr=cb.closest('tr');if(tr)tr.classList.toggle('dim',false);
+  });
+}
+
+function recompute(){
+  // Trade-in selection count + total
+  const sel=TER12.filter(d=>upg(d.sn)==='teros_one');
+  const n=sel.length;const total=n*419;
+  const fmt=v=>'$'+v.toLocaleString();
+  ['kpiSel','selTotal2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=fmt(total);});
+  ['kpiSelLbl','selLbl2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=`Selected (${n} units)`;});
+}
+
+/* ── Warranty ledger (re-render on filter change) ── */
+function renderWarrantyLedger(){
+  const filt=document.getElementById('warrantyFilter').value;
+  const data=WARRANTY_ALL.filter(d=>filt==='all'||d.status===filt);
+  document.getElementById('tb-ledger').innerHTML=data.map(d=>{
+    const urg=d.status==='ACTIVE'&&d.daysRem!==null&&d.daysRem<90;
+    const pill=d.status==='ACTIVE'?(urg?'p-urg':'p-act'):'p-exp';
+    const txt=d.status==='ACTIVE'?(urg?`⚠ ${d.daysRem}d`:d.status):d.status;
+    return `<tr><td class="sn">${d.sn}</td><td>${d.model}</td><td class="rm">${d.room}</td>
+    <td style="font-size:.74rem">${d.cat}</td><td>${d.created}</td><td>${d.expiry||'—'}</td>
+    <td><span class="pill ${pill}">${txt}</span></td></tr>`;
+  }).join('');
+}
+
+/* ── Init ──────────────────────────────────────────────────────── */
+buildTables();
+recompute();
+render();
+syncNow();
+setInterval(pullOnly,20000);
+window.addEventListener('focus',pullOnly);
+</script>
+</body>
+</html>
