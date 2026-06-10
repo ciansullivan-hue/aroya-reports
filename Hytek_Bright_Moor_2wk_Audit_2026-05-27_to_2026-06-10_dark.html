@@ -138,6 +138,13 @@
   .muted{color:var(--ink-muted);font-style:italic}
   kbd{font-family:'JetBrains Mono','Monaco',monospace;font-size:11px;padding:1px 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg-3);color:var(--ink-2)}
 </style>
+<style id="rm-mini-style">
+.rm-minis{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:14px;}
+.rm-mini{border:1px solid var(--border);border-radius:8px;padding:8px 8px 6px;background:var(--bg-2);}
+.rm-mini h6{margin:0 0 4px;font-size:0.66rem;font-weight:600;letter-spacing:.03em;color:var(--ink-2);text-transform:uppercase;}
+.rm-mini-cv{position:relative;height:128px;}
+.rm-minis-title{margin:16px 0 0;font-size:0.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-muted);}
+</style>
 </head>
 <body class="en">
 <div class="wrap">
@@ -345,6 +352,17 @@
     <span class="en-only"><b>Steering intent:</b> Vegetatively-steered (phase: Vegetative, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 5–15 pp absolute, pore EC 3.0–5.0 mS, VPD lights-on 0.8–1.1 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 4.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 14:32 ET ± 0.2 h day-to-day · 0.6 shots/day (VWC step-up derived) · 0.0 P2 maintenance pulses/day · pore EC mean 2.89 mS · VPD lights-on 1.16 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Vegetatively-steered (phase: Vegetative, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 5–15 pp absolute, pore EC 3.0–5.0 mS, VPD lights-on 0.8–1.1 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 4.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 14:32 ET ± 0.2 h day-to-day · 0.6 shots/day (VWC step-up derived) · 0.0 P2 maintenance pulses/day · pore EC mean 2.89 mS · VPD lights-on 1.16 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6893">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6893-vwc" data-mini-room="room-6893" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6893-pore_ec" data-mini-room="room-6893" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6893-sub_temp" data-mini-room="room-6893" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6893-vpd" data-mini-room="room-6893" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6893-air_temp" data-mini-room="room-6893" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6893-rh" data-mini-room="room-6893" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6893-co2" data-mini-room="room-6893" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6891">
   <div class="rm-head">
@@ -370,6 +388,17 @@
     <span class="en-only"><b>Steering intent:</b> Generatively-steered (phase: Early Flower / Stretch, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 20–30 pp absolute, pore EC 6.0–12.0 mS, VPD lights-on 1.0–1.2 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 20.8 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 11:21 ET ± 0.5 h day-to-day · 7.3 shots/day (VWC step-up derived) · 1.1 P2 maintenance pulses/day · pore EC mean 6.84 mS · VPD lights-on 1.34 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Generatively-steered (phase: Early Flower / Stretch, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 20–30 pp absolute, pore EC 6.0–12.0 mS, VPD lights-on 1.0–1.2 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 20.8 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 11:21 ET ± 0.5 h day-to-day · 7.3 shots/day (VWC step-up derived) · 1.1 P2 maintenance pulses/day · pore EC mean 6.84 mS · VPD lights-on 1.34 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6891">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6891-vwc" data-mini-room="room-6891" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6891-pore_ec" data-mini-room="room-6891" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6891-sub_temp" data-mini-room="room-6891" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6891-vpd" data-mini-room="room-6891" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6891-air_temp" data-mini-room="room-6891" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6891-rh" data-mini-room="room-6891" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6891-co2" data-mini-room="room-6891" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6895">
   <div class="rm-head">
@@ -395,6 +424,17 @@
     <span class="en-only"><b>Steering intent:</b> Generatively-steered (phase: Early Flower / Stretch, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 20–30 pp absolute, pore EC 6.0–12.0 mS, VPD lights-on 1.0–1.2 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 10.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 11:54 ET ± 0.3 h day-to-day · 4.1 shots/day (VWC step-up derived) · 0.0 P2 maintenance pulses/day · pore EC mean 8.17 mS · VPD lights-on 1.18 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Generatively-steered (phase: Early Flower / Stretch, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 20–30 pp absolute, pore EC 6.0–12.0 mS, VPD lights-on 1.0–1.2 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 10.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 11:54 ET ± 0.3 h day-to-day · 4.1 shots/day (VWC step-up derived) · 0.0 P2 maintenance pulses/day · pore EC mean 8.17 mS · VPD lights-on 1.18 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6895">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6895-vwc" data-mini-room="room-6895" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6895-pore_ec" data-mini-room="room-6895" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6895-sub_temp" data-mini-room="room-6895" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6895-vpd" data-mini-room="room-6895" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6895-air_temp" data-mini-room="room-6895" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6895-rh" data-mini-room="room-6895" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6895-co2" data-mini-room="room-6895" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6899">
   <div class="rm-head">
@@ -420,6 +460,17 @@
     <span class="en-only"><b>Steering intent:</b> Generatively-steered (phase: Early Flower / Stretch, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 20–30 pp absolute, pore EC 6.0–12.0 mS, VPD lights-on 1.0–1.2 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 28.8 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 12:09 ET ± 0.5 h day-to-day · 9.4 shots/day (VWC step-up derived) · 0.9 P2 maintenance pulses/day · pore EC mean 7.49 mS · VPD lights-on 1.24 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Generatively-steered (phase: Early Flower / Stretch, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 20–30 pp absolute, pore EC 6.0–12.0 mS, VPD lights-on 1.0–1.2 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 28.8 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 12:09 ET ± 0.5 h day-to-day · 9.4 shots/day (VWC step-up derived) · 0.9 P2 maintenance pulses/day · pore EC mean 7.49 mS · VPD lights-on 1.24 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6899">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6899-vwc" data-mini-room="room-6899" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6899-pore_ec" data-mini-room="room-6899" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6899-sub_temp" data-mini-room="room-6899" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6899-vpd" data-mini-room="room-6899" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6899-air_temp" data-mini-room="room-6899" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6899-rh" data-mini-room="room-6899" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6899-co2" data-mini-room="room-6899" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6890">
   <div class="rm-head">
@@ -445,6 +496,17 @@
     <span class="en-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 17.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 10:51 ET ± 0.1 h day-to-day · 8.1 shots/day (VWC step-up derived) · 0.8 P2 maintenance pulses/day · pore EC mean 5.23 mS · VPD lights-on 1.26 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 17.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 10:51 ET ± 0.1 h day-to-day · 8.1 shots/day (VWC step-up derived) · 0.8 P2 maintenance pulses/day · pore EC mean 5.23 mS · VPD lights-on 1.26 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6890">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6890-vwc" data-mini-room="room-6890" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6890-pore_ec" data-mini-room="room-6890" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6890-sub_temp" data-mini-room="room-6890" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6890-vpd" data-mini-room="room-6890" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6890-air_temp" data-mini-room="room-6890" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6890-rh" data-mini-room="room-6890" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6890-co2" data-mini-room="room-6890" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6892">
   <div class="rm-head">
@@ -470,6 +532,17 @@
     <span class="en-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 15.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 10:57 ET ± 0.1 h day-to-day · 7.6 shots/day (VWC step-up derived) · 1.6 P2 maintenance pulses/day · pore EC mean 4.78 mS · VPD lights-on 1.22 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 15.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 10:57 ET ± 0.1 h day-to-day · 7.6 shots/day (VWC step-up derived) · 1.6 P2 maintenance pulses/day · pore EC mean 4.78 mS · VPD lights-on 1.22 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6892">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6892-vwc" data-mini-room="room-6892" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6892-pore_ec" data-mini-room="room-6892" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6892-sub_temp" data-mini-room="room-6892" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6892-vpd" data-mini-room="room-6892" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6892-air_temp" data-mini-room="room-6892" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6892-rh" data-mini-room="room-6892" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6892-co2" data-mini-room="room-6892" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6894">
   <div class="rm-head">
@@ -495,6 +568,17 @@
     <span class="en-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 12.9 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 11:37 ET ± 0.9 h day-to-day · 5.4 shots/day (VWC step-up derived) · 0.1 P2 maintenance pulses/day · pore EC mean 7.90 mS · VPD lights-on 1.24 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 12.9 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 11:37 ET ± 0.9 h day-to-day · 5.4 shots/day (VWC step-up derived) · 0.1 P2 maintenance pulses/day · pore EC mean 7.90 mS · VPD lights-on 1.24 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6894">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6894-vwc" data-mini-room="room-6894" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6894-pore_ec" data-mini-room="room-6894" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6894-sub_temp" data-mini-room="room-6894" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6894-vpd" data-mini-room="room-6894" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6894-air_temp" data-mini-room="room-6894" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6894-rh" data-mini-room="room-6894" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6894-co2" data-mini-room="room-6894" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6896">
   <div class="rm-head">
@@ -520,6 +604,17 @@
     <span class="en-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 9.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 13:00 ET ± 3.1 h day-to-day · 3.1 shots/day (VWC step-up derived) · 0.0 P2 maintenance pulses/day · pore EC mean 4.60 mS · VPD lights-on 1.20 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 9.3 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 13:00 ET ± 3.1 h day-to-day · 3.1 shots/day (VWC step-up derived) · 0.0 P2 maintenance pulses/day · pore EC mean 4.60 mS · VPD lights-on 1.20 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6896">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6896-vwc" data-mini-room="room-6896" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6896-pore_ec" data-mini-room="room-6896" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6896-sub_temp" data-mini-room="room-6896" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6896-vpd" data-mini-room="room-6896" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6896-air_temp" data-mini-room="room-6896" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6896-rh" data-mini-room="room-6896" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6896-co2" data-mini-room="room-6896" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6897">
   <div class="rm-head">
@@ -545,6 +640,17 @@
     <span class="en-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 12.5 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 12:39 ET ± 0.9 h day-to-day · 4.6 shots/day (VWC step-up derived) · 0.5 P2 maintenance pulses/day · pore EC mean 6.23 mS · VPD lights-on 1.19 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Vegetatively-steered (phase: Bulking / Vegetative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 12–18 pp absolute, pore EC 4.0–7.0 mS, VPD lights-on 1.2–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 3–5%.<br><b>14-day observation (REAL):</b> daily dryback 12.5 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 12:39 ET ± 0.9 h day-to-day · 4.6 shots/day (VWC step-up derived) · 0.5 P2 maintenance pulses/day · pore EC mean 6.23 mS · VPD lights-on 1.19 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6897">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6897-vwc" data-mini-room="room-6897" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6897-pore_ec" data-mini-room="room-6897" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6897-sub_temp" data-mini-room="room-6897" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6897-vpd" data-mini-room="room-6897" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6897-air_temp" data-mini-room="room-6897" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6897-rh" data-mini-room="room-6897" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6897-co2" data-mini-room="room-6897" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6898">
   <div class="rm-head">
@@ -570,6 +676,17 @@
     <span class="en-only"><b>Steering intent:</b> Generatively-steered (phase: Ripening / Generative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 25–35 pp absolute, pore EC 6.0–8.0 mS, VPD lights-on 1.4–1.6 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 25.1 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 12:20 ET ± 0.1 h day-to-day · 8.9 shots/day (VWC step-up derived) · 0.1 P2 maintenance pulses/day · pore EC mean 6.34 mS · VPD lights-on 1.32 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Generatively-steered (phase: Ripening / Generative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 25–35 pp absolute, pore EC 6.0–8.0 mS, VPD lights-on 1.4–1.6 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 25.1 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 12:20 ET ± 0.1 h day-to-day · 8.9 shots/day (VWC step-up derived) · 0.1 P2 maintenance pulses/day · pore EC mean 6.34 mS · VPD lights-on 1.32 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6898">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6898-vwc" data-mini-room="room-6898" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6898-pore_ec" data-mini-room="room-6898" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6898-sub_temp" data-mini-room="room-6898" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6898-vpd" data-mini-room="room-6898" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6898-air_temp" data-mini-room="room-6898" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6898-rh" data-mini-room="room-6898" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6898-co2" data-mini-room="room-6898" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6900">
   <div class="rm-head">
@@ -595,6 +712,17 @@
     <span class="en-only"><b>Steering intent:</b> Generatively-steered (phase: Ripening / Generative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 25–35 pp absolute, pore EC 6.0–8.0 mS, VPD lights-on 1.4–1.6 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 25.8 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 11:31 ET ± 0.1 h day-to-day · 8.3 shots/day (VWC step-up derived) · 0.6 P2 maintenance pulses/day · pore EC mean 9.09 mS · VPD lights-on 1.38 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Generatively-steered (phase: Ripening / Generative 2, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 25–35 pp absolute, pore EC 6.0–8.0 mS, VPD lights-on 1.4–1.6 kPa. P0 / P1 / P2 / P3 cadence — shot size 6–10%.<br><b>14-day observation (REAL):</b> daily dryback 25.8 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 11:31 ET ± 0.1 h day-to-day · 8.3 shots/day (VWC step-up derived) · 0.6 P2 maintenance pulses/day · pore EC mean 9.09 mS · VPD lights-on 1.38 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6900">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6900-vwc" data-mini-room="room-6900" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6900-pore_ec" data-mini-room="room-6900" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6900-sub_temp" data-mini-room="room-6900" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6900-vpd" data-mini-room="room-6900" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6900-air_temp" data-mini-room="room-6900" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6900-rh" data-mini-room="room-6900" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6900-co2" data-mini-room="room-6900" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
 <div class="room-meta" id="room-card-room-6889">
   <div class="rm-head">
@@ -620,6 +748,17 @@
     <span class="en-only"><b>Steering intent:</b> Mixed (phase: Idle / Turnover, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 5–15 pp absolute, pore EC 2.0–5.0 mS, VPD lights-on 0.8–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 2–6%.<br><b>14-day observation (REAL):</b> daily dryback 0.6 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 14:54 ET ± 0.0 h day-to-day · 0.2 shots/day (VWC step-up derived) · 0.0 P2 maintenance pulses/day · pore EC mean 1.57 mS · VPD lights-on 1.47 kPa.</span>
     <span class="es-only"><b>Steering intent:</b> Mixed (phase: Idle / Turnover, signal-inferred — no HG roster this run, SPA session down). AROYA targets: dryback 5–15 pp absolute, pore EC 2.0–5.0 mS, VPD lights-on 0.8–1.4 kPa. P0 / P1 / P2 / P3 cadence — shot size 2–6%.<br><b>14-day observation (REAL):</b> daily dryback 0.6 pp absolute (mean of daily peak − pre-irrigation low) · P1 onset 14:54 ET ± 0.0 h day-to-day · 0.2 shots/day (VWC step-up derived) · 0.0 P2 maintenance pulses/day · pore EC mean 1.57 mS · VPD lights-on 1.47 kPa.</span>
   </p>
+
+  <p class="rm-minis-title"><span class="en-only">14-day biophysics — small multiples</span><span class="es-only">Biofísica de 14 días — multiplos pequeños</span></p>
+  <div class="rm-minis" data-room="room-6889">
+    <div class="rm-mini"><h6><span class="en-only">VWC (%)</span><span class="es-only">VWC (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6889-vwc" data-mini-room="room-6889" data-mini-metric="vwc"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Pore EC (mS/cm)</span><span class="es-only">EC de poro (mS/cm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6889-pore_ec" data-mini-room="room-6889" data-mini-metric="pore_ec"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Substrate temp (°F)</span><span class="es-only">Temp. sustrato (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6889-sub_temp" data-mini-room="room-6889" data-mini-metric="sub_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">VPD (kPa)</span><span class="es-only">VPD (kPa)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6889-vpd" data-mini-room="room-6889" data-mini-metric="vpd"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">Air temp (°F)</span><span class="es-only">Temp. aire (°F)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6889-air_temp" data-mini-room="room-6889" data-mini-metric="air_temp"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">RH (%)</span><span class="es-only">HR (%)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6889-rh" data-mini-room="room-6889" data-mini-metric="rh"></canvas></div></div>
+    <div class="rm-mini"><h6><span class="en-only">CO₂ (ppm)</span><span class="es-only">CO₂ (ppm)</span></h6><div class="rm-mini-cv"><canvas id="mini-room-6889-co2" data-mini-room="room-6889" data-mini-metric="co2"></canvas></div></div>
+  </div>
 </div>
   </div>
 </section>
@@ -1176,5 +1315,86 @@ function renderAllCharts(){
 document.addEventListener('DOMContentLoaded', renderAllCharts);
 </script>
 
+<script id="rm-mini-script">
+(function(){
+  var MINI_ACCENT = {
+    'veg':          ['--p-veg',      '#9fd96a'],
+    'mom':          ['--p-rootin',   '#a8d5e2'],
+    'early-flower': ['--p-stretch',  '#f4a261'],
+    'bulking':      ['--p-bulking',  '#c5a3ff'],
+    'ripening':     ['--p-ripening', '#e76f51']
+  };
+  var miniRendered = {};
+  window.__miniCharts = {};
+  function miniVar(name, fb){
+    var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fb;
+  }
+  function renderMini(cv){
+    var id = cv.id;
+    if (miniRendered[id]) return;
+    if (typeof Chart === 'undefined') return;
+    var roomKey = cv.getAttribute('data-mini-room');
+    var metric = cv.getAttribute('data-mini-metric');
+    var ts = (window.__CL_ROOM_TIMESERIES__ || {})[roomKey];
+    if (!ts || !ts[metric]) return;
+    var rooms = (window.__CL_DATA__ || {}).rooms || {};
+    var phase = (rooms[roomKey] || {}).phase || '';
+    var acc = MINI_ACCENT[phase];
+    var color = acc ? miniVar(acc[0], acc[1]) : miniVar('--olive', '#6b7c3f');
+    miniRendered[id] = true;
+    window.__miniCharts[id] = new Chart(cv.getContext('2d'), {
+      type: 'line',
+      data: { labels: ts.labels, datasets: [{
+        data: ts[metric], borderColor: color, backgroundColor: 'transparent',
+        borderWidth: 2, pointRadius: 0, tension: 0.25, spanGaps: true
+      }] },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false,
+        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        scales: {
+          x: { ticks: { color: miniVar('--ink-muted', '#888'), font: { size: 8 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 4 }, grid: { display: false } },
+          y: { ticks: { color: miniVar('--ink-muted', '#888'), font: { size: 8 }, maxTicksLimit: 3 }, grid: { color: miniVar('--grid-line', 'rgba(128,128,128,.18)') } }
+        }
+      }
+    });
+  }
+  function miniBoot(){
+    var canvases = Array.prototype.slice.call(document.querySelectorAll('canvas[data-mini-room]'));
+    if (!canvases.length) return;
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting){ io.unobserve(en.target); renderMini(en.target); }
+        });
+      }, { rootMargin: '400px 0px 400px 0px' });
+      canvases.forEach(function(cv){ io.observe(cv); });
+    } else {
+      canvases.forEach(renderMini);
+    }
+    document.querySelectorAll('.theme-btn').forEach(function(b){
+      b.addEventListener('click', function(){
+        setTimeout(function(){
+          var ids = Object.keys(window.__miniCharts);
+          ids.forEach(function(id){
+            try { window.__miniCharts[id].destroy(); } catch(e) {}
+            delete window.__miniCharts[id];
+            miniRendered[id] = false;
+          });
+          ids.forEach(function(id){
+            var cv = document.getElementById(id);
+            if (cv) renderMini(cv);
+          });
+        }, 0);
+      });
+    });
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', miniBoot);
+  } else {
+    miniBoot();
+  }
+})();
+</script>
 </body>
 </html>
