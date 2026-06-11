@@ -290,7 +290,14 @@ footer a{color:var(--lime);text-decoration:none}
 <tr><td><b>Battery</b></td><td>0 (PoE)</td><td><b>Sister wave</b></td><td>provisioned alongside 3501 &amp; 3514 (same createdOn 2025-01-22)</td></tr>
 <tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">H4210003493S</span> (ee894), AROYA ID 168157, also at facility 3485, last spoke 2026-01-19. Sensor &rsquo;s <span class="mono">retired</span> flag is false &mdash; only the puck was flagged.</td></tr>
 <tr><td colspan="4"><b>Previous-draft correction:</b> the earlier &ldquo;not found / verify serial&rdquo; conclusion was wrong. The SPA <span class="mono">/devices/</span> endpoint hides <span class="mono">retired=true</span> devices by default; the authoritative lookup is <span class="mono">api.aroya.io/portal_api/devices/?search=&lt;serial&gt;</span> with <span class="mono">X-Facility: 3485</span>, which returns retired records too.</td></tr>
-<tr><td colspan="4"><b>Action:</b> already retired in AROYA &mdash; physical disposition (trade-in vs scrap vs RMA box) is the only open question. Include in the H421 conversation alongside 3514, NOT the H111 trade-in batch.</td></tr>
+<tr><td colspan="4"><b>How it got the <span class="mono">retired</span> flag:</b> per Cian, that flag is set only by AROYA support staff &mdash; there is no customer-facing path. So someone on support marked 3493 retired sometime after 2026-01-27 (last comm). Slack + Notion sweep for the case behind it:</td></tr>
+<tr><td colspan="4">&bull; Slack &mdash; <b>1 hit</b> on this exact serial in <span class="mono">#0-critical-aroya-alarms-dont-ignore</span> (automated alert only, no thread / no human conversation).<br>
+&bull; Slack &mdash; no mentions in <span class="mono">#aroya_customersupport</span>, no mentions in <span class="mono">#wp4-to-5-update</span> (so this is NOT a WP4&rarr;WP5 firmware-rollout retirement).<br>
+&bull; Slack &mdash; no Salesforce bot user is provisioned in this workspace; the standard <span class="mono">slackbot</span> SF-search integration that we&rsquo;d use to lookup case info isn&rsquo;t available from the MCP surface here.<br>
+&bull; Notion &mdash; only Noble case in &ldquo;My Cases&rdquo; is <b>00019972</b> (April 2025, Replacement parts shipping, Status: Done, product H810 Drip &amp; Drain) &mdash; <b>not</b> the case behind this retirement.<br>
+&bull; Notion + Drive &mdash; no document references H4210003493.</td></tr>
+<tr><td colspan="4"><b>Recommended:</b> open Salesforce directly and pull the case linked to AROYA ID 168156 or to Noble post-2026-01-27. Whoever marked it retired likely logged the reason there.</td></tr>
+<tr><td colspan="4"><b>Action:</b> already retired in AROYA &mdash; the only open question is physical disposition (trade-in box vs scrap vs RMA). Include in the H421 conversation alongside 3514, NOT the H111 trade-in batch.</td></tr>
 </table></div>
 </details>
 
