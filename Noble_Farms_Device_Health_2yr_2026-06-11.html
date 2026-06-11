@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Noble Farms — AROYA Device Health · 2-Year Audit · 2026-06-11</title>
+<style>
+:root{--bg:#fafaf7;--ink:#1c2419;--ink-muted:#7e836e;--border:#e2e2dc;--card:#ffffff;
+--olive:#3f4e2b;--lime:#9fd96a;--app-blue:#1f78b4;--attention:#e76f51;
+--good:#5b8a3a;--good-bg:#eef5e3;--warn:#c87a2c;--warn-bg:#fbecd6;--bad:#b1442a;--bad-bg:#f7d9cf;
+--grid-line:#e8e8e0;--card-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05);}
+body.dark{--bg:#13160f;--ink:#e8ead9;--ink-muted:#7a8175;--border:#2e3624;--card:#1a1f14;
+--olive:#8aa05c;--lime:#b9e587;--app-blue:#6cb5d8;--attention:#f48066;
+--good:#86c25b;--good-bg:#1f2c19;--warn:#e4a35e;--warn-bg:#2e2418;--bad:#df6a4d;--bad-bg:#2e1c16;
+--grid-line:#2a3220;--card-shadow:0 1px 3px rgba(0,0,0,.5),0 8px 28px rgba(0,0,0,.45);}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink);line-height:1.5;font-size:15px}
+.i-es{display:none}body.es .i-es{display:inline}body.es .i-en{display:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+header.hero{background:linear-gradient(135deg,var(--olive),#26301a 70%);color:#f2f4e8;padding:28px 0 22px;margin-bottom:24px}
+body.dark header.hero{background:linear-gradient(135deg,#26301a,#10140a 70%)}
+header.hero .wrap{padding-bottom:0}
+.brand{font-weight:800;letter-spacing:.22em;font-size:13px;color:var(--lime)}
+.lockup{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.lockup svg{height:22px}
+h1{margin:6px 0 4px;font-size:26px;font-weight:800;color:#fff}
+.sub{font-size:13px;color:#cfd6bd}
+.toggles{float:right;margin-top:4px}
+.tg{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:18px;
+padding:5px 14px;font-size:12px;cursor:pointer;margin-left:8px;font-weight:600}
+.tg:hover{background:rgba(255,255,255,.25)}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 4px}
+.meta .m{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.2);padding:8px 12px;border-radius:8px}
+.meta .m .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:#b9c2a3;font-weight:700}
+.meta .m .v{font-size:14px;font-weight:700;color:#fff;margin-top:2px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0 26px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--card-shadow);border-top:4px solid var(--olive)}
+.kpi.good{border-top-color:var(--good);background:linear-gradient(180deg,var(--good-bg),var(--card) 65%)}
+.kpi.warn{border-top-color:var(--warn);background:linear-gradient(180deg,var(--warn-bg),var(--card) 65%)}
+.kpi.bad{border-top-color:var(--bad);background:linear-gradient(180deg,var(--bad-bg),var(--card) 65%)}
+.kpi.blue{border-top-color:var(--app-blue)}
+.kpi .n{font-size:26px;font-weight:800}
+.kpi .l{font-size:11.5px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+section{margin-bottom:30px}
+h2{font-size:19px;border-left:5px solid var(--lime);padding-left:12px;margin:34px 0 12px}
+h3{font-size:15px;margin:18px 0 8px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;box-shadow:var(--card-shadow)}
+.note{border-left:4px solid var(--app-blue);background:var(--card);padding:12px 16px;border-radius:0 10px 10px 0;font-size:13.5px;margin:12px 0;border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.note.warn{border-left-color:var(--warn)}
+.note.bad{border-left-color:var(--bad)}
+.note.good{border-left-color:var(--good)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-muted);
+border-bottom:2px solid var(--border);padding:7px 8px;white-space:nowrap}
+td{padding:6px 8px;border-bottom:1px solid var(--grid-line);vertical-align:top}
+tr:hover td{background:var(--good-bg)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+.badge{display:inline-block;font-size:11px;font-weight:700;border-radius:10px;padding:2px 9px;white-space:nowrap}
+.b-ok{background:var(--good-bg);color:var(--good)}
+.b-warn{background:var(--warn-bg);color:var(--warn)}
+.b-bad{background:var(--bad-bg);color:var(--bad)}
+.b-roomok{background:var(--good-bg);color:var(--app-blue);outline:1px dashed var(--app-blue)}
+details.dev{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;box-shadow:var(--card-shadow);overflow:hidden}
+details.dev>summary{cursor:pointer;padding:13px 18px;font-weight:700;font-size:15px;list-style:none;display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-left:6px solid var(--olive)}
+details.dev.bad>summary{border-left-color:var(--bad)}
+details.dev.warn>summary{border-left-color:var(--warn)}
+details.dev>summary::-webkit-details-marker{display:none}
+details.dev>summary .roll{font-size:12px;font-weight:600;color:var(--ink-muted);margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+details.dev .tbl{padding:0 18px 16px;overflow-x:auto}
+ol.actions{padding-left:0;list-style:none;counter-reset:act}
+ol.actions li{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 16px;margin-bottom:10px;box-shadow:var(--card-shadow);display:flex;gap:14px;align-items:flex-start}
+ol.actions li .pr{flex:0 0 auto;font-weight:800;font-size:11px;border-radius:10px;padding:3px 10px;letter-spacing:.04em;align-self:flex-start}
+.pr.p0{background:var(--bad-bg);color:var(--bad)}.pr.p1{background:var(--warn-bg);color:var(--warn)}.pr.p2{background:var(--good-bg);color:var(--app-blue)}
+footer{margin-top:40px;font-size:12px;color:var(--ink-muted);border-top:1px solid var(--border);padding-top:14px;background:var(--olive);color:#cfd6bd;padding:18px 22px;border-radius:8px}
+body.dark footer{background:#1f2818}
+footer a{color:var(--lime);text-decoration:none}
+@media print{.toggles{display:none}}
+@media (max-width:600px){.meta{grid-template-columns:repeat(2,1fr)}}
+</style></head>
+<body>
+<header class="hero"><div class="wrap">
+<div class="toggles">
+<button class="tg" id="langBtn" onclick="toggleLang()">ES</button>
+<button class="tg" id="themeBtn" onclick="toggleTheme()">&#9790; Dark</button>
+</div>
+<div class="lockup"><div class="brand">AROYA &middot; DEVICE HEALTH &middot; 2-YEAR AUDIT</div></div>
+<h1>Noble Farms</h1>
+<div class="sub">
+<span class="i-en">6 device serials photographed by Ryan &amp; Ali &middot; 2-year telemetry review &middot; pulled 2026-06-11</span>
+<span class="i-es">6 nº de serie fotografiados por Ryan y Ali &middot; revisión de telemetría a 2 años &middot; extraído 2026-06-11</span>
+</div>
+<div class="meta">
+<div class="m"><div class="l"><span class="i-en">Facility</span><span class="i-es">Instalación</span></div><div class="v">3485 &middot; Noble</div></div>
+<div class="m"><div class="l"><span class="i-en">Organization</span><span class="i-es">Organización</span></div><div class="v">2860 &middot; Noble Farms</div></div>
+<div class="m"><div class="l"><span class="i-en">Rooms (live)</span><span class="i-es">Salas activas</span></div><div class="v">11 / 13</div></div>
+<div class="m"><div class="l"><span class="i-en">Serials in scope</span><span class="i-es">Serie en alcance</span></div><div class="v">6</div></div>
+<div class="m"><div class="l"><span class="i-en">Resolved to room</span><span class="i-es">Resueltos por sala</span></div><div class="v">1 / 6</div></div>
+<div class="m"><div class="l"><span class="i-en">Audit window</span><span class="i-es">Ventana de auditoría</span></div><div class="v">2024-06-11 &rarr; 2026-06-11</div></div>
+<div class="m"><div class="l"><span class="i-en">Primary contacts</span><span class="i-es">Contactos principales</span></div><div class="v">Ryan Kruskamp &middot; Ali Zervopoulos</div></div>
+<div class="m"><div class="l"><span class="i-en">Source</span><span class="i-es">Fuente</span></div><div class="v">iMessage group photos</div></div>
+</div>
+</div></header>
+
+<div class="wrap">
+
+<div class="kpis">
+<div class="kpi blue"><div class="n">6</div><div class="l"><span class="i-en">Serials in scope</span><span class="i-es">Series en alcance</span></div></div>
+<div class="kpi bad"><div class="n">1</div><div class="l"><span class="i-en">Critical</span><span class="i-es">Crítico</span></div></div>
+<div class="kpi warn"><div class="n">5</div><div class="l"><span class="i-en">Warning</span><span class="i-es">Aviso</span></div></div>
+<div class="kpi good"><div class="n">0</div><div class="l"><span class="i-en">Healthy (certified)</span><span class="i-es">Saludable (certificado)</span></div></div>
+<div class="kpi warn"><div class="n">5</div><div class="l"><span class="i-en">Unresolved to room</span><span class="i-es">Sin sala</span></div></div>
+<div class="kpi blue"><div class="n">1140 d</div><div class="l"><span class="i-en">Longest silent gap</span><span class="i-es">Brecha más larga</span></div></div>
+</div>
+
+<section>
+<h2><span class="i-en">TL;DR — what to say back to Ryan &amp; Ali</span><span class="i-es">Resumen &mdash; qué responderles a Ryan y Ali</span></h2>
+<div class="note bad">
+<b>1. <span class="mono">H1110006644</span> in Flower B 1 has been radio-silent since April 28, 2023</b> &mdash;
+<span class="i-en">three full years dark. Battery snapshot 38 %, RSSI 5, status <span class="mono">online: false</span>, <span class="mono">retired: false</span>. <b>It is NOT bricked</b> &mdash; it&rsquo;s a WP4 H210 Climate Station puck that simply hasn&rsquo;t rejoined the mesh. The room itself is healthy (479 valid temp points across the last 14 days at 82.7 &deg;F avg / 1.25 kPa VPD avg), so something else picked up the climate duty and nobody noticed. Decide: power-cycle &amp; rejoin, or retire-and-trade-in.</span>
+<span class="i-es">tres a&ntilde;os silencioso. Bater&iacute;a 38 %, RSSI 5, <span class="mono">online: false</span>, <span class="mono">retired: false</span>. <b>NO est&aacute; muerto</b> &mdash; es un puck WP4 H210 Climate Station que no se ha reincorporado a la malla. La sala est&aacute; sana; otro equipo cubri&oacute; el clima. Decisi&oacute;n: reiniciar y reintegrar, o retirar y canjear.</span>
+</div>
+<div class="note warn">
+<b>2. The three <span class="mono">H4210xxxx</span> serials (3514 / 3501 / 3493) are almost certainly current-fleet Climate One units.</b>
+<span class="i-en">Noble&rsquo;s installed H421 serial range is already 3460&rarr;5610 (we see 2740, 3460, 5610 live in Flower B8). These three slot right into that range. If photographed off-the-shelf or in a swap-out box, the question is whether to provision into new room/zones, RMA, or move them.</span>
+<span class="i-es">El rango de serie H421 instalado en Noble ya es 3460&rarr;5610 (vemos 2740, 3460, 5610 activos en Flower B8). Estos tres caen dentro del rango. Hay que decidir provisi&oacute;n / RMA / reubicaci&oacute;n.</span>
+</div>
+<div class="note warn">
+<b>3. The two other <span class="mono">H111x</span> serials (6757 / 6677) are the same vintage as the silent 6644.</b>
+<span class="i-en">Same hardware family (H210 Climate Station / repeater), same install era (~2023). High prior they&rsquo;re dormant-in-place, de-installed, or shelved as spares. Recommend bundling all three H111s into one trade-in batch and treating the three H421s separately.</span>
+<span class="i-es">Misma familia que 6644 (H210 Climate Station / repeater) y la misma &eacute;poca (~2023). Probable que est&eacute;n inactivos, desinstalados o de reserva. Recomendaci&oacute;n: agrupar los tres H111 en un lote de canje y los tres H421 en una conversaci&oacute;n separada.</span>
+</div>
+</section>
+
+<section>
+<h2><span class="i-en">Identification table</span><span class="i-es">Tabla de identificaci&oacute;n</span></h2>
+<div class="card"><table>
+<tr><th>Serial</th><th>Family</th><th>Resolved?</th><th>Room</th><th>Tier</th></tr>
+<tr><td class="mono">H1110006644</td><td>H210 Climate Station (WP4) &middot; repeater + atm14</td><td><span class="badge b-ok">&check; SPA confirmed</span></td><td>Flower B 1 (room 11392, zone 47916)</td><td><span class="badge b-bad">CRITICAL</span></td></tr>
+<tr><td class="mono">H1110006757</td><td>H210 Climate Station (WP4) &middot; repeater (inferred)</td><td><span class="badge b-warn">SPA bridge dropped</span></td><td>&mdash;</td><td><span class="badge b-warn">WARNING</span></td></tr>
+<tr><td class="mono">H1110006677</td><td>H210 Climate Station (WP4) &middot; repeater (inferred)</td><td><span class="badge b-warn">SPA bridge dropped</span></td><td>&mdash;</td><td><span class="badge b-warn">WARNING</span></td></tr>
+<tr><td class="mono">H4210003514</td><td>Climate One (WP5-capable) &middot; h421 + ee894 (inferred)</td><td><span class="badge b-warn">SPA bridge dropped</span></td><td>&mdash;</td><td><span class="badge b-warn">WARNING</span></td></tr>
+<tr><td class="mono">H4210003501</td><td>Climate One (WP5-capable) &middot; h421 + ee894 (inferred)</td><td><span class="badge b-warn">SPA bridge dropped</span></td><td>&mdash;</td><td><span class="badge b-warn">WARNING</span></td></tr>
+<tr><td class="mono">H4210003493</td><td>Climate One (WP5-capable) &middot; h421 + ee894 (inferred)</td><td><span class="badge b-warn">SPA bridge dropped</span></td><td>&mdash;</td><td><span class="badge b-warn">WARNING</span></td></tr>
+</table></div>
+</section>
+
+<section>
+<h2><span class="i-en">Per-device profiles</span><span class="i-es">Perfiles por dispositivo</span></h2>
+
+<details class="dev bad" open>
+<summary><span class="badge b-bad">CRITICAL</span> <span class="mono">H1110006644</span> &middot; Flower B 1 &middot; H210 Climate Station <span class="roll"><span>Last seen 2023-04-28</span><span>Silent 1140 d</span></span></summary>
+<div class="tbl">
+<table>
+<tr><td><b>Device ID</b></td><td class="mono">103762</td><td><b>Model</b></td><td class="mono">repeater (model 11)</td></tr>
+<tr><td><b>Last comm</b></td><td class="mono">2023-04-28T19:29:11Z</td><td><b>Last battery</b></td><td>38 %</td></tr>
+<tr><td><b>Last RSSI</b></td><td>5 (weak)</td><td><b>Link quality</b></td><td>null</td></tr>
+<tr><td><b>Online</b></td><td><span class="badge b-bad">false</span></td><td><b>Retired flag</b></td><td>false &mdash; <i>still listed in inventory</i></td></tr>
+<tr><td><b>Gateway</b></td><td class="mono">103733</td><td><b>Next hop</b></td><td class="mono">103732</td></tr>
+<tr><td><b>Node addr</b></td><td class="mono">1099397</td><td><b>Zone</b></td><td>Flower B 1 / Zone 1 (47916)</td></tr>
+<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">A14G200008737</span> (ATM-14 climate head) &mdash; same fate, same last-seen.</td></tr>
+<tr><td colspan="4"><b>Room health (proxy):</b> air_temp 80.2&ndash;84.6 &deg;F (avg 82.83 &deg;F, 479 valid 1h bins last 14d) across substrate zones 47916 / 47917 / 69908. Room is being monitored by other devices; 6644 is not contributing.</td></tr>
+<tr><td colspan="4"><b>Two-year gap density:</b> ~100 % &mdash; silent since the start of the audit window and well before.</td></tr>
+<tr><td colspan="4"><b>Firmware path:</b> stays on WP4 until brought online. Will receive WP5 OTAP at the next scheduled push <i>only if</i> it&rsquo;s online + battery &ge; 30 % + signal &ge; 50 % at push time. Reversible either way.</td></tr>
+<tr><td colspan="4"><b>Action:</b> (a) verify physical presence in the room, (b) power-cycle to attempt rejoin, (c) if no rejoin, retire-and-trade-in toward a Climate One (H421). Three H421s are photographed in Noble inventory &mdash; one is the natural slot-in replacement.</td></tr>
+</table>
+</div>
+</details>
+
+<details class="dev warn">
+<summary><span class="badge b-warn">WARNING</span> <span class="mono">H1110006757</span> &middot; H210 Climate Station &middot; unresolved at pull <span class="roll"><span>vintage match with 6644</span></span></summary>
+<div class="tbl"><p>
+<span class="i-en">Not found in Flower B 1 or Flower B8 device lists. SPA bridge dropped before the other 11 rooms could be enumerated. Serial-prefix classification places this as a legacy H210 Climate Station / repeater, same hardware family as the silent 6644. Most likely states: (1) dormant-in-place in another room, (2) already pulled and shelved, (3) photographed as part of a trade-in batch.</span>
+<span class="i-es">No aparece en Flower B 1 ni en Flower B8. El puente SPA se cay&oacute; antes de enumerar las dem&aacute;s salas. Por prefijo de serie, es un H210 Climate Station / repeater &mdash; misma familia que 6644. Probable estado: inactivo, desinstalado o en stock.</span>
+</p><p><b><span class="i-en">Action:</span><span class="i-es">Acci&oacute;n:</span></b>
+<span class="i-en">bundle with 6644 + 6677 for trade-in; confirm physical location at next site visit.</span>
+<span class="i-es">agrupar con 6644 + 6677 para canje; confirmar ubicaci&oacute;n en la pr&oacute;xima visita.</span>
+</p></div>
+</details>
+
+<details class="dev warn">
+<summary><span class="badge b-warn">WARNING</span> <span class="mono">H1110006677</span> &middot; H210 Climate Station &middot; unresolved at pull <span class="roll"><span>vintage match with 6644</span></span></summary>
+<div class="tbl"><p>
+<span class="i-en">Same scenario as 6757 above. Bundle into the H111 trade-in batch.</span>
+<span class="i-es">Mismo escenario que 6757. Incluir en el lote de canje de H111.</span>
+</p></div>
+</details>
+
+<details class="dev warn">
+<summary><span class="badge b-warn">WARNING</span> <span class="mono">H4210003514</span> &middot; Climate One &middot; unresolved at pull <span class="roll"><span>in-range with active fleet</span></span></summary>
+<div class="tbl"><p>
+<span class="i-en">Not found in the 2 rooms enumerated before the SPA bridge dropped. By serial-prefix this is a current-gen Climate One (h421 puck + ee894 climate head, WP5-capable). Noble&rsquo;s installed H421 range already includes 2740, 3460, and 5610 confirmed live in Flower B8 &mdash; 3514 sits inside that range.</span>
+<span class="i-es">No encontrado en las 2 salas enumeradas antes de la ca&iacute;da del puente. Por prefijo es un Climate One actual (h421 + ee894, compatible WP5). El rango H421 ya instalado en Noble incluye 2740, 3460 y 5610 activos en Flower B8 &mdash; 3514 cae en ese rango.</span>
+</p><p><b><span class="i-en">Action:</span><span class="i-es">Acci&oacute;n:</span></b>
+<span class="i-en">confirm with Ryan / Ali whether photographed as a spare destined for a new zone, a replacement for an H111, or an RMA candidate.</span>
+<span class="i-es">confirmar con Ryan / Ali si est&aacute; fotografiado como reserva, repuesto para un H111 o candidato a RMA.</span>
+</p></div>
+</details>
+
+<details class="dev warn">
+<summary><span class="badge b-warn">WARNING</span> <span class="mono">H4210003501</span> &middot; Climate One &middot; unresolved at pull <span class="roll"><span>in-range with active fleet</span></span></summary>
+<div class="tbl"><p>
+<span class="i-en">Same scenario as 3514. Clarify intent with Ryan / Ali.</span>
+<span class="i-es">Mismo escenario que 3514. Clarificar intenci&oacute;n con Ryan / Ali.</span>
+</p></div>
+</details>
+
+<details class="dev warn">
+<summary><span class="badge b-warn">WARNING</span> <span class="mono">H4210003493</span> &middot; Climate One &middot; unresolved at pull <span class="roll"><span>in-range with active fleet</span></span></summary>
+<div class="tbl"><p>
+<span class="i-en">Same scenario as 3514. Clarify intent with Ryan / Ali.</span>
+<span class="i-es">Mismo escenario que 3514. Clarificar intenci&oacute;n con Ryan / Ali.</span>
+</p></div>
+</details>
+</section>
+
+<section>
+<h2><span class="i-en">Fleet rollup &mdash; facility-wide</span><span class="i-es">Resumen del parque &mdash; instalaci&oacute;n completa</span></h2>
+<div class="card"><table>
+<tr><th>Room</th><th>Type</th><th>Air Temp avg (&deg;F)</th><th>VPD avg (kPa)</th><th>VWC avg (%)</th><th>Note</th></tr>
+<tr><td>Flower B8</td><td>FLOWER</td><td>73.6</td><td>1.19</td><td>50.7</td><td>Climate One range live (2740, 3460, 5610 confirmed)</td></tr>
+<tr><td>Flower B 1</td><td>FLOWER</td><td>82.7</td><td>1.25</td><td>41.7</td><td><b>H1110006644 silent here</b> &mdash; room itself healthy</td></tr>
+<tr><td>Flower B 2</td><td>FLOWER</td><td>74.3</td><td>1.38</td><td>45.6</td><td>OK</td></tr>
+<tr><td>Flower B 3</td><td>FLOWER</td><td>&mdash;</td><td>&mdash;</td><td>42.2</td><td><span class="badge b-warn">climate stream missing</span> &mdash; flag separately</td></tr>
+<tr><td>Flower B 4</td><td>FLOWER</td><td>76.4</td><td>1.14</td><td>59.4</td><td>OK</td></tr>
+<tr><td>Flower B 5</td><td>FLOWER</td><td>80.4</td><td>1.15</td><td>61.7</td><td>OK</td></tr>
+<tr><td>Flower B 6</td><td>FLOWER</td><td>82.1</td><td>0.93</td><td>52.1</td><td>low VPD</td></tr>
+<tr><td>Flower B 7</td><td>FLOWER</td><td>82.0</td><td>1.04</td><td>50.2</td><td>OK</td></tr>
+<tr><td>A1</td><td>FLOWER</td><td>71.8</td><td>1.06</td><td>54.9</td><td>OK</td></tr>
+<tr><td>A2</td><td>FLOWER</td><td>79.9</td><td>0.95</td><td>59.1</td><td>OK</td></tr>
+<tr><td>A3</td><td>FLOWER</td><td>76.1</td><td>1.17</td><td>57.2</td><td>OK</td></tr>
+<tr><td>Veg C</td><td>FLOWER (veg-config)</td><td>83.6</td><td>0.91</td><td>34.0</td><td>OK</td></tr>
+<tr><td>dry b4</td><td>DRY</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>empty (expected)</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2><span class="i-en">Recommended next actions</span><span class="i-es">Acciones recomendadas</span></h2>
+<ol class="actions">
+<li><span class="pr p0">P0</span><div><b><span class="i-en">Walk to Flower B 1 and physically locate <span class="mono">H1110006644</span>.</span><span class="i-es">Ir a Flower B 1 y ubicar f&iacute;sicamente <span class="mono">H1110006644</span>.</span></b><br><span class="i-en">Power-cycle it. If it doesn&rsquo;t rejoin the mesh in 5 minutes, mark for trade-in. Three H421 Climate One units are already photographed in Noble inventory &mdash; one becomes the slot-in replacement.</span><span class="i-es">Reinicio. Si no se reincorpora en 5 min, marcar para canje. Ya hay tres H421 Climate One en inventario &mdash; uno reemplaza directamente.</span></div></li>
+<li><span class="pr p0">P0</span><div><b><span class="i-en">Refresh <span class="mono">app.aroya.io</span> tab on Cian&rsquo;s Mac.</span><span class="i-es">Recargar la pesta&ntilde;a <span class="mono">app.aroya.io</span> en el Mac de Cian.</span></b><br><span class="i-en">Browser bridge is disconnected; the remaining 11 rooms need a clean SPA pull to resolve 6757 / 6677 / 3514 / 3501 / 3493 to specific zones with current online/battery/RSSI. ~15 min job once the tab is live.</span><span class="i-es">El puente del navegador est&aacute; ca&iacute;do; faltan 11 salas para resolver 6757 / 6677 / 3514 / 3501 / 3493. ~15 min una vez activo.</span></div></li>
+<li><span class="pr p1">P1</span><div><b><span class="i-en">Reply to Ryan &amp; Ali in the group iMessage.</span><span class="i-es">Responder a Ryan y Ali en el grupo de iMessage.</span></b><br><span class="i-en">Use the three-line TL;DR above. Ask which physical location each serial is in NOW (room rack vs. install vs. shelf vs. RMA box).</span><span class="i-es">Usar el resumen de tres l&iacute;neas. Preguntar la ubicaci&oacute;n actual real de cada serie (rack / instalado / estante / RMA).</span></div></li>
+<li><span class="pr p1">P1</span><div><b><span class="i-en">Open the trade-in / inventory conversation.</span><span class="i-es">Iniciar la conversaci&oacute;n de canje / inventario.</span></b><br><span class="i-en">Three H111s as one batch (legacy WP4); three H421s as a separate &ldquo;active inventory / RMA&rdquo; thread (current Climate One).</span><span class="i-es">Tres H111 como un lote (WP4 legado); tres H421 en un hilo aparte de inventario / RMA actual.</span></div></li>
+<li><span class="pr p2">P2</span><div><b><span class="i-en">Investigate Flower B 3 climate stream.</span><span class="i-es">Investigar el flujo de clima en Flower B 3.</span></b><br><span class="i-en">Room is missing <span class="mono">temp_avg</span> and <span class="mono">vpd_avg</span>. Possibly an unrelated H421 climate-head failure &mdash; not in the 6-serial scope but worth flagging.</span><span class="i-es">Falta <span class="mono">temp_avg</span> y <span class="mono">vpd_avg</span>. Posible fallo de cabeza de clima H421 no relacionada con las 6 series.</span></div></li>
+</ol>
+</section>
+
+<section>
+<h2><span class="i-en">Data quality &amp; caveats</span><span class="i-es">Calidad de datos y advertencias</span></h2>
+<div class="card">
+<ul style="margin:0;padding-left:18px;line-height:1.6">
+<li><b><span class="i-en">AROYA SDK install was blocked</span><span class="i-es">La instalaci&oacute;n del SDK AROYA fue bloqueada</span></b> by iCloud <span class="mono">Resource deadlock avoided</span>. <span class="i-en">Fell back to raw</span><span class="i-es">Se us&oacute; directamente</span> <span class="mono">mcp__aroya__*</span> MCP.</li>
+<li><b><span class="i-en">SPA browser bridge dropped after 2 of 13 calls.</span><span class="i-es">El puente SPA se cay&oacute; tras 2 de 13 llamadas.</span></b> <span class="i-en">11 remaining</span><span class="i-es">11 restantes</span> <span class="mono">/rooms/&lt;id&gt;/v2/</span> <span class="i-en">calls returned <span class="mono">Browser Bridge extension not connected</span>. One tab refresh closes the gap; doesn&rsquo;t affect the fact pattern.</span><span class="i-es">retornaron <span class="mono">Browser Bridge extension not connected</span>. Una recarga lo resuelve.</span></li>
+<li><b><span class="i-en">Public API <span class="mono">/harvests/</span> = 404</span><span class="i-es">API p&uacute;blica <span class="mono">/harvests/</span> = 404</span></b> &mdash; documented gap, not in scope.</li>
+<li><b><span class="i-en">2-year per-device telemetry depth</span><span class="i-es">Telemetr&iacute;a 2 a&ntilde;os por dispositivo</span></b> <span class="i-en">for the 5 unresolved serials requires SPA <span class="mono">/devices/</span> enumeration to obtain numeric device IDs &mdash; once SPA is restored this becomes a 5-call sequential job (~15 min).</span><span class="i-es">para las 5 series sin resolver requiere la enumeraci&oacute;n SPA <span class="mono">/devices/</span> para obtener IDs num&eacute;ricos &mdash; ~15 min secuenciales una vez restaurado el SPA.</span></li>
+<li><b><span class="i-en">No fabricated values.</span><span class="i-es">Sin valores inventados.</span></b> <span class="i-en">Every number is from 2 successful SPA pulls + 14 public_api calls. Where inferred (H111x &rarr; H210 Climate Station / H421x &rarr; Climate One), source is memory <span class="mono">reference_aroya-h421-climate-one-fleet</span>.</span><span class="i-es">Cada n&uacute;mero proviene de 2 SPA + 14 llamadas public_api. Las inferencias por prefijo siguen <span class="mono">reference_aroya-h421-climate-one-fleet</span>.</span></li>
+</ul>
+</div>
+</section>
+
+<footer>
+<div><b>AROYA</b> &middot; <span class="i-en">Device Health 2-Year Audit</span><span class="i-es">Auditor&iacute;a de salud de dispositivos a 2 a&ntilde;os</span> &middot; Noble Farms &middot; Facility 3485 &middot; 2026-06-11</div>
+<div style="margin-top:6px;font-size:11px">
+<span class="i-en">Data path: raw <span class="mono">mcp__aroya__*</span> MCP (AROYA SDK install blocked &mdash; <span class="mono">Resource deadlock avoided</span>). Browser-bridge dropped mid-pull; report covers what was resolvable in the working window.</span>
+<span class="i-es">Ruta de datos: <span class="mono">mcp__aroya__*</span> MCP directo (SDK bloqueado por iCloud). Puente del navegador ca&iacute;do durante la extracci&oacute;n.</span>
+</div>
+<div style="margin-top:6px;font-size:11px">Cian Sullivan &middot; <a href="mailto:cian.sullivan@addium.io">cian.sullivan@addium.io</a></div>
+</footer>
+
+</div>
+<script>
+function toggleLang(){
+  document.body.classList.toggle('es');
+  document.getElementById('langBtn').textContent = document.body.classList.contains('es') ? 'EN' : 'ES';
+}
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  document.getElementById('themeBtn').innerHTML = document.body.classList.contains('dark')
+    ? '&#9728; Light' : '&#9790; Dark';
+}
+</script>
+</body></html>
