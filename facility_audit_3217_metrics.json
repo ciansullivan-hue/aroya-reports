@@ -1,0 +1,275 @@
+{
+  "facility_id": 3217,
+  "customer_name": "Donner Party Dope Growers Association",
+  "window": [
+    "2026-06-09",
+    "2026-06-10"
+  ],
+  "coverage_pct": 100.06944444444446,
+  "coverage_msg": "timestamp span 1.0d (100% of 1d requested) \u2014 2026-06-10 -> 2026-06-11",
+  "rooms": [
+    {
+      "room_id": "19161",
+      "name": "Killington Flowr \ud83c\udf39",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 0.0,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": false,
+      "ec_stack_delta": 0.0,
+      "vpd_mean": 0.95,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "Killington Flowr \ud83c\udf39 is vegetatively-steered this week. Overnight dryback ran 0.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    },
+    {
+      "room_id": "13508",
+      "name": "Killington Veg \ud83e\udd55",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 2.2,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": false,
+      "ec_stack_delta": 0.0,
+      "vpd_mean": 2.25,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "Killington Veg \ud83e\udd55 is vegetatively-steered this week. Overnight dryback ran 2.2 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    },
+    {
+      "room_id": "15240",
+      "name": "Killington Hallway",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 0.0,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": false,
+      "ec_stack_delta": 0.0,
+      "vpd_mean": 0.97,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "Killington Hallway is vegetatively-steered this week. Overnight dryback ran 0.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    },
+    {
+      "room_id": "8321",
+      "name": "Long Skinny \ud83d\ude80\ud83d\udd25\u26fd\ud83c\udf32",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 6.1,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": true,
+      "ec_stack_delta": 0.0,
+      "vpd_mean": 0.74,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "Long Skinny \ud83d\ude80\ud83d\udd25\u26fd\ud83c\udf32 is vegetatively-steered this week. Overnight dryback ran 6.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    },
+    {
+      "room_id": "8322",
+      "name": "Long Skinny \ud83d\ude80\ud83d\udd25\u26fd",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 19.8,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": false,
+      "ec_stack_delta": 0.0,
+      "vpd_mean": null,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "Long Skinny \ud83d\ude80\ud83d\udd25\u26fd is vegetatively-steered this week. Overnight dryback ran 19.8 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    },
+    {
+      "room_id": "8324",
+      "name": "\ud83c\udf7cMom Room \ud83c\udf7c",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 4.2,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": false,
+      "ec_stack_delta": -4.77,
+      "vpd_mean": 0.63,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "\ud83c\udf7cMom Room \ud83c\udf7c is vegetatively-steered this week. Overnight dryback ran 4.2 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    },
+    {
+      "room_id": "14965",
+      "name": "\ud83d\udd27spare parts\u2699\ufe0f",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 0.0,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": false,
+      "ec_stack_delta": 0.0,
+      "vpd_mean": null,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "\ud83d\udd27spare parts\u2699\ufe0f is vegetatively-steered this week. Overnight dryback ran 0.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    },
+    {
+      "room_id": "17375",
+      "name": "\ud83c\udfdeThe Great Outdoors",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 0.0,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": false,
+      "ec_stack_delta": 0.0,
+      "vpd_mean": null,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "\ud83c\udfdeThe Great Outdoors is vegetatively-steered this week. Overnight dryback ran 0.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    },
+    {
+      "room_id": "19456",
+      "name": "test for modbus",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 0.0,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": false,
+      "ec_stack_delta": 0.0,
+      "vpd_mean": null,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "test for modbus is vegetatively-steered this week. Overnight dryback ran 0.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    },
+    {
+      "room_id": "19699",
+      "name": "test 1",
+      "phase": "veg",
+      "phase_color": "#9fd96a",
+      "steering_intent": "vegetatively-steered",
+      "dryback_pp": 0.0,
+      "dryback_target_pp": [
+        5.0,
+        15.0
+      ],
+      "dryback_in_band": false,
+      "ec_stack_delta": 0.0,
+      "vpd_mean": null,
+      "vpd_target": [
+        0.8,
+        1.1
+      ],
+      "irrigation_phases": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "narrative": "test 1 is vegetatively-steered this week. Overnight dryback ran 0.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+    }
+  ],
+  "harvest_groups": [],
+  "soft_imports": [],
+  "generated_at": "2026-06-11T00:41:59+00:00"
+}
