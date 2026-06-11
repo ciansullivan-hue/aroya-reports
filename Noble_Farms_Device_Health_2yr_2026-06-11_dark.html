@@ -98,7 +98,7 @@ footer a{color:var(--lime);text-decoration:none}
 <div class="m"><div class="l"><span class="i-en">Facility</span><span class="i-es">Instalaci&oacute;n</span></div><div class="v">3485 &middot; Noble</div></div>
 <div class="m"><div class="l"><span class="i-en">Organization</span><span class="i-es">Organizaci&oacute;n</span></div><div class="v">2860 &middot; Noble Farms</div></div>
 <div class="m"><div class="l"><span class="i-en">Resolved in portal</span><span class="i-es">Resueltos en portal</span></div><div class="v">5 / 6</div></div>
-<div class="m"><div class="l"><span class="i-en">Critical / Warning / Verify</span><span class="i-es">Cr&iacute;tico / Aviso / Verificar</span></div><div class="v">3 &middot; 2 &middot; 1</div></div>
+<div class="m"><div class="l"><span class="i-en">Critical / Warning / Retired</span><span class="i-es">Cr&iacute;tico / Aviso / Retirado</span></div><div class="v">3 &middot; 2 &middot; 1</div></div>
 <div class="m"><div class="l"><span class="i-en">Audit window</span><span class="i-es">Ventana de auditor&iacute;a</span></div><div class="v">2024-06-11 &rarr; 2026-06-11</div></div>
 <div class="m"><div class="l"><span class="i-en">Contacts</span><span class="i-es">Contactos</span></div><div class="v">Ryan Kruskamp &middot; Alli Zervopoulos</div></div>
 <div class="m"><div class="l"><span class="i-en">Longest silent gap</span><span class="i-es">Brecha m&aacute;s larga</span></div><div class="v">1140 d (6644, 6757)</div></div>
@@ -112,7 +112,7 @@ footer a{color:var(--lime);text-decoration:none}
 <div class="kpi blue"><div class="n">6</div><div class="l"><span class="i-en">Serials in scope</span><span class="i-es">Series en alcance</span></div></div>
 <div class="kpi bad"><div class="n">3</div><div class="l"><span class="i-en">Critical (H111 dormant)</span><span class="i-es">Cr&iacute;ticos (H111)</span></div></div>
 <div class="kpi warn"><div class="n">2</div><div class="l"><span class="i-en">Warning (H421 silent)</span><span class="i-es">Aviso (H421)</span></div></div>
-<div class="kpi warn"><div class="n">1</div><div class="l"><span class="i-en">Verify serial (3493)</span><span class="i-es">Verificar serie (3493)</span></div></div>
+<div class="kpi bad"><div class="n">1</div><div class="l"><span class="i-en">Already retired (3493)</span><span class="i-es">Ya retirado (3493)</span></div></div>
 <div class="kpi good"><div class="n">1</div><div class="l"><span class="i-en">In warranty &middot; free RMA</span><span class="i-es">En garant&iacute;a &middot; RMA gratis</span></div></div>
 <div class="kpi blue"><div class="n">$450</div><div class="l"><span class="i-en">H111 trade-in toward Climate One</span><span class="i-es">Canje H111 hacia Climate One</span></div></div>
 </div>
@@ -129,10 +129,10 @@ footer a{color:var(--lime);text-decoration:none}
 <span class="i-en">H4210003501 (Flower B 2, installed 2025-07-16) last spoke 2026-02-26 &mdash; it is <b>inside the 1-year warranty window</b>. H4210003514 (historic deviceName "B8 Flower", currently <span class="mono">assigned: false</span>, provisioned 2025-02-20) last spoke 2026-03-24 &mdash; just outside warranty, RMA possible on goodwill. <b>This is the actionable fleet, not the legacy fleet.</b></span>
 <span class="i-es">H4210003501 (Flower B 2, instalado 2025-07-16) habl&oacute; por &uacute;ltima vez el 2026-02-26 &mdash; <b>dentro de la garant&iacute;a de 1 a&ntilde;o</b>. H4210003514 (nombre hist&oacute;rico "B8 Flower", hoy <span class="mono">assigned: false</span>, aprovisionado 2025-02-20) habl&oacute; por &uacute;ltima vez el 2026-03-24 &mdash; justo fuera de garant&iacute;a. <b>Esta es la flota accionable, no la legacy.</b></span>
 </div>
-<div class="note warn">
-<b>3. <span class="i-en">H4210003493 is not findable in any of Cian&rsquo;s 1,272 facilities.</span><span class="i-es">H4210003493 no aparece en ninguna de las 1.272 instalaciones de Cian.</span></b>
-<span class="i-en">Most likely a digit mis-read from the photo (3493 vs 3483 / 3498 / 3943 / 3494). Re-photograph or re-read before sending the customer-facing summary.</span>
-<span class="i-es">Probable lectura err&oacute;nea de un d&iacute;gito en la foto. Re-fotografiar antes de enviar el resumen al cliente.</span>
+<div class="note bad">
+<b>3. <span class="i-en">H4210003493 is at Noble and was already retired in AROYA.</span><span class="i-es">H4210003493 est&aacute; en Noble y ya fue retirado en AROYA.</span></b>
+<span class="i-en">AROYA ID 168156 &middot; <span class="mono">facility: 3485</span> &middot; <span class="mono">retired: true</span> &middot; last spoke 2026-01-27 &middot; was provisioned same wave as 3501 &amp; 3514 (createdOn 2025-01-22). The previous draft of this report wrongly said &ldquo;not found&rdquo; &mdash; the SPA <span class="mono">/devices/</span> path hides retired devices; the correct lookup is <span class="mono">/portal_api/devices/?search=H4210003493</span> with <span class="mono">X-Facility: 3485</span>, which returns the puck and its nested ee894 sensor (<span class="mono">H4210003493S</span>). Treat 3493 as an already-flagged trade-in unit, not a serial-verification problem.</span>
+<span class="i-es">AROYA ID 168156 &middot; <span class="mono">facility: 3485</span> &middot; <span class="mono">retired: true</span> &middot; &uacute;ltima comm 2026-01-27. La versi&oacute;n anterior dec&iacute;a &ldquo;no encontrado&rdquo; &mdash; el endpoint SPA <span class="mono">/devices/</span> oculta los retirados; la b&uacute;squeda correcta es <span class="mono">/portal_api/devices/</span> con <span class="mono">X-Facility: 3485</span>.</span>
 </div>
 </section>
 
@@ -188,11 +188,14 @@ footer a{color:var(--lime);text-decoration:none}
 <td><span class="badge b-warn">WARNING &middot; RMA</span></td>
 </tr>
 <tr>
-<td class="mono">H4210003493</td><td>&mdash;</td>
-<td>&mdash;</td>
-<td>NOT FOUND in any Cian-scope AROYA facility</td>
-<td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td>
-<td><span class="badge b-verify">VERIFY SERIAL</span></td>
+<td class="mono">H4210003493</td><td class="mono">168156</td>
+<td>Climate One<br>h421 + ee894 (H4210003493S)</td>
+<td>null &middot; <span class="badge b-bad">retired: true</span></td>
+<td><span class="badge b-bad">false</span></td>
+<td>2026-01-27</td>
+<td class="mono">2025-01-22 (createdOn)</td>
+<td><span class="badge b-bad">OUT &middot; already retired</span></td>
+<td><span class="badge b-bad">RETIRED</span></td>
 </tr>
 </table></div>
 
@@ -277,13 +280,17 @@ footer a{color:var(--lime);text-decoration:none}
 </table></div>
 </details>
 
-<details class="dev warn">
-<summary><span class="badge b-verify">VERIFY SERIAL</span> <span class="mono">H4210003493</span> &middot; not found in any Cian-scope AROYA facility</summary>
+<details class="dev bad">
+<summary><span class="badge b-bad">RETIRED at Noble</span> <span class="mono">H4210003493</span> &middot; Climate One <span class="roll"><span>retired flag set</span><span>last spoke 2026-01-27</span></span></summary>
 <div class="tbl"><table>
-<tr><td colspan="4"><b>Search result:</b> <span class="mono">/devices/?search=H4210003493</span> with <span class="mono">X-Facility: 3485</span> returned <span class="mono">count: 0</span>. Search against 1,272 facilities in Cian&rsquo;s scope: zero hits.</td></tr>
-<tr><td colspan="4"><b>Most likely:</b> OCR / photo digit misread. Plausible alternates: <span class="mono">H4210003483</span>, <span class="mono">H4210003498</span>, <span class="mono">H4210003943</span>, <span class="mono">H4210003494</span>.</td></tr>
-<tr><td colspan="4"><b>Lower prior:</b> belongs to a facility outside Cian&rsquo;s scope (~12 of AROYA&rsquo;s 1,815 facilities).</td></tr>
-<tr><td colspan="4"><b>Action:</b> ask Ryan or Alli for a re-photo or a manual re-read <b>before</b> sending the customer-facing summary.</td></tr>
+<tr><td><b>AROYA ID</b></td><td class="mono">168156</td><td><b>Model</b></td><td class="mono">h421 (Climate One)</td></tr>
+<tr><td><b>Facility</b></td><td class="mono">3485 (Noble)</td><td><b>Room / Zone</b></td><td>null / null</td></tr>
+<tr><td><b>online</b></td><td><span class="badge b-bad">false</span></td><td><b>retired</b></td><td><span class="badge b-bad">true</span></td></tr>
+<tr><td><b>createdOn</b></td><td class="mono">2025-01-22</td><td><b>lastCommunication</b></td><td class="mono">2026-01-27T15:59:18Z</td></tr>
+<tr><td><b>Battery</b></td><td>0 (PoE)</td><td><b>Sister wave</b></td><td>provisioned alongside 3501 &amp; 3514 (same createdOn 2025-01-22)</td></tr>
+<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">H4210003493S</span> (ee894), AROYA ID 168157, also at facility 3485, last spoke 2026-01-19. Sensor &rsquo;s <span class="mono">retired</span> flag is false &mdash; only the puck was flagged.</td></tr>
+<tr><td colspan="4"><b>Previous-draft correction:</b> the earlier &ldquo;not found / verify serial&rdquo; conclusion was wrong. The SPA <span class="mono">/devices/</span> endpoint hides <span class="mono">retired=true</span> devices by default; the authoritative lookup is <span class="mono">api.aroya.io/portal_api/devices/?search=&lt;serial&gt;</span> with <span class="mono">X-Facility: 3485</span>, which returns retired records too.</td></tr>
+<tr><td colspan="4"><b>Action:</b> already retired in AROYA &mdash; physical disposition (trade-in vs scrap vs RMA box) is the only open question. Include in the H421 conversation alongside 3514, NOT the H111 trade-in batch.</td></tr>
 </table></div>
 </details>
 
@@ -292,7 +299,7 @@ footer a{color:var(--lime);text-decoration:none}
 <section>
 <h2><span class="i-en">Recommended next actions</span><span class="i-es">Acciones recomendadas</span></h2>
 <ol class="actions">
-<li><span class="pr p0">P0</span><div><b><span class="i-en">Re-photograph H4210003493.</span><span class="i-es">Re-fotografiar H4210003493.</span></b><br><span class="i-en">Not findable in 1,272 facilities &mdash; likely a digit mis-read. Hold the reply to Ryan / Alli until this is verified.</span><span class="i-es">No se encuentra. Probable d&iacute;gito mal le&iacute;do. No enviar respuesta hasta verificar.</span></div></li>
+<li><span class="pr p0">P0</span><div><b><span class="i-en">Confirm physical disposition of H4210003493 (already retired in AROYA).</span><span class="i-es">Confirmar disposici&oacute;n f&iacute;sica de H4210003493 (ya retirado en AROYA).</span></b><br><span class="i-en">Was last active 2026-01-27, was provisioned alongside 3501 &amp; 3514 in the Jan 2025 wave. Ask Ryan / Alli whether it&rsquo;s in the trade-in box, the RMA pile, or already shipped back. NOT a serial-verification problem &mdash; my earlier draft was wrong on that.</span><span class="i-es">&Uacute;ltima comm 2026-01-27, aprovisionado en la misma ola que 3501 y 3514. Preguntar a Ryan / Alli en qu&eacute; pila f&iacute;sica est&aacute;.</span></div></li>
 <li><span class="pr p0">P0</span><div><b><span class="i-en">File RMA for H4210003501 (Flower B 2, in warranty).</span><span class="i-es">Solicitar RMA para H4210003501 (Flower B 2, en garant&iacute;a).</span></b><br><span class="i-en">Provisioned 2025-07-16, warranty valid through ~2026-07-16. Don&rsquo;t let it lapse &mdash; this is a free replacement waiting to be claimed.</span><span class="i-es">Aprovisionado 2025-07-16, garant&iacute;a v&aacute;lida hasta ~2026-07-16. No dejar que caduque.</span></div></li>
 <li><span class="pr p0">P0</span><div><b><span class="i-en">Physical walk: Flower B 1 (6644), A3 (6757), Flower B 2 (3501), locate 3514.</span><span class="i-es">Recorrido f&iacute;sico: Flower B 1, A3, Flower B 2, ubicar 3514.</span></b><br><span class="i-en">Power-cycle each. Document who rejoins.</span><span class="i-es">Reinicio de cada uno. Documentar cu&aacute;les se reincorporan.</span></div></li>
 <li><span class="pr p1">P1</span><div><b><span class="i-en">Open WP4 trade-in batch &mdash; 3 &times; H111 toward Climate One.</span><span class="i-es">Abrir lote de canje WP4 &mdash; 3 &times; H111 hacia Climate One.</span></b><br><span class="i-en">$150 off Climate One per retired H111 = up to <b>$450 toward the swap</b>. 6677&rsquo;s 1 % battery is the cleanest evidence of legitimate retirement.</span><span class="i-es">$150 de descuento por H111 retirado = hasta <b>$450 hacia el canje</b>. La bater&iacute;a de 1 % en 6677 es la mejor evidencia de retiro leg&iacute;timo.</span></div></li>
