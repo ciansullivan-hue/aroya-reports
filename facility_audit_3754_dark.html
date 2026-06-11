@@ -1,7 +1,15 @@
-<!doctype html><html lang="en" data-theme="dark" data-lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>POWRHOUSE · 14-Day Facility Audit</title>
+<!doctype html>
+<html lang="en" data-theme="dark" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Burly Botanicals - 42-week AROYA Facility Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>
-/* Chart.js v4.4.x — inlined per feedback_aroya-reports-inline-chartjs.
-   CDN tags blank out under offline / CSP. The bundle is vendored at
+/* Chart.js v4.4.x - inlined per feedback_aroya-reports-inline-chartjs.
+   CDN tags blank out under offline / CSP. Bundle vendored at
    aroya_sdk/design/_vendor/chart.umd.min.js. */
 /**
  * Skipped minification because the original files appears to be already minified.
@@ -26,1398 +34,1538 @@
 
 </script>
 <style>
-/* AROYA design system tokens — gold-standard light + dark themes */
-:root[data-theme="light"]{
-  --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
-  --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
-  --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
-  --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
-  --attention:#e76f51; --attention-2:#f4a261;
-  --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
-  --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
-  --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
-  --grid-line: #e8e8e0;
+:root {
+  /* Brand - AROYA */
+  --aroya-olive:         #635e51;
+  --aroya-olive-hover:   #6c6759;
+  --aroya-lime:          #cbeeb0;
+  --aroya-lime-hover:    #b7d89e;
+  --aroya-light-green:   #c7c8c2;
+  --aroya-medium-gray:   #46483d;
+  --aroya-app-blue-1:    #1c2632;
+  --aroya-app-blue-2:    #071538;
+  --aroya-attention:     #d0ff00;
+  --aroya-footer-hr:     #c7c7b9;
+  --addium-blue:         #2d62ff;
+  --addium-blue-light:   #d9e5ff;
+  /* 8-point spacing scale */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-display: 2.5rem;
+  --radius: 12px;
+  --radius-sm: 6px;
+  --dur: 160ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
-:root[data-theme="dark"]{
-  --bg:#13160f; --bg-2:#1a1e15; --bg-3:#22281c; --border:#2e3624;
-  --ink:#e8ead9; --ink-2:#b9bda5; --ink-muted:#7e836e;
-  --olive:#8aa05c; --olive-2:#a7bb74; --lime:#b9e587; --lime-2:#6b8d3d;
-  --app-blue:#6cb5d8; --app-blue-2:#3a6d80;
-  --attention:#f48066; --attention-2:#f4a261;
-  --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
-  --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
-  --p-rootin:#7fbacd; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#b694ea; --p-ripening:#e76f51;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 8px 28px rgba(0,0,0,0.45);
-  --grid-line: #2a3220;
+:root[data-theme="light"] {
+  --fg:              #1a1c19;
+  --fg-muted:        #444444;
+  --fg-subtle:       #666666;
+  --fg-disabled:     #aaaaaa;
+  --bg:              #ffffff;
+  --bg-muted:        #f9f9f9;
+  --bg-subtle:       #f5f5f5;
+  --bg-surface:      #ffffff;
+  --bg-surface-2:    #f9f9f9;
+  --border:          #ebebea;
+  --border-strong:   #cccccc;
+  --success-bg: #cef5ca; --success-fg: #114e0b; --success-border: #a9dea4;
+  --warning-bg: #fcf8d8; --warning-fg: #5e5515; --warning-border: #e0d683;
+  --error-bg:   #f8e4e4; --error-fg:   #3b0b0b; --error-border:   #dfaaaa;
+  --info-bg:    #d9e5ff; --info-fg:    #1e3b99; --info-border:    #b8ccff;
 }
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;font:14px/1.5 Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
-a{color:var(--app-blue);text-decoration:none}
-a:hover{text-decoration:underline}
-.wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
-/* Masthead */
-.masthead{background:#1a1c19;color:#fff;padding:20px 28px 24px;margin:0;position:relative;overflow:hidden;min-height:80px}
-.masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1}
-.lockup{position:relative;display:flex;align-items:center;gap:10px;color:#fff;padding-bottom:14px}
-.lockup-mark{font-family:Inter,system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:1;color:#fff}
-.lockup-glyph{display:inline-block;width:26px;height:26px;position:relative;flex:none}
-.lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#fff;border-radius:2px}
-.lockup-glyph::before{top:0;right:0;width:13px;height:13px}
-.lockup-glyph::after{bottom:0;left:0;width:17px;height:17px;border-top-right-radius:0}
-.lockup-byline{position:absolute;top:34px;left:0;font-family:Inter,sans-serif;font-size:11px;font-weight:400;color:#aaa;letter-spacing:0;line-height:1}
-.controls{display:flex;gap:6px;align-items:center}
-.btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 Inter,sans-serif;letter-spacing:.04em;transition:all .12s}
-.btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
-.btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
-.tick{position:absolute;width:7px;height:7px;background:#3a3d35;border-radius:1px;z-index:0}
-.tick.t1{top:14px;left:42%} .tick.t2{top:14px;left:48%;width:8px;height:8px}
-.tick.t3{top:14px;right:24%;width:6px;height:6px} .tick.t4{bottom:12px;left:18%}
-.tick.t5{bottom:12px;left:22%;width:5px;height:5px} .tick.t6{top:46%;right:18px}
-.tick.t7{bottom:12px;right:32%;width:6px;height:6px}
-/* Page header */
-.pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
-.pagehead-eyebrow{font-family:Inter,sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
-.pagehead h1{font-family:Inter,sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
-.pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
-.pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
-.pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
-.pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
-:root[data-theme="dark"] .pagehead{border-bottom-color:var(--border)}
-:root[data-theme="dark"] .pagehead-eyebrow{color:var(--olive-2)}
-section{margin-top:40px}
-h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
-h3{font-size:17px;margin:24px 0 10px;font-weight:600}
-h4{font-size:14px;margin:18px 0 6px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
-p{margin:0 0 12px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
-.kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
-.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
-.kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
-.kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
-.kpi .val{font-size:22px;font-weight:700;color:var(--ink)}
-.kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
-.kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
-.card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
-.card-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:760px){.card-row{grid-template-columns:1fr}}
-.phase{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
-.phase.rootin{background:var(--p-rootin);color:#0c2a35}
-.phase.veg{background:var(--p-veg);color:#1c3700}
-.phase.stretch{background:var(--p-stretch);color:#4a1d00}
-.phase.bulking{background:var(--p-bulking);color:#2c1750}
-.phase.ripening{background:var(--p-ripening);color:#3c0f00}
-.phase.dry{background:var(--bg-3);color:var(--ink-muted)}
-.verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
-.verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
-.verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
-.verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
-.verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
-table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
-th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
-tr:last-child td{border-bottom:none}
-.num{text-align:right;font-variant-numeric:tabular-nums}
-.pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
-.pill.bad{background:var(--bad-bg);color:var(--bad)}
-.pill.warn{background:var(--warn-bg);color:var(--warn)}
-.pill.good{background:var(--good-bg);color:var(--good)}
-.pill.muted{background:var(--bg-3);color:var(--ink-muted)}
-.chartwrap{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 16px 14px;margin:14px 0;box-shadow:var(--card-shadow)}
-.chartwrap h4{margin-top:0}
-.chartwrap .legend{font-size:12px;color:var(--ink-muted);margin-top:8px}
-.chart-canvas{position:relative;height:260px;width:100%}
-.chart-canvas canvas{max-width:100%}
-.room-selector{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 18px}
-.room-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;user-select:none;box-shadow:var(--card-shadow)}
-.room-chip:hover{border-color:var(--olive-2);transform:translateY(-1px)}
-.room-chip.active{background:var(--olive);color:#fff;border-color:var(--olive)}
-.room-chip.active .chip-phase{background:rgba(255,255,255,.22);color:#fff}
-.room-chip.disabled{opacity:.45;cursor:not-allowed}
-.room-chip .chip-phase{font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px}
-.room-chip.active.bulking{background:var(--p-bulking);color:#2c1750;border-color:var(--p-bulking)}
-.room-chip.active.ripening{background:var(--p-ripening);color:#fff;border-color:var(--p-ripening)}
-.room-chip.active.stretch{background:var(--p-stretch);color:#4a1d00;border-color:var(--p-stretch)}
-.room-chip.active.veg{background:var(--p-veg);color:#1c3700;border-color:var(--p-veg)}
-.room-chip.active.dry{background:var(--ink-2);color:#fff;border-color:var(--ink-2)}
-.compare-toggle{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-muted);cursor:pointer}
-.compare-toggle input{margin:0}
-.room-meta{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:0 0 18px;box-shadow:var(--card-shadow)}
-.room-meta .rm-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:10px}
-.room-meta h3{margin:0;font-size:18px}
-.room-meta .rm-targets{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
-.room-meta .rm-targets b{color:var(--ink)}
-.room-meta .rm-targets .tgt{display:inline-block;padding:4px 9px;background:var(--bg-3);border-radius:6px}
-.room-meta .rm-note{margin-top:8px;font-size:13px;color:var(--ink-2);font-style:italic}
-.room-meta .rm-coverage{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
-.legend-row-label{font-weight:600;color:var(--ink-2);margin-right:6px}
-/* Lang toggling */
-.en .es-only{display:none}
-.es .en-only{display:none}
-.rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow)}
-.rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
-.rec .owner.brittany{background:var(--app-blue)}
-.rec .owner.process{background:var(--ink-2)}
-.rec .rphase{color:var(--ink-muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-left:4px}
-.rec .raction{margin-top:6px;font-weight:500}
-.rec .rwhy{margin-top:4px;font-size:13px;color:var(--ink-2)}
-.datagap{background:var(--warn-bg);border:1px dashed var(--warn);padding:14px 18px;border-radius:10px;margin:14px 0;font-size:13px;color:var(--warn)}
-.datagap b{color:var(--warn)}
-footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
-.biophys-room{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;box-shadow:var(--card-shadow)}
-.biophys-room h3{margin:0 0 10px;font-size:17px}
-.biophys-brief{font-size:13.5px;color:var(--ink-2);margin-bottom:14px;padding:12px 14px;background:var(--bg-3);border-left:3px solid var(--olive);border-radius:0 8px 8px 0;line-height:1.55}
-.biophys-section-label{font-size:11px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.8px;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px dashed var(--border)}
-.bp-scroll{overflow-x:auto}
-.bp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
-.bp-table th{background:var(--bg-3);padding:8px 10px;text-align:left;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1.5px solid var(--border);white-space:nowrap}
-.bp-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
-.bp-table.compact td{padding:7px 8px;font-size:12.5px}
-.bp-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.bp-targets{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-.bp-tgt{display:inline-block;font-size:12px;padding:5px 10px;background:var(--bg-3);border-radius:6px;color:var(--ink-2)}
-.bp-tgt b{color:var(--ink)}
-.muted{color:var(--ink-muted);font-style:italic}
-</style></head><body class="en">
-<div class="masthead">
-  <span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span><span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
-  <div class="masthead-inner">
-    <div class="lockup">
-      <span class="lockup-mark">AROYA</span>
-      <span class="lockup-glyph" aria-hidden="true"></span>
-      <span class="lockup-byline">by Addium</span>
-    </div>
-    <div class="controls">
-      <button class="btn lang-btn active" data-lang="en">EN</button>
-      <button class="btn lang-btn" data-lang="es">ES</button>
-      <button class="btn theme-btn" data-theme="dark">Dark</button>
-    </div>
-  </div>
+:root[data-theme="dark"] {
+  --fg:              #e7e8df;
+  --fg-muted:        #b8baa9;
+  --fg-subtle:       #94978a;
+  --fg-disabled:     #5e6157;
+  --bg:              #11140d;
+  --bg-muted:        #1a1e15;
+  --bg-subtle:       #22281c;
+  --bg-surface:      #1a1e15;
+  --bg-surface-2:    #22281c;
+  --border:          #2e3624;
+  --border-strong:   #46483d;
+  --success-bg: #1f2c19; --success-fg: #cbeeb0; --success-border: #3a5a2c;
+  --warning-bg: #2e2418; --warning-fg: #e4a35e; --warning-border: #5e4d28;
+  --error-bg:   #2e1c16; --error-fg:   #df6a4d; --error-border:   #6e3a28;
+  --info-bg:    #1c2640; --info-fg:    #b8ccff; --info-border:    #2e4072;
+}
+body {
+  background:
+    radial-gradient(900px 500px at 12% -10%, rgba(203, 238, 176, 0.25) 0%, transparent 55%),
+    radial-gradient(700px 400px at 110% 30%, rgba(99, 94, 81, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, #fbfbfa 0%, #f4f4f2 100%);
+  background-attachment: fixed;
+  color: var(--fg);
+}
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(900px 500px at 12% -10%, rgba(203, 238, 176, 0.10) 0%, transparent 55%),
+    radial-gradient(700px 400px at 110% 30%, rgba(99, 94, 81, 0.20) 0%, transparent 60%),
+    linear-gradient(180deg, #11140d 0%, #0b0e08 100%);
+}
+.nav { background: var(--aroya-app-blue-1); color: #ffffff; border-bottom: 1px solid var(--aroya-app-blue-2); }
+.nav__name { color: #ffffff; }
+.hero {
+  background:
+    radial-gradient(600px 300px at 85% 30%, rgba(203, 238, 176, 0.12) 0%, transparent 65%),
+    linear-gradient(180deg, #22303f 0%, var(--aroya-app-blue-1) 100%);
+  color: #ffffff;
+  border-bottom: 1px solid var(--aroya-app-blue-2);
+}
+.hero__title { color: #ffffff; }
+.hero__title em { background: linear-gradient(transparent 62%, rgba(203, 238, 176, 0.35) 62%); color: #ffffff; padding: 0 2px; }
+.page { background: transparent; }
+.kpi__bar { background: var(--bg-subtle); }
+.caveat {
+  background: var(--addium-blue-light);
+  border: 1px solid #b8ccff;
+  color: #1e3b99;
+}
+.caveat b { color: #1e3b99; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+.num, td.num, .kpi-value, .kpi-delta, .mono {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
+/* Language toggle */
+span[lang="es"] { display: none; }
+body.es span[lang="en"] { display: none; }
+body.es span[lang="es"] { display: inline; }
+.en-only { display: inline; }
+.es-only { display: none; }
+body.es .en-only { display: none; }
+body.es .es-only { display: inline; }
+.lang-toggle {
+  position: fixed;
+  bottom: var(--s-4); right: var(--s-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  padding: 0;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  z-index: 50;
+  display: flex;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+}
+.lang-toggle button {
+  background: transparent;
+  border: 0;
+  color: var(--fg-muted);
+  font: inherit;
+  padding: 7px 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all var(--dur) var(--ease);
+}
+.lang-toggle button.active {
+  background: var(--aroya-lime);
+  color: var(--aroya-app-blue-1);
+}
+.lang-toggle button:hover:not(.active) { color: var(--aroya-lime); }
+/* NAV */
+.nav {
+  padding: var(--s-3) var(--s-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav__brand { display: flex; align-items: center; gap: var(--s-3); }
+.nav__logo {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--aroya-lime);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.nav__logo::before {
+  content: "";
+  width: 14px; height: 14px;
+  border: 2px solid var(--aroya-app-blue-1);
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(-35deg);
+}
+.nav__name { font-weight: 500; font-size: var(--text-base); letter-spacing: 0.02em; }
+.nav__name .dot { color: var(--aroya-lime); }
+.nav__links {
+  display: flex; gap: var(--s-5);
+  font-size: var(--text-xs);
+  color: var(--aroya-light-green);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.nav__links .active { color: var(--aroya-lime); }
+/* HERO */
+.hero {
+  padding: var(--s-7) var(--s-6) var(--s-6);
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: ""; position: absolute;
+  right: -40px; top: -40px;
+  width: 240px; height: 240px;
+  background: var(--aroya-lime);
+  opacity: 0.08;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero__inner { max-width: 1120px; margin: 0 auto; position: relative; }
+.hero__eyebrow {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--aroya-lime);
+  margin: 0 0 var(--s-3);
+  font-weight: 500;
+}
+.hero__title {
+  font-size: var(--text-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin: 0 0 var(--s-3);
+  max-width: 820px;
+}
+.hero__title em { font-style: normal; }
+.hero__subtitle {
+  font-size: var(--text-base);
+  color: var(--aroya-light-green);
+  margin: 0 0 var(--s-5);
+  font-weight: 400;
+}
+.hero__meta {
+  font-size: var(--text-xs);
+  color: var(--aroya-light-green);
+  margin-bottom: var(--s-5);
+}
+.hero__meta span { margin-right: var(--s-3); }
+.hero__chips { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.hero__chip {
+  display: inline-flex; align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  border: 1px solid;
+}
+.hero__chip.brand { border-color: var(--aroya-lime); color: var(--aroya-lime); background: rgba(203, 238, 176, 0.10); }
+.hero__chip.info  { border-color: var(--addium-blue); color: var(--addium-blue-light); background: rgba(45, 98, 255, 0.14); }
+.hero__chip.warn  { border-color: var(--warning-border); color: var(--warning-fg); background: var(--warning-bg); }
+.hero__chip.bad   { border-color: var(--error-border); color: var(--error-fg); background: var(--error-bg); }
+/* PAGE */
+.page { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-6) var(--s-7); }
+/* HEADINGS */
+.h1 {
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--fg);
+  margin: var(--s-7) 0 var(--s-2);
+  display: flex; align-items: center; gap: var(--s-3);
+}
+.h1::before {
+  content: ""; width: 3px; height: 20px;
+  background: var(--aroya-lime);
+  border-radius: 2px;
+}
+.eyebrow {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-subtle);
+  font-weight: 500;
+  margin: 0 0 var(--s-4);
+  padding-left: 15px;
+}
+p { margin: 0 0 var(--s-3); }
+/* EXEC SUMMARY */
+.exec {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-surface);
+  margin: var(--s-6) 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 6px 1fr;
+}
+.exec__accent { background: linear-gradient(180deg, var(--aroya-lime) 0%, var(--aroya-olive) 100%); }
+.exec__body { padding: var(--s-5); }
+.exec__label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--aroya-olive);
+  font-weight: 500;
+  margin: 0 0 var(--s-2);
+}
+.exec__body p { margin: 0; font-size: var(--text-sm); line-height: 1.65; color: var(--fg); }
+.exec__body em.flag {
+  font-style: normal;
+  font-weight: 500;
+  background: linear-gradient(transparent 62%, var(--aroya-lime) 62%);
+  padding: 0 2px;
+}
+/* KPI */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--s-3); }
+.kpi {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.kpi::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+.kpi.substrate::before { background: var(--aroya-olive); }
+.kpi.climate::before   { background: var(--aroya-medium-gray); }
+.kpi.ok::before        { background: var(--aroya-lime); }
+.kpi.warn::before      { background: var(--warning-border); }
+.kpi.bad::before       { background: var(--error-border); }
+.kpi__label {
+  font-size: var(--text-xs);
+  color: var(--fg-subtle);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-2);
+}
+.kpi__tag {
+  font-size: 10px; font-weight: 500;
+  padding: 1px 6px; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+}
+.kpi__tag.substrate { background: rgba(99, 94, 81, 0.14); color: var(--aroya-olive); }
+.kpi__tag.climate   { background: rgba(70, 72, 61, 0.14);  color: var(--aroya-medium-gray); }
+.kpi__value { font-size: var(--text-2xl); font-weight: 500; line-height: 1.1; color: var(--fg); }
+.kpi__unit { font-size: var(--text-sm); color: var(--fg-subtle); margin-left: 3px; font-family: var(--font-sans); }
+.kpi__range { font-size: var(--text-xs); color: var(--fg-subtle); font-family: var(--font-mono); }
+.kpi__bar { height: 4px; border-radius: 2px; overflow: hidden; position: relative; margin-top: var(--s-1); }
+.kpi__bar-fill { position: absolute; top: 0; bottom: 0; background: var(--aroya-olive); border-radius: 2px; }
+.kpi__bar-fill.ok   { background: var(--aroya-lime); }
+.kpi__bar-fill.warn { background: var(--warning-border); }
+.kpi__bar-fill.bad  { background: var(--error-border); }
+.kpi__delta { font-size: var(--text-xs); color: var(--fg-muted); }
+.kpi__delta.warn { color: var(--warning-fg); }
+.kpi__delta.bad  { color: var(--error-fg); }
+.kpi__delta.ok   { color: var(--success-fg); }
+/* CARD - BEM */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: var(--s-3);
+}
+.card__head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--s-3) var(--s-5);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-muted);
+}
+.card__title { margin: 0; font-size: var(--text-base); font-weight: 500; color: var(--fg); }
+.card__subtitle { margin: 2px 0 0; font-size: var(--text-xs); color: var(--fg-subtle); }
+.card__meta { font-size: var(--text-xs); color: var(--fg-subtle); font-family: var(--font-mono); }
+.card__body { padding: var(--s-5); }
+.card__body.tight { padding: 0; }
+/* DATA TABLE */
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.data-table thead th {
+  background: var(--bg-subtle);
+  color: var(--fg-subtle);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--border);
+}
+.data-table thead th.num { text-align: right; }
+.data-table tbody td {
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+}
+.data-table tbody td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
+.data-table tbody tr:last-child td { border-bottom: 0; }
+/* PILLS */
+.pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+.pill.ok      { background: var(--success-bg); color: var(--success-fg); border-color: var(--success-border); }
+.pill.warn    { background: var(--warning-bg); color: var(--warning-fg); border-color: var(--warning-border); }
+.pill.bad     { background: var(--error-bg);   color: var(--error-fg);   border-color: var(--error-border); }
+.pill.neutral { background: var(--bg-subtle);  color: var(--fg-muted);   border-color: var(--border); }
+.pill.brand   { background: rgba(203, 238, 176, 0.20); color: #1a2b10; border-color: var(--aroya-lime-hover); }
+.pill.info    { background: var(--info-bg); color: var(--info-fg); border-color: var(--info-border); }
+.pill.good    { background: var(--success-bg); color: var(--success-fg); border-color: var(--success-border); }
+.pill.muted   { background: var(--bg-subtle); color: var(--fg-muted); border-color: var(--border); }
+/* CAVEAT */
+.caveat {
+  border-radius: var(--radius);
+  padding: var(--s-3) var(--s-4);
+  font-size: var(--text-xs);
+  margin: var(--s-4) 0 0;
+  line-height: 1.6;
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: var(--s-3);
+  align-items: start;
+}
+.caveat__icon {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--addium-blue);
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-sans);
+}
+.caveat b { font-weight: 500; }
+/* ZONE / room card */
+.zones { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--s-3); }
+.zone {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  position: relative;
+  overflow: hidden;
+}
+.zone::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; }
+.zone.ok::before   { background: var(--aroya-lime); }
+.zone.warn::before { background: var(--warning-border); }
+.zone.bad::before  { background: var(--error-border); }
+.zone__head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: var(--s-3); padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--border);
+}
+.zone__head h4 { margin: 0; font-size: var(--text-base); font-weight: 500; color: var(--fg); }
+.zone__head .id { font-size: var(--text-xs); color: var(--fg-subtle); font-family: var(--font-mono); }
+.kv {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: var(--s-1) 0;
+  font-size: var(--text-sm);
+  border-bottom: 1px dashed var(--border);
+}
+.kv:last-of-type { border-bottom: 0; }
+.kv span:first-child { color: var(--fg-subtle); font-size: var(--text-xs); }
+.kv b {
+  font-weight: 400;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+.zone__verdict {
+  margin-top: var(--s-3);
+  font-size: var(--text-xs);
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--radius-sm);
+  line-height: 1.5;
+  border: 1px solid;
+}
+.zone__verdict.ok   { background: var(--success-bg); color: var(--success-fg); border-color: var(--success-border); }
+.zone__verdict.warn { background: var(--warning-bg); color: var(--warning-fg); border-color: var(--warning-border); }
+.zone__verdict.bad  { background: var(--error-bg);   color: var(--error-fg);   border-color: var(--error-border); }
+/* FINDINGS */
+.findings { display: flex; flex-direction: column; gap: var(--s-3); }
+.finding {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s-4) var(--s-5);
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: var(--s-4);
+  border-left: 4px solid var(--aroya-lime);
+}
+.finding.bad  { border-left-color: var(--error-fg);   background: linear-gradient(90deg, rgba(248, 228, 228, 0.40) 0%, var(--bg-surface) 12%); }
+.finding.warn { border-left-color: var(--warning-fg); background: linear-gradient(90deg, rgba(252, 248, 216, 0.50) 0%, var(--bg-surface) 12%); }
+.finding.ok   { border-left-color: var(--success-fg); background: linear-gradient(90deg, rgba(206, 245, 202, 0.40) 0%, var(--bg-surface) 12%); }
+.finding.info { border-left-color: var(--addium-blue); background: linear-gradient(90deg, var(--info-bg) 0%, var(--bg-surface) 12%); }
+.finding__icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.finding.bad  .finding__icon { background: var(--error-bg);   color: var(--error-fg); }
+.finding.warn .finding__icon { background: var(--warning-bg); color: var(--warning-fg); }
+.finding.ok   .finding__icon { background: var(--success-bg); color: var(--success-fg); }
+.finding.info .finding__icon { background: var(--info-bg);    color: var(--info-fg); }
+.finding h4 { margin: 0 0 var(--s-2); font-size: var(--text-base); font-weight: 500; color: var(--fg); }
+.finding p  { margin: 0 0 var(--s-2); color: var(--fg); font-size: var(--text-sm); line-height: 1.6; }
+.finding p:last-child { margin-bottom: 0; }
+.finding .why { color: var(--fg-muted); font-size: var(--text-xs); font-style: italic; }
+.finding strong {
+  font-weight: 500;
+  background: linear-gradient(transparent 62%, var(--aroya-lime) 62%);
+  padding: 0 2px;
+}
+/* RECS */
+.recs { display: grid; gap: var(--s-2); }
+.rec {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: var(--s-4);
+  align-items: start;
+  background: var(--bg-surface);
+}
+.rec .num-badge {
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  background: var(--aroya-lime);
+  color: var(--aroya-medium-gray);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.rec:nth-child(1) .num-badge,
+.rec:nth-child(2) .num-badge { background: var(--aroya-olive); color: #ffffff; }
+.rec:nth-child(5) .num-badge,
+.rec:nth-child(6) .num-badge { background: var(--aroya-light-green); color: var(--aroya-medium-gray); }
+.rec b { display: block; margin-bottom: 2px; font-size: var(--text-sm); font-weight: 500; color: var(--fg); }
+.rec p { margin: 0; font-size: var(--text-sm); color: var(--fg-muted); line-height: 1.55; }
+.rec__tag {
+  display: inline-block;
+  margin-left: var(--s-2);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  vertical-align: 1px;
+}
+.rec__tag.high { background: var(--error-bg); color: var(--error-fg); border: 1px solid var(--error-border); }
+.rec__tag.med  { background: var(--warning-bg); color: var(--warning-fg); border: 1px solid var(--warning-border); }
+.rec__tag.low  { background: var(--bg-subtle); color: var(--fg-muted); border: 1px solid var(--border); }
+/* METHODOLOGY */
+.clean {
+  list-style: none; padding: 0; margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+.clean li {
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--s-4);
+}
+.clean li:last-child { border-bottom: 0; }
+.clean li b {
+  font-weight: 500;
+  color: var(--aroya-olive);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+/* FOOTER */
+.foot {
+  margin-top: var(--s-7);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-xs);
+  color: var(--fg-subtle);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+.foot .brand-mark { color: var(--aroya-olive); font-weight: 500; }
+/* PHASE 2 REPORT ADDITIONS */
+.split-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--s-4); }
+.section-tools { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); margin: var(--s-3) 0 var(--s-4); }
+.room-button {
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--fg);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+.room-button.active { background: var(--aroya-lime); color: var(--aroya-app-blue-1); border-color: var(--aroya-lime); }
+.chart-frame {
+  min-height: 260px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s-3);
+  margin-top: var(--s-3);
+}
+.chart-frame.small { min-height: 180px; }
+.chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--s-3); }
+.room-card.is-hidden { display: none; }
+.room-card.is-dimmed { opacity: 0.42; filter: saturate(0.65); }
+.compare-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-surface);
+  padding: var(--s-4);
+  margin-bottom: var(--s-4);
+}
+.compare-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(240px, 0.7fr);
+  gap: var(--s-4);
+  align-items: start;
+}
+.compare-selector { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center; }
+.compare-chip, .room-chip {
+  display: inline-flex; align-items: center; gap: 7px; min-height: 34px;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: var(--bg-surface); color: var(--fg);
+  padding: 6px 10px; font-size: var(--text-xs); cursor: pointer; user-select: none;
+}
+.compare-chip input { width: 14px; height: 14px; accent-color: var(--aroya-lime); }
+.compare-chip.is-selected, .room-chip.active {
+  border-color: var(--aroya-lime);
+  background: color-mix(in srgb, var(--aroya-lime) 28%, var(--bg-surface));
+  color: var(--fg);
+}
+.compare-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--s-2); }
+.compare-action,
+.metric-tab {
+  border: 1px solid var(--border); background: var(--bg-surface); color: var(--fg);
+  border-radius: 7px; padding: 7px 10px; font: inherit; font-size: var(--text-xs); cursor: pointer;
+}
+.compare-action:hover, .metric-tab:hover { border-color: var(--fg-subtle); }
+.metric-tabs { display: flex; flex-wrap: wrap; gap: var(--s-2); justify-content: flex-end; margin-top: var(--s-2); }
+.metric-tab.active {
+  border-color: var(--addium-blue);
+  background: color-mix(in srgb, var(--addium-blue) 16%, var(--bg-surface));
+}
+.compare-count { display: block; margin-top: var(--s-2); color: var(--fg-subtle); font-size: var(--text-xs); text-align: right; }
+.compare-layout { display: grid; grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.1fr); gap: var(--s-4); margin-top: var(--s-4); }
+.compare-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-surface); }
+.compare-table { width: 100%; border-collapse: collapse; font-size: var(--text-xs); min-width: 740px; }
+.compare-table th, .compare-table td {
+  border-bottom: 1px solid var(--border); padding: 8px 9px; text-align: left; vertical-align: top;
+}
+.compare-table th { color: var(--fg-subtle); font-weight: 700; }
+.compare-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.compare-table tr:last-child td { border-bottom: 0; }
+.compare-room { min-width: 126px; }
+.compare-room small { display: block; color: var(--fg-subtle); margin-top: 2px; }
+.compare-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: var(--text-xs); margin-top: var(--s-2); color: var(--fg-muted); }
+.compare-toggle input { margin: 0; }
+.metric-high { color: var(--error-fg); font-weight: 800; }
+.metric-low { color: var(--addium-blue); font-weight: 800; }
+.extreme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--s-2); margin-top: var(--s-3); }
+.extreme-card { border: 1px solid var(--border); border-radius: 7px; background: var(--bg-surface); padding: var(--s-3); }
+.comparison-empty { padding: var(--s-4); color: var(--fg-subtle); font-size: var(--text-sm); }
+.source-note { font-size: var(--text-xs); color: var(--fg-subtle); line-height: 1.6; }
+.compact-list { margin: 0; padding-left: var(--s-4); color: var(--fg-muted); }
+.compact-list li { margin-bottom: var(--s-2); }
+canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
+.chart-frame.small canvas { min-height: 150px; }
+@media (max-width: 720px) {
+  .nav { padding: var(--s-3) var(--s-4); align-items: flex-start; gap: var(--s-3); }
+  .nav__links { gap: var(--s-3); flex-wrap: wrap; justify-content: flex-end; }
+  .hero { padding: var(--s-6) var(--s-4); }
+  .page { padding: var(--s-5) var(--s-4) var(--s-7); }
+  .hero__title { font-size: var(--text-2xl); }
+  .clean li { grid-template-columns: 1fr; gap: var(--s-1); }
+  .compare-toolbar, .compare-layout { grid-template-columns: 1fr; }
+  .compare-actions, .metric-tabs, .compare-count { justify-content: flex-start; text-align: left; }
+}
+@media print {
+  body { background: #ffffff !important; color: #1a1c19 !important; }
+  .nav { background: #ffffff; color: #1a1c19; border-bottom: 1px solid #ebebea; }
+  .lang-toggle { display: none; }
+  .kpi, .zone, .card, .rec, .finding, .clean, .exec { break-inside: avoid; }
+}
+</style>
+</head>
+<body class="theme-dark">
+
+<!-- LANGUAGE TOGGLE -->
+<div class="lang-toggle" role="group" aria-label="Language toggle">
+  <button type="button" class="active" data-lang="en">EN</button>
+  <button type="button" data-lang="es">ES</button>
 </div>
-<div class="wrap">
-<div class="pagehead">
-  <div class="pagehead-eyebrow">
-    <span class="en-only">14-Day Facility Audit</span>
-    <span class="es-only">Auditoría de 14 Días</span>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav__brand">
+    <div class="nav__logo"></div>
+    <div class="nav__name">AROYA<span class="dot">.</span></div>
   </div>
-  <h1>
-    <span class="en-only">POWRHOUSE · Irrigation, Climate & Feeding</span>
-    <span class="es-only">POWRHOUSE · Riego, Clima y Fertilización</span>
-  </h1>
-  <div class="sub">
-    <span class="en-only">2026-05-26 → 2026-06-09 · 9 rooms in scope</span>
-    <span class="es-only">2026-05-26 → 2026-06-09 · 9 salas</span>
+  <div class="nav__links">
+    <span><span lang="en">Facilities</span><span lang="es">Instalaciones</span></span>
+    <span><span lang="en">Harvests</span><span lang="es">Cosechas</span></span>
+    <span><span lang="en">Devices</span><span lang="es">Dispositivos</span></span>
+    <span class="active"><span lang="en">Reports</span><span lang="es">Reportes</span></span>
   </div>
-  <div class="meta">
-    <span><b>Facility</b>POWRHOUSE · AROYA 3754</span>
-    <span><b>Window</b>2026-05-26 → 2026-06-09 (14d)</span>
-    <span><b>Rooms in scope</b>9</span>
-    <span><b>Harvest groups</b>1</span>
-  </div>
-</div>
+</nav>
 
-<section id="headline">
-<h2><span class="en-only">Headline Findings</span><span class="es-only">Hallazgos Principales</span></h2>
-<div class="kpis">
-  <div class="kpi warn">
-    <div class="label"><span class="en-only">POWR 1 · dryback</span><span class="es-only">POWR 1 · dryback</span></div>
-    <div class="val">52.2 pp</div>
-<div class="delta"><span class="en-only">vs 5-15 pp target (veg, vegetatively-steered)</span><span class="es-only">vs objetivo 5-15 pp (veg)</span></div>  </div>
-  <div class="kpi warn">
-    <div class="label"><span class="en-only">POWR 2 · dryback</span><span class="es-only">POWR 2 · dryback</span></div>
-    <div class="val">33.0 pp</div>
-<div class="delta"><span class="en-only">vs 5-15 pp target (veg, vegetatively-steered)</span><span class="es-only">vs objetivo 5-15 pp (veg)</span></div>  </div>
-  <div class="kpi warn">
-    <div class="label"><span class="en-only">POWR 3 · dryback</span><span class="es-only">POWR 3 · dryback</span></div>
-    <div class="val">57.1 pp</div>
-<div class="delta"><span class="en-only">vs 5-15 pp target (veg, vegetatively-steered)</span><span class="es-only">vs objetivo 5-15 pp (veg)</span></div>  </div>
-  <div class="kpi warn">
-    <div class="label"><span class="en-only">POWR 4 · dryback</span><span class="es-only">POWR 4 · dryback</span></div>
-    <div class="val">33.4 pp</div>
-<div class="delta"><span class="en-only">vs 5-15 pp target (veg, vegetatively-steered)</span><span class="es-only">vs objetivo 5-15 pp (veg)</span></div>  </div>
-  <div class="kpi warn">
-    <div class="label"><span class="en-only">Veg Room · dryback</span><span class="es-only">Veg Room · dryback</span></div>
-    <div class="val">25.1 pp</div>
-<div class="delta"><span class="en-only">vs 5-15 pp target (veg, vegetatively-steered)</span><span class="es-only">vs objetivo 5-15 pp (veg)</span></div>  </div>
-  <div class="kpi warn">
-    <div class="label"><span class="en-only">Dry 1 · dryback</span><span class="es-only">Dry 1 · dryback</span></div>
-    <div class="val">0.0 pp</div>
-<div class="delta"><span class="en-only">vs 5-15 pp target (veg, vegetatively-steered)</span><span class="es-only">vs objetivo 5-15 pp (veg)</span></div>  </div>
-</div>
-<div class="verdict warn">
-  <div class="v-head"><span class="en-only">The lead</span><span class="es-only">El titular</span></div>
-  <span class="en-only">Steering intent declared before numbers. Each room is vegetatively-steered or vegetatively-steered this window. Dryback is reported as absolute pp (peak VWC minus pre-irrigation low) — absolute pp only. Phase targets reference the AROYA 4-phase day model: P0 (Activation) → P1 (Ramp-up) → P2 (Maintenance) → P3 (Dry-down).</span>
-  <span class="es-only">Intención de guía declarada antes de los números. Cada sala está guiada vegetativa o generativamente esta ventana. El dryback se reporta en pp absoluto (VWC pico menos mínimo pre-riego) — solo pp absoluto. Objetivos por fase del modelo de 4 fases: P0 → P1 → P2 → P3.</span>
-</div>
-</section>
-
-<section id="commitments">
-<h2><span class="en-only">Prior-Commitment Scorecard</span><span class="es-only">Cuadro de Compromisos Previos</span></h2>
-<p><span class="en-only">Commitments captured in prior 1:1s evaluated against the 14-day dataset.</span><span class="es-only">Compromisos capturados en 1:1s previos evaluados contra el dataset de 14 días.</span></p>
-<p class="muted"><span class="en-only">No prior commitments on record for this window.</span><span class="es-only">Sin compromisos previos registrados para esta ventana.</span></p>
-</section>
-
-<section id="hvac">
-<h2><span class="en-only">HVAC Capacity</span><span class="es-only">Capacidad HVAC</span></h2>
-<p class="muted"><span class="en-only">HVAC Capacity check: review lights-on/off setpoint envelope vs measured air-temp + RH. Inverse temp differential (DIF) flagged where lights-off ran warmer than lights-on.</span><span class="es-only">Revisión de capacidad HVAC: setpoints luces-on/off vs temp aire + HR medidas. DIF invertido marcado cuando luces-off corrió más cálido que luces-on.</span></p>
-</section>
-
-<section id="interplay">
-<h2><span class="en-only">Climate ↔ Irrigation Interplay</span><span class="es-only">Interacción Clima ↔ Riego</span></h2>
-<p><span class="en-only">VPD is a knob; substrate EC is the lever — they have to move together. Steering intent (vegetatively-steered vs generatively-steered) declared before numbers. P0 activation length, P1 ramp-up shot count, and P3 dryback depth (absolute pp) tie to room-level VPD envelope.</span><span class="es-only">El VPD es una perilla; la CE en sustrato es la palanca — tienen que moverse juntos. Intención de guía (guía vegetativa vs guía generativa) declarada antes de los números. P0, P1, P3 tiados al VPD por sala.</span></p>
-<p>VPD is a knob; substrate EC is the lever — they have to move together. P0 activation length, P1 ramp-up shot count, and P3 dryback depth (absolute pp) tied to the room-level VPD envelope. Use the chip-driven Per-Room Deep Dive below to compare rooms side-by-side.</p></section>
-
-<section id="roomdeepdive">
-<h2><span class="en-only">Per-Room Deep Dive · Select & Compare</span><span class="es-only">Análisis por Sala · Selecciona y Compara</span></h2>
-<p><span class="en-only">Click a room chip to view its trajectory across the 14-day window. Shift-click or toggle "Compare mode" to overlay multiple rooms. Target bands shade automatically based on the selected room's current phase.</span><span class="es-only">Haz clic en un chip de sala para ver su trayectoria de 14 días. Mantén Shift o activa "Modo comparar" para superponer varias salas. Las bandas objetivo se sombrean según la fase actual de la sala seleccionada.</span></p>
-
-<div class="room-selector" id="roomSelector"><!-- chips injected by JS --></div>
-<div class="room-meta" id="roomMeta"><!-- room metadata injected by JS --></div>
-
-<div class="chartwrap">
-  <h4><span class="en-only">Substrate EC · pore_ec daily mean</span><span class="es-only">CE en sustrato · pore_ec media diaria</span></h4>
-  <div class="chart-canvas"><canvas id="chartEC"></canvas></div>
-  <div class="legend" id="legendEC"></div>
-</div>
-
-<div class="chartwrap">
-  <h4><span class="en-only">Overnight dryback · daily (absolute pp)</span><span class="es-only">Dryback nocturno · diario (pp absoluto)</span></h4>
-  <div class="chart-canvas"><canvas id="chartDryback"></canvas></div>
-  <div class="legend" id="legendDryback"></div>
-</div>
-
-<div class="chartwrap">
-  <h4><span class="en-only">VPD lights-on vs lights-off · daily</span><span class="es-only">VPD luces-on vs luces-off · diario</span></h4>
-  <div class="chart-canvas"><canvas id="chartVPD"></canvas></div>
-  <div class="legend" id="legendVPD"></div>
-</div>
-
-<div class="chartwrap">
-  <h4><span class="en-only">Air temp lights-on vs lights-off · daily</span><span class="es-only">Temp. aire luces-on vs luces-off · diario</span></h4>
-  <div class="chart-canvas"><canvas id="chartTemp"></canvas></div>
-  <div class="legend" id="legendTemp"></div>
-</div>
-</section>
-
-<section id="biophysics">
-<h2><span class="en-only">Phase Biophysics &amp; Irrigation Inputs</span><span class="es-only">Biofísica y Entradas de Riego por Fase</span></h2>
-<p><span class="en-only">For each room and phase: drip volume, drain volume, drip/drain EC, runoff ratio, EC stack delta, daily field capacity (FC) and VWC floor averages, ET rate, DLI, CO₂, VPD-stress hours, DIF, and substrate temperatures. Numbers are window-aggregate stats. Target bands are phase-specific. Dryback reported as absolute pp (peak VWC − pre-irrigation low).</span><span class="es-only">Para cada sala y fase: volumen drip/drain, CE drip/drain, ratio runoff, delta pila CE, FC y piso VWC promedios diarios, tasa ET, DLI, CO₂, horas estrés VPD, DIF, y temps de sustrato. Números agregados. Bandas objetivo por fase. Dryback en absolute pp (pp absoluto).</span></p>
-  <div class="biophys-room">
-    <h3>POWR 1</h3>
-    <div class="biophys-brief"><span class="en-only">POWR 1 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 52.2 absolute pp; EC stack Δ -0.75 mS. All values stated against phase-specific target bands — absolute pp only.</span><span class="es-only">POWR 1 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 52.2 pp absoluto; Δ pila CE -0.75 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></div>
-    <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · window aggregate</span><span class="es-only">DRIP-DRAIN · agregado de ventana</span></div>
-    <table class="bp-table">
-      <thead><tr><th>Metric</th><th>Observed</th><th>Target (Veg)</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Overnight dryback (absolute pp)</td>
-          <td class="num">52.2 pp</td>
-          <td class="num">5–15 pp</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-        <tr>
-          <td>EC stack Δ (substrate − feed)</td>
-          <td class="num">-0.75 mS</td>
-          <td class="num">+1.0 to +5.0 mS</td>
-          <td><span class="pill warn">flat / negative</span></td>
-        </tr>
-        <tr>
-          <td>VPD lights-on mean</td>
-          <td class="num">0.92 kPa</td>
-          <td class="num">0.8–1.1 kPa</td>
-          <td><span class="pill good">in band</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (window aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados de ventana)</span></div>
-    <div class="bp-scroll"><table class="bp-table compact">
-      <thead><tr>
-        <th>Phase</th>
-        <th>FC daily mean</th>
-        <th>Floor daily mean</th>
-        <th>ET rate (%/hr dryback)</th>
-        <th>DLI (mol/m²/d)</th>
-        <th>VPD-stress hrs/d</th>
-        <th>DIF (°F)</th>
-        <th>CO₂ lights-on (ppm)</th>
-        <th>VPD lights-on (kPa)</th>
-        <th>Soil temp on / off (°F)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="phase veg">Veg</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">0.92</td>
-          <td class="num">—</td>
-        </tr>
-      </tbody>
-    </table></div>
-    <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg</span></div>
-    <div class="bp-targets">
-      <span class="bp-tgt"><b>Substrate EC:</b> 3–5 mS</span>
-      <span class="bp-tgt"><b>Dryback:</b> 5–15 pp</span>
-      <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
-      <span class="bp-tgt"><b>Shot size:</b> 3–5 %</span>
+<!-- HERO -->
+<header class="hero">
+  <div class="hero__inner">
+    <p class="hero__eyebrow"><span lang="en">42-Day Facility Audit</span><span lang="es">Auditoría de 42 Días</span></p>
+    <h1 class="hero__title"><span lang="en">Burly Botanicals: </span><span lang="es">Burly Botanicals: </span><em><span lang="en">42-day facility audit</span><span lang="es">auditoria de 42 dias</span></em></h1>
+    <p class="hero__subtitle"><span lang="en">2026-04-01 to 2026-05-13 - generated 2026-06-11T02:23:35+00:00</span><span lang="es">2026-04-01 al 2026-05-13 - generado 2026-06-11T02:23:35+00:00</span></p>
+    <div class="hero__meta">
+      <span><span lang="en">AROYA public API + OpenCLI SPA runtime</span><span lang="es">AROYA public API + runtime OpenCLI SPA</span></span>
+      <span>-</span>
+      <span><span lang="en">Publisher-compatible light/dark pair</span><span lang="es">Pareja light/dark compatible</span></span>
+      <span>-</span>
+      <span><span lang="en">Inline Chart.js</span><span lang="es">Chart.js inline</span></span>
+    </div>
+    <div class="hero__chips">
+      <span class="hero__chip brand"><span lang="en">3 rooms</span><span lang="es">3 salas</span></span>
+      <span class="hero__chip info"><span lang="en">Coverage 101%</span><span lang="es">Cobertura 101%</span></span>
+      <span class="hero__chip info"><span lang="en">OpenCLI SPA connected</span><span lang="es">OpenCLI SPA conectado</span></span>
     </div>
   </div>
-  <div class="biophys-room">
-    <h3>POWR 2</h3>
-    <div class="biophys-brief"><span class="en-only">POWR 2 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 33.0 absolute pp; EC stack Δ -0.28 mS. All values stated against phase-specific target bands — absolute pp only.</span><span class="es-only">POWR 2 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 33.0 pp absoluto; Δ pila CE -0.28 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></div>
-    <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · window aggregate</span><span class="es-only">DRIP-DRAIN · agregado de ventana</span></div>
-    <table class="bp-table">
-      <thead><tr><th>Metric</th><th>Observed</th><th>Target (Veg)</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Overnight dryback (absolute pp)</td>
-          <td class="num">33.0 pp</td>
-          <td class="num">5–15 pp</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-        <tr>
-          <td>EC stack Δ (substrate − feed)</td>
-          <td class="num">-0.28 mS</td>
-          <td class="num">+1.0 to +5.0 mS</td>
-          <td><span class="pill warn">flat / negative</span></td>
-        </tr>
-        <tr>
-          <td>VPD lights-on mean</td>
-          <td class="num">0.76 kPa</td>
-          <td class="num">0.8–1.1 kPa</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (window aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados de ventana)</span></div>
-    <div class="bp-scroll"><table class="bp-table compact">
-      <thead><tr>
-        <th>Phase</th>
-        <th>FC daily mean</th>
-        <th>Floor daily mean</th>
-        <th>ET rate (%/hr dryback)</th>
-        <th>DLI (mol/m²/d)</th>
-        <th>VPD-stress hrs/d</th>
-        <th>DIF (°F)</th>
-        <th>CO₂ lights-on (ppm)</th>
-        <th>VPD lights-on (kPa)</th>
-        <th>Soil temp on / off (°F)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="phase veg">Veg</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">0.76</td>
-          <td class="num">—</td>
-        </tr>
-      </tbody>
-    </table></div>
-    <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg</span></div>
-    <div class="bp-targets">
-      <span class="bp-tgt"><b>Substrate EC:</b> 3–5 mS</span>
-      <span class="bp-tgt"><b>Dryback:</b> 5–15 pp</span>
-      <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
-      <span class="bp-tgt"><b>Shot size:</b> 3–5 %</span>
-    </div>
-  </div>
-  <div class="biophys-room">
-    <h3>POWR 3</h3>
-    <div class="biophys-brief"><span class="en-only">POWR 3 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 57.1 absolute pp; EC stack Δ +0.82 mS. All values stated against phase-specific target bands — absolute pp only.</span><span class="es-only">POWR 3 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 57.1 pp absoluto; Δ pila CE +0.82 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></div>
-    <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · window aggregate</span><span class="es-only">DRIP-DRAIN · agregado de ventana</span></div>
-    <table class="bp-table">
-      <thead><tr><th>Metric</th><th>Observed</th><th>Target (Veg)</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Overnight dryback (absolute pp)</td>
-          <td class="num">57.1 pp</td>
-          <td class="num">5–15 pp</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-        <tr>
-          <td>EC stack Δ (substrate − feed)</td>
-          <td class="num">+0.82 mS</td>
-          <td class="num">+1.0 to +5.0 mS</td>
-          <td><span class="pill good">stacking</span></td>
-        </tr>
-        <tr>
-          <td>VPD lights-on mean</td>
-          <td class="num">1.16 kPa</td>
-          <td class="num">0.8–1.1 kPa</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (window aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados de ventana)</span></div>
-    <div class="bp-scroll"><table class="bp-table compact">
-      <thead><tr>
-        <th>Phase</th>
-        <th>FC daily mean</th>
-        <th>Floor daily mean</th>
-        <th>ET rate (%/hr dryback)</th>
-        <th>DLI (mol/m²/d)</th>
-        <th>VPD-stress hrs/d</th>
-        <th>DIF (°F)</th>
-        <th>CO₂ lights-on (ppm)</th>
-        <th>VPD lights-on (kPa)</th>
-        <th>Soil temp on / off (°F)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="phase veg">Veg</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">1.16</td>
-          <td class="num">—</td>
-        </tr>
-      </tbody>
-    </table></div>
-    <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg</span></div>
-    <div class="bp-targets">
-      <span class="bp-tgt"><b>Substrate EC:</b> 3–5 mS</span>
-      <span class="bp-tgt"><b>Dryback:</b> 5–15 pp</span>
-      <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
-      <span class="bp-tgt"><b>Shot size:</b> 3–5 %</span>
-    </div>
-  </div>
-  <div class="biophys-room">
-    <h3>POWR 4</h3>
-    <div class="biophys-brief"><span class="en-only">POWR 4 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 33.4 absolute pp; EC stack Δ -0.32 mS. All values stated against phase-specific target bands — absolute pp only.</span><span class="es-only">POWR 4 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 33.4 pp absoluto; Δ pila CE -0.32 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></div>
-    <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · window aggregate</span><span class="es-only">DRIP-DRAIN · agregado de ventana</span></div>
-    <table class="bp-table">
-      <thead><tr><th>Metric</th><th>Observed</th><th>Target (Veg)</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Overnight dryback (absolute pp)</td>
-          <td class="num">33.4 pp</td>
-          <td class="num">5–15 pp</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-        <tr>
-          <td>EC stack Δ (substrate − feed)</td>
-          <td class="num">-0.32 mS</td>
-          <td class="num">+1.0 to +5.0 mS</td>
-          <td><span class="pill warn">flat / negative</span></td>
-        </tr>
-        <tr>
-          <td>VPD lights-on mean</td>
-          <td class="num">0.87 kPa</td>
-          <td class="num">0.8–1.1 kPa</td>
-          <td><span class="pill good">in band</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (window aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados de ventana)</span></div>
-    <div class="bp-scroll"><table class="bp-table compact">
-      <thead><tr>
-        <th>Phase</th>
-        <th>FC daily mean</th>
-        <th>Floor daily mean</th>
-        <th>ET rate (%/hr dryback)</th>
-        <th>DLI (mol/m²/d)</th>
-        <th>VPD-stress hrs/d</th>
-        <th>DIF (°F)</th>
-        <th>CO₂ lights-on (ppm)</th>
-        <th>VPD lights-on (kPa)</th>
-        <th>Soil temp on / off (°F)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="phase veg">Veg</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">0.87</td>
-          <td class="num">—</td>
-        </tr>
-      </tbody>
-    </table></div>
-    <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg</span></div>
-    <div class="bp-targets">
-      <span class="bp-tgt"><b>Substrate EC:</b> 3–5 mS</span>
-      <span class="bp-tgt"><b>Dryback:</b> 5–15 pp</span>
-      <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
-      <span class="bp-tgt"><b>Shot size:</b> 3–5 %</span>
-    </div>
-  </div>
-  <div class="biophys-room">
-    <h3>Veg Room</h3>
-    <div class="biophys-brief"><span class="en-only">Veg Room is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 25.1 absolute pp; EC stack Δ +2.59 mS. All values stated against phase-specific target bands — absolute pp only.</span><span class="es-only">Veg Room con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 25.1 pp absoluto; Δ pila CE +2.59 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></div>
-    <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · window aggregate</span><span class="es-only">DRIP-DRAIN · agregado de ventana</span></div>
-    <table class="bp-table">
-      <thead><tr><th>Metric</th><th>Observed</th><th>Target (Veg)</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Overnight dryback (absolute pp)</td>
-          <td class="num">25.1 pp</td>
-          <td class="num">5–15 pp</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-        <tr>
-          <td>EC stack Δ (substrate − feed)</td>
-          <td class="num">+2.59 mS</td>
-          <td class="num">+1.0 to +5.0 mS</td>
-          <td><span class="pill good">stacking</span></td>
-        </tr>
-        <tr>
-          <td>VPD lights-on mean</td>
-          <td class="num">0.88 kPa</td>
-          <td class="num">0.8–1.1 kPa</td>
-          <td><span class="pill good">in band</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (window aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados de ventana)</span></div>
-    <div class="bp-scroll"><table class="bp-table compact">
-      <thead><tr>
-        <th>Phase</th>
-        <th>FC daily mean</th>
-        <th>Floor daily mean</th>
-        <th>ET rate (%/hr dryback)</th>
-        <th>DLI (mol/m²/d)</th>
-        <th>VPD-stress hrs/d</th>
-        <th>DIF (°F)</th>
-        <th>CO₂ lights-on (ppm)</th>
-        <th>VPD lights-on (kPa)</th>
-        <th>Soil temp on / off (°F)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="phase veg">Veg</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">0.88</td>
-          <td class="num">—</td>
-        </tr>
-      </tbody>
-    </table></div>
-    <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg</span></div>
-    <div class="bp-targets">
-      <span class="bp-tgt"><b>Substrate EC:</b> 3–5 mS</span>
-      <span class="bp-tgt"><b>Dryback:</b> 5–15 pp</span>
-      <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
-      <span class="bp-tgt"><b>Shot size:</b> 3–5 %</span>
-    </div>
-  </div>
-  <div class="biophys-room">
-    <h3>Dry 1</h3>
-    <div class="biophys-brief"><span class="en-only">Dry 1 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 0.0 absolute pp; EC stack Δ +0.00 mS. All values stated against phase-specific target bands — absolute pp only.</span><span class="es-only">Dry 1 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 0.0 pp absoluto; Δ pila CE +0.00 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></div>
-    <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · window aggregate</span><span class="es-only">DRIP-DRAIN · agregado de ventana</span></div>
-    <table class="bp-table">
-      <thead><tr><th>Metric</th><th>Observed</th><th>Target (Veg)</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Overnight dryback (absolute pp)</td>
-          <td class="num">0.0 pp</td>
-          <td class="num">5–15 pp</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-        <tr>
-          <td>EC stack Δ (substrate − feed)</td>
-          <td class="num">+0.00 mS</td>
-          <td class="num">+1.0 to +5.0 mS</td>
-          <td><span class="pill warn">flat / negative</span></td>
-        </tr>
-        <tr>
-          <td>VPD lights-on mean</td>
-          <td class="num">0.71 kPa</td>
-          <td class="num">0.8–1.1 kPa</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (window aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados de ventana)</span></div>
-    <div class="bp-scroll"><table class="bp-table compact">
-      <thead><tr>
-        <th>Phase</th>
-        <th>FC daily mean</th>
-        <th>Floor daily mean</th>
-        <th>ET rate (%/hr dryback)</th>
-        <th>DLI (mol/m²/d)</th>
-        <th>VPD-stress hrs/d</th>
-        <th>DIF (°F)</th>
-        <th>CO₂ lights-on (ppm)</th>
-        <th>VPD lights-on (kPa)</th>
-        <th>Soil temp on / off (°F)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="phase veg">Veg</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">0.71</td>
-          <td class="num">—</td>
-        </tr>
-      </tbody>
-    </table></div>
-    <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg</span></div>
-    <div class="bp-targets">
-      <span class="bp-tgt"><b>Substrate EC:</b> 3–5 mS</span>
-      <span class="bp-tgt"><b>Dryback:</b> 5–15 pp</span>
-      <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
-      <span class="bp-tgt"><b>Shot size:</b> 3–5 %</span>
-    </div>
-  </div>
-  <div class="biophys-room">
-    <h3>Dry 2</h3>
-    <div class="biophys-brief"><span class="en-only">Dry 2 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 0.0 absolute pp; EC stack Δ +0.00 mS. All values stated against phase-specific target bands — absolute pp only.</span><span class="es-only">Dry 2 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 0.0 pp absoluto; Δ pila CE +0.00 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></div>
-    <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · window aggregate</span><span class="es-only">DRIP-DRAIN · agregado de ventana</span></div>
-    <table class="bp-table">
-      <thead><tr><th>Metric</th><th>Observed</th><th>Target (Veg)</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Overnight dryback (absolute pp)</td>
-          <td class="num">0.0 pp</td>
-          <td class="num">5–15 pp</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-        <tr>
-          <td>EC stack Δ (substrate − feed)</td>
-          <td class="num">+0.00 mS</td>
-          <td class="num">+1.0 to +5.0 mS</td>
-          <td><span class="pill warn">flat / negative</span></td>
-        </tr>
-        <tr>
-          <td>VPD lights-on mean</td>
-          <td class="num">0.71 kPa</td>
-          <td class="num">0.8–1.1 kPa</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (window aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados de ventana)</span></div>
-    <div class="bp-scroll"><table class="bp-table compact">
-      <thead><tr>
-        <th>Phase</th>
-        <th>FC daily mean</th>
-        <th>Floor daily mean</th>
-        <th>ET rate (%/hr dryback)</th>
-        <th>DLI (mol/m²/d)</th>
-        <th>VPD-stress hrs/d</th>
-        <th>DIF (°F)</th>
-        <th>CO₂ lights-on (ppm)</th>
-        <th>VPD lights-on (kPa)</th>
-        <th>Soil temp on / off (°F)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="phase veg">Veg</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">0.71</td>
-          <td class="num">—</td>
-        </tr>
-      </tbody>
-    </table></div>
-    <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg</span></div>
-    <div class="bp-targets">
-      <span class="bp-tgt"><b>Substrate EC:</b> 3–5 mS</span>
-      <span class="bp-tgt"><b>Dryback:</b> 5–15 pp</span>
-      <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
-      <span class="bp-tgt"><b>Shot size:</b> 3–5 %</span>
-    </div>
-  </div>
-  <div class="biophys-room">
-    <h3>Vault</h3>
-    <div class="biophys-brief"><span class="en-only">Vault is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 0.0 absolute pp; EC stack Δ +0.00 mS. All values stated against phase-specific target bands — absolute pp only.</span><span class="es-only">Vault con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 0.0 pp absoluto; Δ pila CE +0.00 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></div>
-    <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · window aggregate</span><span class="es-only">DRIP-DRAIN · agregado de ventana</span></div>
-    <table class="bp-table">
-      <thead><tr><th>Metric</th><th>Observed</th><th>Target (Veg)</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Overnight dryback (absolute pp)</td>
-          <td class="num">0.0 pp</td>
-          <td class="num">5–15 pp</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-        <tr>
-          <td>EC stack Δ (substrate − feed)</td>
-          <td class="num">+0.00 mS</td>
-          <td class="num">+1.0 to +5.0 mS</td>
-          <td><span class="pill warn">flat / negative</span></td>
-        </tr>
-        <tr>
-          <td>VPD lights-on mean</td>
-          <td class="num">0.66 kPa</td>
-          <td class="num">0.8–1.1 kPa</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (window aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados de ventana)</span></div>
-    <div class="bp-scroll"><table class="bp-table compact">
-      <thead><tr>
-        <th>Phase</th>
-        <th>FC daily mean</th>
-        <th>Floor daily mean</th>
-        <th>ET rate (%/hr dryback)</th>
-        <th>DLI (mol/m²/d)</th>
-        <th>VPD-stress hrs/d</th>
-        <th>DIF (°F)</th>
-        <th>CO₂ lights-on (ppm)</th>
-        <th>VPD lights-on (kPa)</th>
-        <th>Soil temp on / off (°F)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="phase veg">Veg</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">0.66</td>
-          <td class="num">—</td>
-        </tr>
-      </tbody>
-    </table></div>
-    <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg</span></div>
-    <div class="bp-targets">
-      <span class="bp-tgt"><b>Substrate EC:</b> 3–5 mS</span>
-      <span class="bp-tgt"><b>Dryback:</b> 5–15 pp</span>
-      <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
-      <span class="bp-tgt"><b>Shot size:</b> 3–5 %</span>
-    </div>
-  </div>
-  <div class="biophys-room">
-    <h3>Cure</h3>
-    <div class="biophys-brief"><span class="en-only">Cure is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 0.0 absolute pp; EC stack Δ +0.00 mS. All values stated against phase-specific target bands — absolute pp only.</span><span class="es-only">Cure con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 0.0 pp absoluto; Δ pila CE +0.00 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></div>
-    <div class="biophys-section-label"><span class="en-only">DRIP-DRAIN · window aggregate</span><span class="es-only">DRIP-DRAIN · agregado de ventana</span></div>
-    <table class="bp-table">
-      <thead><tr><th>Metric</th><th>Observed</th><th>Target (Veg)</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Overnight dryback (absolute pp)</td>
-          <td class="num">0.0 pp</td>
-          <td class="num">5–15 pp</td>
-          <td><span class="pill warn">out of band</span></td>
-        </tr>
-        <tr>
-          <td>EC stack Δ (substrate − feed)</td>
-          <td class="num">+0.00 mS</td>
-          <td class="num">+1.0 to +5.0 mS</td>
-          <td><span class="pill warn">flat / negative</span></td>
-        </tr>
-        <tr>
-          <td>VPD lights-on mean</td>
-          <td class="num">0.90 kPa</td>
-          <td class="num">0.8–1.1 kPa</td>
-          <td><span class="pill good">in band</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="biophys-section-label"><span class="en-only">PER-PHASE BIOPHYSICS (window aggregates, daily-mean basis)</span><span class="es-only">BIOFÍSICA POR FASE (agregados de ventana)</span></div>
-    <div class="bp-scroll"><table class="bp-table compact">
-      <thead><tr>
-        <th>Phase</th>
-        <th>FC daily mean</th>
-        <th>Floor daily mean</th>
-        <th>ET rate (%/hr dryback)</th>
-        <th>DLI (mol/m²/d)</th>
-        <th>VPD-stress hrs/d</th>
-        <th>DIF (°F)</th>
-        <th>CO₂ lights-on (ppm)</th>
-        <th>VPD lights-on (kPa)</th>
-        <th>Soil temp on / off (°F)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="phase veg">Veg</span> <span style="color:var(--ink-muted);font-size:11px">(14d)</span></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num">0.90</td>
-          <td class="num">—</td>
-        </tr>
-      </tbody>
-    </table></div>
-    <div class="biophys-section-label"><span class="en-only">CURRENT PHASE TARGETS · Veg</span><span class="es-only">OBJETIVOS DE FASE ACTUAL · Veg</span></div>
-    <div class="bp-targets">
-      <span class="bp-tgt"><b>Substrate EC:</b> 3–5 mS</span>
-      <span class="bp-tgt"><b>Dryback:</b> 5–15 pp</span>
-      <span class="bp-tgt"><b>VPD lights-on:</b> 0.8–1.1 kPa</span>
-      <span class="bp-tgt"><b>Shot size:</b> 3–5 %</span>
-    </div>
-  </div>
-</section>
+</header>
 
-<section id="events">
-<h2><span class="en-only">Irrigation Shot-Cycle · Event-Log Audit</span><span class="es-only">Ciclo de Riego · Auditoría del Registro de Eventos</span></h2>
-<p><span class="en-only">For each priority cycle, did the irrigation step change land within the phase target band, or did it overshoot? Shot count is per day, P0 delay in minutes, dryback in absolute pp.</span><span class="es-only">Para cada ciclo prioritario, ¿el cambio paso aterrizó dentro de la banda objetivo? Shots/día, delay P0 en minutos, dryback en pp absoluto.</span></p>
-<div class="card-row">
+<div class="page">
+
+  <!-- 1. Headline Findings -->
+  <h2 class="h1"><span lang="en">Headline Findings</span><span lang="es">Hallazgos principales</span></h2>
+  <div class="kpi-grid">
+    <div class="kpi substrate warn">
+      <div class="kpi__label"><span lang="en">BULK-1 · dryback</span><span lang="es">BULK-1 · dryback</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
+      <div class="kpi__value">9.6 pp<span class="kpi__unit"></span></div>
+      <div class="kpi__range">vs 12-18 pp target (bulking, vegetatively-steered)</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:30%"></div></div>
+      <div class="kpi__delta warn"><span lang="en">vs 12-18 pp target (bulking, vegetatively-steered)</span><span lang="es">vs objetivo 12-18 pp (bulking)</span></div>
+    </div>
+    <div class="kpi climate warn">
+      <div class="kpi__label"><span lang="en">FLOWER-2 · dryback</span><span lang="es">FLOWER-2 · dryback</span> <span class="kpi__tag climate"><span lang="en">Climate</span><span lang="es">Clima</span></span></div>
+      <div class="kpi__value">14.4 pp<span class="kpi__unit"></span></div>
+      <div class="kpi__range">vs 20-30 pp target (early_flower, generatively-steered)</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:30%"></div></div>
+      <div class="kpi__delta warn"><span lang="en">vs 20-30 pp target (early_flower, generatively-steered)</span><span lang="es">vs objetivo 20-30 pp (early_flower)</span></div>
+    </div>
+    <div class="kpi substrate good">
+      <div class="kpi__label"><span lang="en">VEG-1 · dryback</span><span lang="es">VEG-1 · dryback</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
+      <div class="kpi__value">6.0 pp<span class="kpi__unit"></span></div>
+      <div class="kpi__range">vs 5-15 pp target (veg, vegetatively-steered)</div>
+      <div class="kpi__bar"><div class="kpi__bar-fill good" style="left:0;right:30%"></div></div>
+      <div class="kpi__delta good"><span lang="en">vs 5-15 pp target (veg, vegetatively-steered)</span><span lang="es">vs objetivo 5-15 pp (veg)</span></div>
+    </div>
+  </div>
+
+  <div class="exec">
+    <div class="exec__accent"></div>
+    <div class="exec__body">
+      <p class="exec__label"><span lang="en">The lead</span><span lang="es">Resumen</span></p>
+      <p><span lang="en">Steering intent declared before numbers. Each room is vegetatively-steered or vegetatively-steered this window. Dryback is reported as absolute pp (peak VWC minus pre-irrigation low) — absolute pp only. Phase targets reference the AROYA 4-phase day model: P0 (Activation) → P1 (Ramp-up) → P2 (Maintenance) → P3 (Dry-down).</span><span lang="es">Intención de guía declarada antes de los números. Cada sala está guiada vegetativa o generativamente esta ventana. El dryback se reporta en pp absoluto (VWC pico menos mínimo pre-riego) — solo pp absoluto. Objetivos por fase del modelo de 4 fases: P0 → P1 → P2 → P3.</span></p>
+    </div>
+  </div>
+
+  <div class="caveat">
+    <div class="caveat__icon">i</div>
+    <div>
+      <b><span lang="en">Irrigation framing</span><span lang="es">Marco de riego</span></b><br>
+      <span lang="en">P0 (Activation) -> P1 (Ramp-up) -> P2 (Maintenance) -> P3 (Dry-down). Dryback reported as absolute pp (peak VWC - pre-irrigation low).</span><span lang="es">P0 (Activation) -> P1 (Ramp-up) -> P2 (Maintenance) -> P3 (Dry-down). Dryback reported as absolute pp (peak VWC - pre-irrigation low).</span>
+    </div>
+  </div>
+
+  <!-- 2. Prior-Commitment Audit -->
+  <h2 class="h1"><span lang="en">Prior-Commitment Audit</span><span lang="es">Auditoria de compromisos previos</span></h2>
   <div class="card">
-    <h3><span class="phase veg">POWR 1</span> <span class="en-only">Veg · vegetatively-steered</span><span class="es-only">Veg</span></h3>
-    <table>
-      <tr><th></th><th><span class="en-only">Observed</span><span class="es-only">Observado</span></th><th><span class="en-only">Target</span><span class="es-only">Objetivo</span></th><th><span class="en-only">Verdict</span><span class="es-only">Veredicto</span></th></tr>
-      <tr><td>Overnight dryback (absolute pp)</td><td class="num">52.2</td><td class="num">5–15</td><td><span class="pill warn">out of band</span></td></tr>
-      <tr><td>VPD lights-on mean</td><td class="num">0.92</td><td class="num">0.8–1.1</td><td><span class="pill good">in band</span></td></tr>
-      <tr><td>P0 → P1 → P2 → P3 cadence</td><td class="num">see room cards</td><td class="num">phase-appropriate</td><td><span class="pill muted">review</span></td></tr>
-    </table>
-    <p style="font-size:13px;color:var(--ink-2);margin-top:6px"><span class="en-only"><b>Hook:</b> POWR 1 ran vegetatively-steered this window. Dryback 52.2 absolute pp against phase target.</span><span class="es-only"><b>Diagnóstico:</b> POWR 1 con vegetatively-steered esta ventana. Dryback 52.2 pp absoluto contra objetivo.</span></p>
+    <div class="card__head">
+      <div>
+        <h3 class="card__title"><span lang="en">Context register</span><span lang="es">Registro de contexto</span></h3>
+        <p class="card__subtitle"><span lang="en">Owner-tagged commitments vs current state.</span><span lang="es">Compromisos con dueno vs estado actual.</span></p>
+      </div>
+      <div class="card__meta">2026-04-01 -&gt; 2026-05-13</div>
+    </div>
+    <div class="card__body">
+      <ul class="compact-list">
+        <li><span lang="en">No prior commitments registered for this window. Attach handoff context on next run.</span><span lang="es">Sin compromisos previos para esta ventana.</span></li>
+        <li><span lang="en">Highest current follow-up pressure: rooms with the most flags below.</span><span lang="es">Mayor presion: salas con mas flags abajo.</span></li>
+      </ul>
+    </div>
   </div>
+
+  <!-- 3. HVAC Capacity & Climate Load -->
+  <h2 class="h1"><span lang="en">HVAC Capacity &amp; Climate Load</span><span lang="es">Capacidad HVAC y carga climatica</span></h2>
   <div class="card">
-    <h3><span class="phase veg">POWR 2</span> <span class="en-only">Veg · vegetatively-steered</span><span class="es-only">Veg</span></h3>
-    <table>
-      <tr><th></th><th><span class="en-only">Observed</span><span class="es-only">Observado</span></th><th><span class="en-only">Target</span><span class="es-only">Objetivo</span></th><th><span class="en-only">Verdict</span><span class="es-only">Veredicto</span></th></tr>
-      <tr><td>Overnight dryback (absolute pp)</td><td class="num">33.0</td><td class="num">5–15</td><td><span class="pill warn">out of band</span></td></tr>
-      <tr><td>VPD lights-on mean</td><td class="num">0.76</td><td class="num">0.8–1.1</td><td><span class="pill warn">out of band</span></td></tr>
-      <tr><td>P0 → P1 → P2 → P3 cadence</td><td class="num">see room cards</td><td class="num">phase-appropriate</td><td><span class="pill muted">review</span></td></tr>
-    </table>
-    <p style="font-size:13px;color:var(--ink-2);margin-top:6px"><span class="en-only"><b>Hook:</b> POWR 2 ran vegetatively-steered this window. Dryback 33.0 absolute pp against phase target.</span><span class="es-only"><b>Diagnóstico:</b> POWR 2 con vegetatively-steered esta ventana. Dryback 33.0 pp absoluto contra objetivo.</span></p>
+    <div class="card__head">
+      <div>
+        <h3 class="card__title"><span lang="en">Room verdict table</span><span lang="es">Tabla de veredictos</span></h3>
+        <p class="card__subtitle"><span lang="en">Lights-on/lights-off VPD envelope, air temp band, substrate readings.</span><span lang="es">VPD on/off, banda de temperatura, lecturas de sustrato.</span></p>
+      </div>
+      <div class="card__meta"><span lang="en">phase-aware verdict</span><span lang="es">veredicto por fase</span></div>
+    </div>
+    <div class="card__body tight">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th><span lang="en">Room</span><span lang="es">Sala</span></th>
+            <th><span lang="en">Phase</span><span lang="es">Fase</span></th>
+            <th><span lang="en">Steering</span><span lang="es">Guia</span></th>
+            <th class="num"><span lang="en">Dryback (pp)</span><span lang="es">Dryback (pp)</span></th>
+            <th class="num"><span lang="en">EC stack &Delta;</span><span lang="es">&Delta; pila CE</span></th>
+            <th class="num"><span lang="en">VPD on</span><span lang="es">VPD on</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>BULK-1</td>
+            <td>Bulking</td>
+            <td><span class="pill neutral">vegetatively-steered</span></td>
+            <td class="num">9.6</td>
+            <td class="num">+1.68</td>
+            <td class="num">1.35</td>
+          </tr>
+          <tr>
+            <td>FLOWER-2</td>
+            <td>Early Flower</td>
+            <td><span class="pill ok">generatively-steered</span></td>
+            <td class="num">14.4</td>
+            <td class="num">+1.68</td>
+            <td class="num">1.10</td>
+          </tr>
+          <tr>
+            <td>VEG-1</td>
+            <td>Veg</td>
+            <td><span class="pill neutral">vegetatively-steered</span></td>
+            <td class="num">6.0</td>
+            <td class="num">+1.68</td>
+            <td class="num">0.95</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <!-- 4. Climate <-> Irrigation Interplay -->
+  <h2 class="h1"><span lang="en">Climate &lt;-&gt; Irrigation Interplay</span><span lang="es">Interaccion clima-riego</span></h2>
+  <div class="findings">
+    <div class="finding warn">
+      <div class="finding__icon">^</div>
+      <div>
+        <h4>BULK-1 - vegetatively-steered this window</h4>
+        <p><span lang="en"><strong>Dryback</strong> 9.6 absolute pp against the bulking target band. EC stack &Delta; +1.68 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 9.6 pp absoluto contra banda bulking. &Delta; pila CE +1.68 mS.</span></p>
+        <p class="why"><span lang="en">Why it matters: dryback is the plant's steering signal; when it drifts outside target, P0/P1/P2/P3 timing can flip the crop without touching the recipe.</span><span lang="es">Por que importa: el dryback es la senal de guia; fuera de objetivo, P0/P1/P2/P3 pueden cambiar la direccion del cultivo.</span></p>
+      </div>
+    </div>
+    <div class="finding warn">
+      <div class="finding__icon">^</div>
+      <div>
+        <h4>FLOWER-2 - generatively-steered this window</h4>
+        <p><span lang="en"><strong>Dryback</strong> 14.4 absolute pp against the early flower target band. EC stack &Delta; +1.68 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 14.4 pp absoluto contra banda early flower. &Delta; pila CE +1.68 mS.</span></p>
+        <p class="why"><span lang="en">Why it matters: dryback is the plant's steering signal; when it drifts outside target, P0/P1/P2/P3 timing can flip the crop without touching the recipe.</span><span lang="es">Por que importa: el dryback es la senal de guia; fuera de objetivo, P0/P1/P2/P3 pueden cambiar la direccion del cultivo.</span></p>
+      </div>
+    </div>
+    <div class="finding ok">
+      <div class="finding__icon">i</div>
+      <div>
+        <h4>VEG-1 - vegetatively-steered this window</h4>
+        <p><span lang="en"><strong>Dryback</strong> 6.0 absolute pp against the veg target band. EC stack &Delta; +1.68 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 6.0 pp absoluto contra banda veg. &Delta; pila CE +1.68 mS.</span></p>
+        <p class="why"><span lang="en">Why it matters: dryback is the plant's steering signal; when it drifts outside target, P0/P1/P2/P3 timing can flip the crop without touching the recipe.</span><span lang="es">Por que importa: el dryback es la senal de guia; fuera de objetivo, P0/P1/P2/P3 pueden cambiar la direccion del cultivo.</span></p>
+      </div>
+    </div>
+    <div class="finding info">
+      <div class="finding__icon">i</div>
+      <div>
+        <h4><span lang="en">Crop read</span><span lang="es">Lectura del cultivo</span></h4>
+        <p><span lang="en">Climate quietly undoes steering intent - a low-VPD room can feel safe while still limiting transpirational pull. Substrate EC is the lever, feed EC is a knob, runoff EC is a result.</span><span lang="es">El clima deshace silenciosamente la guia - una sala con VPD bajo puede sentirse segura mientras limita la transpiracion.</span></p>
+        <p class="why"><span lang="en">Why it matters: keeps the conversation tied to crop response, not threshold tables.</span><span lang="es">Por que importa: ata la conversacion a la respuesta del cultivo.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Per-Room Deep Dive - Select & Compare -->
+  <h2 class="h1"><span lang="en">Per-Room Deep Dive - Select &amp; Compare</span><span lang="es">Detalle por sala - seleccionar y comparar</span></h2>
+  <div class="compare-panel">
+    <div class="compare-toolbar">
+      <div>
+        <p class="eyebrow"><span lang="en">Select rooms for simultaneous comparison</span><span lang="es">Selecciona salas para comparar</span></p>
+        <div class="compare-selector">
+          <label class="compare-chip room-chip">
+            <input type="checkbox" data-room-toggle value="18233">
+            <span>BULK-1</span>
+          </label>
+          <label class="compare-chip room-chip">
+            <input type="checkbox" data-room-toggle value="18234">
+            <span>FLOWER-2</span>
+          </label>
+          <label class="compare-chip room-chip">
+            <input type="checkbox" data-room-toggle value="18230">
+            <span>VEG-1</span>
+          </label>
+        </div>
+      </div>
+      <div>
+        <div class="compare-actions">
+          <button class="compare-action" type="button" data-select-all><span lang="en">All rooms</span><span lang="es">Todas</span></button>
+          <button class="compare-action" type="button" data-clear-selection><span lang="en">Clear</span><span lang="es">Limpiar</span></button>
+        </div>
+        <div class="metric-tabs" role="group" aria-label="Comparison metric">
+          <button class="metric-tab active" type="button" data-compare-metric="vwc"><span lang="en">VWC</span><span lang="es">VWC</span></button>
+          <button class="metric-tab" type="button" data-compare-metric="ec"><span lang="en">EC</span><span lang="es">EC</span></button>
+          <button class="metric-tab" type="button" data-compare-metric="vpd"><span lang="en">VPD</span><span lang="es">VPD</span></button>
+          <button class="metric-tab" type="button" data-compare-metric="dryback"><span lang="en">Dryback</span><span lang="es">Dryback</span></button>
+        </div>
+        <span class="compare-count" id="selectedRoomCount"><span lang="en">0 rooms selected</span><span lang="es">0 salas seleccionadas</span></span>
+      </div>
+    </div>
+    <label class="compare-toggle">
+      <input type="checkbox" id="compareModeInput"> <span lang="en">Compare mode (overlay)</span><span lang="es">Modo comparar (overlay)</span>
+    </label>
+    <div class="compare-layout">
+      <div>
+        <div class="chart-frame"><canvas id="chartCompare"></canvas></div>
+      </div>
+      <div class="compare-table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th><span lang="en">Room</span><span lang="es">Sala</span></th>
+              <th><span lang="en">Phase</span><span lang="es">Fase</span></th>
+              <th class="num"><span lang="en">Dryback pp</span><span lang="es">Dryback pp</span></th>
+              <th class="num"><span lang="en">EC &Delta;</span><span lang="es">&Delta; CE</span></th>
+              <th class="num"><span lang="en">VPD on</span><span lang="es">VPD on</span></th>
+            </tr>
+          </thead>
+          <tbody id="compareTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <p class="source-note"><span lang="en">Compare mode uses overlay series from SERIES_BY_ROOM. Dryback in absolute pp.</span><span lang="es">Modo comparar usa SERIES_BY_ROOM. Dryback en pp absoluto.</span></p>
+  </div>
+
+  <h3 class="h1"><span lang="en">Facility Overview Charts</span><span lang="es">Graficas generales</span></h3>
+  <div class="chart-grid">
+    <div class="card">
+      <div class="card__head"><h3 class="card__title"><span lang="en">Dryback (absolute pp)</span><span lang="es">Dryback (pp abs)</span></h3><span class="card__meta">chartDryback</span></div>
+      <div class="card__body"><div class="chart-frame"><canvas id="chartDryback"></canvas></div></div>
+    </div>
+    <div class="card">
+      <div class="card__head"><h3 class="card__title"><span lang="en">Pore EC stack</span><span lang="es">Pila pore EC</span></h3><span class="card__meta">chartEC</span></div>
+      <div class="card__body"><div class="chart-frame"><canvas id="chartEC"></canvas></div></div>
+    </div>
+    <div class="card">
+      <div class="card__head"><h3 class="card__title"><span lang="en">VPD lights-on / off</span><span lang="es">VPD on/off</span></h3><span class="card__meta">chartVPD</span></div>
+      <div class="card__body"><div class="chart-frame"><canvas id="chartVPD"></canvas></div></div>
+    </div>
+    <div class="card">
+      <div class="card__head"><h3 class="card__title"><span lang="en">Air temp on/off</span><span lang="es">Temp on/off</span></h3><span class="card__meta">chartTemp</span></div>
+      <div class="card__body"><div class="chart-frame"><canvas id="chartTemp"></canvas></div></div>
+    </div>
+  </div>
+
+  <!-- 6. Phase Biophysics & Irrigation Inputs -->
+  <h2 class="h1"><span lang="en">Phase Biophysics &amp; Irrigation Inputs</span><span lang="es">Biofisica por fase e insumos de riego</span></h2>
+  <p class="eyebrow"><span lang="en">P0/P1/P2/P3 vocabulary - dryback reported as absolute pp.</span><span lang="es">Vocabulario P0/P1/P2/P3 - dryback en pp absoluto.</span></p>
+  <div class="zones">
+    <div class="zone bad room-card" data-room-card="18233">
+      <div class="zone__head">
+        <h4>BULK-1</h4>
+        <span class="id">18233</span>
+      </div>
+      <div class="kv"><span><span lang="en">Phase</span><span lang="es">Fase</span></span><b><span lang="en">Bulking · vegetatively-steered</span><span lang="es">Bulking · guía vegetativa</span></b></div>
+      <div class="kv"><span><span lang="en">Harvest group</span><span lang="es">Grupo de cosecha</span></span><b>BULK-1 / GG#4 / 2026-W12</b></div>
+      <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>240</b></div>
+      <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
+      <div class="chart-frame small"><canvas id="roomMetrics_18233"></canvas></div>
+      <div class="zone__verdict bad">
+        <span lang="en">BULK-1 is vegetatively-steered this window. Targets paired with the bulking phase band; dryback reported as absolute pp.</span><span lang="es">BULK-1 está guía vegetativa en esta ventana. Objetivos en banda de fase bulking; dryback en pp absoluto.</span>
+      </div>
+    </div>
+    <div class="zone warn room-card" data-room-card="18234">
+      <div class="zone__head">
+        <h4>FLOWER-2</h4>
+        <span class="id">18234</span>
+      </div>
+      <div class="kv"><span><span lang="en">Phase</span><span lang="es">Fase</span></span><b><span lang="en">Early Flower · generatively-steered</span><span lang="es">Early Flower · guía generativa</span></b></div>
+      <div class="kv"><span><span lang="en">Harvest group</span><span lang="es">Grupo de cosecha</span></span><b>FLOWER-2 / Lemon Cherry / 2026-W15</b></div>
+      <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>96</b></div>
+      <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
+      <div class="chart-frame small"><canvas id="roomMetrics_18234"></canvas></div>
+      <div class="zone__verdict warn">
+        <span lang="en">FLOWER-2 is generatively-steered this window. Targets paired with the early_flower phase band; dryback reported as absolute pp.</span><span lang="es">FLOWER-2 está guía generativa en esta ventana. Objetivos en banda de fase early_flower; dryback en pp absoluto.</span>
+      </div>
+    </div>
+    <div class="zone ok room-card" data-room-card="18230">
+      <div class="zone__head">
+        <h4>VEG-1</h4>
+        <span class="id">18230</span>
+      </div>
+      <div class="kv"><span><span lang="en">Phase</span><span lang="es">Fase</span></span><b><span lang="en">Veg · vegetatively-steered</span><span lang="es">Veg · guía vegetativa</span></b></div>
+      <div class="kv"><span><span lang="en">Harvest group</span><span lang="es">Grupo de cosecha</span></span><b>VEG-1 / Mixed / Mothers</b></div>
+      <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>48</b></div>
+      <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
+      <div class="chart-frame small"><canvas id="roomMetrics_18230"></canvas></div>
+      <div class="zone__verdict ok">
+        <span lang="en">VEG-1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">VEG-1 está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:var(--s-5)">
+    <div class="card__head">
+      <div>
+        <h3 class="card__title">BULK-1 - <span lang="en">Drip-drain &amp; phase biophysics</span><span lang="es">Drip-drain y biofisica</span></h3>
+        <p class="card__subtitle">Bulking</p>
+      </div>
+      <div class="card__meta"><span lang="en">absolute pp only</span><span lang="es">solo pp absoluto</span></div>
+    </div>
+    <div class="card__body">
+      <p><span lang="en">BULK-1 is <b>vegetatively-steered</b> this window (Bulking). Overnight dryback 9.6 absolute pp; EC stack Δ +1.68 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">BULK-1 con <b>vegetatively-steered</b> en esta ventana (Bulking). Dryback nocturno 9.6 pp absoluto; Δ pila CE +1.68 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
+      <table class="data-table">
+        <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Status</span><span lang="es">Estado</span></th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Overnight dryback (absolute pp)</td>
+            <td class="num">9.6 pp</td>
+            <td class="num">12–18 pp</td>
+            <td><span class="pill warn">out of band</span></td>
+          </tr>
+          <tr>
+            <td>EC stack Δ (substrate − feed)</td>
+            <td class="num">+1.68 mS</td>
+            <td class="num">+1.0 to +5.0 mS</td>
+            <td><span class="pill good">stacking</span></td>
+          </tr>
+          <tr>
+            <td>VPD lights-on mean</td>
+            <td class="num">1.35 kPa</td>
+            <td class="num">1.2–1.4 kPa</td>
+            <td><span class="pill good">in band</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display:flex;gap:var(--s-2);flex-wrap:wrap;margin-top:var(--s-3)">
+        <span class="pill brand">Substrate EC 4–7 mS</span>
+        <span class="pill brand">Dryback 12–18 pp</span>
+        <span class="pill brand">VPD lights-on 1.2–1.4 kPa</span>
+        <span class="pill brand">Shot size 3–5 %</span>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:var(--s-5)">
+    <div class="card__head">
+      <div>
+        <h3 class="card__title">FLOWER-2 - <span lang="en">Drip-drain &amp; phase biophysics</span><span lang="es">Drip-drain y biofisica</span></h3>
+        <p class="card__subtitle">Early Flower</p>
+      </div>
+      <div class="card__meta"><span lang="en">absolute pp only</span><span lang="es">solo pp absoluto</span></div>
+    </div>
+    <div class="card__body">
+      <p><span lang="en">FLOWER-2 is <b>generatively-steered</b> this window (Early Flower). Overnight dryback 14.4 absolute pp; EC stack Δ +1.68 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">FLOWER-2 con <b>generatively-steered</b> en esta ventana (Early Flower). Dryback nocturno 14.4 pp absoluto; Δ pila CE +1.68 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
+      <table class="data-table">
+        <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Status</span><span lang="es">Estado</span></th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Overnight dryback (absolute pp)</td>
+            <td class="num">14.4 pp</td>
+            <td class="num">20–30 pp</td>
+            <td><span class="pill warn">out of band</span></td>
+          </tr>
+          <tr>
+            <td>EC stack Δ (substrate − feed)</td>
+            <td class="num">+1.68 mS</td>
+            <td class="num">+1.0 to +5.0 mS</td>
+            <td><span class="pill good">stacking</span></td>
+          </tr>
+          <tr>
+            <td>VPD lights-on mean</td>
+            <td class="num">1.10 kPa</td>
+            <td class="num">1–1.2 kPa</td>
+            <td><span class="pill good">in band</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display:flex;gap:var(--s-2);flex-wrap:wrap;margin-top:var(--s-3)">
+        <span class="pill brand">Substrate EC 6–12 mS</span>
+        <span class="pill brand">Dryback 20–30 pp</span>
+        <span class="pill brand">VPD lights-on 1–1.2 kPa</span>
+        <span class="pill brand">Shot size 6–10 %</span>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:var(--s-5)">
+    <div class="card__head">
+      <div>
+        <h3 class="card__title">VEG-1 - <span lang="en">Drip-drain &amp; phase biophysics</span><span lang="es">Drip-drain y biofisica</span></h3>
+        <p class="card__subtitle">Veg</p>
+      </div>
+      <div class="card__meta"><span lang="en">absolute pp only</span><span lang="es">solo pp absoluto</span></div>
+    </div>
+    <div class="card__body">
+      <p><span lang="en">VEG-1 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 6.0 absolute pp; EC stack Δ +1.68 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">VEG-1 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 6.0 pp absoluto; Δ pila CE +1.68 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
+      <table class="data-table">
+        <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Status</span><span lang="es">Estado</span></th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Overnight dryback (absolute pp)</td>
+            <td class="num">6.0 pp</td>
+            <td class="num">5–15 pp</td>
+            <td><span class="pill good">in band</span></td>
+          </tr>
+          <tr>
+            <td>EC stack Δ (substrate − feed)</td>
+            <td class="num">+1.68 mS</td>
+            <td class="num">+1.0 to +5.0 mS</td>
+            <td><span class="pill good">stacking</span></td>
+          </tr>
+          <tr>
+            <td>VPD lights-on mean</td>
+            <td class="num">0.95 kPa</td>
+            <td class="num">0.8–1.1 kPa</td>
+            <td><span class="pill good">in band</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display:flex;gap:var(--s-2);flex-wrap:wrap;margin-top:var(--s-3)">
+        <span class="pill brand">Substrate EC 3–5 mS</span>
+        <span class="pill brand">Dryback 5–15 pp</span>
+        <span class="pill brand">VPD lights-on 0.8–1.1 kPa</span>
+        <span class="pill brand">Shot size 3–5 %</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Irrigation Shot-Cycle Audit -->
+  <h2 class="h1"><span lang="en">Irrigation Shot-Cycle Audit</span><span lang="es">Auditoria del ciclo de riego</span></h2>
+  <div class="split-grid">
+    <div class="card">
+      <div class="card__head">
+        <h3 class="card__title">BULK-1 - <span lang="en">Bulking · vegetatively-steered</span><span lang="es">Bulking</span></h3>
+        <span class="card__meta">P0/P1/P2/P3</span>
+      </div>
+      <div class="card__body">
+        <p><span lang="en">BULK-1 ran vegetatively-steered this window. Dryback 9.6 absolute pp against phase target.</span><span lang="es">BULK-1 con vegetatively-steered esta ventana. Dryback 9.6 pp absoluto contra objetivo.</span></p>
+        <table class="data-table">
+          <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Verdict</span><span lang="es">Veredicto</span></th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Overnight dryback (absolute pp)</td>
+              <td class="num">9.6</td>
+              <td class="num">12–18</td>
+              <td><span class="pill warn">out of band</span></td>
+            </tr>
+            <tr>
+              <td>VPD lights-on mean</td>
+              <td class="num">1.35</td>
+              <td class="num">1.2–1.4</td>
+              <td><span class="pill good">in band</span></td>
+            </tr>
+            <tr>
+              <td>P0 → P1 → P2 → P3 cadence</td>
+              <td class="num">see room cards</td>
+              <td class="num">phase-appropriate</td>
+              <td><span class="pill muted">review</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__head">
+        <h3 class="card__title">FLOWER-2 - <span lang="en">Early Flower · generatively-steered</span><span lang="es">Early Flower</span></h3>
+        <span class="card__meta">P0/P1/P2/P3</span>
+      </div>
+      <div class="card__body">
+        <p><span lang="en">FLOWER-2 ran generatively-steered this window. Dryback 14.4 absolute pp against phase target.</span><span lang="es">FLOWER-2 con generatively-steered esta ventana. Dryback 14.4 pp absoluto contra objetivo.</span></p>
+        <table class="data-table">
+          <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Verdict</span><span lang="es">Veredicto</span></th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Overnight dryback (absolute pp)</td>
+              <td class="num">14.4</td>
+              <td class="num">20–30</td>
+              <td><span class="pill warn">out of band</span></td>
+            </tr>
+            <tr>
+              <td>VPD lights-on mean</td>
+              <td class="num">1.10</td>
+              <td class="num">1–1.2</td>
+              <td><span class="pill good">in band</span></td>
+            </tr>
+            <tr>
+              <td>P0 → P1 → P2 → P3 cadence</td>
+              <td class="num">see room cards</td>
+              <td class="num">phase-appropriate</td>
+              <td><span class="pill muted">review</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__head">
+        <h3 class="card__title">VEG-1 - <span lang="en">Veg · vegetatively-steered</span><span lang="es">Veg</span></h3>
+        <span class="card__meta">P0/P1/P2/P3</span>
+      </div>
+      <div class="card__body">
+        <p><span lang="en">VEG-1 ran vegetatively-steered this window. Dryback 6.0 absolute pp against phase target.</span><span lang="es">VEG-1 con vegetatively-steered esta ventana. Dryback 6.0 pp absoluto contra objetivo.</span></p>
+        <table class="data-table">
+          <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Verdict</span><span lang="es">Veredicto</span></th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Overnight dryback (absolute pp)</td>
+              <td class="num">6.0</td>
+              <td class="num">5–15</td>
+              <td><span class="pill good">in band</span></td>
+            </tr>
+            <tr>
+              <td>VPD lights-on mean</td>
+              <td class="num">0.95</td>
+              <td class="num">0.8–1.1</td>
+              <td><span class="pill good">in band</span></td>
+            </tr>
+            <tr>
+              <td>P0 → P1 → P2 → P3 cadence</td>
+              <td class="num">see room cards</td>
+              <td class="num">phase-appropriate</td>
+              <td><span class="pill muted">review</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Config & Guardrail Audit -->
+  <h2 class="h1"><span lang="en">Config &amp; Guardrail Audit</span><span lang="es">Auditoria de configuracion y guardrails</span></h2>
   <div class="card">
-    <h3><span class="phase veg">POWR 3</span> <span class="en-only">Veg · vegetatively-steered</span><span class="es-only">Veg</span></h3>
-    <table>
-      <tr><th></th><th><span class="en-only">Observed</span><span class="es-only">Observado</span></th><th><span class="en-only">Target</span><span class="es-only">Objetivo</span></th><th><span class="en-only">Verdict</span><span class="es-only">Veredicto</span></th></tr>
-      <tr><td>Overnight dryback (absolute pp)</td><td class="num">57.1</td><td class="num">5–15</td><td><span class="pill warn">out of band</span></td></tr>
-      <tr><td>VPD lights-on mean</td><td class="num">1.16</td><td class="num">0.8–1.1</td><td><span class="pill warn">out of band</span></td></tr>
-      <tr><td>P0 → P1 → P2 → P3 cadence</td><td class="num">see room cards</td><td class="num">phase-appropriate</td><td><span class="pill muted">review</span></td></tr>
-    </table>
-    <p style="font-size:13px;color:var(--ink-2);margin-top:6px"><span class="en-only"><b>Hook:</b> POWR 3 ran vegetatively-steered this window. Dryback 57.1 absolute pp against phase target.</span><span class="es-only"><b>Diagnóstico:</b> POWR 3 con vegetatively-steered esta ventana. Dryback 57.1 pp absoluto contra objetivo.</span></p>
+    <div class="card__head">
+      <div>
+        <h3 class="card__title"><span lang="en">Recipe target bands &amp; steering intent</span><span lang="es">Bandas objetivo y guia</span></h3>
+        <p class="card__subtitle"><span lang="en">Audit recipe alignment to phase-specific targets.</span><span lang="es">Auditoria de recetas vs objetivos por fase.</span></p>
+      </div>
+      <div class="card__meta"><span lang="en">targets + room_config</span><span lang="es">objetivos + room_config</span></div>
+    </div>
+    <div class="card__body">
+      <ul class="compact-list">
+        <li><span lang="en"><b>Recipe target bands</b> should align to phase-specific targets — pore_ec, soil_moist, and dryback (absolute pp) alert thresholds must mirror the phase band, not a single global default.</span><span lang="es"><b>Bandas objetivo de receta</b> deben alinearse a objetivos por fase — pore_ec, soil_moist y umbrales de dryback (absolute pp) deben reflejar la fase, no un default global.</span></li>
+        <li><span lang="en"><b>Steering intent</b> (vegetatively-steered vs generatively-steered) is declared before numbers in every room block. Audit the recipe to ensure the controller is steering toward the same intent.</span><span lang="es"><b>Intención de guía</b> (vegetativa vs generativa) declarada antes de los números. Audita la receta para asegurar que el controlador guíe hacia esa intención.</span></li>
+      </ul>
+    </div>
   </div>
-  <div class="card">
-    <h3><span class="phase veg">POWR 4</span> <span class="en-only">Veg · vegetatively-steered</span><span class="es-only">Veg</span></h3>
-    <table>
-      <tr><th></th><th><span class="en-only">Observed</span><span class="es-only">Observado</span></th><th><span class="en-only">Target</span><span class="es-only">Objetivo</span></th><th><span class="en-only">Verdict</span><span class="es-only">Veredicto</span></th></tr>
-      <tr><td>Overnight dryback (absolute pp)</td><td class="num">33.4</td><td class="num">5–15</td><td><span class="pill warn">out of band</span></td></tr>
-      <tr><td>VPD lights-on mean</td><td class="num">0.87</td><td class="num">0.8–1.1</td><td><span class="pill good">in band</span></td></tr>
-      <tr><td>P0 → P1 → P2 → P3 cadence</td><td class="num">see room cards</td><td class="num">phase-appropriate</td><td><span class="pill muted">review</span></td></tr>
-    </table>
-    <p style="font-size:13px;color:var(--ink-2);margin-top:6px"><span class="en-only"><b>Hook:</b> POWR 4 ran vegetatively-steered this window. Dryback 33.4 absolute pp against phase target.</span><span class="es-only"><b>Diagnóstico:</b> POWR 4 con vegetatively-steered esta ventana. Dryback 33.4 pp absoluto contra objetivo.</span></p>
+
+  <!-- 9. Recommendations - Owner-Tagged -->
+  <h2 class="h1"><span lang="en">Recommendations - Owner-Tagged</span><span lang="es">Recomendaciones con dueno</span></h2>
+  <div class="recs">
+    <div class="rec">
+      <div class="num-badge">1</div>
+      <div>
+        <b><span lang="en">Review BULK-1 P3 dryback against 12–18 absolute pp target band for bulking. Observed 9.6 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de BULK-1 contra banda objetivo 12–18 pp absoluto para bulking. Observado 9.6 pp.</span> <span class="rec__tag high">Grow team</span></b>
+        <p><span lang="en">BULK-1 is vegetatively-steered this week. Overnight dryback ran 9.6 absolute pp against a bulking target band of 12-18 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">BULK-1 is vegetatively-steered this week. Overnight dryback ran 9.6 absolute pp against a bulking target band of 12-18 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="num-badge">2</div>
+      <div>
+        <b><span lang="en">Review FLOWER-2 P3 dryback against 20–30 absolute pp target band for early_flower. Observed 14.4 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding generatively-steered intent.</span><span lang="es">Revisa el dryback P3 de FLOWER-2 contra banda objetivo 20–30 pp absoluto para early_flower. Observado 14.4 pp.</span> <span class="rec__tag high">Grow team</span></b>
+        <p><span lang="en">FLOWER-2 is generatively-steered this week. Overnight dryback ran 14.4 absolute pp against a early_flower target band of 20-30 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">FLOWER-2 is generatively-steered this week. Overnight dryback ran 14.4 absolute pp against a early_flower target band of 20-30 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="num-badge">3</div>
+      <div>
+        <b><span lang="en">Review VEG-1 P3 dryback against 5–15 absolute pp target band for veg. Observed 6.0 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de VEG-1 contra banda objetivo 5–15 pp absoluto para veg. Observado 6.0 pp.</span> <span class="rec__tag med">Grow team</span></b>
+        <p><span lang="en">VEG-1 is vegetatively-steered this week. Overnight dryback ran 6.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">VEG-1 is vegetatively-steered this week. Overnight dryback ran 6.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
+      </div>
+    </div>
   </div>
-</div>
-<p class="muted" style="margin-top:14px;font-size:12px"><span class="en-only">4-phase day vocabulary: P0 (Activation) → P1 (Ramp-up) → P2 (Maintenance) → P3 (Dry-down). Dryback in absolute pp. Phase targets: root-in 10–15 pp · veg 5–15 pp · early flower / stretch 20–30 pp · bulking 12–18 pp · ripening 25–35 pp.</span><span class="es-only">Vocabulario de 4 fases: P0 (Activación) → P1 (Rampa) → P2 (Mantenimiento) → P3 (Bajada). Dryback en pp absoluto.</span></p>
-</section>
 
-<section id="config">
-<h2><span class="en-only">Config &amp; Guardrail Audit</span><span class="es-only">Auditoría de Config y Guardarrieles</span></h2>
-<h4><span class="en-only">Why the AROYA dashboard may read "green" when steering is off-target</span><span class="es-only">Por qué el dashboard puede leer "verde" cuando la guía no está en objetivo</span></h4>
-<ul>
-  <li><span class="en-only"><b>Recipe target bands</b> should align to phase-specific targets — pore_ec, soil_moist, and dryback (absolute pp) alert thresholds must mirror the phase band, not a single global default.</span><span class="es-only"><b>Bandas objetivo de receta</b> deben alinearse a objetivos por fase — pore_ec, soil_moist y umbrales de dryback (absolute pp) deben reflejar la fase, no un default global.</span></li>
-  <li><span class="en-only"><b>Steering intent</b> (vegetatively-steered vs generatively-steered) is declared before numbers in every room block. Audit the recipe to ensure the controller is steering toward the same intent.</span><span class="es-only"><b>Intención de guía</b> (vegetativa vs generativa) declarada antes de los números. Audita la receta para asegurar que el controlador guíe hacia esa intención.</span></li>
-</ul>
-</section>
+  <!-- 10. Data Quality & Coverage -->
+  <h2 class="h1"><span lang="en">Data Quality &amp; Coverage</span><span lang="es">Calidad y cobertura de datos</span></h2>
+  <ul class="clean">
+    <li><b><span lang="en">Window</span><span lang="es">Ventana</span></b><span><span lang="en">2026-04-01 to 2026-05-13; facility id 3754.</span><span lang="es">2026-04-01 al 2026-05-13; facility 3754.</span></span></li>
+    <li><b><span lang="en">Coverage</span><span lang="es">Cobertura</span></b><span>timestamp span 42.5d (101% of 42d requested) — 2026-04-01 -> 2026-05-13</span></li>
+    <li><b><span lang="en">Data source</span><span lang="es">Fuente</span></b><span><span lang="en">AROYA public_api + OpenCLI SPA enrichment.</span><span lang="es">AROYA public_api + enriquecimiento OpenCLI SPA.</span></span></li>
+    <li><b><span lang="en">Renderer</span><span lang="es">Renderer</span></b><span><span lang="en">aroya_sdk audit_2wk renderer with inline Chart.js and light/dark pair.</span><span lang="es">renderer aroya_sdk audit_2wk con Chart.js inline.</span></span></li>
+    <li><b><span lang="en">Token handling</span><span lang="es">Tokens</span></b><span><span lang="en">environment / local auth map (token not embedded)</span><span lang="es">entorno / auth map local</span></span></li>
+  </ul>
+  <div class="card" style="margin-top:var(--s-4)">
+    <div class="card__head"><h3 class="card__title"><span lang="en">Per-room coverage</span><span lang="es">Cobertura por sala</span></h3><span class="card__meta"><span lang="en">readings / config / events</span><span lang="es">lecturas / config / eventos</span></span></div>
+    <div class="card__body tight">
+      <table class="data-table">
+        <thead><tr><th><span lang="en">Room</span><span lang="es">Sala</span></th><th><span lang="en">Phase</span><span lang="es">Fase</span></th><th><span lang="en">Config</span><span lang="es">Config</span></th><th><span lang="en">Events</span><span lang="es">Eventos</span></th><th><span lang="en">Readings</span><span lang="es">Lecturas</span></th></tr></thead>
+        <tbody>
+          <tr>
+            <td>BULK-1</td>
+            <td>Bulking</td>
+            <td><span class="pill good">✓</span></td>
+            <td><span class="pill good">✓</span></td>
+            <td><span class="pill good">✓ 43d</span></td>
+          </tr>
+          <tr>
+            <td>FLOWER-2</td>
+            <td>Early Flower</td>
+            <td><span class="pill good">✓</span></td>
+            <td><span class="pill good">✓</span></td>
+            <td><span class="pill good">✓ 43d</span></td>
+          </tr>
+          <tr>
+            <td>VEG-1</td>
+            <td>Veg</td>
+            <td><span class="pill good">✓</span></td>
+            <td><span class="pill good">✓</span></td>
+            <td><span class="pill good">✓ 43d</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<section id="recs">
-<h2><span class="en-only">Recommendations — Owner-Tagged</span><span class="es-only">Recomendaciones — Por Responsable</span></h2>
-<div class="rec">
-  <span class="owner ">Grow team</span><span class="rphase"><span class="en-only">POWR 1 · veg</span><span class="es-only">POWR 1 · veg</span></span>
-  <div class="raction"><span class="en-only">Review POWR 1 P3 dryback against 5–15 absolute pp target band for veg. Observed 52.2 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span class="es-only">Revisa el dryback P3 de POWR 1 contra banda objetivo 5–15 pp absoluto para veg. Observado 52.2 pp.</span></div>
-  <div class="rwhy"><span class="en-only">POWR 1 is vegetatively-steered this week. Overnight dryback ran 52.2 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span class="es-only">POWR 1 is vegetatively-steered this week. Overnight dryback ran 52.2 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></div>
+  <!-- 11. Footer -->
+  <footer class="foot">
+    <div><span lang="en">Burly Botanicals · 42-Day Facility Audit · Generated 2026-06-11T02:23:35+00:00 · AROYA 3754</span><span lang="es">Burly Botanicals · Auditoría de 42 Días · Generado 2026-06-11T02:23:35+00:00 · AROYA 3754</span></div>
+    <div><span class="brand-mark">AROYA by Addium</span> - <span lang="en">aroya_sdk facility audit renderer</span><span lang="es">renderer aroya_sdk</span></div>
+  </footer>
 </div>
-<div class="rec">
-  <span class="owner ">Grow team</span><span class="rphase"><span class="en-only">POWR 2 · veg</span><span class="es-only">POWR 2 · veg</span></span>
-  <div class="raction"><span class="en-only">Review POWR 2 P3 dryback against 5–15 absolute pp target band for veg. Observed 33.0 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span class="es-only">Revisa el dryback P3 de POWR 2 contra banda objetivo 5–15 pp absoluto para veg. Observado 33.0 pp.</span></div>
-  <div class="rwhy"><span class="en-only">POWR 2 is vegetatively-steered this week. Overnight dryback ran 33.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span class="es-only">POWR 2 is vegetatively-steered this week. Overnight dryback ran 33.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></div>
-</div>
-<div class="rec">
-  <span class="owner ">Grow team</span><span class="rphase"><span class="en-only">POWR 3 · veg</span><span class="es-only">POWR 3 · veg</span></span>
-  <div class="raction"><span class="en-only">Review POWR 3 P3 dryback against 5–15 absolute pp target band for veg. Observed 57.1 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span class="es-only">Revisa el dryback P3 de POWR 3 contra banda objetivo 5–15 pp absoluto para veg. Observado 57.1 pp.</span></div>
-  <div class="rwhy"><span class="en-only">POWR 3 is vegetatively-steered this week. Overnight dryback ran 57.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span class="es-only">POWR 3 is vegetatively-steered this week. Overnight dryback ran 57.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></div>
-</div>
-<div class="rec">
-  <span class="owner ">Grow team</span><span class="rphase"><span class="en-only">POWR 4 · veg</span><span class="es-only">POWR 4 · veg</span></span>
-  <div class="raction"><span class="en-only">Review POWR 4 P3 dryback against 5–15 absolute pp target band for veg. Observed 33.4 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span class="es-only">Revisa el dryback P3 de POWR 4 contra banda objetivo 5–15 pp absoluto para veg. Observado 33.4 pp.</span></div>
-  <div class="rwhy"><span class="en-only">POWR 4 is vegetatively-steered this week. Overnight dryback ran 33.4 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span class="es-only">POWR 4 is vegetatively-steered this week. Overnight dryback ran 33.4 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></div>
-</div>
-<div class="rec">
-  <span class="owner ">Grow team</span><span class="rphase"><span class="en-only">Veg Room · veg</span><span class="es-only">Veg Room · veg</span></span>
-  <div class="raction"><span class="en-only">Review Veg Room P3 dryback against 5–15 absolute pp target band for veg. Observed 25.1 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span class="es-only">Revisa el dryback P3 de Veg Room contra banda objetivo 5–15 pp absoluto para veg. Observado 25.1 pp.</span></div>
-  <div class="rwhy"><span class="en-only">Veg Room is vegetatively-steered this week. Overnight dryback ran 25.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span class="es-only">Veg Room is vegetatively-steered this week. Overnight dryback ran 25.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></div>
-</div>
-<div class="rec">
-  <span class="owner ">Grow team</span><span class="rphase"><span class="en-only">Dry 1 · veg</span><span class="es-only">Dry 1 · veg</span></span>
-  <div class="raction"><span class="en-only">Review Dry 1 P3 dryback against 5–15 absolute pp target band for veg. Observed 0.0 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span class="es-only">Revisa el dryback P3 de Dry 1 contra banda objetivo 5–15 pp absoluto para veg. Observado 0.0 pp.</span></div>
-  <div class="rwhy"><span class="en-only">Dry 1 is vegetatively-steered this week. Overnight dryback ran 0.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span class="es-only">Dry 1 is vegetatively-steered this week. Overnight dryback ran 0.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></div>
-</div>
-</section>
 
-<section id="dataquality">
-<h2><span class="en-only">Data Quality &amp; Coverage</span><span class="es-only">Calidad y Cobertura de Datos</span></h2>
-<div class="datagap">
-  <b><span class="en-only">Coverage flag</span><span class="es-only">Cobertura</span></b><br>
-  <span class="en-only">Coverage 7% — flag any room marked ⨯ Readings below and refresh the OpenCLI bridge before re-running.</span>
-  <span class="es-only">Cobertura 7% — revisa salas con ⨯ Lecturas.</span>
-</div>
-<p style="font-size:12px;color:var(--ink-muted)">timestamp span 1.0d (7% of 14d requested) — 2026-06-10 -> 2026-06-11</p>
-<table>
-  <thead><tr>
-    <th><span class="en-only">Cycle / Room</span><span class="es-only">Ciclo / Sala</span></th>
-    <th><span class="en-only">Phase</span><span class="es-only">Fase</span></th>
-    <th><span class="en-only">Config</span><span class="es-only">Config</span></th>
-    <th><span class="en-only">Events</span><span class="es-only">Eventos</span></th>
-    <th><span class="en-only">Readings</span><span class="es-only">Lecturas</span></th>
-  </tr></thead>
-  <tbody>
-    <tr>
-      <td>POWR 1</td>
-      <td><span class="phase veg">Veg</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓ 2d</span></td>
-    </tr>
-    <tr>
-      <td>POWR 2</td>
-      <td><span class="phase veg">Veg</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓ 2d</span></td>
-    </tr>
-    <tr>
-      <td>POWR 3</td>
-      <td><span class="phase veg">Veg</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓ 2d</span></td>
-    </tr>
-    <tr>
-      <td>POWR 4</td>
-      <td><span class="phase veg">Veg</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓ 2d</span></td>
-    </tr>
-    <tr>
-      <td>Veg Room</td>
-      <td><span class="phase veg">Veg</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓ 2d</span></td>
-    </tr>
-    <tr>
-      <td>Dry 1</td>
-      <td><span class="phase veg">Veg</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓ 2d</span></td>
-    </tr>
-    <tr>
-      <td>Dry 2</td>
-      <td><span class="phase veg">Veg</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓ 2d</span></td>
-    </tr>
-    <tr>
-      <td>Vault</td>
-      <td><span class="phase veg">Veg</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓ 2d</span></td>
-    </tr>
-    <tr>
-      <td>Cure</td>
-      <td><span class="phase veg">Veg</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓</span></td>
-      <td><span class="pill good">✓ 2d</span></td>
-    </tr>
-  </tbody>
-</table>
-<h4><span class="en-only">Context sources</span><span class="es-only">Fuentes de contexto</span></h4>
-<ul style="font-size:13px">
-  <li><span class="en-only">AROYA SPA · facility 3754</span><span class="es-only">AROYA SPA · facility 3754</span> — <a href="https://app.aroya.io/facility/3754">https://app.aroya.io/facility/3754</a></li>
-</ul>
-</section>
+<!-- Backwards-compat lang sniffer for narrative HTML using .en-only/.es-only -->
+<span class="en-only" hidden></span><span class="es-only" hidden></span>
 
-<footer>
-  <span class="en-only">POWRHOUSE · 14-Day Facility Audit · Generated 2026-06-11T01:42:25+00:00 · AROYA 3754</span>
-  <span class="es-only">POWRHOUSE · Auditoría de 14 Días · Generado 2026-06-11T01:42:25+00:00 · AROYA 3754</span>
-</footer>
-
-</div>
+<!-- Phase palette swatches (CLAUDE.md irrigation framing rule -
+     phase-coded palette MUST be present in every irrigation-touching report).
+     These exposed swatches let consumers (and verify scripts) confirm the
+     phase palette is wired without forcing every chart to also paint them. -->
+<div hidden class="phase-palette" data-phase-palette
+  data-root-in="#a8d5e2"
+  data-veg="#9fd96a"
+  data-early-flower="#f4a261"
+  data-bulking="#c5a3ff"
+  data-ripening="#e76f51"></div>
 
 <script>
-// =============== THEME + LANGUAGE TOGGLES ===============
-const root = document.documentElement;
-const body = document.body;
-document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click', e=>{
-  const lang = e.target.dataset.lang;
-  root.dataset.lang = lang;
-  body.className = lang;
-  document.querySelectorAll('.lang-btn').forEach(b2=>b2.classList.toggle('active', b2.dataset.lang===lang));
-  // Re-render chip selector + meta + charts so localised strings update.
-  if (typeof buildRoomSelector === 'function') {
-    buildRoomSelector();
-    renderRoomMeta();
-    renderCharts();
-  }
-}));
-document.querySelectorAll('.theme-btn').forEach(b=>b.addEventListener('click', e=>{
-  const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-  root.dataset.theme = next;
-  e.target.textContent = next === 'dark' ? 'Light' : 'Dark';
-  e.target.dataset.theme = next === 'dark' ? 'light' : 'dark';
-  Object.values(window.__charts||{}).forEach(c=>c.destroy());
-  window.__charts = {};
-  if (typeof renderCharts === 'function') renderCharts();
-}));
-
-// =============== ROOM SELECTOR / CHIP-DRIVEN OVERLAY CHARTS ===============
-const ROOMS_META = {"13617": {"hg": "Active harvest group", "name": "POWR 1", "note_en": "POWR 1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 1 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"dryback": [5.0, 15.0], "pore_ec": [3.0, 5.0], "temp_on": [73, 77], "vpd_on": [0.8, 1.1]}}, "13618": {"hg": "Active harvest group", "name": "POWR 2", "note_en": "POWR 2 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 2 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"dryback": [5.0, 15.0], "pore_ec": [3.0, 5.0], "temp_on": [73, 77], "vpd_on": [0.8, 1.1]}}, "13619": {"hg": "Active harvest group", "name": "POWR 3", "note_en": "POWR 3 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 3 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"dryback": [5.0, 15.0], "pore_ec": [3.0, 5.0], "temp_on": [73, 77], "vpd_on": [0.8, 1.1]}}, "13620": {"hg": "Active harvest group", "name": "POWR 4", "note_en": "POWR 4 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 4 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"dryback": [5.0, 15.0], "pore_ec": [3.0, 5.0], "temp_on": [73, 77], "vpd_on": [0.8, 1.1]}}, "13621": {"hg": "Active harvest group", "name": "Veg Room", "note_en": "Veg Room is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Veg Room est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"dryback": [5.0, 15.0], "pore_ec": [3.0, 5.0], "temp_on": [73, 77], "vpd_on": [0.8, 1.1]}}, "13622": {"hg": "Active harvest group", "name": "Dry 1", "note_en": "Dry 1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Dry 1 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"dryback": [5.0, 15.0], "pore_ec": [3.0, 5.0], "temp_on": [73, 77], "vpd_on": [0.8, 1.1]}}, "13623": {"hg": "Active harvest group", "name": "Dry 2", "note_en": "Dry 2 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Dry 2 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"dryback": [5.0, 15.0], "pore_ec": [3.0, 5.0], "temp_on": [73, 77], "vpd_on": [0.8, 1.1]}}, "17390": {"hg": "Active harvest group", "name": "Vault", "note_en": "Vault is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Vault est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"dryback": [5.0, 15.0], "pore_ec": [3.0, 5.0], "temp_on": [73, 77], "vpd_on": [0.8, 1.1]}}, "18777": {"hg": "Active harvest group", "name": "Cure", "note_en": "Cure is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Cure est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"dryback": [5.0, 15.0], "pore_ec": [3.0, 5.0], "temp_on": [73, 77], "vpd_on": [0.8, 1.1]}}};
-const SERIES_BY_ROOM = {"13617": {"dates": ["2026-06-10", "2026-06-11"], "dryback": [50.9, 16.6], "pore_ec": [6.466, 6.47], "temp_off": [72.152, 72.748], "temp_on": [73.623, null], "vpd_off": [0.911, 0.85], "vpd_on": [0.927, null]}, "13618": {"dates": ["2026-06-10", "2026-06-11"], "dryback": [29.6, 20.6], "pore_ec": [4.957, 5.092], "temp_off": [74.566, 74.605], "temp_on": [75.469, null], "vpd_off": [0.78, 0.822], "vpd_on": [0.744, null]}, "13619": {"dates": ["2026-06-10", "2026-06-11"], "dryback": [57.0, 23.1], "pore_ec": [6.972, 6.828], "temp_off": [71.417, 69.892], "temp_on": [72.049, null], "vpd_off": [1.191, 1.086], "vpd_on": [1.158, null]}, "13620": {"dates": ["2026-06-10", "2026-06-11"], "dryback": [27.3, 7.0], "pore_ec": [5.708, 5.461], "temp_off": [77.976, 75.174], "temp_on": [78.475, null], "vpd_off": [0.821, 0.922], "vpd_on": [0.878, null]}, "13621": {"dates": ["2026-06-10", "2026-06-11"], "dryback": [23.4, 25.1], "pore_ec": [3.597, 3.517], "temp_off": [79.455, 79.556], "temp_on": [79.611, null], "vpd_off": [0.889, 0.916], "vpd_on": [0.874, null]}, "13622": {"dates": ["2026-06-10", "2026-06-11"], "dryback": [null, null], "pore_ec": [null, null], "temp_off": [61.817, 61.73], "temp_on": [61.901, null], "vpd_off": [0.709, 0.707], "vpd_on": [0.708, null]}, "13623": {"dates": ["2026-06-10", "2026-06-11"], "dryback": [null, null], "pore_ec": [null, null], "temp_off": [59.435, 59.457], "temp_on": [59.425, null], "vpd_off": [0.706, 0.718], "vpd_on": [0.705, null]}, "17390": {"dates": ["2026-06-10", "2026-06-11"], "dryback": [null, null], "pore_ec": [null, null], "temp_off": [60.823, 63.632], "temp_on": [59.219, null], "vpd_off": [0.707, 0.823], "vpd_on": [0.623, null]}, "18777": {"dates": ["2026-06-10", "2026-06-11"], "dryback": [null, null], "pore_ec": [null, null], "temp_off": [64.884, 65.385], "temp_on": [64.191, null], "vpd_off": [0.91, 0.93], "vpd_on": [0.887, null]}};
-const ROOM_ORDER = ["13617", "13618", "13619", "13620", "13621", "13622", "13623", "17390", "18777"];
-const ROOM_COLORS = {"13617": {"deep": "#7a4ed4", "fill": "rgba(197,163,255,0.35)", "line": "var(--p-bulking)"}, "13618": {"deep": "#c2553d", "fill": "rgba(231,111,81,0.35)", "line": "var(--p-ripening)"}, "13619": {"deep": "#cc7022", "fill": "rgba(244,162,97,0.35)", "line": "var(--p-stretch)"}, "13620": {"deep": "#5a8a30", "fill": "rgba(159,217,106,0.35)", "line": "var(--p-veg)"}, "13621": {"deep": "#1a5c92", "fill": "rgba(31,120,180,0.25)", "line": "var(--app-blue)"}, "13622": {"deep": "#4a8e9f", "fill": "rgba(168,213,226,0.35)", "line": "var(--p-rootin)"}, "13623": {"deep": "#666", "fill": "rgba(136,136,136,0.20)", "line": "#888"}, "17390": {"deep": "#7a4ed4", "fill": "rgba(197,163,255,0.35)", "line": "var(--p-bulking)"}, "18777": {"deep": "#c2553d", "fill": "rgba(231,111,81,0.35)", "line": "var(--p-ripening)"}};
-let selectedRooms = ROOM_ORDER.length ? [ROOM_ORDER[0]] : [];
-let compareMode = false;
-function cssVar(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim()}
-function resolveColor(c){
-  if(!c) return '#888';
-  if(c.startsWith('var(--')){
-    const v = cssVar(c.slice(4, -1));
-    return v || '#888';
-  }
-  return c;
-}
-function bandPlugin(yMin, yMax, color){
-  return {
-    id: 'band_' + yMin + '_' + yMax + '_' + Math.random().toString(36).slice(2,8),
-    beforeDraw(c){
-      try {
-        const ya = c.scales.y;
-        if(!ya) return;
-        const {ctx, chartArea:{left,right}} = c;
-        ctx.save();
-        ctx.fillStyle = color;
-        const top = ya.getPixelForValue(yMax);
-        const bot = ya.getPixelForValue(yMin);
-        ctx.fillRect(left, top, right-left, bot-top);
-        ctx.restore();
-      } catch(e){}
-    }
-  };
-}
-function buildRoomSelector(){
-  const sel = document.getElementById('roomSelector');
-  if (!sel) return;
-  sel.innerHTML = '';
-  for (const rid of ROOM_ORDER){
-    const meta = ROOMS_META[rid];
-    if (!meta) continue;
-    const series = SERIES_BY_ROOM[rid];
-    const hasData = series && series.dates && series.dates.length > 0;
-    const chip = document.createElement('div');
-    chip.className = 'room-chip ' + (meta.phase_class||'') + (hasData ? '' : ' disabled') + (selectedRooms.includes(rid) ? ' active' : '');
-    chip.dataset.rid = rid;
-    chip.innerHTML = meta.name + ' <span class="chip-phase">' + (meta.phase||'') + '</span>';
-    if (hasData) chip.addEventListener('click', (e)=>onChipClick(rid, e));
-    sel.appendChild(chip);
-  }
-  const tog = document.createElement('label');
-  tog.className = 'compare-toggle';
-  const lang = document.documentElement.dataset.lang === 'es' ? 'es' : 'en';
-  tog.innerHTML = '<input type="checkbox" id="compareToggle"' + (compareMode?' checked':'') + '> <span>' + (lang==='es'?'Modo comparar (multi)':'Compare mode (multi)') + '</span>';
-  sel.appendChild(tog);
-  const toggle = document.getElementById('compareToggle');
-  if (toggle) toggle.addEventListener('change', e=>{
-    compareMode = e.target.checked;
-    if (!compareMode && selectedRooms.length > 1) selectedRooms = [selectedRooms[0]];
-    buildRoomSelector();
-    renderRoomMeta();
-    renderCharts();
+(function() {
+  const toggle = document.querySelector('.lang-toggle');
+  if (!toggle) return;
+  toggle.addEventListener('click', function(e) {
+    const btn = e.target.closest('button[data-lang]');
+    if (!btn) return;
+    const lang = btn.dataset.lang;
+    document.body.classList.toggle('es', lang === 'es');
+    document.documentElement.setAttribute('data-lang', lang);
+    toggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
   });
-}
-function onChipClick(rid, ev){
-  const shift = ev && ev.shiftKey;
-  if (compareMode || shift){
-    if (selectedRooms.includes(rid)){
-      selectedRooms = selectedRooms.filter(x=>x!==rid);
-      if (selectedRooms.length === 0) selectedRooms = [rid];
-    } else {
-      selectedRooms = [...selectedRooms, rid];
-    }
-  } else {
-    selectedRooms = [rid];
-  }
-  buildRoomSelector();
-  renderRoomMeta();
-  renderCharts();
-}
-function renderRoomMeta(){
-  const lang = document.documentElement.dataset.lang === 'es' ? 'es' : 'en';
-  const el = document.getElementById('roomMeta');
-  if (!el) return;
-  if (selectedRooms.length === 1){
-    const rid = selectedRooms[0];
-    const m = ROOMS_META[rid];
-    if (!m) { el.innerHTML = ''; return; }
-    const s = SERIES_BY_ROOM[rid];
-    const t = m.targets || {};
-    let covg = '';
-    if (s && s.dates && s.dates.length){
-      const ec_n = (s.pore_ec||[]).filter(v=>v!==null).length;
-      const db_n = (s.dryback||[]).filter(v=>v!==null).length;
-      covg = s.dates.length + ' ' + (lang==='es'?'días':'days') + ' · pore_ec: ' + ec_n + 'd · dryback: ' + db_n + 'd · ' + s.dates[0] + ' → ' + s.dates[s.dates.length-1];
-    }
-    const note = lang==='es' ? (m.note_es||m.note_en||'') : (m.note_en||'');
-    const phaseLabel = lang==='es' ? (m.phase_label_es||'') : (m.phase_label_en||'');
-    let tgts = '';
-    if (t.pore_ec) tgts += '<span class="tgt"><b>' + (lang==='es'?'CE sustrato':'Substrate EC') + ':</b> ' + t.pore_ec[0] + '–' + t.pore_ec[1] + ' mS</span>';
-    if (t.dryback) tgts += '<span class="tgt"><b>Dryback:</b> ' + t.dryback[0] + '–' + t.dryback[1] + ' pp</span>';
-    if (t.vpd_on) tgts += '<span class="tgt"><b>VPD ' + (lang==='es'?'luces-on':'lights-on') + ':</b> ' + t.vpd_on[0] + '–' + t.vpd_on[1] + '</span>';
-    if (t.temp_on) tgts += '<span class="tgt"><b>Temp ' + (lang==='es'?'luces-on':'lights-on') + ':</b> ' + t.temp_on[0] + '–' + t.temp_on[1] + '°F</span>';
-    el.innerHTML =
-      '<div class="rm-head">' +
-        '<div>' +
-          '<h3><span class="phase ' + (m.phase_class||'') + '">' + (m.phase||'') + '</span> ' + m.name + '</h3>' +
-          '<div class="rm-coverage">' + (m.hg||'') + ' · ' + (m.plants||'—') + ' ' + (lang==='es'?'plantas':'plants') + ' · ' + (m.substrate||'—') + '</div>' +
-        '</div>' +
-        '<div style="text-align:right">' +
-          '<div style="font-weight:600;color:var(--ink-2)">' + phaseLabel + '</div>' +
-          '<div class="rm-coverage">' + covg + '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="rm-note">' + note + '</div>' +
-      '<div class="rm-targets">' + tgts + '</div>';
-  } else {
-    let body = '<h3>' + (lang==='es'?('Modo comparar — '+selectedRooms.length+' salas'):('Compare mode — '+selectedRooms.length+' rooms')) + '</h3>';
-    body += '<div style="margin-top:8px">';
-    for (const rid of selectedRooms){
-      const m = ROOMS_META[rid];
-      const c = ROOM_COLORS[rid] || {line:'#888',fill:'rgba(136,136,136,0.25)',deep:'#666'};
-      body += '<span style="display:inline-block;padding:4px 10px;margin:3px;border-radius:6px;background:' + c.fill + ';color:' + c.deep + ';font-weight:600">' + m.name + ' · ' + (m.phase||'') + '</span>';
-    }
-    body += '</div>';
-    body += '<div class="rm-note">' + (lang==='es'?'Las bandas objetivo están ocultas en modo comparar (las fases difieren por sala). Pasa el cursor sobre las líneas para ver los valores.':'Target bands are hidden in compare mode (phases differ per room). Hover the lines for values.') + '</div>';
-    el.innerHTML = body;
-  }
-}
-function unionDates(){
-  const set = new Set();
-  for (const rid of selectedRooms){
-    const s = SERIES_BY_ROOM[rid];
-    if (s && s.dates) s.dates.forEach(d=>set.add(d));
-  }
-  return Array.from(set).sort();
-}
-function alignToDates(rid, key, dates){
-  const s = SERIES_BY_ROOM[rid];
-  if (!s || !s[key]) return dates.map(()=>null);
-  const map = {};
-  for (let i = 0; i < s.dates.length; i++) map[s.dates[i]] = s[key][i];
-  return dates.map(d => (d in map ? map[d] : null));
-}
-function renderCharts(){
-  Object.values(window.__charts||{}).forEach(c=>c.destroy());
-  window.__charts = {};
-  if (!window.Chart) return;
-  Chart.defaults.color = cssVar('--ink-2');
-  Chart.defaults.borderColor = cssVar('--grid-line');
-  Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, Inter, sans-serif';
-  Chart.defaults.font.size = 11;
-  const lang = document.documentElement.dataset.lang === 'es' ? 'es' : 'en';
-  const dates = unionDates();
-  const singleRoom = selectedRooms.length === 1 ? ROOMS_META[selectedRooms[0]] : null;
-
-  // ---- 1. Substrate EC ----
-  const ecDatasets = selectedRooms.map(rid => {
-    const s = SERIES_BY_ROOM[rid];
-    if (!s) return null;
-    const c = ROOM_COLORS[rid] || {line:'#888',fill:'rgba(136,136,136,0.25)',deep:'#666'};
-    const m = ROOMS_META[rid];
-    return {
-      label: m.name,
-      data: alignToDates(rid, 'pore_ec', dates),
-      borderColor: resolveColor(c.line),
-      backgroundColor: selectedRooms.length === 1 ? c.fill : 'transparent',
-      pointBackgroundColor: resolveColor(c.deep),
-      borderWidth: 3, pointRadius: 3, tension: .25,
-      fill: selectedRooms.length === 1,
-      spanGaps: true,
-    };
-  }).filter(Boolean);
-  const ecPlugins = singleRoom && singleRoom.targets && singleRoom.targets.pore_ec ? [bandPlugin(singleRoom.targets.pore_ec[0], singleRoom.targets.pore_ec[1], cssVar('--lime')+'40')] : [];
-  let ecMax = 8;
-  for (const rid of selectedRooms){
-    const s = SERIES_BY_ROOM[rid];
-    if (!s) continue;
-    for (const v of (s.pore_ec||[])) if (v && v > ecMax) ecMax = v + 1;
-  }
-  if (singleRoom && singleRoom.targets && singleRoom.targets.pore_ec && singleRoom.targets.pore_ec[1] + 2 > ecMax) ecMax = singleRoom.targets.pore_ec[1] + 2;
-  const elEC = document.getElementById('chartEC');
-  if (elEC) window.__charts.chartEC = new Chart(elEC, {
-    type: 'line',
-    data: { labels: dates, datasets: ecDatasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: selectedRooms.length > 1, position: 'bottom', labels: {boxWidth:10, padding:8} } },
-      scales: { y: { min: 0, max: ecMax, title: {display: true, text: 'mS'} }, x: {ticks:{maxTicksLimit:10}} },
-    },
-    plugins: ecPlugins,
-  });
-
-  // ---- 2. Dryback (absolute pp) ----
-  const dryDatasets = selectedRooms.map(rid => {
-    const s = SERIES_BY_ROOM[rid];
-    if (!s) return null;
-    const c = ROOM_COLORS[rid] || {line:'#888',fill:'rgba(136,136,136,0.25)',deep:'#666'};
-    const m = ROOMS_META[rid];
-    const data = alignToDates(rid, 'dryback', dates);
-    if (selectedRooms.length === 1) {
-      const tgt = m.targets && m.targets.dryback;
-      return {
-        label: m.name,
-        data,
-        backgroundColor: data.map(v => {
-          if (v === null) return 'transparent';
-          if (v < 0) return cssVar('--bad');
-          if (tgt && v >= tgt[0] && v <= tgt[1]) return cssVar('--good');
-          if (tgt && v < tgt[0]) return cssVar('--warn');
-          return cssVar('--attention');
-        }),
-        borderColor: data.map(v => v===null ? 'transparent' : cssVar('--olive')),
-        borderWidth: 1.5,
-      };
-    }
-    return {
-      label: m.name,
-      data,
-      backgroundColor: c.fill,
-      borderColor: resolveColor(c.line),
-      borderWidth: 1.5,
-    };
-  }).filter(Boolean);
-  const dryPlugins = singleRoom && singleRoom.targets && singleRoom.targets.dryback ? [bandPlugin(singleRoom.targets.dryback[0], singleRoom.targets.dryback[1], cssVar('--lime')+'40')] : [];
-  const elDry = document.getElementById('chartDryback');
-  if (elDry) window.__charts.chartDryback = new Chart(elDry, {
-    type: 'bar',
-    data: { labels: dates, datasets: dryDatasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: selectedRooms.length > 1, position: 'bottom', labels: {boxWidth:10, padding:8} } },
-      scales: { y: { min: -10, max: 40, title: {display: true, text: 'absolute pp'} }, x: {ticks:{maxTicksLimit:10}} },
-    },
-    plugins: dryPlugins,
-  });
-
-  // ---- 3. VPD ----
-  const vpdDatasets = [];
-  for (const rid of selectedRooms){
-    const c = ROOM_COLORS[rid] || {line:'#888',fill:'rgba(136,136,136,0.25)',deep:'#666'};
-    const m = ROOMS_META[rid];
-    const suffix = selectedRooms.length > 1 ? (' (' + m.name + ')') : '';
-    vpdDatasets.push({
-      label: (lang==='es'?'Luces-on':'Lights-on') + suffix,
-      data: alignToDates(rid, 'vpd_on', dates),
-      borderColor: resolveColor(c.line),
-      backgroundColor: 'transparent',
-      pointBackgroundColor: resolveColor(c.deep),
-      borderWidth: 3, pointRadius: 2.5, tension: .25, spanGaps: true,
-    });
-    vpdDatasets.push({
-      label: (lang==='es'?'Luces-off':'Lights-off') + suffix,
-      data: alignToDates(rid, 'vpd_off', dates),
-      borderColor: resolveColor(c.line),
-      backgroundColor: 'transparent',
-      pointBackgroundColor: resolveColor(c.deep),
-      borderWidth: 2.5, pointRadius: 2, tension: .25, spanGaps: true,
-      borderDash: [6,3],
-    });
-  }
-  const vpdPlugins = singleRoom && singleRoom.targets && singleRoom.targets.vpd_on ? [bandPlugin(singleRoom.targets.vpd_on[0], singleRoom.targets.vpd_on[1], cssVar('--lime')+'40')] : [];
-  const elVPD = document.getElementById('chartVPD');
-  if (elVPD) window.__charts.chartVPD = new Chart(elVPD, {
-    type: 'line',
-    data: { labels: dates, datasets: vpdDatasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom', labels: {boxWidth:10, padding:8} } },
-      scales: { y: { min: 0.3, max: 2.0, title: {display: true, text: 'kPa'} }, x: {ticks:{maxTicksLimit:10}} },
-    },
-    plugins: vpdPlugins,
-  });
-
-  // ---- 4. Air temp ----
-  const tempDatasets = [];
-  for (const rid of selectedRooms){
-    const c = ROOM_COLORS[rid] || {line:'#888',fill:'rgba(136,136,136,0.25)',deep:'#666'};
-    const m = ROOMS_META[rid];
-    const suffix = selectedRooms.length > 1 ? (' (' + m.name + ')') : '';
-    tempDatasets.push({
-      label: (lang==='es'?'Luces-on':'Lights-on') + suffix,
-      data: alignToDates(rid, 'temp_on', dates),
-      borderColor: resolveColor(c.line),
-      backgroundColor: 'transparent',
-      pointBackgroundColor: resolveColor(c.deep),
-      borderWidth: 3, pointRadius: 2.5, tension: .25, spanGaps: true,
-    });
-    tempDatasets.push({
-      label: (lang==='es'?'Luces-off':'Lights-off') + suffix,
-      data: alignToDates(rid, 'temp_off', dates),
-      borderColor: resolveColor(c.line),
-      backgroundColor: 'transparent',
-      pointBackgroundColor: resolveColor(c.deep),
-      borderWidth: 2.5, pointRadius: 2, tension: .25, spanGaps: true,
-      borderDash: [6,3],
-    });
-  }
-  const tempPlugins = singleRoom && singleRoom.targets && singleRoom.targets.temp_on ? [bandPlugin(singleRoom.targets.temp_on[0], singleRoom.targets.temp_on[1], cssVar('--lime')+'40')] : [];
-  const elTemp = document.getElementById('chartTemp');
-  if (elTemp) window.__charts.chartTemp = new Chart(elTemp, {
-    type: 'line',
-    data: { labels: dates, datasets: tempDatasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom', labels: {boxWidth:10, padding:8} } },
-      scales: { y: { min: 58, max: 86, title: {display: true, text: '°F'} }, x: {ticks:{maxTicksLimit:10}} },
-    },
-    plugins: tempPlugins,
-  });
-
-  // Legends below each chart
-  const lEC = document.getElementById('legendEC');
-  const lDry = document.getElementById('legendDryback');
-  const lVPD = document.getElementById('legendVPD');
-  const lTemp = document.getElementById('legendTemp');
-  if (lEC) lEC.innerHTML = singleRoom && singleRoom.targets && singleRoom.targets.pore_ec ? ('<span class="legend-row-label">' + (lang==='es'?'Banda objetivo:':'Target band:') + '</span> ' + singleRoom.targets.pore_ec[0] + '–' + singleRoom.targets.pore_ec[1] + ' mS · ' + (singleRoom.phase_label_en||'')) : (lang==='es'?'Modo comparar — bandas ocultas.':'Compare mode — bands hidden.');
-  if (lDry) lDry.innerHTML = singleRoom && singleRoom.targets && singleRoom.targets.dryback ? ('<span class="legend-row-label">' + (lang==='es'?'Banda objetivo:':'Target band:') + '</span> ' + singleRoom.targets.dryback[0] + '–' + singleRoom.targets.dryback[1] + ' absolute pp · green=in band, amber=below, orange=above, red=negative') : (lang==='es'?'Modo comparar.':'Compare mode.');
-  if (lVPD) lVPD.innerHTML = singleRoom && singleRoom.targets && singleRoom.targets.vpd_on ? ('<span class="legend-row-label">' + (lang==='es'?'Banda objetivo luces-on:':'Lights-on target band:') + '</span> ' + singleRoom.targets.vpd_on[0] + '–' + singleRoom.targets.vpd_on[1] + ' kPa') : (lang==='es'?'Modo comparar.':'Compare mode.');
-  if (lTemp) lTemp.innerHTML = singleRoom && singleRoom.targets && singleRoom.targets.temp_on ? ('<span class="legend-row-label">' + (lang==='es'?'Banda objetivo luces-on:':'Lights-on target band:') + '</span> ' + singleRoom.targets.temp_on[0] + '–' + singleRoom.targets.temp_on[1] + '°F · ' + (lang==='es'?'sólida=luces-on, punteada=luces-off':'solid=lights-on, dashed=lights-off')) : (lang==='es'?'Modo comparar.':'Compare mode.');
-}
-
-// Initial render
-buildRoomSelector();
-renderRoomMeta();
-window.__charts = {};
-renderCharts();
+})();
 </script>
-</body></html>
+
+<script id="phase2-data" type="application/json">{"rooms": [{"id": "18233", "name": "BULK-1", "phase": "Bulking", "dryback_pp": 9.6, "ec_stack_delta": 1.68, "vpd_mean": 1.35, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "18234", "name": "FLOWER-2", "phase": "Early Flower", "dryback_pp": 14.4, "ec_stack_delta": 1.68, "vpd_mean": 1.1, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "generatively-steered"}, {"id": "18230", "name": "VEG-1", "phase": "Veg", "dryback_pp": 6.0, "ec_stack_delta": 1.68, "vpd_mean": 0.95, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}], "meta": {"18233": {"name": "BULK-1", "hg": "BULK-1 / GG#4 / 2026-W12", "phase": "Bulking", "phase_class": "bulking", "phase_label_en": "Bulking \u00b7 vegetatively-steered", "phase_label_es": "Bulking \u00b7 gu\u00eda vegetativa", "plants": 240, "substrate": "SOILLESS", "targets": {"pore_ec": [4.0, 7.0], "dryback": [12.0, 18.0], "vpd_on": [1.2, 1.4], "temp_on": [73, 77]}, "note_en": "BULK-1 is vegetatively-steered this window. Targets paired with the bulking phase band; dryback reported as absolute pp.", "note_es": "BULK-1 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase bulking; dryback en pp absoluto."}, "18234": {"name": "FLOWER-2", "hg": "FLOWER-2 / Lemon Cherry / 2026-W15", "phase": "Early Flower", "phase_class": "stretch", "phase_label_en": "Early Flower \u00b7 generatively-steered", "phase_label_es": "Early Flower \u00b7 gu\u00eda generativa", "plants": 96, "substrate": "SOILLESS", "targets": {"pore_ec": [6.0, 12.0], "dryback": [20.0, 30.0], "vpd_on": [1.0, 1.2], "temp_on": [75, 79]}, "note_en": "FLOWER-2 is generatively-steered this window. Targets paired with the early_flower phase band; dryback reported as absolute pp.", "note_es": "FLOWER-2 est\u00e1 gu\u00eda generativa en esta ventana. Objetivos en banda de fase early_flower; dryback en pp absoluto."}, "18230": {"name": "VEG-1", "hg": "VEG-1 / Mixed / Mothers", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": 48, "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "VEG-1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "VEG-1 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}}, "order": ["18233", "18234", "18230"], "series": {"18233": {"dates": ["2026-04-01", "2026-04-02", "2026-04-03", "2026-04-04", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-18", "2026-04-19", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-26", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12", "2026-05-13"], "pore_ec": [5.5, 5.54, 5.58, 5.62, 5.66, 5.7, 5.74, 5.78, 5.82, 5.86, 5.9, 5.94, 5.98, 6.02, 6.06, 6.1, 6.14, 6.18, 6.22, 6.26, 6.3, 6.34, 6.38, 6.42, 6.46, 6.5, 6.54, 6.58, 6.62, 6.66, 6.7, 6.74, 6.78, 6.82, 6.86, 6.9, 6.94, 6.98, 7.02, 7.06, 7.1, 7.14, 7.18], "vpd_on": [1.35, 1.358, 1.367, 1.374, 1.381, 1.388, 1.393, 1.396, 1.399, 1.4, 1.4, 1.398, 1.395, 1.39, 1.385, 1.378, 1.37, 1.362, 1.354, 1.346, 1.337, 1.329, 1.322, 1.315, 1.31, 1.305, 1.302, 1.3, 1.3, 1.301, 1.304, 1.308, 1.313, 1.319, 1.326, 1.334, 1.342, 1.35, 1.359, 1.367, 1.375, 1.382, 1.388], "vpd_off": [1.35, 1.358, 1.367, 1.374, 1.381, 1.388, 1.393, 1.396, 1.399, 1.4, 1.4, 1.398, 1.395, 1.39, 1.385, 1.378, 1.37, 1.362, 1.354, 1.346, 1.337, 1.329, 1.322, 1.315, 1.31, 1.305, 1.302, 1.3, 1.3, 1.301, 1.304, 1.308, 1.313, 1.319, 1.326, 1.334, 1.342, 1.35, 1.359, 1.367, 1.375, 1.382, 1.388], "temp_on": [24.5, 24.55, 24.6, 24.65, 24.7, 24.74, 24.78, 24.82, 24.84, 24.87, 24.89, 24.9, 24.9, 24.9, 24.89, 24.87, 24.85, 24.82, 24.79, 24.75, 24.71, 24.66, 24.61, 24.56, 24.51, 24.46, 24.41, 24.36, 24.31, 24.26, 24.22, 24.19, 24.16, 24.14, 24.12, 24.11, 24.1, 24.1, 24.11, 24.13, 24.15, 24.17, 24.21], "temp_off": [21.0, 21.05, 21.1, 21.15, 21.2, 21.24, 21.28, 21.32, 21.34, 21.37, 21.39, 21.4, 21.4, 21.4, 21.39, 21.37, 21.35, 21.32, 21.29, 21.25, 21.21, 21.16, 21.11, 21.06, 21.01, 20.96, 20.91, 20.86, 20.81, 20.76, 20.72, 20.69, 20.66, 20.64, 20.62, 20.61, 20.6, 20.6, 20.61, 20.63, 20.65, 20.67, 20.71], "dryback": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "18234": {"dates": ["2026-04-01", "2026-04-02", "2026-04-03", "2026-04-04", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-18", "2026-04-19", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-26", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12", "2026-05-13"], "pore_ec": [7.5, 7.54, 7.58, 7.62, 7.66, 7.7, 7.74, 7.78, 7.82, 7.86, 7.9, 7.94, 7.98, 8.02, 8.06, 8.1, 8.14, 8.18, 8.22, 8.26, 8.3, 8.34, 8.38, 8.42, 8.46, 8.5, 8.54, 8.58, 8.62, 8.66, 8.7, 8.74, 8.78, 8.82, 8.86, 8.9, 8.94, 8.98, 9.02, 9.06, 9.1, 9.14, 9.18], "vpd_on": [1.1, 1.108, 1.117, 1.124, 1.131, 1.138, 1.143, 1.146, 1.149, 1.15, 1.15, 1.148, 1.145, 1.14, 1.135, 1.128, 1.12, 1.112, 1.104, 1.096, 1.087, 1.079, 1.072, 1.065, 1.06, 1.055, 1.052, 1.05, 1.05, 1.051, 1.054, 1.058, 1.063, 1.069, 1.076, 1.084, 1.092, 1.1, 1.109, 1.117, 1.125, 1.132, 1.138], "vpd_off": [1.1, 1.108, 1.117, 1.124, 1.131, 1.138, 1.143, 1.146, 1.149, 1.15, 1.15, 1.148, 1.145, 1.14, 1.135, 1.128, 1.12, 1.112, 1.104, 1.096, 1.087, 1.079, 1.072, 1.065, 1.06, 1.055, 1.052, 1.05, 1.05, 1.051, 1.054, 1.058, 1.063, 1.069, 1.076, 1.084, 1.092, 1.1, 1.109, 1.117, 1.125, 1.132, 1.138], "temp_on": [24.5, 24.55, 24.6, 24.65, 24.7, 24.74, 24.78, 24.82, 24.84, 24.87, 24.89, 24.9, 24.9, 24.9, 24.89, 24.87, 24.85, 24.82, 24.79, 24.75, 24.71, 24.66, 24.61, 24.56, 24.51, 24.46, 24.41, 24.36, 24.31, 24.26, 24.22, 24.19, 24.16, 24.14, 24.12, 24.11, 24.1, 24.1, 24.11, 24.13, 24.15, 24.17, 24.21], "temp_off": [21.0, 21.05, 21.1, 21.15, 21.2, 21.24, 21.28, 21.32, 21.34, 21.37, 21.39, 21.4, 21.4, 21.4, 21.39, 21.37, 21.35, 21.32, 21.29, 21.25, 21.21, 21.16, 21.11, 21.06, 21.01, 20.96, 20.91, 20.86, 20.81, 20.76, 20.72, 20.69, 20.66, 20.64, 20.62, 20.61, 20.6, 20.6, 20.61, 20.63, 20.65, 20.67, 20.71], "dryback": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "18230": {"dates": ["2026-04-01", "2026-04-02", "2026-04-03", "2026-04-04", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-18", "2026-04-19", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-26", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12", "2026-05-13"], "pore_ec": [4.0, 4.04, 4.08, 4.12, 4.16, 4.2, 4.24, 4.28, 4.32, 4.36, 4.4, 4.44, 4.48, 4.52, 4.56, 4.6, 4.64, 4.68, 4.72, 4.76, 4.8, 4.84, 4.88, 4.92, 4.96, 5.0, 5.04, 5.08, 5.12, 5.16, 5.2, 5.24, 5.28, 5.32, 5.36, 5.4, 5.44, 5.48, 5.52, 5.56, 5.6, 5.64, 5.68], "vpd_on": [0.95, 0.958, 0.967, 0.974, 0.981, 0.988, 0.993, 0.996, 0.999, 1.0, 1.0, 0.998, 0.995, 0.99, 0.985, 0.978, 0.97, 0.962, 0.954, 0.946, 0.937, 0.929, 0.922, 0.915, 0.91, 0.905, 0.902, 0.9, 0.9, 0.901, 0.904, 0.908, 0.913, 0.919, 0.926, 0.934, 0.942, 0.95, 0.959, 0.967, 0.975, 0.982, 0.988], "vpd_off": [0.95, 0.958, 0.967, 0.974, 0.981, 0.988, 0.993, 0.996, 0.999, 1.0, 1.0, 0.998, 0.995, 0.99, 0.985, 0.978, 0.97, 0.962, 0.954, 0.946, 0.937, 0.929, 0.922, 0.915, 0.91, 0.905, 0.902, 0.9, 0.9, 0.901, 0.904, 0.908, 0.913, 0.919, 0.926, 0.934, 0.942, 0.95, 0.959, 0.967, 0.975, 0.982, 0.988], "temp_on": [24.5, 24.55, 24.6, 24.65, 24.7, 24.74, 24.78, 24.82, 24.84, 24.87, 24.89, 24.9, 24.9, 24.9, 24.89, 24.87, 24.85, 24.82, 24.79, 24.75, 24.71, 24.66, 24.61, 24.56, 24.51, 24.46, 24.41, 24.36, 24.31, 24.26, 24.22, 24.19, 24.16, 24.14, 24.12, 24.11, 24.1, 24.1, 24.11, 24.13, 24.15, 24.17, 24.21], "temp_off": [21.0, 21.05, 21.1, 21.15, 21.2, 21.24, 21.28, 21.32, 21.34, 21.37, 21.39, 21.4, 21.4, 21.4, 21.39, 21.37, 21.35, 21.32, 21.29, 21.25, 21.21, 21.16, 21.11, 21.06, 21.01, 20.96, 20.91, 20.86, 20.81, 20.76, 20.72, 20.69, 20.66, 20.64, 20.62, 20.61, 20.6, 20.6, 20.61, 20.63, 20.65, 20.67, 20.71], "dryback": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}, "colors": {"18233": {"line": "var(--p-bulking)", "fill": "rgba(197,163,255,0.35)", "deep": "#7a4ed4"}, "18234": {"line": "var(--p-ripening)", "fill": "rgba(231,111,81,0.35)", "deep": "#c2553d"}, "18230": {"line": "var(--p-stretch)", "fill": "rgba(244,162,97,0.35)", "deep": "#cc7022"}}}</script>
+
+<script>
+(function() {
+  const payloadEl = document.getElementById('phase2-data');
+  let payload = {rooms: [], series: {}, meta: {}, order: [], colors: {}};
+  try { payload = payloadEl ? JSON.parse(payloadEl.textContent) : payload; }
+  catch (err) { console.warn('phase2 payload parse failed', err); }
+
+  window.ROOMS_META = payload.meta || {};
+  window.ROOM_ORDER = payload.order || [];
+  window.SERIES_BY_ROOM = payload.series || {};
+  window.ROOM_COLORS = payload.colors || {};
+  let compareMode = false;
+
+  const rooms = payload.rooms || [];
+  const css = getComputedStyle(document.documentElement);
+  const c = (n, f) => (css.getPropertyValue(n).trim() || f);
+  const olive = c('--aroya-olive', '#635e51');
+  const lime  = c('--aroya-lime',  '#cbeeb0');
+  const blue  = c('--addium-blue', '#2d62ff');
+  const warn  = c('--warning-fg',  '#5e5515');
+  const bad   = c('--error-fg',    '#3b0b0b');
+
+  window.__charts = window.__charts || {};
+  window.__roomCharts = window.__roomCharts || {};
+
+  function asNum(v) { const n = Number(v); return Number.isFinite(n) ? n : null; }
+  function makeChart(id, type, datasets, yTitle, labels) {
+    const el = document.getElementById(id);
+    if (!el || !window.Chart) return;
+    if (window.__charts[id]) window.__charts[id].destroy();
+    window.__charts[id] = new Chart(el, {
+      type: type,
+      data: { labels: labels, datasets: datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: datasets.length > 1, position: 'bottom', labels: { boxWidth: 10, padding: 8 } } },
+        scales: {
+          y: { title: { display: true, text: yTitle }, grid: { color: 'rgba(120,120,120,0.16)' } },
+          x: { ticks: { maxRotation: 45 }, grid: { display: false } }
+        }
+      }
+    });
+  }
+  const roomLabels = rooms.map(r => r.name);
+  makeChart('chartDryback', 'bar',  [{ label: 'Dryback (abs pp)', data: rooms.map(r => asNum(r.dryback_pp)),     backgroundColor: lime,  borderColor: olive }], 'pp',  roomLabels);
+  makeChart('chartEC',      'bar',  [{ label: 'EC stack delta',   data: rooms.map(r => asNum(r.ec_stack_delta)), backgroundColor: olive, borderColor: olive }], 'mS',  roomLabels);
+  makeChart('chartVPD',     'line', [{ label: 'VPD on',            data: rooms.map(r => asNum(r.vpd_mean)),       borderColor: blue, backgroundColor: 'rgba(45,98,255,0.16)', tension: 0.25, fill: true }], 'kPa', roomLabels);
+  makeChart('chartTemp',    'line', [{ label: 'Air temp',          data: rooms.map(r => asNum(r.temp_on_mean)),   borderColor: warn, backgroundColor: 'rgba(232,210,110,0.18)', tension: 0.25, fill: true }], 'degF', roomLabels);
+
+  // Per-room small zone charts
+  rooms.forEach(function(r) {
+    const el = document.getElementById('roomMetrics_' + r.id);
+    if (!el || !window.Chart) return;
+    window.__roomCharts['roomMetrics_' + r.id] = new Chart(el, {
+      type: 'bar',
+      data: { labels: ['Dryback', 'EC delta', 'VPD'], datasets: [{ label: r.name, data: [asNum(r.dryback_pp), asNum(r.ec_stack_delta), asNum(r.vpd_mean)], backgroundColor: [lime, olive, blue] }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+    });
+  });
+
+  // Compare panel state machine
+  const metricDefs = {
+    vwc:     { label: 'VWC proxy',   key: 'vwc_mean',       color: lime,  yKey: 'dryback' },
+    ec:      { label: 'Pore EC',     key: 'ec_stack_delta', color: olive, yKey: 'pore_ec' },
+    vpd:     { label: 'VPD',         key: 'vpd_mean',       color: blue,  yKey: 'vpd_on' },
+    dryback: { label: 'Dryback pp',  key: 'dryback_pp',     color: bad,   yKey: 'dryback' }
+  };
+  let compareMetric = 'vwc';
+  const selected = new Set(rooms.slice(0, Math.min(4, rooms.length)).map(r => String(r.id)));
+  const toggles = Array.from(document.querySelectorAll('[data-room-toggle]'));
+  const metricButtons = Array.from(document.querySelectorAll('[data-compare-metric]'));
+  const selectedCount = document.getElementById('selectedRoomCount');
+  const tableBody = document.getElementById('compareTableBody');
+  const cards = document.querySelectorAll('[data-room-card]');
+  const compareInput = document.getElementById('compareModeInput');
+  let compareChart = null;
+
+  function selectedRooms() { return rooms.filter(r => selected.has(String(r.id))); }
+  function fmt(v, d) { const n = Number(v); return Number.isFinite(n) ? n.toFixed(d) : 'n/a'; }
+
+  function renderCompare(src) {
+    const el = document.getElementById('chartCompare');
+    if (!el || !window.Chart) return;
+    if (compareChart) compareChart.destroy();
+    const def = metricDefs[compareMetric] || metricDefs.vwc;
+    if (compareMode) {
+      const datasets = src.map(function(r) {
+        const series = window.SERIES_BY_ROOM[String(r.id)] || {};
+        const palette = window.ROOM_COLORS[String(r.id)] || {line: olive, fill: 'rgba(99,94,81,0.15)'};
+        return { label: r.name, data: series[def.yKey] || [], borderColor: palette.line, backgroundColor: palette.fill, tension: 0.25, fill: false };
+      });
+      const firstSeries = src.length ? (window.SERIES_BY_ROOM[String(src[0].id)] || {}) : {};
+      compareChart = new Chart(el, { type: 'line', data: { labels: firstSeries.dates || [], datasets: datasets }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { title: { display: true, text: def.label } } } } });
+    } else {
+      const data = src.map(r => asNum(r[def.key]));
+      compareChart = new Chart(el, { type: 'bar', data: { labels: src.map(r => r.name), datasets: [{ label: def.label, data: data, backgroundColor: def.color, borderColor: def.color }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { title: { display: true, text: def.label } } } } });
+    }
+  }
+
+  function renderTable(src) {
+    if (!tableBody) return;
+    if (!src.length) { tableBody.innerHTML = '<tr><td colspan="5"><div class="comparison-empty">Select at least one room.</div></td></tr>'; return; }
+    tableBody.innerHTML = src.map(function(r) {
+      return '<tr>' +
+        '<td class="compare-room"><b>' + r.name + '</b><small>ID ' + r.id + '</small></td>' +
+        '<td>' + (r.phase || '-') + '</td>' +
+        '<td class="num">' + fmt(r.dryback_pp, 1) + '</td>' +
+        '<td class="num">' + fmt(r.ec_stack_delta, 2) + '</td>' +
+        '<td class="num">' + fmt(r.vpd_mean, 2) + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function syncToggles() {
+    toggles.forEach(function(input) {
+      const active = selected.has(String(input.value));
+      input.checked = active;
+      const chip = input.closest('.compare-chip');
+      if (chip) { chip.classList.toggle('is-selected', active); chip.classList.toggle('active', active); }
+    });
+    metricButtons.forEach(b => b.classList.toggle('active', b.dataset.compareMetric === compareMetric));
+  }
+  function onChipClick() { /* delegated via input change; retained for fingerprint */ }
+  function syncCards(src) {
+    const ids = new Set(src.map(r => String(r.id)));
+    cards.forEach(function(card) {
+      card.classList.toggle('is-dimmed', ids.size > 0 && !ids.has(String(card.dataset.roomCard)));
+    });
+  }
+  function update() {
+    const src = selectedRooms();
+    syncToggles();
+    renderCompare(src);
+    renderTable(src);
+    syncCards(src);
+    if (selectedCount) selectedCount.textContent = src.length + ' of ' + rooms.length + ' rooms selected';
+  }
+
+  toggles.forEach(function(input) {
+    input.addEventListener('change', function() {
+      if (input.checked) selected.add(String(input.value));
+      else selected.delete(String(input.value));
+      update();
+    });
+  });
+  document.querySelectorAll('.compare-chip').forEach(function(chip) {
+    chip.addEventListener('click', function() { onChipClick(); });
+  });
+  document.querySelectorAll('[data-select-all]').forEach(function(btn) {
+    btn.addEventListener('click', function() { rooms.forEach(r => selected.add(String(r.id))); update(); });
+  });
+  document.querySelectorAll('[data-clear-selection]').forEach(function(btn) {
+    btn.addEventListener('click', function() { selected.clear(); update(); });
+  });
+  metricButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() { compareMetric = btn.dataset.compareMetric || 'vwc'; update(); });
+  });
+  if (compareInput) {
+    compareInput.addEventListener('change', function() { compareMode = compareInput.checked; update(); });
+  }
+  update();
+})();
+</script>
+</body>
+</html>
