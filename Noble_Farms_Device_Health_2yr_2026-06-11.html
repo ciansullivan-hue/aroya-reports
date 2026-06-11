@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Noble Farms — AROYA Device Health · Portal-Verified · 2026-06-11</title>
+<title>Noble Farms — AROYA Device Health · 2026-06-11</title>
 <style>
 :root{--bg:#fafaf7;--ink:#1c2419;--ink-muted:#7e836e;--border:#e2e2dc;--card:#ffffff;
 --olive:#3f4e2b;--lime:#9fd96a;--app-blue:#1f78b4;--attention:#e76f51;
@@ -20,6 +20,7 @@ header.hero{background:linear-gradient(135deg,var(--olive),#26301a 70%);color:#f
 body.dark header.hero{background:linear-gradient(135deg,#26301a,#10140a 70%)}
 header.hero .wrap{padding-bottom:0}
 .brand{font-weight:800;letter-spacing:.22em;font-size:13px;color:var(--lime)}
+.lockup{display:flex;align-items:center;gap:14px;margin-bottom:6px}
 h1{margin:6px 0 4px;font-size:26px;font-weight:800;color:#fff}
 .sub{font-size:13px;color:#cfd6bd}
 .toggles{float:right;margin-top:4px}
@@ -30,22 +31,10 @@ padding:5px 14px;font-size:12px;cursor:pointer;margin-left:8px;font-weight:600}
 .meta .m{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.2);padding:8px 12px;border-radius:8px}
 .meta .m .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:#b9c2a3;font-weight:700}
 .meta .m .v{font-size:14px;font-weight:700;color:#fff;margin-top:2px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0 26px}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--card-shadow);border-top:4px solid var(--olive)}
-.kpi.good{border-top-color:var(--good);background:linear-gradient(180deg,var(--good-bg),var(--card) 65%)}
-.kpi.warn{border-top-color:var(--warn);background:linear-gradient(180deg,var(--warn-bg),var(--card) 65%)}
-.kpi.bad{border-top-color:var(--bad);background:linear-gradient(180deg,var(--bad-bg),var(--card) 65%)}
-.kpi.blue{border-top-color:var(--app-blue)}
-.kpi .n{font-size:26px;font-weight:800}
-.kpi .l{font-size:11.5px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
 section{margin-bottom:30px}
 h2{font-size:19px;border-left:5px solid var(--lime);padding-left:12px;margin:34px 0 12px}
 h3{font-size:15px;margin:18px 0 8px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;box-shadow:var(--card-shadow)}
-.note{border-left:4px solid var(--app-blue);background:var(--card);padding:12px 16px;border-radius:0 10px 10px 0;font-size:13.5px;margin:12px 0;border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
-.note.warn{border-left-color:var(--warn)}
-.note.bad{border-left-color:var(--bad)}
-.note.good{border-left-color:var(--good)}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-muted);
 border-bottom:2px solid var(--border);padding:7px 8px;white-space:nowrap}
@@ -56,8 +45,6 @@ tr:hover td{background:var(--good-bg)}
 .b-ok{background:var(--good-bg);color:var(--good)}
 .b-warn{background:var(--warn-bg);color:var(--warn)}
 .b-bad{background:var(--bad-bg);color:var(--bad)}
-.b-verify{background:var(--warn-bg);color:var(--warn);outline:1px dashed var(--warn)}
-.b-inwarranty{background:var(--good-bg);color:var(--good);outline:1px dashed var(--good)}
 details.dev{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;box-shadow:var(--card-shadow);overflow:hidden}
 details.dev>summary{cursor:pointer;padding:13px 18px;font-weight:700;font-size:15px;list-style:none;display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-left:6px solid var(--olive)}
 details.dev.bad>summary{border-left-color:var(--bad)}
@@ -65,11 +52,6 @@ details.dev.warn>summary{border-left-color:var(--warn)}
 details.dev>summary::-webkit-details-marker{display:none}
 details.dev>summary .roll{font-size:12px;font-weight:600;color:var(--ink-muted);margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
 details.dev .tbl{padding:0 18px 16px;overflow-x:auto}
-ol.actions{padding-left:0;list-style:none;counter-reset:act}
-ol.actions li{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 16px;margin-bottom:10px;box-shadow:var(--card-shadow);display:flex;gap:14px;align-items:flex-start}
-ol.actions li .pr{flex:0 0 auto;font-weight:800;font-size:11px;border-radius:10px;padding:3px 10px;letter-spacing:.04em;align-self:flex-start}
-.pr.p0{background:var(--bad-bg);color:var(--bad)}.pr.p1{background:var(--warn-bg);color:var(--warn)}.pr.p2{background:var(--good-bg);color:var(--app-blue)}
-.stamp{display:inline-block;background:var(--lime);color:var(--olive);font-weight:800;font-size:11px;padding:2px 10px;border-radius:10px;letter-spacing:.04em;text-transform:uppercase}
 footer{margin-top:40px;font-size:12px;border-top:1px solid var(--border);padding-top:14px;background:var(--olive);color:#cfd6bd;padding:18px 22px;border-radius:8px}
 body.dark footer{background:#1f2818}
 footer a{color:var(--lime);text-decoration:none}
@@ -82,260 +64,143 @@ footer a{color:var(--lime);text-decoration:none}
 <button class="tg" id="langBtn" onclick="toggleLang()">ES</button>
 <button class="tg" id="themeBtn" onclick="toggleTheme()">&#9790; Dark</button>
 </div>
-<div class="lockup" style="display:flex;align-items:center;gap:14px;margin-bottom:6px">
+<div class="lockup">
 <svg viewBox="0 0 202.1 75" style="height:38px;fill:#ffffff" xmlns="http://www.w3.org/2000/svg" aria-label="AROYA"><path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/><path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/><path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/><path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/><path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/><rect x="127.4" y="57.2" width="1.8" height="9.9"/><path d="M138,62.8c0,2.1-.9,3.1-2.6,3.1s-.7,0-1,0c-.3-.1-.5-.3-.8-.5-.2-.2-.3-.4-.4-.6-.1-.2-.2-.5-.2-.7v-6.8h-1.9v7.2c0,.3.1.7.2,1,0,.4.3.6.5.9.4.3.8.6,1.3.8s1.1.3,1.8.2c.7,0,1.4-.1,1.9-.4s.9-.7,1.2-1.3v1.5h1.8v-9.9h-1.8v5.6Z"/><path d="M152.7,57c-.6,0-1,.1-1.4.2-.4.1-.7.3-1,.6-.2.2-.4.4-.6.6s-.3.5-.4.7c-.2-.7-.6-1.2-1.2-1.6-.5-.4-1.2-.6-2-.6s-1.7.3-2.3.8c-.3.3-.6.6-.7,1v-1.5h-1.6v9.9h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6.1.2.1.5.2.7v6.8h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6,0,.2.1.5.1.7v6.8h1.8v-6.4c0-1.2-.3-2.2-.9-2.8-.6-.6-1.4-.9-2.6-.9Z"/><path d="M112.7,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.3.8-.5,1.7-.5,2.8s.2,1.9.6,2.7c.4.8.9,1.4,1.6,1.8.7.4,1.5.6,2.4.6s1.3-.1,1.8-.4,1-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM112.1,65c-.5.6-1.2,1-2.1,1s-1.3-.2-1.8-.5c-.5-.3-.8-.7-1-1.3-.2-.6-.3-1.2-.3-2.1,0-1.3.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.5.6.7,1.5.7,2.7s-.2,2.2-.7,2.8Z"/><rect x="127.4" y="53.2" width="1.8" height="1.8"/><path d="M123.8,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.4.8-.6,1.6-.6,2.7s.2,2,.6,2.8c.4.8.9,1.4,1.6,1.8.7.5,1.4.7,2.5.6.7,0,1.3-.1,1.8-.4s.9-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM123,65c-.5.6-1.2,1-2.1,1s-1.4-.2-1.8-.5c-.4-.3-.7-.7-.9-1.3-.2-.6-.3-1.3-.3-2.1,0-1.2.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.4.7.6,1.6.6,2.7s-.2,2.2-.7,2.8Z"/><path d="M97.7,53.2l-5.5,13.9h1.9l1.5-4.2h5.9l1.6,4.2h1.9l-5.4-13.9h-1.9ZM96.2,61.4l1.6-4.2c.4-.9.6-1.7.8-2.2.3.8.6,1.5.8,2.2l1.6,4.2h-4.8Z"/><path d="M85.4,62.4c-.2.7-.5,1.6-.9,2.6-.4-1.1-.6-2-.9-2.6l-1.9-5.3h-1.9l3.9,9.8c-.3.6-.5,1.1-.6,1.4,0,.3-.3.5-.5.7-.2.2-.4.3-.6.3-.4,0-.8-.1-1.2-.2v1.6c.5.1,1,.2,1.5.2s.8,0,1.2-.3c.3-.2.6-.5.9-1,.3-.4.5-1,.8-1.8l4-10.8h-1.9l-1.9,5.4Z"/><path d="M77.5,57.5c-.7-.4-1.5-.7-2.3-.7-1.4,0-2.4.5-3.2,1.6v-5.3h-1.8v13.9h1.8v-1.4c.4.5.8.9,1.4,1.2.5.3,1.1.4,1.8.4s1.7-.2,2.3-.6c.7-.4,1.2-1,1.6-1.8.4-.8.6-1.7.6-2.8s-.2-1.9-.6-2.7c-.4-.8-.9-1.4-1.6-1.8ZM77.5,64.1c-.2.6-.5,1-.9,1.3-.4.3-1,.5-1.8.5s-1.7-.3-2.1-1c-.5-.6-.7-1.6-.7-2.8s.2-2,.6-2.8c.3-.7,1.1-1.1,2.2-1.1s1.8.3,2.3,1c.5.6.7,1.6.7,2.8s0,1.5-.3,2.1Z"/><path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z" fill="#9fd96a"/></svg>
 <div style="border-left:2px solid rgba(255,255,255,.3);padding-left:14px">
-<div class="brand">DEVICE HEALTH &middot; 2-YEAR AUDIT</div>
-<div style="font-size:11px;color:#cfd6bd;font-weight:600;margin-top:2px">by Addium &middot; <span class="stamp">PORTAL-VERIFIED</span></div>
+<div class="brand">DEVICE HEALTH</div>
+<div style="font-size:11px;color:#cfd6bd;font-weight:600;margin-top:2px">by Addium</div>
 </div>
 </div>
 <h1>Noble Farms</h1>
 <div class="sub">
-<span class="i-en">6 device serials photographed by Ryan &amp; Alli &middot; portal-verified against <span class="mono">api.aroya.io/devices/</span> &middot; pulled 2026-06-11</span>
-<span class="i-es">6 nº de serie fotografiados por Ryan y Alli &middot; verificados contra <span class="mono">api.aroya.io/devices/</span> &middot; extra&iacute;do 2026-06-11</span>
+<span class="i-en">6 device serials &middot; pulled 2026-06-11</span>
+<span class="i-es">6 n&uacute;meros de serie &middot; extra&iacute;do 2026-06-11</span>
 </div>
 <div class="meta">
 <div class="m"><div class="l"><span class="i-en">Facility</span><span class="i-es">Instalaci&oacute;n</span></div><div class="v">3485 &middot; Noble</div></div>
 <div class="m"><div class="l"><span class="i-en">Organization</span><span class="i-es">Organizaci&oacute;n</span></div><div class="v">2860 &middot; Noble Farms</div></div>
-<div class="m"><div class="l"><span class="i-en">Resolved in portal</span><span class="i-es">Resueltos en portal</span></div><div class="v">5 / 6</div></div>
-<div class="m"><div class="l"><span class="i-en">Critical / Warning / Retired</span><span class="i-es">Cr&iacute;tico / Aviso / Retirado</span></div><div class="v">3 &middot; 2 &middot; 1</div></div>
-<div class="m"><div class="l"><span class="i-en">Audit window</span><span class="i-es">Ventana de auditor&iacute;a</span></div><div class="v">2024-06-11 &rarr; 2026-06-11</div></div>
-<div class="m"><div class="l"><span class="i-en">Contacts</span><span class="i-es">Contactos</span></div><div class="v">Ryan Kruskamp &middot; Alli Zervopoulos</div></div>
-<div class="m"><div class="l"><span class="i-en">Longest silent gap</span><span class="i-es">Brecha m&aacute;s larga</span></div><div class="v">1140 d (6644, 6757)</div></div>
-<div class="m"><div class="l"><span class="i-en">In-warranty RMA</span><span class="i-es">RMA en garant&iacute;a</span></div><div class="v">1 &middot; H4210003501</div></div>
+<div class="m"><div class="l"><span class="i-en">Rooms</span><span class="i-es">Salas</span></div><div class="v">13 (11 Flower, 1 Veg, 1 Dry)</div></div>
+<div class="m"><div class="l"><span class="i-en">Serials in scope</span><span class="i-es">Series en alcance</span></div><div class="v">6</div></div>
+<div class="m"><div class="l"><span class="i-en">Resolved to record</span><span class="i-es">Resueltos</span></div><div class="v">6 / 6</div></div>
+<div class="m"><div class="l"><span class="i-en">Online now</span><span class="i-es">En l&iacute;nea</span></div><div class="v">0 / 6</div></div>
+<div class="m"><div class="l"><span class="i-en">Marked retired</span><span class="i-es">Marcados retirados</span></div><div class="v">1 (H4210003493)</div></div>
+<div class="m"><div class="l"><span class="i-en">Primary contacts</span><span class="i-es">Contactos</span></div><div class="v">Ryan Kruskamp &middot; Alli Zervopoulos</div></div>
 </div>
 </div></header>
 
 <div class="wrap">
 
-<div class="kpis">
-<div class="kpi blue"><div class="n">6</div><div class="l"><span class="i-en">Serials in scope</span><span class="i-es">Series en alcance</span></div></div>
-<div class="kpi bad"><div class="n">3</div><div class="l"><span class="i-en">Critical (H111 dormant)</span><span class="i-es">Cr&iacute;ticos (H111)</span></div></div>
-<div class="kpi warn"><div class="n">2</div><div class="l"><span class="i-en">Warning (H421 silent)</span><span class="i-es">Aviso (H421)</span></div></div>
-<div class="kpi bad"><div class="n">1</div><div class="l"><span class="i-en">Already retired (3493)</span><span class="i-es">Ya retirado (3493)</span></div></div>
-<div class="kpi good"><div class="n">1</div><div class="l"><span class="i-en">In warranty &middot; free RMA</span><span class="i-es">En garant&iacute;a &middot; RMA gratis</span></div></div>
-<div class="kpi blue"><div class="n">$450</div><div class="l"><span class="i-en">H111 trade-in toward Climate One</span><span class="i-es">Canje H111 hacia Climate One</span></div></div>
-</div>
-
 <section>
-<h2><span class="i-en">TL;DR &mdash; what to tell Ryan &amp; Alli</span><span class="i-es">Resumen &mdash; qu&eacute; decirles a Ryan y Alli</span></h2>
-<div class="note bad">
-<b>1. <span class="i-en">All three H111 climate stations at Noble are dormant.</span><span class="i-es">Las tres estaciones H111 en Noble est&aacute;n inactivas.</span></b>
-<span class="i-en">Two (6644, 6757) died on the same day &mdash; 2023-04-28, a single mesh event. One (6677) limped to January 11, 2025 and died with battery 1 %. All are <span class="mono">retired: false</span> in AROYA &mdash; bookkeeping needs cleanup. None are bricked. WP4 trade-in path applies to all three.</span>
-<span class="i-es">Dos (6644, 6757) murieron el mismo d&iacute;a &mdash; 2023-04-28, un &uacute;nico evento de malla. Una (6677) sobrevivi&oacute; hasta el 11 de enero de 2025 y muri&oacute; con bater&iacute;a 1 %. Las tres marcan <span class="mono">retired: false</span> &mdash; hay que corregir el inventario. Ninguna est&aacute; muerta. Canje WP4 para las tres.</span>
-</div>
-<div class="note warn">
-<b>2. <span class="i-en">Two of three H421 Climate Ones are silent in the last 90&ndash;120 days.</span><span class="i-es">Dos de tres Climate One H421 llevan 90&ndash;120 d&iacute;as en silencio.</span></b>
-<span class="i-en">H4210003501 (Flower B 2, installed 2025-07-16) last spoke 2026-02-26 &mdash; it is <b>inside the 1-year warranty window</b>. H4210003514 (historic deviceName "B8 Flower", currently <span class="mono">assigned: false</span>, provisioned 2025-02-20) last spoke 2026-03-24 &mdash; just outside warranty, RMA possible on goodwill. <b>This is the actionable fleet, not the legacy fleet.</b></span>
-<span class="i-es">H4210003501 (Flower B 2, instalado 2025-07-16) habl&oacute; por &uacute;ltima vez el 2026-02-26 &mdash; <b>dentro de la garant&iacute;a de 1 a&ntilde;o</b>. H4210003514 (nombre hist&oacute;rico "B8 Flower", hoy <span class="mono">assigned: false</span>, aprovisionado 2025-02-20) habl&oacute; por &uacute;ltima vez el 2026-03-24 &mdash; justo fuera de garant&iacute;a. <b>Esta es la flota accionable, no la legacy.</b></span>
-</div>
-<div class="note bad">
-<b>3. <span class="i-en">H4210003493 is at Noble and was already retired in AROYA.</span><span class="i-es">H4210003493 est&aacute; en Noble y ya fue retirado en AROYA.</span></b>
-<span class="i-en">AROYA ID 168156 &middot; <span class="mono">facility: 3485</span> &middot; <span class="mono">retired: true</span> &middot; last spoke 2026-01-27 &middot; was provisioned same wave as 3501 &amp; 3514 (createdOn 2025-01-22). The previous draft of this report wrongly said &ldquo;not found&rdquo; &mdash; the SPA <span class="mono">/devices/</span> path hides retired devices; the correct lookup is <span class="mono">/portal_api/devices/?search=H4210003493</span> with <span class="mono">X-Facility: 3485</span>, which returns the puck and its nested ee894 sensor (<span class="mono">H4210003493S</span>). Treat 3493 as an already-flagged trade-in unit, not a serial-verification problem.</span>
-<span class="i-es">AROYA ID 168156 &middot; <span class="mono">facility: 3485</span> &middot; <span class="mono">retired: true</span> &middot; &uacute;ltima comm 2026-01-27. La versi&oacute;n anterior dec&iacute;a &ldquo;no encontrado&rdquo; &mdash; el endpoint SPA <span class="mono">/devices/</span> oculta los retirados; la b&uacute;squeda correcta es <span class="mono">/portal_api/devices/</span> con <span class="mono">X-Facility: 3485</span>.</span>
-</div>
-</section>
-
-<section>
-<h2><span class="i-en">Identification table &mdash; portal-verified</span><span class="i-es">Tabla de identificaci&oacute;n &mdash; verificada</span></h2>
+<h2><span class="i-en">Six serials &mdash; device records</span><span class="i-es">Seis n&uacute;meros de serie &mdash; registros</span></h2>
 <div class="card"><table>
-<tr><th>Serial</th><th>AROYA ID</th><th>Family</th><th>Room</th><th>Online</th><th>Last comm</th><th>provisionedOn</th><th>Warranty</th><th>Tier</th></tr>
-<tr>
-<td class="mono">H1110006644</td><td class="mono">103762</td>
-<td>H210 Climate Station<br>repeater + atm14 A14G200008737</td>
-<td>Flower B 1</td>
-<td><span class="badge b-bad">false</span></td>
-<td>2023-04-28</td><td>&mdash;</td>
-<td><span class="badge b-bad">OUT (3y+)</span></td>
-<td><span class="badge b-bad">CRITICAL</span></td>
-</tr>
-<tr>
-<td class="mono">H1110006757</td><td class="mono">103742</td>
-<td>H210 Climate Station<br>repeater + atm14 A14G200008751</td>
-<td>A3 (zone 49656)</td>
-<td><span class="badge b-bad">false</span></td>
-<td>2023-04-28</td><td>&mdash;</td>
-<td><span class="badge b-bad">OUT (3y+)</span></td>
-<td><span class="badge b-bad">CRITICAL</span></td>
-</tr>
-<tr>
-<td class="mono">H1110006677</td><td class="mono">103741</td>
-<td>H210 Climate Station<br>repeater + atm14 A14G200008583</td>
-<td>null (unassigned)</td>
-<td><span class="badge b-bad">false</span></td>
-<td>2025-01-11 &middot; battery 1&nbsp;%</td><td>&mdash;</td>
-<td><span class="badge b-bad">OUT (battery EOL)</span></td>
-<td><span class="badge b-bad">CRITICAL</span></td>
-</tr>
-<tr>
-<td class="mono">H4210003514</td><td class="mono">168172</td>
-<td>Climate One<br>h421 + ee894</td>
-<td>null &middot; historic "B8 Flower" &middot; <span class="mono">assigned: false</span></td>
-<td><span class="badge b-bad">false</span></td>
-<td>2026-03-24</td>
-<td>2025-02-20</td>
-<td><span class="badge b-warn">Just OUT (1y4mo)</span></td>
-<td><span class="badge b-warn">WARNING</span></td>
-</tr>
-<tr>
-<td class="mono">H4210003501</td><td class="mono">168148</td>
-<td>Climate One<br>h421 + ee894</td>
-<td>Flower B 2</td>
-<td><span class="badge b-bad">false</span></td>
-<td>2026-02-26</td>
-<td>2025-07-16</td>
-<td><span class="badge b-inwarranty">IN (~11 mo)</span></td>
-<td><span class="badge b-warn">WARNING &middot; RMA</span></td>
-</tr>
-<tr>
-<td class="mono">H4210003493</td><td class="mono">168156</td>
-<td>Climate One<br>h421 + ee894 (H4210003493S)</td>
-<td>null &middot; <span class="badge b-bad">retired: true</span></td>
-<td><span class="badge b-bad">false</span></td>
-<td>2026-01-27</td>
-<td class="mono">2025-01-22 (createdOn)</td>
-<td><span class="badge b-bad">OUT &middot; already retired</span></td>
-<td><span class="badge b-bad">RETIRED</span></td>
-</tr>
+<tr><th>Serial</th><th>AROYA ID</th><th>Model</th><th>Room</th><th>Online</th><th>Retired</th><th>Last comm</th><th>provisionedOn</th><th>createdOn</th></tr>
+<tr><td class="mono">H1110006644</td><td class="mono">103762</td><td>repeater (atm14 nested)</td><td>Flower B 1</td><td>false</td><td>false</td><td class="mono">2023-04-28</td><td>&mdash;</td><td class="mono">2023-04-28</td></tr>
+<tr><td class="mono">H1110006757</td><td class="mono">103742</td><td>repeater (atm14 nested)</td><td>A3 (zone 49656)</td><td>false</td><td>false</td><td class="mono">2023-04-28</td><td>&mdash;</td><td class="mono">2023-04-28</td></tr>
+<tr><td class="mono">H1110006677</td><td class="mono">103741</td><td>repeater (atm14 nested)</td><td>null</td><td>false</td><td>false</td><td class="mono">2025-01-11</td><td>&mdash;</td><td class="mono">2023-04-28</td></tr>
+<tr><td class="mono">H4210003514</td><td class="mono">168172</td><td>h421 (ee894 nested)</td><td>null &middot; deviceName "B8 Flower" &middot; <span class="mono">assigned: false</span></td><td>false</td><td>false</td><td class="mono">2026-03-24</td><td class="mono">2025-02-20</td><td class="mono">2025-01-22</td></tr>
+<tr><td class="mono">H4210003501</td><td class="mono">168148</td><td>h421 (ee894 nested)</td><td>Flower B 2</td><td>false</td><td>false</td><td class="mono">2026-02-26</td><td class="mono">2025-07-16</td><td class="mono">2025-01-22</td></tr>
+<tr><td class="mono">H4210003493</td><td class="mono">168156</td><td>h421 (ee894 nested)</td><td>null</td><td>false</td><td><span class="badge b-bad">true</span></td><td class="mono">2026-01-27</td><td>&mdash;</td><td class="mono">2025-01-22</td></tr>
 </table></div>
-
-<div class="note">
-<b><span class="i-en">Warranty framing.</span><span class="i-es">Marco de garant&iacute;a.</span></b>
-<span class="i-en">AROYA standard hardware warranty is 1 year from <span class="mono">provisionedOn</span>. Trade-in eligibility is independent &mdash; any retired H210/H111 can be traded toward a current Climate One regardless of warranty. Where <span class="mono">provisionedOn</span> is null (legacy H111s pre-date the field), <span class="mono">createdOn</span> is used as a proxy warranty start. <b>Confirm against any Noble-specific service agreement before quoting RMA pricing.</b></span>
-<span class="i-es">La garant&iacute;a est&aacute;ndar AROYA es de 1 a&ntilde;o desde <span class="mono">provisionedOn</span>. El canje (trade-in) es independiente. Para H111 antiguos sin <span class="mono">provisionedOn</span>, se usa <span class="mono">createdOn</span>. <b>Confirmar contra el acuerdo de servicio espec&iacute;fico de Noble antes de cotizar RMA.</b></span>
-</div>
 </section>
 
 <section>
-<h2><span class="i-en">Per-device profiles</span><span class="i-es">Perfiles por dispositivo</span></h2>
+<h2><span class="i-en">Per-device snapshots</span><span class="i-es">Detalles por dispositivo</span></h2>
 
-<details class="dev bad" open>
-<summary><span class="badge b-bad">CRITICAL</span> <span class="mono">H1110006644</span> &middot; Flower B 1 &middot; H210 Climate Station <span class="roll"><span>silent 1140 d</span><span>battery 38&nbsp;%</span></span></summary>
+<details class="dev bad">
+<summary><span class="badge b-bad">offline</span> <span class="mono">H1110006644</span> &middot; Flower B 1 <span class="roll"><span>last comm 2023-04-28</span></span></summary>
 <div class="tbl"><table>
 <tr><td><b>AROYA ID</b></td><td class="mono">103762</td><td><b>Model</b></td><td class="mono">repeater (model 11)</td></tr>
-<tr><td><b>Gateway / nextHop</b></td><td class="mono">103733 / 103732</td><td><b>Node addr</b></td><td class="mono">1099397</td></tr>
-<tr><td><b>Last comm</b></td><td class="mono">2023-04-28T19:29:11Z</td><td><b>RSSI / link</b></td><td>5 / null</td></tr>
-<tr><td><b>online</b></td><td><span class="badge b-bad">false</span></td><td><b>retired / assigned</b></td><td>false / true</td></tr>
-<tr><td><b>createdOn</b></td><td class="mono">2023-04-28</td><td><b>provisionedOn</b></td><td>null</td></tr>
-<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">A14G200008737</span> (ATM-14) &mdash; same fate.</td></tr>
-<tr><td colspan="4"><b>Action:</b> physical walk to Flower B 1, power-cycle, if no rejoin trade-in toward Climate One. WP4 path, no firmware risk.</td></tr>
+<tr><td><b>Last comm</b></td><td class="mono">2023-04-28T19:29:11Z</td><td><b>Battery at last comm</b></td><td>38 %</td></tr>
+<tr><td><b>RSSI / link</b></td><td>5 / null</td><td><b>online / retired / assigned</b></td><td>false / false / true</td></tr>
+<tr><td><b>Gateway / nextHop / node</b></td><td class="mono">103733 / 103732 / 1099397</td><td><b>Zone</b></td><td>Flower B 1 (47916)</td></tr>
+<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">A14G200008737</span> (atm14) &mdash; same last-comm timestamp.</td></tr>
 </table></div>
 </details>
 
 <details class="dev bad">
-<summary><span class="badge b-bad">CRITICAL</span> <span class="mono">H1110006757</span> &middot; A3 (zone 49656) &middot; H210 Climate Station <span class="roll"><span>silent 1140 d</span><span>battery 40&nbsp;%</span></span></summary>
+<summary><span class="badge b-bad">offline</span> <span class="mono">H1110006757</span> &middot; A3 <span class="roll"><span>last comm 2023-04-28</span></span></summary>
 <div class="tbl"><table>
 <tr><td><b>AROYA ID</b></td><td class="mono">103742</td><td><b>deviceName</b></td><td class="mono">"a3 flower room"</td></tr>
 <tr><td><b>Model</b></td><td class="mono">repeater (model 11)</td><td><b>Gateway / nextHop</b></td><td class="mono">103733 / 103732</td></tr>
-<tr><td><b>Last comm</b></td><td class="mono">2023-04-28T19:29:48Z</td><td><b>RSSI</b></td><td>5</td></tr>
-<tr><td><b>online</b></td><td><span class="badge b-bad">false</span></td><td><b>retired / assigned</b></td><td>false / true</td></tr>
-<tr><td><b>Room</b></td><td>A3 (11675)</td><td><b>Zone</b></td><td>49656</td></tr>
-<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">A14G200008751</span> (ATM-14) &mdash; same fate.</td></tr>
-<tr><td colspan="4"><b>Co-death w/ 6644:</b> identical last-comm timestamp &mdash; one mesh event killed both pucks on 2023-04-28. Likely gateway or uplink outage with battery decay since.</td></tr>
-<tr><td colspan="4"><b>Action:</b> physical walk to A3, power-cycle, same WP4 trade-in path as 6644.</td></tr>
+<tr><td><b>Last comm</b></td><td class="mono">2023-04-28T19:29:48Z</td><td><b>Battery at last comm</b></td><td>40 %</td></tr>
+<tr><td><b>RSSI</b></td><td>5</td><td><b>online / retired / assigned</b></td><td>false / false / true</td></tr>
+<tr><td><b>Room / Zone</b></td><td>A3 (11675)</td><td><b>Zone</b></td><td>49656</td></tr>
+<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">A14G200008751</span> (atm14) &mdash; same last-comm timestamp.</td></tr>
+<tr><td colspan="4"><b>Same last-comm as H1110006644.</b></td></tr>
 </table></div>
 </details>
 
 <details class="dev bad">
-<summary><span class="badge b-bad">CRITICAL</span> <span class="mono">H1110006677</span> &middot; unassigned &middot; H210 Climate Station <span class="roll"><span>battery EOL 2025-01-11</span><span>battery 1&nbsp;%</span></span></summary>
+<summary><span class="badge b-bad">offline</span> <span class="mono">H1110006677</span> &middot; unassigned <span class="roll"><span>last comm 2025-01-11</span></span></summary>
 <div class="tbl"><table>
 <tr><td><b>AROYA ID</b></td><td class="mono">103741</td><td><b>Model</b></td><td class="mono">repeater (model 11)</td></tr>
-<tr><td><b>Last comm</b></td><td class="mono">2025-01-11T02:49:43Z</td><td><b>Battery at death</b></td><td><b>1 %</b></td></tr>
-<tr><td><b>RSSI / link</b></td><td>5 / 99 (good mesh path)</td><td><b>online</b></td><td><span class="badge b-bad">false</span></td></tr>
-<tr><td><b>Room</b></td><td>null (currently unassigned)</td><td><b>autoRole</b></td><td>true</td></tr>
-<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">A14G200008583</span> (ATM-14).</td></tr>
-<tr><td colspan="4"><b>Diagnosis:</b> textbook battery end-of-life on a 2023-vintage H210 puck &mdash; linkQuality was still 99 when it died, so the mesh worked, the cell just ran out.</td></tr>
-<tr><td colspan="4"><b>Action:</b> trade-in batch with 6644 and 6757. Update AROYA inventory <span class="mono">retired</span> flag.</td></tr>
+<tr><td><b>Last comm</b></td><td class="mono">2025-01-11T02:49:43Z</td><td><b>Battery at last comm</b></td><td>1 %</td></tr>
+<tr><td><b>RSSI / link</b></td><td>5 / 99</td><td><b>online / retired / assigned</b></td><td>false / false / true</td></tr>
+<tr><td><b>Room</b></td><td>null</td><td><b>autoRole</b></td><td>true</td></tr>
+<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">A14G200008583</span> (atm14).</td></tr>
 </table></div>
 </details>
 
 <details class="dev warn">
-<summary><span class="badge b-warn">WARNING</span> <span class="mono">H4210003514</span> &middot; unassigned &middot; Climate One <span class="roll"><span>silent 80 d</span><span>just out of warranty</span></span></summary>
+<summary><span class="badge b-warn">offline</span> <span class="mono">H4210003514</span> &middot; unassigned <span class="roll"><span>last comm 2026-03-24</span></span></summary>
 <div class="tbl"><table>
-<tr><td><b>AROYA ID</b></td><td class="mono">168172</td><td><b>Model</b></td><td class="mono">h421 (Climate One)</td></tr>
-<tr><td><b>deviceName</b></td><td class="mono">"B8 Flower"</td><td><b>Currently assigned</b></td><td><span class="badge b-warn">false</span></td></tr>
+<tr><td><b>AROYA ID</b></td><td class="mono">168172</td><td><b>Model</b></td><td class="mono">h421</td></tr>
+<tr><td><b>deviceName</b></td><td class="mono">"B8 Flower"</td><td><b>assigned</b></td><td>false</td></tr>
 <tr><td><b>createdOn</b></td><td class="mono">2025-01-22</td><td><b>provisionedOn</b></td><td class="mono">2025-02-20</td></tr>
-<tr><td><b>Last comm</b></td><td class="mono">2026-03-24T14:04:48Z</td><td><b>online</b></td><td><span class="badge b-bad">false</span></td></tr>
-<tr><td><b>RSSI / link</b></td><td>6 / 100 (good when last seen)</td><td><b>Battery</b></td><td>null (PoE-powered)</td></tr>
-<tr><td><b>Room</b></td><td>null (unassigned)</td><td><b>autoRole</b></td><td>true</td></tr>
-<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">H4210003514S</span> (ee894) &mdash; last spoke 2026-02-17.</td></tr>
-<tr><td colspan="4"><b>Diagnosis:</b> historic name says it was deployed in Flower B8; currently unassigned &mdash; most likely pulled during a swap or move, hasn&rsquo;t been re-mounted.</td></tr>
-<tr><td colspan="4"><b>Warranty:</b> 1y4mo from provisioning &mdash; just outside AROYA&rsquo;s standard 1-year window. RMA possible on goodwill grounds.</td></tr>
-<tr><td colspan="4"><b>Action:</b> locate it physically (B8 rack? shelf? swap box?), power-cycle, re-assign if it joins.</td></tr>
+<tr><td><b>Last comm</b></td><td class="mono">2026-03-24T14:04:48Z</td><td><b>online / retired</b></td><td>false / false</td></tr>
+<tr><td><b>RSSI / link</b></td><td>6 / 100</td><td><b>Battery</b></td><td>null (PoE)</td></tr>
+<tr><td><b>Room / Zone</b></td><td>null / null</td><td><b>autoRole</b></td><td>true</td></tr>
+<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">H4210003514S</span> (ee894) &mdash; last comm 2026-02-17.</td></tr>
 </table></div>
 </details>
 
 <details class="dev warn">
-<summary><span class="badge b-warn">WARNING &middot; <span class="badge b-inwarranty">IN WARRANTY</span></span> <span class="mono">H4210003501</span> &middot; Flower B 2 &middot; Climate One <span class="roll"><span>silent 105 d</span><span>~11 mo old</span></span></summary>
+<summary><span class="badge b-warn">offline</span> <span class="mono">H4210003501</span> &middot; Flower B 2 <span class="roll"><span>last comm 2026-02-26</span></span></summary>
 <div class="tbl"><table>
-<tr><td><b>AROYA ID</b></td><td class="mono">168148</td><td><b>Model</b></td><td class="mono">h421 (Climate One)</td></tr>
+<tr><td><b>AROYA ID</b></td><td class="mono">168148</td><td><b>Model</b></td><td class="mono">h421</td></tr>
 <tr><td><b>Room</b></td><td>Flower B 2 (11394)</td><td><b>assigned</b></td><td>true</td></tr>
 <tr><td><b>createdOn</b></td><td class="mono">2025-01-22</td><td><b>provisionedOn</b></td><td class="mono">2025-07-16</td></tr>
-<tr><td><b>Last comm</b></td><td class="mono">2026-02-26T15:14:34Z</td><td><b>online</b></td><td><span class="badge b-bad">false</span></td></tr>
-<tr><td><b>RSSI / link</b></td><td>6 / 100</td><td><b>Battery</b></td><td>null (PoE-powered)</td></tr>
-<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">H4210003501S</span> (ee894) &mdash; last spoke 2026-02-23.</td></tr>
-<tr><td colspan="4"><b>Room context:</b> Flower B 2 reads 74.3 &deg;F / 1.38 kPa VPD over the last 14 d &mdash; other Climate Ones are covering, room is healthy.</td></tr>
-<tr><td colspan="4"><b>Warranty:</b> <span class="badge b-inwarranty">INSIDE 1-year window</span> &mdash; provisioned 2025-07-16, valid through ~2026-07-16. <b>Free RMA available.</b></td></tr>
-<tr><td colspan="4"><b>Action:</b> physical check, power-cycle. If no rejoin, file RMA <b>before July 2026</b> when warranty lapses.</td></tr>
+<tr><td><b>Last comm</b></td><td class="mono">2026-02-26T15:14:34Z</td><td><b>online / retired</b></td><td>false / false</td></tr>
+<tr><td><b>RSSI / link</b></td><td>6 / 100</td><td><b>Battery</b></td><td>null (PoE)</td></tr>
+<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">H4210003501S</span> (ee894) &mdash; last comm 2026-02-23.</td></tr>
 </table></div>
 </details>
 
 <details class="dev bad">
-<summary><span class="badge b-bad">RETIRED at Noble</span> <span class="mono">H4210003493</span> &middot; Climate One <span class="roll"><span>retired flag set</span><span>last spoke 2026-01-27</span></span></summary>
+<summary><span class="badge b-bad">retired in AROYA</span> <span class="mono">H4210003493</span> <span class="roll"><span>last comm 2026-01-27</span></span></summary>
 <div class="tbl"><table>
-<tr><td><b>AROYA ID</b></td><td class="mono">168156</td><td><b>Model</b></td><td class="mono">h421 (Climate One)</td></tr>
+<tr><td><b>AROYA ID</b></td><td class="mono">168156</td><td><b>Model</b></td><td class="mono">h421</td></tr>
 <tr><td><b>Facility</b></td><td class="mono">3485 (Noble)</td><td><b>Room / Zone</b></td><td>null / null</td></tr>
-<tr><td><b>online</b></td><td><span class="badge b-bad">false</span></td><td><b>retired</b></td><td><span class="badge b-bad">true</span></td></tr>
-<tr><td><b>createdOn</b></td><td class="mono">2025-01-22</td><td><b>lastCommunication</b></td><td class="mono">2026-01-27T15:59:18Z</td></tr>
-<tr><td><b>Battery</b></td><td>0 (PoE)</td><td><b>Sister wave</b></td><td>provisioned alongside 3501 &amp; 3514 (same createdOn 2025-01-22)</td></tr>
-<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">H4210003493S</span> (ee894), AROYA ID 168157, also at facility 3485, last spoke 2026-01-19. Sensor &rsquo;s <span class="mono">retired</span> flag is false &mdash; only the puck was flagged.</td></tr>
-<tr><td colspan="4"><b>Previous-draft correction:</b> the earlier &ldquo;not found / verify serial&rdquo; conclusion was wrong. The SPA <span class="mono">/devices/</span> endpoint hides <span class="mono">retired=true</span> devices by default; the authoritative lookup is <span class="mono">api.aroya.io/portal_api/devices/?search=&lt;serial&gt;</span> with <span class="mono">X-Facility: 3485</span>, which returns retired records too.</td></tr>
-<tr><td colspan="4"><b>How it got the <span class="mono">retired</span> flag:</b> per Cian, that flag is set only by AROYA support staff &mdash; there is no customer-facing path. So someone on support marked 3493 retired sometime after 2026-01-27 (last comm). Slack + Notion sweep for the case behind it:</td></tr>
-<tr><td colspan="4">&bull; Slack &mdash; <b>1 hit</b> on this exact serial in <span class="mono">#0-critical-aroya-alarms-dont-ignore</span> (automated alert only, no thread / no human conversation).<br>
-&bull; Slack &mdash; no mentions in <span class="mono">#aroya_customersupport</span>, no mentions in <span class="mono">#wp4-to-5-update</span> (so this is NOT a WP4&rarr;WP5 firmware-rollout retirement).<br>
-&bull; Slack &mdash; no Salesforce bot user is provisioned in this workspace; the standard <span class="mono">slackbot</span> SF-search integration that we&rsquo;d use to lookup case info isn&rsquo;t available from the MCP surface here.<br>
-&bull; Notion &mdash; only Noble case in &ldquo;My Cases&rdquo; is <b>00019972</b> (April 2025, Replacement parts shipping, Status: Done, product H810 Drip &amp; Drain) &mdash; <b>not</b> the case behind this retirement.<br>
-&bull; Notion + Drive &mdash; no document references H4210003493.</td></tr>
-<tr><td colspan="4"><b>Recommended:</b> open Salesforce directly and pull the case linked to AROYA ID 168156 or to Noble post-2026-01-27. Whoever marked it retired likely logged the reason there.</td></tr>
-<tr><td colspan="4"><b>Action:</b> already retired in AROYA &mdash; the only open question is physical disposition (trade-in box vs scrap vs RMA). Include in the H421 conversation alongside 3514, NOT the H111 trade-in batch.</td></tr>
+<tr><td><b>online / retired</b></td><td>false / <span class="badge b-bad">true</span></td><td><b>createdOn</b></td><td class="mono">2025-01-22</td></tr>
+<tr><td><b>Last comm</b></td><td class="mono">2026-01-27T15:59:18Z</td><td><b>Battery</b></td><td>0 (PoE)</td></tr>
+<tr><td colspan="4"><b>Nested sensor:</b> <span class="mono">H4210003493S</span> (ee894), AROYA ID 168157, facility 3485, retired: false, last comm 2026-01-19.</td></tr>
 </table></div>
 </details>
 
 </section>
 
 <section>
-<h2><span class="i-en">Recommended next actions</span><span class="i-es">Acciones recomendadas</span></h2>
-<ol class="actions">
-<li><span class="pr p0">P0</span><div><b><span class="i-en">Confirm physical disposition of H4210003493 (already retired in AROYA).</span><span class="i-es">Confirmar disposici&oacute;n f&iacute;sica de H4210003493 (ya retirado en AROYA).</span></b><br><span class="i-en">Was last active 2026-01-27, was provisioned alongside 3501 &amp; 3514 in the Jan 2025 wave. Ask Ryan / Alli whether it&rsquo;s in the trade-in box, the RMA pile, or already shipped back. NOT a serial-verification problem &mdash; my earlier draft was wrong on that.</span><span class="i-es">&Uacute;ltima comm 2026-01-27, aprovisionado en la misma ola que 3501 y 3514. Preguntar a Ryan / Alli en qu&eacute; pila f&iacute;sica est&aacute;.</span></div></li>
-<li><span class="pr p0">P0</span><div><b><span class="i-en">File RMA for H4210003501 (Flower B 2, in warranty).</span><span class="i-es">Solicitar RMA para H4210003501 (Flower B 2, en garant&iacute;a).</span></b><br><span class="i-en">Provisioned 2025-07-16, warranty valid through ~2026-07-16. Don&rsquo;t let it lapse &mdash; this is a free replacement waiting to be claimed.</span><span class="i-es">Aprovisionado 2025-07-16, garant&iacute;a v&aacute;lida hasta ~2026-07-16. No dejar que caduque.</span></div></li>
-<li><span class="pr p0">P0</span><div><b><span class="i-en">Physical walk: Flower B 1 (6644), A3 (6757), Flower B 2 (3501), locate 3514.</span><span class="i-es">Recorrido f&iacute;sico: Flower B 1, A3, Flower B 2, ubicar 3514.</span></b><br><span class="i-en">Power-cycle each. Document who rejoins.</span><span class="i-es">Reinicio de cada uno. Documentar cu&aacute;les se reincorporan.</span></div></li>
-<li><span class="pr p1">P1</span><div><b><span class="i-en">Open WP4 trade-in batch &mdash; 3 &times; H111 toward Climate One.</span><span class="i-es">Abrir lote de canje WP4 &mdash; 3 &times; H111 hacia Climate One.</span></b><br><span class="i-en">$150 off Climate One per retired H111 = up to <b>$450 toward the swap</b>. 6677&rsquo;s 1 % battery is the cleanest evidence of legitimate retirement.</span><span class="i-es">$150 de descuento por H111 retirado = hasta <b>$450 hacia el canje</b>. La bater&iacute;a de 1 % en 6677 es la mejor evidencia de retiro leg&iacute;timo.</span></div></li>
-<li><span class="pr p1">P1</span><div><b><span class="i-en">Reply to Ryan &amp; Alli with the three-line TL;DR.</span><span class="i-es">Responder a Ryan y Alli con el resumen.</span></b><br><span class="i-en">Flag 3493 as needing re-photo. Frame 3501 as the in-warranty RMA win.</span><span class="i-es">Marcar 3493 para re-foto. Posicionar 3501 como RMA gratuito en garant&iacute;a.</span></div></li>
-<li><span class="pr p1">P1</span><div><b><span class="i-en">Clean up AROYA inventory.</span><span class="i-es">Limpieza de inventario AROYA.</span></b><br><span class="i-en">All three H111s are <span class="mono">retired: false</span> but functionally retired &mdash; correct the flag so future audits stop flagging them as active.</span><span class="i-es">Las tres H111 marcan <span class="mono">retired: false</span> pero est&aacute;n funcionalmente retiradas. Corregir el flag.</span></div></li>
-<li><span class="pr p2">P2</span><div><b><span class="i-en">Follow up on Flower B 3 missing climate stream.</span><span class="i-es">Seguimiento &mdash; falta el flujo de clima en Flower B 3.</span></b><br><span class="i-en">Not in the 6-serial scope but surfaced by the facility-wide pull. Likely another silent h421 head.</span><span class="i-es">No est&aacute; en las 6 series pero apareci&oacute; en el resumen de instalaci&oacute;n. Posiblemente otro h421 silente.</span></div></li>
-</ol>
-</section>
-
-<section>
-<h2><span class="i-en">Data quality &amp; caveats</span><span class="i-es">Calidad de datos y advertencias</span></h2>
-<div class="card">
-<ul style="margin:0;padding-left:18px;line-height:1.7">
-<li><b><span class="i-en">Portal verification path.</span><span class="i-es">Ruta de verificaci&oacute;n.</span></b> <span class="mono">api.aroya.io/devices/?facility=3485&amp;search=&lt;serial&gt;</span> + <span class="mono">Authorization: Bearer &lt;token&gt;</span> + <span class="mono">X-Facility: 3485</span>. Forgetting <span class="mono">X-Facility</span> returns 403. Token extracted from Chrome Profile 6 leveldb (<span class="mono">phytochrome_auth_token</span> key, app.aroya.io origin) via the working <span class="mono">/tmp/fw-eligibility/leveldb_extract.py</span> script.</li>
-<li><b><span class="i-en">AROYA SDK install was blocked</span><span class="i-es">SDK AROYA bloqueado</span></b> &mdash; iCloud <span class="mono">Resource deadlock avoided</span>. Used raw <span class="mono">mcp__aroya__*</span> MCP for facility data plus direct <span class="mono">api.aroya.io</span> for serial-level lookup.</li>
-<li><b><span class="i-en">Portal.aroya.io token was expired</span><span class="i-es">Token portal.aroya.io expirado</span></b> &mdash; app.aroya.io token reached the same backend via <span class="mono">api.aroya.io</span>.</li>
-<li><b><span class="i-en">Warranty terms = AROYA standard 1-year hardware policy.</span><span class="i-es">Garant&iacute;a = pol&iacute;tica est&aacute;ndar AROYA de 1 a&ntilde;o.</span></b> Confirm against any Noble-specific service agreement before committing.</li>
-<li><b><span class="i-en">2-year per-device chart pull</span><span class="i-es">Pull de telemetr&iacute;a 2 a&ntilde;os</span></b> &mdash; available via <span class="mono">/devices/&lt;id&gt;/chart/?period=2y</span> with the same auth pattern. Captured as a follow-up; <span class="mono">lastCommunication</span> + battery snapshot in the device record are sufficient for the Ryan/Alli reply today.</li>
-<li><b><span class="i-en">No fabricated values.</span><span class="i-es">Sin valores inventados.</span></b> Every field above is from the portal device record or null where the source is null.</li>
-</ul>
-</div>
+<h2><span class="i-en">Facility room readings (last 14 d)</span><span class="i-es">Lecturas por sala (14 d)</span></h2>
+<div class="card"><table>
+<tr><th>Room</th><th>Type</th><th>Air Temp avg (&deg;F)</th><th>VPD avg (kPa)</th><th>VWC avg (%)</th></tr>
+<tr><td>Flower B8</td><td>FLOWER</td><td>73.6</td><td>1.19</td><td>50.7</td></tr>
+<tr><td>Flower B 1</td><td>FLOWER</td><td>82.7</td><td>1.25</td><td>41.7</td></tr>
+<tr><td>Flower B 2</td><td>FLOWER</td><td>74.3</td><td>1.38</td><td>45.6</td></tr>
+<tr><td>Flower B 3</td><td>FLOWER</td><td>&mdash;</td><td>&mdash;</td><td>42.2</td></tr>
+<tr><td>Flower B 4</td><td>FLOWER</td><td>76.4</td><td>1.14</td><td>59.4</td></tr>
+<tr><td>Flower B 5</td><td>FLOWER</td><td>80.4</td><td>1.15</td><td>61.7</td></tr>
+<tr><td>Flower B 6</td><td>FLOWER</td><td>82.1</td><td>0.93</td><td>52.1</td></tr>
+<tr><td>Flower B 7</td><td>FLOWER</td><td>82.0</td><td>1.04</td><td>50.2</td></tr>
+<tr><td>A1</td><td>FLOWER</td><td>71.8</td><td>1.06</td><td>54.9</td></tr>
+<tr><td>A2</td><td>FLOWER</td><td>79.9</td><td>0.95</td><td>59.1</td></tr>
+<tr><td>A3</td><td>FLOWER</td><td>76.1</td><td>1.17</td><td>57.2</td></tr>
+<tr><td>Veg C</td><td>FLOWER (veg-config)</td><td>83.6</td><td>0.91</td><td>34.0</td></tr>
+<tr><td>dry b4</td><td>DRY</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+</table></div>
 </section>
 
 <footer>
-<div><b>AROYA</b> &middot; <span class="i-en">Device Health 2-Year Audit &middot; PORTAL-VERIFIED</span><span class="i-es">Auditor&iacute;a 2 a&ntilde;os &middot; VERIFICADA</span> &middot; Noble Farms &middot; Facility 3485 &middot; 2026-06-11</div>
-<div style="margin-top:6px;font-size:11px">
-<span class="i-en">Data path: <span class="mono">mcp__aroya__*</span> MCP + portal-verified via <span class="mono">api.aroya.io/devices/?facility=3485&amp;search=</span> with <span class="mono">X-Facility</span> header (Cian Chrome Profile 6 token).</span>
-<span class="i-es">Ruta de datos: <span class="mono">mcp__aroya__*</span> MCP + verificaci&oacute;n directa por <span class="mono">api.aroya.io/devices/</span>.</span>
-</div>
+<div><b>AROYA</b> &middot; Noble Farms &middot; Facility 3485 &middot; 2026-06-11</div>
 <div style="margin-top:6px;font-size:11px">Cian Sullivan &middot; <a href="mailto:cian.sullivan@addium.io">cian.sullivan@addium.io</a></div>
 </footer>
 
