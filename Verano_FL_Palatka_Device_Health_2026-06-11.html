@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verano — FL (Palatka) · Device Health &amp; Facility Status Audit · 2026-06-11</title>
+<style>
+:root{
+  --aroya-dark-green:#635e51; --aroya-vibrant-green:#cbeeb0; --aroya-light-green:#c7c8c2;
+  --aroya-medium-gray:#46483d; --aroya-app-blue-1:#1c2632; --aroya-app-blue-2:#071538;
+  --aroya-attention:#d0ff00; --aroya-black:#1a1c19;
+  --success-bg:#cef5ca; --success-fg:#114e0b; --warning-bg:#fcf8d8; --warning-fg:#5e5515;
+  --error-bg:#f8e4e4; --error-fg:#3b0b0b; --focus:#2d62ff;
+  --font-sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-mono:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;
+  --radius:12px; --radius-sm:6px;
+  --bg:#f9f9f9; --card:#ffffff; --text:#1a1c19; --text2:#46483d; --border:#e4e4e0; --tick:#1a1c19;
+}
+html[data-theme="dark"]{
+  --bg:#10141a; --card:#1c2632; --text:#f5f5f3; --text2:#c7c8c2; --border:#2b3644; --tick:#cbeeb0;
+  --success-bg:#16321a; --success-fg:#a7e8a0; --warning-bg:#332f10; --warning-fg:#e8dd8a;
+  --error-bg:#3a1414; --error-fg:#f3b8b8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:0.92rem;line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 22px 60px}
+header.rep{position:relative;padding:30px 26px;border-radius:var(--radius);background:linear-gradient(135deg,var(--aroya-app-blue-1),var(--aroya-app-blue-2));color:#fff;overflow:hidden}
+header.rep .tick{position:absolute;width:8px;height:8px;background:var(--aroya-vibrant-green);opacity:.9}
+.brand{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.brand .wordmark{font-weight:600;letter-spacing:.16em;font-size:1.05rem;color:var(--aroya-vibrant-green)}
+.brand .by{font-size:.7rem;color:#c7c8c2;letter-spacing:.08em}
+h1{font-weight:500;font-size:1.55rem;margin:.6em 0 .15em}
+.sub{color:#c7c8c2;font-size:.85rem}
+.controls{display:flex;gap:8px;margin-top:14px}
+.controls button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:999px;padding:5px 14px;font-size:.78rem;cursor:pointer;font-family:inherit}
+.controls button:hover{background:rgba(255,255,255,.22)}
+.verdict{margin-top:20px;border-radius:var(--radius);padding:18px 22px;background:linear-gradient(120deg,#5c1212,#8a1f1f);color:#ffe3e3;border:1px solid #a33}
+.verdict b{color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;border-top:4px solid var(--aroya-dark-green)}
+.kpi.red{border-top-color:#b03030}.kpi.amber{border-top-color:#c9a227}.kpi.green{border-top-color:#7fae62}
+.kpi .v{font-size:1.5rem;font-weight:600;font-family:var(--font-mono)}
+.kpi .l{font-size:.74rem;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:18px 0}
+section h2{font-weight:500;font-size:1.12rem;margin:0 0 12px;display:flex;align-items:center;gap:10px}
+section h2 .stripe{display:inline-block;width:6px;height:20px;border-radius:3px;background:var(--aroya-dark-green)}
+section.red h2 .stripe{background:#b03030}
+section.amber h2 .stripe{background:#c9a227}
+section.green h2 .stripe{background:#7fae62}
+table{width:100%;border-collapse:collapse;font-size:.84rem}
+th{font-weight:600;text-align:left;color:var(--text2);text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;border-bottom:2px solid var(--border);padding:8px 10px}
+td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+td.mono,.mono{font-family:var(--font-mono);font-size:.8rem}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.pill.silent{background:var(--error-bg);color:var(--error-fg)}
+.pill.ok{background:var(--success-bg);color:var(--success-fg)}
+.pill.warn{background:var(--warning-bg);color:var(--warning-fg)}
+.pill.info{background:var(--aroya-vibrant-green);color:#2c331f}
+.note{font-size:.8rem;color:var(--text2)}
+.callout{border-left:4px solid var(--aroya-dark-green);background:var(--bg);border-radius:var(--radius-sm);padding:12px 16px;margin:12px 0;font-size:.86rem}
+.callout.red{border-left-color:#b03030}
+.callout.amber{border-left-color:#c9a227}
+.reco{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border)}
+.reco:last-child{border-bottom:none}
+.prio{flex:0 0 auto;font-family:var(--font-mono);font-weight:700;font-size:.78rem;border-radius:var(--radius-sm);padding:3px 9px}
+.prio.p0{background:#b03030;color:#fff}.prio.p1{background:#c9a227;color:#2e2607}.prio.p2{background:var(--aroya-light-green);color:#33352c}
+footer{margin-top:30px;color:var(--text2);font-size:.76rem;text-align:center}
+.timeline{display:flex;align-items:center;gap:0;margin:14px 0 6px;border-radius:6px;overflow:hidden;height:34px;font-size:.7rem;font-weight:600}
+.timeline .seg{display:flex;align-items:center;justify-content:center;height:100%}
+.legend{display:flex;gap:18px;font-size:.74rem;color:var(--text2);margin-top:6px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+@media(max-width:640px){.wrap{padding:14px}section{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="rep">
+  <span class="tick" style="top:10px;left:14px"></span><span class="tick" style="top:18px;left:30px"></span>
+  <span class="tick" style="top:12px;right:120px"></span><span class="tick" style="bottom:14px;right:18px"></span>
+  <span class="tick" style="bottom:30px;left:46%"></span>
+  <div class="brand">
+    <div>
+      <div class="wordmark">AROYA</div>
+      <div class="by">by Addium</div>
+    </div>
+    <div class="controls">
+      <button id="langBtn" onclick="toggleLang()">ES</button>
+      <button id="themeBtn" onclick="toggleTheme()">◐ Dark</button>
+    </div>
+  </div>
+  <h1 data-i18n="title">Verano — FL (Palatka) · Device Health &amp; Facility Status Audit</h1>
+  <div class="sub"><span data-i18n="subtitle">Facility 4462 · Org 3501 (Verano Holdings) · Window analyzed: 2026-05-21 → 2026-06-11 (21 days) · Generated</span> 2026-06-11</div>
+</header>
+
+<div class="verdict">
+  <b data-i18n="verdict_h">⛔ FACILITY DARK — the entire mesh stopped reporting on 2026-05-25 at 22:12 UTC (17 days ago).</b>
+  <div data-i18n="verdict_b" style="margin-top:6px;font-size:.88rem">Every sensor series at Palatka ends within the same 3-minute interval. The gateway, all 12 nodes and the Climate One went silent simultaneously — a single upstream failure (gateway power or site uplink), not a radio or battery problem. No inbound report of this outage was found in support email. Palatka is the only live AROYA site in the $427K Verano enterprise rollout.</div>
+</div>
+
+<div class="kpis">
+  <div class="kpi red"><div class="v">0 / 15</div><div class="l" data-i18n="k1">Mesh devices online</div></div>
+  <div class="kpi red"><div class="v">17 d</div><div class="l" data-i18n="k2">Since last data (May 25)</div></div>
+  <div class="kpi amber"><div class="v">100%</div><div class="l" data-i18n="k3">Node battery (all 12, at last comm)</div></div>
+  <div class="kpi red"><div class="v">0</div><div class="l" data-i18n="k4">Active harvest groups</div></div>
+  <div class="kpi amber"><div class="v">174 d</div><div class="l" data-i18n="k5">Flower 5 repeater offline (Dec 19)</div></div>
+  <div class="kpi green"><div class="v">29</div><div class="l" data-i18n="k6">Devices inventoried</div></div>
+</div>
+
+<section class="red">
+  <h2><span class="stripe"></span><span data-i18n="s1h">Outage signature — one failure, not many</span></h2>
+  <p data-i18n="s1p1">Every series from every reporting device at the facility ends between 22:09 and 22:12 UTC on 2026-05-25. Before that moment, the substrate sensors were reporting on a clean 3-minute cadence with zero gaps over 30 minutes for 4.3 straight days. Batteries on all 12 nodes read 100% at last communication. This pattern rules out node radios, batteries, and individual sensors: the failure is upstream — the gateway ("veg 5 nova core", H2110001107) lost power or the site lost its internet uplink. The gateway, sink and Climate One are PoE-powered, so the first physical check is the PoE switch / power circuit feeding the head-end, then the uplink.</p>
+  <div class="timeline">
+    <div class="seg" style="flex:4.3;background:var(--aroya-vibrant-green);color:#2c331f"><span data-i18n="tl1">May 21–25 · clean 3-min data</span></div>
+    <div class="seg" style="flex:16.7;background:#b03030;color:#fff"><span data-i18n="tl2">May 25 22:12 UTC → today · NO DATA (17 days)</span></div>
+  </div>
+  <div class="legend"><span><span class="dot" style="background:var(--aroya-vibrant-green)"></span><span data-i18n="lg1">Reporting</span></span><span><span class="dot" style="background:#b03030"></span><span data-i18n="lg2">Dark</span></span></div>
+  <div class="callout red" data-i18n="s1c">No support thread or case about this outage was found in the last 30 days of correspondence with Verano — the site appears to have gone dark unnoticed. Recommend raising it directly in today's 10:15 AM rollout call with Richard Callahan, Mitch Tipton and Dustin Shroyer.</div>
+</section>
+
+<section class="amber">
+  <h2><span class="stripe"></span><span data-i18n="s2h">Device status by room (SPA status, authoritative)</span></h2>
+  <h3 style="font-weight:500;font-size:.95rem" data-i18n="r1">Room "F9 novacore vs bio" — 14 mesh devices, all offline since 2026-05-25</h3>
+  <table>
+    <thead><tr><th data-i18n="th1">Device</th><th>Serial</th><th data-i18n="th2">Model</th><th data-i18n="th3">Zone</th><th data-i18n="th4">Battery</th><th data-i18n="th5">Status</th><th data-i18n="th6">Last comm (UTC)</th></tr></thead>
+    <tbody>
+      <tr><td>veg 5 nova core</td><td class="mono">H2110001107</td><td>Gateway (PoE)</td><td>zone 1 nova</td><td>—</td><td><span class="pill silent" data-i18n="off">OFFLINE</span></td><td class="mono">2026-05-25 22:10</td></tr>
+      <tr><td>veg5 nova</td><td class="mono">H4210004197</td><td>Climate One (PoE)</td><td>zone 1 nova</td><td>—</td><td><span class="pill silent" data-i18n="off">OFFLINE</span></td><td class="mono">2026-05-25 22:09</td></tr>
+      <tr><td>nova core e85 tbl3 bot</td><td class="mono">H3440012461</td><td>Node ×2</td><td>zone 1 nova</td><td>100%</td><td><span class="pill silent" data-i18n="off">OFFLINE</span></td><td class="mono">2026-05-25 22:11</td></tr>
+      <tr><td>nova core gc tbl2 bot</td><td class="mono">H3440012462</td><td>Node ×2</td><td>zone 1 nova</td><td>100%</td><td><span class="pill silent" data-i18n="off">OFFLINE</span></td><td class="mono">2026-05-25 22:10</td></tr>
+      <tr><td>nova gc tbl 2 bot b3</td><td class="mono">H3440012489</td><td>Node ×2</td><td>zone 1 nova</td><td>100%</td><td><span class="pill silent" data-i18n="off">OFFLINE</span></td><td class="mono">2026-05-25 22:10</td></tr>
+      <tr><td>bio</td><td class="mono">H3440012466</td><td>Node ×2</td><td>bio</td><td>100%</td><td><span class="pill silent" data-i18n="off">OFFLINE</span></td><td class="mono">2026-05-25 22:10</td></tr>
+      <tr><td>bio e85 tbl7 bot</td><td class="mono">H3440012470</td><td>Node ×2</td><td>bio</td><td>100%</td><td><span class="pill silent" data-i18n="off">OFFLINE</span></td><td class="mono">2026-05-25 22:09</td></tr>
+      <tr><td>bio</td><td class="mono">H3440012474</td><td>Node ×2</td><td>bio</td><td>100%</td><td><span class="pill silent" data-i18n="off">OFFLINE</span></td><td class="mono">2026-05-25 22:10</td></tr>
+    </tbody>
+  </table>
+  <p class="note" data-i18n="r1n">"Node ×2" = paired radio units sharing a position (-2 suffixed serials), each hosting a TEROS One substrate sensor. 12 node radios + 12 TEROS One total.</p>
+
+  <h3 style="font-weight:500;font-size:.95rem;margin-top:18px" data-i18n="r2">Room "Flower 5" — 1 device, offline since 2025-12-19</h3>
+  <table>
+    <thead><tr><th data-i18n="th1">Device</th><th>Serial</th><th data-i18n="th2">Model</th><th data-i18n="th4">Battery</th><th data-i18n="th5">Status</th><th data-i18n="th6">Last comm (UTC)</th></tr></thead>
+    <tbody>
+      <tr><td>Repeater</td><td class="mono">H3400002704</td><td>Mesh Repeater (PoE)</td><td>100%</td><td><span class="pill silent" data-i18n="off2">OFFLINE 174 d</span></td><td class="mono">2025-12-19 14:58</td></tr>
+    </tbody>
+  </table>
+  <div class="callout amber" data-i18n="r2c">The Flower 5 repeater predates the May outage by five months — separate issue. It is PoE-powered: check its power feed / port. Rooms F22, F32 and F16 have no AROYA devices assigned at all.</div>
+</section>
+
+<section class="green">
+  <h2><span class="stripe"></span><span data-i18n="s3h">Last-known-good snapshot — 4.3 days before the blackout (May 21 → May 25)</span></h2>
+  <p data-i18n="s3p">The trial in F9 ("novacore vs bio", zones "zone 1 nova" vs "bio") was producing clean data right up to the outage. These are observed ranges from the final 4.3 days — shown for context only; this is NOT a 14-day audit window.</p>
+  <table>
+    <thead><tr><th data-i18n="th7">Signal</th><th data-i18n="th8">Zone 1 nova (6 TEROS One)</th><th data-i18n="th9">Bio zone (6 TEROS One)</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="m1">Substrate VWC (median per sensor)</td><td class="mono">30.2 – 50.0 %</td><td class="mono">22.9 – 63.0 %</td></tr>
+      <tr><td data-i18n="m2">Pore EC (typical, mS/cm)</td><td class="mono">p50 ≈ 3.6</td><td class="mono">—</td></tr>
+      <tr><td data-i18n="m3">Substrate temp</td><td class="mono">≈ 78.4 °F</td><td class="mono">≈ 78 °F</td></tr>
+    </tbody>
+  </table>
+  <table style="margin-top:10px">
+    <thead><tr><th data-i18n="th10">Climate (Climate One, zone 1 nova)</th><th data-i18n="th11">Observed May 21–25</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="m4">Air temperature</td><td class="mono">74.6 – 82.1 °F (p50 78.9)</td></tr>
+      <tr><td data-i18n="m5">Relative humidity</td><td class="mono">46.8 – 72.6 % (mean ≈ 56)</td></tr>
+      <tr><td>CO₂</td><td class="mono">850 – 1397 ppm (p50 1335)</td></tr>
+    </tbody>
+  </table>
+  <p class="note" data-i18n="s3n">Per-sensor VWC medians spread 23–63% across the bio zone — wide position-to-position variation worth reviewing once data is restored. Sensor H3440012461 (TEROS One) also logged one 2-day internal gap before the outage and is worth watching after recovery. No dryback or irrigation-phase metrics are quoted here: with no series after May 25 and no configured harvest group, computing them would require fabricating data.</p>
+</section>
+
+<section class="red">
+  <h2><span class="stripe"></span><span data-i18n="s4h">2-week cultivation audit — not produced (and why)</span></h2>
+  <p data-i18n="s4p1">The scheduled 14-day audit window (2026-05-28 → 2026-06-11) contains <b>zero sensor data</b>: the facility went dark three days before the window opened. Coverage is 0% of the required ≥90%. Per audit rules, missing days are never synthesized or modeled, so no cultivation audit is published for this window.</p>
+  <p data-i18n="s4p2">Additionally, the facility has <b>no active harvest groups</b> — the last two HGs ended in September 2025 (F22 and Flower 5 runs). The F9 trial has been running without a configured harvest group, which means no phase context (P0–P3 irrigation day structure, steering targets) can be attached to its data even when the mesh returns.</p>
+</section>
+
+<section class="amber">
+  <h2><span class="stripe"></span><span data-i18n="s5h">Sensor-fleet context for today's rollout call</span></h2>
+  <p data-i18n="s5p1">Palatka runs the new-generation fleet: 12× TEROS One substrate sensors + Climate One. On 2026-06-09 Richard Callahan flagged TEROS One reading 5–15% higher VWC than TEROS 12 on replacement units. As already communicated to Richard: the two sensor families measure VWC and EC differently and are expected to read differently — TEROS 12 is being phased out in favor of TEROS One. Recommend the training session include a short "reading the TEROS One" segment so site teams stop comparing it 1:1 against TEROS 12 history.</p>
+</section>
+
+<section>
+  <h2><span class="stripe"></span><span data-i18n="s6h">Recommendations</span></h2>
+  <div class="reco"><span class="prio p0">P0</span><div data-i18n="rc1"><b>Restore the Palatka head-end.</b> Physical check of the PoE switch / power circuit feeding gateway H2110001107 ("veg 5 nova core") and the site uplink. The simultaneous all-device drop means one fix likely brings all 14 F9 devices back. Batteries are full; no field hardware replacement expected.</div></div>
+  <div class="reco"><span class="prio p0">P0</span><div data-i18n="rc2"><b>Raise the outage in today's 10:15 AM rollout meeting.</b> 17 days of unnoticed downtime at the rollout's only live site is also a process gap: agree an alerting/escalation owner on both sides as part of the rollout plan (AROYA alert recipients + Verano site contact).</div></div>
+  <div class="reco"><span class="prio p1">P1</span><div data-i18n="rc3"><b>Recover the Flower 5 repeater</b> (H3400002704, offline since 2025-12-19): check PoE power/port; replace if it does not rejoin once powered.</div></div>
+  <div class="reco"><span class="prio p1">P1</span><div data-i18n="rc4"><b>Create a harvest group for the F9 trial</b> once data flows, so phases, targets and crop-steering context attach to the novacore-vs-bio comparison. Currently the facility has had no HG since Sept 2025.</div></div>
+  <div class="reco"><span class="prio p2">P2</span><div data-i18n="rc5"><b>Add TEROS One expectations to team training</b> (reads differently than TEROS 12 by design; 5–15% VWC offset is expected, not a defect) and review the wide per-position VWC spread in the bio zone after recovery.</div></div>
+</section>
+
+<section>
+  <h2><span class="stripe"></span><span data-i18n="s7h">Data quality &amp; method</span></h2>
+  <ul style="font-size:.84rem;color:var(--text2);margin:0;padding-left:18px">
+    <li data-i18n="dq1">Device status: AROYA SPA /devices/ (authoritative for online/battery/lastComm), pulled 2026-06-11. Inventory: public API /devices/ (29 devices).</li>
+    <li data-i18n="dq2">Telemetry: per-device chart pulls over a 21-day window (2026-05-21 → 2026-06-11) in 2-day chunks; 29/29 devices pulled, 1 chunk error (EE894), heavy API rate-limiting slowed but did not truncate the pull.</li>
+    <li data-i18n="dq3">Room-level public-API queries returned no series for Mar–May 2026; device-level pulls were used instead. The automated per-device "ok" flags from the gap analyzer ignore gap-to-now and were overridden by last-timestamp inspection — every series ends 2026-05-25 22:12 UTC.</li>
+    <li data-i18n="dq4">No data was synthesized. Dryback, shot counts and phase metrics are intentionally absent (no in-window data, no active HG).</li>
+    <li data-i18n="dq5">Rooms F22, F32, F16: no devices assigned — no claims made about them.</li>
+  </ul>
+</section>
+
+<footer>
+  AROYA by Addium · Verano — FL (Palatka) · fac 4462 · <span data-i18n="ft">Prepared automatically for Cian Sullivan ahead of the 2026-06-11 10:15 AM Verano rollout &amp; training call</span>
+</footer>
+</div>
+
+<script>
+var I18N = {
+  es: {
+    title:"Verano — FL (Palatka) · Auditoría de salud de dispositivos y estado de la instalación",
+    subtitle:"Instalación 4462 · Org 3501 (Verano Holdings) · Ventana analizada: 2026-05-21 → 2026-06-11 (21 días) · Generado",
+    verdict_h:"⛔ INSTALACIÓN SIN DATOS — toda la malla dejó de reportar el 2026-05-25 a las 22:12 UTC (hace 17 días).",
+    verdict_b:"Todas las series de sensores en Palatka terminan dentro del mismo intervalo de 3 minutos. El gateway, los 12 nodos y el Climate One quedaron en silencio simultáneamente — una sola falla aguas arriba (alimentación del gateway o enlace de internet del sitio), no un problema de radios ni baterías. No se encontró ningún reporte de esta caída en el correo de soporte. Palatka es el único sitio AROYA activo del despliegue empresarial de $427K de Verano.",
+    k1:"Dispositivos de malla en línea", k2:"Desde el último dato (25 may)", k3:"Batería de nodos (los 12, último contacto)",
+    k4:"Grupos de cosecha activos", k5:"Repetidor de Flower 5 fuera de línea (19 dic)", k6:"Dispositivos inventariados",
+    s1h:"Firma de la caída — una sola falla, no muchas",
+    s1p1:"Cada serie de cada dispositivo termina entre las 22:09 y 22:12 UTC del 2026-05-25. Hasta ese momento, los sensores de sustrato reportaban con cadencia limpia de 3 minutos, sin brechas mayores a 30 minutos durante 4.3 días seguidos. Las baterías de los 12 nodos marcaban 100% en su última comunicación. Este patrón descarta radios, baterías y sensores individuales: la falla está aguas arriba — el gateway (\"veg 5 nova core\", H2110001107) perdió alimentación o el sitio perdió su enlace de internet. El gateway, el sink y el Climate One se alimentan por PoE, así que la primera revisión física es el switch PoE / circuito eléctrico de la cabecera, y luego el enlace.",
+    tl1:"21–25 may · datos limpios cada 3 min", tl2:"25 may 22:12 UTC → hoy · SIN DATOS (17 días)",
+    lg1:"Reportando", lg2:"Sin datos",
+    s1c:"No se encontró ningún hilo de soporte ni caso sobre esta caída en los últimos 30 días de correspondencia con Verano — el sitio parece haber quedado sin datos sin que nadie lo notara. Se recomienda plantearlo directamente en la llamada de despliegue de hoy a las 10:15 AM con Richard Callahan, Mitch Tipton y Dustin Shroyer.",
+    s2h:"Estado de dispositivos por sala (estado SPA, autoritativo)",
+    r1:"Sala \"F9 novacore vs bio\" — 14 dispositivos de malla, todos fuera de línea desde 2026-05-25",
+    th1:"Dispositivo", th2:"Modelo", th3:"Zona", th4:"Batería", th5:"Estado", th6:"Última comunicación (UTC)",
+    off:"FUERA DE LÍNEA", off2:"FUERA DE LÍNEA 174 d",
+    r1n:"\"Node ×2\" = radios emparejados que comparten posición (seriales con sufijo -2), cada uno con un sensor de sustrato TEROS One. 12 radios + 12 TEROS One en total.",
+    r2:"Sala \"Flower 5\" — 1 dispositivo, fuera de línea desde 2025-12-19",
+    r2c:"El repetidor de Flower 5 falló cinco meses antes de la caída de mayo — es un problema aparte. Se alimenta por PoE: revisar su alimentación/puerto. Las salas F22, F32 y F16 no tienen ningún dispositivo AROYA asignado.",
+    s3h:"Última foto en buen estado — 4.3 días antes del apagón (21 → 25 may)",
+    s3p:"El ensayo en F9 (\"novacore vs bio\", zonas \"zone 1 nova\" vs \"bio\") producía datos limpios hasta la caída. Estos son rangos observados de los últimos 4.3 días — solo como contexto; NO es una ventana de auditoría de 14 días.",
+    th7:"Señal", th8:"Zone 1 nova (6 TEROS One)", th9:"Zona bio (6 TEROS One)",
+    m1:"VWC de sustrato (mediana por sensor)", m2:"EC de poro (típico, mS/cm)", m3:"Temp. de sustrato",
+    th10:"Clima (Climate One, zone 1 nova)", th11:"Observado 21–25 may",
+    m4:"Temperatura del aire", m5:"Humedad relativa",
+    s3n:"Las medianas de VWC por sensor varían de 23 a 63% en la zona bio — variación amplia entre posiciones que conviene revisar cuando vuelvan los datos. El sensor H3440012461 (TEROS One) también registró una brecha interna de 2 días antes de la caída y conviene vigilarlo tras la recuperación. No se citan métricas de dryback ni de fases de riego: sin series después del 25 de mayo y sin grupo de cosecha configurado, calcularlas exigiría fabricar datos.",
+    s4h:"Auditoría de cultivo de 2 semanas — no producida (y por qué)",
+    s4p1:"La ventana de auditoría de 14 días (2026-05-28 → 2026-06-11) contiene cero datos de sensores: la instalación quedó sin datos tres días antes de abrir la ventana. La cobertura es 0% del ≥90% requerido. Según las reglas de auditoría, los días faltantes nunca se sintetizan ni se modelan, así que no se publica auditoría de cultivo para esta ventana.",
+    s4p2:"Además, la instalación no tiene grupos de cosecha activos — los dos últimos terminaron en septiembre de 2025 (corridas de F22 y Flower 5). El ensayo de F9 ha corrido sin grupo de cosecha configurado, por lo que no se puede asociar contexto de fases (estructura de día de riego P0–P3, metas de steering) a sus datos incluso cuando la malla regrese.",
+    s5h:"Contexto de la flota de sensores para la llamada de despliegue de hoy",
+    s5p1:"Palatka opera la flota de nueva generación: 12× TEROS One + Climate One. El 2026-06-09 Richard Callahan señaló que el TEROS One lee VWC 5–15% más alto que el TEROS 12 en unidades de reemplazo. Como ya se le comunicó a Richard: las dos familias de sensores miden VWC y EC de forma distinta y se espera que lean diferente — el TEROS 12 se está retirando gradualmente a favor del TEROS One. Se recomienda que la capacitación incluya un segmento breve de \"cómo leer el TEROS One\" para que los equipos de sitio dejen de compararlo 1:1 contra el histórico del TEROS 12.",
+    s6h:"Recomendaciones",
+    rc1:"<b>Restaurar la cabecera de Palatka.</b> Revisión física del switch PoE / circuito eléctrico que alimenta el gateway H2110001107 (\"veg 5 nova core\") y del enlace del sitio. La caída simultánea de todos los dispositivos significa que una sola reparación probablemente recupere los 14 dispositivos de F9. Las baterías están llenas; no se espera reemplazo de hardware de campo.",
+    rc2:"<b>Plantear la caída en la reunión de despliegue de hoy 10:15 AM.</b> 17 días de inactividad sin que nadie lo note en el único sitio activo del despliegue también es una brecha de proceso: acordar un responsable de alertas/escalamiento en ambos lados como parte del plan (destinatarios de alertas AROYA + contacto de sitio de Verano).",
+    rc3:"<b>Recuperar el repetidor de Flower 5</b> (H3400002704, fuera de línea desde 2025-12-19): revisar alimentación/puerto PoE; reemplazar si no se reincorpora al energizarse.",
+    rc4:"<b>Crear un grupo de cosecha para el ensayo de F9</b> en cuanto fluyan los datos, para que fases, metas y contexto de crop steering se asocien a la comparación novacore-vs-bio. La instalación no tiene HG desde sept 2025.",
+    rc5:"<b>Agregar expectativas del TEROS One a la capacitación</b> (lee distinto que el TEROS 12 por diseño; el desfase de 5–15% de VWC es esperado, no un defecto) y revisar la dispersión amplia de VWC por posición en la zona bio tras la recuperación.",
+    s7h:"Calidad de datos y método",
+    dq1:"Estado de dispositivos: SPA /devices/ de AROYA (autoritativo para en-línea/batería/última comunicación), consultado el 2026-06-11. Inventario: API pública /devices/ (29 dispositivos).",
+    dq2:"Telemetría: consultas de gráfico por dispositivo en una ventana de 21 días (2026-05-21 → 2026-06-11) en bloques de 2 días; 29/29 dispositivos, 1 error de bloque (EE894); la limitación de tasa del API ralentizó pero no truncó la consulta.",
+    dq3:"Las consultas a nivel de sala del API público no devolvieron series para mar–may 2026; se usaron consultas por dispositivo. Las banderas automáticas \"ok\" del analizador de brechas ignoran la brecha-hasta-ahora y se corrigieron inspeccionando el último timestamp — todas las series terminan el 2026-05-25 22:12 UTC.",
+    dq4:"No se sintetizó ningún dato. Dryback, conteo de riegos y métricas de fase están ausentes a propósito (sin datos en la ventana, sin HG activo).",
+    dq5:"Salas F22, F32, F16: sin dispositivos asignados — no se hacen afirmaciones sobre ellas.",
+    ft:"Preparado automáticamente para Cian Sullivan antes de la llamada de despliegue y capacitación de Verano del 2026-06-11 a las 10:15 AM"
+  }
+};
+var EN = {};
+function snapshotEN(){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){ EN[el.getAttribute('data-i18n')] = el.innerHTML; });
+}
+var lang = 'en';
+function toggleLang(){
+  lang = (lang === 'en') ? 'es' : 'en';
+  var dict = (lang === 'es') ? I18N.es : EN;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k = el.getAttribute('data-i18n');
+    if (dict[k] !== undefined) el.innerHTML = dict[k];
+  });
+  document.getElementById('langBtn').textContent = (lang === 'en') ? 'ES' : 'EN';
+  document.documentElement.lang = lang;
+}
+function toggleTheme(){
+  var h = document.documentElement;
+  var dark = h.getAttribute('data-theme') === 'dark';
+  h.setAttribute('data-theme', dark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = dark ? '◐ Dark' : '◑ Light';
+}
+snapshotEN();
+(function(){
+  try{
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) toggleTheme();
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
