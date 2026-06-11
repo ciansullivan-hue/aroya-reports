@@ -732,6 +732,52 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   .lang-toggle { display: none; }
   .kpi, .zone, .card, .rec, .finding, .clean, .exec { break-inside: avoid; }
 }
+
+/* Phase 10 — quadrant mini charts + modal */
+.room-biophys-quadrants {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--s-3); margin-top: var(--s-4);
+}
+.room-biophys-quadrants .quadrant-tile {
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: var(--s-2); background: var(--bg-surface);
+  cursor: pointer; transition: transform var(--dur) var(--ease);
+  position: relative;
+}
+.room-biophys-quadrants .quadrant-tile:hover { transform: translateY(-2px); }
+.room-biophys-quadrants .quadrant-label {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--muted-fg); margin-bottom: var(--s-1);
+}
+.quadrant-canvas { width: 100% !important; height: 140px !important; }
+@media (max-width: 768px) {
+  .room-biophys-quadrants { grid-template-columns: 1fr; }
+}
+.chart-modal {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(7, 21, 56, 0.75);
+  display: none; align-items: center; justify-content: center;
+  padding: var(--s-5);
+}
+.chart-modal.open { display: flex; }
+.chart-modal__panel {
+  background: var(--bg-surface); border-radius: var(--radius);
+  padding: var(--s-5); max-width: 90vw; max-height: 85vh;
+  width: 1100px; box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+}
+.chart-modal__header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: var(--s-3);
+}
+.chart-modal__close {
+  background: var(--aroya-attention); border: 0; cursor: pointer;
+  padding: var(--s-2) var(--s-3); border-radius: var(--radius-sm);
+  font-family: var(--font-mono); font-size: var(--text-sm);
+}
+@media (max-width: 768px) {
+  .chart-modal__panel { width: 96vw; padding: var(--s-3); }
+}
 </style>
 </head>
 <body class="theme-dark">
@@ -761,7 +807,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   <div class="hero__inner">
     <p class="hero__eyebrow"><span lang="en">14-Day Facility Audit</span><span lang="es">Auditoría de 14 Días</span></p>
     <h1 class="hero__title"><span lang="en">POWRHOUSE: </span><span lang="es">POWRHOUSE: </span><em><span lang="en">14-day facility audit</span><span lang="es">auditoria de 14 dias</span></em></h1>
-    <p class="hero__subtitle"><span lang="en">2026-05-26 to 2026-06-09 - generated 2026-06-11T02:29:41+00:00</span><span lang="es">2026-05-26 al 2026-06-09 - generado 2026-06-11T02:29:41+00:00</span></p>
+    <p class="hero__subtitle"><span lang="en">2026-05-26 to 2026-06-09 - generated 2026-06-11T06:58:23+00:00</span><span lang="es">2026-05-26 al 2026-06-09 - generado 2026-06-11T06:58:23+00:00</span></p>
     <div class="hero__meta">
       <span><span lang="en">AROYA public API + OpenCLI SPA runtime</span><span lang="es">AROYA public API + runtime OpenCLI SPA</span></span>
       <span>-</span>
@@ -771,7 +817,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     </div>
     <div class="hero__chips">
       <span class="hero__chip brand"><span lang="en">9 rooms</span><span lang="es">9 salas</span></span>
-      <span class="hero__chip info"><span lang="en">Coverage 7%</span><span lang="es">Cobertura 7%</span></span>
+      <span class="hero__chip info"><span lang="en">Coverage 100%</span><span lang="es">Cobertura 100%</span></span>
       <span class="hero__chip info"><span lang="en">OpenCLI SPA connected</span><span lang="es">OpenCLI SPA conectado</span></span>
     </div>
   </div>
@@ -784,35 +830,35 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   <div class="kpi-grid">
     <div class="kpi substrate warn">
       <div class="kpi__label"><span lang="en">POWR 1 · dryback</span><span lang="es">POWR 1 · dryback</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
-      <div class="kpi__value">52.2 pp<span class="kpi__unit"></span></div>
+      <div class="kpi__value">55.1 pp<span class="kpi__unit"></span></div>
       <div class="kpi__range">vs 5-15 pp target (veg, vegetatively-steered)</div>
       <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:30%"></div></div>
       <div class="kpi__delta warn"><span lang="en">vs 5-15 pp target (veg, vegetatively-steered)</span><span lang="es">vs objetivo 5-15 pp (veg)</span></div>
     </div>
     <div class="kpi climate warn">
       <div class="kpi__label"><span lang="en">POWR 2 · dryback</span><span lang="es">POWR 2 · dryback</span> <span class="kpi__tag climate"><span lang="en">Climate</span><span lang="es">Clima</span></span></div>
-      <div class="kpi__value">33.0 pp<span class="kpi__unit"></span></div>
+      <div class="kpi__value">76.8 pp<span class="kpi__unit"></span></div>
       <div class="kpi__range">vs 5-15 pp target (veg, vegetatively-steered)</div>
       <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:30%"></div></div>
       <div class="kpi__delta warn"><span lang="en">vs 5-15 pp target (veg, vegetatively-steered)</span><span lang="es">vs objetivo 5-15 pp (veg)</span></div>
     </div>
     <div class="kpi substrate warn">
       <div class="kpi__label"><span lang="en">POWR 3 · dryback</span><span lang="es">POWR 3 · dryback</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
-      <div class="kpi__value">57.1 pp<span class="kpi__unit"></span></div>
+      <div class="kpi__value">59.0 pp<span class="kpi__unit"></span></div>
       <div class="kpi__range">vs 5-15 pp target (veg, vegetatively-steered)</div>
       <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:30%"></div></div>
       <div class="kpi__delta warn"><span lang="en">vs 5-15 pp target (veg, vegetatively-steered)</span><span lang="es">vs objetivo 5-15 pp (veg)</span></div>
     </div>
     <div class="kpi climate warn">
       <div class="kpi__label"><span lang="en">POWR 4 · dryback</span><span lang="es">POWR 4 · dryback</span> <span class="kpi__tag climate"><span lang="en">Climate</span><span lang="es">Clima</span></span></div>
-      <div class="kpi__value">33.4 pp<span class="kpi__unit"></span></div>
+      <div class="kpi__value">39.8 pp<span class="kpi__unit"></span></div>
       <div class="kpi__range">vs 5-15 pp target (veg, vegetatively-steered)</div>
       <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:30%"></div></div>
       <div class="kpi__delta warn"><span lang="en">vs 5-15 pp target (veg, vegetatively-steered)</span><span lang="es">vs objetivo 5-15 pp (veg)</span></div>
     </div>
     <div class="kpi substrate warn">
       <div class="kpi__label"><span lang="en">Veg Room · dryback</span><span lang="es">Veg Room · dryback</span> <span class="kpi__tag substrate"><span lang="en">Substrate</span><span lang="es">Sustrato</span></span></div>
-      <div class="kpi__value">25.1 pp<span class="kpi__unit"></span></div>
+      <div class="kpi__value">64.6 pp<span class="kpi__unit"></span></div>
       <div class="kpi__range">vs 5-15 pp target (veg, vegetatively-steered)</div>
       <div class="kpi__bar"><div class="kpi__bar-fill warn" style="left:0;right:30%"></div></div>
       <div class="kpi__delta warn"><span lang="en">vs 5-15 pp target (veg, vegetatively-steered)</span><span lang="es">vs objetivo 5-15 pp (veg)</span></div>
@@ -887,41 +933,41 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
             <td>POWR 1</td>
             <td>Veg</td>
             <td><span class="pill neutral">vegetatively-steered</span></td>
-            <td class="num">52.2</td>
-            <td class="num">-0.75</td>
-            <td class="num">0.92</td>
+            <td class="num">55.1</td>
+            <td class="num">+0.12</td>
+            <td class="num">0.91</td>
           </tr>
           <tr>
             <td>POWR 2</td>
             <td>Veg</td>
             <td><span class="pill neutral">vegetatively-steered</span></td>
-            <td class="num">33.0</td>
-            <td class="num">-0.28</td>
-            <td class="num">0.76</td>
+            <td class="num">76.8</td>
+            <td class="num">-1.61</td>
+            <td class="num">1.09</td>
           </tr>
           <tr>
             <td>POWR 3</td>
             <td>Veg</td>
             <td><span class="pill neutral">vegetatively-steered</span></td>
-            <td class="num">57.1</td>
-            <td class="num">+0.82</td>
-            <td class="num">1.16</td>
+            <td class="num">59.0</td>
+            <td class="num">-0.38</td>
+            <td class="num">1.07</td>
           </tr>
           <tr>
             <td>POWR 4</td>
             <td>Veg</td>
             <td><span class="pill neutral">vegetatively-steered</span></td>
-            <td class="num">33.4</td>
-            <td class="num">-0.32</td>
-            <td class="num">0.87</td>
+            <td class="num">39.8</td>
+            <td class="num">+1.45</td>
+            <td class="num">0.74</td>
           </tr>
           <tr>
             <td>Veg Room</td>
             <td>Veg</td>
             <td><span class="pill neutral">vegetatively-steered</span></td>
-            <td class="num">25.1</td>
-            <td class="num">+2.59</td>
-            <td class="num">0.88</td>
+            <td class="num">64.6</td>
+            <td class="num">+3.46</td>
+            <td class="num">0.81</td>
           </tr>
           <tr>
             <td>Dry 1</td>
@@ -929,7 +975,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
             <td><span class="pill neutral">vegetatively-steered</span></td>
             <td class="num">0.0</td>
             <td class="num">+0.00</td>
-            <td class="num">0.71</td>
+            <td class="num">0.81</td>
           </tr>
           <tr>
             <td>Dry 2</td>
@@ -937,7 +983,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
             <td><span class="pill neutral">vegetatively-steered</span></td>
             <td class="num">0.0</td>
             <td class="num">+0.00</td>
-            <td class="num">0.71</td>
+            <td class="num">0.72</td>
           </tr>
           <tr>
             <td>Vault</td>
@@ -945,7 +991,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
             <td><span class="pill neutral">vegetatively-steered</span></td>
             <td class="num">0.0</td>
             <td class="num">+0.00</td>
-            <td class="num">0.66</td>
+            <td class="num">0.74</td>
           </tr>
           <tr>
             <td>Cure</td>
@@ -967,7 +1013,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="finding__icon">^</div>
       <div>
         <h4>POWR 1 - vegetatively-steered this window</h4>
-        <p><span lang="en"><strong>Dryback</strong> 52.2 absolute pp against the veg target band. EC stack &Delta; -0.75 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 52.2 pp absoluto contra banda veg. &Delta; pila CE -0.75 mS.</span></p>
+        <p><span lang="en"><strong>Dryback</strong> 55.1 absolute pp against the veg target band. EC stack &Delta; +0.12 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 55.1 pp absoluto contra banda veg. &Delta; pila CE +0.12 mS.</span></p>
         <p class="why"><span lang="en">Why it matters: dryback is the plant's steering signal; when it drifts outside target, P0/P1/P2/P3 timing can flip the crop without touching the recipe.</span><span lang="es">Por que importa: el dryback es la senal de guia; fuera de objetivo, P0/P1/P2/P3 pueden cambiar la direccion del cultivo.</span></p>
       </div>
     </div>
@@ -975,7 +1021,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="finding__icon">^</div>
       <div>
         <h4>POWR 2 - vegetatively-steered this window</h4>
-        <p><span lang="en"><strong>Dryback</strong> 33.0 absolute pp against the veg target band. EC stack &Delta; -0.28 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 33.0 pp absoluto contra banda veg. &Delta; pila CE -0.28 mS.</span></p>
+        <p><span lang="en"><strong>Dryback</strong> 76.8 absolute pp against the veg target band. EC stack &Delta; -1.61 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 76.8 pp absoluto contra banda veg. &Delta; pila CE -1.61 mS.</span></p>
         <p class="why"><span lang="en">Why it matters: dryback is the plant's steering signal; when it drifts outside target, P0/P1/P2/P3 timing can flip the crop without touching the recipe.</span><span lang="es">Por que importa: el dryback es la senal de guia; fuera de objetivo, P0/P1/P2/P3 pueden cambiar la direccion del cultivo.</span></p>
       </div>
     </div>
@@ -983,7 +1029,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="finding__icon">^</div>
       <div>
         <h4>POWR 3 - vegetatively-steered this window</h4>
-        <p><span lang="en"><strong>Dryback</strong> 57.1 absolute pp against the veg target band. EC stack &Delta; +0.82 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 57.1 pp absoluto contra banda veg. &Delta; pila CE +0.82 mS.</span></p>
+        <p><span lang="en"><strong>Dryback</strong> 59.0 absolute pp against the veg target band. EC stack &Delta; -0.38 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 59.0 pp absoluto contra banda veg. &Delta; pila CE -0.38 mS.</span></p>
         <p class="why"><span lang="en">Why it matters: dryback is the plant's steering signal; when it drifts outside target, P0/P1/P2/P3 timing can flip the crop without touching the recipe.</span><span lang="es">Por que importa: el dryback es la senal de guia; fuera de objetivo, P0/P1/P2/P3 pueden cambiar la direccion del cultivo.</span></p>
       </div>
     </div>
@@ -991,7 +1037,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="finding__icon">^</div>
       <div>
         <h4>POWR 4 - vegetatively-steered this window</h4>
-        <p><span lang="en"><strong>Dryback</strong> 33.4 absolute pp against the veg target band. EC stack &Delta; -0.32 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 33.4 pp absoluto contra banda veg. &Delta; pila CE -0.32 mS.</span></p>
+        <p><span lang="en"><strong>Dryback</strong> 39.8 absolute pp against the veg target band. EC stack &Delta; +1.45 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 39.8 pp absoluto contra banda veg. &Delta; pila CE +1.45 mS.</span></p>
         <p class="why"><span lang="en">Why it matters: dryback is the plant's steering signal; when it drifts outside target, P0/P1/P2/P3 timing can flip the crop without touching the recipe.</span><span lang="es">Por que importa: el dryback es la senal de guia; fuera de objetivo, P0/P1/P2/P3 pueden cambiar la direccion del cultivo.</span></p>
       </div>
     </div>
@@ -999,7 +1045,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="finding__icon">^</div>
       <div>
         <h4>Veg Room - vegetatively-steered this window</h4>
-        <p><span lang="en"><strong>Dryback</strong> 25.1 absolute pp against the veg target band. EC stack &Delta; +2.59 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 25.1 pp absoluto contra banda veg. &Delta; pila CE +2.59 mS.</span></p>
+        <p><span lang="en"><strong>Dryback</strong> 64.6 absolute pp against the veg target band. EC stack &Delta; +3.46 mS. P0/P1/P2/P3 cadence anchored to the phase.</span><span lang="es"><strong>Dryback</strong> 64.6 pp absoluto contra banda veg. &Delta; pila CE +3.46 mS.</span></p>
         <p class="why"><span lang="en">Why it matters: dryback is the plant's steering signal; when it drifts outside target, P0/P1/P2/P3 timing can flip the crop without touching the recipe.</span><span lang="es">Por que importa: el dryback es la senal de guia; fuera de objetivo, P0/P1/P2/P3 pueden cambiar la direccion del cultivo.</span></p>
       </div>
     </div>
@@ -1163,6 +1209,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>—</b></div>
       <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
       <div class="chart-frame small"><canvas id="roomMetrics_13617"></canvas></div>
+      <div class="room-biophys-quadrants" data-room-quadrants="13617">
+        <div class="quadrant-tile" data-quadrant-tile="13617-vpd"><div class="quadrant-label">VPD (kPa)</div><canvas class="quadrant-canvas" data-room="13617" data-metric="vpd"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13617-vwc"><div class="quadrant-label">VWC peak</div><canvas class="quadrant-canvas" data-room="13617" data-metric="vwc"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13617-temp_on"><div class="quadrant-label">Temp lights-on</div><canvas class="quadrant-canvas" data-room="13617" data-metric="temp_on"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13617-ec_pore"><div class="quadrant-label">Pore EC</div><canvas class="quadrant-canvas" data-room="13617" data-metric="ec_pore"></canvas></div>
+      </div>
       <div class="zone__verdict ok">
         <span lang="en">POWR 1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">POWR 1 está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
       </div>
@@ -1177,6 +1229,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>—</b></div>
       <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
       <div class="chart-frame small"><canvas id="roomMetrics_13618"></canvas></div>
+      <div class="room-biophys-quadrants" data-room-quadrants="13618">
+        <div class="quadrant-tile" data-quadrant-tile="13618-vpd"><div class="quadrant-label">VPD (kPa)</div><canvas class="quadrant-canvas" data-room="13618" data-metric="vpd"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13618-vwc"><div class="quadrant-label">VWC peak</div><canvas class="quadrant-canvas" data-room="13618" data-metric="vwc"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13618-temp_on"><div class="quadrant-label">Temp lights-on</div><canvas class="quadrant-canvas" data-room="13618" data-metric="temp_on"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13618-ec_pore"><div class="quadrant-label">Pore EC</div><canvas class="quadrant-canvas" data-room="13618" data-metric="ec_pore"></canvas></div>
+      </div>
       <div class="zone__verdict ok">
         <span lang="en">POWR 2 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">POWR 2 está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
       </div>
@@ -1191,6 +1249,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>—</b></div>
       <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
       <div class="chart-frame small"><canvas id="roomMetrics_13619"></canvas></div>
+      <div class="room-biophys-quadrants" data-room-quadrants="13619">
+        <div class="quadrant-tile" data-quadrant-tile="13619-vpd"><div class="quadrant-label">VPD (kPa)</div><canvas class="quadrant-canvas" data-room="13619" data-metric="vpd"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13619-vwc"><div class="quadrant-label">VWC peak</div><canvas class="quadrant-canvas" data-room="13619" data-metric="vwc"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13619-temp_on"><div class="quadrant-label">Temp lights-on</div><canvas class="quadrant-canvas" data-room="13619" data-metric="temp_on"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13619-ec_pore"><div class="quadrant-label">Pore EC</div><canvas class="quadrant-canvas" data-room="13619" data-metric="ec_pore"></canvas></div>
+      </div>
       <div class="zone__verdict ok">
         <span lang="en">POWR 3 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">POWR 3 está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
       </div>
@@ -1205,6 +1269,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>—</b></div>
       <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
       <div class="chart-frame small"><canvas id="roomMetrics_13620"></canvas></div>
+      <div class="room-biophys-quadrants" data-room-quadrants="13620">
+        <div class="quadrant-tile" data-quadrant-tile="13620-vpd"><div class="quadrant-label">VPD (kPa)</div><canvas class="quadrant-canvas" data-room="13620" data-metric="vpd"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13620-vwc"><div class="quadrant-label">VWC peak</div><canvas class="quadrant-canvas" data-room="13620" data-metric="vwc"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13620-temp_on"><div class="quadrant-label">Temp lights-on</div><canvas class="quadrant-canvas" data-room="13620" data-metric="temp_on"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13620-ec_pore"><div class="quadrant-label">Pore EC</div><canvas class="quadrant-canvas" data-room="13620" data-metric="ec_pore"></canvas></div>
+      </div>
       <div class="zone__verdict ok">
         <span lang="en">POWR 4 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">POWR 4 está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
       </div>
@@ -1219,6 +1289,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>—</b></div>
       <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
       <div class="chart-frame small"><canvas id="roomMetrics_13621"></canvas></div>
+      <div class="room-biophys-quadrants" data-room-quadrants="13621">
+        <div class="quadrant-tile" data-quadrant-tile="13621-vpd"><div class="quadrant-label">VPD (kPa)</div><canvas class="quadrant-canvas" data-room="13621" data-metric="vpd"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13621-vwc"><div class="quadrant-label">VWC peak</div><canvas class="quadrant-canvas" data-room="13621" data-metric="vwc"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13621-temp_on"><div class="quadrant-label">Temp lights-on</div><canvas class="quadrant-canvas" data-room="13621" data-metric="temp_on"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13621-ec_pore"><div class="quadrant-label">Pore EC</div><canvas class="quadrant-canvas" data-room="13621" data-metric="ec_pore"></canvas></div>
+      </div>
       <div class="zone__verdict ok">
         <span lang="en">Veg Room is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">Veg Room está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
       </div>
@@ -1233,6 +1309,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>—</b></div>
       <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
       <div class="chart-frame small"><canvas id="roomMetrics_13622"></canvas></div>
+      <div class="room-biophys-quadrants" data-room-quadrants="13622">
+        <div class="quadrant-tile" data-quadrant-tile="13622-vpd"><div class="quadrant-label">VPD (kPa)</div><canvas class="quadrant-canvas" data-room="13622" data-metric="vpd"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13622-vwc"><div class="quadrant-label">VWC peak</div><canvas class="quadrant-canvas" data-room="13622" data-metric="vwc"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13622-temp_on"><div class="quadrant-label">Temp lights-on</div><canvas class="quadrant-canvas" data-room="13622" data-metric="temp_on"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13622-ec_pore"><div class="quadrant-label">Pore EC</div><canvas class="quadrant-canvas" data-room="13622" data-metric="ec_pore"></canvas></div>
+      </div>
       <div class="zone__verdict ok">
         <span lang="en">Dry 1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">Dry 1 está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
       </div>
@@ -1247,6 +1329,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>—</b></div>
       <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
       <div class="chart-frame small"><canvas id="roomMetrics_13623"></canvas></div>
+      <div class="room-biophys-quadrants" data-room-quadrants="13623">
+        <div class="quadrant-tile" data-quadrant-tile="13623-vpd"><div class="quadrant-label">VPD (kPa)</div><canvas class="quadrant-canvas" data-room="13623" data-metric="vpd"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13623-vwc"><div class="quadrant-label">VWC peak</div><canvas class="quadrant-canvas" data-room="13623" data-metric="vwc"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13623-temp_on"><div class="quadrant-label">Temp lights-on</div><canvas class="quadrant-canvas" data-room="13623" data-metric="temp_on"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="13623-ec_pore"><div class="quadrant-label">Pore EC</div><canvas class="quadrant-canvas" data-room="13623" data-metric="ec_pore"></canvas></div>
+      </div>
       <div class="zone__verdict ok">
         <span lang="en">Dry 2 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">Dry 2 está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
       </div>
@@ -1261,6 +1349,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>—</b></div>
       <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
       <div class="chart-frame small"><canvas id="roomMetrics_17390"></canvas></div>
+      <div class="room-biophys-quadrants" data-room-quadrants="17390">
+        <div class="quadrant-tile" data-quadrant-tile="17390-vpd"><div class="quadrant-label">VPD (kPa)</div><canvas class="quadrant-canvas" data-room="17390" data-metric="vpd"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="17390-vwc"><div class="quadrant-label">VWC peak</div><canvas class="quadrant-canvas" data-room="17390" data-metric="vwc"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="17390-temp_on"><div class="quadrant-label">Temp lights-on</div><canvas class="quadrant-canvas" data-room="17390" data-metric="temp_on"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="17390-ec_pore"><div class="quadrant-label">Pore EC</div><canvas class="quadrant-canvas" data-room="17390" data-metric="ec_pore"></canvas></div>
+      </div>
       <div class="zone__verdict ok">
         <span lang="en">Vault is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">Vault está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
       </div>
@@ -1275,6 +1369,12 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="kv"><span><span lang="en">Plants</span><span lang="es">Plantas</span></span><b>—</b></div>
       <div class="kv"><span><span lang="en">Substrate</span><span lang="es">Sustrato</span></span><b>SOILLESS</b></div>
       <div class="chart-frame small"><canvas id="roomMetrics_18777"></canvas></div>
+      <div class="room-biophys-quadrants" data-room-quadrants="18777">
+        <div class="quadrant-tile" data-quadrant-tile="18777-vpd"><div class="quadrant-label">VPD (kPa)</div><canvas class="quadrant-canvas" data-room="18777" data-metric="vpd"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="18777-vwc"><div class="quadrant-label">VWC peak</div><canvas class="quadrant-canvas" data-room="18777" data-metric="vwc"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="18777-temp_on"><div class="quadrant-label">Temp lights-on</div><canvas class="quadrant-canvas" data-room="18777" data-metric="temp_on"></canvas></div>
+        <div class="quadrant-tile" data-quadrant-tile="18777-ec_pore"><div class="quadrant-label">Pore EC</div><canvas class="quadrant-canvas" data-room="18777" data-metric="ec_pore"></canvas></div>
+      </div>
       <div class="zone__verdict ok">
         <span lang="en">Cure is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.</span><span lang="es">Cure está guía vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto.</span>
       </div>
@@ -1290,25 +1390,25 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="card__meta"><span lang="en">absolute pp only</span><span lang="es">solo pp absoluto</span></div>
     </div>
     <div class="card__body">
-      <p><span lang="en">POWR 1 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 52.2 absolute pp; EC stack Δ -0.75 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">POWR 1 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 52.2 pp absoluto; Δ pila CE -0.75 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
+      <p><span lang="en">POWR 1 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 55.1 absolute pp; EC stack Δ +0.12 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">POWR 1 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 55.1 pp absoluto; Δ pila CE +0.12 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
       <table class="data-table">
         <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Status</span><span lang="es">Estado</span></th></tr></thead>
         <tbody>
           <tr>
             <td>Overnight dryback (absolute pp)</td>
-            <td class="num">52.2 pp</td>
+            <td class="num">55.1 pp</td>
             <td class="num">5–15 pp</td>
             <td><span class="pill warn">out of band</span></td>
           </tr>
           <tr>
             <td>EC stack Δ (substrate − feed)</td>
-            <td class="num">-0.75 mS</td>
+            <td class="num">+0.12 mS</td>
             <td class="num">+1.0 to +5.0 mS</td>
             <td><span class="pill warn">flat / negative</span></td>
           </tr>
           <tr>
             <td>VPD lights-on mean</td>
-            <td class="num">0.92 kPa</td>
+            <td class="num">0.91 kPa</td>
             <td class="num">0.8–1.1 kPa</td>
             <td><span class="pill good">in band</span></td>
           </tr>
@@ -1331,27 +1431,27 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="card__meta"><span lang="en">absolute pp only</span><span lang="es">solo pp absoluto</span></div>
     </div>
     <div class="card__body">
-      <p><span lang="en">POWR 2 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 33.0 absolute pp; EC stack Δ -0.28 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">POWR 2 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 33.0 pp absoluto; Δ pila CE -0.28 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
+      <p><span lang="en">POWR 2 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 76.8 absolute pp; EC stack Δ -1.61 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">POWR 2 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 76.8 pp absoluto; Δ pila CE -1.61 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
       <table class="data-table">
         <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Status</span><span lang="es">Estado</span></th></tr></thead>
         <tbody>
           <tr>
             <td>Overnight dryback (absolute pp)</td>
-            <td class="num">33.0 pp</td>
+            <td class="num">76.8 pp</td>
             <td class="num">5–15 pp</td>
             <td><span class="pill warn">out of band</span></td>
           </tr>
           <tr>
             <td>EC stack Δ (substrate − feed)</td>
-            <td class="num">-0.28 mS</td>
+            <td class="num">-1.61 mS</td>
             <td class="num">+1.0 to +5.0 mS</td>
             <td><span class="pill warn">flat / negative</span></td>
           </tr>
           <tr>
             <td>VPD lights-on mean</td>
-            <td class="num">0.76 kPa</td>
+            <td class="num">1.09 kPa</td>
             <td class="num">0.8–1.1 kPa</td>
-            <td><span class="pill warn">out of band</span></td>
+            <td><span class="pill good">in band</span></td>
           </tr>
         </tbody>
       </table>
@@ -1372,27 +1472,27 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="card__meta"><span lang="en">absolute pp only</span><span lang="es">solo pp absoluto</span></div>
     </div>
     <div class="card__body">
-      <p><span lang="en">POWR 3 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 57.1 absolute pp; EC stack Δ +0.82 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">POWR 3 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 57.1 pp absoluto; Δ pila CE +0.82 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
+      <p><span lang="en">POWR 3 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 59.0 absolute pp; EC stack Δ -0.38 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">POWR 3 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 59.0 pp absoluto; Δ pila CE -0.38 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
       <table class="data-table">
         <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Status</span><span lang="es">Estado</span></th></tr></thead>
         <tbody>
           <tr>
             <td>Overnight dryback (absolute pp)</td>
-            <td class="num">57.1 pp</td>
+            <td class="num">59.0 pp</td>
             <td class="num">5–15 pp</td>
             <td><span class="pill warn">out of band</span></td>
           </tr>
           <tr>
             <td>EC stack Δ (substrate − feed)</td>
-            <td class="num">+0.82 mS</td>
+            <td class="num">-0.38 mS</td>
             <td class="num">+1.0 to +5.0 mS</td>
-            <td><span class="pill good">stacking</span></td>
+            <td><span class="pill warn">flat / negative</span></td>
           </tr>
           <tr>
             <td>VPD lights-on mean</td>
-            <td class="num">1.16 kPa</td>
+            <td class="num">1.07 kPa</td>
             <td class="num">0.8–1.1 kPa</td>
-            <td><span class="pill warn">out of band</span></td>
+            <td><span class="pill good">in band</span></td>
           </tr>
         </tbody>
       </table>
@@ -1413,27 +1513,27 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="card__meta"><span lang="en">absolute pp only</span><span lang="es">solo pp absoluto</span></div>
     </div>
     <div class="card__body">
-      <p><span lang="en">POWR 4 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 33.4 absolute pp; EC stack Δ -0.32 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">POWR 4 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 33.4 pp absoluto; Δ pila CE -0.32 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
+      <p><span lang="en">POWR 4 is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 39.8 absolute pp; EC stack Δ +1.45 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">POWR 4 con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 39.8 pp absoluto; Δ pila CE +1.45 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
       <table class="data-table">
         <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Status</span><span lang="es">Estado</span></th></tr></thead>
         <tbody>
           <tr>
             <td>Overnight dryback (absolute pp)</td>
-            <td class="num">33.4 pp</td>
+            <td class="num">39.8 pp</td>
             <td class="num">5–15 pp</td>
             <td><span class="pill warn">out of band</span></td>
           </tr>
           <tr>
             <td>EC stack Δ (substrate − feed)</td>
-            <td class="num">-0.32 mS</td>
+            <td class="num">+1.45 mS</td>
             <td class="num">+1.0 to +5.0 mS</td>
-            <td><span class="pill warn">flat / negative</span></td>
+            <td><span class="pill good">stacking</span></td>
           </tr>
           <tr>
             <td>VPD lights-on mean</td>
-            <td class="num">0.87 kPa</td>
+            <td class="num">0.74 kPa</td>
             <td class="num">0.8–1.1 kPa</td>
-            <td><span class="pill good">in band</span></td>
+            <td><span class="pill warn">out of band</span></td>
           </tr>
         </tbody>
       </table>
@@ -1454,25 +1554,25 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
       <div class="card__meta"><span lang="en">absolute pp only</span><span lang="es">solo pp absoluto</span></div>
     </div>
     <div class="card__body">
-      <p><span lang="en">Veg Room is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 25.1 absolute pp; EC stack Δ +2.59 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">Veg Room con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 25.1 pp absoluto; Δ pila CE +2.59 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
+      <p><span lang="en">Veg Room is <b>vegetatively-steered</b> this window (Veg). Overnight dryback 64.6 absolute pp; EC stack Δ +3.46 mS. All values stated against phase-specific target bands — absolute pp only.</span><span lang="es">Veg Room con <b>vegetatively-steered</b> en esta ventana (Veg). Dryback nocturno 64.6 pp absoluto; Δ pila CE +3.46 mS. Valores comparados con banda objetivo por fase — solo pp absoluto.</span></p>
       <table class="data-table">
         <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Status</span><span lang="es">Estado</span></th></tr></thead>
         <tbody>
           <tr>
             <td>Overnight dryback (absolute pp)</td>
-            <td class="num">25.1 pp</td>
+            <td class="num">64.6 pp</td>
             <td class="num">5–15 pp</td>
             <td><span class="pill warn">out of band</span></td>
           </tr>
           <tr>
             <td>EC stack Δ (substrate − feed)</td>
-            <td class="num">+2.59 mS</td>
+            <td class="num">+3.46 mS</td>
             <td class="num">+1.0 to +5.0 mS</td>
             <td><span class="pill good">stacking</span></td>
           </tr>
           <tr>
             <td>VPD lights-on mean</td>
-            <td class="num">0.88 kPa</td>
+            <td class="num">0.81 kPa</td>
             <td class="num">0.8–1.1 kPa</td>
             <td><span class="pill good">in band</span></td>
           </tr>
@@ -1513,9 +1613,9 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
           </tr>
           <tr>
             <td>VPD lights-on mean</td>
-            <td class="num">0.71 kPa</td>
+            <td class="num">0.81 kPa</td>
             <td class="num">0.8–1.1 kPa</td>
-            <td><span class="pill warn">out of band</span></td>
+            <td><span class="pill good">in band</span></td>
           </tr>
         </tbody>
       </table>
@@ -1554,7 +1654,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
           </tr>
           <tr>
             <td>VPD lights-on mean</td>
-            <td class="num">0.71 kPa</td>
+            <td class="num">0.72 kPa</td>
             <td class="num">0.8–1.1 kPa</td>
             <td><span class="pill warn">out of band</span></td>
           </tr>
@@ -1595,7 +1695,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
           </tr>
           <tr>
             <td>VPD lights-on mean</td>
-            <td class="num">0.66 kPa</td>
+            <td class="num">0.74 kPa</td>
             <td class="num">0.8–1.1 kPa</td>
             <td><span class="pill warn">out of band</span></td>
           </tr>
@@ -1660,19 +1760,19 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
         <span class="card__meta">P0/P1/P2/P3</span>
       </div>
       <div class="card__body">
-        <p><span lang="en">POWR 1 ran vegetatively-steered this window. Dryback 52.2 absolute pp against phase target.</span><span lang="es">POWR 1 con vegetatively-steered esta ventana. Dryback 52.2 pp absoluto contra objetivo.</span></p>
+        <p><span lang="en">POWR 1 ran vegetatively-steered this window. Dryback 55.1 absolute pp against phase target.</span><span lang="es">POWR 1 con vegetatively-steered esta ventana. Dryback 55.1 pp absoluto contra objetivo.</span></p>
         <table class="data-table">
           <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Verdict</span><span lang="es">Veredicto</span></th></tr></thead>
           <tbody>
             <tr>
               <td>Overnight dryback (absolute pp)</td>
-              <td class="num">52.2</td>
+              <td class="num">55.1</td>
               <td class="num">5–15</td>
               <td><span class="pill warn">out of band</span></td>
             </tr>
             <tr>
               <td>VPD lights-on mean</td>
-              <td class="num">0.92</td>
+              <td class="num">0.91</td>
               <td class="num">0.8–1.1</td>
               <td><span class="pill good">in band</span></td>
             </tr>
@@ -1692,21 +1792,21 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
         <span class="card__meta">P0/P1/P2/P3</span>
       </div>
       <div class="card__body">
-        <p><span lang="en">POWR 2 ran vegetatively-steered this window. Dryback 33.0 absolute pp against phase target.</span><span lang="es">POWR 2 con vegetatively-steered esta ventana. Dryback 33.0 pp absoluto contra objetivo.</span></p>
+        <p><span lang="en">POWR 2 ran vegetatively-steered this window. Dryback 76.8 absolute pp against phase target.</span><span lang="es">POWR 2 con vegetatively-steered esta ventana. Dryback 76.8 pp absoluto contra objetivo.</span></p>
         <table class="data-table">
           <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Verdict</span><span lang="es">Veredicto</span></th></tr></thead>
           <tbody>
             <tr>
               <td>Overnight dryback (absolute pp)</td>
-              <td class="num">33.0</td>
+              <td class="num">76.8</td>
               <td class="num">5–15</td>
               <td><span class="pill warn">out of band</span></td>
             </tr>
             <tr>
               <td>VPD lights-on mean</td>
-              <td class="num">0.76</td>
+              <td class="num">1.09</td>
               <td class="num">0.8–1.1</td>
-              <td><span class="pill warn">out of band</span></td>
+              <td><span class="pill good">in band</span></td>
             </tr>
             <tr>
               <td>P0 → P1 → P2 → P3 cadence</td>
@@ -1724,21 +1824,21 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
         <span class="card__meta">P0/P1/P2/P3</span>
       </div>
       <div class="card__body">
-        <p><span lang="en">POWR 3 ran vegetatively-steered this window. Dryback 57.1 absolute pp against phase target.</span><span lang="es">POWR 3 con vegetatively-steered esta ventana. Dryback 57.1 pp absoluto contra objetivo.</span></p>
+        <p><span lang="en">POWR 3 ran vegetatively-steered this window. Dryback 59.0 absolute pp against phase target.</span><span lang="es">POWR 3 con vegetatively-steered esta ventana. Dryback 59.0 pp absoluto contra objetivo.</span></p>
         <table class="data-table">
           <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Verdict</span><span lang="es">Veredicto</span></th></tr></thead>
           <tbody>
             <tr>
               <td>Overnight dryback (absolute pp)</td>
-              <td class="num">57.1</td>
+              <td class="num">59.0</td>
               <td class="num">5–15</td>
               <td><span class="pill warn">out of band</span></td>
             </tr>
             <tr>
               <td>VPD lights-on mean</td>
-              <td class="num">1.16</td>
+              <td class="num">1.07</td>
               <td class="num">0.8–1.1</td>
-              <td><span class="pill warn">out of band</span></td>
+              <td><span class="pill good">in band</span></td>
             </tr>
             <tr>
               <td>P0 → P1 → P2 → P3 cadence</td>
@@ -1756,21 +1856,21 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
         <span class="card__meta">P0/P1/P2/P3</span>
       </div>
       <div class="card__body">
-        <p><span lang="en">POWR 4 ran vegetatively-steered this window. Dryback 33.4 absolute pp against phase target.</span><span lang="es">POWR 4 con vegetatively-steered esta ventana. Dryback 33.4 pp absoluto contra objetivo.</span></p>
+        <p><span lang="en">POWR 4 ran vegetatively-steered this window. Dryback 39.8 absolute pp against phase target.</span><span lang="es">POWR 4 con vegetatively-steered esta ventana. Dryback 39.8 pp absoluto contra objetivo.</span></p>
         <table class="data-table">
           <thead><tr><th><span lang="en">Metric</span><span lang="es">Metrica</span></th><th class="num"><span lang="en">Observed</span><span lang="es">Observado</span></th><th class="num"><span lang="en">Target</span><span lang="es">Objetivo</span></th><th><span lang="en">Verdict</span><span lang="es">Veredicto</span></th></tr></thead>
           <tbody>
             <tr>
               <td>Overnight dryback (absolute pp)</td>
-              <td class="num">33.4</td>
+              <td class="num">39.8</td>
               <td class="num">5–15</td>
               <td><span class="pill warn">out of band</span></td>
             </tr>
             <tr>
               <td>VPD lights-on mean</td>
-              <td class="num">0.87</td>
+              <td class="num">0.74</td>
               <td class="num">0.8–1.1</td>
-              <td><span class="pill good">in band</span></td>
+              <td><span class="pill warn">out of band</span></td>
             </tr>
             <tr>
               <td>P0 → P1 → P2 → P3 cadence</td>
@@ -1808,36 +1908,36 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     <div class="rec">
       <div class="num-badge">1</div>
       <div>
-        <b><span lang="en">Review POWR 1 P3 dryback against 5–15 absolute pp target band for veg. Observed 52.2 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de POWR 1 contra banda objetivo 5–15 pp absoluto para veg. Observado 52.2 pp.</span> <span class="rec__tag high">Grow team</span></b>
-        <p><span lang="en">POWR 1 is vegetatively-steered this week. Overnight dryback ran 52.2 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">POWR 1 is vegetatively-steered this week. Overnight dryback ran 52.2 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
+        <b><span lang="en">Review POWR 1 P3 dryback against 5–15 absolute pp target band for veg. Observed 55.1 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de POWR 1 contra banda objetivo 5–15 pp absoluto para veg. Observado 55.1 pp.</span> <span class="rec__tag high">Grow team</span></b>
+        <p><span lang="en">POWR 1 is vegetatively-steered this week. Overnight dryback ran 55.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">POWR 1 is vegetatively-steered this week. Overnight dryback ran 55.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
       </div>
     </div>
     <div class="rec">
       <div class="num-badge">2</div>
       <div>
-        <b><span lang="en">Review POWR 2 P3 dryback against 5–15 absolute pp target band for veg. Observed 33.0 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de POWR 2 contra banda objetivo 5–15 pp absoluto para veg. Observado 33.0 pp.</span> <span class="rec__tag high">Grow team</span></b>
-        <p><span lang="en">POWR 2 is vegetatively-steered this week. Overnight dryback ran 33.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">POWR 2 is vegetatively-steered this week. Overnight dryback ran 33.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
+        <b><span lang="en">Review POWR 2 P3 dryback against 5–15 absolute pp target band for veg. Observed 76.8 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de POWR 2 contra banda objetivo 5–15 pp absoluto para veg. Observado 76.8 pp.</span> <span class="rec__tag high">Grow team</span></b>
+        <p><span lang="en">POWR 2 is vegetatively-steered this week. Overnight dryback ran 76.8 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">POWR 2 is vegetatively-steered this week. Overnight dryback ran 76.8 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
       </div>
     </div>
     <div class="rec">
       <div class="num-badge">3</div>
       <div>
-        <b><span lang="en">Review POWR 3 P3 dryback against 5–15 absolute pp target band for veg. Observed 57.1 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de POWR 3 contra banda objetivo 5–15 pp absoluto para veg. Observado 57.1 pp.</span> <span class="rec__tag med">Grow team</span></b>
-        <p><span lang="en">POWR 3 is vegetatively-steered this week. Overnight dryback ran 57.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">POWR 3 is vegetatively-steered this week. Overnight dryback ran 57.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
+        <b><span lang="en">Review POWR 3 P3 dryback against 5–15 absolute pp target band for veg. Observed 59.0 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de POWR 3 contra banda objetivo 5–15 pp absoluto para veg. Observado 59.0 pp.</span> <span class="rec__tag med">Grow team</span></b>
+        <p><span lang="en">POWR 3 is vegetatively-steered this week. Overnight dryback ran 59.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">POWR 3 is vegetatively-steered this week. Overnight dryback ran 59.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
       </div>
     </div>
     <div class="rec">
       <div class="num-badge">4</div>
       <div>
-        <b><span lang="en">Review POWR 4 P3 dryback against 5–15 absolute pp target band for veg. Observed 33.4 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de POWR 4 contra banda objetivo 5–15 pp absoluto para veg. Observado 33.4 pp.</span> <span class="rec__tag med">Grow team</span></b>
-        <p><span lang="en">POWR 4 is vegetatively-steered this week. Overnight dryback ran 33.4 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">POWR 4 is vegetatively-steered this week. Overnight dryback ran 33.4 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
+        <b><span lang="en">Review POWR 4 P3 dryback against 5–15 absolute pp target band for veg. Observed 39.8 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de POWR 4 contra banda objetivo 5–15 pp absoluto para veg. Observado 39.8 pp.</span> <span class="rec__tag med">Grow team</span></b>
+        <p><span lang="en">POWR 4 is vegetatively-steered this week. Overnight dryback ran 39.8 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">POWR 4 is vegetatively-steered this week. Overnight dryback ran 39.8 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
       </div>
     </div>
     <div class="rec">
       <div class="num-badge">5</div>
       <div>
-        <b><span lang="en">Review Veg Room P3 dryback against 5–15 absolute pp target band for veg. Observed 25.1 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de Veg Room contra banda objetivo 5–15 pp absoluto para veg. Observado 25.1 pp.</span> <span class="rec__tag low">Grow team</span></b>
-        <p><span lang="en">Veg Room is vegetatively-steered this week. Overnight dryback ran 25.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">Veg Room is vegetatively-steered this week. Overnight dryback ran 25.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
+        <b><span lang="en">Review Veg Room P3 dryback against 5–15 absolute pp target band for veg. Observed 64.6 pp this window — adjust P0 delay and P1 ramp-up to bring dryback into band while holding vegetatively-steered intent.</span><span lang="es">Revisa el dryback P3 de Veg Room contra banda objetivo 5–15 pp absoluto para veg. Observado 64.6 pp.</span> <span class="rec__tag low">Grow team</span></b>
+        <p><span lang="en">Veg Room is vegetatively-steered this week. Overnight dryback ran 64.6 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span><span lang="es">Veg Room is vegetatively-steered this week. Overnight dryback ran 64.6 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering.</span></p>
       </div>
     </div>
     <div class="rec">
@@ -1853,7 +1953,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
   <h2 class="h1"><span lang="en">Data Quality &amp; Coverage</span><span lang="es">Calidad y cobertura de datos</span></h2>
   <ul class="clean">
     <li><b><span lang="en">Window</span><span lang="es">Ventana</span></b><span><span lang="en">2026-05-26 to 2026-06-09; facility id 3754.</span><span lang="es">2026-05-26 al 2026-06-09; facility 3754.</span></span></li>
-    <li><b><span lang="en">Coverage</span><span lang="es">Cobertura</span></b><span>timestamp span 1.0d (7% of 14d requested) — 2026-06-10 -> 2026-06-11</span></li>
+    <li><b><span lang="en">Coverage</span><span lang="es">Cobertura</span></b><span>timestamp span 14.0d (100% of 14d requested) — 2026-05-26 -> 2026-06-09</span></li>
     <li><b><span lang="en">Data source</span><span lang="es">Fuente</span></b><span><span lang="en">AROYA public_api + OpenCLI SPA enrichment.</span><span lang="es">AROYA public_api + enriquecimiento OpenCLI SPA.</span></span></li>
     <li><b><span lang="en">Renderer</span><span lang="es">Renderer</span></b><span><span lang="en">aroya_sdk audit_2wk renderer with inline Chart.js and light/dark pair.</span><span lang="es">renderer aroya_sdk audit_2wk con Chart.js inline.</span></span></li>
     <li><b><span lang="en">Token handling</span><span lang="es">Tokens</span></b><span><span lang="en">environment / local auth map (token not embedded)</span><span lang="es">entorno / auth map local</span></span></li>
@@ -1869,63 +1969,63 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
             <td>Veg</td>
             <td><span class="pill good">✓</span></td>
             <td><span class="pill good">✓</span></td>
-            <td><span class="pill good">✓ 2d</span></td>
+            <td><span class="pill good">✓ 14d</span></td>
           </tr>
           <tr>
             <td>POWR 2</td>
             <td>Veg</td>
             <td><span class="pill good">✓</span></td>
             <td><span class="pill good">✓</span></td>
-            <td><span class="pill good">✓ 2d</span></td>
+            <td><span class="pill good">✓ 14d</span></td>
           </tr>
           <tr>
             <td>POWR 3</td>
             <td>Veg</td>
             <td><span class="pill good">✓</span></td>
             <td><span class="pill good">✓</span></td>
-            <td><span class="pill good">✓ 2d</span></td>
+            <td><span class="pill good">✓ 15d</span></td>
           </tr>
           <tr>
             <td>POWR 4</td>
             <td>Veg</td>
             <td><span class="pill good">✓</span></td>
             <td><span class="pill good">✓</span></td>
-            <td><span class="pill good">✓ 2d</span></td>
+            <td><span class="pill good">✓ 14d</span></td>
           </tr>
           <tr>
             <td>Veg Room</td>
             <td>Veg</td>
             <td><span class="pill good">✓</span></td>
             <td><span class="pill good">✓</span></td>
-            <td><span class="pill good">✓ 2d</span></td>
+            <td><span class="pill good">✓ 14d</span></td>
           </tr>
           <tr>
             <td>Dry 1</td>
             <td>Veg</td>
             <td><span class="pill good">✓</span></td>
             <td><span class="pill good">✓</span></td>
-            <td><span class="pill good">✓ 2d</span></td>
+            <td><span class="pill good">✓ 12d</span></td>
           </tr>
           <tr>
             <td>Dry 2</td>
             <td>Veg</td>
             <td><span class="pill good">✓</span></td>
             <td><span class="pill good">✓</span></td>
-            <td><span class="pill good">✓ 2d</span></td>
+            <td><span class="pill good">✓ 14d</span></td>
           </tr>
           <tr>
             <td>Vault</td>
             <td>Veg</td>
             <td><span class="pill good">✓</span></td>
             <td><span class="pill good">✓</span></td>
-            <td><span class="pill good">✓ 2d</span></td>
+            <td><span class="pill good">✓ 14d</span></td>
           </tr>
           <tr>
             <td>Cure</td>
             <td>Veg</td>
             <td><span class="pill good">✓</span></td>
             <td><span class="pill good">✓</span></td>
-            <td><span class="pill good">✓ 2d</span></td>
+            <td><span class="pill good">✓ 15d</span></td>
           </tr>
         </tbody>
       </table>
@@ -1934,7 +2034,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
 
   <!-- 11. Footer -->
   <footer class="foot">
-    <div><span lang="en">POWRHOUSE · 14-Day Facility Audit · Generated 2026-06-11T02:29:41+00:00 · AROYA 3754</span><span lang="es">POWRHOUSE · Auditoría de 14 Días · Generado 2026-06-11T02:29:41+00:00 · AROYA 3754</span></div>
+    <div><span lang="en">POWRHOUSE · 14-Day Facility Audit · Generated 2026-06-11T06:58:23+00:00 · AROYA 3754</span><span lang="es">POWRHOUSE · Auditoría de 14 Días · Generado 2026-06-11T06:58:23+00:00 · AROYA 3754</span></div>
     <div><span class="brand-mark">AROYA by Addium</span> - <span lang="en">aroya_sdk facility audit renderer</span><span lang="es">renderer aroya_sdk</span></div>
   </footer>
 </div>
@@ -1968,7 +2068,7 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
 })();
 </script>
 
-<script id="phase2-data" type="application/json">{"rooms": [{"id": "13617", "name": "POWR 1", "phase": "Veg", "dryback_pp": 52.2, "ec_stack_delta": -0.75, "vpd_mean": 0.92, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13618", "name": "POWR 2", "phase": "Veg", "dryback_pp": 33.0, "ec_stack_delta": -0.28, "vpd_mean": 0.76, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13619", "name": "POWR 3", "phase": "Veg", "dryback_pp": 57.1, "ec_stack_delta": 0.82, "vpd_mean": 1.16, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13620", "name": "POWR 4", "phase": "Veg", "dryback_pp": 33.4, "ec_stack_delta": -0.32, "vpd_mean": 0.87, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13621", "name": "Veg Room", "phase": "Veg", "dryback_pp": 25.1, "ec_stack_delta": 2.59, "vpd_mean": 0.88, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13622", "name": "Dry 1", "phase": "Veg", "dryback_pp": 0.0, "ec_stack_delta": 0.0, "vpd_mean": 0.71, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13623", "name": "Dry 2", "phase": "Veg", "dryback_pp": 0.0, "ec_stack_delta": 0.0, "vpd_mean": 0.71, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "17390", "name": "Vault", "phase": "Veg", "dryback_pp": 0.0, "ec_stack_delta": 0.0, "vpd_mean": 0.66, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "18777", "name": "Cure", "phase": "Veg", "dryback_pp": 0.0, "ec_stack_delta": 0.0, "vpd_mean": 0.9, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}], "meta": {"13617": {"name": "POWR 1", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "POWR 1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 1 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13618": {"name": "POWR 2", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "POWR 2 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 2 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13619": {"name": "POWR 3", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "POWR 3 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 3 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13620": {"name": "POWR 4", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "POWR 4 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 4 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13621": {"name": "Veg Room", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Veg Room is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Veg Room est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13622": {"name": "Dry 1", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Dry 1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Dry 1 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13623": {"name": "Dry 2", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Dry 2 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Dry 2 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "17390": {"name": "Vault", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Vault is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Vault est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "18777": {"name": "Cure", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Cure is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Cure est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}}, "order": ["13617", "13618", "13619", "13620", "13621", "13622", "13623", "17390", "18777"], "series": {"13617": {"dates": ["2026-06-10", "2026-06-11"], "pore_ec": [6.466, 6.47], "vpd_on": [0.927, null], "vpd_off": [0.911, 0.85], "temp_on": [73.623, null], "temp_off": [72.152, 72.748], "dryback": [50.9, 16.6]}, "13618": {"dates": ["2026-06-10", "2026-06-11"], "pore_ec": [4.957, 5.092], "vpd_on": [0.744, null], "vpd_off": [0.78, 0.822], "temp_on": [75.469, null], "temp_off": [74.566, 74.605], "dryback": [29.6, 20.6]}, "13619": {"dates": ["2026-06-10", "2026-06-11"], "pore_ec": [6.972, 6.828], "vpd_on": [1.158, null], "vpd_off": [1.191, 1.086], "temp_on": [72.049, null], "temp_off": [71.417, 69.892], "dryback": [57.0, 23.1]}, "13620": {"dates": ["2026-06-10", "2026-06-11"], "pore_ec": [5.708, 5.461], "vpd_on": [0.878, null], "vpd_off": [0.821, 0.922], "temp_on": [78.475, null], "temp_off": [77.976, 75.174], "dryback": [27.3, 7.0]}, "13621": {"dates": ["2026-06-10", "2026-06-11"], "pore_ec": [3.597, 3.517], "vpd_on": [0.874, null], "vpd_off": [0.889, 0.916], "temp_on": [79.611, null], "temp_off": [79.455, 79.556], "dryback": [23.4, 25.1]}, "13622": {"dates": ["2026-06-10", "2026-06-11"], "pore_ec": [null, null], "vpd_on": [0.708, null], "vpd_off": [0.709, 0.707], "temp_on": [61.901, null], "temp_off": [61.817, 61.73], "dryback": [null, null]}, "13623": {"dates": ["2026-06-10", "2026-06-11"], "pore_ec": [null, null], "vpd_on": [0.705, null], "vpd_off": [0.706, 0.718], "temp_on": [59.425, null], "temp_off": [59.435, 59.457], "dryback": [null, null]}, "17390": {"dates": ["2026-06-10", "2026-06-11"], "pore_ec": [null, null], "vpd_on": [0.623, null], "vpd_off": [0.707, 0.823], "temp_on": [59.219, null], "temp_off": [60.823, 63.632], "dryback": [null, null]}, "18777": {"dates": ["2026-06-10", "2026-06-11"], "pore_ec": [null, null], "vpd_on": [0.887, null], "vpd_off": [0.91, 0.93], "temp_on": [64.191, null], "temp_off": [64.884, 65.385], "dryback": [null, null]}}, "colors": {"13617": {"line": "var(--p-bulking)", "fill": "rgba(197,163,255,0.35)", "deep": "#7a4ed4"}, "13618": {"line": "var(--p-ripening)", "fill": "rgba(231,111,81,0.35)", "deep": "#c2553d"}, "13619": {"line": "var(--p-stretch)", "fill": "rgba(244,162,97,0.35)", "deep": "#cc7022"}, "13620": {"line": "var(--p-veg)", "fill": "rgba(159,217,106,0.35)", "deep": "#5a8a30"}, "13621": {"line": "var(--app-blue)", "fill": "rgba(31,120,180,0.25)", "deep": "#1a5c92"}, "13622": {"line": "var(--p-rootin)", "fill": "rgba(168,213,226,0.35)", "deep": "#4a8e9f"}, "13623": {"line": "#888", "fill": "rgba(136,136,136,0.20)", "deep": "#666"}, "17390": {"line": "var(--p-bulking)", "fill": "rgba(197,163,255,0.35)", "deep": "#7a4ed4"}, "18777": {"line": "var(--p-ripening)", "fill": "rgba(231,111,81,0.35)", "deep": "#c2553d"}}}</script>
+<script id="phase2-data" type="application/json">{"rooms": [{"id": "13617", "name": "POWR 1", "phase": "Veg", "dryback_pp": 55.1, "ec_stack_delta": 0.12, "vpd_mean": 0.91, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13618", "name": "POWR 2", "phase": "Veg", "dryback_pp": 76.8, "ec_stack_delta": -1.61, "vpd_mean": 1.09, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13619", "name": "POWR 3", "phase": "Veg", "dryback_pp": 59.0, "ec_stack_delta": -0.38, "vpd_mean": 1.07, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13620", "name": "POWR 4", "phase": "Veg", "dryback_pp": 39.8, "ec_stack_delta": 1.45, "vpd_mean": 0.74, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13621", "name": "Veg Room", "phase": "Veg", "dryback_pp": 64.6, "ec_stack_delta": 3.46, "vpd_mean": 0.81, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13622", "name": "Dry 1", "phase": "Veg", "dryback_pp": 0.0, "ec_stack_delta": 0.0, "vpd_mean": 0.81, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "13623", "name": "Dry 2", "phase": "Veg", "dryback_pp": 0.0, "ec_stack_delta": 0.0, "vpd_mean": 0.72, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "17390", "name": "Vault", "phase": "Veg", "dryback_pp": 0.0, "ec_stack_delta": 0.0, "vpd_mean": 0.74, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}, {"id": "18777", "name": "Cure", "phase": "Veg", "dryback_pp": 0.0, "ec_stack_delta": 0.0, "vpd_mean": 0.9, "temp_on_mean": null, "vwc_mean": null, "steering_intent": "vegetatively-steered"}], "meta": {"13617": {"name": "POWR 1", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "POWR 1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 1 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13618": {"name": "POWR 2", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "POWR 2 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 2 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13619": {"name": "POWR 3", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "POWR 3 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 3 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13620": {"name": "POWR 4", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "POWR 4 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "POWR 4 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13621": {"name": "Veg Room", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Veg Room is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Veg Room est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13622": {"name": "Dry 1", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Dry 1 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Dry 1 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "13623": {"name": "Dry 2", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Dry 2 is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Dry 2 est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "17390": {"name": "Vault", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Vault is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Vault est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}, "18777": {"name": "Cure", "hg": "Active harvest group", "phase": "Veg", "phase_class": "veg", "phase_label_en": "Veg \u00b7 vegetatively-steered", "phase_label_es": "Veg \u00b7 gu\u00eda vegetativa", "plants": "\u2014", "substrate": "SOILLESS", "targets": {"pore_ec": [3.0, 5.0], "dryback": [5.0, 15.0], "vpd_on": [0.8, 1.1], "temp_on": [73, 77]}, "note_en": "Cure is vegetatively-steered this window. Targets paired with the veg phase band; dryback reported as absolute pp.", "note_es": "Cure est\u00e1 gu\u00eda vegetativa en esta ventana. Objetivos en banda de fase veg; dryback en pp absoluto."}}, "order": ["13617", "13618", "13619", "13620", "13621", "13622", "13623", "17390", "18777"], "series": {"13617": {"dates": ["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08"], "pore_ec": [6.001, 5.949, 5.872, 5.956, 5.941, 5.558, 5.892, 6.023, 6.253, 6.12, 6.123, 6.368, 6.38, 6.456], "vpd_on": [1.058, 1.027, 0.967, 1.03, 1.009, 0.892, 0.983, 1.057, 0.862, 0.809, 0.828, 0.813, 0.829, 0.865], "vpd_off": [0.981, 0.939, 0.893, 0.894, 0.914, 0.857, 0.872, 0.982, 0.776, 0.739, 0.835, 0.819, 0.808, 0.891], "temp_on": [80.162, 80.459, 80.464, 80.782, 79.163, 78.785, 79.431, 79.489, 75.05, 74.816, 73.571, 73.436, 73.556, 72.652], "temp_off": [80.049, 79.972, 79.945, 79.852, 78.486, 78.375, 78.812, 78.924, 73.511, 73.319, 72.308, 72.148, 71.511, 71.547], "dryback": [40.7, 44.3, 45.0, 47.2, 50.2, 44.1, 49.6, 48.4, 49.5, 49.9, 45.1, 50.3, 51.8, 50.0], "vwc_peak": [74.1, 77.5, 77.6, 77.3, 78.7, 78.2, 77.0, 77.3, 76.6, 76.3, 77.2, 76.1, 76.3, 77.0]}, "13618": {"dates": ["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08"], "pore_ec": [5.614, 4.99, 4.744, 4.376, 4.125, 4.694, 4.332, 2.921, 1.319, 0.527, 1.161, 3.304, 3.787, 4.237], "vpd_on": [1.169, 1.151, 1.15, 1.153, 1.154, 1.133, 1.116, 1.112, 1.229, 1.107, 0.994, 1.06, 0.734, 0.755], "vpd_off": [1.2, 1.152, 1.158, 1.178, 1.191, 1.162, 1.11, 1.107, 1.139, 1.238, 0.903, 0.834, 0.688, 0.704], "temp_on": [72.638, 72.21, 72.24, 72.388, 71.15, 70.475, 69.824, 68.936, 69.675, 77.549, 79.505, 79.226, 76.316, 75.629], "temp_off": [70.989, 70.052, 70.245, 70.673, 70.444, 69.382, 67.479, 66.773, 66.801, 76.433, 77.142, 76.011, 74.627, 74.804], "dryback": [52.6, 50.9, 55.1, 55.7, 55.2, 44.0, 55.5, 51.4, 4.8, 7.7, 74.1, 32.5, 14.5, 24.7], "vwc_peak": [76.8, 75.1, 74.8, 74.5, 73.9, 64.7, 73.2, 76.2, 5.3, 7.8, 74.3, 71.4, 59.8, 57.8]}, "13619": {"dates": ["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08", "2026-06-09"], "pore_ec": [6.5, 6.653, 6.703, 6.734, 6.73, 6.836, 6.998, 7.098, 7.262, 7.233, 7.242, 7.192, 7.107, 7.146, 6.984], "vpd_on": [0.856, 1.028, 1.011, 1.002, 1.076, 1.077, 1.076, 1.141, 1.082, 1.081, 1.089, 1.083, 1.089, 1.119, null], "vpd_off": [0.931, 1.05, 1.106, 1.066, 1.116, 1.132, 1.144, 1.176, 1.133, 1.153, 1.142, 1.138, 1.128, 1.114, 1.1], "temp_on": [73.413, 74.147, 73.701, 73.352, 73.744, 73.569, 73.541, 73.826, 72.373, 72.27, 72.584, 72.447, 72.51, 71.936, null], "temp_off": [72.056, 72.898, 72.748, 71.96, 72.66, 72.475, 72.464, 72.553, 71.241, 71.583, 71.52, 71.417, 71.179, 70.36, 73.533], "dryback": [56.6, 57.6, 57.0, 57.1, 57.7, 55.5, 56.1, 55.7, 56.3, 56.6, 56.2, 56.8, 56.6, 56.2, 19.7], "vwc_peak": [80.4, 79.9, 79.6, 79.5, 79.7, 78.9, 79.0, 79.0, 79.3, 79.5, 78.5, 78.8, 78.2, 77.8, 58.5]}, "13620": {"dates": ["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08"], "pore_ec": [4.047, 3.882, 4.17, 4.217, 3.991, 4.064, 4.192, 4.55, 4.881, 5.217, 5.388, 5.782, 5.888, 5.941], "vpd_on": [0.779, 0.861, 0.704, 0.659, 0.611, 0.651, 0.649, 0.643, 0.71, 0.755, 0.748, 0.818, 0.855, 0.87], "vpd_off": [0.742, 0.774, 0.668, 0.613, 0.691, 0.693, 0.695, 0.678, 0.785, 0.806, 0.759, 0.794, 0.807, 0.832], "temp_on": [78.569, 77.035, 76.788, 76.671, 76.777, 77.285, 77.339, 77.414, 77.328, 77.57, 77.844, 77.742, 77.76, 77.702], "temp_off": [77.428, 76.275, 76.302, 75.995, 76.357, 76.606, 76.73, 76.774, 76.825, 77.125, 77.448, 77.055, 77.053, 76.865], "dryback": [36.2, 31.6, 22.6, 23.3, 19.0, 23.6, 21.9, 19.4, 22.5, 25.2, 22.2, 26.7, 28.6, 28.4], "vwc_peak": [77.1, 76.5, 64.8, 68.7, 68.5, 71.4, 70.8, 68.3, 69.2, 68.5, 70.2, 69.7, 71.3, 72.0]}, "13621": {"dates": ["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08"], "pore_ec": [4.254, 4.29, 3.788, 3.943, 4.043, 4.402, 4.355, 4.228, 4.208, 3.322, 2.986, 4.031, 4.156, 4.165], "vpd_on": [0.83, 0.839, 0.831, 0.833, 0.824, 0.823, 0.828, 0.838, 0.546, 0.633, 0.695, 0.851, 0.919, 0.914], "vpd_off": [0.961, 0.932, 0.947, 0.881, 0.924, 0.93, 0.938, 0.907, 0.626, 0.664, 0.7, 0.728, 0.728, 0.73], "temp_on": [80.89, 80.96, 81.055, 80.9, 80.933, 80.936, 80.994, 81.095, 79.529, 79.542, 79.55, 79.582, 79.521, 79.537], "temp_off": [81.206, 80.589, 80.719, 79.075, 80.613, 80.83, 80.885, 80.817, 79.525, 79.591, 79.396, 79.566, 79.528, 79.528], "dryback": [62.6, 56.7, 50.9, 45.9, 46.1, 56.7, 53.0, 46.0, 41.0, 28.2, 26.1, 23.6, 23.8, 23.7], "vwc_peak": [65.4, 59.5, 53.7, 48.8, 49.0, 59.8, 55.9, 48.9, 44.2, 31.1, 29.0, 27.3, 26.4, 26.4]}, "13622": {"dates": ["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08"], "pore_ec": [null, null, null, null, null, null, null, null, null, null, null, null], "vpd_on": [0.778, 0.782, 0.774, 0.767, 0.775, 0.946, 0.865, 0.969, 0.903, 0.696, 0.741, 0.699], "vpd_off": [0.767, 0.771, 0.781, 0.771, 0.755, 0.83, 0.846, 0.98, 0.878, 0.698, 0.732, 0.718], "temp_on": [62.28, 62.258, 62.229, 62.457, 62.326, 68.425, 67.012, 66.826, 66.006, 61.869, 61.984, 61.748], "temp_off": [62.151, 62.168, 62.263, 62.337, 62.273, 65.971, 67.388, 66.883, 65.431, 61.76, 61.873, 61.628], "dryback": [null, null, null, null, null, null, null, null, null, null, null, null], "vwc_peak": [null, null, null, null, null, null, null, null, null, null, null, null]}, "13623": {"dates": ["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08"], "pore_ec": [null, null, null, null, null, null, null, null, null, null, null, null, null, null], "vpd_on": [0.72, 0.725, 0.713, 0.718, 0.715, 0.714, 0.707, 0.717, 0.719, 0.714, 0.715, 0.718, 0.719, 0.709], "vpd_off": [0.724, 0.725, 0.712, 0.716, 0.714, 0.714, 0.705, 0.715, 0.716, 0.72, 0.712, 0.719, 0.718, 0.712], "temp_on": [59.579, 59.685, 59.575, 59.47, 59.456, 59.446, 59.395, 59.719, 59.456, 59.775, 59.405, 59.437, 59.436, 59.42], "temp_off": [59.582, 59.627, 59.547, 59.449, 59.386, 59.39, 59.39, 59.544, 59.431, 59.821, 59.512, 59.376, 59.39, 59.375], "dryback": [null, null, null, null, null, null, null, null, null, null, null, null, null, null], "vwc_peak": [null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, "17390": {"dates": ["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08"], "pore_ec": [null, null, null, null, null, null, null, null, null, null, null, null, null, null], "vpd_on": [0.599, 0.622, 0.573, 0.596, 0.698, 0.753, 0.865, 1.14, 0.739, 0.611, 0.666, 0.621, 0.589, 0.61], "vpd_off": [0.65, 0.648, 0.652, 0.658, 0.834, 0.89, 1.068, 1.408, 1.115, 0.763, 0.871, 0.851, 0.662, 0.711], "temp_on": [57.515, 58.25, 57.1, 58.363, 61.481, 63.552, 67.425, 70.729, 60.943, 58.678, 59.048, 58.529, 58.094, 58.419], "temp_off": [58.652, 58.817, 60.562, 60.894, 66.375, 69.036, 72.104, 75.374, 66.323, 60.872, 62.311, 62.123, 58.996, 59.787], "dryback": [null, null, null, null, null, null, null, null, null, null, null, null, null, null], "vwc_peak": [null, null, null, null, null, null, null, null, null, null, null, null, null, null]}, "18777": {"dates": ["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08", "2026-06-09"], "pore_ec": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "vpd_on": [0.915, 0.875, 0.857, 0.884, 0.901, 0.897, 0.909, 0.908, 0.901, 0.885, 0.9, 0.876, 0.863, 0.867, null], "vpd_off": [0.922, 0.89, 0.869, 0.896, 0.904, 0.929, 0.948, 0.948, 0.945, 0.921, 0.954, 0.927, 0.898, 0.895, 0.9], "temp_on": [65.114, 64.291, 64.277, 64.567, 64.921, 64.776, 65.519, 65.168, 64.505, 64.328, 64.479, 63.888, 63.51, 63.749, null], "temp_off": [65.225, 64.677, 64.325, 64.84, 65.17, 65.542, 65.981, 65.938, 65.685, 65.272, 65.975, 65.306, 64.477, 64.398, 64.7], "dryback": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "vwc_peak": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]}}, "colors": {"13617": {"line": "var(--p-bulking)", "fill": "rgba(197,163,255,0.35)", "deep": "#7a4ed4"}, "13618": {"line": "var(--p-ripening)", "fill": "rgba(231,111,81,0.35)", "deep": "#c2553d"}, "13619": {"line": "var(--p-stretch)", "fill": "rgba(244,162,97,0.35)", "deep": "#cc7022"}, "13620": {"line": "var(--p-veg)", "fill": "rgba(159,217,106,0.35)", "deep": "#5a8a30"}, "13621": {"line": "var(--app-blue)", "fill": "rgba(31,120,180,0.25)", "deep": "#1a5c92"}, "13622": {"line": "var(--p-rootin)", "fill": "rgba(168,213,226,0.35)", "deep": "#4a8e9f"}, "13623": {"line": "#888", "fill": "rgba(136,136,136,0.20)", "deep": "#666"}, "17390": {"line": "var(--p-bulking)", "fill": "rgba(197,163,255,0.35)", "deep": "#7a4ed4"}, "18777": {"line": "var(--p-ripening)", "fill": "rgba(231,111,81,0.35)", "deep": "#c2553d"}}}</script>
 
 <script>
 (function() {
@@ -2131,6 +2231,97 @@ canvas { width: 100% !important; height: 100% !important; min-height: 220px; }
     compareInput.addEventListener('change', function() { compareMode = compareInput.checked; update(); });
   }
   update();
+})();
+</script>
+
+<div class="chart-modal" role="dialog" aria-modal="true">
+  <div class="chart-modal__panel">
+    <div class="chart-modal__header">
+      <h3 class="chart-modal__title">Chart</h3>
+      <button class="chart-modal__close" type="button"><span lang="en">Close</span><span lang="es">Cerrar</span></button>
+    </div>
+    <div style="position: relative; height: 60vh;">
+      <canvas class="chart-modal__canvas"></canvas>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  if (!window.Chart) return;
+  var QUADRANT_METRICS = {
+    vpd:     { label: 'VPD (kPa)', color: '#2d62ff', series: 'vpd_on' },
+    vwc:     { label: 'VWC peak (%)', color: '#cbeeb0', series: 'vwc_peak' },
+    temp_on: { label: 'Temp lights-on', color: '#d0ff00', series: 'temp_on' },
+    ec_pore: { label: 'Pore EC (mS/cm)', color: '#635e51', series: 'pore_ec' }
+  };
+  function seriesFor(roomId, metric){
+    var by = window.SERIES_BY_ROOM || {};
+    var room = by[String(roomId)] || {};
+    var cfg = QUADRANT_METRICS[metric] || {};
+    var dates = room.dates || [];
+    var values = room[cfg.series] || [];
+    return { dates: dates, values: values };
+  }
+  // Render every quadrant on load.
+  document.querySelectorAll('canvas.quadrant-canvas').forEach(function(c){
+    var room = c.dataset.room, metric = c.dataset.metric;
+    var s = seriesFor(room, metric);
+    var cfg = QUADRANT_METRICS[metric] || { label: metric, color: '#46483d' };
+    if (!s.values.length) return;
+    try {
+      new Chart(c, {
+        type: 'line',
+        data: { labels: s.dates, datasets: [{
+          label: cfg.label, data: s.values,
+          borderColor: cfg.color, backgroundColor: 'transparent',
+          borderWidth: 1.5, pointRadius: 0, tension: 0.2,
+          spanGaps: true
+        }] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          scales: { x: { display: false }, y: { ticks: { font: { size: 9 } } } }
+        }
+      });
+    } catch (err) { console.warn('quadrant render failed', err); }
+  });
+  // Modal: clicking a tile enlarges.
+  var modal = document.querySelector('.chart-modal');
+  var modalCanvas = modal && modal.querySelector('canvas.chart-modal__canvas');
+  var modalTitle = modal && modal.querySelector('.chart-modal__title');
+  var modalChart = null;
+  document.querySelectorAll('.quadrant-tile').forEach(function(tile){
+    tile.addEventListener('click', function(){
+      var c = tile.querySelector('canvas.quadrant-canvas');
+      if (!c || !modal || !modalCanvas) return;
+      var room = c.dataset.room, metric = c.dataset.metric;
+      var s = seriesFor(room, metric);
+      var cfg = QUADRANT_METRICS[metric] || { label: metric, color: '#46483d' };
+      var meta = (window.ROOMS_META && window.ROOMS_META[room]) || {};
+      if (modalTitle) modalTitle.textContent = (meta.name || room) + ' - ' + cfg.label;
+      if (modalChart) modalChart.destroy();
+      modalChart = new Chart(modalCanvas, {
+        type: 'line',
+        data: { labels: s.dates, datasets: [{
+          label: cfg.label, data: s.values,
+          borderColor: cfg.color, backgroundColor: 'transparent',
+          borderWidth: 2, pointRadius: 0, tension: 0.2,
+          spanGaps: true
+        }] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: true, position: 'bottom' }, tooltip: { enabled: true } }
+        }
+      });
+      modal.classList.add('open');
+    });
+  });
+  if (modal) {
+    modal.addEventListener('click', function(e){ if (e.target === modal) modal.classList.remove('open'); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') modal.classList.remove('open'); });
+    var closeBtn = modal.querySelector('.chart-modal__close');
+    if (closeBtn) closeBtn.addEventListener('click', function(){ modal.classList.remove('open'); });
+  }
 })();
 </script>
 </body>

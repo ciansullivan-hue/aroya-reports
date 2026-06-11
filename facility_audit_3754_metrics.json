@@ -5,8 +5,8 @@
     "2026-05-26",
     "2026-06-09"
   ],
-  "coverage_pct": 7.182539682539682,
-  "coverage_msg": "timestamp span 1.0d (7% of 14d requested) \u2014 2026-06-10 -> 2026-06-11",
+  "coverage_pct": 100.0,
+  "coverage_msg": "timestamp span 14.0d (100% of 14d requested) \u2014 2026-05-26 -> 2026-06-09",
   "rooms": [
     {
       "room_id": "13617",
@@ -14,14 +14,14 @@
       "phase": "veg",
       "phase_color": "#9fd96a",
       "steering_intent": "vegetatively-steered",
-      "dryback_pp": 52.2,
+      "dryback_pp": 55.1,
       "dryback_target_pp": [
         5.0,
         15.0
       ],
       "dryback_in_band": false,
-      "ec_stack_delta": -0.75,
-      "vpd_mean": 0.92,
+      "ec_stack_delta": 0.12,
+      "vpd_mean": 0.91,
       "vpd_target": [
         0.8,
         1.1
@@ -32,7 +32,7 @@
         "P2",
         "P3"
       ],
-      "narrative": "POWR 1 is vegetatively-steered this week. Overnight dryback ran 52.2 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+      "narrative": "POWR 1 is vegetatively-steered this week. Overnight dryback ran 55.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
     },
     {
       "room_id": "13618",
@@ -40,14 +40,14 @@
       "phase": "veg",
       "phase_color": "#9fd96a",
       "steering_intent": "vegetatively-steered",
-      "dryback_pp": 33.0,
+      "dryback_pp": 76.8,
       "dryback_target_pp": [
         5.0,
         15.0
       ],
       "dryback_in_band": false,
-      "ec_stack_delta": -0.28,
-      "vpd_mean": 0.76,
+      "ec_stack_delta": -1.61,
+      "vpd_mean": 1.09,
       "vpd_target": [
         0.8,
         1.1
@@ -58,7 +58,7 @@
         "P2",
         "P3"
       ],
-      "narrative": "POWR 2 is vegetatively-steered this week. Overnight dryback ran 33.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+      "narrative": "POWR 2 is vegetatively-steered this week. Overnight dryback ran 76.8 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
     },
     {
       "room_id": "13619",
@@ -66,14 +66,14 @@
       "phase": "veg",
       "phase_color": "#9fd96a",
       "steering_intent": "vegetatively-steered",
-      "dryback_pp": 57.1,
+      "dryback_pp": 59.0,
       "dryback_target_pp": [
         5.0,
         15.0
       ],
       "dryback_in_band": false,
-      "ec_stack_delta": 0.82,
-      "vpd_mean": 1.16,
+      "ec_stack_delta": -0.38,
+      "vpd_mean": 1.07,
       "vpd_target": [
         0.8,
         1.1
@@ -84,7 +84,7 @@
         "P2",
         "P3"
       ],
-      "narrative": "POWR 3 is vegetatively-steered this week. Overnight dryback ran 57.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+      "narrative": "POWR 3 is vegetatively-steered this week. Overnight dryback ran 59.0 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
     },
     {
       "room_id": "13620",
@@ -92,14 +92,14 @@
       "phase": "veg",
       "phase_color": "#9fd96a",
       "steering_intent": "vegetatively-steered",
-      "dryback_pp": 33.4,
+      "dryback_pp": 39.8,
       "dryback_target_pp": [
         5.0,
         15.0
       ],
       "dryback_in_band": false,
-      "ec_stack_delta": -0.32,
-      "vpd_mean": 0.87,
+      "ec_stack_delta": 1.45,
+      "vpd_mean": 0.74,
       "vpd_target": [
         0.8,
         1.1
@@ -110,7 +110,7 @@
         "P2",
         "P3"
       ],
-      "narrative": "POWR 4 is vegetatively-steered this week. Overnight dryback ran 33.4 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+      "narrative": "POWR 4 is vegetatively-steered this week. Overnight dryback ran 39.8 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
     },
     {
       "room_id": "13621",
@@ -118,14 +118,14 @@
       "phase": "veg",
       "phase_color": "#9fd96a",
       "steering_intent": "vegetatively-steered",
-      "dryback_pp": 25.1,
+      "dryback_pp": 64.6,
       "dryback_target_pp": [
         5.0,
         15.0
       ],
       "dryback_in_band": false,
-      "ec_stack_delta": 2.59,
-      "vpd_mean": 0.88,
+      "ec_stack_delta": 3.46,
+      "vpd_mean": 0.81,
       "vpd_target": [
         0.8,
         1.1
@@ -136,7 +136,7 @@
         "P2",
         "P3"
       ],
-      "narrative": "Veg Room is vegetatively-steered this week. Overnight dryback ran 25.1 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
+      "narrative": "Veg Room is vegetatively-steered this week. Overnight dryback ran 64.6 absolute pp against a veg target band of 5-15 absolute pp; shot cadence held the P1/P2 schedule with P3 driving steering."
     },
     {
       "room_id": "13622",
@@ -151,7 +151,7 @@
       ],
       "dryback_in_band": false,
       "ec_stack_delta": 0.0,
-      "vpd_mean": 0.71,
+      "vpd_mean": 0.81,
       "vpd_target": [
         0.8,
         1.1
@@ -177,7 +177,7 @@
       ],
       "dryback_in_band": false,
       "ec_stack_delta": 0.0,
-      "vpd_mean": 0.71,
+      "vpd_mean": 0.72,
       "vpd_target": [
         0.8,
         1.1
@@ -203,7 +203,7 @@
       ],
       "dryback_in_band": false,
       "ec_stack_delta": 0.0,
-      "vpd_mean": 0.66,
+      "vpd_mean": 0.74,
       "vpd_target": [
         0.8,
         1.1
@@ -3492,5 +3492,5 @@
     }
   ],
   "soft_imports": [],
-  "generated_at": "2026-06-11T02:29:41+00:00"
+  "generated_at": "2026-06-11T06:58:23+00:00"
 }
