@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flying Dutchman — AROYA Trade-In Valuation v2 · 2026-06-11</title>
+<title>Flying Dutchman — AROYA Trade-In Valuation v3 · 2026-06-11</title>
 <style>
 :root{--bg:#fafaf7;--ink:#1c2419;--ink-muted:#7e836e;--border:#e2e2dc;--card:#ffffff;
 --olive:#3f4e2b;--lime:#9fd96a;--app-blue:#1f78b4;--attention:#e76f51;
@@ -39,6 +39,8 @@ body.dark h3{color:var(--lime)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;box-shadow:var(--card-shadow)}
 .notice{border-left:5px solid var(--warn);background:var(--warn-bg);padding:14px 18px;border-radius:8px;margin:18px 0;font-size:13.5px}
 .callout-fix{border-left:5px solid var(--good);background:var(--good-bg);padding:14px 18px;border-radius:8px;margin:18px 0;font-size:13.5px}
+.callout-promo{border-left:5px solid var(--lime);background:linear-gradient(90deg,rgba(159,217,106,.18),rgba(159,217,106,.05));padding:16px 20px;border-radius:8px;margin:18px 0;font-size:14px}
+body.dark .callout-promo{background:linear-gradient(90deg,rgba(185,229,135,.10),rgba(185,229,135,.02))}
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:14px 0}
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;box-shadow:var(--card-shadow)}
 .kpi .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);font-weight:700}
@@ -56,15 +58,17 @@ tr:hover td{background:var(--good-bg)}
 .b-ok{background:var(--good-bg);color:var(--good)}
 .b-warn{background:var(--warn-bg);color:var(--warn)}
 .b-bad{background:var(--bad-bg);color:var(--bad)}
-.b-src-aroya{background:var(--good-bg);color:var(--good);font-size:10.5px}
+.b-promo{background:var(--lime);color:var(--olive);font-weight:800}
 .b-src-est{background:var(--warn-bg);color:var(--warn);font-size:10.5px}
 footer{margin-top:40px;font-size:12px;border-top:1px solid var(--border);padding-top:14px;background:var(--olive);color:#cfd6bd;padding:18px 22px;border-radius:8px}
 body.dark footer{background:#1f2818}
 footer a{color:var(--lime);text-decoration:none}
-.scenario{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:12px;box-shadow:var(--card-shadow)}
+.scenario{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:var(--card-shadow)}
 .scenario h3{margin-top:0;color:var(--olive)}
 body.dark .scenario h3{color:var(--lime)}
 .scenario.recommended{border:2px solid var(--lime)}
+.scenario.promo{border:2px solid var(--lime);background:linear-gradient(180deg,var(--card),rgba(159,217,106,.06))}
+body.dark .scenario.promo{background:linear-gradient(180deg,var(--card),rgba(185,229,135,.04))}
 .scenario .row{display:flex;gap:24px;flex-wrap:wrap;margin-top:8px}
 .scenario .row .col{flex:1;min-width:140px}
 .scenario .row .col .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);font-weight:700}
@@ -75,6 +79,8 @@ body.dark .scenario .row .col .v{color:var(--lime)}
 body.dark .sku-line .qty{color:var(--lime)}
 .sku-line .sku{flex:1;font-weight:600}
 .sku-line .price{color:var(--ink-muted);font-size:12px}
+.commit{background:rgba(159,217,106,.10);border:1px dashed var(--olive);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px}
+body.dark .commit{background:rgba(185,229,135,.06);border-color:var(--lime)}
 @media print{.toggles{display:none}}
 @media (max-width:680px){.meta,.kpi-row{grid-template-columns:repeat(2,1fr)}}
 </style></head>
@@ -85,129 +91,125 @@ body.dark .sku-line .qty{color:var(--lime)}
 <button class="tg" id="themeBtn" onclick="toggleTheme()">&#9790; Dark</button>
 </div>
 <div class="lockup">
-<svg viewBox="0 0 202.1 75" style="height:38px;fill:currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="AROYA"><path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/><path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/><path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/><path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/><path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/><rect x="127.4" y="57.2" width="1.8" height="9.9"/><path d="M138,62.8c0,2.1-.9,3.1-2.6,3.1s-.7,0-1,0c-.3-.1-.5-.3-.8-.5-.2-.2-.3-.4-.4-.6-.1-.2-.2-.5-.2-.7v-6.8h-1.9v7.2c0,.3.1.7.2,1,0,.4.3.6.5.9.4.3.8.6,1.3.8s1.1.3,1.8.2c.7,0,1.4-.1,1.9-.4s.9-.7,1.2-1.3v1.5h1.8v-9.9h-1.8v5.6Z"/><path d="M152.7,57c-.6,0-1,.1-1.4.2-.4.1-.7.3-1,.6-.2.2-.4.4-.6.6s-.3.5-.4.7c-.2-.7-.6-1.2-1.2-1.6-.5-.4-1.2-.6-2-.6s-1.7.3-2.3.8c-.3.3-.6.6-.7,1v-1.5h-1.6v9.9h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6.1.2.1.5.2.7v6.8h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6,0,.2.1.5.1.7v6.8h1.8v-6.4c0-1.2-.3-2.2-.9-2.8-.6-.6-1.4-.9-2.6-.9Z"/><path d="M112.7,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.3.8-.5,1.7-.5,2.8s.2,1.9.6,2.7c.4.8.9,1.4,1.6,1.8.7.4,1.5.6,2.4.6s1.3-.1,1.8-.4,1-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM112.1,65c-.5.6-1.2,1-2.1,1s-1.3-.2-1.8-.5c-.5-.3-.8-.7-1-1.3-.2-.6-.3-1.2-.3-2.1,0-1.3.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.5.6.7,1.5.7,2.7s-.2,2.2-.7,2.8Z"/><rect x="127.4" y="53.2" width="1.8" height="1.8"/><path d="M123.8,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.4.8-.6,1.6-.6,2.7s.2,2,.6,2.8c.4.8.9,1.4,1.6,1.8.7.5,1.4.7,2.5.6.7,0,1.3-.1,1.8-.4s.9-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM123,65c-.5.6-1.2,1-2.1,1s-1.4-.2-1.8-.5c-.4-.3-.7-.7-.9-1.3-.2-.6-.3-1.3-.3-2.1,0-1.2.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.4.7.6,1.6.6,2.7s-.2,2.2-.7,2.8Z"/><path d="M97.7,53.2l-5.5,13.9h1.9l1.5-4.2h5.9l1.6,4.2h1.9l-5.4-13.9h-1.9ZM96.2,61.4l1.6-4.2c.4-.9.6-1.7.8-2.2.3.8.6,1.5.8,2.2l1.6,4.2h-4.8Z"/><path d="M85.4,62.4c-.2.7-.5,1.6-.9,2.6-.4-1.1-.6-2-.9-2.6l-1.9-5.3h-1.9l3.9,9.8c-.3.6-.5,1.1-.6,1.4,0,.3-.3.5-.5.7-.2.2-.4.3-.6.3-.4,0-.8-.1-1.2-.2v1.6c.5.1,1,.2,1.5.2s.8,0,1.2-.3c.3-.2.6-.5.9-1,.3-.4.5-1,.8-1.8l4-10.8h-1.9l-1.9,5.4Z"/><path d="M77.5,57.5c-.7-.4-1.5-.7-2.3-.7-1.4,0-2.4.5-3.2,1.6v-5.3h-1.8v13.9h1.8v-1.4c.4.5.8.9,1.4,1.2.5.3,1.1.4,1.8.4s1.7-.2,2.3-.6c.7-.4,1.2-1,1.6-1.8.4-.8.6-1.7.6-2.8s-.2-1.9-.6-2.7c-.4-.8-.9-1.4-1.6-1.8ZM77.5,64.1c-.2.6-.5,1-.9,1.3-.4.3-1,.5-1.8.5s-1.7-.3-2.1-1c-.5-.6-.7-1.6-.7-2.8s.2-2,.6-2.8c.3-.7,1.1-1.1,2.2-1.1s1.8.3,2.3,1c.5.6.7,1.6.7,2.8s0,1.5-.3,2.1Z"/><path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z" fill="#9fd96a"/></svg>
+<svg viewBox="0 0 202.1 75" style="height:38px;fill:currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="AROYA"><path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/><path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/><path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/><path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/><path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/><path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z" fill="#9fd96a"/></svg>
 <div style="border-left:2px solid rgba(255,255,255,.3);padding-left:14px">
 <div class="brand">TRADE-IN VALUATION</div>
-<div style="font-size:11px;color:#cfd6bd;font-weight:600;margin-top:2px">by Addium &middot; v2</div>
+<div style="font-size:11px;color:#cfd6bd;font-weight:600;margin-top:2px">by Addium &middot; v3</div>
 </div>
 </div>
 <h1>Flying Dutchman &middot; Palm Desert, CA</h1>
-<div class="sub">
-<span class="i-en">36 devices inventoried &middot; pulled 2026-06-11 &middot; credit-per-purchase model</span>
-<span class="i-es">36 dispositivos &middot; extra&iacute;do 2026-06-11</span>
-</div>
+<div class="sub">36 devices inventoried &middot; pulled 2026-06-11 &middot; credit-per-purchased-SKU model · standard trade-in + FREE TEROS ONE promo</div>
 <div class="meta">
-<div class="m"><div class="l"><span class="i-en">Facility</span></div><div class="v">3447 &middot; Flying Dutchman</div></div>
-<div class="m"><div class="l"><span class="i-en">Location</span></div><div class="v">Palm Desert, Riverside CA</div></div>
-<div class="m"><div class="l"><span class="i-en">Primary contact</span></div><div class="v">Nick De Groot &middot; (805) 453-7279</div></div>
-<div class="m"><div class="l"><span class="i-en">Legacy puck-nodes (in 4 rooms)</span></div><div class="v">32</div></div>
-<div class="m"><div class="l"><span class="i-en">Legacy climate stations</span></div><div class="v">2</div></div>
-<div class="m"><div class="l"><span class="i-en">Already current-gen H421</span></div><div class="v">2</div></div>
-<div class="m"><div class="l"><span class="i-en">Max credit (1:1 Singles)</span></div><div class="v">$3,500</div></div>
-<div class="m"><div class="l"><span class="i-en">Rooms inventoried</span></div><div class="v">4 / 14 (partial)</div></div>
+<div class="m"><div class="l">Facility</div><div class="v">3447 &middot; Flying Dutchman</div></div>
+<div class="m"><div class="l">Location</div><div class="v">Palm Desert, Riverside CA</div></div>
+<div class="m"><div class="l">Contact</div><div class="v">Nick De Groot &middot; (805) 453-7279</div></div>
+<div class="m"><div class="l">Legacy puck-nodes</div><div class="v">32</div></div>
+<div class="m"><div class="l">Legacy climate stations</div><div class="v">2</div></div>
+<div class="m"><div class="l">Current-gen H421</div><div class="v">2</div></div>
+<div class="m"><div class="l">FREE-promo sensor value</div><div class="v">$13,408</div></div>
+<div class="m"><div class="l">Rooms inventoried</div><div class="v">4 / 14 (partial)</div></div>
 </div>
 </div></header>
 
 <div class="wrap">
 
 <section>
-<div class="callout-fix">
-<b><span class="i-en">v2 correction (2026-06-11)</span></b><br>
-<span class="i-en">AROYA's trade-in credit is tied to the <b>SKU purchased</b>, not the device traded in. Each <b>TEROS One Single</b> bought = $100 off ($419 → $319). Each <b>TEROS One Dual</b> bought = $150 off ($608 → $458). Each <b>Climate One</b> bought = $150 off ($569 → $419). So the customer's total credit depends on how many of each new SKU they buy — and the Dual SKU lets them <b>retire 2 legacy pucks for the price of less than 1.5 Singles</b> with the same per-unit discount as a Climate One. That trade-off is the core decision in this report.</span>
+<div class="callout-promo">
+<b>Active AROYA promo &middot; offer expires 2026-08-31</b><br>
+<b>All your TEROS 12 sensors, upgraded to TEROS ONE — for free.</b> AROYA covers 100% of new TEROS ONE hardware for the 32 puck-node positions IF the facility purchases &amp; activates <b>Drip &amp; Drain</b> (runoff-EC + irrigation-volume tracking) AND activates <b>AUTOMAIT</b> (AI irrigation autopilot). At MSRP that's <b>$13,408</b> of free sensor hardware. The 2 legacy climate-station repeaters in Rooms 2 and 5 are NOT covered by this promo — they still need the standard Climate One trade-in. See Scenario D below + <code>aroya.io/terosupgrade</code>. Source: 06.01.2026_AR-Teros-Flyer.pdf.
 </div>
 <div class="notice">
-<b><span class="i-en">Scope note &middot; partial inventory</span></b><br>
-<span class="i-en">This pull resolved <b>Rooms 1, 2, 3, 5</b> (= 36 physical devices) via <code>spa_get_room_config</code> before the AROYA SPA bridge returned a "stale page" error on Room 4. The other 10 rooms — Rooms 4, 6, 7, 8, 9 (Nick's new second-floor expansion), the Dry/Trim/Curing/Storage rooms, the Veg Room (9 zones), and the Nursery (14 zones) — are <b>not yet inventoried</b>. Extrapolating from the 4-room sample (each flower room ≈ 8 nodes + 1 climate station): roughly <b>90–110 total devices</b>, with an estimated <b>$8,000–$10,000 of additional 1:1-Single trade-in credit</b> available on the unpulled rooms.</span>
+<b>Scope note · partial inventory</b><br>
+This pull resolved Rooms 1, 2, 3, 5 (= 36 physical devices) before the AROYA SPA bridge returned a "stale page" error. The remaining 10 rooms (Rooms 4, 6, 7, 8, 9, Dry, Trim, Veg, Curing, Nursery) are not yet inventoried. Extrapolating from the 4-room sample: roughly 90-110 total devices facility-wide, with another <b>~$22,000-$28,000 of free-promo sensor value</b> on the unpulled rooms if Scenario D is chosen.
 </div>
 </section>
 
 <section>
-<h2><span class="i-en">Executive summary</span></h2>
+<h2>Executive summary &middot; four scenarios</h2>
 <div class="kpi-row">
-<div class="kpi"><div class="lbl">1:1 Singles credit (Scenario A)</div><div class="val">$3,500</div><div class="sub">Highest gross credit number, but highest net spend $11,046</div></div>
-<div class="kpi"><div class="lbl">Consolidated Duals credit (Scenario B)</div><div class="val">$2,700</div><div class="sub">Lower credit but LOWEST net spend $8,166 — saves $2,880 vs Singles</div></div>
-<div class="kpi"><div class="lbl">Devices in scope (4 rooms)</div><div class="val">36</div><div class="sub">32 legacy pucks + 2 legacy climates + 2 current-gen H421</div></div>
-<div class="kpi"><div class="lbl">Estimated residual value</div><div class="val">$6,209</div><div class="sub">Book value of installed legacy hardware (estimate, not AROYA-published)</div></div>
+<div class="kpi"><div class="lbl">A · 1:1 Singles credit</div><div class="val">$3,500</div><div class="sub">Net spend $11,046 (highest gross credit)</div></div>
+<div class="kpi"><div class="lbl">B · Consolidated Duals credit</div><div class="val">$2,700</div><div class="sub">Net spend $8,166 (lowest standard net spend)</div></div>
+<div class="kpi"><div class="lbl">D · FREE TEROS ONE promo value</div><div class="val">$13,408</div><div class="sub">Hardware net spend $838 (climate-station Climate One only) + D&D + AUTOMAIT commitments</div></div>
+<div class="kpi"><div class="lbl">Estimated residual value</div><div class="val">$6,209</div><div class="sub">Book value of installed legacy hardware (estimate)</div></div>
 </div>
 
-<h3 class="i-en">Top 3 rooms by replacement scale (credit potential)</h3>
+<h3>Top 3 rooms by replacement scale</h3>
 <div class="card">
 <table>
-<tr><th>#</th><th>Room</th><th>Pucks</th><th>Climates</th><th>Credit if 1:1 Singles</th><th>Credit if Duals</th></tr>
-<tr><td><b>1</b></td><td>Room 2</td><td class="num">8</td><td class="num">1</td><td class="num">$950</td><td class="num">$750</td></tr>
-<tr><td><b>2</b></td><td>Room 5</td><td class="num">8</td><td class="num">1</td><td class="num">$950</td><td class="num">$750</td></tr>
-<tr><td><b>3</b></td><td>Room 1</td><td class="num">8</td><td class="num">0</td><td class="num">$800</td><td class="num">$600</td></tr>
+<tr><th>#</th><th>Room</th><th>Pucks</th><th>Climates</th><th>Credit A (1:1 Singles)</th><th>Credit B (Duals)</th><th>Value D (FREE promo)</th></tr>
+<tr><td><b>1</b></td><td>Room 2</td><td class="num">8</td><td class="num">1</td><td class="num">$950</td><td class="num">$750</td><td class="num"><b>$3502</b></td></tr>
+<tr><td><b>2</b></td><td>Room 5</td><td class="num">8</td><td class="num">1</td><td class="num">$950</td><td class="num">$750</td><td class="num"><b>$3502</b></td></tr>
+<tr><td><b>3</b></td><td>Room 1</td><td class="num">8</td><td class="num">0</td><td class="num">$800</td><td class="num">$600</td><td class="num"><b>$3352</b></td></tr>
 </table>
 <div style="margin-top:8px;font-size:11.5px;color:var(--ink-muted)">
-<span class="i-en">Each of Rooms 1, 2, 3, 5 has the same shape — 8 legacy pucks per flower room. Rooms 2 + 5 also each have 1 legacy climate station (the H111 and H411 repeaters with ATM14 sensors) which add $150 to the credit total. Rooms 1 + 3 already have a current-gen H421 in place.</span>
+Each of Rooms 1, 2, 3, 5 has 8 legacy puck-nodes — Scenario D returns $3,352 of free sensor value per flower room. Rooms 2 + 5 also have 1 legacy climate station each (the H111 / H411 repeaters with ATM14 sensors); those add $150 standard Climate One credit per room even under Scenario D.
 </div>
 </div>
 </section>
 
 <section>
-<h2><span class="i-en">Upgrade scenarios</span></h2>
-
+<h2>Upgrade scenarios</h2>
 <div class="scenario">
-<h3>A &middot; 1:1 swap with Singles + Climate One</h3>
-<p><span class="i-en">Replace every legacy puck with 1 TEROS One Single and every legacy climate with 1 Climate One. Maximum credit, maximum spend.</span></p>
-<div class="sku-line">
-<div class="qty">32&times;</div>
-<div class="sku">TEROS One Single<div class="price">discount $100/ea &middot; trade price $319/ea &middot; MSRP $419/ea</div></div>
-</div>
-<div class="sku-line">
-<div class="qty">2&times;</div>
-<div class="sku">Climate One H421<div class="price">discount $150/ea &middot; trade price $419/ea &middot; MSRP $569/ea</div></div>
-</div>
+<h3>A · 1:1 swap with Singles + Climate One (standard trade-in)</h3>
+<div class="sku-line"><div class="qty">32&times;</div><div class="sku">TEROS One Single<div class="price">discount $100/ea · trade price $319/ea · MSRP $419/ea</div></div></div>
+<div class="sku-line"><div class="qty">2&times;</div><div class="sku">Climate One H421<div class="price">discount $150/ea · trade price $419/ea · MSRP $569/ea</div></div></div>
 <div class="row" style="margin-top:14px">
-<div class="col"><div class="l">AROYA credit</div><div class="v">$3,500</div></div>
+<div class="col"><div class="l">AROYA credit (discount)</div><div class="v">$3,500</div></div>
 <div class="col"><div class="l">MSRP total</div><div class="v">$14,546</div></div>
 <div class="col"><div class="l">Net spend (with trade-in)</div><div class="v">$11,046</div></div>
 <div class="col"><div class="l">Legacy devices retired</div><div class="v">34</div></div>
 </div>
-</div>
 
+</div>
 <div class="scenario recommended">
-<h3>B &middot; Consolidated Duals + Climate One <span class="badge b-ok" style="vertical-align:middle">recommended</span></h3>
-<p><span class="i-en">Pair every 2 legacy pucks into 1 TEROS One Dual + 1:1 on climates. <b>Lowest net spend</b> — the customer saves $2,880 vs Scenario A even though gross credit is $800 lower. Each Dual replaces 2 pucks at $458 instead of 2× $319 = $638.</span></p>
-<div class="sku-line">
-<div class="qty">16&times;</div>
-<div class="sku">TEROS One Dual<div class="price">discount $150/ea &middot; trade price $458/ea &middot; MSRP $608/ea</div></div>
-</div>
-<div class="sku-line">
-<div class="qty">2&times;</div>
-<div class="sku">Climate One H421<div class="price">discount $150/ea &middot; trade price $419/ea &middot; MSRP $569/ea</div></div>
-</div>
+<h3>B · Consolidated Duals + Climate One (lowest standard net spend) <span class="badge b-ok" style="vertical-align:middle">recommended</span></h3>
+<div class="sku-line"><div class="qty">16&times;</div><div class="sku">TEROS One Dual<div class="price">discount $150/ea · trade price $458/ea · MSRP $608/ea</div></div></div>
+<div class="sku-line"><div class="qty">2&times;</div><div class="sku">Climate One H421<div class="price">discount $150/ea · trade price $419/ea · MSRP $569/ea</div></div></div>
 <div class="row" style="margin-top:14px">
-<div class="col"><div class="l">AROYA credit</div><div class="v">$2,700</div></div>
+<div class="col"><div class="l">AROYA credit (discount)</div><div class="v">$2,700</div></div>
 <div class="col"><div class="l">MSRP total</div><div class="v">$10,866</div></div>
 <div class="col"><div class="l">Net spend (with trade-in)</div><div class="v">$8,166</div></div>
 <div class="col"><div class="l">Legacy devices retired</div><div class="v">34</div></div>
 </div>
-</div>
 
-<div class="scenario">
-<h3>C &middot; Selective &mdash; OOW &amp; unhealthy only</h3>
-<p><span class="i-en">Replace only the devices that are out-of-warranty AND showing health failure (dead battery, low battery). Conservative spend, biggest reliability win.</span></p>
-<div class="sku-line">
-<div class="qty">1&times;</div>
-<div class="sku">TEROS One Single<div class="price">discount $100/ea &middot; trade price $319/ea &middot; MSRP $419/ea</div></div>
 </div>
+<div class="scenario">
+<h3>C · Selective — OOW &amp; unhealthy only</h3>
+<div class="sku-line"><div class="qty">1&times;</div><div class="sku">TEROS One Single<div class="price">discount $100/ea · trade price $319/ea · MSRP $419/ea</div></div></div>
 <div class="row" style="margin-top:14px">
-<div class="col"><div class="l">AROYA credit</div><div class="v">$100</div></div>
-<div class="col"><div class="l">Net spend</div><div class="v">$319</div></div>
+<div class="col"><div class="l">AROYA credit (discount)</div><div class="v">$100</div></div>
+<div class="col"><div class="l">MSRP total</div><div class="v">$419</div></div>
+<div class="col"><div class="l">Net spend (with trade-in)</div><div class="v">$319</div></div>
 <div class="col"><div class="l">Legacy devices retired</div><div class="v">1</div></div>
 </div>
-<div style="margin-top:10px;font-size:12.5px;color:var(--ink-muted)">
-<span class="i-en">In scope: just <b>1 puck</b> — Room 5 H3310008223 with the dead T12 (T12-00137234, battery 0%). Every other H321/H331 node is out-of-warranty but currently healthy.</span>
+
+</div>
+<div class="scenario promo">
+<h3>D · FREE TEROS ONE upgrade via Drip &amp; Drain + AUTOMAIT commitment <span class="badge b-promo" style="vertical-align:middle">free hardware</span></h3>
+<div class="sku-line"><div class="qty">32&times;</div><div class="sku">TEROS One Single (AROYA covers 100% — promo)<div class="price"><b>$0/ea</b> — AROYA covers 100% (MSRP $419/ea, total value $13,408)</div></div></div>
+<div class="sku-line"><div class="qty">2&times;</div><div class="sku">Climate One H421 (standard pricing — promo does NOT cover repeater/climate swaps)<div class="price">discount $150/ea · trade price $419/ea · MSRP $569/ea</div></div></div>
+<div class="row" style="margin-top:14px">
+<div class="col"><div class="l">AROYA-covered value</div><div class="v">$13,708</div></div>
+<div class="col"><div class="l">MSRP total</div><div class="v">$14,546</div></div>
+<div class="col"><div class="l">Hardware net spend</div><div class="v">$838</div></div>
+<div class="col"><div class="l">Legacy devices retired</div><div class="v">34</div></div>
+</div>
+<div class="commit">
+<b>Customer commitments (required to claim the promo)</b>
+<ul style="margin:6px 0 4px;padding-left:20px">
+<li>Purchase + activate Drip &amp; Drain (hardware + software, real-time runoff EC + irrigation volume)</li><li>Activate AUTOMAIT (AI irrigation autopilot)</li><li>Maintain standard AROYA software subscription</li>
+</ul>
+<div style="font-size:12px;color:var(--ink-muted);margin-top:6px">Drip &amp; Drain hardware + software + AUTOMAIT subscription pricing is per-facility — ask AROYA rep for the Flying Dutchman quote. AROYA cites &#x27;up to 60 hours/month saved and 20% less water &amp; nutrient&#x27; as the ROI thesis for the operational commitment.</div>
+<div style="font-size:12px;color:var(--olive);margin-top:6px"><b>Offer expires 2026-08-31 · aroya.io/terosupgrade</b></div>
 </div>
 </div>
 </section>
 
 <section>
-<h2><span class="i-en">Per-device table</span></h2>
+<h2>Per-device table</h2>
 <div class="card" style="overflow-x:auto">
 <table>
-<tr><th>Room</th><th>Zone</th><th>Radio serial</th><th>Family</th><th>Sensor serial</th><th>Sensor</th><th>createdOn</th><th>Age</th><th>Warranty</th><th>Battery</th><th>Upgrade options (credit attaches to new SKU)</th><th>Est. residual</th></tr>
+<tr><th>Room</th><th>Zone</th><th>Radio serial</th><th>Family</th><th>Sensor serial</th><th>Sensor</th><th>createdOn</th><th>Age</th><th>Warranty</th><th>Battery</th><th>Upgrade options (credit attaches to NEW SKU)</th><th>Est. residual</th></tr>
 <tr>
 <td>Room 1</td>
 <td>Zone 2 Front</td>
@@ -219,8 +221,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>98%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 1</td>
@@ -233,8 +235,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 1</td>
@@ -247,8 +249,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 1</td>
@@ -261,8 +263,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 1</td>
@@ -275,8 +277,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 1</td>
@@ -289,8 +291,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 1</td>
@@ -303,8 +305,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 1</td>
@@ -317,8 +319,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 1</td>
@@ -332,7 +334,7 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td><span class="badge b-ok">in&nbsp;warranty</span></td>
 <td>PoE</td>
 <td><span style="color:var(--ink-muted)">— current gen, no upgrade —</span></td>
-<td class="num">$495 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td class="num">$495 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 2</td>
@@ -345,8 +347,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>Climate One H421 ($150 off)</td>
-<td class="num">$184 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>Climate One H421 ($150 off) — <i>promo does not cover</i></td>
+<td class="num">$184 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 2</td>
@@ -359,8 +361,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>90%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 2</td>
@@ -373,8 +375,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 2</td>
@@ -387,8 +389,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 2</td>
@@ -401,8 +403,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>96%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 2</td>
@@ -415,8 +417,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 2</td>
@@ -429,8 +431,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 2</td>
@@ -443,8 +445,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 2</td>
@@ -457,8 +459,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">2.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$251 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$251 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 3</td>
@@ -471,8 +473,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>81%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 3</td>
@@ -485,8 +487,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 3</td>
@@ -499,8 +501,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 3</td>
@@ -513,8 +515,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$147 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 3</td>
@@ -527,8 +529,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>99%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$170 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$170 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 3</td>
@@ -541,8 +543,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>99%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$170 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$170 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 3</td>
@@ -555,8 +557,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>97%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$170 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$170 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 3</td>
@@ -569,8 +571,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>99%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$170 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$170 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 3</td>
@@ -584,7 +586,7 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td><span class="badge b-bad">expired</span></td>
 <td>PoE</td>
 <td><span style="color:var(--ink-muted)">— current gen, no upgrade —</span></td>
-<td class="num">$319 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td class="num">$319 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 5</td>
@@ -597,8 +599,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$165 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 5</td>
@@ -611,8 +613,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>97%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$165 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 5</td>
@@ -625,8 +627,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td><span class="badge b-bad">0%</span></td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$41 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$41 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 5</td>
@@ -639,8 +641,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$165 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 5</td>
@@ -653,8 +655,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$165 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 5</td>
@@ -667,8 +669,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$165 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 5</td>
@@ -681,8 +683,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>94%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$165 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 5</td>
@@ -695,8 +697,8 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off) · or share<br><span style="font-size:11px;color:var(--ink-muted)">a Dual ($150 off) with 1 other puck</span></td>
-<td class="num">$165 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">FREE via promo</span></td>
+<td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 <tr>
 <td>Room 5</td>
@@ -709,102 +711,85 @@ body.dark .sku-line .qty{color:var(--lime)}
 <td class="num">2.1 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>PoE</td>
-<td>Climate One H421 ($150 off)</td>
-<td class="num">$291 <span class="badge b-src-est" title="Estimate, not AROYA-published">E</span></td>
+<td>Climate One H421 ($150 off) — <i>promo does not cover</i></td>
+<td class="num">$291 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 </table>
 <div style="margin-top:10px;font-size:11.5px;color:var(--ink-muted)">
-<span class="b-src-est badge">E</span> <span class="i-en">= defensible estimate (not AROYA-published)</span>
-&middot; <span class="i-en">The credit numbers in the upgrade column are attached to the NEW SKU purchased — see Scenarios A &amp; B for how the same device produces different total credit depending on the purchase plan.</span>
+<span class="b-promo badge">FREE via promo</span> = covered 100% under Scenario D (TEROS 12 puck-nodes only) ·
+<span class="b-src-est badge">E</span> = defensible estimate (not AROYA-published)
 </div>
 </div>
 </section>
 
 <section>
-<h2><span class="i-en">Rollups</span></h2>
+<h2>Rollups</h2>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
-<div class="card"><h3>By family</h3>
-<table><tr><th>Family</th><th>Count</th><th>Residual</th></tr>
-<tr><td>H321</td><td class="num">19</td><td class="num">$2,793</td></tr>
+<div class="card"><h3>By family</h3><table><tr><th>Family</th><th>Count</th><th>Residual</th></tr><tr><td>H321</td><td class="num">19</td><td class="num">$2,793</td></tr>
 <tr><td>H331</td><td class="num">12</td><td class="num">$1,876</td></tr>
 <tr><td>H421</td><td class="num">2</td><td class="num">$814</td></tr>
 <tr><td>H111</td><td class="num">1</td><td class="num">$184</td></tr>
 <tr><td>H341</td><td class="num">1</td><td class="num">$251</td></tr>
-<tr><td>H411</td><td class="num">1</td><td class="num">$291</td></tr>
-</table></div>
-<div class="card"><h3>By room</h3>
-<table><tr><th>Room</th><th>Count</th><th>Residual</th></tr>
-<tr><td>Room 1</td><td class="num">9</td><td class="num">$1,671</td></tr>
+<tr><td>H411</td><td class="num">1</td><td class="num">$291</td></tr></table></div>
+<div class="card"><h3>By room</h3><table><tr><th>Room</th><th>Count</th><th>Residual</th></tr><tr><td>Room 1</td><td class="num">9</td><td class="num">$1,671</td></tr>
 <tr><td>Room 2</td><td class="num">9</td><td class="num">$1,464</td></tr>
 <tr><td>Room 3</td><td class="num">9</td><td class="num">$1,587</td></tr>
-<tr><td>Room 5</td><td class="num">9</td><td class="num">$1,487</td></tr>
-</table></div>
-<div class="card"><h3>By warranty</h3>
-<table><tr><th>Status</th><th>Count</th><th>Residual</th></tr>
-<tr><td>IN_WARRANTY</td><td class="num">1</td><td class="num">$495</td></tr>
-<tr><td>OUT_OF_WARRANTY</td><td class="num">35</td><td class="num">$5,714</td></tr>
-</table></div>
+<tr><td>Room 5</td><td class="num">9</td><td class="num">$1,487</td></tr></table></div>
+<div class="card"><h3>By warranty</h3><table><tr><th>Status</th><th>Count</th><th>Residual</th></tr><tr><td>IN_WARRANTY</td><td class="num">1</td><td class="num">$495</td></tr>
+<tr><td>OUT_OF_WARRANTY</td><td class="num">35</td><td class="num">$5,714</td></tr></table></div>
 </div>
 </section>
 
 <section>
-<h2><span class="i-en">Assumptions &amp; pricing sources</span></h2>
+<h2>Assumptions &amp; pricing sources</h2>
 <div class="card">
-<h3>AROYA-published pricing — credit attaches to the NEW SKU purchased</h3>
+<h3>Standard AROYA-published trade-in pricing</h3>
 <table>
-<tr><th>New SKU bought</th><th>MSRP</th><th>Trade-in price</th><th>Discount = AROYA credit</th><th>Replaces</th></tr>
+<tr><th>New SKU bought</th><th>MSRP</th><th>Trade price</th><th>Discount</th><th>Replaces</th></tr>
 <tr><td><b>TEROS One Single</b></td><td>$419</td><td>$319</td><td><b>$100</b></td><td>1 legacy node + T12 puck</td></tr>
 <tr><td><b>TEROS One Dual</b></td><td>$608</td><td>$458</td><td><b>$150</b></td><td>2 legacy node + T12 pucks</td></tr>
 <tr><td><b>Climate One H421</b></td><td>$569</td><td>$419</td><td><b>$150</b></td><td>1 legacy repeater + ATM14 (or current H421)</td></tr>
 </table>
-<p style="font-size:12.5px;color:var(--ink-muted);margin-top:8px"><span class="i-en">Source: claude-brain memory <code>reference_aroya-firmware-upgrade-audit-skill</code> + <code>reference_aroya-retired-devices-from-api</code> (the Zugatti / Noble Farms canonical pricing).</span></p>
+<p style="font-size:12.5px;color:var(--ink-muted);margin-top:8px">Source: claude-brain memory (Zugatti / Noble Farms canonical pricing).</p>
 
-<h3>Estimated values (flagged <span class="badge b-src-est">E</span> in tables — NOT AROYA-published)</h3>
-<p><span class="i-en">The "Estimated residual value" column reflects defensible book value of installed hardware based on industry-standard 5-year straight-line depreciation, with a health haircut for any device in failure state. Legacy node radio = $280, repeater = $320, TEROS-12 sensor = $140, ATM14 = $180. None of these are AROYA-published — they're informational only and don't feed the trade-in credit math.</span></p>
+<h3>Scenario D — FREE TEROS ONE promo (2026)</h3>
+<p>Per the uploaded flyer (<code>06.01.2026_AR-Teros-Flyer.pdf</code>, <code>aroya.io/terosupgrade</code>): AROYA covers 100% of new TEROS ONE sensors. Customer's commitment is operational, not hardware-cash: <b>Drip &amp; Drain</b> hardware + software (real-time runoff EC + irrigation volume tracking) AND <b>AUTOMAIT</b> (the AI module that auto-executes irrigation strategy). Flyer cites the operational ROI as "up to 60 hours/month saved and 20% less water &amp; nutrient." Offer expires <b>2026-08-31</b>, allocations limited. <b>Important scope:</b> the promo swaps TEROS 12 stacks — the legacy H111 / H411 repeaters with Atmos-14 climate sensors are <b>not</b> covered by this offer; those still need the standard Climate One trade-in path.</p>
+
+<h3>Estimated residual values</h3>
+<p>The "Est. residual" column reflects defensible book value: legacy node $280, repeater $320, TEROS-12 $140, ATM14 $180; straight-line 5-year depreciation; health haircut for failed batteries. NONE of these legacy values are AROYA-published — they don't feed any of the trade-in / promo math, they're informational only.</p>
 
 <h3>Warranty rule</h3>
-<p><span class="i-en">Climate One / H421: 1y standard + 2y CO2. H311: 3y. Everything else: 1y. Warranty start = <code>provisionedOn</code> if present, else <code>createdOn</code>.</span></p>
-
-<h3>What I searched for an explicit AROYA trade-in schedule</h3>
-<p><span class="i-en">No AROYA-published cash-back schedule for legacy NODE / ATM14 / TER12 hardware specifically was found in: claude-brain vault, Notion ("Flying Dutchman" + "trade-in"), Gmail (hth + personal), Drive. If AROYA has a more granular schedule than the SKU-purchase-discount model used here, please point me at the source and the report refreshes.</span></p>
+<p>Climate One / H421: 1y standard + 2y CO2. H311: 3y. Everything else: 1y. Start = <code>provisionedOn</code> if present, else <code>createdOn</code>.</p>
 </div>
 </section>
 
 <section>
-<h2><span class="i-en">Data quality &amp; provenance</span></h2>
+<h2>Data quality &amp; provenance</h2>
 <div class="card">
 <table>
 <tr><th>Field</th><th>Source</th><th>Status</th></tr>
-<tr><td>Facility ID 3447</td><td>Notion + Drive (Palm Springs/Joshua Tree trip plan doc, Apr-1 to Apr-4 2026)</td><td><span class="badge b-ok">verified</span></td></tr>
-<tr><td>Facility location (Palm Desert, Riverside CA)</td><td>User brief + Notion check-in (Apr 2, 2026, w/ Jason Van Leuven)</td><td><span class="badge b-ok">verified</span></td></tr>
-<tr><td>Primary contact (Nick De Groot)</td><td>Drive trip plan doc (confirmed)</td><td><span class="badge b-ok">verified</span></td></tr>
-<tr><td>Room roster (14 rooms)</td><td>AROYA public_api <code>/rooms/?facility=3447</code></td><td><span class="badge b-ok">verified</span></td></tr>
-<tr><td>6 active harvest groups</td><td>AROYA SPA <code>/harvests/?facility=3447</code></td><td><span class="badge b-ok">verified</span></td></tr>
-<tr><td>Per-device serials, dates, health (Rooms 1, 2, 3, 5)</td><td>AROYA SPA <code>/rooms/&lt;id&gt;/v2/</code> devices field</td><td><span class="badge b-ok">verified</span></td></tr>
-<tr><td>Per-device data (Rooms 4, 6, 7, 8, 9, Dry, Trim, Veg, Cure, Nursery)</td><td>AROYA SPA bridge returned "stale page" error mid-pull</td><td><span class="badge b-bad">not yet pulled</span></td></tr>
-<tr><td>AROYA SKU trade-in pricing</td><td>claude-brain (cited)</td><td><span class="badge b-ok">verified</span></td></tr>
-<tr><td>Legacy hardware residual estimates</td><td>Defensible estimate (no AROYA-published schedule found)</td><td><span class="badge b-warn">estimate</span></td></tr>
+<tr><td>Facility ID 3447</td><td>Notion + Drive (Palm Springs / Joshua Tree trip plan)</td><td><span class="badge b-ok">verified</span></td></tr>
+<tr><td>Location · Palm Desert, Riverside CA</td><td>User brief + Notion check-in (Apr 2 2026)</td><td><span class="badge b-ok">verified</span></td></tr>
+<tr><td>Primary contact · Nick De Groot</td><td>Drive trip plan doc</td><td><span class="badge b-ok">verified</span></td></tr>
+<tr><td>Room roster (14 rooms)</td><td>AROYA public_api</td><td><span class="badge b-ok">verified</span></td></tr>
+<tr><td>Per-device data (Rooms 1, 2, 3, 5)</td><td>AROYA SPA <code>spa_get_room_config</code></td><td><span class="badge b-ok">verified</span></td></tr>
+<tr><td>Per-device data (Rooms 4, 6, 7, 8, 9, Dry/Trim/Veg/Cure/Nursery)</td><td>SPA bridge "stale page" error</td><td><span class="badge b-bad">not yet pulled</span></td></tr>
+<tr><td>Standard SKU pricing</td><td>claude-brain memory</td><td><span class="badge b-ok">verified</span></td></tr>
+<tr><td>FREE TEROS ONE promo</td><td>Uploaded flyer 06.01.2026_AR-Teros-Flyer.pdf</td><td><span class="badge b-promo">verified</span></td></tr>
+<tr><td>Drip &amp; Drain + AUTOMAIT pricing</td><td>Not on flyer — per-facility</td><td><span class="badge b-warn">ask rep</span></td></tr>
 </table>
 </div>
 </section>
 
 <footer>
-<div>Flying Dutchman &middot; AROYA Trade-In Valuation v2 &middot; pulled 2026-06-11 &middot; credit-per-SKU-purchase model</div>
-<div>v1 published earlier today at the same URL used the legacy-device 1:1 credit-per-trade model. v2 (this version) is the correct AROYA model — credit attaches to what they buy, not what they trade.</div>
+<div>Flying Dutchman &middot; AROYA Trade-In Valuation v3 &middot; pulled 2026-06-11 &middot; credit-per-purchased-SKU model + 2026 TEROS ONE free-upgrade promo</div>
+<div>v1 (1:1 credit-per-legacy-device) → v2 (credit-per-purchased-SKU correction) → v3 (added Scenario D from uploaded promo flyer)</div>
 <div style="margin-top:6px"><a href="https://ciansullivan-hue.github.io/aroya-reports/" target="_blank">ciansullivan-hue.github.io/aroya-reports</a></div>
 </footer>
 
 </div>
 <script>
-function toggleLang(){
-  var b=document.body;
-  if(b.classList.contains('es')){b.classList.remove('es');document.getElementById('langBtn').textContent='ES';}
-  else{b.classList.add('es');document.getElementById('langBtn').textContent='EN';}
-}
-function toggleTheme(){
-  var b=document.body, btn=document.getElementById('themeBtn');
-  if(b.classList.contains('dark')){b.classList.remove('dark');btn.innerHTML='☾ Dark';}
-  else{b.classList.add('dark');btn.innerHTML='☀ Light';}
-}
+function toggleLang(){ var b=document.body; if(b.classList.contains('es')){b.classList.remove('es');document.getElementById('langBtn').textContent='ES';} else {b.classList.add('es');document.getElementById('langBtn').textContent='EN';} }
+function toggleTheme(){ var b=document.body, btn=document.getElementById('themeBtn'); if(b.classList.contains('dark')){b.classList.remove('dark');btn.innerHTML='☾ Dark';} else {b.classList.add('dark');btn.innerHTML='☀ Light';} }
 </script>
 </body></html>
