@@ -148,7 +148,7 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
   <div class="mast-left">
     <div class="eyebrow">AROYA · Device Health Report</div>
     <h1>Eschen Industries <span>· Facility 2851</span></h1>
-    <div class="meta">Generated 2026-06-09 · 244 active devices · WP4→WP5 firmware readiness · warranty eligibility · TEROS One trade-in</div>
+    <div class="meta">Generated 2026-06-09 · Updated 2026-06-12 · 244 active devices · WP4→WP5 firmware readiness · warranty eligibility · TEROS One trade-in · <strong style="color:#c0392b">9 active CO2 failures</strong></div>
     <div id="syncState" class="savebanner">Connecting…</div>
   </div>
   <div class="wordmark">
@@ -177,7 +177,7 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
   <div class="kpi" style="border-top:4px solid #2f8f2a"><div class="kpi-n">41</div><div class="kpi-l">WP4 ready — will receive WP5</div></div>
   <div class="kpi" style="border-top:4px solid #d6b220"><div class="kpi-n">17</div><div class="kpi-l">WP4 offline — bring online first</div></div>
   <div class="kpi" style="border-top:4px solid #2d62ff"><div class="kpi-n">39</div><div class="kpi-l">Already on WP5</div></div>
-  <div class="kpi" style="border-top:4px solid #c0392b"><div class="kpi-n" id="kpiDays">64d</div><div class="kpi-l">Until first H421 warranty expires</div></div>
+  <div class="kpi" style="border-top:4px solid #c0392b"><div class="kpi-n" id="kpiDays">61d</div><div class="kpi-l">Until first H421 warranty expires</div></div>
   <div class="kpi" style="border-top:4px solid #7faa3a"><div class="kpi-n">46</div><div class="kpi-l">H421/EE894 under warranty</div></div>
   <div class="kpi" style="border-top:4px solid var(--olive)"><div class="kpi-n">41</div><div class="kpi-l">ter12 trade-in eligible</div></div>
   <div class="kpi" style="border-top:4px solid #2d62ff"><div class="kpi-n" id="kpiSel">$0</div><div class="kpi-l" id="kpiSelLbl">Selected for upgrade</div></div>
@@ -226,8 +226,71 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
 
 <!-- ════ WARRANTY ═══════════════════════════════════════════════ -->
 <div class="panel" id="panel-warranty">
-  <div class="card urgent"><strong>Action needed — 64 days:</strong> 23 H421 CO2 hubs (and their paired EE894 sensors) begin expiring <strong>Aug 12 2026</strong>. If any unit is experiencing CO2 sensor failure, file the claim before that date. After Aug 12 the 2-year CO2 warranty window closes on the earliest units.</div>
+  <div class="card urgent"><strong>Action needed — 61 days:</strong> 23 H421 CO2 hubs (and their paired EE894 sensors) begin expiring <strong>Aug 12 2026</strong>. Charles Zirvopolous reported <strong>9 currently failing CO2/humidity units</strong> on Jun 12, 2026 — file replacement claims now, before the warranty window closes.</div>
   <div class="card info"><strong>Rules applied:</strong> H311 serial prefix = 3-year warranty · H421 hub / EE894 CO2 sensor = 2-year (CO2 failure) · All other models = 1-year. Dates sourced from AROYA portal <em>createdOn</em> field, pulled per-serial.</div>
+
+  <!-- ── Prior Salesforce case history ── -->
+  <div class="card" style="border-left:3px solid #c0392b;padding:16px 18px">
+    <strong>Prior Salesforce case history — CO2 failures at Eschen</strong>
+    <div style="overflow:auto;margin:12px 0 6px">
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--line);border-radius:8px;overflow:hidden">
+      <thead>
+        <tr style="background:var(--head)">
+          <th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line);white-space:nowrap">Case #</th>
+          <th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line);white-space:nowrap">Open → Closed</th>
+          <th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line);white-space:nowrap">Owner</th>
+          <th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line);white-space:nowrap">Units replaced</th>
+          <th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line)">Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--line)">
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:11.5px;white-space:nowrap">00041328</td>
+          <td style="padding:8px 10px;white-space:nowrap">Jun 5 → Jun 8, 2026</td>
+          <td style="padding:8px 10px;white-space:nowrap">Pete Steiner</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:11px;line-height:1.9">H4210002606<br>H4210004264<br>H4210004272<br>H4210004722</td>
+          <td style="padding:8px 10px">4 units replaced (Order 00062758, $0 warranty). <strong style="color:#c0392b">H42100004718 placed on "continued monitoring" — case closed Jun 8 with no replacement order.</strong></td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:11.5px;white-space:nowrap">00010640</td>
+          <td style="padding:8px 10px;white-space:nowrap">Sep 4 → Sep 20, 2024</td>
+          <td style="padding:8px 10px">—</td>
+          <td style="padding:8px 10px">—</td>
+          <td style="padding:8px 10px;color:var(--sub)">Firmware migration (WP4→WP5 readiness). No sensor replacements.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:12px;color:var(--sub)">All 9 current failing serials were checked against Salesforce and Slack. None match the 4 replaced units above — they are net-new claims except <span class="chip cr">H42100004718</span>, which has prior unresolved history from Case 00041328.</p>
+  </div>
+
+  <!-- ── Currently failing CO2 sensors ── -->
+  <h2>Currently failing CO2 sensors — Jun 12, 2026 <span class="ct chip cr">9 units · file claims now</span></h2>
+  <p style="font-size:12.5px;color:var(--sub);margin:-6px 0 10px">Reported by Charles Zirvopolous in iMessage group chat. Searched against all Salesforce cases and Slack — no duplicate claims found.</p>
+  <div class="tw"><table>
+    <thead><tr>
+      <th>Serial</th>
+      <th>Case history</th>
+      <th>Warranty status</th>
+      <th>Notes</th>
+    </tr></thead>
+    <tbody>
+      <tr style="background:rgba(192,57,43,.06)">
+        <td class="mono">H42100004718</td>
+        <td><span class="chip cr">Deferred — unresolved</span></td>
+        <td><span class="chip cy">Active (≤ Aug 2026)</span></td>
+        <td>Was in Case 00041328 (Jun 5). Pete Steiner held for "continued monitoring." Case closed Jun 8 without replacement. <strong>Should have been in Order 00062758.</strong></td>
+      </tr>
+      <tr><td class="mono">H42100002686</td><td><span class="chip cn">Net-new</span></td><td><span class="chip cy">Active (≤ Aug 2026)</span></td><td>No prior case.</td></tr>
+      <tr><td class="mono">H42100002676</td><td><span class="chip cn">Net-new</span></td><td><span class="chip cy">Active (≤ Aug 2026)</span></td><td>No prior case.</td></tr>
+      <tr><td class="mono">H42100004290</td><td><span class="chip cn">Net-new</span></td><td><span class="chip cy">Active (≤ Aug 2026)</span></td><td>No prior case.</td></tr>
+      <tr><td class="mono">H42100002700</td><td><span class="chip cn">Net-new</span></td><td><span class="chip cy">Active (≤ Aug 2026)</span></td><td>No prior case.</td></tr>
+      <tr><td class="mono">H42100002629</td><td><span class="chip cn">Net-new</span></td><td><span class="chip cy">Active (≤ Aug 2026)</span></td><td>No prior case.</td></tr>
+      <tr><td class="mono">H42100002695</td><td><span class="chip cn">Net-new</span></td><td><span class="chip cy">Active (≤ Aug 2026)</span></td><td>No prior case.</td></tr>
+      <tr><td class="mono">H42100004276</td><td><span class="chip cn">Net-new</span></td><td><span class="chip cy">Active (≤ Aug 2026)</span></td><td>No prior case.</td></tr>
+      <tr><td class="mono">H42100005017</td><td><span class="chip cn">Net-new</span></td><td><span class="chip cy">Active (≤ Aug 2026)</span></td><td>No prior case.</td></tr>
+    </tbody>
+  </table></div>
 
   <div class="plan" style="grid-template-columns:repeat(3,1fr)">
     <div class="pcard cy"><div class="pn">46</div><div class="pl">H421/EE894 active (2-yr CO2 window) — first expires Aug 12</div></div>
