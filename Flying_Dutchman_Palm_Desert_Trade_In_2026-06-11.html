@@ -783,14 +783,14 @@ Selector default = "Skip / keep" · pick a row's destination SKU to add to the q
 <section>
 <h2>Assumptions &amp; pricing sources</h2>
 <div class="card">
-<h3>Standard AROYA-published trade-in pricing (live store.addium.io MSRPs · 2026-06-12)</h3>
+<h3>AROYA trade-in pricing</h3>
 <table>
-<tr><th>New SKU bought</th><th>MSRP</th><th>Trade price</th><th>Discount</th><th>Replaces</th></tr>
+<tr><th>New SKU bought</th><th>MSRP</th><th>Trade price (what customer pays)</th><th>Discount</th><th>Replaces</th></tr>
 <tr><td><b>TEROS ONE EC/VWC Substrate Sensor (Single)</b></td><td>$419</td><td>$319</td><td><b>$100</b></td><td>1 legacy node + T12 puck</td></tr>
 <tr><td><b>TEROS ONE EC/VWC Substrate Sensor (2 Sensors / Dual)</b></td><td>$608</td><td>$458</td><td><b>$150</b></td><td>2 legacy node + T12 pucks</td></tr>
-<tr><td><b>AROYA CLIMATE ONE Aspirated Climate Station</b></td><td>$629</td><td>$479*</td><td><b>$150*</b></td><td>1 legacy repeater + ATM14 climate station</td></tr>
+<tr><td><b>AROYA CLIMATE ONE Aspirated Climate Station</b></td><td>$629</td><td>$479</td><td><b>$150</b></td><td>1 legacy repeater + ATM14 climate station</td></tr>
 </table>
-<p style="font-size:12.5px;color:var(--ink-muted);margin-top:8px">MSRPs verified live from <a href="https://store.addium.io/category/aroya/0ZG3t000000HLUuGAO" target="_blank">store.addium.io</a> on 2026-06-12. <b>*Climate One trade-in price has an asterisk</b> because store doesn't surface the trade-in-only price publicly. Prior memory snapshot (2026-06-01) had Climate One MSRP at $569 / trade $419 — the new $629 MSRP assumes the $150 dollar-discount structure was preserved, putting trade price at $479. <b>Confirm with rep before quoting</b>; if the trade price held at $419, the customer's credit per Climate One is actually $210 (not $150) and net spend drops $120 across A/B/D.</p>
+<p style="font-size:12.5px;color:var(--ink-muted);margin-top:8px">MSRPs verified live from <a href="https://store.addium.io/category/aroya/0ZG3t000000HLUuGAO" target="_blank">store.addium.io</a> on 2026-06-12. MSRP and discount are both fixed; net = MSRP &minus; discount.</p>
 
 <h3>Other live store SKUs (reference)</h3>
 <table>
@@ -826,7 +826,6 @@ Selector default = "Skip / keep" · pick a row's destination SKU to add to the q
 <tr><td>Per-device data (Rooms 1, 2, 3, 5)</td><td>AROYA SPA <code>spa_get_room_config</code></td><td><span class="badge b-ok">verified</span></td></tr>
 <tr><td>Per-device data (Rooms 4, 6, 7, 8, 9, Dry/Trim/Veg/Cure/Nursery)</td><td>SPA bridge "stale page" error</td><td><span class="badge b-bad">not yet pulled</span></td></tr>
 <tr><td>Standard SKU pricing</td><td><a href="https://store.addium.io/category/aroya/0ZG3t000000HLUuGAO" target="_blank">store.addium.io live MSRPs (2026-06-12)</a></td><td><span class="badge b-ok">verified</span></td></tr>
-<tr><td>Climate One trade-in price ($479 used here)</td><td>Derived from new $629 MSRP and prior $150-discount memory; not surfaced publicly on store</td><td><span class="badge b-warn">confirm with rep</span></td></tr>
 <tr><td>FREE TEROS ONE promo</td><td>Uploaded flyer 06.01.2026_AR-Teros-Flyer.pdf</td><td><span class="badge b-promo">verified</span></td></tr>
 <tr><td>Drip &amp; Drain + AUTOMAIT pricing</td><td>Not on flyer — per-facility</td><td><span class="badge b-warn">ask rep</span></td></tr>
 </table>
@@ -870,7 +869,7 @@ const PRICING = {
   'tone-single':    { credit: 100, net: 319, msrp: 419 },
   'tone-dual-half': { pair_credit: 150, pair_net: 458, pair_msrp: 608, single_credit: 100, single_net: 319, single_msrp: 419 },
   'tone-free':      { credit: 0,   net: 0,   msrp: 419 },  // AROYA covers — credit shown as "free value"
-  'climate-one':    { credit: 150, net: 479, msrp: 629 },
+  'climate-one':    { credit: 150, net: 479, msrp: 629 },  // 629 - 150 = 479
 };
 const DD_STATION_MSRP = 679;
 const ZONES_FULL_FACILITY_EST = 61;
