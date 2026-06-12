@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flying Dutchman — AROYA Trade-In Valuation v5 · 2026-06-12</title>
+<title>Flying Dutchman — AROYA Trade-In Valuation v6 · 2026-06-12 · interactive</title>
 <style>
 :root{--bg:#fafaf7;--ink:#1c2419;--ink-muted:#7e836e;--border:#e2e2dc;--card:#ffffff;
 --olive:#3f4e2b;--lime:#9fd96a;--app-blue:#1f78b4;--attention:#e76f51;
@@ -81,10 +81,38 @@ body.dark .sku-line .qty{color:var(--lime)}
 .sku-line .price{color:var(--ink-muted);font-size:12px}
 .commit{background:rgba(159,217,106,.10);border:1px dashed var(--olive);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px}
 body.dark .commit{background:rgba(185,229,135,.06);border-color:var(--lime)}
-@media print{.toggles{display:none}}
-@media (max-width:680px){.meta,.kpi-row{grid-template-columns:repeat(2,1fr)}}
+/* Interactive quote bar (sticky bottom) */
+.quote-bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:3px solid var(--lime);box-shadow:0 -2px 14px rgba(0,0,0,.18);padding:10px 14px;z-index:90;display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;font-size:13px}
+body.dark .quote-bar{box-shadow:0 -2px 18px rgba(0,0,0,.55)}
+.qb-presets{display:flex;flex-wrap:wrap;gap:6px}
+.preset-btn{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:5px 11px;font-size:11.5px;font-weight:700;cursor:pointer;color:var(--ink);white-space:nowrap}
+.preset-btn:hover{background:var(--good-bg);border-color:var(--olive)}
+.preset-btn.active{background:var(--olive);color:#fff;border-color:var(--olive)}
+body.dark .preset-btn.active{background:var(--lime);color:#13160f}
+.qb-stats{text-align:center;font-size:12.5px;line-height:1.5}
+.qb-stats b{color:var(--olive);font-size:13.5px}
+body.dark .qb-stats b{color:var(--lime)}
+.qb-stats .totals{font-size:15px;margin-top:2px}
+.qb-stats .totals b{font-size:17px}
+.qb-actions{display:flex;gap:6px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.action-btn{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+.action-btn:hover{background:var(--good-bg)}
+.sync-indicator{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:10px}
+.sync-indicator.ok{background:var(--good-bg);color:var(--good)}
+.sync-indicator.saving{background:var(--warn-bg);color:var(--warn)}
+.sync-indicator.offline{background:var(--bad-bg);color:var(--bad)}
+/* Per-device trade selector */
+.trade-select{width:100%;min-width:200px;font-size:12px;padding:3px 4px;border:1px solid var(--border);border-radius:5px;background:var(--card);color:var(--ink);font-family:inherit}
+.trade-select option{padding:3px}
+tr.row-selected td{background:rgba(159,217,106,.10)}
+body.dark tr.row-selected td{background:rgba(185,229,135,.06)}
+tr.row-promo td{background:rgba(159,217,106,.18)}
+body.dark tr.row-promo td{background:rgba(185,229,135,.10)}
+.body-pad{padding-bottom:90px}
+@media print{.toggles,.quote-bar{display:none}.body-pad{padding-bottom:0}}
+@media (max-width:680px){.meta,.kpi-row{grid-template-columns:repeat(2,1fr)} .quote-bar{grid-template-columns:1fr;text-align:center} .qb-presets,.qb-actions{justify-content:center}}
 </style></head>
-<body class="">
+<body class=" body-pad">
 <header class="hero"><div class="wrap">
 <div class="toggles">
 <button class="tg" id="langBtn" onclick="toggleLang()">ES</button>
@@ -94,7 +122,7 @@ body.dark .commit{background:rgba(185,229,135,.06);border-color:var(--lime)}
 <svg viewBox="0 0 202.1 75" style="height:38px;fill:currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="AROYA"><path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/><path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/><path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/><path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/><path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/><path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z" fill="#9fd96a"/></svg>
 <div style="border-left:2px solid rgba(255,255,255,.3);padding-left:14px">
 <div class="brand">TRADE-IN VALUATION</div>
-<div style="font-size:11px;color:#cfd6bd;font-weight:600;margin-top:2px">by Addium &middot; v5 &middot; zone-based promo terms</div>
+<div style="font-size:11px;color:#cfd6bd;font-weight:600;margin-top:2px">by Addium &middot; v6 &middot; interactive selector + live sync</div>
 </div>
 </div>
 <h1>Flying Dutchman &middot; Palm Desert, CA</h1>
@@ -215,11 +243,14 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 </section>
 
 <section>
-<h2>Per-device table</h2>
+<h2>Per-device trade-in selector — build your custom package</h2>
+<div class="card" style="background:rgba(159,217,106,.08);border:1px dashed var(--olive);font-size:13px;margin-bottom:14px">
+<b>How to build your trade-in package:</b> use the dropdown in each row to pick the upgrade target for that device — or hit a scenario preset (<b>A · 1:1 Singles</b>, <b>B · Consolidated Duals</b>, <b>C · OOW &amp; unhealthy only</b>, <b>D · FREE TEROS ONE promo</b>) in the sticky bar at the bottom to set everything at once, then tweak individual rows. Live SKU counts + total credit + total net spend update as you go. <b>State syncs across every device that opens this URL</b> — make changes here and they appear on the operator's phone too. Export / Import gives a JSON backup.
+</div>
 <div class="card" style="overflow-x:auto">
 <table>
-<tr><th>Room</th><th>Zone</th><th>Radio serial</th><th>Family</th><th>Sensor serial</th><th>Sensor</th><th>createdOn</th><th>Age</th><th>Warranty</th><th>Battery</th><th>Upgrade options (credit attaches to NEW SKU)</th><th>Est. residual</th></tr>
-<tr>
+<tr><th>Room</th><th>Zone</th><th>Radio serial</th><th>Family</th><th>Sensor serial</th><th>Sensor</th><th>createdOn</th><th>Age</th><th>Warranty</th><th>Battery</th><th>Trade in for…</th><th>Est. residual</th></tr>
+<tr data-serial="H3210019010">
 <td>Room 1</td>
 <td>Zone 2 Front</td>
 <td class="mono">H3210019010</td>
@@ -230,10 +261,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>98%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210019010" data-kind="puck" data-zone-key="Room 1::Zone 2" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020344">
 <td>Room 1</td>
 <td>Zone 4 Front</td>
 <td class="mono">H3210020344</td>
@@ -244,10 +275,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020344" data-kind="puck" data-zone-key="Room 1::Zone 4" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020378">
 <td>Room 1</td>
 <td>Zone 1 Front</td>
 <td class="mono">H3210020378</td>
@@ -258,10 +289,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020378" data-kind="puck" data-zone-key="Room 1::Zone 1" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020381">
 <td>Room 1</td>
 <td>Zone 3 Back</td>
 <td class="mono">H3210020381</td>
@@ -272,10 +303,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020381" data-kind="puck" data-zone-key="Room 1::Zone 3" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020385">
 <td>Room 1</td>
 <td>Zone 4 Back</td>
 <td class="mono">H3210020385</td>
@@ -286,10 +317,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020385" data-kind="puck" data-zone-key="Room 1::Zone 4" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020416">
 <td>Room 1</td>
 <td>Zone 3 Front</td>
 <td class="mono">H3210020416</td>
@@ -300,10 +331,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020416" data-kind="puck" data-zone-key="Room 1::Zone 3" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020516">
 <td>Room 1</td>
 <td>Zone 2 Back</td>
 <td class="mono">H3210020516</td>
@@ -314,10 +345,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020516" data-kind="puck" data-zone-key="Room 1::Zone 2" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020540">
 <td>Room 1</td>
 <td>Zone 1 Back</td>
 <td class="mono">H3210020540</td>
@@ -328,10 +359,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020540" data-kind="puck" data-zone-key="Room 1::Zone 1" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H4210005093">
 <td>Room 1</td>
 <td>—</td>
 <td class="mono">H4210005093</td>
@@ -342,10 +373,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">0.7 y</td>
 <td><span class="badge b-ok">in&nbsp;warranty</span></td>
 <td>PoE</td>
-<td><span style="color:var(--ink-muted)">— current gen, no upgrade —</span></td>
+<td><span style="color:var(--ink-muted);font-size:12px">— current-gen H421, no upgrade —</span></td>
 <td class="num">$495 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H1110006667">
 <td>Room 2</td>
 <td>—</td>
 <td class="mono">H1110006667</td>
@@ -356,10 +387,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>Climate One H421 ($150 off) — <i>promo does not cover</i></td>
+<td><select class="trade-select" data-serial="H1110006667" data-kind="climate" data-zone-key="Room 2::H1110006667" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="climate-one">→ Climate One H421 · $479 net (saves $150)</option></select></td>
 <td class="num">$184 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020334">
 <td>Room 2</td>
 <td>Zone 3 Back</td>
 <td class="mono">H3210020334</td>
@@ -370,10 +401,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>90%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020334" data-kind="puck" data-zone-key="Room 2::Zone 3" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020361">
 <td>Room 2</td>
 <td>Zone 1 Back</td>
 <td class="mono">H3210020361</td>
@@ -384,10 +415,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020361" data-kind="puck" data-zone-key="Room 2::Zone 1" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020431">
 <td>Room 2</td>
 <td>Zone 4 Back</td>
 <td class="mono">H3210020431</td>
@@ -398,10 +429,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020431" data-kind="puck" data-zone-key="Room 2::Zone 4" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020521">
 <td>Room 2</td>
 <td>Zone 2 Back</td>
 <td class="mono">H3210020521</td>
@@ -412,10 +443,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>96%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020521" data-kind="puck" data-zone-key="Room 2::Zone 2" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020541">
 <td>Room 2</td>
 <td>Zone 1 Front</td>
 <td class="mono">H3210020541</td>
@@ -426,10 +457,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020541" data-kind="puck" data-zone-key="Room 2::Zone 1" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020542">
 <td>Room 2</td>
 <td>Zone 3 Front</td>
 <td class="mono">H3210020542</td>
@@ -440,10 +471,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020542" data-kind="puck" data-zone-key="Room 2::Zone 3" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020544">
 <td>Room 2</td>
 <td>Zone 4 Front</td>
 <td class="mono">H3210020544</td>
@@ -454,10 +485,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020544" data-kind="puck" data-zone-key="Room 2::Zone 4" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3410003917">
 <td>Room 2</td>
 <td>Zone 2 Front</td>
 <td class="mono">H3410003917</td>
@@ -468,10 +499,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">2.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3410003917" data-kind="puck" data-zone-key="Room 2::Zone 2" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$251 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020327">
 <td>Room 3</td>
 <td>Zone 3 Front</td>
 <td class="mono">H3210020327</td>
@@ -482,10 +513,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>81%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020327" data-kind="puck" data-zone-key="Room 3::Zone 3" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020332">
 <td>Room 3</td>
 <td>Zone 1 Front</td>
 <td class="mono">H3210020332</td>
@@ -496,10 +527,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020332" data-kind="puck" data-zone-key="Room 3::Zone 1" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020333">
 <td>Room 3</td>
 <td>Zone 4 Front</td>
 <td class="mono">H3210020333</td>
@@ -510,10 +541,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020333" data-kind="puck" data-zone-key="Room 3::Zone 4" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3210020366">
 <td>Room 3</td>
 <td>Zone 2 Back</td>
 <td class="mono">H3210020366</td>
@@ -524,10 +555,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3210020366" data-kind="puck" data-zone-key="Room 3::Zone 2" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$147 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008675">
 <td>Room 3</td>
 <td>Zone 3 Back</td>
 <td class="mono">H3310008675</td>
@@ -538,10 +569,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>99%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008675" data-kind="puck" data-zone-key="Room 3::Zone 3" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$170 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008683">
 <td>Room 3</td>
 <td>Zone 2 Front</td>
 <td class="mono">H3310008683</td>
@@ -552,10 +583,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>99%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008683" data-kind="puck" data-zone-key="Room 3::Zone 2" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$170 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008687">
 <td>Room 3</td>
 <td>Zone 4 Back</td>
 <td class="mono">H3310008687</td>
@@ -566,10 +597,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>97%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008687" data-kind="puck" data-zone-key="Room 3::Zone 4" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$170 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008692">
 <td>Room 3</td>
 <td>Zone 1 Back</td>
 <td class="mono">H3310008692</td>
@@ -580,10 +611,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>99%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008692" data-kind="puck" data-zone-key="Room 3::Zone 1" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$170 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H4210001585">
 <td>Room 3</td>
 <td>—</td>
 <td class="mono">H4210001585</td>
@@ -594,10 +625,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">2.2 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>PoE</td>
-<td><span style="color:var(--ink-muted)">— current gen, no upgrade —</span></td>
+<td><span style="color:var(--ink-muted);font-size:12px">— current-gen H421, no upgrade —</span></td>
 <td class="num">$319 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008122">
 <td>Room 5</td>
 <td>Zone 2 Back</td>
 <td class="mono">H3310008122</td>
@@ -608,10 +639,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008122" data-kind="puck" data-zone-key="Room 5::Zone 2" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008221">
 <td>Room 5</td>
 <td>Zone 1 Back</td>
 <td class="mono">H3310008221</td>
@@ -622,10 +653,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>97%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008221" data-kind="puck" data-zone-key="Room 5::Zone 1" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008223">
 <td>Room 5</td>
 <td>Zone 4 Back</td>
 <td class="mono">H3310008223</td>
@@ -636,10 +667,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td><span class="badge b-bad">0%</span></td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008223" data-kind="puck" data-zone-key="Room 5::Zone 4" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$41 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008275">
 <td>Room 5</td>
 <td>Zone 3 Back</td>
 <td class="mono">H3310008275</td>
@@ -650,10 +681,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008275" data-kind="puck" data-zone-key="Room 5::Zone 3" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008378">
 <td>Room 5</td>
 <td>Zone 1 Front</td>
 <td class="mono">H3310008378</td>
@@ -664,10 +695,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008378" data-kind="puck" data-zone-key="Room 5::Zone 1" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008392">
 <td>Room 5</td>
 <td>Zone 3 Front</td>
 <td class="mono">H3310008392</td>
@@ -678,10 +709,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008392" data-kind="puck" data-zone-key="Room 5::Zone 3" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008397">
 <td>Room 5</td>
 <td>Zone 2 Front</td>
 <td class="mono">H3310008397</td>
@@ -692,10 +723,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>94%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008397" data-kind="puck" data-zone-key="Room 5::Zone 2" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H3310008398">
 <td>Room 5</td>
 <td>Zone 4 Front</td>
 <td class="mono">H3310008398</td>
@@ -706,10 +737,10 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">3.0 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>100%</td>
-<td>TEROS One Single ($100 off std) · Dual ($150 off, 2-into-1)<br><span class="badge b-promo">eligible under per-zone promo</span><span style="font-size:10.5px;color:var(--ink-muted)"> · 1 TEROS ONE per zone, not per puck</span></td>
+<td><select class="trade-select" data-serial="H3310008398" data-kind="puck" data-zone-key="Room 5::Zone 4" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="tone-single">→ TEROS One Single · $319 net (saves $100)</option><option value="tone-dual-half">→ TEROS One Dual (auto-pair) · $229 net half</option><option value="tone-free">→ FREE TEROS ONE via per-zone promo</option></select></td>
 <td class="num">$165 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
-<tr>
+<tr data-serial="H4110006855">
 <td>Room 5</td>
 <td>—</td>
 <td class="mono">H4110006855</td>
@@ -720,13 +751,13 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <td class="num">2.1 y</td>
 <td><span class="badge b-bad">expired</span></td>
 <td>PoE</td>
-<td>Climate One H421 ($150 off) — <i>promo does not cover</i></td>
+<td><select class="trade-select" data-serial="H4110006855" data-kind="climate" data-zone-key="Room 5::H4110006855" data-oow="true" data-unhealthy="true"><option value="skip">— Skip / keep —</option><option value="climate-one">→ Climate One H421 · $479 net (saves $150)</option></select></td>
 <td class="num">$291 <span class="badge b-src-est" title="Estimate">E</span></td>
 </tr>
 </table>
 <div style="margin-top:10px;font-size:11.5px;color:var(--ink-muted)">
-<span class="b-promo badge">FREE via promo</span> = covered 100% under Scenario D (TEROS 12 puck-nodes only) ·
-<span class="b-src-est badge">E</span> = defensible estimate (not AROYA-published)
+<span class="b-src-est badge">E</span> = defensible estimate (not AROYA-published) ·
+Selector default = "Skip / keep" · pick a row's destination SKU to add to the quote.
 </div>
 </div>
 </section>
@@ -809,7 +840,233 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 </footer>
 
 </div>
+
+<!-- Sticky quote bar -->
+<div class="quote-bar" id="quoteBar">
+<div class="qb-presets">
+<button class="preset-btn" data-preset="A">A · 1:1 Singles</button>
+<button class="preset-btn" data-preset="B">B · Duals (auto-pair)</button>
+<button class="preset-btn" data-preset="C">C · OOW &amp; unhealthy</button>
+<button class="preset-btn" data-preset="D">D · FREE promo</button>
+<button class="preset-btn" data-preset="reset">Reset</button>
+</div>
+<div class="qb-stats">
+<div><span id="qbSingles">0</span> Singles &middot; <span id="qbDuals">0</span> Duals &middot; <span id="qbClimates">0</span> Climates &middot; <span id="qbPromo">0</span> free-via-promo zones</div>
+<div class="totals">Credit: <b id="qbCredit">$0</b> &middot; Net spend: <b id="qbNet">$0</b> <span id="qbPromoExtra" style="font-size:11.5px;color:var(--ink-muted)"></span></div>
+</div>
+<div class="qb-actions">
+<span class="sync-indicator ok" id="syncIndicator">Synced &check;</span>
+<button class="action-btn" id="exportBtn">Export JSON</button>
+<button class="action-btn" id="importBtn">Import</button>
+<input type="file" id="importFile" accept="application/json" style="display:none">
+</div>
+</div>
+
 <script>
+const FACILITY_ID = 3447;
+const SYNC_URL = 'https://aroya-report-sync.ciansul.workers.dev/' + FACILITY_ID + '/tradein';
+const STORAGE_KEY = 'aroya-tradein-flying-dutchman-3447';
+const PRICING = {
+  'tone-single':    { credit: 100, net: 319, msrp: 419 },
+  'tone-dual-half': { pair_credit: 150, pair_net: 458, pair_msrp: 608, single_credit: 100, single_net: 319, single_msrp: 419 },
+  'tone-free':      { credit: 0,   net: 0,   msrp: 419 },  // AROYA covers — credit shown as "free value"
+  'climate-one':    { credit: 150, net: 479, msrp: 629 },
+};
+const DD_STATION_MSRP = 679;
+const ZONES_FULL_FACILITY_EST = 61;
+
+let state = {};
+let putTimer = null;
+
+function setSync(s, label) {
+  const el = document.getElementById('syncIndicator');
+  el.className = 'sync-indicator ' + s;
+  el.textContent = label;
+}
+
+function buildState() {
+  const next = {};
+  document.querySelectorAll('.trade-select').forEach(sel => {
+    if (sel.value !== 'skip') {
+      next[sel.dataset.serial] = { sku: sel.value, ts: new Date().toISOString() };
+    }
+  });
+  return next;
+}
+
+function applyState() {
+  document.querySelectorAll('.trade-select').forEach(sel => {
+    const v = state[sel.dataset.serial];
+    sel.value = v ? v.sku : 'skip';
+    const tr = sel.closest('tr');
+    tr.classList.toggle('row-selected', sel.value !== 'skip');
+    tr.classList.toggle('row-promo', sel.value === 'tone-free');
+  });
+  computeQuote();
+}
+
+function computeQuote() {
+  let nSingles = 0, nDualHalves = 0, nClimates = 0;
+  let credit = 0, net = 0;
+  const promoZones = new Set();
+
+  document.querySelectorAll('.trade-select').forEach(sel => {
+    const sku = sel.value;
+    if (sku === 'tone-single') {
+      nSingles++;
+      credit += PRICING['tone-single'].credit;
+      net    += PRICING['tone-single'].net;
+    } else if (sku === 'tone-dual-half') {
+      nDualHalves++;
+    } else if (sku === 'tone-free') {
+      promoZones.add(sel.dataset.zoneKey);
+    } else if (sku === 'climate-one') {
+      nClimates++;
+      credit += PRICING['climate-one'].credit;
+      net    += PRICING['climate-one'].net;
+    }
+  });
+  // Pair Dual halves: every 2 = 1 full Dual; odd half-pair → bumped to a Single
+  const nDuals = Math.floor(nDualHalves / 2);
+  const nDualLeftover = nDualHalves % 2;
+  credit += nDuals * PRICING['tone-dual-half'].pair_credit + nDualLeftover * PRICING['tone-dual-half'].single_credit;
+  net    += nDuals * PRICING['tone-dual-half'].pair_net    + nDualLeftover * PRICING['tone-dual-half'].single_net;
+
+  // Promo zones: free TEROS ONE (no cash, no credit in the standard sense), customer pays D&D
+  const nPromoZones = promoZones.size;
+  const promoFreeValue = nPromoZones * PRICING['tone-free'].msrp;
+  const promoDDCost = nPromoZones * DD_STATION_MSRP;
+  net += promoDDCost;
+
+  document.getElementById('qbSingles').textContent = nSingles + (nDualLeftover ? ' + 1 (Dual leftover)' : '');
+  document.getElementById('qbDuals').textContent = nDuals;
+  document.getElementById('qbClimates').textContent = nClimates;
+  document.getElementById('qbPromo').textContent = nPromoZones;
+  document.getElementById('qbCredit').textContent = '$' + credit.toLocaleString();
+  document.getElementById('qbNet').textContent = '$' + net.toLocaleString();
+  const promoExtra = document.getElementById('qbPromoExtra');
+  if (nPromoZones > 0) {
+    promoExtra.innerHTML = ' &middot; <b style="color:var(--olive)">$' + promoFreeValue.toLocaleString() + '</b> free TEROS ONE hardware + AUTOMAIT (TBD) &middot; all-or-nothing scope: <b>' + nPromoZones + '/' + ZONES_FULL_FACILITY_EST + '</b> zones picked of ~' + ZONES_FULL_FACILITY_EST + ' total in the facility';
+  } else {
+    promoExtra.innerHTML = '';
+  }
+}
+
+function saveState() {
+  state = buildState();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  setSync('saving', 'Saving…');
+  clearTimeout(putTimer);
+  putTimer = setTimeout(() => {
+    fetch(SYNC_URL, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(state) })
+      .then(r => { if (r.ok) setSync('ok', 'Synced ✓'); else setSync('offline', 'Offline (local only)'); })
+      .catch(() => setSync('offline', 'Offline (local only)'));
+  }, 800);
+}
+
+function mergeRemote(remote) {
+  // Per-entry last-write-wins
+  let changed = false;
+  for (const k in remote) {
+    const r = remote[k]; const l = state[k];
+    if (!l || (r.ts && (!l.ts || new Date(r.ts) > new Date(l.ts)))) {
+      state[k] = r; changed = true;
+    }
+  }
+  return changed;
+}
+
+async function pullRemote() {
+  try {
+    const r = await fetch(SYNC_URL);
+    if (r.ok) {
+      const remote = await r.json();
+      if (mergeRemote(remote || {})) applyState();
+      setSync('ok', 'Synced ✓');
+    } else {
+      setSync('offline', 'Offline (local only)');
+    }
+  } catch (e) {
+    setSync('offline', 'Offline (local only)');
+  }
+}
+
+function setAllPucks(sku) {
+  document.querySelectorAll('.trade-select[data-kind="puck"]').forEach(s => s.value = sku);
+}
+function setAllClimates(sku) {
+  document.querySelectorAll('.trade-select[data-kind="climate"]').forEach(s => s.value = sku);
+}
+function setAllSkip() {
+  document.querySelectorAll('.trade-select').forEach(s => s.value = 'skip');
+}
+
+const PRESETS = {
+  'A': () => { setAllSkip(); setAllPucks('tone-single'); setAllClimates('climate-one'); },
+  'B': () => { setAllSkip(); setAllPucks('tone-dual-half'); setAllClimates('climate-one'); },
+  'C': () => {
+    setAllSkip();
+    document.querySelectorAll('.trade-select[data-unhealthy="true"]').forEach(sel => {
+      sel.value = sel.dataset.kind === 'puck' ? 'tone-single' : 'climate-one';
+    });
+  },
+  'D': () => { setAllSkip(); setAllPucks('tone-free'); setAllClimates('climate-one'); },
+  'reset': () => setAllSkip(),
+};
+
+document.querySelectorAll('.preset-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    PRESETS[b.dataset.preset]();
+    saveState();
+    applyState();
+  });
+});
+document.querySelectorAll('.trade-select').forEach(sel => {
+  sel.addEventListener('change', () => {
+    saveState();
+    const tr = sel.closest('tr');
+    tr.classList.toggle('row-selected', sel.value !== 'skip');
+    tr.classList.toggle('row-promo', sel.value === 'tone-free');
+    computeQuote();
+  });
+});
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify({facility: FACILITY_ID, exported_at: new Date().toISOString(), state: buildState()}, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'flying-dutchman-tradein-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+});
+document.getElementById('importBtn').addEventListener('click', () => document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      const incoming = data.state || data;
+      state = incoming;
+      applyState();
+      saveState();
+    } catch (err) { alert('Import failed: ' + err.message); }
+  };
+  reader.readAsText(f);
+});
+
+// Init: load cached state, then sync from worker, then poll
+function loadCached() {
+  try {
+    const c = localStorage.getItem(STORAGE_KEY);
+    if (c) state = JSON.parse(c);
+  } catch(e) {}
+}
+loadCached();
+applyState();
+pullRemote();
+setInterval(pullRemote, 20000);
+window.addEventListener('focus', pullRemote);
+
 function toggleLang(){ var b=document.body; if(b.classList.contains('es')){b.classList.remove('es');document.getElementById('langBtn').textContent='ES';} else {b.classList.add('es');document.getElementById('langBtn').textContent='EN';} }
 function toggleTheme(){ var b=document.body, btn=document.getElementById('themeBtn'); if(b.classList.contains('dark')){b.classList.remove('dark');btn.innerHTML='☾ Dark';} else {b.classList.add('dark');btn.innerHTML='☀ Light';} }
 </script>
