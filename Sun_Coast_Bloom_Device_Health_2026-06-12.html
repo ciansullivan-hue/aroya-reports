@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>Sun Coast Bloom LLC. · Device Health · 2026-06-12</title>
+<style>
+  :root[data-theme="light"]{
+    --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
+    --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
+    --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
+    --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
+    --attention:#e76f51; --attention-2:#f4a261;
+    --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
+    --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
+    --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+    --grid-line: #e8e8e0;
+  }
+  :root[data-theme="dark"]{
+    --bg:#13160f; --bg-2:#1a1e15; --bg-3:#22281c; --border:#2e3624;
+    --ink:#e8ead9; --ink-2:#b9bda5; --ink-muted:#7e836e;
+    --olive:#8aa05c; --olive-2:#a7bb74; --lime:#b9e587; --lime-2:#6b8d3d;
+    --app-blue:#6cb5d8; --app-blue-2:#3a6d80;
+    --attention:#f48066; --attention-2:#f4a261;
+    --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
+    --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
+    --p-rootin:#7fbacd; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#b694ea; --p-ripening:#e76f51;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 8px 28px rgba(0,0,0,0.45);
+    --grid-line: #2a3220;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;font:14px/1.5 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","ss03"}
+  a{color:var(--app-blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+  .masthead{background:#1a1c19;color:#fff;padding:20px 28px 24px;margin:0 -28px 0;position:relative;overflow:hidden;min-height:80px}
+  .masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1}
+  .lockup{position:relative;display:flex;align-items:center;gap:10px;color:#fff;padding-bottom:14px}
+  .lockup-mark{font-family:'Inter',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:1;color:#fff}
+  .lockup-glyph{display:inline-block;width:26px;height:26px;position:relative;flex:none}
+  .lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#fff;border-radius:2px}
+  .lockup-glyph::before{top:0;right:0;width:13px;height:13px}
+  .lockup-glyph::after{bottom:0;left:0;width:17px;height:17px;border-top-right-radius:0}
+  .lockup-byline{position:absolute;top:34px;left:0;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;color:#aaa;letter-spacing:0;line-height:1}
+  .controls{display:flex;gap:6px;align-items:center}
+  .btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
+  .btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
+  .btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
+  .tick{position:absolute;width:7px;height:7px;background:#3a3d35;border-radius:1px;z-index:0}
+  .tick.t1{top:14px;left:42%} .tick.t2{top:14px;left:48%;width:8px;height:8px} .tick.t3{top:14px;right:24%;width:6px;height:6px}
+  .tick.t4{bottom:12px;left:18%} .tick.t5{bottom:12px;left:22%;width:5px;height:5px}
+  .tick.t6{top:46%;right:18px} .tick.t7{bottom:12px;right:32%;width:6px;height:6px}
+  .pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+  .pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
+  .pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
+  .pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+  .pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+  .pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+  section{margin-top:40px}
+  h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+  h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+  h4{font-size:14px;margin:18px 0 6px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
+  p{margin:0 0 12px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+  .kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
+  .kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
+  .kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+  .kpi .val{font-size:22px;font-weight:700;color:var(--ink)}
+  .kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
+  .kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
+  .card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
+  .phase{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .phase.rootin{background:var(--p-rootin);color:#0c2a35}
+  .phase.veg{background:var(--p-veg);color:#1c3700}
+  .phase.stretch{background:var(--p-stretch);color:#4a1d00}
+  .phase.bulking{background:var(--p-bulking);color:#2c1750}
+  .phase.ripening{background:var(--p-ripening);color:#3c0f00}
+  .phase.dry{background:var(--bg-3);color:var(--ink-muted)}
+  .verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
+  .verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
+  .verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
+  .verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
+  .verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+  table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+  th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
+  .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
+  .chartwrap{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 16px 14px;margin:14px 0;box-shadow:var(--card-shadow)}
+  .chartwrap h4{margin-top:0}
+  .chartwrap .legend{font-size:12px;color:var(--ink-muted);margin-top:8px}
+  .chart-canvas{position:relative;height:260px;width:100%}
+  .chart-canvas canvas{max-width:100%}
+  .room-selector{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 18px}
+  .room-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;user-select:none;box-shadow:var(--card-shadow)}
+  .room-chip:hover{border-color:var(--olive-2);transform:translateY(-1px)}
+  .room-chip.active{background:var(--olive);color:#fff;border-color:var(--olive)}
+  .room-chip.active .chip-phase{background:rgba(255,255,255,.22);color:#fff}
+  .room-chip .chip-phase{font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px}
+  .room-chip.bulking{border-color:var(--p-bulking)}
+  .room-chip.ripening{border-color:var(--p-ripening)}
+  .room-chip.stretch{border-color:var(--p-stretch)}
+  .room-chip.veg{border-color:var(--p-veg)}
+  .room-meta{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:0 0 18px;box-shadow:var(--card-shadow)}
+  .room-meta .rm-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:10px}
+  .room-meta h3{margin:0;font-size:18px}
+  .room-meta .rm-targets{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
+  .room-meta .rm-targets b{color:var(--ink)}
+  .room-meta .rm-targets .tgt{display:inline-block;padding:4px 9px;background:var(--bg-3);border-radius:6px}
+  .room-meta .rm-note{margin-top:8px;font-size:13px;color:var(--ink-2);font-style:italic}
+  .room-meta .rm-coverage{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+  .en .es-only{display:none} .es .en-only{display:none}
+  .rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow)}
+  .rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
+  .rec .owner.grower{background:var(--app-blue)}
+  .rec .owner.process{background:var(--ink-2)}
+  .rec .rphase{color:var(--ink-muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-left:4px}
+  .rec .raction{margin-top:6px;font-weight:500}
+  .rec .rwhy{margin-top:4px;font-size:13px;color:var(--ink-2)}
+  footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+  .biophys-room{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;box-shadow:var(--card-shadow)}
+  .biophys-room h3{margin:0 0 10px;font-size:17px}
+  .biophys-brief{font-size:13.5px;color:var(--ink-2);margin-bottom:14px;padding:12px 14px;background:var(--bg-3);border-left:3px solid var(--olive);border-radius:0 8px 8px 0;line-height:1.55}
+  .bp-scroll{overflow-x:auto}
+  .bp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  .bp-table th{background:var(--bg-3);padding:8px 10px;text-align:left;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1.5px solid var(--border);white-space:nowrap}
+  .bp-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .bp-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .room-charts-full{display:grid;grid-template-columns:1fr;gap:14px;margin:14px 0 6px}
+  .room-chart-card{background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:10px 14px}
+  .room-chart-card h5{margin:0 0 4px;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .room-chart-card h5 .chart-note{font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--ink-muted)}
+  .room-chart-canvas{position:relative;height:240px;width:100%}
+  .muted{color:var(--ink-muted);font-style:italic}
+  kbd{font-family:'JetBrains Mono','Monaco',monospace;font-size:11px;padding:1px 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg-3);color:var(--ink-2)}
+</style>
+</head>
+<body class="en">
+<div class="wrap">
+<div class="masthead">
+  <span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span><span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
+  <div class="masthead-inner">
+    <div class="lockup"><span class="lockup-mark">AROYA</span><span class="lockup-glyph" aria-hidden="true"></span><span class="lockup-byline">by Addium</span></div>
+    <div class="controls"><button class="btn theme-btn" data-theme="dark">Dark</button></div>
+  </div>
+</div>
+<div class="pagehead">
+  <div class="pagehead-eyebrow">AROYA · Device Health · Mesh Telemetry</div>
+  <h1>Sun Coast Bloom LLC. · Device Health</h1>
+  <div class="sub">110-device substrate mesh · audit window 2026-05-29 → 2026-06-12 · companion to the 2-week cultivation audit</div>
+  <div class="meta">
+    <span><b>Facility</b>Sun Coast Bloom LLC. (ID 4497) · Bloomfield Innovations</span>
+    <span><b>Fleet</b>48 Node + 48 TEROS One · 8 Repeater · 3 Gateway · 3 Sink</span>
+    <span><b>Report date</b>2026-06-12</span>
+  </div>
+</div>
+
+<section>
+  <h2>Headline</h2>
+  <div class="kpis">
+    <div class="kpi warn"><div class="label">Online (last 48 h)</div><div class="val">77 / 110</div><div class="delta">devices reporting</div></div>
+    <div class="kpi bad"><div class="label">Silent &gt;48 h</div><div class="val">33</div><div class="delta">17 in 1Z + 10 section 2z (dark since ~06-10) · 16 unplaced · 1 gateway in GH#3</div></div>
+    <div class="kpi warn"><div class="label">Rooms fully dark</div><div class="val">2</div><div class="delta">1Z (0/12) · 10 section 2z (0/5)</div></div>
+    <div class="kpi warn"><div class="label">Unplaced inventory</div><div class="val">16</div><div class="delta">1 gateway · 2 sinks · 6 repeaters · node + TEROS One pair</div></div>
+  </div>
+  <div class="verdict warn">
+    <div class="v-head">The read</div>
+    <p><b>The mesh is healthy where it’s placed, and dead where it isn’t.</b> All five 100%-coverage rooms (both greenhouses’ HG rooms, 600 R1/R2, GH#1) ran the full 14 days without a gap, and the two Jims Veggies rooms came online cleanly mid-window (06-08 and 06-10 — fresh installs, not faults). The problem is concentrated: <b>1Z and ‘10 section 2z’ went completely dark around 06-10</b> after only ~6 days of reporting — 17 devices (nodes + TEROS One heads + the wing’s repeater H3400002795) all at once. Seventeen simultaneous battery deaths is not a thing; an entire wing dropping together is an <b>upstream mesh-path failure</b> — start at the repeater/sink/gateway serving that wing (all PoE — check the PoE drop and switch port, not batteries). Note gateway <b>H2110001144</b> (Greenhouse #3) also shows no data in the window while its room’s sensors report fine through other paths — verify which sink it’s backhauling through. Separately, <b>16 devices sit unplaced in inventory</b> including a full gateway + 2 sinks + 6 repeaters: placing one repeater in the 1Z/2z wing would likely harden it permanently. The 1Z probes also read near in-air VWC (~10%) while they were online — re-seat them in active media when the wing comes back.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Per-Room Device Tables</h2>
+  <p>Status = any reading in the last 48 h. Power model: Node + TEROS One are battery; Repeater / Gateway / Sink are PoE. TEROS One sensor-head serials are masked — heads are identified by their host node serial.</p>
+<div class="biophys-room">
+  <h3>Greenhouse #1 <span class="pill good">12/12 online (48 h) — all online</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012848</td><td>zone 1</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012848-2</td><td>zone 1</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012848</td><td>zone 1</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 67% (n=960) · EC 5.3 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012848</td><td>zone 1</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 42% (n=960) · EC 3.8 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012853</td><td>Zone 3</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012853-2</td><td>Zone 3</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012853</td><td>Zone 3</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 62% (n=960) · EC 5.5 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012853</td><td>Zone 3</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 46% (n=960) · EC 6.5 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012867</td><td>Zone 2</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012867-2</td><td>Zone 2</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012867</td><td>Zone 2</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 70% (n=960) · EC 4.6 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012867</td><td>Zone 2</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 40% (n=960) · EC 6.3 mS</td></tr></tbody>
+  </table></div>
+</div>
+<div class="biophys-room">
+  <h3>Greenhouse #2 <span class="pill good">24/24 online (48 h) — all online</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012842</td><td>Zone 3</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012842-2</td><td>Zone 3</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012842</td><td>Zone 3</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 56% (n=960) · EC 8.8 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012842</td><td>Zone 3</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 57% (n=960) · EC 3.8 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012852</td><td>Zone 1</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012852-2</td><td>Zone 1</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012852</td><td>Zone 1</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 60% (n=960) · EC 3.8 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012852</td><td>Zone 1</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 55% (n=960) · EC 4.5 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012858</td><td>Zone 4</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012858-2</td><td>Zone 4</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012858</td><td>Zone 4</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 56% (n=960) · EC 4.0 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012858</td><td>Zone 4</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 59% (n=960) · EC 4.9 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012859</td><td>Zone 5</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012859-2</td><td>Zone 5</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012859</td><td>Zone 5</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 63% (n=960) · EC 3.7 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012859</td><td>Zone 5</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 53% (n=960) · EC 4.2 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012862</td><td>Zone 6</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012862-2</td><td>Zone 6</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012862</td><td>Zone 6</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 59% (n=960) · EC 5.0 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012862</td><td>Zone 6</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 57% (n=960) · EC 3.9 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012864</td><td>Zone 2</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012864-2</td><td>Zone 2</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012864</td><td>Zone 2</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 58% (n=960) · EC 5.5 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012864</td><td>Zone 2</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 61% (n=960) · EC 4.0 mS</td></tr></tbody>
+  </table></div>
+</div>
+<div class="biophys-room">
+  <h3>Greenhouse #3 <span class="pill warn">24/25 online (48 h) — 1 silent</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Gateway</td><td style="font-family:monospace;font-size:0.85em;">H2110001144</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012843</td><td>Zone 2</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012843-2</td><td>Zone 2</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012843</td><td>Zone 2</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 56% (n=960) · EC 3.9 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012843</td><td>Zone 2</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 52% (n=960) · EC 3.9 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012851</td><td>Zone 1</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012851-2</td><td>Zone 1</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012851</td><td>Zone 1</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 44% (n=960) · EC 4.0 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012851</td><td>Zone 1</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 71% (n=960) · EC 3.7 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012855</td><td>Zone 3</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012855-2</td><td>Zone 3</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012855</td><td>Zone 3</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 54% (n=960) · EC 4.1 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012855</td><td>Zone 3</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 51% (n=960) · EC 4.2 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012856</td><td>Zone 4</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012856-2</td><td>Zone 4</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012856</td><td>Zone 4</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 54% (n=960) · EC 3.6 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012856</td><td>Zone 4</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 51% (n=960) · EC 4.0 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012860</td><td>Zone 6</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012860-2</td><td>Zone 6</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012860</td><td>Zone 6</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 51% (n=960) · EC 4.0 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012860</td><td>Zone 6</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 50% (n=960) · EC 4.1 mS</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012861</td><td>Zone 5</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012861-2</td><td>Zone 5</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012861</td><td>Zone 5</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 49% (n=958) · EC 4.3 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012861</td><td>Zone 5</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 61% (n=958) · EC 2.7 mS</td></tr></tbody>
+  </table></div>
+</div>
+<div class="biophys-room">
+  <h3>600 (Room 1) <span class="pill good">4/4 online (48 h) — all online</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012845</td><td>Lantz</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 13:00Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012845-2</td><td>Game over</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 13:00Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012845</td><td>Game over</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 13:00Z</td><td>VWC 47% (n=936) · EC 7.3 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012845</td><td>Lantz</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 13:00Z</td><td>VWC 44% (n=936) · EC 5.8 mS</td></tr></tbody>
+  </table></div>
+</div>
+<div class="biophys-room">
+  <h3>600 (Room 2) <span class="pill good">4/4 online (48 h) — all online</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012847</td><td>Lantz</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 13:00Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012847-2</td><td>Lantz 2</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 13:00Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012847</td><td>Lantz 2</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 13:00Z</td><td>VWC 51% (n=936) · EC 3.7 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012847</td><td>Lantz</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 13:00Z</td><td>VWC 55% (n=936) · EC 2.9 mS</td></tr></tbody>
+  </table></div>
+</div>
+<div class="biophys-room">
+  <h3>Jims Veggies (#1) <span class="pill good">4/4 online (48 h) — all online</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012844</td><td>Zone 1</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012844-2</td><td>Zone 2</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012844</td><td>Zone 2</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 31% (n=960) · EC 3.9 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012844</td><td>Zone 1</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 69% (n=960) · EC 2.8 mS</td></tr></tbody>
+  </table></div>
+</div>
+<div class="biophys-room">
+  <h3>Jims Veggies (#2) <span class="pill good">4/4 online (48 h) — all online</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012854</td><td>Zone 1</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012854-2</td><td>Zone 2</td><td>battery</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012854</td><td>Zone 2</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 75% (n=960) · EC 3.1 mS</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012854</td><td>Zone 1</td><td>battery (via node)</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 12:57Z</td><td>VWC 76% (n=960) · EC 2.8 mS</td></tr></tbody>
+  </table></div>
+</div>
+<div class="biophys-room">
+  <h3>1Z <span class="pill bad">0/12 online (48 h) — ALL SILENT</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012857</td><td>Blue Dream</td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012857-2</td><td>Blue Dream</td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012857</td><td>Blue Dream</td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012857</td><td>Blue Dream</td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012863</td><td>Blue Dream</td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012863-2</td><td>Blue Dream 2</td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012863</td><td>Blue Dream 2</td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012863</td><td>Blue Dream</td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012866</td><td>KeeKee</td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012866-2</td><td>KeeKee 2</td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012866</td><td>KeeKee 2</td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012866</td><td>KeeKee</td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr></tbody>
+  </table></div>
+</div>
+<div class="biophys-room">
+  <h3>10 section 2z <span class="pill bad">0/5 online (48 h) — ALL SILENT</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Mesh Repeater</td><td style="font-family:monospace;font-size:0.85em;">H3400002795</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012850</td><td>Black Runtz</td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012850-2</td><td>Black Runtz</td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012850</td><td>Black Runtz</td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012850</td><td>Black Runtz</td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr></tbody>
+  </table></div>
+</div>
+<div class="biophys-room">
+  <h3>— unplaced (inventory) <span class="pill warn">1/16 online (48 h) — 15 silent</span></h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device</th><th>Serial</th><th>Zone</th><th>Power</th><th>Status (48 h)</th><th class="num">Last reading</th><th>Window stats</th></tr></thead>
+    <tbody><tr><td>Gateway</td><td style="font-family:monospace;font-size:0.85em;">H2100005572</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Gateway</td><td style="font-family:monospace;font-size:0.85em;">H2200001018</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Sink</td><td style="font-family:monospace;font-size:0.85em;">SINKH2100005572</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Sink</td><td style="font-family:monospace;font-size:0.85em;">SINKH2110001144</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Sink</td><td style="font-family:monospace;font-size:0.85em;">SINKH2200001018</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Mesh Repeater</td><td style="font-family:monospace;font-size:0.85em;">H3400002789</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Mesh Repeater</td><td style="font-family:monospace;font-size:0.85em;">H3400002790</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Mesh Repeater</td><td style="font-family:monospace;font-size:0.85em;">H3400002791</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Mesh Repeater</td><td style="font-family:monospace;font-size:0.85em;">H3400002799</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Mesh Repeater</td><td style="font-family:monospace;font-size:0.85em;">H3400002800</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Mesh Repeater</td><td style="font-family:monospace;font-size:0.85em;">H3400002801</td><td></td><td>PoE</td><td><span class="pill good">online</span></td><td class="num">2026-06-12 13:00Z</td><td>—</td></tr><tr><td>Mesh Repeater</td><td style="font-family:monospace;font-size:0.85em;">H3400002802</td><td></td><td>PoE</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012846</td><td></td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>Node</td><td style="font-family:monospace;font-size:0.85em;">H3440012846-2</td><td></td><td>battery</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012846</td><td></td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr><tr><td>TEROS One (substrate head)</td><td style="font-family:monospace;font-size:0.85em;">TEROS One head on node H3440012846</td><td></td><td>battery (via node)</td><td><span class="pill bad">silent</span></td><td class="num">no data in window</td><td>—</td></tr></tbody>
+  </table></div>
+</div>
+</section>
+
+<section>
+  <h2>Recommendations</h2>
+  <ol style="line-height:1.7;">
+    <li><b>Walk the 1Z / 10 section 2z wing.</b> Confirm power + uplink on the repeater and the sink/gateway path serving it (PoE — check the drop/switch port). 17 devices went silent together ~06-10; that is a single upstream failure, not device faults.</li>
+    <li><b>Deploy from the unplaced pool.</b> 6 spare repeaters + 1 gateway + 2 sinks are unassigned; one repeater placed mid-wing gives 1Z/2z a redundant path. Place or RMA the unplaced node + TEROS One head.</li>
+    <li><b>Verify gateway H2110001144 (Greenhouse #3)</b> — no readings attributed in-window despite its room reporting at 100%; likely backhauling through another sink, worth confirming so the site isn’t one-gateway-fragile.</li>
+    <li><b>Re-seat the 1Z substrate heads</b> when the wing returns — they read close to in-air (~10% VWC) even while online.</li>
+    <li><b>No climate or flow devices exist at this site.</b> Substrate-only fleet; see the cultivation audit for the climate-sensing and OpenSprinkler-integration recommendations.</li>
+  </ol>
+</section>
+
+<footer><p>Generated 2026-06-12 from cached SPA /devices/ + readings manifest (facility 4497). Status thresholds: silent = no reading in 48 h. Battery vs PoE per AROYA device power reference.</p></footer>
+</div>
+<script>
+document.querySelectorAll('.theme-btn').forEach(function(b){
+  b.addEventListener('click', function(e){
+    var root = document.documentElement;
+    var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    e.target.textContent = next === 'dark' ? 'Light' : 'Dark';
+  });
+});
+</script>
+</body>
+</html>
