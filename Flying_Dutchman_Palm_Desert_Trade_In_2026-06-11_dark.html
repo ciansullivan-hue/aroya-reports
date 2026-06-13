@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flying Dutchman — AROYA Trade-In Valuation v6 · 2026-06-12 · interactive</title>
+<title>Flying Dutchman — AROYA Trade-In Valuation v8 · 2026-06-12 · interactive</title>
 <style>
 :root{--bg:#fafaf7;--ink:#1c2419;--ink-muted:#7e836e;--border:#e2e2dc;--card:#ffffff;
 --olive:#3f4e2b;--lime:#9fd96a;--app-blue:#1f78b4;--attention:#e76f51;
@@ -89,11 +89,18 @@ body.dark .quote-bar{box-shadow:0 -2px 18px rgba(0,0,0,.55)}
 .preset-btn:hover{background:var(--good-bg);border-color:var(--olive)}
 .preset-btn.active{background:var(--olive);color:#fff;border-color:var(--olive)}
 body.dark .preset-btn.active{background:var(--lime);color:#13160f}
-.qb-stats{text-align:center;font-size:12.5px;line-height:1.5}
-.qb-stats b{color:var(--olive);font-size:13.5px}
+.qb-stats{text-align:center;font-size:12.5px;line-height:1.45}
+.qb-stats b{color:var(--olive)}
 body.dark .qb-stats b{color:var(--lime)}
-.qb-stats .totals{font-size:15px;margin-top:2px}
-.qb-stats .totals b{font-size:17px}
+.qb-spend-headline{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:1px}
+.qb-spend-headline b{font-size:22px;color:var(--attention);margin-left:2px}
+body.dark .qb-spend-headline b{color:#f48066}
+.qb-spend-sublabel{font-size:11px;font-weight:500;color:var(--ink-muted);margin-left:4px}
+.qb-sub{font-size:12px;color:var(--ink-muted);margin-bottom:2px}
+.qb-sub b{font-size:13px;color:var(--good)}
+body.dark .qb-sub b{color:var(--good)}
+.qb-counts{font-size:11.5px;color:var(--ink-muted)}
+.qb-counts span{color:var(--ink);font-weight:600}
 .qb-actions{display:flex;gap:6px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
 .action-btn{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink)}
 .action-btn:hover{background:var(--good-bg)}
@@ -122,7 +129,7 @@ body.dark tr.row-promo td{background:rgba(185,229,135,.10)}
 <svg viewBox="0 0 202.1 75" style="height:38px;fill:currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="AROYA"><path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/><path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/><path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/><path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/><path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/><path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z" fill="#9fd96a"/></svg>
 <div style="border-left:2px solid rgba(255,255,255,.3);padding-left:14px">
 <div class="brand">TRADE-IN VALUATION</div>
-<div style="font-size:11px;color:#cfd6bd;font-weight:600;margin-top:2px">by Addium &middot; v6 &middot; interactive selector + live sync</div>
+<div style="font-size:11px;color:#cfd6bd;font-weight:600;margin-top:2px">by Addium &middot; v8 &middot; out-of-pocket headline</div>
 </div>
 </div>
 <h1>Flying Dutchman &middot; Palm Desert, CA</h1>
@@ -160,12 +167,13 @@ This pull resolved Rooms 1, 2, 3, 5 (= 36 physical devices) before the AROYA SPA
 </section>
 
 <section>
-<h2>Executive summary &middot; four scenarios</h2>
+<h2>Executive summary &middot; what each scenario actually costs</h2>
+<p style="font-size:13px;color:var(--ink-muted);margin:6px 0 14px"><b>The big number is what Nick pays out-of-pocket for hardware</b> (after the trade-in discount). The smaller "saves" line is how much that discount works out to vs. AROYA's sticker MSRP.</p>
 <div class="kpi-row">
-<div class="kpi"><div class="lbl">A · 1:1 Singles credit</div><div class="val">$3,500</div><div class="sub">Net spend $11,166 (highest gross credit)</div></div>
-<div class="kpi"><div class="lbl">B · Consolidated Duals credit</div><div class="val">$2,700</div><div class="sub">Net spend $8,286 (lowest standard net spend)</div></div>
-<div class="kpi"><div class="lbl">D · FREE TEROS ONE (full facility ~61 zones)</div><div class="val">$25,559</div><div class="sub">free sensor MSRP value · customer pays ~$41,419 for D&D Stations + AUTOMAIT (TBD) + $2× Climate One trade-in. ALL-OR-NOTHING.</div></div>
-<div class="kpi"><div class="lbl">Estimated residual value</div><div class="val">$6,209</div><div class="sub">Book value of installed legacy hardware (estimate)</div></div>
+<div class="kpi"><div class="lbl">A &middot; 1:1 Singles &mdash; you pay</div><div class="val">$11,166</div><div class="sub">saves $3,500 vs MSRP $14,666</div></div>
+<div class="kpi"><div class="lbl">B &middot; Consolidated Duals &mdash; you pay</div><div class="val">$8,286</div><div class="sub">saves $2,700 vs MSRP $10,986 &middot; cheapest standard path</div></div>
+<div class="kpi"><div class="lbl">D &middot; FREE promo full facility &mdash; you pay</div><div class="val">$42,377</div><div class="sub">+ AUTOMAIT subscription (TBD) &middot; gets $25,559 of free sensors &middot; <b>all-or-nothing</b> on ~61 zones</div></div>
+<div class="kpi"><div class="lbl">C &middot; Selective &mdash; you pay</div><div class="val">$319</div><div class="sub">just the OOW &amp; unhealthy unit (1 device) &middot; saves $100</div></div>
 </div>
 
 <h3>Top 3 rooms by replacement scale</h3>
@@ -189,9 +197,9 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <div class="sku-line"><div class="qty">32&times;</div><div class="sku">TEROS One Single<div class="price">discount $100/ea · trade price $319/ea · MSRP $419/ea</div></div></div>
 <div class="sku-line"><div class="qty">2&times;</div><div class="sku">Climate One H421<div class="price">discount $150/ea · trade price $479/ea · MSRP $629/ea</div></div></div>
 <div class="row" style="margin-top:14px">
-<div class="col"><div class="l">AROYA credit (discount)</div><div class="v">$3,500</div></div>
-<div class="col"><div class="l">MSRP total</div><div class="v">$14,666</div></div>
-<div class="col"><div class="l">Net spend (with trade-in)</div><div class="v">$11,166</div></div>
+<div class="col" style="flex:1.5"><div class="l">Net spend (with trade-in)</div><div class="v" style="color:var(--attention);font-size:26px">$11,166</div></div>
+<div class="col"><div class="l">vs. MSRP total</div><div class="v">$14,666</div></div>
+<div class="col"><div class="l">Saves (vs MSRP)</div><div class="v" style="color:var(--good)">$3,500</div></div>
 <div class="col"><div class="l">Legacy units retired</div><div class="v" style="font-size:14px">34</div></div>
 </div>
 
@@ -201,9 +209,9 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <div class="sku-line"><div class="qty">16&times;</div><div class="sku">TEROS One Dual<div class="price">discount $150/ea · trade price $458/ea · MSRP $608/ea</div></div></div>
 <div class="sku-line"><div class="qty">2&times;</div><div class="sku">Climate One H421<div class="price">discount $150/ea · trade price $479/ea · MSRP $629/ea</div></div></div>
 <div class="row" style="margin-top:14px">
-<div class="col"><div class="l">AROYA credit (discount)</div><div class="v">$2,700</div></div>
-<div class="col"><div class="l">MSRP total</div><div class="v">$10,986</div></div>
-<div class="col"><div class="l">Net spend (with trade-in)</div><div class="v">$8,286</div></div>
+<div class="col" style="flex:1.5"><div class="l">Net spend (with trade-in)</div><div class="v" style="color:var(--attention);font-size:26px">$8,286</div></div>
+<div class="col"><div class="l">vs. MSRP total</div><div class="v">$10,986</div></div>
+<div class="col"><div class="l">Saves (vs MSRP)</div><div class="v" style="color:var(--good)">$2,700</div></div>
 <div class="col"><div class="l">Legacy units retired</div><div class="v" style="font-size:14px">34</div></div>
 </div>
 
@@ -212,9 +220,9 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <h3>C · Selective — OOW &amp; unhealthy only</h3>
 <div class="sku-line"><div class="qty">1&times;</div><div class="sku">TEROS One Single<div class="price">discount $100/ea · trade price $319/ea · MSRP $419/ea</div></div></div>
 <div class="row" style="margin-top:14px">
-<div class="col"><div class="l">AROYA credit (discount)</div><div class="v">$100</div></div>
-<div class="col"><div class="l">MSRP total</div><div class="v">$419</div></div>
-<div class="col"><div class="l">Net spend (with trade-in)</div><div class="v">$319</div></div>
+<div class="col" style="flex:1.5"><div class="l">Net spend (with trade-in)</div><div class="v" style="color:var(--attention);font-size:26px">$319</div></div>
+<div class="col"><div class="l">vs. MSRP total</div><div class="v">$419</div></div>
+<div class="col"><div class="l">Saves (vs MSRP)</div><div class="v" style="color:var(--good)">$100</div></div>
 <div class="col"><div class="l">Legacy units retired</div><div class="v" style="font-size:14px">1</div></div>
 </div>
 
@@ -225,9 +233,9 @@ Each flower room runs 2 pucks per zone (Front + Back) and 4 zones per room → u
 <div class="sku-line"><div class="qty">61&times;</div><div class="sku">Drip &amp; Drain Station (Gen 2) — 1 per zone · MSRP $679/ea (customer pays full)<div class="price">discount $0/ea · trade price $679/ea · MSRP $679/ea</div></div></div>
 <div class="sku-line"><div class="qty">2&times;</div><div class="sku">AROYA CLIMATE ONE Aspirated Climate Station (legacy climate-station swap — standard pricing, NOT covered by promo)<div class="price">discount $150/ea · trade price $479/ea · MSRP $629/ea</div></div></div>
 <div class="row" style="margin-top:14px">
-<div class="col"><div class="l">Free TEROS ONE value (full facility)</div><div class="v">$25,559</div></div>
-<div class="col"><div class="l">MSRP total</div><div class="v">$68,236</div></div>
-<div class="col"><div class="l">Hardware net spend (D&D + Climate One trade)</div><div class="v">$42,377</div></div>
+<div class="col" style="flex:1.5"><div class="l">Hardware net spend (D&D + Climate One trade)</div><div class="v" style="color:var(--attention);font-size:26px">$42,377</div></div>
+<div class="col"><div class="l">vs. MSRP total</div><div class="v">$68,236</div></div>
+<div class="col"><div class="l">Free hardware value (sensors covered)</div><div class="v" style="color:var(--good)">$25,559</div></div>
 <div class="col"><div class="l">Scope</div><div class="v" style="font-size:14px">all 32+ legacy puck-positions facility-wide + 2 climate stations verified (partial inventory)</div></div>
 </div>
 <div style="background:rgba(231,111,81,.10);border:1px solid var(--attention);border-radius:6px;padding:8px 12px;margin-top:8px;font-size:12.5px"><b>All-or-nothing scope:</b> Deal is ALL-OR-NOTHING — every zone/valve in the facility must go on AUTOMAIT at the same time to qualify. Partial-room deployments are NOT eligible.</div>
@@ -850,8 +858,10 @@ Selector default = "Skip / keep" · pick a row's destination SKU to add to the q
 <button class="preset-btn" data-preset="reset">Reset</button>
 </div>
 <div class="qb-stats">
-<div><span id="qbSingles">0</span> Singles &middot; <span id="qbDuals">0</span> Duals &middot; <span id="qbClimates">0</span> Climates &middot; <span id="qbPromo">0</span> free-via-promo zones</div>
-<div class="totals">Credit: <b id="qbCredit">$0</b> &middot; Net spend: <b id="qbNet">$0</b> <span id="qbPromoExtra" style="font-size:11.5px;color:var(--ink-muted)"></span></div>
+<div class="qb-spend-headline">Out-of-pocket spend: <b id="qbNet">$0</b><span class="qb-spend-sublabel"> (hardware net w/ trade-in)</span></div>
+<div class="qb-sub">Saves <b id="qbCredit">$0</b> vs MSRP &middot; MSRP total <b id="qbMsrp">$0</b></div>
+<div class="qb-counts"><span id="qbSingles">0</span> Singles &middot; <span id="qbDuals">0</span> Duals &middot; <span id="qbClimates">0</span> Climates &middot; <span id="qbPromo">0</span> free-via-promo zones</div>
+<div id="qbPromoExtra" style="font-size:11.5px;color:var(--ink-muted)"></div>
 </div>
 <div class="qb-actions">
 <span class="sync-indicator ok" id="syncIndicator">Synced &check;</span>
@@ -906,7 +916,7 @@ function applyState() {
 
 function computeQuote() {
   let nSingles = 0, nDualHalves = 0, nClimates = 0;
-  let credit = 0, net = 0;
+  let credit = 0, net = 0, msrp = 0;
   const promoZones = new Set();
 
   document.querySelectorAll('.trade-select').forEach(sel => {
@@ -915,6 +925,7 @@ function computeQuote() {
       nSingles++;
       credit += PRICING['tone-single'].credit;
       net    += PRICING['tone-single'].net;
+      msrp   += PRICING['tone-single'].msrp;
     } else if (sku === 'tone-dual-half') {
       nDualHalves++;
     } else if (sku === 'tone-free') {
@@ -923,6 +934,7 @@ function computeQuote() {
       nClimates++;
       credit += PRICING['climate-one'].credit;
       net    += PRICING['climate-one'].net;
+      msrp   += PRICING['climate-one'].msrp;
     }
   });
   // Pair Dual halves: every 2 = 1 full Dual; odd half-pair → bumped to a Single
@@ -930,12 +942,15 @@ function computeQuote() {
   const nDualLeftover = nDualHalves % 2;
   credit += nDuals * PRICING['tone-dual-half'].pair_credit + nDualLeftover * PRICING['tone-dual-half'].single_credit;
   net    += nDuals * PRICING['tone-dual-half'].pair_net    + nDualLeftover * PRICING['tone-dual-half'].single_net;
+  msrp   += nDuals * PRICING['tone-dual-half'].pair_msrp   + nDualLeftover * PRICING['tone-dual-half'].single_msrp;
 
-  // Promo zones: free TEROS ONE (no cash, no credit in the standard sense), customer pays D&D
+  // Promo zones: free TEROS ONE (AROYA covers); customer pays D&D Station per zone
   const nPromoZones = promoZones.size;
   const promoFreeValue = nPromoZones * PRICING['tone-free'].msrp;
   const promoDDCost = nPromoZones * DD_STATION_MSRP;
-  net += promoDDCost;
+  net  += promoDDCost;
+  msrp += promoFreeValue + promoDDCost;  // sticker = free sensor MSRP + D&D MSRP (both retail prices)
+  credit += promoFreeValue;              // savings = the free TEROS ONE hardware value
 
   document.getElementById('qbSingles').textContent = nSingles + (nDualLeftover ? ' + 1 (Dual leftover)' : '');
   document.getElementById('qbDuals').textContent = nDuals;
@@ -943,9 +958,10 @@ function computeQuote() {
   document.getElementById('qbPromo').textContent = nPromoZones;
   document.getElementById('qbCredit').textContent = '$' + credit.toLocaleString();
   document.getElementById('qbNet').textContent = '$' + net.toLocaleString();
+  document.getElementById('qbMsrp').textContent = '$' + msrp.toLocaleString();
   const promoExtra = document.getElementById('qbPromoExtra');
   if (nPromoZones > 0) {
-    promoExtra.innerHTML = ' &middot; <b style="color:var(--olive)">$' + promoFreeValue.toLocaleString() + '</b> free TEROS ONE hardware + AUTOMAIT (TBD) &middot; all-or-nothing scope: <b>' + nPromoZones + '/' + ZONES_FULL_FACILITY_EST + '</b> zones picked of ~' + ZONES_FULL_FACILITY_EST + ' total in the facility';
+    promoExtra.innerHTML = '&middot; <b style="color:var(--olive)">' + nPromoZones + '/' + ZONES_FULL_FACILITY_EST + '</b> zones picked of ~' + ZONES_FULL_FACILITY_EST + ' total. <b>All-or-nothing</b> &mdash; promo requires AUTOMAIT live on every zone simultaneously; D&amp;D Station cost above is <b>$' + promoDDCost.toLocaleString() + '</b> (zone count &times; $679) + AUTOMAIT subscription (TBD).';
   } else {
     promoExtra.innerHTML = '';
   }
