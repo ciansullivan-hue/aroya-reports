@@ -171,11 +171,11 @@
   <div class="pricegrid" style="margin-top:12px;gap:22px">
     <div class="pricefix">TEROS One <b>Dual</b> <b style="font-size:15px">$458</b> <span class="sdim">$608 MSRP · save $150</span></div>
     <div class="pricefix">TEROS One <b>Single</b> <b style="font-size:15px">$319</b> <span class="sdim">$419 MSRP · save $100</span></div>
-    <div class="pricefix">Climate One <b style="font-size:15px">$419</b> <span class="sdim">$569 MSRP · save $150</span></div>
+    <div class="pricefix">Climate One <b style="font-size:15px">$479</b> <span class="sdim">$629 MSRP · save $150</span></div>
   </div>
   <div class="plan" style="grid-template-columns:repeat(3,1fr)">
     <div class="pcard"><div class="pn" id="pCostT">$0</div><div class="pl"><b>TEROS One</b>: <span id="pNSingle">0</span> single + <span id="pNDual">0</span> dual — save <span class="sok" id="pSaveT">$0</span></div></div>
-    <div class="pcard"><div class="pn" id="pCostC">$0</div><div class="pl"><b>Climate One</b>: <span id="pNC1">0</span> × $419 — save <span class="sok" id="pSaveC">$0</span></div></div>
+    <div class="pcard"><div class="pn" id="pCostC">$0</div><div class="pl"><b>Climate One</b>: <span id="pNC1">0</span> × $479 — save <span class="sok" id="pSaveC">$0</span></div></div>
     <div class="pcard"><div class="pn sok" id="pSaveTotal">$0</div><div class="pl">Total saving vs MSRP (<span id="pMsrpTotal">$0</span>) — time-limited</div></div>
   </div>
 </div>
@@ -284,7 +284,7 @@ const STATUS=[["","—"],["revived","✓ Fixed / reporting"],["scheduled","◐ S
 const STATUS_NOSUB=STATUS;
 // Fixed trade-in pricing — TEROS One (substrate) + Climate One (climate)
 const DUAL_NET=458,SINGLE_NET=319,DUAL_MSRP=608,SINGLE_MSRP=419,DUAL_SAVE=150,SINGLE_SAVE=100;
-const C1_NET=419,C1_MSRP=569,C1_SAVE=150;
+const C1_NET=479,C1_MSRP=629,C1_SAVE=150;
 // ---- charts ----
 (function(){
   if(typeof Chart==='undefined')return;
@@ -397,7 +397,7 @@ function upgBox(d){
     if(isSub(d)) extra=` <select class="upgm" data-ser="${d.serial}" onchange="setUpgModel(this)">`
       +`<option value="dual"${m==='dual'?' selected':''}>Dual $458</option>`
       +`<option value="single"${m==='single'?' selected':''}>Single $319</option></select>`;
-    else extra=` <span class="scur" style="background:#d9e5ff;color:#08326b">Climate One $419</span>`;
+    else extra=` <span class="scur" style="background:#d9e5ff;color:#08326b">Climate One $479</span>`;
   }
   const title=isSub(d)?'Count for a TEROS One upgrade quote':'Count for a Climate One upgrade quote';
   return `<input type="checkbox" class="upg" data-ser="${d.serial}" ${on?'checked':''} onchange="toggleUpg(this)" title="${title}">${extra}`;

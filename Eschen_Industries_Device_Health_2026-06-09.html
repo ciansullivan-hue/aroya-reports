@@ -322,12 +322,12 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
 
 <!-- ════ TRADE-IN ════════════════════════════════════════════════ -->
 <div class="panel" id="panel-tradein">
-  <div class="card info"><strong>TEROS One upgrade path:</strong> Each TEROS-12 substrate probe qualifies for the TEROS One trade-in. Submit the old unit and receive a $150 discount off the $569 list price — net $419 per unit. Tick the boxes below to build your order. Selection syncs live across all devices in real time.</div>
+  <div class="card info"><strong>TEROS One upgrade path:</strong> Each TEROS-12 substrate probe qualifies for the TEROS One trade-in. Submit the old unit and receive a $100 discount off the $419 list price — net $319 per unit (or consolidate two TEROS-12s into one TEROS One Dual: $608 MSRP, $150 off → $458). Tick the boxes below to build your order. Selection syncs live across all devices in real time.</div>
 
   <div class="plan">
-    <div class="pcard"><div class="pn">$569</div><div class="pl">TEROS One list price / unit</div></div>
-    <div class="pcard"><div class="pn">− $150</div><div class="pl">Trade-in discount (per unit)</div></div>
-    <div class="pcard"><div class="pn">$419</div><div class="pl">Net per unit after trade-in</div></div>
+    <div class="pcard"><div class="pn">$419</div><div class="pl">TEROS One Single list price / unit</div></div>
+    <div class="pcard"><div class="pn">− $100</div><div class="pl">Trade-in discount (per Single)</div></div>
+    <div class="pcard"><div class="pn">$319</div><div class="pl">Net per unit after trade-in</div></div>
     <div class="pcard hl"><div class="pn" id="pGrand">$0</div><div class="pl" id="pLbl">Total (0 units selected)</div></div>
   </div>
 
@@ -560,7 +560,7 @@ function render(){
 
 function recompute(){
   const sel=TER12.filter(d=>upg(d.sn)==='teros_one');
-  const n=sel.length,tot=n*419,save=n*150;
+  const n=sel.length,tot=n*319,save=n*100;
   const fmt=v=>'$'+v.toLocaleString();
   document.getElementById('pGrand').textContent=fmt(tot);
   document.getElementById('pLbl').textContent=`Total (${n} unit${n!==1?'s':''} selected)`;
