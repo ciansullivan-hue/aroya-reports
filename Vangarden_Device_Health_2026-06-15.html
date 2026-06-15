@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vangarden · Device Health · 2026-06-15</title><style>
+  :root[data-theme="light"]{
+    --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
+    --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
+    --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
+    --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
+    --attention:#e76f51; --attention-2:#f4a261;
+    --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
+    --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
+    --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+    --grid-line: #e8e8e0;
+  }
+  :root[data-theme="dark"]{
+    --bg:#13160f; --bg-2:#1a1e15; --bg-3:#22281c; --border:#2e3624;
+    --ink:#e8ead9; --ink-2:#b9bda5; --ink-muted:#7e836e;
+    --olive:#8aa05c; --olive-2:#a7bb74; --lime:#b9e587; --lime-2:#6b8d3d;
+    --app-blue:#6cb5d8; --app-blue-2:#3a6d80;
+    --attention:#f48066; --attention-2:#f4a261;
+    --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
+    --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
+    --p-rootin:#7fbacd; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#b694ea; --p-ripening:#e76f51;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 8px 28px rgba(0,0,0,0.45);
+    --grid-line: #2a3220;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;font:14px/1.5 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","ss03"}
+  a{color:var(--app-blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+  .masthead{background:#1a1c19;color:#fff;padding:20px 28px 24px;margin:0 -28px 0;position:relative;overflow:hidden;min-height:80px}
+  .masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1}
+  .lockup{position:relative;display:flex;align-items:center;gap:10px;color:#fff;padding-bottom:14px}
+  .lockup-mark{font-family:'Inter',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:1;color:#fff}
+  .lockup-glyph{display:inline-block;width:26px;height:26px;position:relative;flex:none}
+  .lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#fff;border-radius:2px}
+  .lockup-glyph::before{top:0;right:0;width:13px;height:13px}
+  .lockup-glyph::after{bottom:0;left:0;width:17px;height:17px;border-top-right-radius:0}
+  .lockup-byline{position:absolute;top:34px;left:0;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;color:#aaa;letter-spacing:0;line-height:1}
+  .controls{display:flex;gap:6px;align-items:center}
+  .btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
+  .btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
+  .btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
+  .tick{position:absolute;width:7px;height:7px;background:#3a3d35;border-radius:1px;z-index:0}
+  .tick.t1{top:14px;left:42%} .tick.t2{top:14px;left:48%;width:8px;height:8px} .tick.t3{top:14px;right:24%;width:6px;height:6px}
+  .tick.t4{bottom:12px;left:18%} .tick.t5{bottom:12px;left:22%;width:5px;height:5px}
+  .tick.t6{top:46%;right:18px} .tick.t7{bottom:12px;right:32%;width:6px;height:6px}
+  .pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+  .pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
+  .pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
+  .pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+  .pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+  .pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+  :root[data-theme="dark"] .pagehead{border-bottom-color:var(--border)}
+  :root[data-theme="dark"] .pagehead-eyebrow{color:var(--olive-2)}
+  section{margin-top:40px}
+  h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+  h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+  h4{font-size:14px;margin:18px 0 6px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
+  p{margin:0 0 12px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+  .kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
+  .kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
+  .kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+  .kpi .val{font-size:22px;font-weight:700;color:var(--ink)}
+  .kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
+  .kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
+  .card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
+  .phase{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .phase.rootin{background:var(--p-rootin);color:#0c2a35}
+  .phase.veg{background:var(--p-veg);color:#1c3700}
+  .phase.stretch{background:var(--p-stretch);color:#4a1d00}
+  .phase.bulking{background:var(--p-bulking);color:#2c1750}
+  .phase.ripening{background:var(--p-ripening);color:#3c0f00}
+  .phase.dry{background:var(--bg-3);color:var(--ink-muted)}
+  .verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
+  .verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
+  .verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
+  .verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
+  .verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+  table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+  th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
+  .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
+  .chartwrap{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 16px 14px;margin:14px 0;box-shadow:var(--card-shadow)}
+  .chartwrap h4{margin-top:0}
+  .chartwrap .legend{font-size:12px;color:var(--ink-muted);margin-top:8px}
+  .chart-canvas{position:relative;height:260px;width:100%}
+  .chart-canvas canvas{max-width:100%}
+  .room-selector{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 18px}
+  .room-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--bg-2);border:1.5px solid var(--border);color:var(--ink);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;user-select:none;box-shadow:var(--card-shadow)}
+  .room-chip:hover{border-color:var(--olive-2);transform:translateY(-1px)}
+  .room-chip.active{background:var(--olive);color:#fff;border-color:var(--olive)}
+  .room-chip.active .chip-phase{background:rgba(255,255,255,.22);color:#fff}
+  .room-chip.disabled{opacity:.45;cursor:not-allowed}
+  .room-chip .chip-phase{font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--bg-3);color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px}
+  .room-chip.active.bulking{background:var(--p-bulking);color:#2c1750;border-color:var(--p-bulking)}
+  .room-chip.active.ripening{background:var(--p-ripening);color:#fff;border-color:var(--p-ripening)}
+  .room-chip.active.stretch{background:var(--p-stretch);color:#4a1d00;border-color:var(--p-stretch)}
+  .room-chip.active.veg{background:var(--p-veg);color:#1c3700;border-color:var(--p-veg)}
+  .room-chip.active.dry{background:var(--ink-2);color:#fff;border-color:var(--ink-2)}
+  .compare-toggle{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-muted);cursor:pointer}
+  .compare-toggle input{margin:0}
+  .room-meta{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:0 0 18px;box-shadow:var(--card-shadow)}
+  .room-meta .rm-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:10px}
+  .room-meta h3{margin:0;font-size:18px}
+  .room-meta .rm-targets{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
+  .room-meta .rm-targets b{color:var(--ink)}
+  .room-meta .rm-targets .tgt{display:inline-block;padding:4px 9px;background:var(--bg-3);border-radius:6px}
+  .room-meta .rm-note{margin-top:8px;font-size:13px;color:var(--ink-2);font-style:italic}
+  .room-meta .rm-coverage{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+  .legend-row-label{font-weight:600;color:var(--ink-2);margin-right:6px}
+  .en .es-only{display:none} .es .en-only{display:none}
+  .rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow)}
+  .rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
+  .rec .owner.grower{background:var(--app-blue)}
+  .rec .owner.process{background:var(--ink-2)}
+  .rec .rphase{color:var(--ink-muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-left:4px}
+  .rec .raction{margin-top:6px;font-weight:500}
+  .rec .rwhy{margin-top:4px;font-size:13px;color:var(--ink-2)}
+  footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+  .biophys-room{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;box-shadow:var(--card-shadow)}
+  .biophys-room h3{margin:0 0 10px;font-size:17px}
+  .biophys-brief{font-size:13.5px;color:var(--ink-2);margin-bottom:14px;padding:12px 14px;background:var(--bg-3);border-left:3px solid var(--olive);border-radius:0 8px 8px 0;line-height:1.55}
+  .biophys-section-label{font-size:11px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.8px;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px dashed var(--border)}
+  .bp-scroll{overflow-x:auto}
+  .bp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  .bp-table th{background:var(--bg-3);padding:8px 10px;text-align:left;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1.5px solid var(--border);white-space:nowrap}
+  .bp-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .bp-table.compact td{padding:7px 8px;font-size:12.5px}
+  .bp-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .bp-targets{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .bp-tgt{display:inline-block;font-size:12px;padding:5px 10px;background:var(--bg-3);border-radius:6px;color:var(--ink-2)}
+  .bp-tgt b{color:var(--ink)}
+  .muted{color:var(--ink-muted);font-style:italic}
+  kbd{font-family:'JetBrains Mono','Monaco',monospace;font-size:11px;padding:1px 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg-3);color:var(--ink-2)}
+</style></head>
+<body class="en">
+<div class="wrap">
+<div class="masthead"><span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span><span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
+<div class="masthead-inner"><div class="lockup"><span class="lockup-mark">AROYA</span><span class="lockup-glyph"></span><span class="lockup-byline">by Addium</span></div>
+<div class="controls"><button class="btn theme-btn" data-theme="dark">Dark</button></div></div></div>
+<div class="pagehead"><div class="pagehead-eyebrow">AROYA · Device Health · Mesh Reliability</div>
+<h1>Vangarden · Device &amp; Mesh Health</h1>
+<div class="sub">Substrate + climate reading reliability across 13 active flower rooms · 14-day window</div>
+<div class="meta"><span><b>Facility</b>Vangarden (ID 4537)</span><span><b>Window</b>2026-06-01 → 2026-06-15</span><span><b>Report date</b>2026-06-15</span><span><b>Power</b>Node + TEROS 12 battery; Repeater/Climate/Atmos/EE894/Gateway PoE</span></div></div>
+<section><h2>Headline</h2><div class="kpis">
+    <div class="kpi good"><div class="label">Rooms reporting</div><div class="val">13 / 13</div><div class="delta">all active flower rooms online</div></div>
+    <div class="kpi good"><div class="label">Healthy mesh</div><div class="val">12 / 13</div><div class="delta">max gap ≤30 min, full cadence</div></div>
+    <div class="kpi warn"><div class="label">Watch</div><div class="val">1</div><div class="delta">intermittent / minor gaps</div></div>
+    <div class="kpi good"><div class="label">Faults</div><div class="val">0</div><div class="delta">silent or &gt;2h gaps</div></div>
+    <div class="kpi good"><div class="label">Reading cadence</div><div class="val">~1–4 min</div><div class="delta">substrate + climate, 14-day window</div></div>
+    <div class="kpi good"><div class="label">Window coverage</div><div class="val">100%</div><div class="delta">14/14 days · 104% of window</div></div>
+  </div>
+<div class="verdict good"><div class="v-head">Mesh is healthy across the flower deck</div>
+<p>Every one of the 13 active flower rooms reported substrate and climate data on a tight ~1–4 minute cadence for the full 14-day window, with a longest gap of ≤4 minutes in any room. There are no silent nodes and no multi-hour blackouts. This is the reliability signal operators actually feel — no missing data in the AROYA app. One room (Flower 8) logged ~8% fewer substrate readings than its peers, consistent with a single substrate position reporting intermittently; worth a quick probe-seat check but not a fault.</p></div>
+<div class="verdict warn"><div class="v-head">What this view does and does not cover</div>
+<p>This dashboard derives reliability from <b>reading cadence and gap analysis</b> over the 14-day window. Per-device <b>battery %, RSSI, link quality and travel time</b> come from the AROYA SPA <code>/devices/</code> endpoint, which requires a live browser session and was <b>not reachable in this unattended run</b>. For the battery/radio view, re-run with the device-health pipeline against a live SPA tab. Power reminder: only <b>Node and TEROS 12</b> are battery-powered; Mesh Repeater, Climate One, Atmos 14, EE894, Gateway and Sink are all PoE — never suggest USB-C/wall-wart power for those when troubleshooting an offline device.</p></div></section>
+<section><h2>Per-Room Mesh Reliability</h2>
+<p>Substrate positions per room, 14-day reading counts (substrate + climate), longest inter-reading gap, last reading timestamp, and a reliability verdict. Healthy = full cadence, max gap ≤30 min.</p>
+<div class="bp-scroll"><table class='bp-table compact'><thead><tr><th>Room</th><th>Phase</th><th>Substrate positions</th><th>Substrate readings (14d)</th><th>Climate readings (14d)</th><th>Longest gap</th><th>Last reading (UTC)</th><th>Status</th></tr></thead><tbody><tr><td><b>Flower 1</b></td><td>Week 6 Generative</td><td class='num'>6</td><td class='num'>83,820</td><td class='num'>13,973</td><td class='num'>2 min</td><td>2026-06-15 13:22Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 2</b></td><td>Bulking/Vegetative 2</td><td class='num'>6</td><td class='num'>83,824</td><td class='num'>20,948</td><td class='num'>2 min</td><td>2026-06-15 13:23Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 3</b></td><td>Week 2 Generative</td><td class='num'>6</td><td class='num'>83,850</td><td class='num'>8,239</td><td class='num'>2 min</td><td>2026-06-15 13:23Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 4</b></td><td>Week 2 Generative</td><td class='num'>6</td><td class='num'>83,852</td><td class='num'>20,934</td><td class='num'>1 min</td><td>2026-06-15 13:24Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 5</b></td><td>Week 6 Generative</td><td class='num'>6</td><td class='num'>83,834</td><td class='num'>13,971</td><td class='num'>2 min</td><td>2026-06-15 13:25Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 6</b></td><td>Bulking/Vegetative 2</td><td class='num'>6</td><td class='num'>83,832</td><td class='num'>22,306</td><td class='num'>3 min</td><td>2026-06-15 13:25Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 7</b></td><td>Week 2 Generative</td><td class='num'>6</td><td class='num'>83,848</td><td class='num'>13,969</td><td class='num'>2 min</td><td>2026-06-15 13:26Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 8</b></td><td>Week 8 Generative</td><td class='num'>6</td><td class='num'>76,838</td><td class='num'>13,969</td><td class='num'>2 min</td><td>2026-06-15 13:26Z</td><td><span class='pill warn'>one position intermittent</span></td></tr><tr><td><b>Flower 9</b></td><td>Bulking/Vegetative 2</td><td class='num'>6</td><td class='num'>83,856</td><td class='num'>20,951</td><td class='num'>2 min</td><td>2026-06-15 13:27Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 12</b></td><td>Bulking/Vegetative 2</td><td class='num'>6</td><td class='num'>83,786</td><td class='num'>23,580</td><td class='num'>4 min</td><td>2026-06-15 13:27Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 14</b></td><td>Bulking/Vegetative 2</td><td class='num'>7</td><td class='num'>83,812</td><td class='num'>27,887</td><td class='num'>2 min</td><td>2026-06-15 13:27Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 17</b></td><td>Ripening/Generative 2</td><td class='num'>6</td><td class='num'>83,868</td><td class='num'>23,134</td><td class='num'>2 min</td><td>2026-06-15 13:27Z</td><td><span class='pill good'>healthy</span></td></tr><tr><td><b>Flower 18</b></td><td>Week 2 Generative</td><td class='num'>6</td><td class='num'>83,868</td><td class='num'>13,975</td><td class='num'>1 min</td><td>2026-06-15 13:28Z</td><td><span class='pill good'>healthy</span></td></tr></tbody></table></div></section>
+<footer><div>Generated 2026-06-15 · AROYA SPA /dataReadings/ · facility 4537 · reliability derived from reading cadence; battery/RSSI pending SPA /devices/ pull</div></footer>
+</div>
+<script>(function(){var root=document.documentElement;document.querySelectorAll('.theme-btn').forEach(function(b){b.addEventListener('click',function(e){var next=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=next;e.target.textContent=next==='dark'?'Light':'Dark';e.target.dataset.theme=next==='dark'?'light':'dark';});});})();</script>
+</body></html>
