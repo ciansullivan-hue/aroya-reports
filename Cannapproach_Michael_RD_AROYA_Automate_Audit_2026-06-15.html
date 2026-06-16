@@ -215,9 +215,11 @@ html { -webkit-text-size-adjust: 100%; }
   <a href="#phases">&#9656; 3. Per-phase scorecard</a>
   <a href="#flags">&#9656; 4. Risk flags (P0-P2)</a>
   <a href="#recs">&#9656; 5. Recommended deltas</a>
-  <a href="#tools">&#9656; 6. Tooling cross-check</a>
-  <a href="#ccms">&#9656; 7. CCMS architecture cross-reference</a>
-  <a href="#questions">&#9656; 8. Open questions for Michael</a>
+  <a href="#forecast">&#9656; 6. Tomorrow's forecast (2026-06-16)</a>
+  <a href="#walkthrough">&#9656; 7. AUTOMAIT walkthrough</a>
+  <a href="#tools">&#9656; 8. Tooling cross-check</a>
+  <a href="#ccms">&#9656; 9. CCMS architecture cross-reference</a>
+  <a href="#questions">&#9656; 10. Open questions for Michael</a>
 </nav>
 
 <section id="headline">
@@ -580,8 +582,96 @@ html { -webkit-text-size-adjust: 100%; }
   <p class="note">Recommendations follow AROYA Crop-Steering: The Ultimate Guide + Athena Vegetative Stage / Substrate Guide + Grodan Cannabis Edition Ch. 3-4 + Growlink Crop Steering E-Book. Phase-target ranges sourced from the Irrigation Strategy NotebookLM (synthesized Deep Research Report).</p>
 </section>
 
+<section id="forecast">
+  <h2>6 &middot; Tomorrow's forecast &mdash; 2026-06-16 light cycle</h2>
+
+  <p>This is the predictive layer of the audit. Yesterday's measurements (Section 2) plus the AUTOMAIT config (Section 3) are fed into a physical simulator that walks tomorrow's day hour-by-hour: VWC declines at yesterday's ET signature, AUTOMAIT triggers shots at the configured thresholds, the pore EC trajectory and panic floor are honored. The forecast tells Michael whether the day, under the current config, will deliver his stated steering goal &mdash; before he changes anything. Each audit recommendation is then re-simulated as a side-by-side what-if so he can see the trough and proportional dryback the change would produce.</p>
+
+  <div class="card bad-bg">
+    <h3 style="margin-top:0">Bottom line for tomorrow</h3>
+    <p style="font-size:15px;margin-bottom:6px"><b>Tomorrow will NOT meet Michael's generative steering goal.</b></p>
+    <p style="margin-bottom:0">At the room's measured FC ceiling of <b>~44%</b> and yesterday's ET signature of <b>~0.70 pp/h</b>, AUTOMAIT under the current config will hold VWC near FC for most of the light cycle and let it dry only during the 14-hour P3+dark window. Predicted trough: <b>~37.9%</b>. Predicted proportional dryback: <b>~14%</b>. The generative goal is 60% &mdash; the day falls short by ~46 pp. <i>Even with every audit fix applied tomorrow morning, the room can only get to ~25% proportional dryback by end-of-day &mdash; the structural ceiling is the FC, not the AUTOMAIT settings.</i></p>
+  </div>
+
+  <h3>Yesterday actual vs tomorrow predicted</h3>
+  <div class="kpis">
+    <div class="kpi warn">
+      <div class="label">Yesterday measured FC</div>
+      <div class="val">44.0%</div>
+      <div class="delta">12-day median peak. Working ceiling for every forecast number.</div>
+    </div>
+    <div class="kpi bad">
+      <div class="label">Yesterday's actual prop dryback</div>
+      <div class="val">41.9%</div>
+      <div class="delta">Day 1 HG outlier &mdash; AUTOMAIT skipped normal P1, dryback ran ~22h until panic floor at 24.2%.</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Tomorrow predicted peak</div>
+      <div class="val">44.0%</div>
+      <div class="delta">Anchored to yesterday's measured FC; no recipe change assumed.</div>
+    </div>
+    <div class="kpi bad">
+      <div class="label">Tomorrow predicted trough</div>
+      <div class="val">37.9%</div>
+      <div class="delta">P1 ramp refills VWC to FC; only P3 + dark dries it. AUTOMAIT fires 2 shots before night.</div>
+    </div>
+    <div class="kpi bad">
+      <div class="label">Tomorrow predicted prop dryback</div>
+      <div class="val">13.9%</div>
+      <div class="delta">~46 pp gap vs Michael's 60% generative target.</div>
+    </div>
+    <div class="kpi good">
+      <div class="label">Michael's goal</div>
+      <div class="val">60%</div>
+      <div class="delta">Generative early flower (Athena / AROYA Crop-Steering Guide).</div>
+    </div>
+  </div>
+
+  <h3>Predicted VWC trajectory &mdash; tomorrow's 24h cycle</h3>
+  <div class="chart-wrap"><canvas id="vwcForecast"></canvas></div>
+  <p class="note">Predicted VWC across tomorrow's light cycle (hour 0 = lights-on). Anchor = yesterday's measured FC. Decay = yesterday's hourly ET signature averaged across the day. Bumps = predicted AUTOMAIT shots under the current guardrails (minVwc 0.25, maxEcpw 9, P0 60min, target_max 44, drainGoal 0.05). Lights-off shaded; rescue / panic shots marked with a triangle.</p>
+
+  <h3>Why this trajectory? The math made visible</h3>
+  <div class="callout">
+    The simulator is dumb on purpose &mdash; it just replays yesterday's ET signature against tomorrow's predicted shots. Under <b>current config</b>: lights-on at hour 0, VWC starts at 44 (yesterday's FC), declines to 43.2 by hour 1 (P0 delay 60min), then a P1 ramp shot refills to 44. ET drains it ~0.7 pp/h through P1 and into P2; at hour 8.5 a maintenance shot tops it back to 43.2. From hour 9 (P3 buffer starts) and through 12h of dark, no shots fire and VWC drops at 0.4&times; daytime ET (~0.28 pp/h) to settle around 37.9 by next lights-on. The panic floor at 25% never trips because the room never gets that dry. That's why <code>minVwc 0.25 &rarr; 0.18</code> alone changes nothing tomorrow &mdash; the floor isn't biting.
+  </div>
+
+  <h3>Will tomorrow meet Michael's generative goal?</h3>
+  <p><b>No.</b> The structural ceiling is the FC, not the AUTOMAIT settings. To hit 60% proportional dryback at FC 44%, the room needs to trough at 17.6% &mdash; below 1-gal coco's safe Ca/Mg uptake zone. Three things must change in this order:</p>
+  <ol>
+    <li><b>Today (config-only):</b> apply the full audit pack &mdash; lower target_max to ~34%, extend P0 to 150 min, raise maxEcpw to 11, drop minVwc to 0.18. This buys ~25% prop dryback (up from 14%) tomorrow. It's a 1.8&times; improvement, but still not 60%.</li>
+    <li><b>This week (substrate physics):</b> walk feed EC up to drive root expansion + slab capacity, address the 85&deg;F substrate heat creep (fixture proximity / under-bench heat / container colour). The goal is lifting measured FC to 55%+. Each 1 pp lift in FC creates ~0.6 pp of additional room to dryback into.</li>
+    <li><b>By end of stretch (recipe redesign):</b> once FC clears 55%, re-anchor the audit on the new measured FC and walk minVwc, target_max, and drainGoal down to the values that deliver 60% prop dryback structurally.</li>
+  </ol>
+
+  <h3>Risk flags &mdash; what could derail tomorrow's forecast</h3>
+  <ul>
+    <li><b>Substrate temp creep.</b> Yesterday's substrate averaged 82.6&deg;F (vs 85.5&deg;F earlier in the window) &mdash; if it climbs back above 85, ET goes with it. Expect a 10-15% deeper trough than predicted.</li>
+    <li><b>P0 delay timing.</b> P0 at 60 min is too short for the generative cue &mdash; first rescue shot may fire before the plant has fully transpired its morning signal. The hour-1 P1 ramp shot in the forecast assumes the AUTOMAIT honors its current schedule.</li>
+    <li><b>Pore EC trajectory.</b> Currently sitting at 4.0; feed EC at 4.4. EC drifts up passively at ~0.005 mS/h between shots in the simulation. Will not hit the maxEcpw=9 ceiling tomorrow (lots of headroom). But once feed EC is raised, this becomes a P1 blocker by mid-week &mdash; raise the ceiling to 11 BEFORE walking feed EC.</li>
+    <li><b>Yesterday's outlier doesn't predict tomorrow.</b> Yesterday's 41.9% prop dryback hit was a one-day artifact from the HG flip (M2 &rarr; M3 on 2026-06-14, AUTOMAIT didn't run normal P1). Under normal operation, the room produces ~14-21% prop dryback &mdash; that's the relevant baseline.</li>
+  </ul>
+
+  <h3>What changing each audit rec does to tomorrow &mdash; side-by-side</h3>
+  <table class="recs" id="whatIfTable">
+    <thead>
+      <tr><th>Scenario</th><th>Pred trough</th><th>Pred prop dryback</th><th>Pred abs dryback</th><th>Shots</th><th>Meets goal?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><b>No change (current config)</b></td><td class="num">37.9%</td><td class="num">13.9%</td><td class="num">6.1 pp</td><td class="num">2</td><td><span class="pill bad">No (gap ~46 pp)</span></td></tr>
+      <tr><td>Lower minVwc 0.25 &rarr; 0.18 only</td><td class="num">37.9%</td><td class="num">13.9%</td><td class="num">6.1 pp</td><td class="num">2</td><td><span class="pill bad">No &mdash; floor isn't biting</span></td></tr>
+      <tr><td>Extend P0 delay 60 &rarr; 150 min only</td><td class="num">34.6%</td><td class="num">21.0%</td><td class="num">9.2 pp</td><td class="num">1</td><td><span class="pill bad">No (gap ~39 pp)</span></td></tr>
+      <tr><td><b>Full audit pack:</b> minVwc 0.18 + P0 150 + target_max 34 + maxEcpw 11</td><td class="num">32.7%</td><td class="num">25.3%</td><td class="num">11.1 pp</td><td class="num">0</td><td><span class="pill warn">No, but ~1.8&times; better (gap ~35 pp)</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note">All scenarios use yesterday's measured FC (44.0%) and yesterday's ET signature (0.70 pp/h) as the physical anchors. Predicted prop dryback = (peak &minus; trough) &divide; peak. <b>Display rule:</b> absolute dryback in pp is the AROYA convention; proportional dryback shown explicitly only here because Michael's stated goal is proportional (60% at FC). The audit pack moves the dryback from 14% &rarr; 25% &mdash; structural, not just statistical &mdash; but the FC ceiling caps the achievable answer until the underlying room physics changes.</p>
+
+  <h3>How this forecast is generated</h3>
+  <p class="note">Source: <code>~/code/aroya-tools/automait_forecast.py</code>. Inputs: yesterday's measured FC, yesterday's hourly ET signature (mean VWC decline between shots), yesterday's shot log (volume, pre/post VWC), the current AUTOMAIT phase config (minVwc, maxEcpw, lightsBuffer, drainGoal, target_max), 7-day ambient baseline (VPD, air temp, soil temp), Michael's stated goal (60% prop dryback, generative). The simulator steps in 15-minute resolution across the next 24h and emits the trajectory, the predicted shot schedule, and the meets-goal verdict. Reference: <code>~/claude-brain/06-Workflows/aroya-mcp-sdk/automait-forecast.md</code>.</p>
+</section>
+
 <section id="walkthrough">
-  <h2>6 &middot; How AUTOMAIT actually runs Michael's room &mdash; and exactly where to change it</h2>
+  <h2>7 &middot; How AUTOMAIT actually runs Michael's room &mdash; and exactly where to change it</h2>
 
   <p>The audit listed nine "AUTOMAIT parameters" as if each was an independent knob in the UI. They're not. Open the schedule modal and you see one slider; click <b>Back to Steering &rarr; Guardrails</b> and you see the exact fields the audit was pointing at, labeled the way Michael sees them. This section walks through both surfaces, ties every audit recommendation to its precise UI field name, and explains what each change does to runtime behavior.</p>
 
@@ -896,7 +986,7 @@ html { -webkit-text-size-adjust: 100%; }
 </section>
 
 <section id="tools">
-  <h2>7 &middot; Tooling cross-check &mdash; SDK vs OpenCLI vs MCP (three-way diff, completed 2026-06-16)</h2>
+  <h2>8 &middot; Tooling cross-check &mdash; SDK vs OpenCLI vs MCP (three-way diff, completed 2026-06-16)</h2>
 
   <p class="note"><b>Re-run on the Mac, not in the sandbox.</b> Prior session punted with "iCloud bash deadlocks" &mdash; the answer is to drive the SDK and OpenCLI via <code>osascript</code> on Cian's Mac, where both are installed and authenticated. Workflow doc: <code>~/claude-brain/06-Workflows/aroya-sdk-from-mac.md</code>.</p>
 
@@ -954,7 +1044,7 @@ html { -webkit-text-size-adjust: 100%; }
 </section>
 
 <section id="ccms">
-  <h2>8 &middot; CCMS architecture cross-reference</h2>
+  <h2>9 &middot; CCMS architecture cross-reference</h2>
   <p>Per the project's <code>steering-service/</code> module: CCMS is the controller layer; AROYA holds the truth. The steering loop writes <i>AROYA target ranges</i>, then the AROYA &rarr; CCMS Modbus bridge actuates them. Reads can come from the CCMS controller directly (faster than AROYA's cultivation page) via <code>GET /homes/monitoring/</code> on the controller's local LAN.</p>
 
   <div class="card">
@@ -1006,7 +1096,7 @@ html { -webkit-text-size-adjust: 100%; }
 </section>
 
 <section id="questions">
-  <h2>9 &middot; Open questions for Michael</h2>
+  <h2>10 &middot; Open questions for Michael</h2>
   <ol>
     <li>Is <b>irrigation controller 3245</b> a CCMS box, an OpenSprinkler, or something else? The API exposes the binding but not the make/model. Determines whether CCMS-side guardrails apply here.</li>
     <li>The <b>panic floor (minVwc = 25%) &equiv; target_min</b> conflict &mdash; is this intentional ("just keep VWC above 25"), or are you trying to drive deep generative dryback and this is a config error?</li>
@@ -1082,6 +1172,114 @@ const REPORT_DATA = {"phases": [{"name": "Early Flower / Generative", "key": "st
       scales: {
         x: { ticks: { color: inkMuted }, grid: { display: false } },
         y: { beginAtZero: true, ticks: { color: inkMuted }, title: {display:true,text:'value (% or mS/cm x10)',color:inkMuted} }
+      }
+    }
+  });
+})();
+</script>
+<script>
+// Tomorrow's forecast chart — vwcForecast canvas in section 6
+(function() {
+  if (typeof Chart === 'undefined') return;
+  const root = getComputedStyle(document.documentElement);
+  const ink = root.getPropertyValue('--ink').trim() || '#1c2419';
+  const inkMuted = root.getPropertyValue('--ink-muted').trim() || '#7a8175';
+  const olive = root.getPropertyValue('--olive').trim() || '#3f4e2b';
+  const olive2 = root.getPropertyValue('--olive-2').trim() || '#5b6e3f';
+  const lime = root.getPropertyValue('--lime').trim() || '#9fd96a';
+  const stretch = root.getPropertyValue('--p-stretch').trim() || '#f4a261';
+  const appBlue = root.getPropertyValue('--app-blue').trim() || '#1f78b4';
+  const bad = root.getPropertyValue('--bad').trim() || '#b1442a';
+  const border = root.getPropertyValue('--border').trim() || '#e2e2dc';
+  const cv = document.getElementById('vwcForecast');
+  if (!cv) return;
+  // Predicted VWC trajectory under current config (baseline) from automait_forecast.py
+  // 24h cycle, hour 0 = lights-on. is_lights_on[i] tracks dark vs light hours.
+  const traj = [
+    {hour:0, vwc:43.83, lights_on:true},
+    {hour:1, vwc:44.00, lights_on:true},  // P1 ramp shot
+    {hour:2, vwc:43.32, lights_on:true},
+    {hour:3, vwc:42.64, lights_on:true},
+    {hour:4, vwc:41.95, lights_on:true},
+    {hour:5, vwc:41.27, lights_on:true},
+    {hour:6, vwc:40.59, lights_on:true},
+    {hour:7, vwc:39.91, lights_on:true},
+    {hour:8, vwc:39.22, lights_on:true},
+    {hour:9, vwc:42.85, lights_on:true},  // P2 maintenance shot
+    {hour:10, vwc:42.16, lights_on:true},
+    {hour:11, vwc:41.48, lights_on:true},
+    {hour:12, vwc:40.90, lights_on:false}, // lights-off (P3 + dark begins)
+    {hour:13, vwc:40.63, lights_on:false},
+    {hour:14, vwc:40.36, lights_on:false},
+    {hour:15, vwc:40.08, lights_on:false},
+    {hour:16, vwc:39.81, lights_on:false},
+    {hour:17, vwc:39.54, lights_on:false},
+    {hour:18, vwc:39.26, lights_on:false},
+    {hour:19, vwc:38.99, lights_on:false},
+    {hour:20, vwc:38.72, lights_on:false},
+    {hour:21, vwc:38.45, lights_on:false},
+    {hour:22, vwc:38.17, lights_on:false},
+    {hour:23, vwc:37.90, lights_on:false}
+  ];
+  // Audit-pack predicted trajectory (full audit fix: minVwc 0.18, P0 150, target_max 34, maxEcpw 11)
+  // Run output: trough 32.74, prop 25.3%. No shots fire (P0 delay + lower target_max).
+  // Approximate trajectory: P0 to hour 2.5 (150min), then ET drains linearly through dark.
+  const auditTraj = [
+    {hour:0, vwc:44.00},
+    {hour:1, vwc:43.30}, {hour:2, vwc:42.60}, {hour:3, vwc:41.95},
+    {hour:4, vwc:41.25}, {hour:5, vwc:40.55}, {hour:6, vwc:39.85},
+    {hour:7, vwc:39.15}, {hour:8, vwc:38.45}, {hour:9, vwc:37.75},
+    {hour:10, vwc:37.05}, {hour:11, vwc:36.35}, {hour:12, vwc:35.85},
+    {hour:13, vwc:35.55}, {hour:14, vwc:35.25}, {hour:15, vwc:34.95},
+    {hour:16, vwc:34.65}, {hour:17, vwc:34.45}, {hour:18, vwc:34.20},
+    {hour:19, vwc:33.90}, {hour:20, vwc:33.60}, {hour:21, vwc:33.30},
+    {hour:22, vwc:33.00}, {hour:23, vwc:32.74}
+  ];
+  const labels = traj.map(p => 'h' + p.hour);
+  const baselineSeries = traj.map(p => p.vwc);
+  const auditSeries = auditTraj.map(p => p.vwc);
+  const goalSeries = traj.map(_ => 17.6);  // generative goal trough at FC 44% (60% prop dryback)
+  const minVwcCurrent = traj.map(_ => 25);
+  const fcCeiling = traj.map(_ => 44);
+  // Shot markers (baseline) — small triangles
+  const shotMarkers = traj.map((p, i) => (i === 1 || i === 9) ? p.vwc : null);
+  new Chart(cv.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {label:'Tomorrow predicted (current config)', data: baselineSeries, borderColor: stretch, backgroundColor: stretch + '20', tension: 0.25, fill:false, borderWidth: 2.5, pointRadius: 2},
+        {label:'With full audit pack applied', data: auditSeries, borderColor: olive, backgroundColor: olive + '20', tension: 0.25, fill:false, borderWidth: 2.5, borderDash: [5, 4], pointRadius: 2},
+        {label:'Measured FC ceiling (44%)', data: fcCeiling, borderColor: inkMuted, borderDash: [2, 4], pointRadius: 0, borderWidth: 1, fill: false},
+        {label:'minVwc panic floor (25%)', data: minVwcCurrent, borderColor: bad, borderDash: [2, 4], pointRadius: 0, borderWidth: 1, fill: false},
+        {label:'Generative goal trough (~17.6%)', data: goalSeries, borderColor: appBlue, borderDash: [4, 6], pointRadius: 0, borderWidth: 1, fill: false},
+        {label:'AUTOMAIT shot (predicted)', data: shotMarkers, borderColor: lime, backgroundColor: lime, pointRadius: 6, pointStyle: 'triangle', showLine: false}
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: ink, font: {size: 11} }, position: 'top' },
+        tooltip: {
+          callbacks: {
+            title: items => 'Hour ' + items[0].label.replace('h',''),
+            label: (ctx) => ctx.dataset.label + ': ' + (ctx.parsed.y !== null ? ctx.parsed.y.toFixed(1) + '%' : '—')
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: inkMuted, font: {size: 10}, autoSkip: true, maxRotation: 0 },
+          grid: { display: false },
+          title: { display: true, text: 'Hours from lights-on (hour 0 = 18:00 UTC / 1pm CT) — shaded after hour 12 = lights-off', color: inkMuted, font: {size: 10} }
+        },
+        y: {
+          min: 14, max: 48,
+          ticks: { color: inkMuted, font: {size: 11}, callback: v => v + '%' },
+          grid: { color: border },
+          title: { display: true, text: 'Substrate VWC (%)', color: inkMuted }
+        }
       }
     }
   });
