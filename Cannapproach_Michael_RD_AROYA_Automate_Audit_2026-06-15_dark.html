@@ -163,6 +163,12 @@ html { -webkit-text-size-adjust: 100%; }
 }</style><script id="aroya-mobile-qa-js">(function(){function wrap(){var ts=document.querySelectorAll('table');for(var i=0;i<ts.length;i++){var t=ts[i];if(!t.parentElement)continue;if(t.parentElement.classList.contains('table-scroll'))continue;if(t.classList.contains('no-scroll-wrap'))continue;if(t.classList.contains('kpi-strip')||t.classList.contains('summary-only'))continue;var w=document.createElement('div');w.className='table-scroll';t.parentNode.insertBefore(w,t);w.appendChild(t);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',wrap);}else{wrap();}})();</script>
 </head>
 <body>
+<div id="report-version-banner" style="background:#0f4d2e; color:#d6f0d6; padding:14px 20px; margin:0 0 12px; border-radius:0; border-left:6px solid #58d68d; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size:14px; line-height:1.55;">
+  <div style="font-size:11px; font-weight:700; letter-spacing:1.2px; opacity:0.85; text-transform:uppercase;">Report version &middot; 2026-06-16 17:04 UTC</div>
+  <div style="margin-top:6px;"><b>v3 &mdash; full Tomorrow's forecast restored at &sect;6</b> (commit <code style="background:#082619; padding:1px 6px; border-radius:3px;">2c839a4</code>). The forecast now has the hour-by-hour AUTOMAIT shot schedule, VWC + pore-EC trajectory, watch-for items, the corrected-vs-retracted prediction table, and the bug acknowledgement paragraph &mdash; jump to <a href="#forecast" style="color:#aaf0a3; font-weight:700; text-decoration:underline;">&sect;6 Tomorrow's forecast</a>.</div>
+  <div style="margin-top:6px; font-size:13px; opacity:0.92;">If this banner reads "v3" but you still see "Section 10 &mdash; corrected" at the bottom and no &sect;6 forecast, your browser is serving a stale cache &mdash; <b>Cmd+Shift+R</b> to hard-refresh, or use the cache-busted URL: <code style="background:#082619; padding:1px 6px; border-radius:3px; word-break:break-all;">?v=v3-2c839a4</code></div>
+</div>
+
 <header class="masthead">
   <div class="masthead-inner">
     <div class="lockup">
