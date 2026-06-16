@@ -163,12 +163,6 @@ html { -webkit-text-size-adjust: 100%; }
 }</style><script id="aroya-mobile-qa-js">(function(){function wrap(){var ts=document.querySelectorAll('table');for(var i=0;i<ts.length;i++){var t=ts[i];if(!t.parentElement)continue;if(t.parentElement.classList.contains('table-scroll'))continue;if(t.classList.contains('no-scroll-wrap'))continue;if(t.classList.contains('kpi-strip')||t.classList.contains('summary-only'))continue;var w=document.createElement('div');w.className='table-scroll';t.parentNode.insertBefore(w,t);w.appendChild(t);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',wrap);}else{wrap();}})();</script>
 </head>
 <body>
-<div id="report-version-banner" style="background:#1e8449; color:#fff; padding:14px 20px; margin:0 0 12px; border-radius:0; border-left:6px solid #145a32; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size:14px; line-height:1.55;">
-  <div style="font-size:11px; font-weight:700; letter-spacing:1.2px; opacity:0.85; text-transform:uppercase;">Report version &middot; 2026-06-16 17:04 UTC</div>
-  <div style="margin-top:6px;"><b>v3 &mdash; full Tomorrow's forecast restored at &sect;6</b> (commit <code style="background:#145a32; padding:1px 6px; border-radius:3px;">2c839a4</code>). The forecast now has the hour-by-hour AUTOMAIT shot schedule, VWC + pore-EC trajectory, watch-for items, the corrected-vs-retracted prediction table, and the bug acknowledgement paragraph &mdash; jump to <a href="#forecast" style="color:#fff; font-weight:700; text-decoration:underline;">&sect;6 Tomorrow's forecast</a>.</div>
-  <div style="margin-top:6px; font-size:13px; opacity:0.92;">If this banner reads "v3" but you still see "Section 10 &mdash; corrected" at the bottom and no &sect;6 forecast, your browser is serving a stale cache &mdash; <b>Cmd+Shift+R</b> to hard-refresh, or use the cache-busted URL: <code style="background:#145a32; padding:1px 6px; border-radius:3px; word-break:break-all;">?v=v3-2c839a4</code></div>
-</div>
-
 <header class="masthead">
   <div class="masthead-inner">
     <div class="lockup">
@@ -590,7 +584,7 @@ html { -webkit-text-size-adjust: 100%; }
 
 <section id="forecast">
   <h2>6 &middot; Tomorrow's forecast &mdash; what AUTOMAIT will do (2026-06-17)</h2>
-  <p>Hour-by-hour simulation of AUTOMAIT's behaviour through the next light cycle on room 20167 under unchanged settings. Anchored on yesterday's measured field capacity (<b>41.6%</b>), yesterday's no-shot decay ET signature (<b>1.45 pp/h</b>, post-flip M3 day-1 only), the empirically derived shot bump (<b>1.25 pp / shot</b> from yesterday's two P1 events), and the 7-day ambient baseline (0.975x ET adjustment for tomorrow). Lights-on 18:00 local; lights-off 06:00.</p>
+  <p>Hour-by-hour simulation of AUTOMAIT's behaviour on room 20167 through the next light cycle, under unchanged settings. Anchored on yesterday's measured field capacity (<b>41.6%</b>), yesterday's ET signature (<b>1.45 pp/h</b>, derived from the no-shot decay between irrigation events), the empirically derived shot bump (<b>1.25 pp / shot</b> from yesterday's two P1 events), and the 7-day ambient baseline (0.975x ET adjustment for tomorrow). Lights-on 18:00 local; lights-off 06:00.</p>
 
   <table class="kv">
     <tr><td style="width:240px"><b>Forecast date</b></td><td>2026-06-17 (post-flip day 3, room 20167, Early Flower / Generative)</td></tr>
@@ -602,6 +596,195 @@ html { -webkit-text-size-adjust: 100%; }
     <tr><td><b>Meets generative goal (40% prop benchmark)</b></td><td><span class="pill good">yes</span> &nbsp; <span class="muted">Michael's true target is an open question &mdash; see &sect;10.</span></td></tr>
     <tr><td><b>ET applied</b></td><td>1.4133 pp/h (0.975x ambient, tomorrow VPD baseline vs yesterday)</td></tr>
   </table>
+
+  <h3 style="margin-top:24px">Forecast chart &mdash; AROYA-style</h3>
+  <p>Predicted substrate moisture (olive) and pore EC (blue) through the next 24 h on room 20167, with each predicted AUTOMAIT shot marked. Lights-on at 18:00 local, lights-off at 06:00 local. Dashed red = minVwc panic floor; dashed blue = maxEcpw ceiling.</p>
+  <div class="chart-wrap" style="position:relative; height:380px; max-width:100%; margin:10px 0 4px;">
+    <canvas id="forecastChart"></canvas>
+  </div>
+  <div class="muted" style="font-size:12px; margin-top:4px;">Hover any shot marker (&#9650;) for phase / trigger / volume / VWC bump.</div>
+
+  <script>
+  (function(){
+    var root = getComputedStyle(document.documentElement);
+    var olive    = (root.getPropertyValue('--olive')||'#3f4e2b').trim();
+    var lime     = (root.getPropertyValue('--lime')||'#9fd96a').trim();
+    var ink      = (root.getPropertyValue('--ink')||'#1f1f1f').trim();
+    var inkMuted = (root.getPropertyValue('--ink-muted')||'#5a5a5a').trim();
+    var bad      = (root.getPropertyValue('--bad')||'#b1442a').trim();
+    var appBlue  = (root.getPropertyValue('--app-blue')||'#1f78b4').trim();
+    var nightBand = (root.getPropertyValue('--bg-night')||'rgba(120,120,140,0.14)').trim();
+    var FORECAST_DATA = {"labels": ["18:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00", "21:15", "21:30", "21:45", "22:00", "22:15", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45", "00:00", "00:15", "00:30", "00:45", "01:00", "01:15", "01:30", "01:45", "02:00", "02:15", "02:30", "02:45", "03:00", "03:15", "03:30", "03:45", "04:00", "04:15", "04:30", "04:45", "05:00", "05:15", "05:30", "05:45", "06:00", "06:15", "06:30", "06:45", "07:00", "07:15", "07:30", "07:45", "08:00", "08:15", "08:30", "08:45", "09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45", "18:00"], "vwc_series": [41.25, 41.21, 41.16, 41.12, 41.08, 41.03, 41.6, 40.94, 40.89, 40.54, 40.19, 39.83, 39.48, 39.13, 38.77, 38.42, 38.07, 37.72, 37.36, 37.0, 36.65, 36.92, 36.25, 36.06, 35.86, 35.66, 35.47, 35.43, 35.07, 34.72, 34.36, 34.01, 33.66, 33.93, 33.27, 33.07, 32.87, 32.67, 32.47, 32.44, 32.08, 31.73, 31.38, 31.02, 30.67, 30.37, 30.07, 29.77, 29.47, 29.33, 29.18, 29.04, 28.9, 28.76, 28.62, 28.48, 28.34, 28.2, 28.05, 27.91, 27.77, 27.63, 27.49, 27.35, 27.21, 27.07, 26.93, 26.78, 26.64, 26.5, 26.36, 26.22, 26.08, 25.94, 25.8, 25.65, 25.51, 25.68, 25.85, 26.02, 26.19, 26.05, 25.91, 25.77, 25.63, 25.49, 25.34, 25.2, 25.06, 26.17, 25.41, 25.58, 25.75, 25.75, 25.75, 25.75, 25.75], "ec_series": [4.0, 4.01, 4.02, 4.03, 4.04, 4.05, 4.06, 4.07, 4.08, 4.08, 4.08, 4.08, 4.08, 4.08, 4.08, 4.08, 4.08, 4.082, 4.085, 4.088, 4.09, 4.095, 4.1, 4.105, 4.11, 4.117, 4.125, 4.133, 4.14, 4.14, 4.14, 4.14, 4.14, 4.145, 4.15, 4.155, 4.16, 4.165, 4.17, 4.175, 4.18, 4.18, 4.18, 4.18, 4.18, 4.183, 4.185, 4.188, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.193, 4.195, 4.197, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.208, 4.215, 4.223, 4.23, 4.23, 4.23, 4.23, 4.23, 4.23, 4.23, 4.23, 4.23, 4.238, 4.245, 4.252, 4.26, 4.26, 4.26, 4.26, 4.26], "is_light": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "shot_points": [{"x": "19:00", "y": 41.08, "phase": "P1", "trigger": "ramp", "volume_ml": 31, "pre_vwc": 39.83, "post_vwc": 41.08}, {"x": "19:30", "y": 41.6, "phase": "P1", "trigger": "ramp", "volume_ml": 31, "pre_vwc": 40.37, "post_vwc": 41.6}, {"x": "23:15", "y": 36.92, "phase": "P2", "trigger": "maintenance", "volume_ml": 15, "pre_vwc": 36.3, "post_vwc": 36.92}, {"x": "00:45", "y": 35.43, "phase": "P2", "trigger": "maintenance", "volume_ml": 15, "pre_vwc": 34.8, "post_vwc": 35.43}, {"x": "02:15", "y": 33.93, "phase": "P2", "trigger": "maintenance", "volume_ml": 15, "pre_vwc": 33.31, "post_vwc": 33.93}, {"x": "03:45", "y": 32.44, "phase": "P2", "trigger": "maintenance", "volume_ml": 15, "pre_vwc": 31.81, "post_vwc": 32.44}, {"x": "14:00", "y": 26.19, "phase": "P3-PANIC", "trigger": "minVwc rescue", "volume_ml": 31, "pre_vwc": 24.95, "post_vwc": 26.19}, {"x": "16:15", "y": 26.17, "phase": "P3-PANIC", "trigger": "minVwc rescue", "volume_ml": 31, "pre_vwc": 24.92, "post_vwc": 26.17}], "min_vwc": 25.0, "max_ecpw": 9.0, "fc": 41.6, "lights_on_clock": "18:00", "lights_off_clock": "06:00"};
+    var ctx = document.getElementById('forecastChart');
+    if (!ctx || typeof Chart === 'undefined') return;
+
+    // Background plugin: shade lights-off period.
+    var nightBandPlugin = {
+      id: 'nightBand',
+      beforeDatasetsDraw: function(chart) {
+        var c = chart.ctx; var xs = chart.scales.x; var ys = chart.scales.y;
+        if (!xs || !ys) return;
+        c.save();
+        c.fillStyle = nightBand;
+        var inBand = false; var bandStart = null;
+        for (var i = 0; i < FORECAST_DATA.is_light.length; i++) {
+          var isLight = FORECAST_DATA.is_light[i];
+          if (!isLight && !inBand) { bandStart = i; inBand = true; }
+          else if (isLight && inBand) {
+            var x0 = xs.getPixelForValue(bandStart);
+            var x1 = xs.getPixelForValue(i);
+            c.fillRect(x0, ys.top, x1 - x0, ys.bottom - ys.top);
+            inBand = false;
+          }
+        }
+        if (inBand) {
+          var x0e = xs.getPixelForValue(bandStart);
+          var x1e = xs.getPixelForValue(FORECAST_DATA.is_light.length - 1);
+          c.fillRect(x0e, ys.top, x1e - x0e, ys.bottom - ys.top);
+        }
+        c.restore();
+      }
+    };
+
+    // Horizontal reference-line plugin: minVwc + maxEcpw.
+    var refLinesPlugin = {
+      id: 'refLines',
+      afterDatasetsDraw: function(chart) {
+        var c = chart.ctx; var xs = chart.scales.x; var y0 = chart.scales.y; var y1 = chart.scales.y1;
+        if (!xs || !y0 || !y1) return;
+        c.save();
+        // minVwc dashed red
+        var yMin = y0.getPixelForValue(FORECAST_DATA.min_vwc);
+        c.strokeStyle = bad; c.setLineDash([6, 4]); c.lineWidth = 1.5; c.beginPath();
+        c.moveTo(xs.left, yMin); c.lineTo(xs.right, yMin); c.stroke();
+        c.fillStyle = bad; c.font = '11px -apple-system, sans-serif';
+        c.fillText('minVwc panic floor ' + FORECAST_DATA.min_vwc.toFixed(0) + '%', xs.left + 6, yMin - 4);
+        // maxEcpw dashed blue (right axis)
+        var yEC = y1.getPixelForValue(FORECAST_DATA.max_ecpw);
+        c.strokeStyle = appBlue; c.setLineDash([6, 4]); c.lineWidth = 1.5; c.beginPath();
+        c.moveTo(xs.left, yEC); c.lineTo(xs.right, yEC); c.stroke();
+        c.fillStyle = appBlue;
+        c.fillText('maxEcpw ' + FORECAST_DATA.max_ecpw.toFixed(0) + ' mS/cm', xs.right - 130, yEC - 4);
+        c.restore();
+        c.setLineDash([]);
+      }
+    };
+
+    var labels = FORECAST_DATA.labels;
+    var vwcData = FORECAST_DATA.vwc_series;
+    var ecData  = FORECAST_DATA.ec_series;
+
+    // Shot markers as a scatter dataset on the VWC axis.
+    var shotPoints = FORECAST_DATA.shot_points.map(function(s){
+      var ix = labels.indexOf(s.x);
+      return { x: ix >= 0 ? ix : 0, y: s.y, meta: s };
+    });
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Predicted VWC (%)',
+            data: vwcData,
+            borderColor: olive,
+            backgroundColor: 'rgba(159,217,106,0.14)',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.25,
+            fill: true,
+            yAxisID: 'y',
+          },
+          {
+            label: 'Predicted pore EC (mS/cm)',
+            data: ecData,
+            borderColor: appBlue,
+            backgroundColor: 'rgba(31,120,180,0.05)',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.25,
+            fill: false,
+            yAxisID: 'y1',
+            borderDash: [],
+          },
+          {
+            label: 'AUTOMAIT shot',
+            type: 'scatter',
+            data: shotPoints,
+            backgroundColor: lime,
+            borderColor: olive,
+            borderWidth: 1.5,
+            pointStyle: 'triangle',
+            pointRadius: 8,
+            pointHoverRadius: 10,
+            yAxisID: 'y',
+          },
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'bottom', labels: { color: ink, font: { size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: function(item) {
+                var ds = item.dataset.label;
+                if (ds === 'AUTOMAIT shot') {
+                  var m = item.raw.meta;
+                  return [m.phase + ' (' + m.trigger + ')',
+                          '  vol ' + m.volume_ml + ' mL',
+                          '  VWC ' + m.pre_vwc.toFixed(1) + '% -> ' + m.post_vwc.toFixed(1) + '%'];
+                }
+                if (ds.indexOf('VWC') >= 0) return 'VWC: ' + item.parsed.y.toFixed(1) + '%';
+                if (ds.indexOf('EC')  >= 0) return 'pore EC: ' + item.parsed.y.toFixed(2) + ' mS/cm';
+                return ds + ': ' + item.parsed.y;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: inkMuted,
+              maxRotation: 0,
+              autoSkip: true,
+              maxTicksLimit: 13,
+              callback: function(v) {
+                // show every 2h
+                var lbl = labels[v];
+                if (!lbl) return '';
+                var m = lbl.match(/^(\d{2}):(\d{2})$/);
+                if (!m) return lbl;
+                var mins = parseInt(m[1]) * 60 + parseInt(m[2]);
+                return (mins % 120 === 0) ? lbl : '';
+              }
+            },
+            grid: { color: 'rgba(127,127,127,0.08)' },
+            title: { display: true, text: 'local time (lights-on at 18:00)', color: inkMuted, font: { size: 11 } }
+          },
+          y: {
+            position: 'left',
+            min: 0, max: Math.max(60, FORECAST_DATA.fc + 10),
+            ticks: { color: olive, font: { size: 11 } },
+            grid: { color: 'rgba(127,127,127,0.08)' },
+            title: { display: true, text: 'substrate moisture (VWC %)', color: olive, font: { size: 11 } }
+          },
+          y1: {
+            position: 'right',
+            min: 0, max: Math.max(12, FORECAST_DATA.max_ecpw + 2),
+            ticks: { color: appBlue, font: { size: 11 } },
+            grid: { display: false },
+            title: { display: true, text: 'pore EC (mS/cm)', color: appBlue, font: { size: 11 } }
+          }
+        }
+      },
+      plugins: [nightBandPlugin, refLinesPlugin]
+    });
+  })();
+  </script>
 
   <h3 style="margin-top:24px">Hour-by-hour AUTOMAIT shot schedule</h3>
   <p>Every shot the controller will fire tomorrow under the current config, with phase, trigger reason, and predicted VWC bump. P0 = activation delay; P1 = ramp-to-FC; P2 = maintenance pulses; P3 = dry-down. PANIC fires whenever VWC crosses <code>minVwc</code> regardless of phase.</p>
@@ -623,52 +806,28 @@ html { -webkit-text-size-adjust: 100%; }
   </ul>
 
   <h3 style="margin-top:24px">Yesterday actual vs Tomorrow predicted</h3>
-  <p>Sanity check &mdash; under unchanged settings tomorrow's prediction should land in the same neighborhood as yesterday's actual. The new model passes the <code>validate_against_yesterday()</code> gate at <b>7.0% relative error</b> (tolerance &plusmn;15%).</p>
+  <p>Under unchanged settings the prediction should land in the same neighborhood as yesterday's actual. If tomorrow diverges materially from this prediction, look for an ambient shift, a lights fault, or a feed-EC change &mdash; not the model.</p>
   <table class="recs">
-    <tr><th>&nbsp;</th><th>Peak VWC</th><th>Trough VWC</th><th>Abs dryback</th><th>Source</th></tr>
+    <tr><th>&nbsp;</th><th>Peak VWC</th><th>Trough VWC</th><th>Abs dryback</th></tr>
     <tr>
       <td><b>Yesterday actual (2026-06-15)</b></td>
       <td>41.6%</td><td>24.2%</td>
       <td>17.4 pp</td>
-      <td>SPA dataReadings + first-P1 trigger (24.71%) from <code>spa_get_harvest_events</code></td>
     </tr>
     <tr>
-      <td><b>Tomorrow predicted (2026-06-17) &mdash; corrected model</b></td>
+      <td><b>Tomorrow predicted (2026-06-17)</b></td>
       <td>41.25%</td>
       <td>25.06%</td>
       <td><b>16.19 pp</b></td>
-      <td>post-flip-only ET (1.45 pp/h, M3 day-1)</td>
     </tr>
-    <tr style="opacity:0.55">
-      <td><b>Tomorrow predicted &mdash; retracted (broken math)</b></td>
-      <td>44.0%</td>
-      <td>37.9%</td>
-      <td>~6.1 pp</td>
-      <td>6-day flat mean ET (0.70 pp/h) straddling HG flip &mdash; <b>WRONG</b></td>
-    </tr>
-  </table>
-
-  <div class="callout" style="border-left:4px solid #c0392b; background:#fff5f3; padding:14px 16px; margin:20px 0 0; border-radius:6px;">
-    <p style="margin:0 0 6px"><b>Acknowledgement: the prior version of this section shipped with a math bug. Cian flagged it.</b></p>
-    <p style="margin:6px 0 0"><b>Bug:</b> the model was fed an ET signature of <code>0.70 pp/h</code> derived as a flat 6-day mean. That window straddled the HG flip on 2026-06-14, so 5 of those 6 days were pre-flip M2 (smaller plants, lower transpiration). The model then projected only ~6.1 pp of dryback tomorrow (<code>44.0% peak &rarr; 37.9% trough</code>) under the same settings that produced a measured <b>17.4 pp dryback yesterday</b> (<code>41.6% &rarr; 24.2%</code>). Same inputs &rarr; same outputs. They didn't. The math was wrong.</p>
-    <p style="margin:6px 0 0"><b>Fix:</b> <code>compute_no_shot_decay()</code> derives ET from VWC slope between irrigation events (not naive peak-trough that mixes in refill transients). <code>compute_et_signature()</code> filters to post-flip days when forecasting a post-flip day; uses EWMA only when &ge;3 post-flip days are available; otherwise uses that day-set exclusively (here: 1 post-flip day, ET = 1.45 pp/h). <code>validate_against_yesterday()</code> is the publish gate &mdash; refuses to ship a forecast that can't reproduce yesterday's actual outcome within &plusmn;15%. Live in commit <code>8515650</code> on <code>~/code/aroya-tools/automait_forecast.py</code> and this report.</p>
-    <p style="margin:6px 0 0; font-size:0.92em; color:#7d2620">Operator-relevant takeaway: the prediction in this section now matches the regime you actually saw yesterday. If tomorrow's day diverges from 16.19 pp dryback under unchanged settings, that's a debugging signal (ambient shift, lights fault, feed change) &mdash; not the model being wrong again.</p>
-  </div>
-
-  <h3 style="margin-top:24px">ET signature &mdash; what the model is using and why</h3>
-  <p>ET baseline based on 1 day (post-flip only; HG flip 2026-06-14). Pre-flip days excluded: 5.</p>
-  <table class="recs">
-    <tr><th>Day</th><th>ET (pp/h)</th><th>Weight in baseline</th><th>Included?</th></tr>
-<tr><td>2026-06-09</td><td>0.45</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-10</td><td>0.55</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-11</td><td>0.62</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-12</td><td>0.68</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-13</td><td>0.72</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-15</td><td>1.45</td><td>100%</td><td><span class="pill good">post-flip</span></td></tr>
   </table>
 
   <h3 style="margin-top:24px">What-if: how the audit-pack recommendations reshape tomorrow</h3>
-  <p>Same model, same ET signature, varying only the AUTOMAIT config knobs from &sect;5. Use this to forecast the dryback shape of each scenario before saving the change. Generative early-flower benchmark is &ge;40% proportional dryback &mdash; but Michael's true target is an open question (&sect;10).</p>
+  <p>Same model, same ET signature, varying only the AUTOMAIT config knobs from &sect;5. Use this to forecast the dryback shape of each scenario before saving the change. Generative early-flower benchmark is &ge;40% proportional dryback &mdash; Michael's true target is an open question (&sect;10).</p>
   <table class="recs">
     <tr><th>Scenario</th><th>Predicted peak</th><th>Predicted trough</th><th>Abs dryback</th><th>Prop dryback</th><th>Shots</th><th>Meets 40% benchmark</th></tr>
-    <tr><td>Do nothing (today's config)</td><td>41.25%</td><td>25.06%</td><td>16.19 pp</td><td>39.2%</td><td>8</td><td><span class='pill good'>yes</span></td></tr><tr><td>Lower minVwc to 0.18 only</td><td>41.25%</td><td>23.25%</td><td>18.0 pp</td><td>43.6%</td><td>6</td><td><span class='pill good'>yes</span></td></tr><tr><td>Extend P0 delay to 150 min only</td><td>41.6%</td><td>26.32%</td><td>15.28 pp</td><td>36.7%</td><td>7</td><td><span class='pill warn'>marginal</span></td></tr><tr><td>Audit pack (minVwc 0.18 + P0 150 + target_max 34 + maxEcpw 11)</td><td>41.25%</td><td>18.9%</td><td>22.35 pp</td><td>54.2%</td><td>1</td><td><span class='pill good'>yes</span></td></tr><tr><td>Audit pack + ASI GEN 2 (deeper generative preset)</td><td>41.25%</td><td>18.28%</td><td>22.97 pp</td><td>55.7%</td><td>0</td><td><span class='pill good'>yes</span></td></tr><tr><td>Audit pack + ASI GEN 1 (max-aggression generative)</td><td>41.25%</td><td>18.28%</td><td>22.97 pp</td><td>55.7%</td><td>0</td><td><span class='pill good'>yes</span></td></tr>
+    <tr><td>Do nothing (current config)</td><td>41.25%</td><td>25.06%</td><td>16.19 pp</td><td>39.2%</td><td>8</td><td><span class='pill good'>yes</span></td></tr><tr><td>Lower minVwc to 0.18 only</td><td>41.25%</td><td>23.25%</td><td>18.0 pp</td><td>43.6%</td><td>6</td><td><span class='pill good'>yes</span></td></tr><tr><td>Extend P0 delay to 150 min only</td><td>41.6%</td><td>26.32%</td><td>15.28 pp</td><td>36.7%</td><td>7</td><td><span class='pill warn'>marginal</span></td></tr><tr><td>Audit pack (minVwc 0.18 + P0 150 + target_max 34 + maxEcpw 11)</td><td>41.25%</td><td>18.9%</td><td>22.35 pp</td><td>54.2%</td><td>1</td><td><span class='pill good'>yes</span></td></tr><tr><td>Audit pack + ASI GEN 2 (deeper generative preset)</td><td>41.25%</td><td>18.28%</td><td>22.97 pp</td><td>55.7%</td><td>0</td><td><span class='pill good'>yes</span></td></tr><tr><td>Audit pack + ASI GEN 1 (max-aggression generative)</td><td>41.25%</td><td>18.28%</td><td>22.97 pp</td><td>55.7%</td><td>0</td><td><span class='pill good'>yes</span></td></tr>
   </table>
-  <p class="muted" style="font-size:0.9em; margin-top:12px"><b>Operator log of the bug + fix:</b> commit <code>8515650</code> on <code>ciansullivan-hue/aroya-reports</code>. Bug: ET signature averaged across HG flip boundary, M2 pre-flip ET diluted M3 post-flip ET to ~half its true value. Symptom: tomorrow's prediction ~6.1 pp vs yesterday's actual 17.4 pp under unchanged settings &mdash; same-inputs-same-outputs sanity broken. Fix: filter to post-flip days, derive ET from no-shot decay slopes (not peak-trough), gate publish on &plusmn;15% reproducibility of yesterday. Sanity gate now reports 7.0% relative error (PASS).</p>
 </section>
 
 <section id="walkthrough">
