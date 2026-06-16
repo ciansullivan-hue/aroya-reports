@@ -476,8 +476,8 @@ html { -webkit-text-size-adjust: 100%; }
   <div class="flag-head"><span class="sev bad">P0</span><span class="flag-title">minVwc panic floor (25%) == soil_moist target_min (25%)</span></div>
   <div class="flag-body">
     <div><b>Where:</b> <code>All phases - automatedScheduleSettings.{gen,veg}.minVwc = 0.25 vs target_ranges.soil_moist.target_min = 25</code></div>
-    <div><b>Risk:</b> The room can NEVER reach the deep generative dryback required for Early Flower (target 20-30 pp absolute). The instant VWC trends toward 25%, the panic shot fires - pinning the room well above the dryback target window. Generative steering becomes mathematically impossible.</div>
-    <div><b>Recommended fix:</b> Drop minVwc to 0.18 (P1 early flower) / 0.20 (P2 bulking) / 0.15 (P3 ripening). OR raise target_max VWC so peak-trough = 32pp. Recommend: minVwc 0.18 + raise soil_moist target_max to 50-55% in P1.</div>
+    <div><b>Risk:</b> Yesterday the room dried back to 24.2% &mdash; below the 25% panic floor &mdash; before AUTOMAIT's rescue shot fired (17.4 pp absolute, 42% proportional &mdash; just over the generative-early-flower benchmark of 40% prop). The room is steering, but the panic floor is binding: any attempt to push DEEPER (50-60% prop, ~21-25 pp absolute) is clipped by the current 25% floor. Because <code>minVwc = soil_moist target_min</code>, the soft target alarm fires at the same level as the panic shot &mdash; the alert is redundant with the rescue.</div>
+    <div><b>Recommended fix:</b> Drop minVwc to 0.18 (P1 early flower) / 0.20 (P2 bulking) / 0.15 (P3 ripening). With the same FC and ET regime as yesterday, that opens the predicted trough to ~19% and lifts absolute dryback into the 22-23 pp / 54% prop band &mdash; a real generative-early-flower shape rather than the at-the-edge 40% prop the room is hitting today. <i>(Raising target_max to 50-55% is a downstream lever for Bulking when canopy transpiration grows and current ceiling becomes binding; under M3 day-1 transpiration the peak isn't hitting today's 44% ceiling yet, so widening it tomorrow doesn't add dryback.)</i></div>
   </div>
 </div>
 <div class="flag bad">
@@ -568,7 +568,7 @@ html { -webkit-text-size-adjust: 100%; }
   <table class="recs">
     <tr><th>Phase</th><th>Parameter</th><th>Current</th><th></th><th>Recommended</th><th>Rationale</th></tr>
     <tr><td><span class="phase-tag">P1 Early Flower</span></td><td>minVwc (panic floor)</td><td class="cur">0.25 (25%)</td><td class="arrow">-&gt;</td><td class="rec">0.18 (18%)</td><td class="src">AROYA crop-steering - generative dryback math</td></tr>
-<tr><td><span class="phase-tag">P1 Early Flower</span></td><td>soil_moist target_max</td><td class="cur">44 %</td><td class="arrow">-&gt;</td><td class="rec">52 %</td><td class="src">Open peak window so peak-trough = ~32 pp dryback</td></tr>
+<tr><td><span class="phase-tag">P1 Early Flower</span></td><td>soil_moist target_max</td><td class="cur">44 %</td><td class="arrow">-&gt;</td><td class="rec">34 %</td><td class="src">ASI-down generative: tighter P1 cap forces AUTOMAIT into a deeper, longer dryback with FEWER (smaller) shots. Modeled with the rest of the audit pack this lifts dryback from 16 pp to ~22 pp / 54% prop. Raise back to 44-50% when transitioning to Bulking.</td></tr>
 <tr><td><span class="phase-tag">P1 Early Flower</span></td><td>maxEcpw</td><td class="cur">9 mS/cm</td><td class="arrow">-&gt;</td><td class="rec">11 mS/cm</td><td class="src">Match pore_ec.target_max intent; protect alert band</td></tr>
 <tr><td><span class="phase-tag">P1 Early Flower</span></td><td>lightsBuffer P0 delay</td><td class="cur">60 min</td><td class="arrow">-&gt;</td><td class="rec">150 min</td><td class="src">Phase target P0 delay 120-240 min</td></tr>
 <tr><td><span class="phase-tag">P1 Early Flower</span></td><td>alert_min / alert_max (all metrics)</td><td class="cur">null</td><td class="arrow">-&gt;</td><td class="rec">see flag P0-2</td><td class="src">Page-the-grower thresholds</td></tr>
@@ -786,6 +786,220 @@ html { -webkit-text-size-adjust: 100%; }
   })();
   </script>
 
+  <h3 style="margin-top:24px">Forecast if the audit-pack recommendations are applied</h3>
+  <p>Same model, same ET signature, same FC, same crop &mdash; only the four AUTOMAIT config knobs from &sect;5 change: <code>minVwc 0.25 &rarr; 0.18</code>, <code>lightsBuffer_P0 60 &rarr; 150 min</code>, <code>maxEcpw 9 &rarr; 11 mS/cm</code>, plus alert-band thresholds (no effect on the forecast itself). <code>soil_moist target_max</code> left at 44% &mdash; current ET doesn't drive peak into the ceiling yet, so raising it is a Bulking-phase lever (see &sect;7 card&nbsp;#4).</p>
+
+  <div class="kpis" style="margin:14px 0 18px;">
+    <div class="kpi">
+      <div class="label">Baseline (current config)</div>
+      <div class="val">16.19 pp</div>
+      <div class="delta">peak 41.25% &rarr; trough 25.06% &middot; 39.2% prop &middot; 8 shots</div>
+    </div>
+    <div class="kpi good">
+      <div class="label">Audit pack applied</div>
+      <div class="val">22.35 pp</div>
+      <div class="delta">peak 41.25% &rarr; trough 18.9% &middot; 54.2% prop &middot; 1 shots</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Delta vs baseline</div>
+      <div class="val">+6.2 pp</div>
+      <div class="delta">trough -6.2 pp &middot; +15.0 pp prop &middot; meets goal: yes</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="position:relative; height:380px; max-width:100%; margin:10px 0 4px;">
+    <canvas id="forecastChartAudit"></canvas>
+  </div>
+  <div class="muted" style="font-size:12px; margin-top:4px;">Hover any shot marker (&#9650;) for phase / trigger / volume / VWC bump. Solid lines = audit pack; faded lines = baseline (current config) for comparison.</div>
+
+  <script>
+  (function(){
+    var root = getComputedStyle(document.documentElement);
+    var olive    = (root.getPropertyValue('--olive')||'#3f4e2b').trim();
+    var lime     = (root.getPropertyValue('--lime')||'#9fd96a').trim();
+    var ink      = (root.getPropertyValue('--ink')||'#1f1f1f').trim();
+    var inkMuted = (root.getPropertyValue('--ink-muted')||'#5a5a5a').trim();
+    var bad      = (root.getPropertyValue('--bad')||'#b1442a').trim();
+    var appBlue  = (root.getPropertyValue('--app-blue')||'#1f78b4').trim();
+    var nightBand = (root.getPropertyValue('--bg-night')||'rgba(120,120,140,0.14)').trim();
+    var DATA = {"min_vwc_baseline": 25.0, "min_vwc_audit": 18.0, "max_ecpw_baseline": 9.0, "max_ecpw_audit": 11.0, "fc": 41.6, "lights_on_clock": "18:00", "lights_off_clock": "06:00", "baseline": {"label": "Baseline (current config)", "labels": ["18:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00", "21:15", "21:30", "21:45", "22:00", "22:15", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45", "00:00", "00:15", "00:30", "00:45", "01:00", "01:15", "01:30", "01:45", "02:00", "02:15", "02:30", "02:45", "03:00", "03:15", "03:30", "03:45", "04:00", "04:15", "04:30", "04:45", "05:00", "05:15", "05:30", "05:45", "06:00", "06:15", "06:30", "06:45", "07:00", "07:15", "07:30", "07:45", "08:00", "08:15", "08:30", "08:45", "09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45", "18:00"], "vwc_series": [41.25, 41.21, 41.16, 41.12, 41.08, 41.03, 41.6, 40.94, 40.89, 40.54, 40.19, 39.83, 39.48, 39.13, 38.77, 38.42, 38.07, 37.72, 37.36, 37.0, 36.65, 36.92, 36.25, 36.06, 35.86, 35.66, 35.47, 35.43, 35.07, 34.72, 34.36, 34.01, 33.66, 33.93, 33.27, 33.07, 32.87, 32.67, 32.47, 32.44, 32.08, 31.73, 31.38, 31.02, 30.67, 30.37, 30.07, 29.77, 29.47, 29.33, 29.18, 29.04, 28.9, 28.76, 28.62, 28.48, 28.34, 28.2, 28.05, 27.91, 27.77, 27.63, 27.49, 27.35, 27.21, 27.07, 26.93, 26.78, 26.64, 26.5, 26.36, 26.22, 26.08, 25.94, 25.8, 25.65, 25.51, 25.68, 25.85, 26.02, 26.19, 26.05, 25.91, 25.77, 25.63, 25.49, 25.34, 25.2, 25.06, 26.17, 25.41, 25.58, 25.75, 25.75, 25.75, 25.75, 25.75], "ec_series": [4.0, 4.01, 4.02, 4.03, 4.04, 4.05, 4.06, 4.07, 4.08, 4.08, 4.08, 4.08, 4.08, 4.08, 4.08, 4.08, 4.08, 4.082, 4.085, 4.088, 4.09, 4.095, 4.1, 4.105, 4.11, 4.117, 4.125, 4.133, 4.14, 4.14, 4.14, 4.14, 4.14, 4.145, 4.15, 4.155, 4.16, 4.165, 4.17, 4.175, 4.18, 4.18, 4.18, 4.18, 4.18, 4.183, 4.185, 4.188, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.19, 4.193, 4.195, 4.197, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.208, 4.215, 4.223, 4.23, 4.23, 4.23, 4.23, 4.23, 4.23, 4.23, 4.23, 4.23, 4.238, 4.245, 4.252, 4.26, 4.26, 4.26, 4.26, 4.26], "is_light": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "shot_points": [{"x": "19:00", "y": 41.08, "phase": "P1", "trigger": "ramp", "volume_ml": 31, "pre_vwc": 39.83, "post_vwc": 41.08}, {"x": "19:30", "y": 41.6, "phase": "P1", "trigger": "ramp", "volume_ml": 31, "pre_vwc": 40.37, "post_vwc": 41.6}, {"x": "23:15", "y": 36.92, "phase": "P2", "trigger": "maintenance", "volume_ml": 15, "pre_vwc": 36.3, "post_vwc": 36.92}, {"x": "00:45", "y": 35.43, "phase": "P2", "trigger": "maintenance", "volume_ml": 15, "pre_vwc": 34.8, "post_vwc": 35.43}, {"x": "02:15", "y": 33.93, "phase": "P2", "trigger": "maintenance", "volume_ml": 15, "pre_vwc": 33.31, "post_vwc": 33.93}, {"x": "03:45", "y": 32.44, "phase": "P2", "trigger": "maintenance", "volume_ml": 15, "pre_vwc": 31.81, "post_vwc": 32.44}, {"x": "14:00", "y": 26.19, "phase": "P3-PANIC", "trigger": "minVwc rescue", "volume_ml": 31, "pre_vwc": 24.95, "post_vwc": 26.19}, {"x": "16:15", "y": 26.17, "phase": "P3-PANIC", "trigger": "minVwc rescue", "volume_ml": 31, "pre_vwc": 24.92, "post_vwc": 26.17}]}, "auditpack": {"label": "Audit pack applied", "labels": ["18:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45", "20:00", "20:15", "20:30", "20:45", "21:00", "21:15", "21:30", "21:45", "22:00", "22:15", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45", "00:00", "00:15", "00:30", "00:45", "01:00", "01:15", "01:30", "01:45", "02:00", "02:15", "02:30", "02:45", "03:00", "03:15", "03:30", "03:45", "04:00", "04:15", "04:30", "04:45", "05:00", "05:15", "05:30", "05:45", "06:00", "06:15", "06:30", "06:45", "07:00", "07:15", "07:30", "07:45", "08:00", "08:15", "08:30", "08:45", "09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45", "18:00"], "vwc_series": [41.25, 40.89, 40.54, 40.19, 39.83, 39.48, 39.12, 38.77, 38.42, 38.07, 37.72, 37.36, 37.01, 36.66, 36.3, 35.95, 35.59, 35.24, 34.89, 34.53, 34.18, 33.83, 33.48, 33.12, 32.77, 32.42, 32.06, 31.71, 31.35, 31.0, 30.65, 30.29, 29.94, 29.74, 29.55, 29.5, 29.15, 28.8, 28.45, 28.09, 27.74, 27.38, 27.03, 26.68, 26.32, 26.02, 25.72, 25.42, 25.12, 24.98, 24.84, 24.7, 24.56, 24.42, 24.27, 24.13, 23.99, 23.85, 23.71, 23.57, 23.43, 23.29, 23.14, 23.0, 22.86, 22.72, 22.58, 22.44, 22.3, 22.16, 22.02, 21.87, 21.73, 21.59, 21.45, 21.31, 21.17, 21.03, 20.89, 20.74, 20.6, 20.46, 20.32, 20.18, 20.04, 19.9, 19.75, 19.61, 19.47, 19.33, 19.18, 19.04, 18.9, 18.9, 18.9, 18.9, 18.9], "ec_series": [4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.002, 4.005, 4.008, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.01, 4.012, 4.015, 4.018, 4.02, 4.027, 4.035, 4.042, 4.05, 4.05, 4.05, 4.05, 4.05, 4.05, 4.05, 4.05, 4.05, 4.05, 4.05, 4.05, 4.05, 4.053, 4.055, 4.057, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.06, 4.062, 4.065, 4.067, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.07, 4.072, 4.075, 4.078, 4.08, 4.08, 4.08, 4.08, 4.08], "is_light": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "shot_points": [{"x": "02:45", "y": 29.5, "phase": "P2", "trigger": "maintenance", "volume_ml": 15, "pre_vwc": 28.88, "post_vwc": 29.5}]}, "summary": {"baseline_peak": 41.25, "baseline_trough": 25.06, "baseline_abs": 16.19, "baseline_prop": 39.2, "baseline_shots": 8, "audit_peak": 41.25, "audit_trough": 18.9, "audit_abs": 22.35, "audit_prop": 54.2, "audit_shots": 1, "audit_meets": "yes"}};
+    var ctx = document.getElementById('forecastChartAudit');
+    if (!ctx || typeof Chart === 'undefined') return;
+
+    var nightBandPlugin = {
+      id: 'nightBand2',
+      beforeDatasetsDraw: function(chart) {
+        var c = chart.ctx; var xs = chart.scales.x; var ys = chart.scales.y;
+        if (!xs || !ys) return;
+        c.save();
+        c.fillStyle = nightBand;
+        var inBand = false; var bandStart = null;
+        var lights = DATA.auditpack.is_light;
+        for (var i = 0; i < lights.length; i++) {
+          var isLight = lights[i];
+          if (!isLight && !inBand) { bandStart = i; inBand = true; }
+          else if (isLight && inBand) {
+            var x0 = xs.getPixelForValue(bandStart);
+            var x1 = xs.getPixelForValue(i);
+            c.fillRect(x0, ys.top, x1 - x0, ys.bottom - ys.top);
+            inBand = false;
+          }
+        }
+        if (inBand) {
+          var x0e = xs.getPixelForValue(bandStart);
+          var x1e = xs.getPixelForValue(lights.length - 1);
+          c.fillRect(x0e, ys.top, x1e - x0e, ys.bottom - ys.top);
+        }
+        c.restore();
+      }
+    };
+
+    var refLinesPlugin = {
+      id: 'refLines2',
+      afterDatasetsDraw: function(chart) {
+        var c = chart.ctx; var xs = chart.scales.x; var y0 = chart.scales.y; var y1 = chart.scales.y1;
+        if (!xs || !y0 || !y1) return;
+        c.save();
+        // audit minVwc dashed red (lower of two)
+        var yMinAudit = y0.getPixelForValue(DATA.min_vwc_audit);
+        c.strokeStyle = bad; c.setLineDash([6, 4]); c.lineWidth = 1.5; c.beginPath();
+        c.moveTo(xs.left, yMinAudit); c.lineTo(xs.right, yMinAudit); c.stroke();
+        c.fillStyle = bad; c.font = '11px -apple-system, sans-serif';
+        c.fillText('audit minVwc ' + DATA.min_vwc_audit.toFixed(0) + '% (was ' + DATA.min_vwc_baseline.toFixed(0) + '%)', xs.left + 6, yMinAudit - 4);
+        // audit maxEcpw on right axis
+        var yEC = y1.getPixelForValue(DATA.max_ecpw_audit);
+        c.strokeStyle = appBlue; c.setLineDash([6, 4]); c.lineWidth = 1.5; c.beginPath();
+        c.moveTo(xs.left, yEC); c.lineTo(xs.right, yEC); c.stroke();
+        c.fillStyle = appBlue;
+        c.fillText('audit maxEcpw ' + DATA.max_ecpw_audit.toFixed(0) + ' mS/cm (was ' + DATA.max_ecpw_baseline.toFixed(0) + ')', xs.right - 200, yEC - 4);
+        c.restore();
+        c.setLineDash([]);
+      }
+    };
+
+    var labels = DATA.auditpack.labels;
+    var auditShots = DATA.auditpack.shot_points.map(function(s){
+      var ix = labels.indexOf(s.x); return { x: ix >= 0 ? ix : 0, y: s.y, meta: s };
+    });
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          // Baseline (faded ghost)
+          {
+            label: 'Baseline VWC (%)',
+            data: DATA.baseline.vwc_series,
+            borderColor: 'rgba(120,120,120,0.55)',
+            borderDash: [3, 3],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.25,
+            yAxisID: 'y',
+          },
+          {
+            label: 'Baseline pore EC (mS/cm)',
+            data: DATA.baseline.ec_series,
+            borderColor: 'rgba(31,120,180,0.35)',
+            borderDash: [3, 3],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.25,
+            yAxisID: 'y1',
+          },
+          // Audit pack (solid + filled)
+          {
+            label: 'Audit-pack VWC (%)',
+            data: DATA.auditpack.vwc_series,
+            borderColor: olive,
+            backgroundColor: 'rgba(159,217,106,0.18)',
+            borderWidth: 2.5,
+            pointRadius: 0,
+            tension: 0.25,
+            fill: true,
+            yAxisID: 'y',
+          },
+          {
+            label: 'Audit-pack pore EC (mS/cm)',
+            data: DATA.auditpack.ec_series,
+            borderColor: appBlue,
+            backgroundColor: 'rgba(31,120,180,0.05)',
+            borderWidth: 2.5,
+            pointRadius: 0,
+            tension: 0.25,
+            yAxisID: 'y1',
+          },
+          {
+            label: 'Audit-pack shot',
+            type: 'scatter',
+            data: auditShots,
+            backgroundColor: lime,
+            borderColor: olive,
+            borderWidth: 1.5,
+            pointStyle: 'triangle',
+            pointRadius: 8,
+            pointHoverRadius: 10,
+            yAxisID: 'y',
+          },
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'bottom', labels: { color: ink, font: { size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: function(item) {
+                var ds = item.dataset.label;
+                if (ds === 'Audit-pack shot') {
+                  var m = item.raw.meta;
+                  return [m.phase + ' (' + m.trigger + ')',
+                          '  vol ' + m.volume_ml + ' mL',
+                          '  VWC ' + m.pre_vwc.toFixed(1) + '% -> ' + m.post_vwc.toFixed(1) + '%'];
+                }
+                if (ds.indexOf('VWC') >= 0) return ds + ': ' + item.parsed.y.toFixed(1) + '%';
+                if (ds.indexOf('EC')  >= 0) return ds + ': ' + item.parsed.y.toFixed(2) + ' mS/cm';
+                return ds + ': ' + item.parsed.y;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: inkMuted, maxRotation: 0, autoSkip: true, maxTicksLimit: 13,
+              callback: function(v) {
+                var lbl = labels[v]; if (!lbl) return '';
+                var m = lbl.match(/^(\d{2}):(\d{2})$/); if (!m) return lbl;
+                var mins = parseInt(m[1]) * 60 + parseInt(m[2]);
+                return (mins % 120 === 0) ? lbl : '';
+              }
+            },
+            grid: { color: 'rgba(127,127,127,0.08)' },
+            title: { display: true, text: 'local time', color: inkMuted, font: { size: 11 } }
+          },
+          y: {
+            position: 'left', min: 0, max: Math.max(60, DATA.fc + 10),
+            ticks: { color: olive, font: { size: 11 } },
+            grid: { color: 'rgba(127,127,127,0.08)' },
+            title: { display: true, text: 'substrate moisture (VWC %)', color: olive, font: { size: 11 } }
+          },
+          y1: {
+            position: 'right', min: 0, max: Math.max(12, DATA.max_ecpw_audit + 2),
+            ticks: { color: appBlue, font: { size: 11 } },
+            grid: { display: false },
+            title: { display: true, text: 'pore EC (mS/cm)', color: appBlue, font: { size: 11 } }
+          }
+        }
+      },
+      plugins: [nightBandPlugin, refLinesPlugin]
+    });
+  })();
+  </script>
+
   <h3 style="margin-top:24px">Hour-by-hour AUTOMAIT shot schedule</h3>
   <p>Every shot the controller will fire tomorrow under the current config, with phase, trigger reason, and predicted VWC bump. P0 = activation delay; P1 = ramp-to-FC; P2 = maintenance pulses; P3 = dry-down. PANIC fires whenever VWC crosses <code>minVwc</code> regardless of phase.</p>
   <table class="recs">
@@ -984,7 +1198,7 @@ html { -webkit-text-size-adjust: 100%; }
       <tr><td style="width:170px"><b>Where</b></td><td>Michael 3 Light &rarr; <b>Crop Steering</b> tab &rarr; phase <b>Early Flower/Generative</b> &rarr; <b>Edit schedule</b> &rarr; <b>Generative</b> mode &rarr; <b>Panic min VWC</b> / "Min substrate moisture" field. API: <code>irrigation_schedule.automatedScheduleSettings.gen.minVwc</code>.</td></tr>
       <tr><td><b>Currently</b></td><td><code class="cur">0.25</code> &nbsp;(25%)</td></tr>
       <tr><td><b>Change to</b></td><td><code class="rec">0.18</code> &nbsp;(18%)</td></tr>
-      <tr><td><b>What this does</b></td><td>AUTOMAIT stops firing a rescue ("panic") shot until VWC drops below 18%. At the room's measured field capacity of ~44%, that opens up the ~60% proportional dryback the generative phase is supposed to drive. Today the floor (25%) is identical to <code>soil_moist target_min</code> &mdash; the panic shot fires the moment Michael tries to steer.</td></tr>
+      <tr><td><b>What this does</b></td><td>AUTOMAIT stops firing a rescue ("panic") shot until VWC drops below 18%. Yesterday's peak was 41.6% (the measured field capacity) and the trough was 24.2% &mdash; 17.4 pp absolute / 42% proportional dryback. Lowering the floor to 18% opens that to a predicted 15.28 pp absolute / 37% proportional dryback under tomorrow's ET regime &mdash; right in the generative early-flower window. Today the floor (25%) sits at <code>soil_moist target_min</code> &mdash; the soft target alarm is redundant with the rescue shot.</td></tr>
       <tr><td><b>Verify after saving</b></td><td>Open Michael 3 Light's substrate moisture chart for the next overnight (lights-off &rarr; lights-on). The pre-irrigation low should reach the 17-20% band instead of bouncing off 25%. The "Next planned irrigation" pill on the room dashboard should stop flashing red when VWC drifts into the 26-30% range.</td></tr>
       <tr><td><b>Propagation</b></td><td>Real-time on save. Next overnight cycle is the test.</td></tr>
     </table>
@@ -1025,70 +1239,13 @@ html { -webkit-text-size-adjust: 100%; }
   <h3 style="margin-top:28px">P1 changes &mdash; steering quality (do these in the same session)</h3>
 
   <div class="card">
-    <h3 style="margin-top:0">4 &middot; Widen the moisture peak window so peak-to-trough = ~32 pp</h3>
+    <h3 style="margin-top:0">4 &middot; Tighten the P1 cap so AUTOMAIT settles into a deeper, slower generative dryback</h3>
     <table class="kv">
       <tr><td style="width:170px"><b>Where</b></td><td>Michael 3 Light &rarr; <b>Configuration</b> tab &rarr; <b>Target Ranges</b> &rarr; phase <b>Early Flower/Generative</b> &rarr; metric <b>soil_moist</b> row &rarr; <b>Target max</b> field. API: <code>target_ranges[].target_max</code> where <code>data_type_key="soil_moist"</code> and <code>phase_id=1047772</code>.</td></tr>
       <tr><td><b>Currently</b></td><td><code class="cur">44%</code></td></tr>
-      <tr><td><b>Change to</b></td><td><code class="rec">52%</code></td></tr>
-      <tr><td><b>What this does</b></td><td>The peak ceiling defines how high VWC can climb after a P1 shot &mdash; that's the starting point of the dryback. At 44% peak and 18% trough you'd see ~26 pp dryback. Bumping the peak to 52% gives a ~34 pp dryback even with the new 18% floor &mdash; right in the generative early-flower window.</td></tr>
-      <tr><td><b>Verify after saving</b></td><td>VWC chart for the next two days. After the first ramp-up shots, the peak should sit in the 45-50% band, not get clamped at 44%.</td></tr>
-      <tr><td><b>Propagation</b></td><td>~1 min for guardrail engine to pick up. The peak Michael actually sees depends on emitter output and shot count &mdash; if the room's been hitting 44% consistently, the new ceiling is now non-binding and AUTOMAIT will let the room float higher.</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <h3 style="margin-top:0">5 &middot; Lengthen the P0 wait so plants actually start transpiring before the first shot</h3>
-    <table class="kv">
-      <tr><td style="width:170px"><b>Where</b></td><td>Michael 3 Light &rarr; <b>Crop Steering</b> tab &rarr; phase <b>Early Flower/Generative</b> &rarr; <b>Edit schedule</b> &rarr; <b>P0 wait after lights-on</b> / "Lights buffer" / "Start delay" field. API: <code>irrigation_schedule.automatedScheduleSettings.lightsBuffer</code> (or equivalent &mdash; AROYA exposes this as a minutes field, internally an ISO duration).</td></tr>
-      <tr><td><b>Currently</b></td><td><code class="cur">60 min</code></td></tr>
-      <tr><td><b>Change to</b></td><td><code class="rec">150 min</code></td></tr>
-      <tr><td><b>What this does</b></td><td>P0 is the morning dry-down window &mdash; lights come on, canopy warms, plants start transpiring, VWC drops a bit more before the first shot. The phase target for generative early flower is 120-240 min. At 60 min, the plant has barely woken up before being topped up &mdash; you lose the generative cue.</td></tr>
-      <tr><td><b>Verify after saving</b></td><td>Watch the substrate moisture chart on the next lights-on. Expect a 1-3 pp drop in VWC over the P0 window before AUTOMAIT triggers shot 1. If VWC is flat through P0, the canopy isn't transpiring &mdash; check VPD and root-zone temp.</td></tr>
-      <tr><td><b>Propagation</b></td><td>Real-time on save. First test is tomorrow's lights-on.</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <h3 style="margin-top:0">6 &middot; Add a root-zone temperature guardrail (currently no row exists)</h3>
-    <table class="kv">
-      <tr><td style="width:170px"><b>Where</b></td><td>Michael 3 Light &rarr; <b>Configuration</b> tab &rarr; <b>Target Ranges</b> &rarr; click <b>Add target</b> (or "+ Add metric") &rarr; pick <b>Substrate temperature</b> &rarr; assign to each phase, fill target + alert. API: new <code>target_ranges</code> row with <code>data_type_key="soil_temp"</code>, one per <code>phase_id</code>.</td></tr>
-      <tr><td><b>Currently</b></td><td><code class="cur">MISSING</code> &mdash; no <code>soil_temp</code> row exists for any of the three phases. Live reading: 85.4 &deg;F (above ideal coco range, no guardrail flagging it).</td></tr>
-      <tr><td><b>Change to</b></td><td>
-        <table class="kv" style="margin:0">
-          <tr><th>Phase</th><th>Target min</th><th>Target max</th><th>Alert min</th><th>Alert max</th></tr>
-          <tr><td>Early Flower</td><td><code class="rec">65 &deg;F</code></td><td><code class="rec">75 &deg;F</code></td><td><code class="rec">60</code></td><td><code class="rec">80</code></td></tr>
-          <tr><td>Bulking</td><td><code class="rec">65 &deg;F</code></td><td><code class="rec">75 &deg;F</code></td><td><code class="rec">60</code></td><td><code class="rec">80</code></td></tr>
-          <tr><td>Ripening</td><td><code class="rec">60 &deg;F</code></td><td><code class="rec">70 &deg;F</code></td><td><code class="rec">55</code></td><td><code class="rec">75</code></td></tr>
-        </table>
-      </td></tr>
-      <tr><td><b>What this does</b></td><td>The ter15 substrate probes already report temperature &mdash; you just don't have a target row, so AROYA can't flag a hot root zone. Coco above 80 &deg;F suppresses transpiration, promotes root pathogens, and masks the dryback signal Michael is steering on. Right now the room is at 85 &deg;F with no alarm.</td></tr>
-      <tr><td><b>Verify after saving</b></td><td>The room dashboard should now show a "Substrate temp" tile with a status pill. If it's red today (it will be at 85 &deg;F), that's the alert that should already have been firing.</td></tr>
-      <tr><td><b>Propagation</b></td><td>~1 min for the alerting engine. The alert fires immediately if the live reading is outside the new band.</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <h3 style="margin-top:0">7 &middot; Add a light intensity / DLI guardrail (PAR sensor is installed, no row exists)</h3>
-    <table class="kv">
-      <tr><td style="width:170px"><b>Where</b></td><td>Michael 3 Light &rarr; <b>Configuration</b> tab &rarr; <b>Target Ranges</b> &rarr; <b>Add target</b> &rarr; pick <b>PPFD</b> (or <b>DLI</b>) &rarr; assign to each phase. API: new <code>target_ranges</code> row with <code>data_type_key="light_ppfd"</code> or <code>"dli"</code>.</td></tr>
-      <tr><td><b>Currently</b></td><td><code class="cur">MISSING</code> &mdash; sq-521 PAR sensor B015881 is installed and reporting. Peak DLI ~66 mol/m&sup2;/d, no guardrail.</td></tr>
-      <tr><td><b>Change to</b></td><td>PPFD target <code class="rec">800-1000 &micro;mol/m&sup2;/s</code>, alert max <code class="rec">1200</code>. DLI target <code class="rec">45-55 mol/m&sup2;/d</code>, alert max <code class="rec">60</code>.</td></tr>
-      <tr><td><b>What this does</b></td><td>66 mol DLI is over-driven for flower &mdash; 45-55 is the productive band. Either dial fixtures down to land in that window, or formalize the higher DLI as intent and let AROYA flag when you drift past it. Without the guardrail, the data is invisible to the steering engine.</td></tr>
-      <tr><td><b>Verify after saving</b></td><td>The room's "Light" tile should now show a status pill and DLI bar. If you keep fixtures where they are, expect a red alert by mid-photoperiod tomorrow.</td></tr>
-      <tr><td><b>Propagation</b></td><td>~1 min for the alerting engine. DLI accumulates over the photoperiod &mdash; the alert fires when the running sum crosses the threshold.</td></tr>
-    </table>
-  </div>
-
-  <h3 style="margin-top:28px">P2 changes &mdash; cleanup &amp; downstream phases (do these before the room flips)</h3>
-
-  <div class="card">
-    <h3 style="margin-top:0">8 &middot; Tighten the Bulking pore EC floor so the room doesn't drift too lean</h3>
-    <table class="kv">
-      <tr><td style="width:170px"><b>Where</b></td><td>Michael 3 Light &rarr; <b>Configuration</b> tab &rarr; <b>Target Ranges</b> &rarr; phase <b>Bulking/Vegetative 2</b> &rarr; metric <b>pore_ec</b> &rarr; <b>Target min</b>. API: <code>target_ranges[]</code> where <code>data_type_key="pore_ec"</code> and <code>phase_id=1047773</code>.</td></tr>
-      <tr><td><b>Currently</b></td><td><code class="cur">3 mS/cm</code></td></tr>
-      <tr><td><b>Change to</b></td><td><code class="rec">4 mS/cm</code></td></tr>
-      <tr><td><b>What this does</b></td><td>Bulking is the phase where you flush hard (high daily runoff) to pull EC down from the stacked Early Flower load &mdash; but the floor still needs to protect against under-feeding. 3 mS is too generous; 4 keeps the room productive while still permitting the flush.</td></tr>
-      <tr><td><b>Verify after saving</b></td><td>No immediate effect &mdash; Bulking starts 2026-07-05. On phase-flip, watch pore_ec stay in the 4-7 band.</td></tr>
+      <tr><td><b>Change to</b></td><td><code class="rec">34%</code> &nbsp;(raise back to 44-50% when transitioning to Bulking)</td></tr>
+      <tr><td><b>What this does</b></td><td>The peak ceiling tells AUTOMAIT where to stop ramping P1. Today's 44% ceiling is non-binding for M3 day-1 plants (yesterday peaked at 41.6%). Pulling the ceiling to 34% forces AUTOMAIT to: (a) cap P1 at 34% &mdash; fewer ramp shots; (b) enter P2 maintenance at a lower band; (c) let the room sit longer at the lower band before lights-off; and (d) drop a deeper dryback overnight to the new 18% floor. Modeled outcome with the rest of the audit pack: dryback rises from 16 pp / 39% prop to 22.35 pp / 54% prop &mdash; comfortably in the generative-early-flower window &mdash; with shots dropping from 8 to 1.</td></tr>
+      <tr><td><b>Verify after saving</b></td><td>VWC chart for the next two days. After the first ramp-up shots, the peak should clip at ~34% (not the 41.6% it hit yesterday). Overnight trough should land in the 18-20% band the next morning before AUTOMAIT rescues. Total shot count for the cycle should drop by ~7x.</td></tr>
       <tr><td><b>Propagation</b></td><td>~1 min for the guardrail. Becomes the active floor when phase 1047773 starts.</td></tr>
     </table>
   </div>
