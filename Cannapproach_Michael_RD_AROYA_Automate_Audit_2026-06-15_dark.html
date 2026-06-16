@@ -605,7 +605,9 @@ html { -webkit-text-size-adjust: 100%; }
   <div class="muted" style="font-size:12px; margin-top:4px;">Hover any shot marker (&#9650;) for phase / trigger / volume / VWC bump.</div>
 
   <script>
-  (function(){
+  
+(function(){
+  function init(){
     var root = getComputedStyle(document.documentElement);
     var olive    = (root.getPropertyValue('--olive')||'#3f4e2b').trim();
     var lime     = (root.getPropertyValue('--lime')||'#9fd96a').trim();
@@ -783,7 +785,20 @@ html { -webkit-text-size-adjust: 100%; }
       },
       plugins: [nightBandPlugin, refLinesPlugin]
     });
-  })();
+
+  }
+  // Wait for Chart.js bundle (loaded at end of body) to register the global.
+  function ready(){
+    if (typeof Chart !== 'undefined') { init(); return; }
+    setTimeout(ready, 50);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ready);
+  } else {
+    ready();
+  }
+})();
+
   </script>
 
   <h3 style="margin-top:24px">Forecast if the audit-pack recommendations are applied</h3>
@@ -813,7 +828,9 @@ html { -webkit-text-size-adjust: 100%; }
   <div class="muted" style="font-size:12px; margin-top:4px;">Hover any shot marker (&#9650;) for phase / trigger / volume / VWC bump. Solid lines = audit pack; faded lines = baseline (current config) for comparison.</div>
 
   <script>
-  (function(){
+  
+(function(){
+  function init(){
     var root = getComputedStyle(document.documentElement);
     var olive    = (root.getPropertyValue('--olive')||'#3f4e2b').trim();
     var lime     = (root.getPropertyValue('--lime')||'#9fd96a').trim();
@@ -997,7 +1014,20 @@ html { -webkit-text-size-adjust: 100%; }
       },
       plugins: [nightBandPlugin, refLinesPlugin]
     });
-  })();
+
+  }
+  // Wait for Chart.js bundle (loaded at end of body) to register the global.
+  function ready(){
+    if (typeof Chart !== 'undefined') { init(); return; }
+    setTimeout(ready, 50);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ready);
+  } else {
+    ready();
+  }
+})();
+
   </script>
 
   <h3 style="margin-top:24px">Hour-by-hour AUTOMAIT shot schedule</h3>
