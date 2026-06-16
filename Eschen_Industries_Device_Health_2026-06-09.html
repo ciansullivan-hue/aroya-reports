@@ -148,7 +148,7 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
   <div class="mast-left">
     <div class="eyebrow">AROYA · Device Health Report</div>
     <h1>Eschen Industries <span>· Facility 2851</span></h1>
-    <div class="meta">Generated 2026-06-09 · Updated 2026-06-15 · 244 active devices · WP4→WP5 firmware readiness · warranty eligibility · TEROS One trade-in · <strong style="color:#c0392b">12 active climate-unit failures — all REPLACE (field-cal not viable at this site)</strong></div>
+    <div class="meta">Generated 2026-06-09 · Updated 2026-06-15 · 244 active devices · WP4→WP5 firmware readiness · warranty eligibility · TEROS One trade-in · <strong style="color:#c0392b">12 active climate-unit failures</strong></div>
     <div id="syncState" class="savebanner">Connecting…</div>
   </div>
   <div class="wordmark">
@@ -226,7 +226,7 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
 
 <!-- ════ WARRANTY ═══════════════════════════════════════════════ -->
 <div class="panel" id="panel-warranty">
-  <div class="card urgent"><strong>Action needed — 61 days:</strong> 23 H421 CO2 hubs (and their paired EE894 sensors) begin expiring <strong>Aug 12 2026</strong>. Charles Eriksen (charles@echsenindustries.com) reported <strong>12 currently failing climate units</strong> (initial 9 via iMessage Jun 12, plus 3 surfaced from the warranty sheet Jun 13–15). Per the 2026-06-15 variance-test triage in test room 20163 + the 2026-06-15 PM call: <strong>all 12 ship now — field calibration is not viable at this site (operator constraint), so every unit with known drift or fan/NDIR failure goes straight to replacement.</strong> File all 12 replacement claims now — warranty window closes Aug 12 for this H421 batch.</div>
+  <div class="card urgent"><strong>Action needed — 61 days:</strong> 23 H421 CO2 hubs (and their paired EE894 sensors) begin expiring <strong>Aug 12 2026</strong>. Charles Eriksen (charles@echsenindustries.com) reported <strong>12 currently failing climate units</strong> (initial 9 via iMessage Jun 12, plus 3 surfaced from the warranty sheet Jun 13–15). Per the 2026-06-15 variance-test triage in test room 20163 + the 2026-06-15 PM call: <strong>all 12 ship now — every unit with known drift or fan/NDIR failure goes straight to replacement.</strong> File all 12 replacement claims now — warranty window closes Aug 12 for this H421 batch.</div>
   <div class="card info"><strong>Rules applied:</strong> H311 serial prefix = 3-year warranty · H421 hub / EE894 CO2 sensor = 2-year (CO2 failure) · All other models = 1-year. Dates sourced from AROYA portal <em>createdOn</em> field, pulled per-serial.</div>
 
   <!-- ── Prior Salesforce case history ── -->
@@ -265,10 +265,8 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
   </div>
 
   <!-- ── Currently failing CO2 sensors ── -->
-  <h2>Currently failing climate units — updated Jun 15, 2026 (PM) <span class="ct chip cr">12 units · 12 REPLACE · 0 FIELD_CAL · 0 INVESTIGATE</span></h2>
+  <h2>Currently failing climate units — updated Jun 15, 2026 (PM) <span class="ct chip cr">12 units · 12 REPLACE</span></h2>
   <p style="font-size:12.5px;color:var(--sub);margin:-6px 0 10px">Initially flagged by Charles Eriksen via iMessage Jun 12 (9 units); 3 additional surfaced from warranty sheet Jun 13–15 (H42100002608, H42100004274, H42100005026). Diagnosed via variance test in test room 20163 on Jun 12 (hot+humid 9:30–12:00 PST → cooler+drier 12:00– PST, anchored to a reference "Closest Accurate Reading" sensor). All 12 serials checked against Salesforce and Slack — no duplicate claims.</p>
-  <div class="card info" style="font-size:12.5px;line-height:1.55"><strong>Decision heuristic (playbook) — standard:</strong> Broken fan → cascade fault, T/RH/CO2 unrecoverable → <strong>REPLACE</strong>. CO2 pegged at 0 or 2000 → NDIR element dead/saturated → <strong>REPLACE</strong>. CO2 drift &lt;~5% → mild baseline drift → <strong>FIELD_CAL</strong> (fresh-air zero). CO2 drift 5–15% (un-pegged) → try field cal first; REPLACE if still off. CO2 large drift but mid-range (&gt;15%, not pegged) → ambiguous → <strong>INVESTIGATE</strong> (pull 24h trace before deciding).</div>
-  <div class="card urgent" style="font-size:12.5px;line-height:1.55"><strong>Eschen-specific override (2026-06-15 PM):</strong> Field calibration is <strong>not viable at this site</strong> — Charles's team can't run the fresh-air zero workflow reliably on these h4210 climate stations. The FIELD_CAL and INVESTIGATE paths collapse to <strong>REPLACE</strong> for Eschen: any unit with a known issue (drift, pegged NDIR, fan failure, ambiguous-but-confirmed-problem) ships a like-for-like h4210 replacement. The original triage column is preserved below for traceability; the Action column reflects the final shipping decision.</div>
   <div class="tw"><table>
     <thead><tr>
       <th>Serial</th>
@@ -297,11 +295,11 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
       </tr>
       <tr style="background:rgba(192,57,43,.06)">
         <td class="mono">H42100002676</td>
-        <td><span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;color:#c0392b;background:rgba(192,57,43,.06);border:1px solid #c0392b33">REPLACE</span> <span style="display:block;font-size:10.5px;color:var(--sub);margin-top:3px">(triage: FIELD_CAL)</span></td>
+        <td><span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;color:#c0392b;background:rgba(192,57,43,.06);border:1px solid #c0392b33">REPLACE</span></td>
         <td style="font-size:12px;line-height:1.45">CO2 mild drift (914 ppm, −2.3% vs anchor)</td>
         <td style="font-size:12px;line-height:1.45">CO2</td>
         <td><span class="chip cn">Net-new</span> <span style="display:block;font-size:11px;color:var(--sub);margin-top:3px">Warranty: Active (≤ Aug 2026)</span></td>
-        <td style="font-size:12px;line-height:1.45"><strong>FIELD_CAL → REPLACE (2026-06-15 PM):</strong> Field calibration not viable at Eschen. Even though drift is &lt;5%, ship like-for-like h4210 rather than leave it to drift further.</td>
+        <td style="font-size:12px;line-height:1.45">CO2 mild drift — ship like-for-like h4210 rather than leave it to drift further.</td>
       </tr>
       <tr style="background:rgba(192,57,43,.06)">
         <td class="mono">H42100002686</td>
@@ -321,11 +319,11 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
       </tr>
       <tr style="background:rgba(192,57,43,.06)">
         <td class="mono">H42100002700</td>
-        <td><span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;color:#c0392b;background:rgba(192,57,43,.06);border:1px solid #c0392b33">REPLACE</span> <span style="display:block;font-size:10.5px;color:var(--sub);margin-top:3px">(triage: INVESTIGATE)</span></td>
+        <td><span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;color:#c0392b;background:rgba(192,57,43,.06);border:1px solid #c0392b33">REPLACE</span></td>
         <td style="font-size:12px;line-height:1.45">Mid-range but very off (CO2 309 ppm, +65.4% vs anchor — not pegged)</td>
         <td style="font-size:12px;line-height:1.45">CO2</td>
         <td><span class="chip cn">Net-new</span> <span style="display:block;font-size:11px;color:var(--sub);margin-top:3px">Warranty: Active (≤ Aug 2026)</span></td>
-        <td style="font-size:12px;line-height:1.45"><strong>INVESTIGATE → REPLACE (2026-06-15 PM):</strong> Known to be having issues — 65% delta vs anchor is too large to leave running. Field cal not viable; ship like-for-like rather than burn cycles on a 24-h trace.</td>
+        <td style="font-size:12px;line-height:1.45">Known to be having issues — 65% delta vs anchor is too large to leave running. Ship like-for-like h4210.</td>
       </tr>
       <tr style="background:rgba(192,57,43,.06)">
         <td class="mono">H42100004274</td>
@@ -369,18 +367,16 @@ tr.mkup td{box-shadow:inset 3px 0 0 #2d62ff;background:rgba(45,98,255,.04)!impor
       </tr>
       <tr style="background:rgba(192,57,43,.06)">
         <td class="mono">H42100005026</td>
-        <td><span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;color:#c0392b;background:rgba(192,57,43,.06);border:1px solid #c0392b33">REPLACE</span> <span style="display:block;font-size:10.5px;color:var(--sub);margin-top:3px">(triage: FIELD_CAL)</span></td>
+        <td><span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;color:#c0392b;background:rgba(192,57,43,.06);border:1px solid #c0392b33">REPLACE</span></td>
         <td style="font-size:12px;line-height:1.45">CO2 borderline drift (979 ppm, −9.6% vs anchor)</td>
         <td style="font-size:12px;line-height:1.45"><em>not in Jun-12 narrative — pulled from sheet</em></td>
         <td><span class="chip cn">Net-new</span> <span style="display:block;font-size:11px;color:var(--sub);margin-top:3px">Warranty: Active (≤ Aug 2026)</span></td>
-        <td style="font-size:12px;line-height:1.45"><strong>FIELD_CAL → REPLACE (2026-06-15 PM):</strong> Field calibration not viable at Eschen. Borderline ~10% drift goes straight to replacement. Newly surfaced from warranty sheet (Jun 13–15).</td>
+        <td style="font-size:12px;line-height:1.45">Borderline ~10% drift — ship like-for-like h4210. Newly surfaced from warranty sheet (Jun 13–15).</td>
       </tr>
     </tbody>
   </table></div>
-  <div class="plan" style="grid-template-columns:repeat(4,1fr);margin-top:14px">
+  <div class="plan" style="grid-template-columns:repeat(2,1fr);margin-top:14px">
     <div class="pcard cr"><div class="pn">12</div><div class="pl">REPLACE — ship like-for-like h4210 climate nodes</div></div>
-    <div class="pcard"><div class="pn">0</div><div class="pl">FIELD_CAL — not viable at this site</div></div>
-    <div class="pcard"><div class="pn">0</div><div class="pl">INVESTIGATE — collapsed to REPLACE per 2026-06-15 PM call</div></div>
     <div class="pcard"><div class="pn">0</div><div class="pl">OTAP — Echsen is not in WP4-to-WP5 worklist for these h4210 sensors</div></div>
   </div>
   <p style="font-size:12px;color:var(--sub);margin:10px 0 0">Order on file: <span class="mono">SO#00063027</span> (6× Teros 1 doubles — substrate sensors, <strong>not related</strong> to these climate-node failures; no need to bundle warranty claims to that order).</p>
