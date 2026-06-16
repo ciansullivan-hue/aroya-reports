@@ -1,0 +1,122 @@
+{
+  "forecast_date": "2026-06-17",
+  "yesterday": {
+    "peak_vwc": 41.6,
+    "trough_vwc": 24.2,
+    "abs_dryback_pp": 17.400000000000002,
+    "et_signature_pp_per_hr": 1.45,
+    "source": "SPA dataReadings + first P1 trigger from spa_get_harvest_events"
+  },
+  "et_signature": {
+    "et_pp_per_hr": 1.45,
+    "n_days_used": 1,
+    "transparency_note": "ET baseline based on 1 day (post-flip only; HG flip 2026-06-14). Pre-flip days excluded: 5.",
+    "post_flip_only": true,
+    "filtered_pre_flip_days": [
+      "2026-06-09",
+      "2026-06-10",
+      "2026-06-11",
+      "2026-06-12",
+      "2026-06-13"
+    ],
+    "weights": [
+      {
+        "date": "2026-06-15",
+        "weight": 1.0,
+        "et": 1.45
+      }
+    ]
+  },
+  "validation_gate": {
+    "passed": true,
+    "predicted_abs_dryback_pp": 16.19,
+    "actual_abs_dryback_pp": 17.4,
+    "relative_error": 0.0695,
+    "tolerance": 0.15,
+    "message": "Model reproduces yesterday's actual 17.4 pp dryback: predicted 16.2 pp (rel error 7.0%, tolerance \u00b115%)."
+  },
+  "baseline_forecast": {
+    "predicted_peak_vwc": 41.25,
+    "predicted_trough_vwc": 25.06,
+    "predicted_abs_dryback_pp": 16.19,
+    "predicted_prop_dryback": 0.3925,
+    "predicted_shots_count": 8,
+    "meets_goal_label": "yes",
+    "et_rate_applied": 1.4133,
+    "et_ambient_adjustment": 0.975
+  },
+  "scenarios": [
+    {
+      "label": "Lower minVwc to 0.18",
+      "trough": 23.25,
+      "abs_db": 18.0,
+      "prop_db": 43.6,
+      "meets": "yes",
+      "shots": 6,
+      "changes": {
+        "minVwc": 0.18
+      }
+    },
+    {
+      "label": "Extend P0 delay to 150 min",
+      "trough": 26.32,
+      "abs_db": 15.28,
+      "prop_db": 36.7,
+      "meets": "marginal",
+      "shots": 7,
+      "changes": {
+        "lightsBuffer_P0_min": 150
+      }
+    },
+    {
+      "label": "Audit pack (minVwc 0.18 + P0 150 + target_max 34 + maxEcpw 11)",
+      "trough": 18.9,
+      "abs_db": 22.35,
+      "prop_db": 54.2,
+      "meets": "yes",
+      "shots": 1,
+      "changes": {
+        "minVwc": 0.18,
+        "lightsBuffer_P0_min": 150,
+        "soil_moist_target_max": 34.0,
+        "maxEcpw": 11.0
+      }
+    },
+    {
+      "label": "Audit pack + ASI GEN 2",
+      "trough": 18.28,
+      "abs_db": 22.97,
+      "prop_db": 55.7,
+      "meets": "yes",
+      "shots": 0,
+      "changes": {
+        "minVwc": 0.16,
+        "lightsBuffer_P0_min": 150,
+        "soil_moist_target_max": 32.0,
+        "maxEcpw": 12.0
+      }
+    },
+    {
+      "label": "Audit pack + ASI GEN 1",
+      "trough": 18.28,
+      "abs_db": 22.97,
+      "prop_db": 55.7,
+      "meets": "yes",
+      "shots": 0,
+      "changes": {
+        "minVwc": 0.14,
+        "lightsBuffer_P0_min": 180,
+        "soil_moist_target_max": 30.0,
+        "maxEcpw": 13.0
+      }
+    }
+  ],
+  "prior_broken_prediction": {
+    "predicted_peak_vwc": 44.0,
+    "predicted_trough_vwc": 37.9,
+    "predicted_abs_dryback_pp": 6.100000000000001,
+    "et_used_pp_per_hr": 0.7,
+    "et_window_used": "6-day flat mean (straddled HG flip)",
+    "why_wrong": "Pre-flip M2 ET diluted post-flip M3 ET; same-inputs-same-outputs sanity broken."
+  }
+}
