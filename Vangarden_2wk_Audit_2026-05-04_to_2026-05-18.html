@@ -154,6 +154,60 @@
   kbd{font-family:'JetBrains Mono','Monaco',monospace;font-size:11px;padding:1px 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg-3);color:var(--ink-2)}
 
 </style>
+<!-- aroya-mobile-qa-v1 -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<style id="aroya-mobile-qa">
+/* AROYA Mobile QA — universal iPhone-safe block. v1 2026-06-15 */
+html { -webkit-text-size-adjust: 100%; }
+@media (max-width: 768px) {
+  html, body { max-width: 100vw; overflow-x: hidden; }
+  body, main, .container, .wrap, .page, .report { padding-left: 12px !important; padding-right: 12px !important; }
+  /* Fluid media */
+  img, svg, video, canvas { max-width: 100%; height: auto; }
+  /* Tables: contain horizontal scroll inside their cell, not the page */
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table.kpi, table.meta, table.kpi-strip { display: table; width: 100%; }
+  /* Pre/code overflow */
+  pre, code { max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
+  /* Long unbroken strings (UUIDs, hashes, long URLs) */
+  td, th, p, li, dd, dt, a, span, div.cell { overflow-wrap: anywhere; word-break: break-word; }
+  /* Mermaid + wide SVG: shrink to fit */
+  .mermaid svg, svg.mermaid, [class*="mermaid"] svg { max-width: 100% !important; height: auto !important; }
+  /* Collapse the AROYA 8-cell meta grid + KPI strips */
+  .meta, .meta-grid, .kpi-grid, .kpi-strip, .kpis, .kpi-row,
+  .grid, .grid-4, .grid-3, .grid-2,
+  .cards, .card-grid, .kpi-cards, .summary-grid,
+  .row, .stat-row, .stats, .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    flex-wrap: wrap !important;
+  }
+  /* Individual KPI cards inside a flexed strip */
+  .kpi, .kpi-card, .stat, .stat-card, .summary-card, .card {
+    min-width: 0 !important;
+    flex: 1 1 calc(50% - 8px) !important;
+    max-width: 100% !important;
+  }
+  /* Tab bars / chips */
+  .tabs, .tab-bar, .chips, .room-chips { flex-wrap: wrap !important; }
+  /* Tighten heavy headings */
+  h1 { font-size: clamp(1.4rem, 6vw, 2rem) !important; }
+  h2 { font-size: clamp(1.15rem, 5vw, 1.5rem) !important; }
+  /* Body font floor */
+  body { font-size: max(15px, 0.95rem); }
+  /* Touch targets — links inside KPI/tabs/buttons */
+  .tab, .tab-button, .chip, button, .btn, .room-chip, .lang-toggle { min-height: 44px; }
+  /* Sticky elements should not crowd viewport */
+  .sticky, [class*="sticky"], header.sticky, .nav-sticky { position: relative !important; }
+}
+@media (max-width: 480px) {
+  .meta, .meta-grid, .kpi-grid, .kpi-strip, .kpis, .kpi-row,
+  .grid-4, .grid-3, .cards, .card-grid, .kpi-cards, .summary-grid,
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .kpi, .kpi-card, .stat, .stat-card, .summary-card, .card { flex: 1 1 100% !important; }
+}
+</style>
 </head>
 <body class="en">
 <div class="wrap">
