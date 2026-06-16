@@ -585,12 +585,12 @@ html { -webkit-text-size-adjust: 100%; }
 <section id="forecast">
   <h2>6 &middot; Tomorrow's forecast &mdash; 2026-06-16 light cycle</h2>
 
-  <p>This is the predictive layer of the audit. Yesterday's measurements (Section 2) plus the AUTOMAIT config (Section 3) are fed into a physical simulator that walks tomorrow's day hour-by-hour: VWC declines at yesterday's ET signature, AUTOMAIT triggers shots at the configured thresholds, the pore EC trajectory and panic floor are honored. The forecast tells Michael whether the day, under the current config, will deliver his stated steering goal &mdash; before he changes anything. Each audit recommendation is then re-simulated as a side-by-side what-if so he can see the trough and proportional dryback the change would produce.</p>
+  <p>This is the predictive layer of the audit. Yesterday's measurements (Section 2) plus the AUTOMAIT config (Section 3) are fed into a physical simulator that walks tomorrow's day hour-by-hour: VWC declines at yesterday's ET signature, AUTOMAIT triggers shots at the configured thresholds, the pore EC trajectory and panic floor are honored. The forecast tells Michael what trough VWC the day will reach under the current config &mdash; before he changes anything. Each audit recommendation is then re-simulated as a side-by-side what-if so he can see what peak and trough VWC the change would produce, in absolute terms.</p>
 
   <div class="card bad-bg">
     <h3 style="margin-top:0">Bottom line for tomorrow</h3>
-    <p style="font-size:15px;margin-bottom:6px"><b>Tomorrow will NOT meet Michael's generative steering goal.</b></p>
-    <p style="margin-bottom:0">At the room's measured FC ceiling of <b>~44%</b> and yesterday's ET signature of <b>~0.70 pp/h</b>, AUTOMAIT under the current config will hold VWC near FC for most of the light cycle and let it dry only during the 14-hour P3+dark window. Predicted trough: <b>~37.9%</b>. Predicted proportional dryback: <b>~14%</b>. The generative goal is 60% &mdash; the day falls short by ~46 pp. <i>Even with every audit fix applied tomorrow morning, the room can only get to ~25% proportional dryback by end-of-day &mdash; the structural ceiling is the FC, not the AUTOMAIT settings.</i></p>
+    <p style="font-size:15px;margin-bottom:6px"><b>Tomorrow's dryback will be shallow &mdash; peak ~44% VWC down to a trough of only ~37.9% VWC.</b></p>
+    <p style="margin-bottom:0">At the room's measured FC ceiling of <b>~44% VWC</b> and yesterday's ET signature of <b>~0.70 pp/h</b>, AUTOMAIT under the current config will hold VWC near FC for most of the light cycle and let it dry only during the 14-hour P3+dark window. Predicted trough: <b>~37.9% VWC</b> &mdash; about a <b>6 pp absolute drop</b> from peak. <i>Even with every audit fix applied tomorrow morning, the room only reaches a trough of ~33% VWC by end-of-day &mdash; an 11-point absolute drop &mdash; because the structural ceiling is the FC at 44%, not the AUTOMAIT settings.</i> <b>Michael's stated dryback target is an open question</b> &mdash; not documented in recipe 124916 metadata; to clarify with him before recommending a specific trough.</p>
   </div>
 
   <h3>Yesterday actual vs tomorrow predicted</h3>
@@ -601,9 +601,9 @@ html { -webkit-text-size-adjust: 100%; }
       <div class="delta">12-day median peak. Working ceiling for every forecast number.</div>
     </div>
     <div class="kpi bad">
-      <div class="label">Yesterday's actual prop dryback</div>
-      <div class="val">41.9%</div>
-      <div class="delta">Day 1 HG outlier &mdash; AUTOMAIT skipped normal P1, dryback ran ~22h until panic floor at 24.2%.</div>
+      <div class="label">Yesterday's actual trough VWC</div>
+      <div class="val">24.2%</div>
+      <div class="delta">Day 1 HG outlier &mdash; AUTOMAIT skipped normal P1, dryback ran ~22h from peak ~41.7% down to panic floor at 24.2% (~17.5 pp absolute drop). Not a repeatable baseline.</div>
     </div>
     <div class="kpi">
       <div class="label">Tomorrow predicted peak</div>
@@ -616,32 +616,32 @@ html { -webkit-text-size-adjust: 100%; }
       <div class="delta">P1 ramp refills VWC to FC; only P3 + dark dries it. AUTOMAIT fires 2 shots before night.</div>
     </div>
     <div class="kpi bad">
-      <div class="label">Tomorrow predicted prop dryback</div>
-      <div class="val">13.9%</div>
-      <div class="delta">~46 pp gap vs Michael's 60% generative target.</div>
+      <div class="label">Tomorrow predicted abs dryback</div>
+      <div class="val">6.1 pp</div>
+      <div class="delta">Peak 44% &rarr; trough 37.9% VWC. Shallow generative dryback for early flower.</div>
     </div>
-    <div class="kpi good">
-      <div class="label">Michael's goal</div>
-      <div class="val">60%</div>
-      <div class="delta">Generative early flower (Athena / AROYA Crop-Steering Guide).</div>
+    <div class="kpi warn">
+      <div class="label">Michael's stated dryback target</div>
+      <div class="val">open</div>
+      <div class="delta"><b>Open question</b> &mdash; not documented in recipe 124916 metadata. To clarify with Michael directly. Phase-target ranges for generative early flower (per AROYA Crop-Steering Guide) suggest a trough in the high-20s VWC, but his actual target hasn't been stated.</div>
     </div>
   </div>
 
   <h3>Predicted VWC trajectory &mdash; tomorrow's 24h cycle</h3>
   <div class="chart-wrap"><canvas id="vwcForecast"></canvas></div>
-  <p class="note">Predicted VWC across tomorrow's light cycle (hour 0 = lights-on). Anchor = yesterday's measured FC. Decay = yesterday's hourly ET signature averaged across the day. Bumps = predicted AUTOMAIT shots under the current guardrails (minVwc 0.25, maxEcpw 9, P0 60min, target_max 44, drainGoal 0.05). Lights-off shaded; rescue / panic shots marked with a triangle.</p>
+  <p class="note">Predicted VWC across tomorrow's light cycle (hour 0 = lights-on). Anchor = yesterday's measured FC of ~44% VWC. Decay = yesterday's hourly ET signature averaged across the day. Bumps = predicted AUTOMAIT shots under the current guardrails (minVwc 0.25, maxEcpw 9, P0 60min, target_max 44, drainGoal 0.05). Lights-off shaded; rescue / panic shots marked with a triangle.</p>
 
   <h3>Why this trajectory? The math made visible</h3>
   <div class="callout">
-    The simulator is dumb on purpose &mdash; it just replays yesterday's ET signature against tomorrow's predicted shots. Under <b>current config</b>: lights-on at hour 0, VWC starts at 44 (yesterday's FC), declines to 43.2 by hour 1 (P0 delay 60min), then a P1 ramp shot refills to 44. ET drains it ~0.7 pp/h through P1 and into P2; at hour 8.5 a maintenance shot tops it back to 43.2. From hour 9 (P3 buffer starts) and through 12h of dark, no shots fire and VWC drops at 0.4&times; daytime ET (~0.28 pp/h) to settle around 37.9 by next lights-on. The panic floor at 25% never trips because the room never gets that dry. That's why <code>minVwc 0.25 &rarr; 0.18</code> alone changes nothing tomorrow &mdash; the floor isn't biting.
+    The simulator is dumb on purpose &mdash; it just replays yesterday's ET signature against tomorrow's predicted shots. Under <b>current config</b>: lights-on at hour 0, VWC starts at 44% (yesterday's FC), declines to 43.2% by hour 1 (P0 delay 60min), then a P1 ramp shot refills to 44%. ET drains it ~0.7 pp/h through P1 and into P2; at hour 8.5 a maintenance shot tops it back to 43.2%. From hour 9 (P3 buffer starts) and through 12h of dark, no shots fire and VWC drops at 0.4&times; daytime ET (~0.28 pp/h) to settle around 37.9% VWC by next lights-on &mdash; a 6 pp absolute drop from peak. The panic floor at 25% never trips because the room never gets that dry. That's why <code>minVwc 0.25 &rarr; 0.18</code> alone changes nothing tomorrow &mdash; the floor isn't biting.
   </div>
 
-  <h3>Will tomorrow meet Michael's generative goal?</h3>
-  <p><b>No.</b> The structural ceiling is the FC, not the AUTOMAIT settings. To hit 60% proportional dryback at FC 44%, the room needs to trough at 17.6% &mdash; below 1-gal coco's safe Ca/Mg uptake zone. Three things must change in this order:</p>
+  <h3>How deep can tomorrow's dryback actually go?</h3>
+  <p><b>The structural ceiling is the FC at 44% VWC, not the AUTOMAIT settings.</b> Michael's actual dryback target is an <b>open question</b> &mdash; not documented in recipe 124916 metadata, and worth getting on the table with him before locking a target trough. As a frame: a deep generative dryback that troughs near 17-18% VWC would put the room <i>below</i> 1-gal coco's safe Ca/Mg uptake zone; a more defensible early-flower trough on this substrate lives in the high-20s VWC. Three things must change in this order to unlock deeper dryback:</p>
   <ol>
-    <li><b>Today (config-only):</b> apply the full audit pack &mdash; lower target_max to ~34%, extend P0 to 150 min, raise maxEcpw to 11, drop minVwc to 0.18. This buys ~25% prop dryback (up from 14%) tomorrow. It's a 1.8&times; improvement, but still not 60%.</li>
+    <li><b>Today (config-only):</b> apply the full audit pack &mdash; lower target_max to ~34%, extend P0 to 150 min, raise maxEcpw to 11, drop minVwc to 0.18. This buys a trough of <b>~33% VWC</b> (up from 37.9%) tomorrow &mdash; an 11 pp absolute drop vs 6 pp today. It's a 1.8&times; improvement on dryback depth, but the FC ceiling at 44% caps how much further config-only changes can take it.</li>
     <li><b>This week (substrate physics):</b> walk feed EC up to drive root expansion + slab capacity, address the 85&deg;F substrate heat creep (fixture proximity / under-bench heat / container colour). The goal is lifting measured FC to 55%+. Each 1 pp lift in FC creates ~0.6 pp of additional room to dryback into.</li>
-    <li><b>By end of stretch (recipe redesign):</b> once FC clears 55%, re-anchor the audit on the new measured FC and walk minVwc, target_max, and drainGoal down to the values that deliver 60% prop dryback structurally.</li>
+    <li><b>By end of stretch (recipe redesign):</b> once FC lifts to the mid-50s VWC, re-anchor the audit on the new measured FC and walk minVwc, target_max, and drainGoal down to the absolute VWC values that deliver the trough Michael (when asked) commits to.</li>
   </ol>
 
   <h3>Risk flags &mdash; what could derail tomorrow's forecast</h3>
@@ -649,7 +649,7 @@ html { -webkit-text-size-adjust: 100%; }
     <li><b>Substrate temp creep.</b> Yesterday's substrate averaged 82.6&deg;F (vs 85.5&deg;F earlier in the window) &mdash; if it climbs back above 85, ET goes with it. Expect a 10-15% deeper trough than predicted.</li>
     <li><b>P0 delay timing.</b> P0 at 60 min is too short for the generative cue &mdash; first rescue shot may fire before the plant has fully transpired its morning signal. The hour-1 P1 ramp shot in the forecast assumes the AUTOMAIT honors its current schedule.</li>
     <li><b>Pore EC trajectory.</b> Currently sitting at 4.0; feed EC at 4.4. EC drifts up passively at ~0.005 mS/h between shots in the simulation. Will not hit the maxEcpw=9 ceiling tomorrow (lots of headroom). But once feed EC is raised, this becomes a P1 blocker by mid-week &mdash; raise the ceiling to 11 BEFORE walking feed EC.</li>
-    <li><b>Yesterday's outlier doesn't predict tomorrow.</b> Yesterday's 41.9% prop dryback hit was a one-day artifact from the HG flip (M2 &rarr; M3 on 2026-06-14, AUTOMAIT didn't run normal P1). Under normal operation, the room produces ~14-21% prop dryback &mdash; that's the relevant baseline.</li>
+    <li><b>Yesterday's outlier doesn't predict tomorrow.</b> Yesterday's deep trough of 24.2% VWC (~17.5 pp absolute drop from peak ~41.7%) was a one-day artifact from the HG flip (M2 &rarr; M3 on 2026-06-14, AUTOMAIT didn't run normal P1). Under normal operation, the room troughs in the high-30s VWC for a 6-9 pp absolute drop &mdash; that's the relevant baseline.</li>
   </ul>
 
   <h3>What changing each audit rec does to tomorrow &mdash; side-by-side</h3>
@@ -658,18 +658,18 @@ html { -webkit-text-size-adjust: 100%; }
       <tr><th>Scenario</th><th>Pred trough</th><th>Pred prop dryback</th><th>Pred abs dryback</th><th>Shots</th><th>Meets goal?</th></tr>
     </thead>
     <tbody>
-      <tr><td><b>No change (current config)</b></td><td class="num">37.9%</td><td class="num">13.9%</td><td class="num">6.1 pp</td><td class="num">2</td><td><span class="pill bad">No (gap ~46 pp)</span></td></tr>
-      <tr><td>Lower minVwc 0.25 &rarr; 0.18 only</td><td class="num">37.9%</td><td class="num">13.9%</td><td class="num">6.1 pp</td><td class="num">2</td><td><span class="pill bad">No &mdash; floor isn't biting</span></td></tr>
-      <tr><td>Extend P0 delay 60 &rarr; 150 min only</td><td class="num">34.6%</td><td class="num">21.0%</td><td class="num">9.2 pp</td><td class="num">1</td><td><span class="pill bad">No (gap ~39 pp)</span></td></tr>
-      <tr><td><b>Full audit pack:</b> minVwc 0.18 + P0 150 + target_max 34 + maxEcpw 11</td><td class="num">32.7%</td><td class="num">25.3%</td><td class="num">11.1 pp</td><td class="num">0</td><td><span class="pill warn">No, but ~1.8&times; better (gap ~35 pp)</span></td></tr>
-      <tr><td><b>Audit pack + step ASI to GEN 2</b> (deeper dryback preset, shorter window, smaller P2 shots)</td><td class="num">31.8%</td><td class="num">27.7%</td><td class="num">12.2 pp</td><td class="num">0</td><td><span class="pill warn">No, but ~2.0&times; better (gap ~32 pp)</span></td></tr>
-      <tr><td><b>Audit pack + step ASI to GEN 1 (max aggression)</b> &mdash; deepest dryback the preset map allows</td><td class="num">30.8%</td><td class="num">30.0%</td><td class="num">13.2 pp</td><td class="num">0</td><td><span class="pill warn">No &mdash; ceiling is FC, not the slider (gap ~30 pp)</span></td></tr>
+      <tr><td><b>No change (current config)</b></td><td class="num">37.9%</td><td class="num">13.9%</td><td class="num">6.1 pp</td><td class="num">2</td><td><span class="pill bad">Shallow &mdash; only 6 pp drop from peak</span></td></tr>
+      <tr><td>Lower minVwc 0.25 &rarr; 0.18 only</td><td class="num">37.9%</td><td class="num">13.9%</td><td class="num">6.1 pp</td><td class="num">2</td><td><span class="pill bad">No change &mdash; floor isn't biting</span></td></tr>
+      <tr><td>Extend P0 delay 60 &rarr; 150 min only</td><td class="num">34.6%</td><td class="num">21.0%</td><td class="num">9.2 pp</td><td class="num">1</td><td><span class="pill warn">Trough ~34.6% VWC (9 pp drop)</span></td></tr>
+      <tr><td><b>Full audit pack:</b> minVwc 0.18 + P0 150 + target_max 34 + maxEcpw 11</td><td class="num">32.7%</td><td class="num">25.3%</td><td class="num">11.1 pp</td><td class="num">0</td><td><span class="pill warn">Trough ~32.7% VWC (11 pp drop, ~1.8&times; deeper)</span></td></tr>
+      <tr><td><b>Audit pack + step ASI to GEN 2</b> (deeper dryback preset, shorter window, smaller P2 shots)</td><td class="num">31.8%</td><td class="num">27.7%</td><td class="num">12.2 pp</td><td class="num">0</td><td><span class="pill warn">Trough ~31.8% VWC (12 pp drop, ~2.0&times; deeper)</span></td></tr>
+      <tr><td><b>Audit pack + step ASI to GEN 1 (max aggression)</b> &mdash; deepest dryback the preset map allows</td><td class="num">30.8%</td><td class="num">30.0%</td><td class="num">13.2 pp</td><td class="num">0</td><td><span class="pill warn">Trough ~30.8% VWC (13 pp drop) &mdash; ceiling is FC, not the slider</span></td></tr>
     </tbody>
   </table>
-  <p class="note">All scenarios use yesterday's measured FC (44.0%) and yesterday's ET signature (0.70 pp/h) as the physical anchors. Predicted prop dryback = (peak &minus; trough) &divide; peak. <b>Display rule:</b> absolute dryback in pp is the AROYA convention; proportional dryback shown explicitly only here because Michael's stated goal is proportional (60% at FC). <b>ASI direction (corrected):</b> stepping the slider from GEN 3 toward GEN 1 walks the preset deeper into the generative range &mdash; deeper dryback, shorter irrigation window, smaller/fewer P2 shots. GEN 5 is the neutral pivot; GEN 6-10 is vegetative and moves the room AWAY from Michael's goal. The audit pack alone moves dryback from 14% &rarr; 25%; adding GEN 1 only adds ~5 pp on top &mdash; structural confirmation that the FC ceiling, not the slider position, caps the achievable answer until the underlying room physics (substrate heat, feed EC, root mass) changes.</p>
+  <p class="note">All scenarios use yesterday's measured FC (44.0% VWC) and yesterday's ET signature (0.70 pp/h) as the physical anchors. <b>Display rule:</b> peak and trough VWC are quoted in absolute % (the AROYA convention &mdash; that's how cultivators talk). Absolute dryback in pp = peak &minus; trough. Proportional dryback is shown in two columns as supporting context only &mdash; useful for explaining why a fixed absolute trough target is wrong when the FC ceiling itself shifts day-to-day, never as recommendation language. <b>Michael's stated dryback target is an open question</b> &mdash; not documented in recipe 124916 metadata. <b>ASI direction (corrected):</b> stepping the slider from GEN 3 toward GEN 1 walks the preset deeper into the generative range &mdash; deeper dryback, shorter irrigation window, smaller/fewer P2 shots. GEN 5 is the neutral pivot; GEN 6-10 is vegetative and moves the room AWAY from a generative target. The audit pack alone deepens the trough from 37.9% VWC down to ~33% VWC (6 pp &rarr; 11 pp absolute drop); adding GEN 1 only adds ~2 more pp on top &mdash; structural confirmation that the FC ceiling, not the slider position, caps the achievable trough until the underlying room physics (substrate heat, feed EC, root mass) changes.</p>
 
   <h3>How this forecast is generated</h3>
-  <p class="note">Source: <code>~/code/aroya-tools/automait_forecast.py</code>. Inputs: yesterday's measured FC, yesterday's hourly ET signature (mean VWC decline between shots), yesterday's shot log (volume, pre/post VWC), the current AUTOMAIT phase config (minVwc, maxEcpw, lightsBuffer, drainGoal, target_max), 7-day ambient baseline (VPD, air temp, soil temp), Michael's stated goal (60% prop dryback, generative). The simulator steps in 15-minute resolution across the next 24h and emits the trajectory, the predicted shot schedule, and the meets-goal verdict. Reference: <code>~/claude-brain/06-Workflows/aroya-mcp-sdk/automait-forecast.md</code>.</p>
+  <p class="note">Source: <code>~/code/aroya-tools/automait_forecast.py</code>. Inputs: yesterday's measured FC, yesterday's hourly ET signature (mean VWC decline between shots), yesterday's shot log (volume, pre/post VWC), the current AUTOMAIT phase config (minVwc, maxEcpw, lightsBuffer, drainGoal, target_max), 7-day ambient baseline (VPD, air temp, soil temp). The simulator steps in 15-minute resolution across the next 24h and emits the absolute VWC trajectory and the predicted shot schedule. Michael's actual dryback target is an open question &mdash; not in recipe 124916 metadata &mdash; so the model carries a placeholder generative trough internally (used only as an optional comparison line on the chart) and surfaces "how deep does the trough actually go" as the headline answer. Reference: <code>~/claude-brain/06-Workflows/aroya-mcp-sdk/automait-forecast.md</code>.</p>
 </section>
 
 <section id="walkthrough">
@@ -826,7 +826,7 @@ html { -webkit-text-size-adjust: 100%; }
       <tr><td style="width:170px"><b>Where</b></td><td>Michael 3 Light &rarr; <b>Crop Steering</b> tab &rarr; phase <b>Early Flower/Generative</b> &rarr; <b>Edit schedule</b> &rarr; <b>Generative</b> mode &rarr; <b>Panic min VWC</b> / "Min substrate moisture" field. API: <code>irrigation_schedule.automatedScheduleSettings.gen.minVwc</code>.</td></tr>
       <tr><td><b>Currently</b></td><td><code class="cur">0.25</code> &nbsp;(25%)</td></tr>
       <tr><td><b>Change to</b></td><td><code class="rec">0.18</code> &nbsp;(18%)</td></tr>
-      <tr><td><b>What this does</b></td><td>AUTOMAIT stops firing a rescue ("panic") shot until VWC drops below 18%. At the room's measured field capacity of ~44%, that opens up the ~60% proportional dryback the generative phase is supposed to drive. Today the floor (25%) is identical to <code>soil_moist target_min</code> &mdash; the panic shot fires the moment Michael tries to steer.</td></tr>
+      <tr><td><b>What this does</b></td><td>AUTOMAIT stops firing a rescue ("panic") shot until VWC drops below 18%. At the room's measured field capacity of ~44% VWC, that opens room for a deeper generative trough down into the high-teens / low-20s VWC if that's where Michael wants to steer. Today the floor (25%) is identical to <code>soil_moist target_min</code> &mdash; the panic shot fires the moment Michael tries to steer below 25% VWC.</td></tr>
       <tr><td><b>Verify after saving</b></td><td>Open Michael 3 Light's substrate moisture chart for the next overnight (lights-off &rarr; lights-on). The pre-irrigation low should reach the 17-20% band instead of bouncing off 25%. The "Next planned irrigation" pill on the room dashboard should stop flashing red when VWC drifts into the 26-30% range.</td></tr>
       <tr><td><b>Propagation</b></td><td>Real-time on save. Next overnight cycle is the test.</td></tr>
     </table>
@@ -1240,7 +1240,7 @@ const REPORT_DATA = {"phases": [{"name": "Early Flower / Generative", "key": "st
   const labels = traj.map(p => 'h' + p.hour);
   const baselineSeries = traj.map(p => p.vwc);
   const auditSeries = auditTraj.map(p => p.vwc);
-  const goalSeries = traj.map(_ => 17.6);  // generative goal trough at FC 44% (60% prop dryback)
+  const goalSeries = traj.map(_ => 17.6);  // optional reference line: deep-generative trough at ~17.6% VWC; Michael's actual target is an open question
   const minVwcCurrent = traj.map(_ => 25);
   const fcCeiling = traj.map(_ => 44);
   // Shot markers (baseline) — small triangles
@@ -1254,7 +1254,7 @@ const REPORT_DATA = {"phases": [{"name": "Early Flower / Generative", "key": "st
         {label:'With full audit pack applied', data: auditSeries, borderColor: olive, backgroundColor: olive + '20', tension: 0.25, fill:false, borderWidth: 2.5, borderDash: [5, 4], pointRadius: 2},
         {label:'Measured FC ceiling (44%)', data: fcCeiling, borderColor: inkMuted, borderDash: [2, 4], pointRadius: 0, borderWidth: 1, fill: false},
         {label:'minVwc panic floor (25%)', data: minVwcCurrent, borderColor: bad, borderDash: [2, 4], pointRadius: 0, borderWidth: 1, fill: false},
-        {label:'Generative goal trough (~17.6%)', data: goalSeries, borderColor: appBlue, borderDash: [4, 6], pointRadius: 0, borderWidth: 1, fill: false},
+        {label:'Deep-generative reference trough (~17.6% VWC) — Michael target TBC', data: goalSeries, borderColor: appBlue, borderDash: [4, 6], pointRadius: 0, borderWidth: 1, fill: false},
         {label:'AUTOMAIT shot (predicted)', data: shotMarkers, borderColor: lime, backgroundColor: lime, pointRadius: 6, pointStyle: 'triangle', showLine: false}
       ]
     },
