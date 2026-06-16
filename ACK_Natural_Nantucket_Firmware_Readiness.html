@@ -50,61 +50,59 @@ table{width:100%;border-collapse:collapse}
 .mix{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
 .mix .m{background:var(--row);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center}
 .mix .mn{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
-.mix .ml{font-size:11px;color:var(--sub)}</style><!-- aroya-mobile-qa-v1 -->
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-<style id="aroya-mobile-qa">
-/* AROYA Mobile QA — universal iPhone-safe block. v1 2026-06-15 */
+.mix .ml{font-size:11px;color:var(--sub)}</style>
+<!-- aroya-mobile-qa-v2 --><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style id="aroya-mobile-qa">/* AROYA Mobile QA v2 2026-06-16. Proper design replacing v1 brute-force compression. Word-boundary wrapping (no mid-word breaks), auto-fit grids (no forced 1fr), nowrap pills/numerics, wrapped tables scroll inside their container, 16px body floor. */
 html { -webkit-text-size-adjust: 100%; }
 @media (max-width: 768px) {
   html, body { max-width: 100vw; overflow-x: hidden; }
-  body, main, .container, .wrap, .page, .report { padding-left: 12px !important; padding-right: 12px !important; }
-  /* Fluid media */
+  body { font-size: 16px; line-height: 1.55; }
+  body, main, .container, .wrap, .page, .report, .content { padding-left: 16px !important; padding-right: 16px !important; box-sizing: border-box; }
   img, svg, video, canvas { max-width: 100%; height: auto; }
-  /* Tables: contain horizontal scroll inside their cell, not the page */
-  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table.kpi, table.meta, table.kpi-strip { display: table; width: 100%; }
-  /* Pre/code overflow */
-  pre, code { max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
-  /* Long unbroken strings (UUIDs, hashes, long URLs) */
-  td, th, p, li, dd, dt, a, span, div.cell { overflow-wrap: anywhere; word-break: break-word; }
-  /* Mermaid + wide SVG: shrink to fit */
-  .mermaid svg, svg.mermaid, [class*="mermaid"] svg { max-width: 100% !important; height: auto !important; }
-  /* Collapse the AROYA 8-cell meta grid + KPI strips */
-  .meta, .meta-grid, .kpi-grid, .kpi-strip, .kpis, .kpi-row,
-  .grid, .grid-4, .grid-3, .grid-2,
-  .cards, .card-grid, .kpi-cards, .summary-grid,
-  .row, .stat-row, .stats, .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    flex-wrap: wrap !important;
-  }
-  /* Individual KPI cards inside a flexed strip */
-  .kpi, .kpi-card, .stat, .stat-card, .summary-card, .card {
-    min-width: 0 !important;
-    flex: 1 1 calc(50% - 8px) !important;
-    max-width: 100% !important;
-  }
-  /* Tab bars / chips */
-  .tabs, .tab-bar, .chips, .room-chips { flex-wrap: wrap !important; }
-  /* Tighten heavy headings */
-  h1 { font-size: clamp(1.4rem, 6vw, 2rem) !important; }
-  h2 { font-size: clamp(1.15rem, 5vw, 1.5rem) !important; }
-  /* Body font floor */
-  body { font-size: max(15px, 0.95rem); }
-  /* Touch targets — links inside KPI/tabs/buttons */
-  .tab, .tab-button, .chip, button, .btn, .room-chip, .lang-toggle { min-height: 44px; }
-  /* Sticky elements should not crowd viewport */
-  .sticky, [class*="sticky"], header.sticky, .nav-sticky { position: relative !important; }
+  h1 { font-size: clamp(1.5rem, 6vw, 2.1rem) !important; line-height: 1.2 !important; }
+  h2 { font-size: clamp(1.2rem, 4.8vw, 1.55rem) !important; line-height: 1.25 !important; }
+  h3 { font-size: clamp(1.05rem, 4vw, 1.25rem) !important; }
+  p, li, dd, dt { font-size: 15px; line-height: 1.55; }
+  p, li, dd, dt, td, th, .verdict p, .verdict li, .lead, .sub, .pagehead-eyebrow, .v-head, blockquote, figcaption, caption { overflow-wrap: break-word !important; word-break: normal !important; hyphens: manual; }
+  code, pre, .serial, .uuid, .long-id, .url, .hash, .device-serial, .api-token, kbd, samp, a[href*="http"]:not(.btn):not(.lang-btn):not(.theme-btn):not(.lang-toggle) { overflow-wrap: anywhere !important; word-break: break-word !important; }
+  .pill, .badge, .phase, .chip, .room-chip, .tag, .label-pill, .status-pill, .lang-btn, .theme-btn, .lang-toggle { white-space: nowrap !important; word-break: keep-all !important; overflow-wrap: normal !important; display: inline-block; }
+  .table-scroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 0 12px; }
+  .table-scroll table { display: table; width: max-content; max-width: none; border-collapse: collapse; }
+  table.kpi, table.meta, table.kpi-strip, table.summary-only, table.no-scroll, table.no-scroll-wrap { width: 100% !important; max-width: 100% !important; }
+  table td, table th { word-break: keep-all !important; overflow-wrap: break-word !important; hyphens: manual; }
+  table th { white-space: nowrap; }
+  table td.num, table th.num, td.numeric, th.numeric, td[align="right"] { white-space: nowrap !important; text-align: right; font-variant-numeric: tabular-nums; }
+  table.bp-table td:first-child, table.compact td:first-child, table.device-table td:first-child { white-space: nowrap; }
+  pre, code { max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-break: normal; }
+  pre code, .codeblock { overflow-wrap: anywhere; }
+  .mermaid, [class*="mermaid"] { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .mermaid svg, svg.mermaid, [class*="mermaid"] svg { max-width: none !important; height: auto !important; }
+  .meta, .meta-grid { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important; gap: 10px !important; }
+  .kpis, .kpi-grid, .kpi-strip, .kpi-row, .kpi-cards { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)) !important; gap: 12px !important; }
+  .summary-grid, .stats-grid, .stats { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important; gap: 10px !important; }
+  .cards, .card-grid, .tile-grid { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important; gap: 14px !important; }
+  .grid, .grid-2, .grid-3, .grid-4 { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important; gap: 12px !important; }
+  .row.kpi-row, .row.stat-row, .stat-row { flex-wrap: wrap !important; gap: 12px; }
+  .kpi, .kpi-card, .stat, .stat-card, .summary-card, .card { min-width: 0 !important; box-sizing: border-box; }
+  .kpi, .kpi-card, .stat-card, .summary-card { padding: 14px 12px !important; }
+  .kpi .val, .kpi-card .val, .stat-card .val, .kpi-value, .stat-value { font-size: clamp(1.5rem, 6vw, 2rem) !important; line-height: 1.1 !important; }
+  .kpi .label, .kpi-card .label, .kpi-label, .stat-label { font-size: 11px !important; letter-spacing: 0.05em; }
+  .kpi .delta, .kpi-card .delta, .kpi-sub, .stat-sub { font-size: 11px !important; line-height: 1.4 !important; }
+  .tabs, .tab-bar, .chips, .room-chips, .controls, .filter-bar { flex-wrap: wrap !important; gap: 8px !important; }
+  .tab, .tab-button, .chip, button, .btn, .room-chip, .lang-btn, .theme-btn { min-height: 36px; padding-top: 8px; padding-bottom: 8px; }
+  .masthead-inner, .lockup, .controls { gap: 8px !important; }
+  .lockup .aroya-wordmark, .aroya-wordmark { height: 26px !important; width: auto !important; }
+  .lockup-byline { font-size: 11px !important; }
+  .meta span, .meta-grid > * { min-width: 0; padding: 8px 10px; font-size: 13px; line-height: 1.4; }
+  .meta b, .meta-grid b { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; opacity: 0.7; }
+  .verdict, .lead, .callout, .alert-box { padding: 14px 14px !important; }
+  .nav-sticky.sticky-overflow, .sidebar-nav.fixed-mobile, .sticky-mobile-off { position: relative !important; }
+  .compare-2col, .two-col, .split-2 { display: block !important; }
+  .compare-2col > *, .two-col > *, .split-2 > * { width: 100% !important; }
 }
-@media (max-width: 480px) {
-  .meta, .meta-grid, .kpi-grid, .kpi-strip, .kpis, .kpi-row,
-  .grid-4, .grid-3, .cards, .card-grid, .kpi-cards, .summary-grid,
-  .stats-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .kpi, .kpi-card, .stat, .stat-card, .summary-card, .card { flex: 1 1 100% !important; }
-}
-</style>
-</head><body><div class="wrap">
+@media (max-width: 380px) {
+  body, main, .container, .wrap, .page, .report, .content { padding-left: 14px !important; padding-right: 14px !important; }
+  h1 { font-size: 1.45rem !important; }
+}</style><script id="aroya-mobile-qa-js">(function(){function wrap(){var ts=document.querySelectorAll('table');for(var i=0;i<ts.length;i++){var t=ts[i];if(!t.parentElement)continue;if(t.parentElement.classList.contains('table-scroll'))continue;if(t.classList.contains('no-scroll-wrap'))continue;if(t.classList.contains('kpi-strip')||t.classList.contains('summary-only'))continue;var w=document.createElement('div');w.className='table-scroll';t.parentNode.insertBefore(w,t);w.appendChild(t);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',wrap);}else{wrap();}})();</script></head><body><div class="wrap">
 
 <div class="brandbar" style="margin:0 0 14px"><svg fill="currentColor" height="40" role="img" aria-label="AROYA by Addium" version="1.1" viewBox="0 0 202.1 75" id="brand" xmlns="http://www.w3.org/2000/svg">
 <path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/>
