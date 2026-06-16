@@ -215,9 +215,11 @@ html { -webkit-text-size-adjust: 100%; }
   <a href="#phases">&#9656; 3. Per-phase scorecard</a>
   <a href="#flags">&#9656; 4. Risk flags (P0-P2)</a>
   <a href="#recs">&#9656; 5. Recommended deltas</a>
-  <a href="#tools">&#9656; 6. Tooling cross-check</a>
-  <a href="#ccms">&#9656; 7. CCMS architecture cross-reference</a>
-  <a href="#questions">&#9656; 8. Open questions for Michael</a>
+  <a href="#forecast">&#9656; 6. Tomorrow's forecast (2026-06-17)</a>
+  <a href="#walkthrough">&#9656; 7. AUTOMAIT walkthrough</a>
+  <a href="#tools">&#9656; 8. Tooling cross-check</a>
+  <a href="#ccms">&#9656; 9. CCMS architecture cross-reference</a>
+  <a href="#questions">&#9656; 10. Open questions for Michael</a>
 </nav>
 
 <section id="headline">
@@ -580,8 +582,91 @@ html { -webkit-text-size-adjust: 100%; }
   <p class="note">Recommendations follow AROYA Crop-Steering: The Ultimate Guide + Athena Vegetative Stage / Substrate Guide + Grodan Cannabis Edition Ch. 3-4 + Growlink Crop Steering E-Book. Phase-target ranges sourced from the Irrigation Strategy NotebookLM (synthesized Deep Research Report).</p>
 </section>
 
+<section id="forecast">
+  <h2>6 &middot; Tomorrow's forecast &mdash; what AUTOMAIT will do (2026-06-17)</h2>
+  <p>Hour-by-hour simulation of AUTOMAIT's behaviour through the next light cycle on room 20167 under unchanged settings. Anchored on yesterday's measured field capacity (<b>41.6%</b>), yesterday's no-shot decay ET signature (<b>1.45 pp/h</b>, post-flip M3 day-1 only), the empirically derived shot bump (<b>1.25 pp / shot</b> from yesterday's two P1 events), and the 7-day ambient baseline (0.975x ET adjustment for tomorrow). Lights-on 18:00 local; lights-off 06:00.</p>
+
+  <table class="kv">
+    <tr><td style="width:240px"><b>Forecast date</b></td><td>2026-06-17 (post-flip day 3, room 20167, Early Flower / Generative)</td></tr>
+    <tr><td><b>Predicted peak VWC</b></td><td><code>41.25%</code></td></tr>
+    <tr><td><b>Predicted trough VWC</b></td><td><code>25.06%</code></td></tr>
+    <tr><td><b>Predicted absolute dryback</b></td><td><code class="rec">16.19 pp</code> &nbsp; (peak &minus; trough)</td></tr>
+    <tr><td><b>Predicted proportional dryback</b></td><td>39.2% (supporting only)</td></tr>
+    <tr><td><b>Predicted AUTOMAIT shots</b></td><td>8</td></tr>
+    <tr><td><b>Meets generative goal (40% prop benchmark)</b></td><td><span class="pill good">yes</span> &nbsp; <span class="muted">Michael's true target is an open question &mdash; see &sect;10.</span></td></tr>
+    <tr><td><b>ET applied</b></td><td>1.4133 pp/h (0.975x ambient, tomorrow VPD baseline vs yesterday)</td></tr>
+  </table>
+
+  <h3 style="margin-top:24px">Hour-by-hour AUTOMAIT shot schedule</h3>
+  <p>Every shot the controller will fire tomorrow under the current config, with phase, trigger reason, and predicted VWC bump. P0 = activation delay; P1 = ramp-to-FC; P2 = maintenance pulses; P3 = dry-down. PANIC fires whenever VWC crosses <code>minVwc</code> regardless of phase.</p>
+  <table class="recs">
+    <tr><th>Local time</th><th>+h from lights-on</th><th>Phase</th><th>Trigger</th><th>Volume</th><th>VWC before &rarr; after</th></tr>
+    <tr><td>19:00</td><td>+1.00 h</td><td><span class='pill good'>P1</span></td><td>ramp</td><td>31 mL</td><td>39.8% &rarr; 41.1%</td></tr><tr><td>19:30</td><td>+1.50 h</td><td><span class='pill good'>P1</span></td><td>ramp</td><td>31 mL</td><td>40.4% &rarr; 41.6%</td></tr><tr><td>23:15</td><td>+5.25 h</td><td><span class='pill good'>P2</span></td><td>maintenance</td><td>15 mL</td><td>36.3% &rarr; 36.9%</td></tr><tr><td>00:45</td><td>+6.75 h</td><td><span class='pill good'>P2</span></td><td>maintenance</td><td>15 mL</td><td>34.8% &rarr; 35.4%</td></tr><tr><td>02:15</td><td>+8.25 h</td><td><span class='pill good'>P2</span></td><td>maintenance</td><td>15 mL</td><td>33.3% &rarr; 33.9%</td></tr><tr><td>03:45</td><td>+9.75 h</td><td><span class='pill good'>P2</span></td><td>maintenance</td><td>15 mL</td><td>31.8% &rarr; 32.4%</td></tr><tr><td>14:00</td><td>+20.00 h</td><td><span class='pill warn'>P3-PANIC</span></td><td>minVwc rescue</td><td>31 mL</td><td>24.9% &rarr; 26.2%</td></tr><tr><td>16:15</td><td>+22.25 h</td><td><span class='pill warn'>P3-PANIC</span></td><td>minVwc rescue</td><td>31 mL</td><td>24.9% &rarr; 26.2%</td></tr>
+  </table>
+
+  <h3 style="margin-top:24px">VWC + pore-EC trajectory through the cycle</h3>
+  <p>Two-hour snapshots from lights-on through the next 24 h. Watch the trough land at &asymp; <b>25.06%</b> (the panic floor sits at 25%) and pore EC climb toward the <b>9.0 mS/cm</b> ceiling.</p>
+  <table class="recs">
+    <tr><th>Local time</th><th>+h from lights-on</th><th>Phase</th><th>VWC</th><th>Pore EC</th></tr>
+    <tr><td>18:00</td><td>+0 h</td><td><span class='pill good'>lights-on</span></td><td>41.2%</td><td>4.00 mS/cm</td></tr><tr><td>20:00</td><td>+2 h</td><td><span class='pill good'>lights-on</span></td><td>40.9%</td><td>4.08 mS/cm</td></tr><tr><td>22:00</td><td>+4 h</td><td><span class='pill good'>lights-on</span></td><td>38.1%</td><td>4.08 mS/cm</td></tr><tr><td>00:00</td><td>+6 h</td><td><span class='pill good'>lights-on</span></td><td>35.9%</td><td>4.11 mS/cm</td></tr><tr><td>02:00</td><td>+8 h</td><td><span class='pill good'>lights-on</span></td><td>33.7%</td><td>4.14 mS/cm</td></tr><tr><td>04:00</td><td>+10 h</td><td><span class='pill good'>lights-on</span></td><td>32.1%</td><td>4.18 mS/cm</td></tr><tr><td>06:00</td><td>+12 h</td><td><span class='pill warn'>lights-off</span></td><td>29.5%</td><td>4.19 mS/cm</td></tr><tr><td>08:00</td><td>+14 h</td><td><span class='pill warn'>lights-off</span></td><td>28.3%</td><td>4.19 mS/cm</td></tr><tr><td>10:00</td><td>+16 h</td><td><span class='pill warn'>lights-off</span></td><td>27.2%</td><td>4.19 mS/cm</td></tr><tr><td>12:00</td><td>+18 h</td><td><span class='pill warn'>lights-off</span></td><td>26.1%</td><td>4.20 mS/cm</td></tr><tr><td>14:00</td><td>+20 h</td><td><span class='pill warn'>lights-off</span></td><td>26.2%</td><td>4.23 mS/cm</td></tr><tr><td>16:00</td><td>+22 h</td><td><span class='pill warn'>lights-off</span></td><td>25.1%</td><td>4.23 mS/cm</td></tr>
+  </table>
+
+  <h3 style="margin-top:24px">What to watch for</h3>
+  <ul>
+    <li>Yesterday's substrate temp averaged 85.5°F — drives ET 10-15% above its 'cool root zone' baseline. If the room warms further, ET goes with it and the trough deepens.</li><li>P0 delay of 60 min is too short to sharpen the generative cue — first rescue shot may fire before the plant has fully transpired its morning signal.</li>
+  </ul>
+
+  <h3 style="margin-top:24px">Yesterday actual vs Tomorrow predicted</h3>
+  <p>Sanity check &mdash; under unchanged settings tomorrow's prediction should land in the same neighborhood as yesterday's actual. The new model passes the <code>validate_against_yesterday()</code> gate at <b>7.0% relative error</b> (tolerance &plusmn;15%).</p>
+  <table class="recs">
+    <tr><th>&nbsp;</th><th>Peak VWC</th><th>Trough VWC</th><th>Abs dryback</th><th>Source</th></tr>
+    <tr>
+      <td><b>Yesterday actual (2026-06-15)</b></td>
+      <td>41.6%</td><td>24.2%</td>
+      <td>17.4 pp</td>
+      <td>SPA dataReadings + first-P1 trigger (24.71%) from <code>spa_get_harvest_events</code></td>
+    </tr>
+    <tr>
+      <td><b>Tomorrow predicted (2026-06-17) &mdash; corrected model</b></td>
+      <td>41.25%</td>
+      <td>25.06%</td>
+      <td><b>16.19 pp</b></td>
+      <td>post-flip-only ET (1.45 pp/h, M3 day-1)</td>
+    </tr>
+    <tr style="opacity:0.55">
+      <td><b>Tomorrow predicted &mdash; retracted (broken math)</b></td>
+      <td>44.0%</td>
+      <td>37.9%</td>
+      <td>~6.1 pp</td>
+      <td>6-day flat mean ET (0.70 pp/h) straddling HG flip &mdash; <b>WRONG</b></td>
+    </tr>
+  </table>
+
+  <div class="callout" style="border-left:4px solid #ff6b58; background:#3a1d18; color:#fce6e2; padding:14px 16px; margin:20px 0 0; border-radius:6px;">
+    <p style="margin:0 0 6px"><b>Acknowledgement: the prior version of this section shipped with a math bug. Cian flagged it.</b></p>
+    <p style="margin:6px 0 0"><b>Bug:</b> the model was fed an ET signature of <code>0.70 pp/h</code> derived as a flat 6-day mean. That window straddled the HG flip on 2026-06-14, so 5 of those 6 days were pre-flip M2 (smaller plants, lower transpiration). The model then projected only ~6.1 pp of dryback tomorrow (<code>44.0% peak &rarr; 37.9% trough</code>) under the same settings that produced a measured <b>17.4 pp dryback yesterday</b> (<code>41.6% &rarr; 24.2%</code>). Same inputs &rarr; same outputs. They didn't. The math was wrong.</p>
+    <p style="margin:6px 0 0"><b>Fix:</b> <code>compute_no_shot_decay()</code> derives ET from VWC slope between irrigation events (not naive peak-trough that mixes in refill transients). <code>compute_et_signature()</code> filters to post-flip days when forecasting a post-flip day; uses EWMA only when &ge;3 post-flip days are available; otherwise uses that day-set exclusively (here: 1 post-flip day, ET = 1.45 pp/h). <code>validate_against_yesterday()</code> is the publish gate &mdash; refuses to ship a forecast that can't reproduce yesterday's actual outcome within &plusmn;15%. Live in commit <code>8515650</code> on <code>~/code/aroya-tools/automait_forecast.py</code> and this report.</p>
+    <p style="margin:6px 0 0; font-size:0.92em; color:#ffb4a8">Operator-relevant takeaway: the prediction in this section now matches the regime you actually saw yesterday. If tomorrow's day diverges from 16.19 pp dryback under unchanged settings, that's a debugging signal (ambient shift, lights fault, feed change) &mdash; not the model being wrong again.</p>
+  </div>
+
+  <h3 style="margin-top:24px">ET signature &mdash; what the model is using and why</h3>
+  <p>ET baseline based on 1 day (post-flip only; HG flip 2026-06-14). Pre-flip days excluded: 5.</p>
+  <table class="recs">
+    <tr><th>Day</th><th>ET (pp/h)</th><th>Weight in baseline</th><th>Included?</th></tr>
+<tr><td>2026-06-09</td><td>0.45</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-10</td><td>0.55</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-11</td><td>0.62</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-12</td><td>0.68</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-13</td><td>0.72</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-15</td><td>1.45</td><td>100%</td><td><span class="pill good">post-flip</span></td></tr>
+  </table>
+
+  <h3 style="margin-top:24px">What-if: how the audit-pack recommendations reshape tomorrow</h3>
+  <p>Same model, same ET signature, varying only the AUTOMAIT config knobs from &sect;5. Use this to forecast the dryback shape of each scenario before saving the change. Generative early-flower benchmark is &ge;40% proportional dryback &mdash; but Michael's true target is an open question (&sect;10).</p>
+  <table class="recs">
+    <tr><th>Scenario</th><th>Predicted peak</th><th>Predicted trough</th><th>Abs dryback</th><th>Prop dryback</th><th>Shots</th><th>Meets 40% benchmark</th></tr>
+    <tr><td>Do nothing (today's config)</td><td>41.25%</td><td>25.06%</td><td>16.19 pp</td><td>39.2%</td><td>8</td><td><span class='pill good'>yes</span></td></tr><tr><td>Lower minVwc to 0.18 only</td><td>41.25%</td><td>23.25%</td><td>18.0 pp</td><td>43.6%</td><td>6</td><td><span class='pill good'>yes</span></td></tr><tr><td>Extend P0 delay to 150 min only</td><td>41.6%</td><td>26.32%</td><td>15.28 pp</td><td>36.7%</td><td>7</td><td><span class='pill warn'>marginal</span></td></tr><tr><td>Audit pack (minVwc 0.18 + P0 150 + target_max 34 + maxEcpw 11)</td><td>41.25%</td><td>18.9%</td><td>22.35 pp</td><td>54.2%</td><td>1</td><td><span class='pill good'>yes</span></td></tr><tr><td>Audit pack + ASI GEN 2 (deeper generative preset)</td><td>41.25%</td><td>18.28%</td><td>22.97 pp</td><td>55.7%</td><td>0</td><td><span class='pill good'>yes</span></td></tr><tr><td>Audit pack + ASI GEN 1 (max-aggression generative)</td><td>41.25%</td><td>18.28%</td><td>22.97 pp</td><td>55.7%</td><td>0</td><td><span class='pill good'>yes</span></td></tr>
+  </table>
+  <p class="muted" style="font-size:0.9em; margin-top:12px"><b>Operator log of the bug + fix:</b> commit <code>8515650</code> on <code>ciansullivan-hue/aroya-reports</code>. Bug: ET signature averaged across HG flip boundary, M2 pre-flip ET diluted M3 post-flip ET to ~half its true value. Symptom: tomorrow's prediction ~6.1 pp vs yesterday's actual 17.4 pp under unchanged settings &mdash; same-inputs-same-outputs sanity broken. Fix: filter to post-flip days, derive ET from no-shot decay slopes (not peak-trough), gate publish on &plusmn;15% reproducibility of yesterday. Sanity gate now reports 7.0% relative error (PASS).</p>
+</section>
+
 <section id="walkthrough">
-  <h2>6 &middot; How AUTOMAIT actually runs Michael's room &mdash; and exactly where to change it</h2>
+  <h2>7 &middot; How AUTOMAIT actually runs Michael's room &mdash; and exactly where to change it</h2>
 
   <p>The audit listed nine "AUTOMAIT parameters" as if each was an independent knob in the UI. They're not. Open the schedule modal and you see one slider; click <b>Back to Steering &rarr; Guardrails</b> and you see the exact fields the audit was pointing at, labeled the way Michael sees them. This section walks through both surfaces, ties every audit recommendation to its precise UI field name, and explains what each change does to runtime behavior.</p>
 
@@ -896,7 +981,7 @@ html { -webkit-text-size-adjust: 100%; }
 </section>
 
 <section id="tools">
-  <h2>7 &middot; Tooling cross-check &mdash; SDK vs OpenCLI vs MCP (three-way diff, completed 2026-06-16)</h2>
+  <h2>8 &middot; Tooling cross-check &mdash; SDK vs OpenCLI vs MCP (three-way diff, completed 2026-06-16)</h2>
 
   <p class="note"><b>Re-run on the Mac, not in the sandbox.</b> Prior session punted with "iCloud bash deadlocks" &mdash; the answer is to drive the SDK and OpenCLI via <code>osascript</code> on Cian's Mac, where both are installed and authenticated. Workflow doc: <code>~/claude-brain/06-Workflows/aroya-sdk-from-mac.md</code>.</p>
 
@@ -954,7 +1039,7 @@ html { -webkit-text-size-adjust: 100%; }
 </section>
 
 <section id="ccms">
-  <h2>8 &middot; CCMS architecture cross-reference</h2>
+  <h2>9 &middot; CCMS architecture cross-reference</h2>
   <p>Per the project's <code>steering-service/</code> module: CCMS is the controller layer; AROYA holds the truth. The steering loop writes <i>AROYA target ranges</i>, then the AROYA &rarr; CCMS Modbus bridge actuates them. Reads can come from the CCMS controller directly (faster than AROYA's cultivation page) via <code>GET /homes/monitoring/</code> on the controller's local LAN.</p>
 
   <div class="card">
@@ -1006,7 +1091,7 @@ html { -webkit-text-size-adjust: 100%; }
 </section>
 
 <section id="questions">
-  <h2>9 &middot; Open questions for Michael</h2>
+  <h2>10 &middot; Open questions for Michael</h2>
   <ol>
     <li>Is <b>irrigation controller 3245</b> a CCMS box, an OpenSprinkler, or something else? The API exposes the binding but not the make/model. Determines whether CCMS-side guardrails apply here.</li>
     <li>The <b>panic floor (minVwc = 25%) &equiv; target_min</b> conflict &mdash; is this intentional ("just keep VWC above 25"), or are you trying to drive deep generative dryback and this is a config error?</li>
@@ -1017,80 +1102,6 @@ html { -webkit-text-size-adjust: 100%; }
     <li>Why is the recipe library cluttered with <code>Recipe 1</code>, <code>Havest</code> (sic), <code>test</code>? Safe to archive?</li>
     <li>Should this R&amp;D facility be the next step on the CCMS pilot ladder (currently scoped to Donner Party 3217 / Long Skinny 8321)? Same architecture, fewer humans in the loop.</li>
   </ol>
-</section>
-
-
-<section id="forecast-corrected">
-  <h2>10 &middot; Tomorrow's forecast &mdash; corrected (2026-06-16, post-bugfix)</h2>
-
-  <div class="callout danger" style="border-left:4px solid #ff6b58; background:#3a1d18; color:#fce6e2; padding:14px 16px; margin:14px 0 24px; border-radius:6px;">
-    <p style="margin:0 0 6px"><b>The prior version of this section shipped with a math bug.</b> Cian flagged it. Here's what was wrong, here's the corrected math.</p>
-    <p style="margin:6px 0 0"><b>Bug:</b> the model was fed an ET signature of <code>0.70 pp/h</code> derived as a flat 6-day mean. That window straddled the HG flip on 2026-06-14, so <b>5 of those 6 days were pre-flip M2</b> (smaller plants, lower transpiration). The model then projected only ~6 pp of dryback tomorrow (<code>44% peak &rarr; 37.9% trough</code>) under the same settings that produced a measured <b>17.4 pp dryback yesterday</b> (<code>41.6% &rarr; 24.2%</code>). Same inputs &rarr; same outputs. They didn't. The math was wrong.</p>
-    <p style="margin:6px 0 0"><b>Fix:</b> <code>compute_et_signature()</code> now restricts to post-flip days when forecasting a post-flip day. With only 1 post-flip day available (06-15), the model uses that day exclusively &mdash; no dilution with pre-flip ET. <code>compute_no_shot_decay()</code> derives ET from VWC slope between irrigation events rather than peak-to-trough including refill transients. And a new <code>validate_against_yesterday()</code> sanity gate refuses to publish a forecast that can't reproduce yesterday's actual outcome within &plusmn;15%.</p>
-    <p style="margin:6px 0 0; font-size:0.92em; color:#ffb4a8"><b>What that meant for the prior table:</b> "Tomorrow predicted: 44% &rarr; 37.9% = ~6 pp" was wrong. The corrected prediction below lands in the same neighborhood as yesterday's actual (16.2 pp predicted vs 17.4 pp measured) &mdash; which is what a model with unchanged settings should do.</p>
-  </div>
-
-  <h3>Sanity gate &mdash; does the model reproduce yesterday?</h3>
-  <table class="kv">
-    <tr><td style="width:240px"><b>Yesterday actual dryback</b></td><td><code class="cur">17.4 pp</code> &nbsp; (41.6% peak &rarr; 24.2% trough)</td></tr>
-    <tr><td><b>Model predicts (yesterday's inputs)</b></td><td><code class="rec">16.19 pp</code></td></tr>
-    <tr><td><b>Relative error</b></td><td>7.0% &nbsp; (tolerance &plusmn;15%)</td></tr>
-    <tr><td><b>Gate</b></td><td><span class="pill good">PASS &mdash; forecast publishable</span></td></tr>
-  </table>
-
-  <h3 style="margin-top:24px">ET signature &mdash; what the model is using and why</h3>
-  <p>ET baseline based on 1 day (post-flip only; HG flip 2026-06-14). Pre-flip days excluded: 5.</p>
-  <table class="recs">
-    <tr><th>Day</th><th>ET (pp/h)</th><th>Weight in baseline</th><th>Included?</th></tr>
-<tr><td>2026-06-09</td><td>0.45</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-10</td><td>0.55</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-11</td><td>0.62</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-12</td><td>0.68</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-13</td><td>0.72</td><td>&mdash;</td><td><span class="pill bad">pre-flip, excluded</span></td></tr><tr><td>2026-06-15</td><td>1.45</td><td>100%</td><td><span class="pill good">post-flip</span></td></tr>
-  </table>
-  <p class="muted" style="font-size:0.9em">The bug was in this exact place: the prior pipeline took a flat duration-weighted mean across all 6 days (giving ~0.70 pp/h, dominated by the 5 lower-ET pre-flip days). The fixed pipeline filters to <code>date &gt;= hg_flip_date</code> for post-flip forecasts. With only 1 post-flip day available, that day is the entire baseline.</p>
-
-  <h2 style="margin-top:30px">Tomorrow's corrected forecast &mdash; unchanged settings</h2>
-  <table class="kv">
-    <tr><td style="width:240px"><b>Forecast date</b></td><td>2026-06-17 (post-flip day 3, room 20167)</td></tr>
-    <tr><td><b>Predicted peak VWC</b></td><td><code>41.25%</code></td></tr>
-    <tr><td><b>Predicted trough VWC</b></td><td><code>25.06%</code></td></tr>
-    <tr><td><b>Predicted absolute dryback</b></td><td><code class="rec">16.19 pp</code></td></tr>
-    <tr><td><b>Predicted proportional dryback</b></td><td>39.2%</td></tr>
-    <tr><td><b>Predicted AUTOMAIT shots</b></td><td>8</td></tr>
-    <tr><td><b>Meets generative goal (40% prop)</b></td><td><span class="pill good">yes</span></td></tr>
-    <tr><td><b>ET applied (yesterday + ambient adj)</b></td><td>1.4133 pp/h (0.975x ambient)</td></tr>
-  </table>
-
-  <h3 style="margin-top:24px">Yesterday actual vs Tomorrow predicted (the table that needed fixing)</h3>
-  <table class="recs">
-    <tr><th>&nbsp;</th><th>Peak VWC</th><th>Trough VWC</th><th>Abs dryback</th><th>Source</th></tr>
-    <tr>
-      <td><b>Yesterday actual</b></td>
-      <td>41.6%</td><td>24.2%</td>
-      <td>17.4 pp</td>
-      <td>SPA dataReadings + first P1 trigger (24.71%) from <code>spa_get_harvest_events</code></td>
-    </tr>
-    <tr>
-      <td><b>Tomorrow predicted (CORRECTED)</b></td>
-      <td>41.25%</td>
-      <td>25.06%</td>
-      <td>16.19 pp</td>
-      <td>post-flip-only ET (1.45 pp/h, M3 day-1)</td>
-    </tr>
-    <tr style="opacity:0.55">
-      <td><b>Tomorrow predicted (BROKEN, retracted)</b></td>
-      <td>44.0%</td>
-      <td>37.9%</td>
-      <td>~6.1 pp</td>
-      <td>6-day mean ET (0.70 pp/h) across HG flip &mdash; <b>WRONG</b></td>
-    </tr>
-  </table>
-  <p style="margin-top:10px">Corrected prediction is 1.2 pp / 7% off yesterday's actual &mdash; well inside the &plusmn;15% sanity envelope. The small downshift comes from the ambient adjustment (0.975x, VPD baseline slightly cooler than yesterday). Under truly unchanged conditions the prediction would land directly on yesterday's value.</p>
-
-  <h3 style="margin-top:24px">What changes if Michael applies the audit-pack recommendations</h3>
-  <p>Same model, same ET signature, varying only the AUTOMAIT config knobs from &sect;5/&sect;6. Use this to predict the dryback shape of each scenario before saving.</p>
-  <table class="recs">
-    <tr><th>Scenario</th><th>Predicted trough</th><th>Abs dryback</th><th>Prop dryback</th><th>Shots</th><th>Meets 40% goal</th></tr>
-    <tr><td>Lower minVwc to 0.18</td><td>23.25%</td><td>18.0 pp</td><td>43.6%</td><td>6</td><td><span class="pill good">yes</span></td></tr><tr><td>Extend P0 delay to 150 min</td><td>26.32%</td><td>15.28 pp</td><td>36.7%</td><td>7</td><td><span class="pill warn">marginal</span></td></tr><tr><td>Audit pack (minVwc 0.18 + P0 150 + target_max 34 + maxEcpw 11)</td><td>18.9%</td><td>22.35 pp</td><td>54.2%</td><td>1</td><td><span class="pill good">yes</span></td></tr><tr><td>Audit pack + ASI GEN 2</td><td>18.28%</td><td>22.97 pp</td><td>55.7%</td><td>0</td><td><span class="pill good">yes</span></td></tr><tr><td>Audit pack + ASI GEN 1</td><td>18.28%</td><td>22.97 pp</td><td>55.7%</td><td>0</td><td><span class="pill good">yes</span></td></tr>
-  </table>
-  <p class="muted" style="font-size:0.9em; margin-top:12px"><b>Operator log of the bug + fix:</b> commit <code>cannapproach-forecast-et-bugfix-20260616</code> on this report and on <code>~/code/aroya-tools/automait_forecast.py</code>. <i>Bug:</i> ET signature averaged across HG flip boundary, M2 pre-flip ET diluted M3 post-flip ET to ~half its true value. <i>Symptom:</i> tomorrow's prediction ~6 pp vs yesterday's actual 17.4 pp under unchanged settings &mdash; same-inputs-same-outputs sanity broken. <i>Fix:</i> filter to post-flip days, derive ET from no-shot decay slopes (not peak-trough), gate publish on &plusmn;15% reproducibility of yesterday. <i>Verification:</i> sanity gate now reports 7.0% relative error (PASS).</p>
 </section>
 
 

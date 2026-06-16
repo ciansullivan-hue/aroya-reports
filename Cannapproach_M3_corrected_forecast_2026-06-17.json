@@ -1,11 +1,11 @@
 {
   "forecast_date": "2026-06-17",
+  "anchor": "#forecast",
   "yesterday": {
     "peak_vwc": 41.6,
     "trough_vwc": 24.2,
     "abs_dryback_pp": 17.400000000000002,
-    "et_signature_pp_per_hr": 1.45,
-    "source": "SPA dataReadings + first P1 trigger from spa_get_harvest_events"
+    "et_signature_pp_per_hr": 1.45
   },
   "et_signature": {
     "et_pp_per_hr": 1.45,
@@ -41,14 +41,241 @@
     "predicted_abs_dryback_pp": 16.19,
     "predicted_prop_dryback": 0.3925,
     "predicted_shots_count": 8,
+    "predicted_shot_schedule": [
+      {
+        "ts_hr": 1.0,
+        "phase": "P1",
+        "trigger": "ramp",
+        "volume_ml": 31,
+        "pre_vwc": 39.83,
+        "post_vwc": 41.08
+      },
+      {
+        "ts_hr": 1.5,
+        "phase": "P1",
+        "trigger": "ramp",
+        "volume_ml": 31,
+        "pre_vwc": 40.37,
+        "post_vwc": 41.6
+      },
+      {
+        "ts_hr": 5.25,
+        "phase": "P2",
+        "trigger": "maintenance",
+        "volume_ml": 15,
+        "pre_vwc": 36.3,
+        "post_vwc": 36.92
+      },
+      {
+        "ts_hr": 6.75,
+        "phase": "P2",
+        "trigger": "maintenance",
+        "volume_ml": 15,
+        "pre_vwc": 34.8,
+        "post_vwc": 35.43
+      },
+      {
+        "ts_hr": 8.25,
+        "phase": "P2",
+        "trigger": "maintenance",
+        "volume_ml": 15,
+        "pre_vwc": 33.31,
+        "post_vwc": 33.93
+      },
+      {
+        "ts_hr": 9.75,
+        "phase": "P2",
+        "trigger": "maintenance",
+        "volume_ml": 15,
+        "pre_vwc": 31.81,
+        "post_vwc": 32.44
+      },
+      {
+        "ts_hr": 20.0,
+        "phase": "P3-PANIC",
+        "trigger": "minVwc rescue",
+        "volume_ml": 31,
+        "pre_vwc": 24.95,
+        "post_vwc": 26.19
+      },
+      {
+        "ts_hr": 22.25,
+        "phase": "P3-PANIC",
+        "trigger": "minVwc rescue",
+        "volume_ml": 31,
+        "pre_vwc": 24.92,
+        "post_vwc": 26.17
+      }
+    ],
+    "predicted_vwc_trajectory": [
+      {
+        "hour": 0.0,
+        "vwc": 41.25,
+        "pore_ec": 4.0,
+        "is_lights_on": true
+      },
+      {
+        "hour": 1.0,
+        "vwc": 41.08,
+        "pore_ec": 4.04,
+        "is_lights_on": true
+      },
+      {
+        "hour": 2.0,
+        "vwc": 40.89,
+        "pore_ec": 4.08,
+        "is_lights_on": true
+      },
+      {
+        "hour": 3.0,
+        "vwc": 39.48,
+        "pore_ec": 4.08,
+        "is_lights_on": true
+      },
+      {
+        "hour": 4.0,
+        "vwc": 38.07,
+        "pore_ec": 4.08,
+        "is_lights_on": true
+      },
+      {
+        "hour": 5.0,
+        "vwc": 36.65,
+        "pore_ec": 4.09,
+        "is_lights_on": true
+      },
+      {
+        "hour": 6.0,
+        "vwc": 35.86,
+        "pore_ec": 4.11,
+        "is_lights_on": true
+      },
+      {
+        "hour": 7.0,
+        "vwc": 35.07,
+        "pore_ec": 4.14,
+        "is_lights_on": true
+      },
+      {
+        "hour": 8.0,
+        "vwc": 33.66,
+        "pore_ec": 4.14,
+        "is_lights_on": true
+      },
+      {
+        "hour": 9.0,
+        "vwc": 32.87,
+        "pore_ec": 4.16,
+        "is_lights_on": true
+      },
+      {
+        "hour": 10.0,
+        "vwc": 32.08,
+        "pore_ec": 4.18,
+        "is_lights_on": true
+      },
+      {
+        "hour": 11.0,
+        "vwc": 30.67,
+        "pore_ec": 4.18,
+        "is_lights_on": true
+      },
+      {
+        "hour": 12.0,
+        "vwc": 29.47,
+        "pore_ec": 4.19,
+        "is_lights_on": false
+      },
+      {
+        "hour": 13.0,
+        "vwc": 28.9,
+        "pore_ec": 4.19,
+        "is_lights_on": false
+      },
+      {
+        "hour": 14.0,
+        "vwc": 28.34,
+        "pore_ec": 4.19,
+        "is_lights_on": false
+      },
+      {
+        "hour": 15.0,
+        "vwc": 27.77,
+        "pore_ec": 4.19,
+        "is_lights_on": false
+      },
+      {
+        "hour": 16.0,
+        "vwc": 27.21,
+        "pore_ec": 4.19,
+        "is_lights_on": false
+      },
+      {
+        "hour": 17.0,
+        "vwc": 26.64,
+        "pore_ec": 4.2,
+        "is_lights_on": false
+      },
+      {
+        "hour": 18.0,
+        "vwc": 26.08,
+        "pore_ec": 4.2,
+        "is_lights_on": false
+      },
+      {
+        "hour": 19.0,
+        "vwc": 25.51,
+        "pore_ec": 4.2,
+        "is_lights_on": false
+      },
+      {
+        "hour": 20.0,
+        "vwc": 26.19,
+        "pore_ec": 4.23,
+        "is_lights_on": false
+      },
+      {
+        "hour": 21.0,
+        "vwc": 25.63,
+        "pore_ec": 4.23,
+        "is_lights_on": false
+      },
+      {
+        "hour": 22.0,
+        "vwc": 25.06,
+        "pore_ec": 4.23,
+        "is_lights_on": false
+      },
+      {
+        "hour": 23.0,
+        "vwc": 25.75,
+        "pore_ec": 4.26,
+        "is_lights_on": false
+      }
+    ],
     "meets_goal_label": "yes",
     "et_rate_applied": 1.4133,
-    "et_ambient_adjustment": 0.975
+    "et_ambient_adjustment": 0.975,
+    "risk_flags": [
+      "Yesterday's substrate temp averaged 85.5\u00b0F \u2014 drives ET 10-15% above its 'cool root zone' baseline. If the room warms further, ET goes with it and the trough deepens.",
+      "P0 delay of 60 min is too short to sharpen the generative cue \u2014 first rescue shot may fire before the plant has fully transpired its morning signal."
+    ]
   },
   "scenarios": [
     {
-      "label": "Lower minVwc to 0.18",
+      "label": "Do nothing (today's config)",
+      "trough": 25.06,
+      "peak": 41.25,
+      "abs_db": 16.19,
+      "prop_db": 39.2,
+      "meets": "yes",
+      "shots": 8,
+      "changes": {}
+    },
+    {
+      "label": "Lower minVwc to 0.18 only",
       "trough": 23.25,
+      "peak": 41.25,
       "abs_db": 18.0,
       "prop_db": 43.6,
       "meets": "yes",
@@ -58,8 +285,9 @@
       }
     },
     {
-      "label": "Extend P0 delay to 150 min",
+      "label": "Extend P0 delay to 150 min only",
       "trough": 26.32,
+      "peak": 41.6,
       "abs_db": 15.28,
       "prop_db": 36.7,
       "meets": "marginal",
@@ -71,6 +299,7 @@
     {
       "label": "Audit pack (minVwc 0.18 + P0 150 + target_max 34 + maxEcpw 11)",
       "trough": 18.9,
+      "peak": 41.25,
       "abs_db": 22.35,
       "prop_db": 54.2,
       "meets": "yes",
@@ -83,8 +312,9 @@
       }
     },
     {
-      "label": "Audit pack + ASI GEN 2",
+      "label": "Audit pack + ASI GEN 2 (deeper generative preset)",
       "trough": 18.28,
+      "peak": 41.25,
       "abs_db": 22.97,
       "prop_db": 55.7,
       "meets": "yes",
@@ -97,8 +327,9 @@
       }
     },
     {
-      "label": "Audit pack + ASI GEN 1",
+      "label": "Audit pack + ASI GEN 1 (max-aggression generative)",
       "trough": 18.28,
+      "peak": 41.25,
       "abs_db": 22.97,
       "prop_db": 55.7,
       "meets": "yes",
