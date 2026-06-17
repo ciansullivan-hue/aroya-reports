@@ -120,6 +120,43 @@ html { -webkit-text-size-adjust: 100%; }
         header.brand { flex-direction: column; align-items: flex-start; }
         .reportmeta { text-align: left; }
     }
+
+    /* ---- Interactive trade-in selector ---- */
+    .sticky-totals { position: sticky; top: 0; z-index: 50; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin: 14px 0 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .tt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .tt-cell { display: flex; flex-direction: column; gap: 2px; }
+    .tt-cell .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .tt-cell .value { font-size: 20px; font-weight: 700; color: var(--olive); font-variant-numeric: tabular-nums; }
+    .tt-cell.net .value { color: var(--app); }
+    .tt-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border); }
+    .tt-actions button { font-size: 12px; padding: 6px 10px; border: 1px solid var(--border); background: var(--bg); color: var(--fg); border-radius: 6px; cursor: pointer; min-height: 32px; }
+    .tt-actions button:hover { background: var(--card); border-color: var(--olive); }
+    .tt-actions button.primary { background: var(--olive); color: #fff; border-color: var(--olive); }
+    .tt-actions input[type="file"] { display: none; }
+    .savebanner { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px; color: var(--muted); background: rgba(0,0,0,0.04); margin-left: auto; }
+    .savebanner.sok { color: #2f8f2a; background: #e8f6e6; }
+    .savebanner.soff { color: #c0392b; background: #fbe2e0; }
+    .savebanner.swork { color: #6b5d12; background: #fcf3cf; }
+
+    .tradein-cell { white-space: nowrap; }
+    .tradein-cell .toggle { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+    .tradein-cell .toggle input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; accent-color: var(--olive); }
+    .tradein-cell .toggle.disabled { opacity: 0.4; cursor: not-allowed; }
+    .tradein-cell .toggle.disabled input { cursor: not-allowed; }
+    .tradein-cell .rep { display: none; margin-top: 4px; font-size: 11px; gap: 8px; }
+    .tradein-cell .rep.on { display: inline-flex; }
+    .tradein-cell .rep label { display: inline-flex; align-items: center; gap: 3px; cursor: pointer; }
+    .tradein-cell .rep input[type="radio"] { width: 14px; height: 14px; margin: 0; accent-color: var(--olive); }
+    tr.row-picked td { background: rgba(141, 173, 63, 0.08) !important; }
+    tr.row-picked td.value { color: var(--app); }
+
+    @media (max-width: 768px) {
+      .sticky-totals { position: sticky; top: 0; padding: 10px 12px; }
+      .tt-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .tt-cell .value { font-size: 17px; }
+      .tradein-cell .toggle input[type="checkbox"] { width: 22px; height: 22px; }
+      .tradein-cell .rep input[type="radio"] { width: 18px; height: 18px; }
+    }
     </style>
 </head>
 <body>
@@ -155,6 +192,25 @@ html { -webkit-text-size-adjust: 100%; }
 
 <h1>Device Trade-In Evaluation — Leafy Jungle</h1>
 <p class="muted">Source request: Allison Zervopoulos (Addium) forwarding Jesse Burstein (Clean Leaf Labs) · Subject "Serial Numbers" · 2026-06-17 · attachment "Arroya Device List.xlsx" (89 serials). This report evaluates Ali's listed devices and every other device on the Leafy Jungle network against AROYA's published trade-in matrix. AUTOMAIT promo path is referenced but not priced here — this is the straight trade-in case.</p>
+
+<aside class="sticky-totals" id="ttPanel" aria-label="Trade-in selection running totals">
+  <div class="tt-grid">
+    <div class="tt-cell"><span class="label">Devices selected</span><span class="value" id="tt-count">0</span></div>
+    <div class="tt-cell"><span class="label">Replacement spend</span><span class="value" id="tt-spend">$0</span></div>
+    <div class="tt-cell"><span class="label">Trade-in credit</span><span class="value" id="tt-credit">$0</span></div>
+    <div class="tt-cell net"><span class="label">Net spend</span><span class="value" id="tt-net">$0</span></div>
+  </div>
+  <div class="tt-actions">
+    <button id="tt-sel-ali">Select all in Ali sheet (eligible)</button>
+    <button id="tt-sel-all">Select entire network (eligible)</button>
+    <button id="tt-deselect">Deselect all</button>
+    <button id="tt-export">Export JSON</button>
+    <button id="tt-import-btn">Import</button>
+    <input type="file" id="tt-import" accept="application/json">
+    <button id="tt-reset">Reset</button>
+    <span class="savebanner" id="syncState">Connecting…</span>
+  </div>
+</aside>
 
 <h2>At a glance</h2>
 <div class="meta-grid">
@@ -1872,5 +1928,296 @@ Generated 2026-06-17 by Cian Sullivan · Addium for Leafy Jungle Corp · Facilit
 </footer>
 
 </div>
+<script id="tradein-selector">
+(function(){
+  const FACILITY_ID = "2950";
+  const SYNC_URL = "https://aroya-report-sync.ciansul.workers.dev/" + FACILITY_ID + "/tradein";
+  const CACHE = "aroya_2950_tradein_v1";
+  const PRICE = {
+    single:      { msrp: 419, net: 319, discount: 100, label: "Single $319" },
+    dual:        { msrp: 608, net: 458, discount: 150, label: "Dual $458" },
+    'climate-one': { msrp: 629, net: 479, discount: 150, label: "Climate One $479" },
+    repeater:    { msrp: 267, net: 267, discount: 0,   label: "H340 Repeater $267" },
+    gateway:     { msrp: 345, net: 345, discount: 0,   label: "H220 Gateway $345" }
+  };
+  /* SEL[serial] = { picked: bool, type: 'single'|'dual'|'climate-one'|'repeater'|'gateway', ts: ms } */
+  let SEL = {};
+  /* index keyed by serial -> {row,checkbox,radioSingle,radioDual,baseType,inAli,eligible,replaceWrap} */
+  const IDX = {};
+  let syncTimer = null;
+
+  // ---------- helpers ----------
+  function fmt(n){ return "$"+Math.round(n).toLocaleString(); }
+  function setSync(t,cls){ const e=document.getElementById('syncState'); if(e){ e.textContent=t; e.className='savebanner '+(cls||''); } }
+  function mergeTs(local, remote){
+    const out={}; const ks=new Set([...Object.keys(local||{}),...Object.keys(remote||{})]);
+    ks.forEach(k=>{ const a=local[k], b=remote[k]; out[k] = (!a)?b:(!b)?a:(((b.ts||0)>(a.ts||0))?b:a); });
+    return out;
+  }
+  function saveCache(){ try { localStorage.setItem(CACHE, JSON.stringify(SEL)); } catch(e){} }
+  function loadCache(){ try { const c=JSON.parse(localStorage.getItem(CACHE)||"null"); if(c) SEL=c; } catch(e){} }
+
+  // ---------- classify each row ----------
+  function classifyRow(tr, sectionLabel) {
+    const monoTd = tr.querySelector('td.mono');
+    const valueTd = tr.querySelector('td.value');
+    if (!monoTd || !valueTd) return null;
+    const serial = monoTd.textContent.trim();
+    if (!serial) return null;
+    const recoText = (tr.children[7] && tr.children[7].textContent || "").toLowerCase();
+    const verifiedTd = tr.children[3] && tr.children[3].textContent.toLowerCase() || "";
+    let baseType = null;
+    if (recoText.includes("teros one") || recoText.includes("$319")) baseType = "single";
+    else if (recoText.includes("climate one") || recoText.includes("$479")) baseType = "climate-one";
+    else if (recoText.includes("h340 repeater") || recoText.includes("$267")) baseType = "repeater";
+    else if (recoText.includes("h220 gateway") || recoText.includes("$345")) baseType = "gateway";
+    if (!baseType) return null;
+    // Repeaters & gateways have no published trade credit; we still let them be selected for
+    // bookkeeping, but mark them as no-credit (eligible=true but discount=0).
+    const eligible = true;
+    const notEligibleReason = "";
+    return { serial, baseType, eligible, notEligibleReason, sectionLabel, tr, monoTd, valueTd };
+  }
+
+  // ---------- inject UI into one row ----------
+  function injectRow(rowInfo) {
+    const { serial, baseType, eligible, tr, valueTd } = rowInfo;
+    if (IDX[serial]) return; // dedupe
+    const td = document.createElement('td');
+    td.className = 'tradein-cell';
+    td.dataset.serial = serial;
+    const isSubstrate = baseType === 'single';
+    const showRadios = isSubstrate;
+    const hasCredit = (baseType === 'single' || baseType === 'climate-one');
+    const radiosHTML = showRadios ? (
+      '<div class="rep" data-rep="'+serial+'">' +
+        '<label><input type="radio" name="rep-'+serial+'" value="single" checked> Single $319</label>' +
+        '<label><input type="radio" name="rep-'+serial+'" value="dual"> Dual $458</label>' +
+      '</div>'
+    ) : '';
+    const titleAttr = hasCredit ? '' : (baseType === 'repeater' ? 'No published trade-in credit (counts as straight purchase)' : 'No published trade-in credit');
+    td.innerHTML =
+      '<label class="toggle" title="'+titleAttr+'">' +
+        '<input type="checkbox" class="ti-cb" data-serial="'+serial+'" data-base="'+baseType+'">' +
+        '<span>Trade in</span>' +
+      '</label>' + radiosHTML;
+    tr.appendChild(td);
+    const checkbox = td.querySelector('input.ti-cb');
+    const radios = td.querySelectorAll('input[type="radio"]');
+    const replaceWrap = td.querySelector('.rep');
+    IDX[serial] = { row: tr, td, checkbox, radios, replaceWrap, baseType };
+
+    checkbox.addEventListener('change', () => {
+      const cur = SEL[serial] || {};
+      const type = (cur.type && isValidType(cur.type, baseType)) ? cur.type : baseType;
+      SEL[serial] = { picked: checkbox.checked, type, ts: Date.now() };
+      reflect(serial); recompute(); scheduleSync();
+    });
+    radios.forEach(r => r.addEventListener('change', () => {
+      if (!r.checked) return;
+      const cur = SEL[serial] || { picked: false, type: baseType };
+      SEL[serial] = { picked: cur.picked, type: r.value, ts: Date.now() };
+      reflect(serial); recompute(); scheduleSync();
+    }));
+  }
+
+  function isValidType(t, base) {
+    if (base === 'single') return t === 'single' || t === 'dual';
+    return t === base;
+  }
+
+  // ---------- reflect one row from SEL ----------
+  function reflect(serial) {
+    const idx = IDX[serial]; if (!idx) return;
+    const s = SEL[serial] || { picked: false, type: idx.baseType };
+    idx.checkbox.checked = !!s.picked;
+    if (idx.replaceWrap) {
+      if (s.picked) idx.replaceWrap.classList.add('on'); else idx.replaceWrap.classList.remove('on');
+      idx.radios.forEach(r => { r.checked = (r.value === (s.type || idx.baseType)); });
+    }
+    if (s.picked) idx.row.classList.add('row-picked'); else idx.row.classList.remove('row-picked');
+    // update line value
+    const td = idx.row.querySelector('td.value');
+    if (td) {
+      const p = PRICE[s.type || idx.baseType];
+      const orig = idx.baseType === 'single' ? PRICE.single.net : PRICE[idx.baseType].net;
+      if (s.picked) td.textContent = fmt(p.net); else td.textContent = fmt(orig);
+    }
+  }
+
+  // ---------- recompute totals ----------
+  function recompute() {
+    let count = 0, spend = 0, credit = 0;
+    Object.keys(IDX).forEach(serial => {
+      const s = SEL[serial];
+      if (s && s.picked) {
+        const p = PRICE[s.type || IDX[serial].baseType];
+        count += 1;
+        spend += p.net;
+        credit += p.discount;
+      }
+    });
+    setText('tt-count', count.toString());
+    setText('tt-spend', fmt(spend + credit));
+    setText('tt-credit', "-" + fmt(credit));
+    setText('tt-net', fmt(spend));
+  }
+  function setText(id, v) { const e = document.getElementById(id); if (e) e.textContent = v; }
+
+  // ---------- sync ----------
+  function scheduleSync() { saveCache(); clearTimeout(syncTimer); syncTimer = setTimeout(syncNow, 700); }
+  async function syncNow() {
+    setSync('Saving…', 'swork');
+    let remote = null;
+    try { const r = await fetch(SYNC_URL, { cache: 'no-store' }); if (r.ok) remote = await r.json(); } catch(e){}
+    if (remote && typeof remote === 'object') SEL = mergeTs(SEL, remote);
+    saveCache(); applyAll(); recompute();
+    try {
+      const w = await fetch(SYNC_URL, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(SEL) });
+      if (w.ok) setSync('Synced ✓ ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}), 'sok');
+      else setSync('Offline — saved on this device only', 'soff');
+    } catch(e) { setSync('Offline — saved on this device only', 'soff'); }
+  }
+  async function pullOnly() {
+    try {
+      const r = await fetch(SYNC_URL, { cache:'no-store' }); if (!r.ok) return;
+      const remote = await r.json();
+      if (remote && typeof remote === 'object') {
+        SEL = mergeTs(SEL, remote); saveCache(); applyAll(); recompute();
+        setSync('Synced ✓ ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}), 'sok');
+      }
+    } catch(e){}
+  }
+
+  function applyAll() { Object.keys(IDX).forEach(reflect); }
+
+  // ---------- buttons ----------
+  function selectInSection(sectionLabel) {
+    const now = Date.now();
+    Object.keys(IDX).forEach(serial => {
+      const idx = IDX[serial];
+      if (idx.section !== sectionLabel && sectionLabel !== '*ALL*') return;
+      if (idx.baseType !== 'single' && idx.baseType !== 'climate-one') return; // only credit-eligible
+      const cur = SEL[serial] || {};
+      SEL[serial] = { picked: true, type: cur.type && isValidType(cur.type, idx.baseType) ? cur.type : idx.baseType, ts: now };
+    });
+    applyAll(); recompute(); scheduleSync();
+  }
+  function deselectAll() {
+    const now = Date.now();
+    Object.keys(IDX).forEach(serial => {
+      SEL[serial] = { picked: false, type: (SEL[serial] && SEL[serial].type) || IDX[serial].baseType, ts: now };
+    });
+    applyAll(); recompute(); scheduleSync();
+  }
+  function resetAll() {
+    if (!confirm('Reset every trade-in selection for Leafy Jungle (also clears on every device viewing this report)?')) return;
+    SEL = {};
+    Object.keys(IDX).forEach(serial => { SEL[serial] = { picked: false, type: IDX[serial].baseType, ts: Date.now() }; });
+    applyAll(); recompute(); scheduleSync();
+  }
+  function exportJSON() {
+    const totals = computeTotalsRaw();
+    const payload = { facility_id: FACILITY_ID, facility_name: "Leafy Jungle Corp: Little Morongo Road", exported_at: new Date().toISOString(), pricing: PRICE, selections: SEL, totals };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type:'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = "leafy_jungle_tradein_" + new Date().toISOString().slice(0,10) + ".json"; a.click();
+  }
+  function computeTotalsRaw() {
+    let count = 0, spend = 0, credit = 0;
+    Object.keys(IDX).forEach(serial => {
+      const s = SEL[serial]; if (!s || !s.picked) return;
+      const p = PRICE[s.type || IDX[serial].baseType];
+      count++; spend += p.net; credit += p.discount;
+    });
+    return { count, replacement_spend_msrp: spend + credit, trade_in_credit: credit, net_spend: spend };
+  }
+  function importJSON(ev) {
+    const f = ev.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const p = JSON.parse(r.result);
+        const sel = p.selections || p;
+        const now = Date.now();
+        Object.keys(sel).forEach(s => {
+          const v = sel[s];
+          SEL[s] = (v && typeof v === 'object' && 'picked' in v) ? { picked: !!v.picked, type: v.type, ts: typeof v.ts === 'number' ? v.ts : now } : { picked: !!v, type: IDX[s] ? IDX[s].baseType : 'single', ts: now };
+        });
+        saveCache(); syncNow();
+      } catch(e) { alert('Could not read that file.'); }
+    };
+    r.readAsText(f);
+    ev.target.value = '';
+  }
+
+  // ---------- init ----------
+  function init() {
+    loadCache();
+    // walk Section A and Section B tables
+    const headings = document.querySelectorAll('h2');
+    let secA = null, secB = null;
+    headings.forEach(h => {
+      const t = h.textContent;
+      if (t.indexOf('Section A') === 0) secA = h;
+      else if (t.indexOf('Section B') === 0) secB = h;
+    });
+    // walk Section B between its heading and the next h2 ("Operational health flags")
+    const tightB = [];
+    if (secB) {
+      let n = secB.nextElementSibling;
+      while (n && n.tagName !== 'H2') {
+        n.querySelectorAll && n.querySelectorAll('tr').forEach(tr => {
+          if (tr.querySelector('td.mono') && tr.querySelector('td.value')) tightB.push(tr);
+        });
+        n = n.nextElementSibling;
+      }
+    }
+    const tightA = [];
+    if (secA) {
+      let n = secA.nextElementSibling;
+      while (n && n !== secB) {
+        n.querySelectorAll && n.querySelectorAll('tr').forEach(tr => {
+          if (tr.querySelector('td.mono') && tr.querySelector('td.value')) tightA.push(tr);
+        });
+        n = n.nextElementSibling;
+      }
+    }
+    // append a new header cell to Section A & B thead
+    function extendHead(headingEl, label) {
+      let n = headingEl.nextElementSibling;
+      while (n && n.tagName !== 'H2') {
+        const thead = n.querySelector && n.querySelector('thead tr');
+        if (thead) { const th = document.createElement('th'); th.textContent = label; thead.appendChild(th); return; }
+        n = n.nextElementSibling;
+      }
+    }
+    if (secA) extendHead(secA, 'Trade in');
+    if (secB) extendHead(secB, 'Trade in');
+    tightA.forEach(tr => { const info = classifyRow(tr, 'A'); if (info) { injectRow(info); IDX[info.serial].section = 'A'; } });
+    tightB.forEach(tr => { const info = classifyRow(tr, 'B'); if (info) { injectRow(info); IDX[info.serial].section = 'B'; } });
+
+    // Buttons
+    document.getElementById('tt-sel-ali').addEventListener('click', () => selectInSection('A'));
+    document.getElementById('tt-sel-all').addEventListener('click', () => selectInSection('*ALL*'));
+    document.getElementById('tt-deselect').addEventListener('click', deselectAll);
+    document.getElementById('tt-reset').addEventListener('click', resetAll);
+    document.getElementById('tt-export').addEventListener('click', exportJSON);
+    document.getElementById('tt-import-btn').addEventListener('click', () => document.getElementById('tt-import').click());
+    document.getElementById('tt-import').addEventListener('change', importJSON);
+
+    // First paint from cache
+    applyAll(); recompute();
+    // Initial sync round trip
+    syncNow();
+    // Poll
+    setInterval(pullOnly, 20000);
+    window.addEventListener('focus', pullOnly);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
 </body>
 </html>
