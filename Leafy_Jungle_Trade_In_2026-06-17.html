@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Leafy Jungle Trade-In Report — 2026-06-17</title>
+<!-- aroya-mobile-qa-v2 --><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style id="aroya-mobile-qa">/* AROYA Mobile QA v2 2026-06-16. Proper design replacing v1 brute-force compression. Word-boundary wrapping (no mid-word breaks), auto-fit grids (no forced 1fr), nowrap pills/numerics, wrapped tables scroll inside their container, 16px body floor. */
+html { -webkit-text-size-adjust: 100%; }
+@media (max-width: 768px) {
+  html, body { max-width: 100vw; overflow-x: hidden; }
+  body { font-size: 16px; line-height: 1.55; }
+  body, main, .container, .wrap, .page, .report, .content { padding-left: 16px !important; padding-right: 16px !important; box-sizing: border-box; }
+  img, svg, video, canvas { max-width: 100%; height: auto; }
+  h1 { font-size: clamp(1.5rem, 6vw, 2.1rem) !important; line-height: 1.2 !important; }
+  h2 { font-size: clamp(1.2rem, 4.8vw, 1.55rem) !important; line-height: 1.25 !important; }
+  h3 { font-size: clamp(1.05rem, 4vw, 1.25rem) !important; }
+  p, li, dd, dt { font-size: 15px; line-height: 1.55; }
+  p, li, dd, dt, td, th, .verdict p, .verdict li, .lead, .sub, .pagehead-eyebrow, .v-head, blockquote, figcaption, caption { overflow-wrap: break-word !important; word-break: normal !important; hyphens: manual; }
+  code, pre, .serial, .uuid, .long-id, .url, .hash, .device-serial, .api-token, kbd, samp, a[href*="http"]:not(.btn):not(.lang-btn):not(.theme-btn):not(.lang-toggle) { overflow-wrap: anywhere !important; word-break: break-word !important; }
+  .pill, .badge, .phase, .chip, .room-chip, .tag, .label-pill, .status-pill, .lang-btn, .theme-btn, .lang-toggle { white-space: nowrap !important; word-break: keep-all !important; overflow-wrap: normal !important; display: inline-block; }
+  .table-scroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 0 12px; }
+  .table-scroll table { display: table; width: max-content; max-width: none; border-collapse: collapse; }
+  table.kpi, table.meta, table.kpi-strip, table.summary-only, table.no-scroll, table.no-scroll-wrap { width: 100% !important; max-width: 100% !important; }
+  table td, table th { word-break: keep-all !important; overflow-wrap: break-word !important; hyphens: manual; }
+  table th { white-space: nowrap; }
+  table td.num, table th.num, td.numeric, th.numeric, td[align="right"] { white-space: nowrap !important; text-align: right; font-variant-numeric: tabular-nums; }
+  table.bp-table td:first-child, table.compact td:first-child, table.device-table td:first-child { white-space: nowrap; }
+  pre, code { max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-break: normal; }
+  pre code, .codeblock { overflow-wrap: anywhere; }
+  .mermaid, [class*="mermaid"] { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .mermaid svg, svg.mermaid, [class*="mermaid"] svg { max-width: none !important; height: auto !important; }
+  .meta, .meta-grid { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important; gap: 10px !important; }
+  .kpis, .kpi-grid, .kpi-strip, .kpi-row, .kpi-cards { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)) !important; gap: 12px !important; }
+  .summary-grid, .stats-grid, .stats { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important; gap: 10px !important; }
+  .cards, .card-grid, .tile-grid { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important; gap: 14px !important; }
+  .grid, .grid-2, .grid-3, .grid-4 { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important; gap: 12px !important; }
+  .row.kpi-row, .row.stat-row, .stat-row { flex-wrap: wrap !important; gap: 12px; }
+  .kpi, .kpi-card, .stat, .stat-card, .summary-card, .card { min-width: 0 !important; box-sizing: border-box; }
+  .kpi, .kpi-card, .stat-card, .summary-card { padding: 14px 12px !important; }
+  .kpi .val, .kpi-card .val, .stat-card .val, .kpi-value, .stat-value { font-size: clamp(1.5rem, 6vw, 2rem) !important; line-height: 1.1 !important; }
+  .kpi .label, .kpi-card .label, .kpi-label, .stat-label { font-size: 11px !important; letter-spacing: 0.05em; }
+  .kpi .delta, .kpi-card .delta, .kpi-sub, .stat-sub { font-size: 11px !important; line-height: 1.4 !important; }
+  .tabs, .tab-bar, .chips, .room-chips, .controls, .filter-bar { flex-wrap: wrap !important; gap: 8px !important; }
+  .tab, .tab-button, .chip, button, .btn, .room-chip, .lang-btn, .theme-btn { min-height: 36px; padding-top: 8px; padding-bottom: 8px; }
+  .masthead-inner, .lockup, .controls { gap: 8px !important; }
+  .lockup .aroya-wordmark, .aroya-wordmark { height: 26px !important; width: auto !important; }
+  .lockup-byline { font-size: 11px !important; }
+  .meta span, .meta-grid > * { min-width: 0; padding: 8px 10px; font-size: 13px; line-height: 1.4; }
+  .meta b, .meta-grid b { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; opacity: 0.7; }
+  .verdict, .lead, .callout, .alert-box { padding: 14px 14px !important; }
+  .nav-sticky.sticky-overflow, .sidebar-nav.fixed-mobile, .sticky-mobile-off { position: relative !important; }
+  .compare-2col, .two-col, .split-2 { display: block !important; }
+  .compare-2col > *, .two-col > *, .split-2 > * { width: 100% !important; }
+}
+@media (max-width: 380px) {
+  body, main, .container, .wrap, .page, .report, .content { padding-left: 14px !important; padding-right: 14px !important; }
+  h1 { font-size: 1.45rem !important; }
+}</style><script id="aroya-mobile-qa-js">(function(){function wrap(){var ts=document.querySelectorAll('table');for(var i=0;i<ts.length;i++){var t=ts[i];if(!t.parentElement)continue;if(t.parentElement.classList.contains('table-scroll'))continue;if(t.classList.contains('no-scroll-wrap'))continue;if(t.classList.contains('kpi-strip')||t.classList.contains('summary-only'))continue;var w=document.createElement('div');w.className='table-scroll';t.parentNode.insertBefore(w,t);w.appendChild(t);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',wrap);}else{wrap();}})();</script></head>
+<body class=" body-pad">
+
+<style>
+    :root {
+        --bg: #fafaf7; --fg: #1a1d1a; --muted: #6b7280; --card: #ffffff; --border: #e5e7eb;
+        --olive: #5c6b46; --lime: #8dad3f; --attn: #c97a3f; --ok: #5d7f2e; --app: #3b6b8a;
+    }
+    *,*::before,*::after { box-sizing: border-box; }
+    html, body { background: var(--bg); color: var(--fg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; margin:0; padding:0; line-height: 1.5; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
+    header.brand { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding-bottom: 20px; border-bottom: 2px solid var(--border); margin-bottom: 28px; }
+    .lockup { display: flex; flex-direction: column; gap: 4px; color: var(--fg); }
+    .lockup .wordmark svg { height: 36px; width: auto; display: block; }
+    .lockup .byline { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .reportmeta { text-align: right; font-size: 12px; color: var(--muted); }
+    .reportmeta strong { color: var(--fg); display:block; font-size: 16px; }
+
+    h1 { font-size: 28px; margin: 0 0 6px; letter-spacing: -0.01em; }
+    h2 { font-size: 20px; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); color: var(--olive); }
+    h3 { font-size: 15px; margin: 24px 0 8px; color: var(--olive); }
+    p { margin: 0 0 12px; }
+    .muted { color: var(--muted); font-size: 13px; }
+
+    .meta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0 12px; }
+    .meta-cell { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+    .meta-cell .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .meta-cell .value { font-size: 18px; font-weight: 600; color: var(--fg); }
+    .meta-cell .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .scen-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 16px 0 24px; }
+    .scen-card { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--olive); border-radius: 8px; padding: 16px 18px; }
+    .scen-card.full { border-left-color: var(--app); }
+    .scen-card h4 { margin: 0 0 6px; font-size: 14px; }
+    .scen-card .big { font-size: 24px; font-weight: 700; color: var(--olive); }
+    .scen-card.full .big { color: var(--app); }
+    .scen-card .sub { font-size: 12px; color: var(--muted); }
+    .scen-card ul { margin: 10px 0 0; padding-left: 20px; font-size: 13px; }
+    .scen-card li { margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { background: var(--card); color: var(--olive); text-align: left; padding: 10px 12px; font-weight: 600; border-bottom: 2px solid var(--olive); font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+    td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    td.value { font-weight: 600; color: var(--olive); }
+    td.mono { font-family: 'SF Mono', Consolas, monospace; font-size: 12px; }
+    tr:hover td { background: rgba(0,0,0,0.02); }
+
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+    .pill-ok { background: rgba(110, 158, 60, 0.15); color: var(--ok); }
+    .pill-warn { background: rgba(201, 122, 63, 0.18); color: var(--attn); }
+
+    .price-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; margin: 14px 0; }
+    .price-row { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--border); }
+    .price-row:last-child { border-bottom: none; }
+
+    footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); }
+
+    @media (max-width: 700px) {
+        .meta-grid { grid-template-columns: repeat(2, 1fr); }
+        .scen-grid { grid-template-columns: 1fr; }
+        h1 { font-size: 22px; }
+        h2 { font-size: 17px; }
+        header.brand { flex-direction: column; align-items: flex-start; }
+        .reportmeta { text-align: left; }
+    }
+    </style>
+</head>
+<body>
+<div class="wrap">
+<header class="brand">
+  <div class="lockup">
+    <div class="wordmark"><svg fill="currentColor" version="1.1" viewBox="0 0 202.1 75" id="brand" xmlns="http://www.w3.org/2000/svg">
+<path fill="currentColor" d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/>
+<path fill="currentColor" d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/>
+<path fill="currentColor" d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/>
+<path fill="currentColor" d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/>
+<path fill="currentColor" d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/>
+<rect x="127.4" y="57.2" width="1.8" height="9.9"/>
+<path fill="currentColor" d="M138,62.8c0,2.1-.9,3.1-2.6,3.1s-.7,0-1,0c-.3-.1-.5-.3-.8-.5-.2-.2-.3-.4-.4-.6-.1-.2-.2-.5-.2-.7v-6.8h-1.9v7.2c0,.3.1.7.2,1,0,.4.3.6.5.9.4.3.8.6,1.3.8s1.1.3,1.8.2c.7,0,1.4-.1,1.9-.4s.9-.7,1.2-1.3v1.5h1.8v-9.9h-1.8v5.6Z"/>
+<path fill="currentColor" d="M152.7,57c-.6,0-1,.1-1.4.2-.4.1-.7.3-1,.6-.2.2-.4.4-.6.6s-.3.5-.4.7c-.2-.7-.6-1.2-1.2-1.6-.5-.4-1.2-.6-2-.6s-1.7.3-2.3.8c-.3.3-.6.6-.7,1v-1.5h-1.6v9.9h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6.1.2.1.5.2.7v6.8h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6,0,.2.1.5.1.7v6.8h1.8v-6.4c0-1.2-.3-2.2-.9-2.8-.6-.6-1.4-.9-2.6-.9Z"/>
+<path fill="currentColor" d="M112.7,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.3.8-.5,1.7-.5,2.8s.2,1.9.6,2.7c.4.8.9,1.4,1.6,1.8.7.4,1.5.6,2.4.6s1.3-.1,1.8-.4,1-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM112.1,65c-.5.6-1.2,1-2.1,1s-1.3-.2-1.8-.5c-.5-.3-.8-.7-1-1.3-.2-.6-.3-1.2-.3-2.1,0-1.3.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.5.6.7,1.5.7,2.7s-.2,2.2-.7,2.8Z"/>
+<rect x="127.4" y="53.2" width="1.8" height="1.8"/>
+<path fill="currentColor" d="M123.8,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.4.8-.6,1.6-.6,2.7s.2,2,.6,2.8c.4.8.9,1.4,1.6,1.8.7.5,1.4.7,2.5.6.7,0,1.3-.1,1.8-.4s.9-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM123,65c-.5.6-1.2,1-2.1,1s-1.4-.2-1.8-.5c-.4-.3-.7-.7-.9-1.3-.2-.6-.3-1.3-.3-2.1,0-1.2.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.4.7.6,1.6.6,2.7s-.2,2.2-.7,2.8Z"/>
+<path fill="currentColor" d="M97.7,53.2l-5.5,13.9h1.9l1.5-4.2h5.9l1.6,4.2h1.9l-5.4-13.9h-1.9ZM96.2,61.4l1.6-4.2c.4-.9.6-1.7.8-2.2.3.8.6,1.5.8,2.2l1.6,4.2h-4.8Z"/>
+<path fill="currentColor" d="M85.4,62.4c-.2.7-.5,1.6-.9,2.6-.4-1.1-.6-2-.9-2.6l-1.9-5.3h-1.9l3.9,9.8c-.3.6-.5,1.1-.6,1.4,0,.3-.3.5-.5.7-.2.2-.4.3-.6.3-.4,0-.8-.1-1.2-.2v1.6c.5.1,1,.2,1.5.2s.8,0,1.2-.3c.3-.2.6-.5.9-1,.3-.4.5-1,.8-1.8l4-10.8h-1.9l-1.9,5.4Z"/>
+<path fill="currentColor" d="M77.5,57.5c-.7-.4-1.5-.7-2.3-.7-1.4,0-2.4.5-3.2,1.6v-5.3h-1.8v13.9h1.8v-1.4c.4.5.8.9,1.4,1.2.5.3,1.1.4,1.8.4s1.7-.2,2.3-.6c.7-.4,1.2-1,1.6-1.8.4-.8.6-1.7.6-2.8s-.2-1.9-.6-2.7c-.4-.8-.9-1.4-1.6-1.8ZM77.5,64.1c-.2.6-.5,1-.9,1.3-.4.3-1,.5-1.8.5s-1.7-.3-2.1-1c-.5-.6-.7-1.6-.7-2.8s.2-2,.6-2.8c.3-.7,1.1-1.1,2.2-1.1s1.8.3,2.3,1c.5.6.7,1.6.7,2.8s0,1.5-.3,2.1Z"/>
+<path fill="currentColor" d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z"/>
+</svg>
+</div>
+    <div class="byline">Trade-In Report · by Addium</div>
+  </div>
+  <div class="reportmeta">
+    <strong>Leafy Jungle Corp</strong>
+    Little Morongo Road · Facility ID 2950<br>
+    Report generated 2026-06-17 · Cian Sullivan
+  </div>
+</header>
+
+<h1>Device Trade-In Evaluation — Leafy Jungle</h1>
+<p class="muted">Source request: Allison Zervopoulos (Addium) forwarding Jesse Burstein (Clean Leaf Labs) · Subject "Serial Numbers" · 2026-06-17 · attachment "Arroya Device List.xlsx" (89 serials). This report evaluates Ali's listed devices and every other device on the Leafy Jungle network against AROYA's published trade-in matrix. AUTOMAIT promo path is referenced but not priced here — this is the straight trade-in case.</p>
+
+<h2>At a glance</h2>
+<div class="meta-grid">
+  <div class="meta-cell"><div class="label">Facility</div><div class="value">Leafy Jungle Corp</div><div class="sub">Little Morongo Road · ID 2950</div></div>
+  <div class="meta-cell"><div class="label">Report date</div><div class="value">2026-06-17</div><div class="sub">Cian Sullivan · Addium</div></div>
+  <div class="meta-cell"><div class="label">Devices in Ali's sheet</div><div class="value">89</div><div class="sub">87 matched in AROYA · 2 unmatched</div></div>
+  <div class="meta-cell"><div class="label">Devices on AROYA network</div><div class="value">97</div><div class="sub">+ 10 not in Ali's sheet</div></div>
+  <div class="meta-cell"><div class="label">Trade-in value (Ali sheet, A)</div><div class="value">$29,709</div><div class="sub">net spend on 1:1 Singles · saves $8,450 vs MSRP</div></div>
+  <div class="meta-cell"><div class="label">Trade-in value (full network, A)</div><div class="value">$33,063</div><div class="sub">if you trade everything · saves $9,250</div></div>
+  <div class="meta-cell"><div class="label">Already current gen</div><div class="value">0</div><div class="sub">Gateway is WP4 (ggVersion=1) — whole network is legacy</div></div>
+  <div class="meta-cell"><div class="label">Operational flags</div><div class="value">62</div><div class="sub">39 offline / 58 online</div></div>
+</div>
+
+<h2>Pricing matrix (canonical, from AROYA published trade-in)</h2>
+<div class="price-card">
+  <div class="price-row"><span><strong>TEROS One Single</strong> · 1-for-1 replacement of legacy node + TEROS 12 bundle</span><span class="num">MSRP $419 · discount $100 · <strong>$319 net</strong></span></div>
+  <div class="price-row"><span><strong>TEROS One Dual</strong> · 2-for-1 consolidation (2 legacy nodes → 1 dual unit)</span><span class="num">MSRP $608 · discount $150 · <strong>$458 net</strong></span></div>
+  <div class="price-row"><span><strong>Climate One H421</strong> · replacement for legacy H111 Climate Station + ATM14</span><span class="num">MSRP $629 · discount $150 · <strong>$479 net</strong></span></div>
+  <div class="price-row"><span><strong>AROYA H340 Provisioned Repeater</strong> · replaces bare H110 mesh repeater</span><span class="num">MSRP $267 · <span class="muted">no published trade credit</span></span></div>
+  <div class="price-row"><span><strong>AROYA H220 Gateway (WP5)</strong> · replaces H210 WP4 gateway</span><span class="num">MSRP $345 · <span class="muted">no published trade credit</span></span></div>
+</div>
+<p class="muted">Source: Flying Dutchman Palm Desert Trade-In Report (2026-06-11) and store.addium.io live SKU pricing. AROYA's promo (FREE TEROS One Single per zone, $0/ea) requires bundling AUTOMAIT subscription + Drip & Drain Stations and is not priced into the scenarios below — surface it separately if Jesse wants the AUTOMAIT path.</p>
+
+<h2>Cost scenarios</h2>
+<div class="scen-grid">
+  <div class="scen-card">
+    <h4>Scenario A · Ali sheet only · 1:1 Singles</h4>
+    <div class="big">$29,709</div>
+    <div class="sub">net spend after trade-in · saves $8,450 vs $38,159 MSRP</div>
+    <ul>
+      <li>68 × TEROS One Single @ $319 = $21,692</li>
+      <li>11 × Climate One H421 @ $479 = $5,269</li>
+      <li>9 × H340 Repeater @ $267 = $2,403</li>
+      <li>1 × H220 Gateway WP5 @ $345 = $345</li>
+    </ul>
+  </div>
+  <div class="scen-card">
+    <h4>Scenario B · Ali sheet only · Consolidated Duals</h4>
+    <div class="big">$23,589</div>
+    <div class="sub">net spend if 2 legacy nodes consolidate into 1 TEROS Dual · saves $6,750</div>
+    <ul>
+      <li>34 × TEROS One Dual @ $458 = $15,572 <span class="muted">(retires 68 legacy nodes)</span></li>
+      <li>11 × Climate One H421 @ $479 = $5,269</li>
+      <li>9 × H340 Repeater @ $267 = $2,403</li>
+      <li>1 × H220 Gateway WP5 @ $345 = $345</li>
+    </ul>
+  </div>
+  <div class="scen-card full">
+    <h4>Scenario A · Full network (Ali + 10 extras) · Singles</h4>
+    <div class="big">$33,063</div>
+    <div class="sub">all devices on the network · saves $9,250 vs $42,313 MSRP</div>
+    <ul>
+      <li>73 × TEROS One Single @ $319 = $23,287</li>
+      <li>13 × Climate One H421 @ $479 = $6,227</li>
+      <li>12 × H340 Repeater @ $267 = $3,204</li>
+      <li>1 × H220 Gateway WP5 @ $345 = $345</li>
+    </ul>
+  </div>
+  <div class="scen-card full">
+    <h4>Scenario B · Full network · Consolidated Duals</h4>
+    <div class="big">$26,722</div>
+    <div class="sub">cheapest path overall · saves $7,500</div>
+    <ul>
+      <li>37 × TEROS One Dual @ $458 = $16,946</li>
+      <li>13 × Climate One H421 @ $479 = $6,227</li>
+      <li>12 × H340 Repeater @ $267 = $3,204</li>
+      <li>1 × H220 Gateway WP5 @ $345 = $345</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Section A · Devices in Jesse's spreadsheet (89)</h2>
+<p>Every serial Ali listed. "Verified" means the serial matches an active device in AROYA's database for Leafy Jungle. Health pills come straight from the SPA <code>/devices/</code> endpoint (battery %, RSSI 0-7, last communication).</p>
+<div class="table-scroll"><table>
+  <thead><tr>
+    <th>Serial</th><th>Description</th><th>Room (sheet · AROYA)</th><th>Verified</th>
+    <th>Battery</th><th>RSSI</th><th>Last comm</th><th>Trade-in recommendation</th><th>Value</th>
+  </tr></thead>
+  <tbody>
+        <tr>
+          <td class="mono">H3210003589</td>
+          <td>Sensor Nose</td>
+          <td>101 <span class="muted">Flower 101</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">7</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007073</td>
+          <td>Sensor Nose</td>
+          <td>101 <span class="muted">Flower 101</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">63%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007067</td>
+          <td>Sensor Nose</td>
+          <td>101 <span class="muted">Flower 101</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">75%</td>
+          <td class="num">4</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003625</td>
+          <td>Sensor Nose</td>
+          <td>101 <span class="muted">Flower 101</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">100%</td>
+          <td class="num">2</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007072</td>
+          <td>Sensor Nose</td>
+          <td>101 <span class="muted">Flower 101</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">51%</td>
+          <td class="num">4</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007070</td>
+          <td>Sensor Nose</td>
+          <td>101 <span class="muted">Flower 101</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004067</td>
+          <td>Repeater</td>
+          <td>102 <span class="muted">—</span></td>
+          <td><span class="pill pill-warn">unverified</span> <span class="pill pill-warn">NOT FOUND in AROYA</span></td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td>AROYA H340 Repeater $267 MSRP (no published trade credit)</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003566</td>
+          <td>Sensor Nose</td>
+          <td>102 <span class="muted">Flower 102</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003616</td>
+          <td>Sensor Nose</td>
+          <td>102 <span class="muted">Flower 102</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">low battery 0% / weak signal RSSI 3</span></td>
+          <td class="num">0%</td>
+          <td class="num">3</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003501</td>
+          <td>Sensor Nose</td>
+          <td>102 <span class="muted">Flower 102</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">4</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003578</td>
+          <td>Sensor Nose</td>
+          <td>102 <span class="muted">Flower 102</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">7</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004823</td>
+          <td>Climate Station</td>
+          <td>102 <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 2% / silent 109d</span></td>
+          <td class="num">2%</td>
+          <td class="num">8</td>
+          <td class="num">2026-02-28</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003547</td>
+          <td>Sensor Nose</td>
+          <td>102 <span class="muted">Flower 102</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003651</td>
+          <td>Sensor Nose</td>
+          <td>102 <span class="muted">Flower 102</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003557</td>
+          <td>Sensor Nose</td>
+          <td>102 <span class="muted">Flower 102</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003652</td>
+          <td>Sensor Nose</td>
+          <td>102 <span class="muted">Flower 102</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004869</td>
+          <td>Climate Station</td>
+          <td>102 <span class="muted">Flower 102</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2026-06-17</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003496</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">7</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003568</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003497</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">100%</td>
+          <td class="num">3</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003622</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">100%</td>
+          <td class="num">3</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004998</td>
+          <td>Climate Station</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003644</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">100%</td>
+          <td class="num">3</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003615</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">7</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003556</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">7</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003598</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003620</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">4</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003562</td>
+          <td>Sensor Nose</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">7</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004627</td>
+          <td>Repeater</td>
+          <td>103 <span class="muted">Flower 103</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2026-06-17</td>
+          <td>AROYA H340 Repeater $267 MSRP (no published trade credit)</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003601</td>
+          <td>Sensor Nose</td>
+          <td>204 <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2025-09-26</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003619</td>
+          <td>Sensor Nose</td>
+          <td>204 <span class="muted">Flower 204</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007090</td>
+          <td>Sensor Nose</td>
+          <td>204 <span class="muted">Flower 204</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">100%</td>
+          <td class="num">3</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003649</td>
+          <td>Sensor Nose</td>
+          <td>204 <span class="muted">Flower 204</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">4</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003554</td>
+          <td>Sensor Nose</td>
+          <td>204 <span class="muted">Flower 204</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007079</td>
+          <td>Sensor Nose</td>
+          <td>204 <span class="muted">Flower 204</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">69%</td>
+          <td class="num">2</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004803</td>
+          <td>Climate Station</td>
+          <td>204 <span class="muted">Flower 204</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 0% / weak signal RSSI 3</span></td>
+          <td class="num">0%</td>
+          <td class="num">3</td>
+          <td class="num">2026-05-27</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004922</td>
+          <td>Climate Station</td>
+          <td>204 <span class="muted">Flower 204</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 22% / silent 67d</span></td>
+          <td class="num">22%</td>
+          <td class="num">8</td>
+          <td class="num">2026-04-11</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004606</td>
+          <td>Repeater</td>
+          <td>204 <span class="muted">Flower 204</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 2% / weak signal RSSI 0 / silent 64d</span></td>
+          <td class="num">2%</td>
+          <td class="num">0</td>
+          <td class="num">2026-04-14</td>
+          <td>AROYA H340 Repeater $267 MSRP (no published trade credit)</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004827</td>
+          <td>Climate Station</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 1%</span></td>
+          <td class="num">1%</td>
+          <td class="num">4</td>
+          <td class="num">2026-06-10</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004986</td>
+          <td>Climate Station</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 2% / weak signal RSSI 3 / silent 65d</span></td>
+          <td class="num">2%</td>
+          <td class="num">3</td>
+          <td class="num">2026-04-13</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004625</td>
+          <td>Repeater</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 3% / silent 64d</span></td>
+          <td class="num">3%</td>
+          <td class="num">5</td>
+          <td class="num">2026-04-13</td>
+          <td>AROYA H340 Repeater $267 MSRP (no published trade credit)</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003569</td>
+          <td>Sensor Nose</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">97%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003552</td>
+          <td>Sensor Nose</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003639</td>
+          <td>Sensor Nose</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">98%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007124</td>
+          <td>Sensor Nose</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">92%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003555</td>
+          <td>Sensor Nose</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">93%</td>
+          <td class="num">4</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003645</td>
+          <td>Sensor Nose</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003618</td>
+          <td>Sensor Nose</td>
+          <td>205 <span class="muted">Flower 205</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">95%</td>
+          <td class="num">7</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004575</td>
+          <td>Repeater</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 67d</span></td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2026-04-11</td>
+          <td>AROYA H340 Repeater $267 MSRP (no published trade credit)</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007151</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">—</span></td>
+          <td><span class="pill pill-warn">unverified</span> <span class="pill pill-warn">NOT FOUND in AROYA</span></td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007081</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003567</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003595</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">100%</td>
+          <td class="num">3</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003587</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007111</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007078</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">100%</td>
+          <td class="num">2</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007120</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">100%</td>
+          <td class="num">2</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007068</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003648</td>
+          <td>Sensor Nose</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / weak signal RSSI 1</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-16</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004880</td>
+          <td>Climate Station</td>
+          <td>206 <span class="muted">Flower 206</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 25% / silent 67d</span></td>
+          <td class="num">25%</td>
+          <td class="num">7</td>
+          <td class="num">2026-04-11</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004619</td>
+          <td>Repeater</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 67d</span></td>
+          <td class="num">38%</td>
+          <td class="num">8</td>
+          <td class="num">2026-04-11</td>
+          <td>AROYA H340 Repeater $267 MSRP (no published trade credit)</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004844</td>
+          <td>Climate Station</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 67d</span></td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2026-04-11</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004885</td>
+          <td>Climate Station</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 0% / weak signal RSSI 3 / silent 61d</span></td>
+          <td class="num">0%</td>
+          <td class="num">3</td>
+          <td class="num">2026-04-16</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003658</td>
+          <td>Sensor Nose</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">98%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003551</td>
+          <td>Sensor Nose</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">100%</td>
+          <td class="num">2</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003647</td>
+          <td>Sensor Nose</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003632</td>
+          <td>Sensor Nose</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">92%</td>
+          <td class="num">6</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007108</td>
+          <td>Sensor Nose</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">85%</td>
+          <td class="num">4</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003594</td>
+          <td>Sensor Nose</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">100%</td>
+          <td class="num">5</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003629</td>
+          <td>Sensor Nose</td>
+          <td>207 <span class="muted">Flower 207</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">97%</td>
+          <td class="num">4</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H2100002451</td>
+          <td>Gateway</td>
+          <td>Bathroom Hall <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span></td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num">2026-06-17</td>
+          <td>AROYA H220 Gateway WP5 $345 MSRP (no published trade credit)</td>
+          <td class="num value">$345</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007057</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / weak signal RSSI 0 / silent 62d</span></td>
+          <td class="num">94%</td>
+          <td class="num">0</td>
+          <td class="num">2026-04-16</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003642</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 0% / silent 264d</span></td>
+          <td class="num">0%</td>
+          <td class="num">7</td>
+          <td class="num">2025-09-26</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007106</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 0% / silent 649d</span></td>
+          <td class="num">0%</td>
+          <td class="num">5</td>
+          <td class="num">2024-09-06</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007119</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 681d</span></td>
+          <td class="num">70%</td>
+          <td class="num">7</td>
+          <td class="num">2024-08-05</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003650</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">Flower 101</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / weak signal RSSI 3 / silent 166d</span></td>
+          <td class="num">100%</td>
+          <td class="num">3</td>
+          <td class="num">2026-01-02</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007074</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 3% / silent 262d</span></td>
+          <td class="num">3%</td>
+          <td class="num">5</td>
+          <td class="num">2025-09-28</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007055</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">100%</td>
+          <td class="num">7</td>
+          <td class="num">2025-09-26</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007076</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">Flower 101</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 2% / silent 228d</span></td>
+          <td class="num">2%</td>
+          <td class="num">6</td>
+          <td class="num">2025-11-01</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003584</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">100%</td>
+          <td class="num">7</td>
+          <td class="num">2025-09-25</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003631</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 18% / silent 264d</span></td>
+          <td class="num">18%</td>
+          <td class="num">4</td>
+          <td class="num">2025-09-26</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003699</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 2% / weak signal RSSI 1 / silent 257d</span></td>
+          <td class="num">2%</td>
+          <td class="num">1</td>
+          <td class="num">2025-10-03</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003685</td>
+          <td>Sensor Nose <span class="pill pill-warn">BROKEN</span></td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 0% / weak signal RSSI 1 / silent 257d</span></td>
+          <td class="num">0%</td>
+          <td class="num">1</td>
+          <td class="num">2025-10-03</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007083</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">100%</td>
+          <td class="num">5</td>
+          <td class="num">2025-09-26</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003646</td>
+          <td>Sensor Nose</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 268d</span></td>
+          <td class="num">91%</td>
+          <td class="num">6</td>
+          <td class="num">2025-09-22</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004615</td>
+          <td>Repeater <span class="pill pill-warn">BROKEN</span></td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 489d</span></td>
+          <td class="num">100%</td>
+          <td class="num">6</td>
+          <td class="num">2025-02-13</td>
+          <td>AROYA H340 Repeater $267 MSRP (no published trade credit)</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004573</td>
+          <td>Repeater</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">100%</td>
+          <td class="num">4</td>
+          <td class="num">2025-09-26</td>
+          <td>AROYA H340 Repeater $267 MSRP (no published trade credit)</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004634</td>
+          <td>Repeater</td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / silent 1728d</span></td>
+          <td class="num">58%</td>
+          <td class="num">8</td>
+          <td class="num">2021-09-23</td>
+          <td>AROYA H340 Repeater $267 MSRP (no published trade credit)</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004991</td>
+          <td>Climate Station <span class="pill pill-warn">BROKEN</span></td>
+          <td>Not in Use <span class="muted">—</span></td>
+          <td><span class="pill pill-ok">verified</span> <span class="pill pill-warn">offline / low battery 2% / weak signal RSSI 3 / silent 373d</span></td>
+          <td class="num">2%</td>
+          <td class="num">3</td>
+          <td class="num">2025-06-09</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr></tbody>
+</table></div>
+
+<h2>Section B · Devices on the AROYA network NOT in Jesse's sheet (10)</h2>
+<p>These are parent devices (Sensor Nose / Climate Station / Repeater) physically provisioned at the facility that did not appear in Ali's spreadsheet. Jesse may not realize they're tradeable. Bundled child sensors (TEROS 12, ATM14, ES-2) travel with their parent on return; they're not separate trade-in line items.</p>
+<div class="table-scroll"><table>
+  <thead><tr>
+    <th>Serial</th><th>Type</th><th>Room</th><th>Status</th>
+    <th>Battery</th><th>RSSI</th><th>Last comm</th><th>Trade-in recommendation</th><th>Value</th>
+  </tr></thead>
+  <tbody>
+        <tr>
+          <td class="mono">H1110004813</td>
+          <td>Climate Station</td>
+          <td>Dry/Cure</td>
+          <td>✗ offline <span class="pill pill-warn">offline / weak signal RSSI 1 / silent 766d</span></td>
+          <td class="num">100%</td>
+          <td class="num">1</td>
+          <td class="num">2024-05-12</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004997</td>
+          <td>Climate Station</td>
+          <td>—</td>
+          <td>✗ offline <span class="pill pill-warn">offline / low battery 2% / silent 770d</span></td>
+          <td class="num">2%</td>
+          <td class="num">7</td>
+          <td class="num">2024-05-08</td>
+          <td>Climate One H421 $479 net</td>
+          <td class="num value">$479</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004576</td>
+          <td>Repeater</td>
+          <td>—</td>
+          <td>✗ offline <span class="pill pill-warn">offline / silent 1728d</span></td>
+          <td class="num">56%</td>
+          <td class="num">8</td>
+          <td class="num">2021-09-23</td>
+          <td>AROYA H340 Repeater $267 MSRP</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004607</td>
+          <td>Repeater</td>
+          <td>Flower 102</td>
+          <td>✓ online</td>
+          <td class="num">100%</td>
+          <td class="num">8</td>
+          <td class="num">2026-06-17</td>
+          <td>AROYA H340 Repeater $267 MSRP</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004610</td>
+          <td>Repeater</td>
+          <td>—</td>
+          <td>✗ offline <span class="pill pill-warn">offline / silent 783d</span></td>
+          <td class="num">35%</td>
+          <td class="num">7</td>
+          <td class="num">2024-04-25</td>
+          <td>AROYA H340 Repeater $267 MSRP</td>
+          <td class="num value">$267</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003590</td>
+          <td>Sensor Nose</td>
+          <td>Flower 204</td>
+          <td>✓ online <span class="pill pill-warn">low battery 0% / weak signal RSSI 1</span></td>
+          <td class="num">0%</td>
+          <td class="num">1</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003593</td>
+          <td>Sensor Nose</td>
+          <td>Flower 205</td>
+          <td>✗ offline <span class="pill pill-warn">offline / silent 76d</span></td>
+          <td class="num">100%</td>
+          <td class="num">5</td>
+          <td class="num">2026-04-01</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003690</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td>✗ offline <span class="pill pill-warn">offline / silent 1728d</span></td>
+          <td class="num">83%</td>
+          <td class="num">8</td>
+          <td class="num">2021-09-23</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007116</td>
+          <td>Sensor Nose</td>
+          <td>Flower 204</td>
+          <td>✗ offline <span class="pill pill-warn">offline / low battery 4% / silent 142d</span></td>
+          <td class="num">4%</td>
+          <td class="num">7</td>
+          <td class="num">2026-01-26</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007121</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td>✓ online <span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">100%</td>
+          <td class="num">3</td>
+          <td class="num">2026-06-17</td>
+          <td>TEROS One Single $319 net  |  or Dual $458 (2-for-1)</td>
+          <td class="num value">$319</td>
+        </tr></tbody>
+</table></div>
+
+<h2>Operational health flags (62 devices)</h2>
+<p>Devices that are offline, low-battery, weak-signal, or have been silent &gt; 30 days. AROYA may bench-test on return; flag these to Jesse so he doesn't ship a non-functional unit expecting full trade credit. Flags do NOT disqualify a unit — they just need a heads-up.</p>
+<div class="table-scroll"><table>
+  <thead><tr><th>Serial</th><th>Type</th><th>Room</th><th>Flags</th><th>Last comm</th><th>In Ali sheet?</th></tr></thead>
+  <tbody>
+        <tr>
+          <td class="mono">H1110004803</td>
+          <td>Climate Station</td>
+          <td>Flower 204</td>
+          <td><span class="pill pill-warn">offline / low battery 0% / weak signal RSSI 3</span></td>
+          <td class="num">2026-05-27</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004813</td>
+          <td>Climate Station</td>
+          <td>Dry/Cure</td>
+          <td><span class="pill pill-warn">offline / weak signal RSSI 1 / silent 766d</span></td>
+          <td class="num">2024-05-12</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004823</td>
+          <td>Climate Station</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / low battery 2% / silent 109d</span></td>
+          <td class="num">2026-02-28</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004827</td>
+          <td>Climate Station</td>
+          <td>Flower 205</td>
+          <td><span class="pill pill-warn">offline / low battery 1%</span></td>
+          <td class="num">2026-06-10</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004844</td>
+          <td>Climate Station</td>
+          <td>Flower 207</td>
+          <td><span class="pill pill-warn">offline / silent 67d</span></td>
+          <td class="num">2026-04-11</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004880</td>
+          <td>Climate Station</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">offline / low battery 25% / silent 67d</span></td>
+          <td class="num">2026-04-11</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004885</td>
+          <td>Climate Station</td>
+          <td>Flower 207</td>
+          <td><span class="pill pill-warn">offline / low battery 0% / weak signal RSSI 3 / silent 61d</span></td>
+          <td class="num">2026-04-16</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004922</td>
+          <td>Climate Station</td>
+          <td>Flower 204</td>
+          <td><span class="pill pill-warn">offline / low battery 22% / silent 67d</span></td>
+          <td class="num">2026-04-11</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004986</td>
+          <td>Climate Station</td>
+          <td>Flower 205</td>
+          <td><span class="pill pill-warn">offline / low battery 2% / weak signal RSSI 3 / silent 65d</span></td>
+          <td class="num">2026-04-13</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004991</td>
+          <td>Climate Station</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / low battery 2% / weak signal RSSI 3 / silent 373d</span></td>
+          <td class="num">2025-06-09</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1110004997</td>
+          <td>Climate Station</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / low battery 2% / silent 770d</span></td>
+          <td class="num">2024-05-08</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004573</td>
+          <td>Repeater</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">2025-09-26</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004575</td>
+          <td>Repeater</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">offline / silent 67d</span></td>
+          <td class="num">2026-04-11</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004576</td>
+          <td>Repeater</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 1728d</span></td>
+          <td class="num">2021-09-23</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004606</td>
+          <td>Repeater</td>
+          <td>Flower 204</td>
+          <td><span class="pill pill-warn">offline / low battery 2% / weak signal RSSI 0 / silent 64d</span></td>
+          <td class="num">2026-04-14</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004610</td>
+          <td>Repeater</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 783d</span></td>
+          <td class="num">2024-04-25</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004615</td>
+          <td>Repeater</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 489d</span></td>
+          <td class="num">2025-02-13</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004619</td>
+          <td>Repeater</td>
+          <td>Flower 207</td>
+          <td><span class="pill pill-warn">offline / silent 67d</span></td>
+          <td class="num">2026-04-11</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004625</td>
+          <td>Repeater</td>
+          <td>Flower 205</td>
+          <td><span class="pill pill-warn">offline / low battery 3% / silent 64d</span></td>
+          <td class="num">2026-04-13</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H1100004634</td>
+          <td>Repeater</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 1728d</span></td>
+          <td class="num">2021-09-23</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003497</td>
+          <td>Sensor Nose</td>
+          <td>Flower 103</td>
+          <td><span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003551</td>
+          <td>Sensor Nose</td>
+          <td>Flower 207</td>
+          <td><span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003552</td>
+          <td>Sensor Nose</td>
+          <td>Flower 205</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003554</td>
+          <td>Sensor Nose</td>
+          <td>Flower 204</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003567</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003569</td>
+          <td>Sensor Nose</td>
+          <td>Flower 205</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003584</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">2025-09-25</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003587</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003590</td>
+          <td>Sensor Nose</td>
+          <td>Flower 204</td>
+          <td><span class="pill pill-warn">low battery 0% / weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003593</td>
+          <td>Sensor Nose</td>
+          <td>Flower 205</td>
+          <td><span class="pill pill-warn">offline / silent 76d</span></td>
+          <td class="num">2026-04-01</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003595</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003601</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">2025-09-26</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003616</td>
+          <td>Sensor Nose</td>
+          <td>Flower 102</td>
+          <td><span class="pill pill-warn">low battery 0% / weak signal RSSI 3</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003619</td>
+          <td>Sensor Nose</td>
+          <td>Flower 204</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003622</td>
+          <td>Sensor Nose</td>
+          <td>Flower 103</td>
+          <td><span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003625</td>
+          <td>Sensor Nose</td>
+          <td>Flower 101</td>
+          <td><span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003631</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / low battery 18% / silent 264d</span></td>
+          <td class="num">2025-09-26</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003642</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / low battery 0% / silent 264d</span></td>
+          <td class="num">2025-09-26</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003644</td>
+          <td>Sensor Nose</td>
+          <td>Flower 103</td>
+          <td><span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003645</td>
+          <td>Sensor Nose</td>
+          <td>Flower 205</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003646</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 268d</span></td>
+          <td class="num">2025-09-22</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003648</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">offline / weak signal RSSI 1</span></td>
+          <td class="num">2026-06-16</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003650</td>
+          <td>Sensor Nose</td>
+          <td>Flower 101</td>
+          <td><span class="pill pill-warn">offline / weak signal RSSI 3 / silent 166d</span></td>
+          <td class="num">2026-01-02</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003685</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / low battery 0% / weak signal RSSI 1 / silent 257d</span></td>
+          <td class="num">2025-10-03</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003690</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 1728d</span></td>
+          <td class="num">2021-09-23</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210003699</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / low battery 2% / weak signal RSSI 1 / silent 257d</span></td>
+          <td class="num">2025-10-03</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007055</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">2025-09-26</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007057</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / weak signal RSSI 0 / silent 62d</span></td>
+          <td class="num">2026-04-16</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007068</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007074</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / low battery 3% / silent 262d</span></td>
+          <td class="num">2025-09-28</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007076</td>
+          <td>Sensor Nose</td>
+          <td>Flower 101</td>
+          <td><span class="pill pill-warn">offline / low battery 2% / silent 228d</span></td>
+          <td class="num">2025-11-01</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007078</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007079</td>
+          <td>Sensor Nose</td>
+          <td>Flower 204</td>
+          <td><span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007081</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007083</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 264d</span></td>
+          <td class="num">2025-09-26</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007090</td>
+          <td>Sensor Nose</td>
+          <td>Flower 204</td>
+          <td><span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007106</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / low battery 0% / silent 649d</span></td>
+          <td class="num">2024-09-06</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007111</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">weak signal RSSI 1</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007116</td>
+          <td>Sensor Nose</td>
+          <td>Flower 204</td>
+          <td><span class="pill pill-warn">offline / low battery 4% / silent 142d</span></td>
+          <td class="num">2026-01-26</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007119</td>
+          <td>Sensor Nose</td>
+          <td>—</td>
+          <td><span class="pill pill-warn">offline / silent 681d</span></td>
+          <td class="num">2024-08-05</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007120</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">weak signal RSSI 2</span></td>
+          <td class="num">2026-06-17</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007121</td>
+          <td>Sensor Nose</td>
+          <td>Flower 206</td>
+          <td><span class="pill pill-warn">weak signal RSSI 3</span></td>
+          <td class="num">2026-06-17</td>
+          <td>No</td>
+        </tr></tbody>
+</table></div>
+
+<h2>Needs clarification from Jesse</h2>
+
+    <p>These serials appear in Ali's spreadsheet but are NOT in the active AROYA device database for facility 2950. Possible reasons: already retired, never provisioned, or typo. Ask Jesse to confirm physical possession before assuming trade-in eligibility.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Serial</th><th>Description</th><th>Room (Ali)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono">H1100004067</td>
+          <td>Repeater</td>
+          <td>102</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="mono">H3210007151</td>
+          <td>Sensor Nose</td>
+          <td>206</td>
+          <td></td>
+        </tr></tbody>
+    </table></div>
+
+<h2>What about the AUTOMAIT promo path?</h2>
+<p>AROYA's active promo (expires <strong>2026-08-31</strong>) gives FREE TEROS One Single — 1 per zone — to any facility that buys Drip &amp; Drain Stations (1 per zone at $679 MSRP) and activates an AUTOMAIT subscription across every zone. For Leafy Jungle's 39 zones (rooms 101-103 + 204-207 + Veg + Dry/Cure + Pheno), that would mean: 39× TEROS One Single FREE (worth $16,341 MSRP) + 39× Drip &amp; Drain $679 = $26,481 hardware + AUTOMAIT subscription. This is NOT priced in the scenarios above — it's a different commercial path. If Jesse is interested in AUTOMAIT, swing back and run the full FREE-promo math against the trade-in scenarios.</p>
+
+<h2>Recommendation</h2>
+<p><strong>Lowest net spend → Scenario B (Consolidated Duals), Ali's sheet only: $23,589.</strong> Consolidating 68 legacy substrate pucks into 34 TEROS One Duals halves the substrate-sensor count without losing zone coverage (each Dual reads two positions). If Jesse wants to refresh the full network (Set B included), Scenario B full at <strong>$26,722</strong> is the cheapest complete refresh. If he prefers preserving the current 1-puck-per-position layout, Scenario A is the straight-swap path.</p>
+
+<p><strong>Before shipping units back:</strong> the 2 serials in the "Needs clarification" table aren't in AROYA's database — Jesse should verify those are real physical units before counting them. The 3 BROKEN units he flagged can still earn trade credit (the credit attaches to the new SKU bought, not the returned device), but expect AROYA to note the condition on receipt.</p>
+
+<footer>
+Generated 2026-06-17 by Cian Sullivan · Addium for Leafy Jungle Corp · Facility 2950 · org 2283. Network state pulled live from api.aroya.io/public_api + api.aroya.io SPA devices endpoint. Pricing sourced from Flying Dutchman Palm Desert Trade-In Report (2026-06-11) and store.addium.io live SKUs. No fabricated numbers — every $ figure ties back to the published trade-in matrix.
+<!-- aroya-mobile-qa-v2-marker -->
+</footer>
+
+</div>
+</body>
+</html>
