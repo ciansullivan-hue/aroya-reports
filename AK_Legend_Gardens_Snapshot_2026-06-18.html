@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Legend Gardens — Pre-Meeting Snapshot · 2026-06-18</title>
+<style>
+  :root{
+    --olive:#5b6b2f; --lime:#a3c644; --app-blue:#2f6f8f; --ink:#1d2310;
+    --paper:#fbfcf7; --card:#ffffff; --line:#e3e7d4; --muted:#6c7358;
+    --warn:#c4622d; --good:#5b8a2f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 60px}
+  header{border-bottom:3px solid var(--lime);padding-bottom:14px;margin-bottom:8px}
+  .kic{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--olive);font-weight:700}
+  h1{margin:6px 0 4px;font-size:26px}
+  h2{font-size:19px;margin:30px 0 10px;color:var(--olive);border-left:4px solid var(--lime);padding-left:10px}
+  h3{font-size:15px;margin:18px 0 6px}
+  .meta{color:var(--muted);font-size:13px}
+  .note{background:#fff7ed;border:1px solid #f0d3b0;border-left:4px solid var(--warn);
+    padding:12px 14px;border-radius:8px;margin:16px 0;font-size:14px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+  @media(max-width:680px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .card h3{margin-top:0;color:var(--app-blue)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}
+  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+  td.v{font-variant-numeric:tabular-nums;font-weight:600}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600}
+  .pill.flower{background:#f4a26122;color:#9a4a1b;border:1px solid #f4a26155}
+  .pill.warn{background:#c4622d18;color:#8a3d18;border:1px solid #c4622d44}
+  .pill.ok{background:#5b8a2f18;color:#3c5c1f;border:1px solid #5b8a2f44}
+  ul{margin:8px 0;padding-left:20px}
+  li{margin:5px 0}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:12px}
+  code{background:#eef0e4;padding:1px 5px;border-radius:4px;font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="kic">AROYA · Pre-Meeting Snapshot</span>
+  <h1>AK Legend Gardens</h1>
+  <div class="meta">Facility 4693 · Org 3663 · 2 flower rooms (soilless) · Meeting: Jered Buss × Cian, 3:30 PM PT · Generated 2026-06-18</div>
+</header>
+
+<div class="note">
+  <strong>Scope of this document.</strong> This is a <em>genuine-data snapshot</em>, not the full
+  11-section gold-standard 14-day audit. The scheduled-run environment had no live AROYA browser
+  bridge, so harvest-group / cultivar metadata, room config &amp; guardrails, device health, and the
+  true 14-day per-point time-series could not be pulled this run. Numbers below are from
+  <code>get_raw_data</code> (public API): the <strong>14-day aggregate stats are genuine over the full
+  2026-06-04 → 2026-06-18 window</strong>; the daily/diurnal shape reflects the <strong>last ~24 h only</strong>
+  (a documented per-point clamp). Nothing here is synthesized. Re-run with the AROYA Chrome tab + browser
+  bridge connected to generate the full published audit, HG table, and device-health dashboard.
+</div>
+
+<h2>Headline</h2>
+<p>
+  Both flower rooms are reporting climate normally. <strong>Flower Room 1</strong> is substrate-instrumented
+  and showing a healthy daily dryback; <strong>Flower Room 2 is returning climate only — no substrate
+  moisture/EC series</strong>, meaning irrigation in that room is currently running without VWC/EC
+  visibility. The two rooms are also running noticeably different climates (Room 1 warmer &amp; more humid,
+  Room 2 cooler &amp; drier). Both are worth raising with Jered. This connects to the standing
+  "dryback" conversation theme.
+</p>
+
+<h2>Per-Room Read (14-day aggregates · genuine)</h2>
+<div class="grid">
+  <div class="card">
+    <h3>Flower Room 1 — Zone 1 <span class="pill flower">FLOWER</span></h3>
+    <table>
+      <tr><th>Metric</th><th>Mean</th><th>Range</th></tr>
+      <tr><td>Substrate VWC</td><td class="v">41.9%</td><td>35.2 – 51.3%</td></tr>
+      <tr><td>Pore EC</td><td class="v">4.09 mS/cm</td><td>3.94 – 4.19</td></tr>
+      <tr><td>Substrate temp</td><td class="v">80.0 °F</td><td>77.0 – 82.1</td></tr>
+      <tr><td>Air temp</td><td class="v">80.2 °F</td><td>76.6 – 83.6</td></tr>
+      <tr><td>RH</td><td class="v">73.3%</td><td>68.4 – 78.2</td></tr>
+      <tr><td>VPD</td><td class="v">0.94 kPa</td><td>0.73 – 1.21</td></tr>
+      <tr><td>CO₂</td><td class="v">1460 ppm</td><td>1376 – 1638</td></tr>
+    </table>
+    <p style="margin:10px 0 0;font-size:13px">
+      <strong>Today's dryback:</strong> peak ≈ 51% VWC → pre-irrigation low ≈ 35% =
+      <strong>~16 pp absolute</strong>. That sits in a solid generative-leaning band for flower bulking
+      (benchmark ≈ 15–25 pp absolute). Pore EC stable mid-range (~4.1), not aggressively stacked.
+    </p>
+  </div>
+  <div class="card">
+    <h3>Flower Room 2 — Zone 2 <span class="pill warn">SUBSTRATE OFFLINE</span></h3>
+    <table>
+      <tr><th>Metric</th><th>Mean</th><th>Range</th></tr>
+      <tr><td>Substrate VWC</td><td class="v">— </td><td>no series</td></tr>
+      <tr><td>Pore EC</td><td class="v">— </td><td>no series</td></tr>
+      <tr><td>Air temp</td><td class="v">75.7 °F</td><td>73.2 – 78.0</td></tr>
+      <tr><td>RH</td><td class="v">65.5%</td><td>61.8 – 70.5</td></tr>
+      <tr><td>VPD</td><td class="v">1.05 kPa</td><td>0.84 – 1.24</td></tr>
+      <tr><td>CO₂</td><td class="v">1584 ppm</td><td>1185 – 2000*</td></tr>
+    </table>
+    <p style="margin:10px 0 0;font-size:13px">
+      <strong>No substrate moisture/EC reporting</strong> over the window — the TEROS-12 substrate probe
+      (battery-powered) is likely offline or unassigned. Irrigation here can't be steered to a dryback
+      target without it. *CO₂ frequently pinned at the 2000 ppm sensor ceiling.
+    </p>
+  </div>
+</div>
+
+<h2>Talking Points for Jered</h2>
+<ul>
+  <li><strong>Room 2 substrate sensor is dark — top priority.</strong> Without VWC/EC you're irrigating
+    Room 2 blind. Worth confirming on-screen whether the probe is offline (battery/node) or just
+    unassigned to the room, and getting it back before steering decisions.</li>
+  <li><strong>Room 1 dryback looks good (~16 pp absolute/day).</strong> Confirm the intended steering for
+    the current phase — <em>open question, not documented this run</em> — so we can say whether 16 pp is
+    on target (bulking) or wants deepening (ripening, push toward 25–35 pp via a longer P3 dry-down).</li>
+  <li><strong>Climate split between rooms.</strong> Room 1 runs warmer (80 °F) and more humid (73% RH,
+    VPD 0.94) than Room 2 (76 °F, 65% RH, VPD 1.05). If both are in comparable flower phases, Room 1's
+    high canopy RH / low VPD is the late-flower mold-risk lever — consider nudging Room 1 RH down toward
+    Room 2's tighter band (VPD ~1.0–1.2).</li>
+  <li><strong>Pore EC ~4.1 stable in Room 1.</strong> Moderate; if ripening, an EC restack (toward 6–8)
+    drives finishing metabolites. Depends on phase/cultivar target — confirm with Jered.</li>
+</ul>
+
+<h2>Data Quality &amp; Caveats</h2>
+<ul>
+  <li>14-day aggregate stats (mean/min/max) are genuine over 2026-06-04 → 2026-06-18 (n≈480 binned points/series). Diurnal shape = last ~24 h only.</li>
+  <li>Irrigation event count via drip-volume = <strong>0</strong> (no flow meter instrumented). Shots are inferable only from VWC step-up signatures; full 14-day shot cadence not retrievable this run.</li>
+  <li>Flower Room 2 substrate series absent — VWC/EC/substrate-temp unavailable for that room.</li>
+  <li>Harvest-group names, cultivars, flip/harvest dates, plant counts, room config/guardrails, and device-health telemetry require the AROYA browser bridge — offline this run.</li>
+</ul>
+
+<footer>
+  AROYA internal pre-meeting snapshot · facility 4693 · data: AROYA public API <code>get_raw_data</code> ·
+  dryback expressed as absolute percentage points · irrigation framed P0–P3 · not for external distribution.
+</footer>
+</div>
+</body>
+</html>
