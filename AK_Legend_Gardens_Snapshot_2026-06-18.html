@@ -1,141 +1,280 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AK Legend Gardens — Pre-Meeting Snapshot · 2026-06-18</title>
-<style>
-  :root{
-    --olive:#5b6b2f; --lime:#a3c644; --app-blue:#2f6f8f; --ink:#1d2310;
-    --paper:#fbfcf7; --card:#ffffff; --line:#e3e7d4; --muted:#6c7358;
-    --warn:#c4622d; --good:#5b8a2f;
+<!DOCTYPE html><html lang="en" data-lang="en" data-theme="light"><head><meta charset="utf-8"><title>AK Legend Gardens · Pre-Meeting Snapshot · 2026-06-18</title><style>
+  :root[data-theme="light"]{
+    --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
+    --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
+    --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
+    --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
+    --attention:#e76f51; --attention-2:#f4a261;
+    --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
+    --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
+    --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+    --grid-line: #e8e8e0;
+  }
+  :root[data-theme="dark"]{
+    --bg:#13160f; --bg-2:#1a1e15; --bg-3:#22281c; --border:#2e3624;
+    --ink:#e8ead9; --ink-2:#b9bda5; --ink-muted:#7e836e;
+    --olive:#8aa05c; --olive-2:#a7bb74; --lime:#b9e587; --lime-2:#6b8d3d;
+    --app-blue:#6cb5d8; --app-blue-2:#3a6d80;
+    --attention:#f48066; --attention-2:#f4a261;
+    --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
+    --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
+    --p-rootin:#7fbacd; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#b694ea; --p-ripening:#e76f51;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 8px 28px rgba(0,0,0,0.45);
+    --grid-line: #2a3220;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--paper);color:var(--ink);
-    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
-  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 60px}
-  header{border-bottom:3px solid var(--lime);padding-bottom:14px;margin-bottom:8px}
-  .kic{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--olive);font-weight:700}
-  h1{margin:6px 0 4px;font-size:26px}
-  h2{font-size:19px;margin:30px 0 10px;color:var(--olive);border-left:4px solid var(--lime);padding-left:10px}
-  h3{font-size:15px;margin:18px 0 6px}
-  .meta{color:var(--muted);font-size:13px}
-  .note{background:#fff7ed;border:1px solid #f0d3b0;border-left:4px solid var(--warn);
-    padding:12px 14px;border-radius:8px;margin:16px 0;font-size:14px}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
-  @media(max-width:680px){.grid{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
-  .card h3{margin-top:0;color:var(--app-blue)}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}
-  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
-  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
-  td.v{font-variant-numeric:tabular-nums;font-weight:600}
-  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600}
-  .pill.flower{background:#f4a26122;color:#9a4a1b;border:1px solid #f4a26155}
-  .pill.warn{background:#c4622d18;color:#8a3d18;border:1px solid #c4622d44}
-  .pill.ok{background:#5b8a2f18;color:#3c5c1f;border:1px solid #5b8a2f44}
-  ul{margin:8px 0;padding-left:20px}
-  li{margin:5px 0}
-  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:12px}
-  code{background:#eef0e4;padding:1px 5px;border-radius:4px;font-size:12.5px}
+  html,body{margin:0;padding:0;font:14px/1.5 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","ss03"}
+  a{color:var(--app-blue);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+  .masthead{background:#1a1c19;color:#fff;padding:20px 28px 24px;margin:0 -28px 0;position:relative;overflow:hidden;min-height:80px}
+  .masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1}
+  .lockup{position:relative;display:flex;align-items:center;gap:10px;color:#fff;padding-bottom:14px}
+  .lockup-mark{font-family:'Inter',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:1;color:#fff}
+  .lockup-glyph{display:inline-block;width:26px;height:26px;position:relative;flex:none}
+  .lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#fff;border-radius:2px}
+  .lockup-glyph::before{top:0;right:0;width:13px;height:13px}
+  .lockup-glyph::after{bottom:0;left:0;width:17px;height:17px;border-top-right-radius:0}
+  .lockup-byline{position:absolute;top:34px;left:0;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;color:#aaa;letter-spacing:0;line-height:1}
+  .controls{display:flex;gap:6px;align-items:center}
+  .btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
+  .btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
+  .btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
+  .tick{position:absolute;width:7px;height:7px;background:#3a3d35;border-radius:1px;z-index:0}
+  .tick.t1{top:14px;left:42%} .tick.t2{top:14px;left:48%;width:8px;height:8px} .tick.t3{top:14px;right:24%;width:6px;height:6px}
+  .tick.t4{bottom:12px;left:18%} .tick.t5{bottom:12px;left:22%;width:5px;height:5px}
+  .tick.t6{top:46%;right:18px} .tick.t7{bottom:12px;right:32%;width:6px;height:6px}
+  .pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+  .pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
+  .pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
+  .pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+  .pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+  .pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+  section{margin-top:40px}
+  h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+  h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+  p{margin:0 0 12px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+  .kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
+  .kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
+  .kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+  .kpi .val{font-size:22px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+  .kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
+  .kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
+  .card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
+  .phase{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .phase.bulking{background:var(--p-bulking);color:#2c1750}
+  .phase.dry{background:var(--bg-3);color:var(--ink-muted)}
+  .verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
+  .verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
+  .verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
+  .verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
+  .verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+  table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+  th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
+  .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
+  .room-meta{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:0 0 18px;box-shadow:var(--card-shadow)}
+  .room-meta .rm-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:10px}
+  .room-meta h3{margin:0;font-size:18px}
+  .room-meta .rm-note{margin-top:8px;font-size:13px;color:var(--ink-2);font-style:italic}
+  .en .es-only{display:none} .es .en-only{display:none}
+  .rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow)}
+  .rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
+  .rec .owner.grower{background:var(--app-blue)} .rec .owner.process{background:var(--ink-2)}
+  .rec .raction{margin-top:6px;font-weight:500}
+  .rec .rwhy{margin-top:4px;font-size:13px;color:var(--ink-2)}
+  .callout{font-size:13.5px;color:var(--ink-2);margin:14px 0;padding:12px 14px;background:var(--bg-3);border-left:3px solid var(--olive);border-radius:0 8px 8px 0;line-height:1.55}
+  footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+  .muted{color:var(--ink-muted);font-style:italic}
 </style>
-</head>
-<body>
-<div class="wrap">
-<header>
-  <span class="kic">AROYA · Pre-Meeting Snapshot</span>
-  <h1>AK Legend Gardens</h1>
-  <div class="meta">Facility 4693 · Org 3663 · 2 flower rooms (soilless) · Meeting: Jered Buss × Cian, 3:30 PM PT · Generated 2026-06-18</div>
-</header>
-
-<div class="note">
-  <strong>Scope of this document.</strong> This is a <em>genuine-data snapshot</em>, not the full
-  11-section gold-standard 14-day audit. The scheduled-run environment had no live AROYA browser
-  bridge, so harvest-group / cultivar metadata, room config &amp; guardrails, device health, and the
-  true 14-day per-point time-series could not be pulled this run. Numbers below are from
-  <code>get_raw_data</code> (public API): the <strong>14-day aggregate stats are genuine over the full
-  2026-06-04 → 2026-06-18 window</strong>; the daily/diurnal shape reflects the <strong>last ~24 h only</strong>
-  (a documented per-point clamp). Nothing here is synthesized. Re-run with the AROYA Chrome tab + browser
-  bridge connected to generate the full published audit, HG table, and device-health dashboard.
-</div>
-
-<h2>Headline</h2>
-<p>
-  Both flower rooms are reporting climate normally. <strong>Flower Room 1</strong> is substrate-instrumented
-  and showing a healthy daily dryback; <strong>Flower Room 2 is returning climate only — no substrate
-  moisture/EC series</strong>, meaning irrigation in that room is currently running without VWC/EC
-  visibility. The two rooms are also running noticeably different climates (Room 1 warmer &amp; more humid,
-  Room 2 cooler &amp; drier). Both are worth raising with Jered. This connects to the standing
-  "dryback" conversation theme.
-</p>
-
-<h2>Per-Room Read (14-day aggregates · genuine)</h2>
-<div class="grid">
-  <div class="card">
-    <h3>Flower Room 1 — Zone 1 <span class="pill flower">FLOWER</span></h3>
-    <table>
-      <tr><th>Metric</th><th>Mean</th><th>Range</th></tr>
-      <tr><td>Substrate VWC</td><td class="v">41.9%</td><td>35.2 – 51.3%</td></tr>
-      <tr><td>Pore EC</td><td class="v">4.09 mS/cm</td><td>3.94 – 4.19</td></tr>
-      <tr><td>Substrate temp</td><td class="v">80.0 °F</td><td>77.0 – 82.1</td></tr>
-      <tr><td>Air temp</td><td class="v">80.2 °F</td><td>76.6 – 83.6</td></tr>
-      <tr><td>RH</td><td class="v">73.3%</td><td>68.4 – 78.2</td></tr>
-      <tr><td>VPD</td><td class="v">0.94 kPa</td><td>0.73 – 1.21</td></tr>
-      <tr><td>CO₂</td><td class="v">1460 ppm</td><td>1376 – 1638</td></tr>
-    </table>
-    <p style="margin:10px 0 0;font-size:13px">
-      <strong>Today's dryback:</strong> peak ≈ 51% VWC → pre-irrigation low ≈ 35% =
-      <strong>~16 pp absolute</strong>. That sits in a solid generative-leaning band for flower bulking
-      (benchmark ≈ 15–25 pp absolute). Pore EC stable mid-range (~4.1), not aggressively stacked.
-    </p>
+<!-- aroya-mobile-qa-v2 --><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style id="aroya-mobile-qa">
+  @media (max-width:560px){
+    .wrap{padding:0 14px 60px}
+    .masthead{margin:0 -14px}
+    .pagehead h1{font-size:24px}
+    .kpis{grid-template-columns:1fr 1fr}
+  }
+  img, svg, video, canvas { max-width: 100%; height: auto; }
+  table{display:block;overflow-x:auto;white-space:nowrap}
+</style></head>
+<body class="en"><div class="wrap"><div class="masthead">
+  <span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span><span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
+  <div class="masthead-inner">
+    <div class="lockup">
+      <span class="lockup-mark">AROYA</span>
+      <span class="lockup-glyph" aria-hidden="true"></span>
+      <span class="lockup-byline">by Addium</span>
+    </div>
+    <div class="controls">
+      <button class="btn lang-btn active" data-lang="en">EN</button>
+      <button class="btn lang-btn" data-lang="es">ES</button>
+      <button class="btn theme-btn" data-theme="dark">Dark</button>
+    </div>
   </div>
-  <div class="card">
-    <h3>Flower Room 2 — Zone 2 <span class="pill warn">SUBSTRATE OFFLINE</span></h3>
-    <table>
-      <tr><th>Metric</th><th>Mean</th><th>Range</th></tr>
-      <tr><td>Substrate VWC</td><td class="v">— </td><td>no series</td></tr>
-      <tr><td>Pore EC</td><td class="v">— </td><td>no series</td></tr>
-      <tr><td>Air temp</td><td class="v">75.7 °F</td><td>73.2 – 78.0</td></tr>
-      <tr><td>RH</td><td class="v">65.5%</td><td>61.8 – 70.5</td></tr>
-      <tr><td>VPD</td><td class="v">1.05 kPa</td><td>0.84 – 1.24</td></tr>
-      <tr><td>CO₂</td><td class="v">1584 ppm</td><td>1185 – 2000*</td></tr>
-    </table>
-    <p style="margin:10px 0 0;font-size:13px">
-      <strong>No substrate moisture/EC reporting</strong> over the window — the TEROS-12 substrate probe
-      (battery-powered) is likely offline or unassigned. Irrigation here can't be steered to a dryback
-      target without it. *CO₂ frequently pinned at the 2000 ppm sensor ceiling.
-    </p>
+</div>
+<div class="pagehead">
+  <div class="pagehead-eyebrow"><span class="en-only">AROYA · Pre-Meeting Snapshot · Cultivation Intelligence</span><span class="es-only">AROYA · Resumen Pre-Reunión</span></div>
+  <h1><span class="en-only">AK Legend Gardens · Current-State Read</span><span class="es-only">AK Legend Gardens · Estado Actual</span></h1>
+  <div class="sub"><span class="en-only">Quick read of your two flower rooms ahead of today's call · 14-day aggregates with today's dryback cycle · phases signal-inferred (no HG roster this run)</span><span class="es-only">Lectura rápida de sus dos salas de flora · agregados de 14 días · fases inferidas por señal</span></div>
+  <div class="meta">
+    <span><b><span class="en-only">Facility</span><span class="es-only">Instalación</span></b>AK Legend Gardens (ID 4693)</span>
+    <span><b><span class="en-only">Window</span><span class="es-only">Ventana</span></b>2026-06-04 → 2026-06-18 (14-day aggregates)</span>
+    <span><b><span class="en-only">Rooms</span><span class="es-only">Salas</span></b>2 rooms (1 fully sensed, 1 climate-only)</span>
+    <span><b><span class="en-only">Substrate</span><span class="es-only">Sustrato</span></b>Soilless (type not set in AROYA)</span>
+    <span><b><span class="en-only">Meeting</span><span class="es-only">Reunión</span></b>Jered Buss × Cian · 3:30 PM PT</span>
+    <span><b><span class="en-only">Source</span><span class="es-only">Fuente</span></b>AROYA public_api · get_raw_data</span>
+    <span><b><span class="en-only">Report date</span><span class="es-only">Fecha</span></b>2026-06-18</span>
   </div>
 </div>
 
-<h2>Talking Points for Jered</h2>
-<ul>
-  <li><strong>Room 2 substrate sensor is dark — top priority.</strong> Without VWC/EC you're irrigating
-    Room 2 blind. Worth confirming on-screen whether the probe is offline (battery/node) or just
-    unassigned to the room, and getting it back before steering decisions.</li>
-  <li><strong>Room 1 dryback looks good (~16 pp absolute/day).</strong> Confirm the intended steering for
-    the current phase — <em>open question, not documented this run</em> — so we can say whether 16 pp is
-    on target (bulking) or wants deepening (ripening, push toward 25–35 pp via a longer P3 dry-down).</li>
-  <li><strong>Climate split between rooms.</strong> Room 1 runs warmer (80 °F) and more humid (73% RH,
-    VPD 0.94) than Room 2 (76 °F, 65% RH, VPD 1.05). If both are in comparable flower phases, Room 1's
-    high canopy RH / low VPD is the late-flower mold-risk lever — consider nudging Room 1 RH down toward
-    Room 2's tighter band (VPD ~1.0–1.2).</li>
-  <li><strong>Pore EC ~4.1 stable in Room 1.</strong> Moderate; if ripening, an EC restack (toward 6–8)
-    drives finishing metabolites. Depends on phase/cultivar target — confirm with Jered.</li>
-</ul>
+<div class="verdict warn">
+  <div class="v-head"><span class="en-only">Scope</span><span class="es-only">Alcance</span></div>
+  <span class="en-only">Genuine-data <b>snapshot</b>, not the full 11-section 14-day audit. The scheduled run had no live AROYA browser bridge, so harvest-group / cultivar metadata, room config &amp; guardrails, device health, and the true 14-day per-point time-series (the overlay charts) could not be pulled. The 14-day aggregate stats below are genuine over 2026-06-04 → 2026-06-18; the diurnal dryback read is the last ~24 h. Nothing is synthesized.</span>
+  <span class="es-only">Resumen con datos reales, no la auditoría completa de 14 días. Sin puente de navegador AROYA esta ejecución: sin metadatos de grupo de cosecha, configuración ni salud de dispositivos. Los agregados de 14 días son reales; el ciclo diurno es de las últimas ~24 h.</span>
+</div>
 
-<h2>Data Quality &amp; Caveats</h2>
-<ul>
-  <li>14-day aggregate stats (mean/min/max) are genuine over 2026-06-04 → 2026-06-18 (n≈480 binned points/series). Diurnal shape = last ~24 h only.</li>
-  <li>Irrigation event count via drip-volume = <strong>0</strong> (no flow meter instrumented). Shots are inferable only from VWC step-up signatures; full 14-day shot cadence not retrievable this run.</li>
-  <li>Flower Room 2 substrate series absent — VWC/EC/substrate-temp unavailable for that room.</li>
-  <li>Harvest-group names, cultivars, flip/harvest dates, plant counts, room config/guardrails, and device-health telemetry require the AROYA browser bridge — offline this run.</li>
-</ul>
+<section>
+<h2><span class="en-only">At a glance</span><span class="es-only">Resumen</span></h2>
+<div class="kpis">
+  <div class="kpi good">
+    <div class="label">Room 1 · daily dryback</div>
+    <div class="val">~16 pp</div>
+    <div class="delta"><span class="en-only">absolute (51% → 35% VWC) · solid generative band</span><span class="es-only">absoluto (51% → 35%) · banda generativa</span></div>
+  </div>
+  <div class="kpi">
+    <div class="label">Room 1 · pore EC</div>
+    <div class="val">4.1 <span style="font-size:13px">mS/cm</span></div>
+    <div class="delta"><span class="en-only">stable (3.94–4.19) · not heavily stacked</span><span class="es-only">estable · sin acumulación fuerte</span></div>
+  </div>
+  <div class="kpi warn">
+    <div class="label">Room 1 · VPD / RH</div>
+    <div class="val">0.94 / 73%</div>
+    <div class="delta"><span class="en-only">humid for flower · mold-risk lever</span><span class="es-only">húmedo para flora · riesgo de moho</span></div>
+  </div>
+  <div class="kpi bad">
+    <div class="label">Room 2 · substrate sensing</div>
+    <div class="val">OFFLINE</div>
+    <div class="delta"><span class="en-only">no VWC / EC series · irrigating blind</span><span class="es-only">sin VWC / EC · riego a ciegas</span></div>
+  </div>
+</div>
+</section>
+
+<section>
+<h2><span class="en-only">Per-room read · 14-day aggregates</span><span class="es-only">Por sala · agregados 14 días</span></h2>
+
+<div class="room-meta">
+  <div class="rm-head">
+    <h3>Flower Room 1 · Zone 1</h3>
+    <span class="phase bulking">Flower · inferred</span>
+  </div>
+  <table>
+    <thead><tr><th>Metric</th><th class="num">Mean</th><th class="num">Range</th></tr></thead>
+    <tbody>
+      <tr><td>Substrate VWC</td><td class="num">41.9%</td><td class="num">35.2 – 51.3%</td></tr>
+      <tr><td>Pore EC</td><td class="num">4.09 mS/cm</td><td class="num">3.94 – 4.19</td></tr>
+      <tr><td>Substrate temp</td><td class="num">80.0 °F</td><td class="num">77.0 – 82.1</td></tr>
+      <tr><td>Air temp</td><td class="num">80.2 °F</td><td class="num">76.6 – 83.6</td></tr>
+      <tr><td>RH</td><td class="num">73.3%</td><td class="num">68.4 – 78.2</td></tr>
+      <tr><td>VPD</td><td class="num">0.94 kPa</td><td class="num">0.73 – 1.21</td></tr>
+      <tr><td>CO₂</td><td class="num">1460 ppm</td><td class="num">1376 – 1638</td></tr>
+    </tbody>
+  </table>
+  <div class="rm-note"><span class="en-only">Today's cycle: peak ≈ 51% VWC → pre-irrigation low ≈ 35% = ~16 pp absolute dryback — a solid generative-leaning band for flower bulking (benchmark ≈ 15–25 pp absolute). Pore EC stable mid-range (~4.1), not aggressively stacked.</span><span class="es-only">Ciclo de hoy: pico ≈ 51% → mínimo ≈ 35% = ~16 pp absoluto, banda generativa sólida. EC estable (~4.1).</span></div>
+</div>
+
+<div class="room-meta">
+  <div class="rm-head">
+    <h3>Flower Room 2 · Zone 2</h3>
+    <span class="pill bad">Substrate offline</span>
+  </div>
+  <table>
+    <thead><tr><th>Metric</th><th class="num">Mean</th><th class="num">Range</th></tr></thead>
+    <tbody>
+      <tr><td>Substrate VWC</td><td class="num muted">—</td><td class="num muted">no series</td></tr>
+      <tr><td>Pore EC</td><td class="num muted">—</td><td class="num muted">no series</td></tr>
+      <tr><td>Air temp</td><td class="num">75.7 °F</td><td class="num">73.2 – 78.0</td></tr>
+      <tr><td>RH</td><td class="num">65.5%</td><td class="num">61.8 – 70.5</td></tr>
+      <tr><td>VPD</td><td class="num">1.05 kPa</td><td class="num">0.84 – 1.24</td></tr>
+      <tr><td>CO₂</td><td class="num">1584 ppm</td><td class="num">1185 – 2000*</td></tr>
+    </tbody>
+  </table>
+  <div class="rm-note"><span class="en-only">No substrate moisture/EC reporting over the window — the TEROS-12 substrate probe (battery-powered) is likely offline or unassigned. Irrigation here can't be steered to a dryback target without it. *CO₂ frequently pinned at the 2000 ppm sensor ceiling.</span><span class="es-only">Sin VWC/EC en la ventana — sonda TEROS-12 probablemente desconectada. *CO₂ tope 2000 ppm.</span></div>
+</div>
+</section>
+
+<section>
+<h2><span class="en-only">Talking points for Jered</span><span class="es-only">Puntos para Jered</span></h2>
+
+<div class="rec">
+  <span class="owner process">Priority</span><span class="en-only">Room 2 substrate sensor is dark</span><span class="es-only">Sonda de sustrato Sala 2 sin datos</span>
+  <div class="raction"><span class="en-only">Confirm on-screen whether the probe is offline (battery/node) or just unassigned, and get it back before any steering decisions.</span><span class="es-only">Confirmar si está desconectada o sin asignar y recuperarla antes de decidir riego.</span></div>
+  <div class="rwhy"><span class="en-only">Without VWC/EC you're irrigating Room 2 blind — no dryback target possible.</span><span class="es-only">Sin VWC/EC, el riego de la Sala 2 es a ciegas.</span></div>
+</div>
+
+<div class="rec">
+  <span class="owner grower">Steering</span><span class="en-only">Room 1 dryback looks good (~16 pp absolute/day)</span><span class="es-only">Dryback Sala 1 bien (~16 pp/día)</span>
+  <div class="raction"><span class="en-only">Confirm the intended steering for the current phase so we can say whether 16 pp is on target (bulking) or wants deepening (ripening → push toward 25–35 pp via a longer P3 dry-down).</span><span class="es-only">Confirmar el objetivo de la fase actual: 16 pp ¿en meta (engorde) o profundizar (maduración 25–35 pp)?</span></div>
+  <div class="rwhy muted"><span class="en-only">Phase + dryback target not documented this run — open question.</span><span class="es-only">Objetivo de fase no documentado — pregunta abierta.</span></div>
+</div>
+
+<div class="rec">
+  <span class="owner">Climate</span><span class="en-only">Room split — Room 1 warmer &amp; more humid than Room 2</span><span class="es-only">Diferencia de clima entre salas</span>
+  <div class="raction"><span class="en-only">Room 1 runs 80 °F / 73% RH / VPD 0.94 vs Room 2 at 76 °F / 65% RH / VPD 1.05. If both are in comparable flower phases, nudge Room 1 RH down toward Room 2's tighter band (VPD ~1.0–1.2).</span><span class="es-only">Sala 1: 80 °F / 73% / VPD 0.94 vs Sala 2: 76 °F / 65% / VPD 1.05. Bajar HR de Sala 1 hacia VPD 1.0–1.2.</span></div>
+  <div class="rwhy"><span class="en-only">High canopy RH / low VPD in Room 1 is the late-flower mold-risk lever.</span><span class="es-only">HR alta en dosel de Sala 1 = riesgo de moho en flora tardía.</span></div>
+</div>
+
+<div class="rec">
+  <span class="owner grower">EC</span><span class="en-only">Room 1 pore EC ~4.1 stable</span><span class="es-only">EC poro Sala 1 ~4.1 estable</span>
+  <div class="raction"><span class="en-only">Moderate; if ripening, an EC restack (toward 6–8) drives finishing metabolites. Depends on phase/cultivar target — confirm with Jered.</span><span class="es-only">Moderado; si madura, reapilar EC (6–8) para metabolitos de cierre. Confirmar con Jered.</span></div>
+</div>
+</section>
+
+<section>
+<h2><span class="en-only">Data quality &amp; caveats</span><span class="es-only">Calidad de datos</span></h2>
+<div class="callout">
+  <span class="en-only">
+    • 14-day aggregate stats (mean / min / max) are genuine over 2026-06-04 → 2026-06-18 (n ≈ 480 binned points per series). Diurnal shape = last ~24 h only (documented per-point clamp on <kbd style="font-family:monospace">get_raw_data</kbd>).<br>
+    • Irrigation event count via drip-volume = 0 (no flow meter instrumented). Shots inferable only from VWC step-up signatures; full 14-day shot cadence not retrievable this run.<br>
+    • Flower Room 2 substrate series absent — VWC / EC / substrate-temp unavailable for that room.<br>
+    • Harvest-group names, cultivars, flip/harvest dates, plant counts, room config / guardrails, and device-health telemetry require the AROYA browser bridge — offline this run. Re-run with app.aroya.io open + bridge connected for the full gold-standard audit + device-health dashboard.
+  </span>
+  <span class="es-only">
+    • Agregados de 14 días reales (2026-06-04 → 2026-06-18). Forma diurna = últimas ~24 h.<br>
+    • Conteo de riego por volumen = 0 (sin caudalímetro).<br>
+    • Sala 2 sin serie de sustrato.<br>
+    • Metadatos de grupo de cosecha, cultivares y salud de dispositivos requieren el puente de navegador AROYA — desconectado.
+  </span>
+</div>
+</section>
 
 <footer>
-  AROYA internal pre-meeting snapshot · facility 4693 · data: AROYA public API <code>get_raw_data</code> ·
-  dryback expressed as absolute percentage points · irrigation framed P0–P3 · not for external distribution.
+  <span class="en-only">AROYA · pre-meeting snapshot · facility 4693 · data: AROYA public API get_raw_data · dryback in absolute percentage points · irrigation framed P0–P3 · internal — not for external distribution.</span>
+  <span class="es-only">AROYA · resumen pre-reunión · instalación 4693 · interno.</span>
 </footer>
 </div>
-</body>
-</html>
+<script>
+(function(){
+  var root=document.documentElement, body=document.body;
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var l=b.getAttribute('data-lang');
+      document.querySelectorAll('.lang-btn').forEach(function(x){x.classList.toggle('active',x===b)});
+      body.className=l; root.setAttribute('data-lang',l); root.setAttribute('lang',l);
+    });
+  });
+  var tb=document.querySelector('.theme-btn');
+  tb.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark';
+    root.setAttribute('data-theme',dark?'light':'dark');
+    tb.textContent=dark?'Dark':'Light';
+    tb.classList.toggle('active',!dark);
+  });
+})();
+</script>
+</body></html>
