@@ -6558,25 +6558,6 @@ function initProfiles(){
   }catch(e){}
 })();
 
-/* ---------- INIT ---------- */
-renderPhaseGuide();
-renderMatrix();
-renderNotes();
-drawHeatBoxes();
-updateCalc();
-updateIrrigation();
-updateDensity();
-updateFeedRate();
-/* v2 init — equipment rows + first full chain pass */
-renderDehuRows();
-renderCoolRows();
-runRoomChain();
-
-/* v3 — profiles (may applyState), then tab routing + UI wiring */
-wireProfileUI();
-initProfiles();
-showTab((location.hash||'#home').slice(1));
-
 
 /* ============ AUTOMAIT toggle + guardrails handoff ============ */
 const AUTOMAIT_STORAGE_KEY = 'aroya_automait_enabled';
@@ -6619,7 +6600,7 @@ function refreshAutomaitGuardrails(ctx){
     if(!row) return;
     const numEl = row.querySelector('.autg-num');
     const unitEl = row.querySelector('.autg-unit');
-    numEl.textContent = enabled ? (val === null || val === undefined ? '—' : val) : '—';
+    numEl.textContent = (val === null || val === undefined) ? '—' : val;
     if(unit && unitEl) unitEl.textContent = unit;
   };
 
@@ -6756,6 +6737,25 @@ function refreshAutomaitGuardrails(ctx){
   /* Default = GEN 3 (the verified-default scenario in the screenshots) */
   _select(3);
 })();
+
+/* ---------- INIT ---------- */
+renderPhaseGuide();
+renderMatrix();
+renderNotes();
+drawHeatBoxes();
+updateCalc();
+updateIrrigation();
+updateDensity();
+updateFeedRate();
+/* v2 init — equipment rows + first full chain pass */
+renderDehuRows();
+renderCoolRows();
+runRoomChain();
+
+/* v3 — profiles (may applyState), then tab routing + UI wiring */
+wireProfileUI();
+initProfiles();
+showTab((location.hash||'#home').slice(1));
 
 </script>
 </body>
