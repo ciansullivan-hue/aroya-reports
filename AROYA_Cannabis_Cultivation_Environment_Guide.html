@@ -2115,61 +2115,73 @@
             <tr data-fld="irrWinStart">
               <td><b>Irrigation Window Start</b><div class="autg-fld-sub">Time after lights ON when irrigation begins</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min after lights-on</span></td>
+              <td class="autg-rec" data-rec="irrWinStart"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">Buffer for plants to transition from dark — lets stomata open and transpiration start before the first P1 shot. Marks the beginning of the P1 rehydration phase. AROYA default <b>60 min</b> after lights ON.</td>
             </tr>
             <tr data-fld="irrSafetyCutoff">
               <td><b>Irrigation Safety Cutoff</b><div class="autg-fld-sub">Buffer before lights OFF — "never irrigate after"</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min before lights-off</span></td>
+              <td class="autg-rec" data-rec="irrSafetyCutoff"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">Hard backstop to ensure root oxygenation, healthy dryback, and reduced nighttime pathogen pressure. This is the safety cutoff — the actual end of the P2 window is set by ASI, not this field. AROYA default <b>60 min</b> before lights OFF.</td>
             </tr>
             <tr data-fld="ecpwMax">
               <td><b>ECpw Limit (Max)</b><div class="autg-fld-sub">Pore-water EC ceiling — triggers Supplemental Shot</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">dS/m · GEN / VEG</span></td>
+              <td class="autg-rec" data-rec="ecpwMax"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">If pore-water EC crosses this, a Supplemental Shot dilutes salts to reduce the osmotic differential and prevent turgor loss. Note: may take multiple shots to bring back into range. AROYA defaults: <b>GEN 9 dS/m · VEG 6 dS/m</b>.</td>
             </tr>
             <tr data-fld="vwcMin">
               <td><b>VWC Limit (Min)</b><div class="autg-fld-sub">Substrate VWC floor — triggers Supplemental Shot</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">% VWC</span></td>
+              <td class="autg-rec" data-rec="vwcMin"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">If breached, a Supplemental Shot re-wets the media to prevent hydrophobicity, salt buildup, and root dehydration stress. AROYA default <b>25%</b> both sides — drop to ~18–20% for early-flower generative dryback so the room can actually achieve the steering depth.</td>
             </tr>
             <tr data-fld="suppShot">
               <td><b>Supplemental Shot Size</b><div class="autg-fld-sub">Duration of the corrective shot</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-rec" data-rec="suppShot"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">The corrective shot AUTOMAIT fires when ECpw is too high or VWC too low. Must be <b>larger</b> than P2 Shot Size so it can actually correct what P2 couldn't. Rule of thumb: ≥ P1 shot size.</td>
             </tr>
             <tr data-fld="p1ShotPct">
               <td><b>P1 Shot Size</b><div class="autg-fld-sub">Duration of each P1 rehydration shot</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">% / runtime</span></td>
+              <td class="autg-rec" data-rec="p1ShotPct"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">Series of shots gradually refills substrate toward field capacity. Size for even wetting and reduced channeling. Calc shows shot size as % of substrate vol; AROYA UI takes it as a runtime (min:sec) at your emitter flow.</td>
             </tr>
             <tr data-fld="p1MaxDur">
               <td><b>P1 Maximum Duration if No Drain Detected</b><div class="autg-fld-sub">P1 → P2 transition backstop</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-rec" data-rec="p1MaxDur"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">Max P1 length before AUTOMAIT auto-transitions to P2 even without drain detection. Set ≥ your calculated P1 window so the room actually has time to refill before the kicker. If hit before drain, suggests guardrails are too tight or the drain station has an issue.</td>
             </tr>
             <tr data-fld="p2ShotPct">
               <td><b>P2 Shot Size</b><div class="autg-fld-sub">Duration of each P2 maintenance shot</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">% / runtime</span></td>
+              <td class="autg-rec" data-rec="p2ShotPct"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">Sustains VWC near field capacity without oversaturation. Independent from P1 — smaller so the sawtooth holds at the landing point. AROYA default Event Size range: <b>0.5 – 5 min</b>.</td>
             </tr>
             <tr data-fld="waitMin">
               <td><b>Wait between Shots (Min)</b><div class="autg-fld-sub">Minimum interval — prevents channeling</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-rec" data-rec="waitMin"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">Ensures each irrigation has time to spread evenly through the substrate before the next one fires. Should match your P1 repeat interval. AROYA default <b>15 min</b>.</td>
             </tr>
             <tr data-fld="waitMax">
               <td><b>Wait between Shots (Max)</b><div class="autg-fld-sub">Maximum interval — prevents over-drying</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-rec" data-rec="waitMax"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">Prevents the root zone from drying back too far or salts concentrating excessively between shots. Should be ≥ your P2 repeat interval — gives AUTOMAIT room to make dynamic decisions. AROYA default <b>60 min</b>.</td>
             </tr>
             <tr data-fld="drainGoal">
               <td><b>Drainage Goal</b><div class="autg-fld-sub">Target runoff during P2 (% of substrate vol)</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">%</span></td>
+              <td class="autg-rec" data-rec="drainGoal"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">Supports air–water exchange in the root zone, helps prevent pH drift, and verifies full saturation. Per Jason: this is best understood as % of substrate volume, not % of irrigation shot. You only need just enough runoff to get a pH reading. AROYA default <b>5%</b>.</td>
             </tr>
             <tr data-fld="flushEvent">
               <td><b>Flush Event</b><div class="autg-fld-sub">Periodic high-volume leaching shot</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-rec" data-rec="flushEvent"><span class="autg-rec-val">—</span><span class="autg-rec-status"></span></td>
               <td class="autg-why">High-volume irrigation to leach salts. AROYA default <b>5 min</b> both sides. Triggered by ECpw Limit (Max) or scheduled by operator.</td>
             </tr>
           </tbody>
