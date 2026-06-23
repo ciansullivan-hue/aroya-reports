@@ -1189,6 +1189,129 @@
   /* iPhone QA — pills nowrap, prose break-word */
   .pill, .opt-chip, .ph-photo, .rs-pill, .lebadge, .aut-asi-pos, .aut-eyebrow .aut-badge{white-space:nowrap}
   .lead, .aut-lead, .aut-sub, p{overflow-wrap:break-word; word-wrap:break-word}
+
+/* ============ AUTOMAIT toggle + guardrails handoff ============ */
+.automait-toggle-wrap{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px;
+  margin:14px 0 22px; padding:14px 16px;
+  background:rgba(166,189,108,0.06); border:1px solid rgba(166,189,108,0.22);
+  border-radius:10px;
+}
+.automait-toggle{
+  display:inline-flex; align-items:center; gap:10px; cursor:pointer;
+  font-weight:600; color:var(--leaf); user-select:none;
+  white-space:nowrap;
+}
+.automait-toggle input{ position:absolute; opacity:0; pointer-events:none; width:1px; height:1px; }
+.aut-pillbar{
+  position:relative; display:inline-block; width:42px; height:22px;
+  background:#2b3439; border:1px solid rgba(255,255,255,0.08);
+  border-radius:999px; transition:background 160ms ease;
+  flex:0 0 auto;
+}
+.aut-pillbar-knob{
+  position:absolute; top:2px; left:2px; width:16px; height:16px;
+  background:#cfd8dc; border-radius:50%;
+  transition:left 160ms ease, background 160ms ease;
+}
+.automait-toggle input:checked + .aut-pillbar{ background:var(--leaf); }
+.automait-toggle input:checked + .aut-pillbar .aut-pillbar-knob{ left:22px; background:#0e1416; }
+.aut-toggle-lbl{ letter-spacing:.02em; }
+.aut-toggle-state{
+  display:inline-block; padding:4px 10px; border-radius:999px;
+  background:#1a2226; color:#9fb0bd; font-size:12px; font-weight:600;
+  border:1px solid rgba(255,255,255,0.06); white-space:nowrap;
+}
+.aut-toggle-note{
+  flex:1 1 100%; color:#9fb0bd; font-size:12.5px; line-height:1.45;
+  overflow-wrap:break-word;
+}
+
+.autg-section{
+  margin-top:28px; padding:20px; border-radius:14px;
+  background:linear-gradient(180deg, rgba(166,189,108,0.05), rgba(166,189,108,0.02));
+  border:1px solid rgba(166,189,108,0.2);
+}
+.autg-head{
+  display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; justify-content:space-between;
+  margin-bottom:14px;
+}
+.autg-h{ font-size:22px; margin:0; line-height:1.2; overflow-wrap:break-word; }
+.autg-mode-pill{
+  display:inline-block; padding:5px 12px; border-radius:999px;
+  background:#1a2226; color:#9fb0bd; font-size:12px; font-weight:700;
+  letter-spacing:.04em; text-transform:uppercase;
+  border:1px solid rgba(255,255,255,0.08); white-space:nowrap;
+}
+.autg-mode-pill.is-on{ background:rgba(166,189,108,0.18); color:#dbe9b5; border-color:rgba(166,189,108,0.4); }
+.autg-strategy-banner{
+  padding:12px 14px; margin:0 0 16px;
+  background:rgba(0,0,0,0.18); border-left:3px solid var(--leaf);
+  border-radius:6px; color:#cfd8dc; font-size:13.5px; line-height:1.55;
+  overflow-wrap:break-word;
+}
+.autg-table-wrap{ position:relative; }
+.autg-table{
+  width:100%; border-collapse:collapse; font-size:13px;
+  table-layout:fixed;
+}
+.autg-table th, .autg-table td{
+  padding:10px 12px; vertical-align:top;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  overflow-wrap:break-word; word-break:break-word;
+}
+.autg-table thead th{
+  text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+  color:#9fb0bd; background:transparent; border-bottom-color:rgba(255,255,255,0.12);
+  white-space:nowrap;
+}
+.autg-th-field{ width:34%; }
+.autg-th-val{ width:18%; }
+.autg-th-why{ width:48%; }
+.autg-table code{
+  font-size:12px; background:rgba(0,0,0,0.25); padding:1px 6px; border-radius:4px;
+  color:#dbe9b5; white-space:nowrap; display:inline-block; max-width:100%;
+  overflow:hidden; text-overflow:ellipsis;
+}
+.autg-fld-sub{ font-size:11.5px; color:#7e8a92; margin-top:3px; }
+.autg-val{ font-variant-numeric:tabular-nums; white-space:nowrap; }
+.autg-num{ font-weight:700; color:#dbe9b5; font-size:15px; }
+.autg-unit{ color:#9fb0bd; font-size:11.5px; margin-left:4px; }
+.autg-why{ color:#c8cdd1; line-height:1.5; }
+.autg-compromise{
+  margin-top:18px; padding:14px 16px;
+  background:rgba(0,0,0,0.22); border-radius:8px; border:1px solid rgba(255,255,255,0.06);
+  color:#cfd8dc; font-size:13px; line-height:1.55;
+}
+.autg-compromise ul{ margin:8px 0 0; padding-left:18px; }
+.autg-compromise li{ margin-bottom:6px; }
+.autg-compromise code{ background:rgba(255,255,255,0.06); padding:1px 5px; border-radius:4px; font-size:12px; }
+.autg-off-note{
+  margin-top:14px; padding:10px 14px; color:#9fb0bd; font-size:13px; font-style:italic;
+  background:rgba(0,0,0,0.18); border-radius:6px; text-align:center;
+}
+/* OFF state: dim table, hide compromise, show off-note */
+.autg-section.is-off .autg-num{ color:#5a6469; }
+.autg-section.is-off .autg-compromise{ display:none; }
+.autg-section.is-off .autg-table tbody tr td.autg-val .autg-num{ opacity:0.35; }
+.autg-section.is-on  .autg-off-note{ display:none; }
+.autg-section.is-on  .autg-strategy-banner{ border-left-color:var(--olive); }
+
+@media (max-width:640px){
+  .autg-th-field, .autg-th-val, .autg-th-why{ width:auto; }
+  .autg-table thead{ display:none; }
+  .autg-table, .autg-table tbody, .autg-table tr, .autg-table td{ display:block; width:100%; }
+  .autg-table tr{
+    margin-bottom:10px; padding:10px 12px;
+    background:rgba(0,0,0,0.15); border-radius:8px;
+    border:1px solid rgba(255,255,255,0.05);
+  }
+  .autg-table td{ border:none; padding:4px 0; }
+  .autg-table td.autg-val{ font-size:15px; }
+  .autg-table td.autg-val::before{ content:'Value: '; color:#7e8a92; font-size:11px; text-transform:uppercase; letter-spacing:.05em; margin-right:6px; }
+  .autg-table td.autg-why::before{ content:'Why: '; color:#7e8a92; font-size:11px; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+}
+
 </style>
 </head>
 <body>
@@ -1685,6 +1808,17 @@
     <h2>Irrigation Program Builder</h2>
     <p class="lead" style="margin:10px 0 18px">Plan today's <b>P1 ramp-up</b> and <b>P2 maintenance</b> from substrate, emitter, plant transpiration, and your day plan. The shot count and interval update live with every input — see exactly how the math shifts when you turn the knobs.</p>
 
+    <div class="automait-toggle-wrap" id="automaitToggleWrap">
+      <label class="automait-toggle" for="automaitEnabled">
+        <input type="checkbox" id="automaitEnabled">
+        <span class="aut-pillbar"><span class="aut-pillbar-knob"></span></span>
+        <span class="aut-toggle-lbl">AUTOMAIT enabled</span>
+      </label>
+      <div class="aut-toggle-state" id="automaitToggleState">OFF — Educational mode · pure-physics ideal</div>
+      <div class="aut-toggle-note" id="automaitToggleNote">Toggle AUTOMAIT on to see the guardrails-ready version — calculator outputs translate into literal AUTOMAIT field values with notes on where the AUTOMAIT execution differs from the pure ideal.</div>
+    </div>
+
+
     <a class="edit-in-setup" href="#setup" data-jump="setup-irrigation">✎ Edit inputs in Setup</a>
 
     <div class="irr-calc-grid">
@@ -1692,15 +1826,15 @@
       <div class="card panel" style="display:flex;flex-direction:column;gap:14px">
 
         <div class="prog-band">
-          <div class="prog-band-h">P1 ramp shot · per pulse</div>
+          <div class="prog-band-h">P1 ramp shot · per-pulse delivery</div>
           <div class="irr-out-grid">
             <div class="irr-out hero-out">
-              <div class="olbl">Ramp shot volume / plant</div>
+              <div class="olbl">P1 ramp shot size / plant</div>
               <div class="oval"><span id="outShotVol">0.227</span><small id="outShotVolU">L</small></div>
               <div style="color:#9fb0bd;font-size:12px;margin-top:3px;font-variant-numeric:tabular-nums" id="outShotSub">227 mL</div>
             </div>
             <div class="irr-out hero-out">
-              <div class="olbl">Ramp shot runtime</div>
+              <div class="olbl">P1 ramp shot runtime</div>
               <div class="oval"><span id="outRuntime">6.8</span><small>min</small></div>
               <div style="color:#9fb0bd;font-size:12px;margin-top:3px" id="outFlowSub">2.0 L/hr × 1 emit</div>
             </div>
@@ -1721,7 +1855,7 @@
               <div style="color:#9fb0bd;font-size:11.5px;margin-top:3px" id="outP1Win">over 90 min ramp</div>
             </div>
             <div class="irr-out">
-              <div class="olbl" id="outP1RunoffLbl">End-of-P1 runoff shot</div>
+              <div class="olbl" id="outP1RunoffLbl">P1 end-of-phase kicker shot</div>
               <div class="oval"><span id="outP1RunoffML">—</span><small>mL</small></div>
               <div style="color:#9fb0bd;font-size:11.5px;margin-top:3px" id="outP1RunoffMin">set valve — min</div>
             </div>
@@ -1868,6 +2002,101 @@
         <span><i style="background:#1F3D52"></i>Lights off</span>
       </div>
     </div>
+
+    <!-- ============ AUTOMAIT guardrails handoff ============ -->
+    <div class="autg-section" id="automaitGuardrails">
+      <div class="autg-head">
+        <div>
+          <div class="eyebrow" style="color:var(--leaf);margin-bottom:6px">Handoff · calculator → AUTOMAIT</div>
+          <h3 class="autg-h">How to set your AUTOMAIT guardrails from this calculator</h3>
+        </div>
+        <span class="autg-mode-pill" id="autgModePill">OFF · manual</span>
+      </div>
+
+      <div class="autg-strategy-banner" id="autgStrategyBanner">
+        <b>Manual irrigation mode.</b> Program your controller to fire <b id="autgManualShots">—</b> P1 ramp shots of <b id="autgManualVol">—</b> spaced <b id="autgManualInt">—</b> apart, then a single end-of-P1 kicker shot of <b id="autgManualKick">—</b>. AUTOMAIT is OFF — the calculator shows the pure-physics ideal. Toggle AUTOMAIT on to translate this into literal AROYA guardrail fields with the execution compromises annotated.
+      </div>
+
+      <div class="autg-table-wrap">
+        <table class="autg-table" id="autgTable">
+          <thead>
+            <tr><th class="autg-th-field">AUTOMAIT field</th><th class="autg-th-val">Value</th><th class="autg-th-why">Why (tied to calc input)</th></tr>
+          </thead>
+          <tbody>
+            <tr data-fld="minVwc">
+              <td><code>automatedScheduleSettings.gen.minVwc</code><div class="autg-fld-sub">P1/P2 panic shot floor</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">VWC</span></td>
+              <td class="autg-why">Floor for AUTOMAIT's emergency shot. Should sit BELOW the target dryback trough so the room can actually achieve the steering depth — never identical to <code>soil_moist.target_min</code>.</td>
+            </tr>
+            <tr data-fld="soilMoistMin">
+              <td><code>target_ranges.soil_moist.target_min</code><div class="autg-fld-sub">Soft VWC floor / alert</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">%</span></td>
+              <td class="autg-why">Alert band, NOT the panic floor. Sits above <code>minVwc</code> so the operator gets a warning before AUTOMAIT rescues.</td>
+            </tr>
+            <tr data-fld="soilMoistMax">
+              <td><code>target_ranges.soil_moist.target_max</code><div class="autg-fld-sub">FC ceiling / over-irrigation alert</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">%</span></td>
+              <td class="autg-why">FC ceiling from the calc — anywhere above this and AUTOMAIT is over-irrigating. Sits at or just above the post-ramp landing point.</td>
+            </tr>
+            <tr data-fld="maxEcpw">
+              <td><code>automatedScheduleSettings.gen.maxEcpw</code><div class="autg-fld-sub">EC flush trigger</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">mS/cm</span></td>
+              <td class="autg-why">Ceiling — when pore-water EC crosses this, AUTOMAIT fires an extra runoff flush. Stays ≤ <code>pore_ec.target_max</code> so the guardrail can never clamp BELOW the configured target window.</td>
+            </tr>
+            <tr data-fld="poreEcMin">
+              <td><code>target_ranges.pore_ec.target_min</code><div class="autg-fld-sub">Substrate EC floor (alert)</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">mS/cm</span></td>
+              <td class="autg-why">From the Feed Rate output, scaled by the steering-intent stacking factor. Below this the room is under-fed for the phase.</td>
+            </tr>
+            <tr data-fld="poreEcMax">
+              <td><code>target_ranges.pore_ec.target_max</code><div class="autg-fld-sub">Substrate EC ceiling (alert)</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">mS/cm</span></td>
+              <td class="autg-why">Stacked-EC ceiling for this phase — should be ≥ <code>maxEcpw</code> so AUTOMAIT can't clamp the room below its own target window.</td>
+            </tr>
+            <tr data-fld="drainGoal">
+              <td><code>automatedScheduleSettings.gen.drainGoal</code><div class="autg-fld-sub">Daily runoff target (frac)</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">frac</span></td>
+              <td class="autg-why">Runoff fraction from the calc (15% → 0.15). Generative low / vegetative high.</td>
+            </tr>
+            <tr data-fld="lightsBufP0">
+              <td><code>automatedScheduleSettings.gen.lightsBuffer_P0</code><div class="autg-fld-sub">P0 delay after lights-on</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-why">P0 delay slider — longer P0 = more generative. AUTOMAIT will not fire P1 until this buffer elapses after lights-on.</td>
+            </tr>
+            <tr data-fld="lightsBufP3">
+              <td><code>automatedScheduleSettings.gen.lightsBuffer_P3</code><div class="autg-fld-sub">P3 cutoff before lights-off</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-why">P3 cutoff from the calc — last shot fires this many minutes before lights-off, giving the substrate a full dry-down before dark.</td>
+            </tr>
+            <tr data-fld="p1ShotPct">
+              <td><code>automatedScheduleSettings.gen.shotSize</code> (P1)<div class="autg-fld-sub">P1 ramp shot size</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">%</span></td>
+              <td class="autg-why">P1 ramp shot size (% of substrate volume). AUTOMAIT fires uniform-sized shots within a phase — no taper.</td>
+            </tr>
+            <tr data-fld="p1IntMin">
+              <td><code>automatedScheduleSettings.gen.shotInterval</code> (P1)<div class="autg-fld-sub">P1 shot interval</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-why">Time between successive P1 ramp shots — derived from the P1 ramp window ÷ shot count.</td>
+            </tr>
+            <tr data-fld="p2ShotPct">
+              <td><code>automatedScheduleSettings.gen.shotSize</code> (P2)<div class="autg-fld-sub">P2 maintenance shot size</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">%</span></td>
+              <td class="autg-why">P2 maintenance pulse size — independent from P1, smaller so the sawtooth holds at the landing point.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="autg-compromise" id="autgCompromise">
+          <b>Where AUTOMAIT execution differs from the pure ideal:</b>
+          <ul>
+            <li>AUTOMAIT can't fire variable-sized shots within a phase — all P1 ramp shots use the same volume. The ideal would taper the last shot smaller; the AUTOMAIT-compatible compromise is uniform shots with the end-of-P1 kicker carrying the runoff trigger.</li>
+            <li>AUTOMAIT executes on substrate-state feedback, not pure-time. If the substrate hits FC before the last scheduled P1 shot, AUTOMAIT will skip the remaining ramp shots and proceed to the kicker. Calculator values are the upper bound; actual fire count can be lower.</li>
+            <li>The panic floor <code>minVwc</code> overrides everything else. If you set <code>minVwc</code> identical to <code>soil_moist.target_min</code>, the room cannot achieve its configured dryback target — AUTOMAIT will rescue at the same level the soft target reports.</li>
+          </ul>
+        </div>
+        <div class="autg-off-note" id="autgOffNote">Toggle AUTOMAIT on to see the guardrails-ready version.</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -3864,25 +4093,29 @@ function updateIrrigation(){
   document.getElementById('irrFlowUnit').textContent = flowUnitLabel;
 
   /* P1 — ramp + runoff delivery */
-  const tailLabel = RUNOFF_MODE==='extra' ? `+${p1ExtraShotsN}` : `+1`;
+  const tailLabel = RUNOFF_MODE==='extra'
+    ? ` ramp + ${p1ExtraShotsN} extra`
+    : ` ramp + 1 kicker`;
   document.getElementById('outP1Shots').textContent = `${p1RampShots}${tailLabel}`;
   document.getElementById('outP1Int').textContent   = p1IntMin>0 ? p1IntMin.toFixed(0) : '—';
-  document.getElementById('outP1Refill').textContent = `Ramp refills ${p1RampRefillPct.toFixed(1)}% (target ${dryPct}%)`;
+  document.getElementById('outP1Refill').textContent = RUNOFF_MODE==='extra'
+    ? `Ramp shots refill the overnight dryback; extra ramps drive runoff (refills ${p1RampRefillPct.toFixed(1)}% / target ${dryPct}%)`
+    : `Ramp shots refill the overnight dryback; kicker drives runoff (refills ${p1RampRefillPct.toFixed(1)}% / target ${dryPct}%)`;
   document.getElementById('outP1Win').textContent   = RUNOFF_MODE==='extra'
-    ? `${p1RampShots} ramp + ${p1ExtraShotsN} extra-size runoff shots`
-    : `${p1RampShots} ramp + 1 kicker runoff shot`;
+    ? `${p1RampShots} P1 ramp + ${p1ExtraShotsN} extra-size runoff shots`
+    : `${p1RampShots} P1 ramp + 1 P1 end-of-phase kicker`;
   const rampLine =
-    `<b>Ramp:</b> <code>ceil(dryback ÷ shot%) = ceil(${dryPct} ÷ ${shotPct}) = ${p1RampShots}</code> shots × ${shotPct}% = ` +
-    `<b>${(rampVolL*conv).toFixed(3)} ${u}</b> — refills overnight loss to FC. Fires every <b>${p1IntMin.toFixed(0)} min</b>.`;
+    `<b>P1 ramp shot count:</b> <code>ceil(dryback ÷ shot%) = ceil(${dryPct} ÷ ${shotPct}) = ${p1RampShots}</code> P1 ramp shots × ${shotPct}% = ` +
+    `<b>${(rampVolL*conv).toFixed(3)} ${u}</b> — refills overnight loss to FC. Each P1 ramp shot fires every <b>${p1IntMin.toFixed(0)} min</b>.`;
   let runoffLine;
   if(RUNOFF_MODE==='extra'){
     runoffLine =
-      `<b>Runoff via extra ramps:</b> <code>ceil(runoff% ÷ shot%) = ceil(${runoffTarget} ÷ ${shotPct}) = ${p1ExtraShotsN}</code> additional standard shots after FC ` +
+      `<b>P1 end-of-phase runoff (extra ramps):</b> <code>ceil(runoff% ÷ shot%) = ceil(${runoffTarget} ÷ ${shotPct}) = ${p1ExtraShotsN}</code> additional standard-size P1 shots fired after FC ` +
       `(each <b>${p1RunoffShotMin.toFixed(1)} min</b> @ ${flowSlider.toFixed(2)} ${flowUnitLabel}). ` +
       `Total drain = <b>${(p1RunoffShotVolL*conv).toFixed(3)} ${u}</b> = <b>${achievedRunoffPct.toFixed(1)}%</b> of substrate vol (target ${runoffTarget}%).`;
   } else {
     runoffLine =
-      `<b>Runoff kicker shot:</b> single larger shot at the end of P1, sized as <code>runoff% × substrate = ${runoffTarget}% × ${(volL*conv).toFixed(3)} ${u} = ${(p1RunoffShotVolL*conv).toFixed(3)} ${u}</code>. ` +
+      `<b>P1 end-of-phase kicker shot (runoff trigger):</b> single larger shot at the end of P1, sized as <code>runoff% × substrate = ${runoffTarget}% × ${(volL*conv).toFixed(3)} ${u} = ${(p1RunoffShotVolL*conv).toFixed(3)} ${u}</code>. ` +
       `<br>Runtime <b>${p1RunoffShotMin.toFixed(1)} min</b> = <code>${(p1RunoffShotVolL*conv).toFixed(3)} ${u} ÷ ${flowSlider.toFixed(2)} ${flowUnitLabel} × 60</code>. ` +
       `Once substrate is at FC, every drop input ≈ every drop drained → <b>${achievedRunoffPct.toFixed(1)}%</b> of substrate volume exits as runoff.`;
   }
@@ -3895,8 +4128,8 @@ function updateIrrigation(){
   document.getElementById('outP1RunoffML').textContent  = _p1RunoffHasEvent ? Math.round(_p1RunoffPerShotL*1000).toLocaleString() : '—';
   document.getElementById('outP1RunoffMin').textContent = _p1RunoffHasEvent ? _fmtRun(p1RunoffShotMin) : 'no runoff event';
   document.getElementById('outP1RunoffLbl').textContent = (RUNOFF_MODE==='extra')
-    ? `End-of-P1 runoff shot · ×${p1ExtraShotsN}`
-    : 'End-of-P1 kicker shot';
+    ? `P1 end-of-phase runoff shot · ×${p1ExtraShotsN}`
+    : 'P1 end-of-phase kicker shot (runoff trigger)';
 
   /* P2 — maintain or steer down */
   const p2ShotMl = p2ShotVolL*conv;
@@ -4143,6 +4376,14 @@ function updateIrrigation(){
 
   /* Day timeline */
   renderTimeline({lightHr, p0Min, p1DurMin, p3CutMin, p2WindowMin, p1Shots, p2Shots, p1IntMin, p2IntMin});
+
+  /* AUTOMAIT guardrails handoff — pump current calc values into the field table */
+  refreshAutomaitGuardrails({
+    shotPct, p1IntMin, p1RampShots, p1ExtraShotsN, p2ShotPct,
+    runoffTarget, p0Min, p3CutMin,
+    rampVolL, p1RunoffShotVolL, conv, u, isGal,
+    dryPct, transPct, runoffEventsN
+  });
 }
 
 /* Day timeline renderer — proportional widths over 24 hr */
@@ -6247,6 +6488,104 @@ runRoomChain();
 wireProfileUI();
 initProfiles();
 showTab((location.hash||'#home').slice(1));
+
+
+/* ============ AUTOMAIT toggle + guardrails handoff ============ */
+const AUTOMAIT_STORAGE_KEY = 'aroya_automait_enabled';
+let _autLastCtx = null;
+function _autReadEnabled(){
+  try{ return localStorage.getItem(AUTOMAIT_STORAGE_KEY) === '1'; }catch(e){ return false; }
+}
+function _autWriteEnabled(v){
+  try{ localStorage.setItem(AUTOMAIT_STORAGE_KEY, v ? '1' : '0'); }catch(e){}
+}
+function _autFmt(n, digits){
+  if(n === null || n === undefined || !isFinite(n)) return '—';
+  return Number(n).toFixed(digits);
+}
+function refreshAutomaitGuardrails(ctx){
+  _autLastCtx = ctx;
+  const wrap = document.getElementById('automaitGuardrails');
+  if(!wrap) return;
+  const enabled = _autReadEnabled();
+  wrap.classList.toggle('is-on', enabled);
+  wrap.classList.toggle('is-off', !enabled);
+  const pill = document.getElementById('autgModePill');
+  if(pill){
+    pill.textContent = enabled ? 'ON · AUTOMAIT-aware' : 'OFF · manual';
+    pill.classList.toggle('is-on', enabled);
+  }
+
+  const banner = document.getElementById('autgStrategyBanner');
+  if(banner){
+    if(enabled){
+      banner.innerHTML = '<b>AUTOMAIT-aware mode.</b> Here\'s the cultivation vision — and here\'s how AUTOMAIT will execute it within its capabilities. The fields below are the literal AROYA guardrail values that match this calc. Where AUTOMAIT\'s execution differs from the pure ideal (uniform shot sizes within a phase, substrate-state feedback, panic-floor override), the compromise note below the table explains the trade.';
+    } else {
+      banner.innerHTML = '<b>Manual irrigation mode.</b> Program your controller to fire <b id="autgManualShots">' + ctx.p1RampShots + '</b> P1 ramp shots of <b id="autgManualVol">' + (ctx.rampVolL && ctx.p1RampShots ? _autFmt((ctx.rampVolL/ctx.p1RampShots)*ctx.conv, 3) + ' ' + ctx.u : '—') + '</b> spaced <b id="autgManualInt">' + _autFmt(ctx.p1IntMin, 0) + ' min</b> apart, then a single end-of-P1 kicker shot of <b id="autgManualKick">' + (ctx.p1RunoffShotVolL ? _autFmt(ctx.p1RunoffShotVolL*ctx.conv, 3) + ' ' + ctx.u : '—') + '</b>. AUTOMAIT is OFF — the calculator shows the pure-physics ideal. Toggle AUTOMAIT on to translate this into literal AROYA guardrail fields with the execution compromises annotated.';
+    }
+  }
+
+  /* Field-cell writes — values from the live calc context */
+  const set = (fld, val, unit) => {
+    const row = document.querySelector('#autgTable tr[data-fld="' + fld + '"]');
+    if(!row) return;
+    const numEl = row.querySelector('.autg-num');
+    const unitEl = row.querySelector('.autg-unit');
+    numEl.textContent = enabled ? (val === null || val === undefined ? '—' : val) : '—';
+    if(unit && unitEl) unitEl.textContent = unit;
+  };
+
+  /* P1 shot size + interval — directly from calc */
+  set('p1ShotPct', _autFmt(ctx.shotPct, 1), '%');
+  set('p1IntMin',  _autFmt(ctx.p1IntMin, 0), 'min');
+  set('p2ShotPct', _autFmt(ctx.p2ShotPct, 1), '%');
+
+  /* Runoff target as fraction (AROYA stores drainGoal as 0.0-1.0) */
+  set('drainGoal', _autFmt(ctx.runoffTarget/100, 2), 'frac');
+
+  /* P0 / P3 buffers — directly from calc */
+  set('lightsBufP0', _autFmt(ctx.p0Min, 0), 'min');
+  set('lightsBufP3', _autFmt(ctx.p3CutMin, 0), 'min');
+
+  /* VWC fields — derived from substrate FC and the configured dryback target.
+     We don't know the room's true FC% here (it depends on the substrate brand
+     and saturation), so we present these as the % delta from FC that the
+     calc implies, NOT as absolute VWC numbers. */
+  set('minVwc',       'FC − ' + _autFmt(ctx.dryPct + 3, 0) + ' pp', 'VWC');
+  set('soilMoistMin', 'FC − ' + _autFmt(ctx.dryPct, 0) + ' pp',     '%');
+  set('soilMoistMax', 'FC (landing)',                                '%');
+
+  /* EC fields — calculator surfaces the feed/substrate EC math in the Feed
+     Rate tab; this is a hand-off pointer so the operator picks numbers up
+     from there, not a fabricated derivation here. */
+  set('maxEcpw',  'from Feed Rate ÷ stacking factor', 'mS/cm');
+  set('poreEcMin', 'from Feed Rate · phase target_min', 'mS/cm');
+  set('poreEcMax', 'from Feed Rate · phase target_max', 'mS/cm');
+
+  /* OFF-state state pill (toggle widget) + note */
+  const stateChip = document.getElementById('automaitToggleState');
+  if(stateChip){
+    stateChip.textContent = enabled
+      ? 'ON — AUTOMAIT-aware · guardrails-ready'
+      : 'OFF — Educational mode · pure-physics ideal';
+  }
+}
+
+/* Toggle wire-up */
+(function initAutomaitToggle(){
+  const cb = document.getElementById('automaitEnabled');
+  if(!cb) return;
+  const initial = _autReadEnabled();
+  cb.checked = initial;
+  cb.addEventListener('change', () => {
+    _autWriteEnabled(cb.checked);
+    if(_autLastCtx) refreshAutomaitGuardrails(_autLastCtx);
+  });
+  /* If the calc has already run, refresh now */
+  if(_autLastCtx) refreshAutomaitGuardrails(_autLastCtx);
+})();
+
+
 </script>
 </body>
 </html>
