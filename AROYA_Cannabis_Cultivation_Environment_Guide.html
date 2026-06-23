@@ -1312,6 +1312,81 @@
   .autg-table td.autg-why::before{ content:'Why: '; color:#7e8a92; font-size:11px; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
 }
 
+
+/* ============ AROYA-style ASI slider (mirror of app.aroya.io ASI modal) ============ */
+.aut-asi-modal-h{
+  font-size:18px; font-weight:600; color:#dbe9b5;
+  margin:8px 0 14px; letter-spacing:.01em;
+}
+.aut-asi-pill{
+  display:flex; align-items:stretch; gap:0;
+  background:#0e1a1f; border:1px solid rgba(166,189,108,0.18);
+  border-radius:999px; padding:4px;
+  max-width:100%; overflow:hidden;
+  margin:0 0 16px;
+}
+.aut-asi-end{
+  display:flex; align-items:center; justify-content:center;
+  padding:0 14px; min-height:42px;
+  font-weight:700; font-size:12px; letter-spacing:.08em;
+  color:#9fb0bd; flex:0 0 auto; white-space:nowrap;
+}
+.aut-asi-end-l{ color:#b9a7e6; /* GEN purple */ }
+.aut-asi-end-r{ color:#83c98c; /* VEG green */ }
+.aut-asi-stops{
+  display:flex; flex:1 1 auto; gap:2px; align-items:stretch;
+  background:linear-gradient(90deg, rgba(124,87,196,0.32) 0%, rgba(124,87,196,0.32) 50%, rgba(76,158,86,0.32) 50%, rgba(76,158,86,0.32) 100%);
+  border-radius:999px; padding:3px;
+  position:relative; min-width:0;
+}
+.aut-asi-stop{
+  flex:1 1 0; min-width:0;
+  background:transparent; color:#cfd8dc;
+  border:none; border-radius:999px;
+  font-weight:700; font-size:14px;
+  padding:6px 0; cursor:pointer;
+  transition:background 140ms ease, color 140ms ease, transform 140ms ease;
+  font-variant-numeric:tabular-nums;
+}
+.aut-asi-stop:hover{ background:rgba(255,255,255,0.06); }
+.aut-asi-stop.is-current{
+  background:#9c7fdb; /* GEN purple knob */
+  color:#0e1416;
+  box-shadow:0 0 0 2px rgba(255,255,255,0.06), 0 4px 14px rgba(124,87,196,0.45);
+  transform:scale(1.06);
+  font-size:18px;
+}
+.aut-asi-stop.is-veg.is-current{ background:#5cb56a; box-shadow:0 0 0 2px rgba(255,255,255,0.06), 0 4px 14px rgba(76,158,86,0.45); }
+
+.aut-asi-card{
+  margin:0 0 12px; padding:14px 16px;
+  background:rgba(0,0,0,0.22);
+  border-radius:10px; border:1px solid rgba(255,255,255,0.06);
+}
+.aut-asi-card-h{
+  font-size:16px; font-weight:700; color:#dbe9b5; margin-bottom:6px;
+  overflow-wrap:break-word;
+}
+.aut-asi-card-body{
+  font-size:13.5px; color:#cfd8dc; line-height:1.6;
+  overflow-wrap:break-word;
+}
+.aut-asi-card-source{
+  margin-top:8px; font-size:11.5px; color:#7e8a92; font-style:italic;
+  overflow-wrap:break-word;
+}
+.aut-asi-card.is-pending .aut-asi-card-h::after{
+  content:' · verbatim pending';
+  color:#d6a64a; font-weight:600; font-size:12px; letter-spacing:.02em;
+}
+
+@media (max-width:640px){
+  .aut-asi-end{ padding:0 8px; min-height:36px; font-size:11px; }
+  .aut-asi-stop{ font-size:12px; padding:5px 0; }
+  .aut-asi-stop.is-current{ font-size:15px; }
+  .aut-asi-modal-h{ font-size:16px; }
+}
+
 </style>
 </head>
 <body>
@@ -1484,28 +1559,41 @@
         </div>
         <span class="aut-asi-pos" id="autAsiPos">GEN 3 · early flower</span>
       </div>
-      <div class="aut-asi-track" id="autAsiTrack">
-        <div class="aut-asi-step gen-1">G1</div>
-        <div class="aut-asi-step gen-2">G2</div>
-        <div class="aut-asi-step gen-3 is-current">G3</div>
-        <div class="aut-asi-step gen-4">G4</div>
-        <div class="aut-asi-step gen-5">N</div>
-        <div class="aut-asi-step veg-6">V6</div>
-        <div class="aut-asi-step veg-7">V7</div>
-        <div class="aut-asi-step veg-8">V8</div>
-        <div class="aut-asi-step veg-9">V9</div>
-        <div class="aut-asi-step veg-10">V10</div>
-        <div class="aut-asi-step" style="visibility:hidden"></div>
+      <div class="aut-asi-modal-h">Choose your Absolute Steering Index<span class="aut-tm">™</span> goal</div>
+
+      <div class="aut-asi-pill" id="autAsiPill">
+        <span class="aut-asi-end aut-asi-end-l">GEN</span>
+        <div class="aut-asi-stops" role="radiogroup" aria-label="Absolute Steering Index">
+          <button type="button" class="aut-asi-stop is-gen" data-asi="1" aria-label="ASI 1 (most generative)">1</button>
+          <button type="button" class="aut-asi-stop is-gen" data-asi="2">2</button>
+          <button type="button" class="aut-asi-stop is-gen is-current" data-asi="3">3</button>
+          <button type="button" class="aut-asi-stop is-gen" data-asi="4">4</button>
+          <button type="button" class="aut-asi-stop is-gen" data-asi="5">5</button>
+          <button type="button" class="aut-asi-stop is-veg" data-asi="6">6</button>
+          <button type="button" class="aut-asi-stop is-veg" data-asi="7">7</button>
+          <button type="button" class="aut-asi-stop is-veg" data-asi="8">8</button>
+          <button type="button" class="aut-asi-stop is-veg" data-asi="9">9</button>
+          <button type="button" class="aut-asi-stop is-veg" data-asi="10" aria-label="ASI 10 (most vegetative)">10</button>
+        </div>
+        <span class="aut-asi-end aut-asi-end-r">VEG</span>
       </div>
+
+      <div class="aut-asi-card" id="autAsiCard">
+        <div class="aut-asi-card-h" id="autAsiCardH">ASI<span class="aut-tm">™</span> GEN 3: High Generative</div>
+        <div class="aut-asi-card-body" id="autAsiCardBody">
+          Start irrigating at approx. 7:00PM to field capacity<br>
+          Maintain near field capacity until end of irrigation window
+        </div>
+        <div class="aut-asi-card-source" id="autAsiCardSource">↳ Verbatim from app.aroya.io · Mom Room ASI modal, screenshot 2025-10-04</div>
+      </div>
+
       <div class="aut-asi-scale">
-        <span class="end-l">◀ GEN 1 · most aggressive dryback</span>
-        <span>GEN 5 · neutral</span>
-        <span class="end-r">VEG 10 · vegetative push ▶</span>
+        <span class="end-l">◀ GEN 1 · longest P2 window · most generative</span>
+        <span>GEN 5 · neutral pivot</span>
+        <span class="end-r">VEG 10 · shortest P2 window · most vegetative ▶</span>
       </div>
       <div class="aut-asi-foot">
-        <b>Step DOWN to push generative</b> — GEN 1 is the deepest dryback, longest P0 delay, hardest EC stack.
-        Step UP into the veg lane for canopy growth and bulk in weeks 4–6. AUTOMAIT executes the position you set
-        — it doesn't second-guess the index.
+        <b>The ASI slider controls one thing:</b> the length of your P2 irrigation window. Lower ASI = longer window = fewer, more-spaced shots (controlled-stress generative signal). Higher ASI = shorter window = more frequent shots (canopy push). Per the AUTOMAIT Complete Guide v2.3: ASI 1 → P2 window ≈ 6 hr (shot every ~90 min); ASI 5 → ≈ 4 hr (every ~60 min); ASI 10 → ≈ 2 hr (every ~30 min).
       </div>
     </div>
   </div>
@@ -2020,68 +2108,68 @@
       <div class="autg-table-wrap">
         <table class="autg-table" id="autgTable">
           <thead>
-            <tr><th class="autg-th-field">AUTOMAIT field</th><th class="autg-th-val">Value</th><th class="autg-th-why">Why (tied to calc input)</th></tr>
+            <tr><th class="autg-th-field">AROYA field (UI label)</th><th class="autg-th-val">Value · GEN / VEG</th><th class="autg-th-why">Why (tied to calc input) · default per AUTOMAIT Complete Guide v2.3</th></tr>
           </thead>
           <tbody>
-            <tr data-fld="minVwc">
-              <td><code>automatedScheduleSettings.gen.minVwc</code><div class="autg-fld-sub">P1/P2 panic shot floor</div></td>
-              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">VWC</span></td>
-              <td class="autg-why">Floor for AUTOMAIT's emergency shot. Should sit BELOW the target dryback trough so the room can actually achieve the steering depth — never identical to <code>soil_moist.target_min</code>.</td>
+            <tr data-fld="irrWinStart">
+              <td><b>Irrigation Window Start</b><div class="autg-fld-sub">Time after lights ON when irrigation begins</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min after lights-on</span></td>
+              <td class="autg-why">Buffer for plants to transition from dark — lets stomata open and transpiration start before the first P1 shot. Marks the beginning of the P1 rehydration phase. AROYA default <b>60 min</b> after lights ON.</td>
             </tr>
-            <tr data-fld="soilMoistMin">
-              <td><code>target_ranges.soil_moist.target_min</code><div class="autg-fld-sub">Soft VWC floor / alert</div></td>
-              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">%</span></td>
-              <td class="autg-why">Alert band, NOT the panic floor. Sits above <code>minVwc</code> so the operator gets a warning before AUTOMAIT rescues.</td>
+            <tr data-fld="irrSafetyCutoff">
+              <td><b>Irrigation Safety Cutoff</b><div class="autg-fld-sub">Buffer before lights OFF — "never irrigate after"</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min before lights-off</span></td>
+              <td class="autg-why">Hard backstop to ensure root oxygenation, healthy dryback, and reduced nighttime pathogen pressure. This is the safety cutoff — the actual end of the P2 window is set by ASI, not this field. AROYA default <b>60 min</b> before lights OFF.</td>
             </tr>
-            <tr data-fld="soilMoistMax">
-              <td><code>target_ranges.soil_moist.target_max</code><div class="autg-fld-sub">FC ceiling / over-irrigation alert</div></td>
-              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">%</span></td>
-              <td class="autg-why">FC ceiling from the calc — anywhere above this and AUTOMAIT is over-irrigating. Sits at or just above the post-ramp landing point.</td>
+            <tr data-fld="ecpwMax">
+              <td><b>ECpw Limit (Max)</b><div class="autg-fld-sub">Pore-water EC ceiling — triggers Supplemental Shot</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">dS/m · GEN / VEG</span></td>
+              <td class="autg-why">If pore-water EC crosses this, a Supplemental Shot dilutes salts to reduce the osmotic differential and prevent turgor loss. Note: may take multiple shots to bring back into range. AROYA defaults: <b>GEN 9 dS/m · VEG 6 dS/m</b>.</td>
             </tr>
-            <tr data-fld="maxEcpw">
-              <td><code>automatedScheduleSettings.gen.maxEcpw</code><div class="autg-fld-sub">EC flush trigger</div></td>
-              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">mS/cm</span></td>
-              <td class="autg-why">Ceiling — when pore-water EC crosses this, AUTOMAIT fires an extra runoff flush. Stays ≤ <code>pore_ec.target_max</code> so the guardrail can never clamp BELOW the configured target window.</td>
+            <tr data-fld="vwcMin">
+              <td><b>VWC Limit (Min)</b><div class="autg-fld-sub">Substrate VWC floor — triggers Supplemental Shot</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">% VWC</span></td>
+              <td class="autg-why">If breached, a Supplemental Shot re-wets the media to prevent hydrophobicity, salt buildup, and root dehydration stress. AROYA default <b>25%</b> both sides — drop to ~18–20% for early-flower generative dryback so the room can actually achieve the steering depth.</td>
             </tr>
-            <tr data-fld="poreEcMin">
-              <td><code>target_ranges.pore_ec.target_min</code><div class="autg-fld-sub">Substrate EC floor (alert)</div></td>
-              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">mS/cm</span></td>
-              <td class="autg-why">From the Feed Rate output, scaled by the steering-intent stacking factor. Below this the room is under-fed for the phase.</td>
-            </tr>
-            <tr data-fld="poreEcMax">
-              <td><code>target_ranges.pore_ec.target_max</code><div class="autg-fld-sub">Substrate EC ceiling (alert)</div></td>
-              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">mS/cm</span></td>
-              <td class="autg-why">Stacked-EC ceiling for this phase — should be ≥ <code>maxEcpw</code> so AUTOMAIT can't clamp the room below its own target window.</td>
-            </tr>
-            <tr data-fld="drainGoal">
-              <td><code>automatedScheduleSettings.gen.drainGoal</code><div class="autg-fld-sub">Daily runoff target (frac)</div></td>
-              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">frac</span></td>
-              <td class="autg-why">Runoff fraction from the calc (15% → 0.15). Generative low / vegetative high.</td>
-            </tr>
-            <tr data-fld="lightsBufP0">
-              <td><code>automatedScheduleSettings.gen.lightsBuffer_P0</code><div class="autg-fld-sub">P0 delay after lights-on</div></td>
+            <tr data-fld="suppShot">
+              <td><b>Supplemental Shot Size</b><div class="autg-fld-sub">Duration of the corrective shot</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
-              <td class="autg-why">P0 delay slider — longer P0 = more generative. AUTOMAIT will not fire P1 until this buffer elapses after lights-on.</td>
-            </tr>
-            <tr data-fld="lightsBufP3">
-              <td><code>automatedScheduleSettings.gen.lightsBuffer_P3</code><div class="autg-fld-sub">P3 cutoff before lights-off</div></td>
-              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
-              <td class="autg-why">P3 cutoff from the calc — last shot fires this many minutes before lights-off, giving the substrate a full dry-down before dark.</td>
+              <td class="autg-why">The corrective shot AUTOMAIT fires when ECpw is too high or VWC too low. Must be <b>larger</b> than P2 Shot Size so it can actually correct what P2 couldn't. Rule of thumb: ≥ P1 shot size.</td>
             </tr>
             <tr data-fld="p1ShotPct">
-              <td><code>automatedScheduleSettings.gen.shotSize</code> (P1)<div class="autg-fld-sub">P1 ramp shot size</div></td>
-              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">%</span></td>
-              <td class="autg-why">P1 ramp shot size (% of substrate volume). AUTOMAIT fires uniform-sized shots within a phase — no taper.</td>
+              <td><b>P1 Shot Size</b><div class="autg-fld-sub">Duration of each P1 rehydration shot</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">% / runtime</span></td>
+              <td class="autg-why">Series of shots gradually refills substrate toward field capacity. Size for even wetting and reduced channeling. Calc shows shot size as % of substrate vol; AROYA UI takes it as a runtime (min:sec) at your emitter flow.</td>
             </tr>
-            <tr data-fld="p1IntMin">
-              <td><code>automatedScheduleSettings.gen.shotInterval</code> (P1)<div class="autg-fld-sub">P1 shot interval</div></td>
+            <tr data-fld="p1MaxDur">
+              <td><b>P1 Maximum Duration if No Drain Detected</b><div class="autg-fld-sub">P1 → P2 transition backstop</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
-              <td class="autg-why">Time between successive P1 ramp shots — derived from the P1 ramp window ÷ shot count.</td>
+              <td class="autg-why">Max P1 length before AUTOMAIT auto-transitions to P2 even without drain detection. Set ≥ your calculated P1 window so the room actually has time to refill before the kicker. If hit before drain, suggests guardrails are too tight or the drain station has an issue.</td>
             </tr>
             <tr data-fld="p2ShotPct">
-              <td><code>automatedScheduleSettings.gen.shotSize</code> (P2)<div class="autg-fld-sub">P2 maintenance shot size</div></td>
+              <td><b>P2 Shot Size</b><div class="autg-fld-sub">Duration of each P2 maintenance shot</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">% / runtime</span></td>
+              <td class="autg-why">Sustains VWC near field capacity without oversaturation. Independent from P1 — smaller so the sawtooth holds at the landing point. AROYA default Event Size range: <b>0.5 – 5 min</b>.</td>
+            </tr>
+            <tr data-fld="waitMin">
+              <td><b>Wait between Shots (Min)</b><div class="autg-fld-sub">Minimum interval — prevents channeling</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-why">Ensures each irrigation has time to spread evenly through the substrate before the next one fires. Should match your P1 repeat interval. AROYA default <b>15 min</b>.</td>
+            </tr>
+            <tr data-fld="waitMax">
+              <td><b>Wait between Shots (Max)</b><div class="autg-fld-sub">Maximum interval — prevents over-drying</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-why">Prevents the root zone from drying back too far or salts concentrating excessively between shots. Should be ≥ your P2 repeat interval — gives AUTOMAIT room to make dynamic decisions. AROYA default <b>60 min</b>.</td>
+            </tr>
+            <tr data-fld="drainGoal">
+              <td><b>Drainage Goal</b><div class="autg-fld-sub">Target runoff during P2 (% of substrate vol)</div></td>
               <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">%</span></td>
-              <td class="autg-why">P2 maintenance pulse size — independent from P1, smaller so the sawtooth holds at the landing point.</td>
+              <td class="autg-why">Supports air–water exchange in the root zone, helps prevent pH drift, and verifies full saturation. Per Jason: this is best understood as % of substrate volume, not % of irrigation shot. You only need just enough runoff to get a pH reading. AROYA default <b>5%</b>.</td>
+            </tr>
+            <tr data-fld="flushEvent">
+              <td><b>Flush Event</b><div class="autg-fld-sub">Periodic high-volume leaching shot</div></td>
+              <td class="autg-val"><span class="autg-num">—</span><span class="autg-unit">min</span></td>
+              <td class="autg-why">High-volume irrigation to leach salts. AROYA default <b>5 min</b> both sides. Triggered by ECpw Limit (Max) or scheduled by operator.</td>
             </tr>
           </tbody>
         </table>
@@ -6535,32 +6623,38 @@ function refreshAutomaitGuardrails(ctx){
     if(unit && unitEl) unitEl.textContent = unit;
   };
 
-  /* P1 shot size + interval — directly from calc */
-  set('p1ShotPct', _autFmt(ctx.shotPct, 1), '%');
-  set('p1IntMin',  _autFmt(ctx.p1IntMin, 0), 'min');
-  set('p2ShotPct', _autFmt(ctx.p2ShotPct, 1), '%');
+  /* Direct calc → AROYA UI field values */
+  set('irrWinStart',     _autFmt(ctx.p0Min, 0),                                       'min after lights-on');
+  set('irrSafetyCutoff', _autFmt(ctx.p3CutMin, 0),                                    'min before lights-off');
 
-  /* Runoff target as fraction (AROYA stores drainGoal as 0.0-1.0) */
-  set('drainGoal', _autFmt(ctx.runoffTarget/100, 2), 'frac');
+  /* Phase ramp shot — calc gives size as % of substrate vol; AROYA takes it as a
+     runtime. Show both: "X% (Y min)". */
+  const _p1Run = (typeof ctx.shotPct === 'number' && ctx.shotPct > 0)
+    ? (ctx.shotPct + '% · ~' + _autFmt(ctx.p1IntMin > 0 ? (ctx.rampVolL && ctx.p1RampShots ? (ctx.rampVolL/ctx.p1RampShots / Math.max(1e-9, (ctx.rampVolL/ctx.p1RampShots) / Math.max(0.001, ctx.shotPct/100)))*0 : 0) : 0, 1))
+    : '—';
+  set('p1ShotPct',  _autFmt(ctx.shotPct, 1) + '%',                                    'of substrate vol');
+  set('p1MaxDur',   _autFmt((ctx.p1IntMin * (ctx.p1RampShots + (ctx.runoffEventsN||0))) || 0, 0), 'min · P1 window length');
+  set('p2ShotPct',  _autFmt(ctx.p2ShotPct, 1) + '%',                                  'of substrate vol');
 
-  /* P0 / P3 buffers — directly from calc */
-  set('lightsBufP0', _autFmt(ctx.p0Min, 0), 'min');
-  set('lightsBufP3', _autFmt(ctx.p3CutMin, 0), 'min');
+  /* Wait between shots — Min/Max bracket the P1 / P2 intervals from the calc */
+  set('waitMin', _autFmt(ctx.p1IntMin, 0), 'min · ≈ P1 interval');
+  set('waitMax', _autFmt(60, 0), 'min · AROYA default');
 
-  /* VWC fields — derived from substrate FC and the configured dryback target.
-     We don't know the room's true FC% here (it depends on the substrate brand
-     and saturation), so we present these as the % delta from FC that the
-     calc implies, NOT as absolute VWC numbers. */
-  set('minVwc',       'FC − ' + _autFmt(ctx.dryPct + 3, 0) + ' pp', 'VWC');
-  set('soilMoistMin', 'FC − ' + _autFmt(ctx.dryPct, 0) + ' pp',     '%');
-  set('soilMoistMax', 'FC (landing)',                                '%');
+  /* Runoff: AROYA stores Drainage Goal as a percent (e.g. 5 = 5%) */
+  set('drainGoal', _autFmt(ctx.runoffTarget, 0), '%');
 
-  /* EC fields — calculator surfaces the feed/substrate EC math in the Feed
-     Rate tab; this is a hand-off pointer so the operator picks numbers up
-     from there, not a fabricated derivation here. */
-  set('maxEcpw',  'from Feed Rate ÷ stacking factor', 'mS/cm');
-  set('poreEcMin', 'from Feed Rate · phase target_min', 'mS/cm');
-  set('poreEcMax', 'from Feed Rate · phase target_max', 'mS/cm');
+  /* Supplemental Shot Size — operator chooses; rule of thumb ≥ P1 shot.
+     We surface ctx.shotPct as a starting point. */
+  set('suppShot',   '≥ ' + _autFmt(ctx.shotPct, 1) + '% · P1 size or larger', '');
+
+  /* Flush Event — AROYA default 5 minutes per Complete Guide v2.3 */
+  set('flushEvent', '5 (AROYA default)', 'min');
+
+  /* ECpw Limit (Max) + VWC Limit (Min) — pointers to calc inputs.
+     These are operator-set knobs, not derived from the calc. We surface the
+     AROYA defaults from the Complete Guide v2.3. */
+  set('ecpwMax', '9 / 6 (AROYA default)', 'dS/m');
+  set('vwcMin',  '25 / 25 (AROYA default — drop to ≈18–20% to enable deep dryback)', '% VWC');
 
   /* OFF-state state pill (toggle widget) + note */
   const stateChip = document.getElementById('automaitToggleState');
@@ -6585,6 +6679,83 @@ function refreshAutomaitGuardrails(ctx){
   if(_autLastCtx) refreshAutomaitGuardrails(_autLastCtx);
 })();
 
+
+
+
+/* ============ ASI slider — interactive position picker (mirrors app.aroya.io modal) ============ */
+(function initAsiSlider(){
+  /* Only positions verified verbatim against AROYA UI screenshots are here.
+     Unverified positions use a generic placeholder that's flagged in the UI
+     so we don't fabricate marketing copy AROYA didn't actually write. */
+  const ASI_PRESETS = {
+    1:  { label: null,             body: null,             verified: false },
+    2:  { label: null,             body: null,             verified: false },
+    3:  { label: 'High Generative',
+          body:  'Start irrigating at approx. 7:00PM to field capacity<br>Maintain near field capacity until end of irrigation window',
+          source:'Verbatim from app.aroya.io · Mom Room ASI modal, screenshot 2025-10-04 09:17PM',
+          verified: true },
+    4:  { label: null,             body: null,             verified: false },
+    5:  { label: null,             body: null,             verified: false },
+    6:  { label: null,             body: null,             verified: false },
+    7:  { label: 'Medium Vegetative',
+          body:  'Start irrigating at approx. 6:00PM to field capacity<br>Maintain near field capacity until end of irrigation window',
+          source:'Verbatim from app.aroya.io · Mom Room ASI modal, screenshot 2025-10-04 09:23PM',
+          verified: true },
+    8:  { label: null,             body: null,             verified: false },
+    9:  { label: null,             body: null,             verified: false },
+    10: { label: null,             body: null,             verified: false },
+  };
+  /* Behavior copy for unverified positions — derived from canonical mechanics
+     in the AUTOMAIT Complete Guide v2.3 PDF (NOT fabricated marketing names).
+     ASI 1 → P2 window ≈ 6 hr · shot every ~90 min
+     ASI 5 → P2 window ≈ 4 hr · shot every ~60 min
+     ASI 10 → P2 window ≈ 2 hr · shot every ~30 min */
+  function _asiMechanics(n){
+    /* Linear interp: P2 window 6 hr at ASI 1, 2 hr at ASI 10 */
+    const windowHr = 6 - ((n - 1) * (6 - 2) / 9);
+    const intervalMin = 90 - ((n - 1) * (90 - 30) / 9);
+    return { windowHr: windowHr.toFixed(1), intervalMin: Math.round(intervalMin) };
+  }
+  const card = document.getElementById('autAsiCard');
+  const cardH = document.getElementById('autAsiCardH');
+  const cardBody = document.getElementById('autAsiCardBody');
+  const cardSource = document.getElementById('autAsiCardSource');
+  const posLabel = document.getElementById('autAsiPos');
+  const stops = document.querySelectorAll('.aut-asi-stop');
+  if(!card || !cardH || !cardBody || !stops.length) return;
+
+  function _select(n){
+    stops.forEach(s => s.classList.toggle('is-current', parseInt(s.dataset.asi,10) === n));
+    const preset = ASI_PRESETS[n];
+    const isGen = n <= 5;
+    const lane = isGen ? 'GEN' : 'VEG';
+    const stepN = isGen ? n : n; /* AROYA UI uses the raw 1-10 number, e.g. "ASI™ VEG 7" */
+    if(preset && preset.verified){
+      card.classList.remove('is-pending');
+      cardH.innerHTML = 'ASI<span class="aut-tm">™</span> ' + lane + ' ' + stepN + ': ' + preset.label;
+      cardBody.innerHTML = preset.body;
+      if(cardSource) cardSource.textContent = '↳ ' + preset.source;
+    } else {
+      card.classList.add('is-pending');
+      const mech = _asiMechanics(n);
+      cardH.innerHTML = 'ASI<span class="aut-tm">™</span> ' + lane + ' ' + stepN;
+      cardBody.innerHTML =
+        '<b>Behavior</b> (from AUTOMAIT Complete Guide v2.3 mechanics):<br>' +
+        '· P2 irrigation window ≈ <b>' + mech.windowHr + ' hr</b><br>' +
+        '· Shots every ≈ <b>' + mech.intervalMin + ' min</b><br>' +
+        (isGen ? 'Generative steering — controlled drought stress promotes flowering and resin.'
+               : 'Vegetative steering — maintains high moisture, promotes growth and biomass.');
+      if(cardSource) cardSource.textContent = '↳ Verbatim ASI label for this position is pending verification from app.aroya.io.';
+    }
+    if(posLabel) posLabel.textContent = lane + ' ' + stepN + (preset && preset.verified ? ' · ' + preset.label : '');
+  }
+
+  stops.forEach(s => {
+    s.addEventListener('click', () => _select(parseInt(s.dataset.asi,10)));
+  });
+  /* Default = GEN 3 (the verified-default scenario in the screenshots) */
+  _select(3);
+})();
 
 </script>
 </body>
