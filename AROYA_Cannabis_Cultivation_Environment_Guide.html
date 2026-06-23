@@ -1274,8 +1274,9 @@
   overflow:hidden; text-overflow:ellipsis;
 }
 .autg-fld-sub{ font-size:11.5px; color:#7e8a92; margin-top:3px; }
-.autg-val{ font-variant-numeric:tabular-nums; white-space:nowrap; }
-.autg-num{ font-weight:700; color:#dbe9b5; font-size:15px; }
+/* .autg-val white-space:nowrap replaced — see updated rule above */
+.autg-num{ font-weight:700; color:#dbe9b5; font-size:16px; font-variant-numeric:tabular-nums; }
+.autg-val{ font-variant-numeric:tabular-nums; white-space:normal; }
 .autg-unit{ color:#9fb0bd; font-size:11.5px; margin-left:4px; }
 .autg-why{ color:#c8cdd1; line-height:1.5; }
 .autg-compromise{
@@ -1291,9 +1292,9 @@
   background:rgba(0,0,0,0.18); border-radius:6px; text-align:center;
 }
 /* OFF state: dim table, hide compromise, show off-note */
-.autg-section.is-off .autg-num{ color:#5a6469; }
+.autg-section.is-off .autg-num{ color:#dbe9b5; }   /* numbers ALWAYS legible */
 .autg-section.is-off .autg-compromise{ display:none; }
-.autg-section.is-off .autg-table tbody tr td.autg-val .autg-num{ opacity:0.35; }
+/* removed the opacity-dimming — values must always be legible */
 .autg-section.is-on  .autg-off-note{ display:none; }
 .autg-section.is-on  .autg-strategy-banner{ border-left-color:var(--olive); }
 
@@ -6604,38 +6605,19 @@ function refreshAutomaitGuardrails(ctx){
     if(unit && unitEl) unitEl.textContent = unit;
   };
 
-  /* Direct calc → AROYA UI field values */
-  set('irrWinStart',     _autFmt(ctx.p0Min, 0),                                       'min after lights-on');
-  set('irrSafetyCutoff', _autFmt(ctx.p3CutMin, 0),                                    'min before lights-off');
-
-  /* Phase ramp shot — calc gives size as % of substrate vol; AROYA takes it as a
-     runtime. Show both: "X% (Y min)". */
-  const _p1Run = (typeof ctx.shotPct === 'number' && ctx.shotPct > 0)
-    ? (ctx.shotPct + '% · ~' + _autFmt(ctx.p1IntMin > 0 ? (ctx.rampVolL && ctx.p1RampShots ? (ctx.rampVolL/ctx.p1RampShots / Math.max(1e-9, (ctx.rampVolL/ctx.p1RampShots) / Math.max(0.001, ctx.shotPct/100)))*0 : 0) : 0, 1))
-    : '—';
-  set('p1ShotPct',  _autFmt(ctx.shotPct, 1) + '%',                                    'of substrate vol');
-  set('p1MaxDur',   _autFmt((ctx.p1IntMin * (ctx.p1RampShots + (ctx.runoffEventsN||0))) || 0, 0), 'min · P1 window length');
-  set('p2ShotPct',  _autFmt(ctx.p2ShotPct, 1) + '%',                                  'of substrate vol');
-
-  /* Wait between shots — Min/Max bracket the P1 / P2 intervals from the calc */
-  set('waitMin', _autFmt(ctx.p1IntMin, 0), 'min · ≈ P1 interval');
-  set('waitMax', _autFmt(60, 0), 'min · AROYA default');
-
-  /* Runoff: AROYA stores Drainage Goal as a percent (e.g. 5 = 5%) */
-  set('drainGoal', _autFmt(ctx.runoffTarget, 0), '%');
-
-  /* Supplemental Shot Size — operator chooses; rule of thumb ≥ P1 shot.
-     We surface ctx.shotPct as a starting point. */
-  set('suppShot',   '≥ ' + _autFmt(ctx.shotPct, 1) + '% · P1 size or larger', '');
-
-  /* Flush Event — AROYA default 5 minutes per Complete Guide v2.3 */
-  set('flushEvent', '5 (AROYA default)', 'min');
-
-  /* ECpw Limit (Max) + VWC Limit (Min) — pointers to calc inputs.
-     These are operator-set knobs, not derived from the calc. We surface the
-     AROYA defaults from the Complete Guide v2.3. */
-  set('ecpwMax', '9 / 6 (AROYA default)', 'dS/m');
-  set('vwcMin',  '25 / 25 (AROYA default — drop to ≈18–20% to enable deep dryback)', '% VWC');
+  /* Direct calc → AROYA UI field values (short, scannable numbers) */
+  set('irrWinStart',     _autFmt(ctx.p0Min, 0),                                'min');
+  set('irrSafetyCutoff', _autFmt(ctx.p3CutMin, 0),                             'min');
+  set('p1ShotPct',       _autFmt(ctx.shotPct, 1),                              '%');
+  set('p1MaxDur',        _autFmt((ctx.p1IntMin * (ctx.p1RampShots + (ctx.runoffEventsN||0))) || 0, 0), 'min');
+  set('p2ShotPct',       _autFmt(ctx.p2ShotPct, 1),                            '%');
+  set('waitMin',         _autFmt(ctx.p1IntMin, 0),                             'min');
+  set('waitMax',         '60',                                                 'min');
+  set('drainGoal',       _autFmt(ctx.runoffTarget, 0),                         '%');
+  set('suppShot',        '≥ ' + _autFmt(ctx.shotPct, 1),                       '% · P1 size or larger');
+  set('flushEvent',      '5',                                                  'min');
+  set('ecpwMax',         '9 / 6',                                              'dS/m · GEN / VEG');
+  set('vwcMin',          '25 / 25',                                            '% · GEN / VEG');
 
   /* OFF-state state pill (toggle widget) + note */
   const stateChip = document.getElementById('automaitToggleState');
