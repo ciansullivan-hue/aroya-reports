@@ -1388,6 +1388,60 @@
   .aut-asi-modal-h{ font-size:16px; }
 }
 
+
+/* Phase-strategy strip above the guardrails table */
+.autg-phase-strip{
+  margin:0 0 14px; padding:14px 16px;
+  background:linear-gradient(180deg, rgba(166,189,108,0.10), rgba(166,189,108,0.04));
+  border:1px solid rgba(166,189,108,0.28);
+  border-radius:10px;
+}
+.autg-phase-h{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  flex-wrap:wrap; margin-bottom:8px;
+}
+.autg-phase-eyebrow{
+  font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:#9fb0bd; font-weight:600;
+}
+.autg-phase-pill{
+  display:inline-block; padding:5px 12px; border-radius:999px;
+  background:rgba(166,189,108,0.22); color:#dbe9b5; font-size:13px; font-weight:700;
+  border:1px solid rgba(166,189,108,0.35); white-space:nowrap;
+}
+.autg-phase-body{
+  color:#cfd8dc; font-size:13.5px; line-height:1.6;
+  overflow-wrap:break-word;
+}
+.autg-phase-body a{ color:var(--leaf); text-decoration:underline; }
+
+/* Recommended-column cell styling */
+.autg-th-field{ width:25%; }
+.autg-th-val{   width:16%; }
+.autg-th-rec{   width:21%; }
+.autg-th-why{   width:38%; }
+.autg-rec{
+  font-variant-numeric:tabular-nums; line-height:1.45;
+  color:#cfd8dc;
+}
+.autg-rec-val{
+  display:inline-block; font-weight:700; color:#cbeeb0; font-size:14.5px;
+  overflow-wrap:break-word;
+}
+.autg-rec-status{
+  display:inline-block; margin-left:6px; padding:1px 7px; border-radius:999px;
+  font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+  vertical-align:middle; white-space:nowrap;
+}
+.autg-rec-status.ok    { background:rgba(76,158,86,0.20);  color:#a8d585; border:1px solid rgba(76,158,86,0.4); }
+.autg-rec-status.warn  { background:rgba(214,166,74,0.18); color:#f0c884; border:1px solid rgba(214,166,74,0.4); }
+.autg-rec-status.bad   { background:rgba(196,76,76,0.18);  color:#e88f8f; border:1px solid rgba(196,76,76,0.4); }
+.autg-rec-status.unset { background:rgba(255,255,255,0.06); color:#9fb0bd; border:1px solid rgba(255,255,255,0.1); }
+
+@media (max-width:640px){
+  .autg-th-field, .autg-th-val, .autg-th-rec, .autg-th-why{ width:auto; }
+  .autg-table td.autg-rec::before{ content:'Recommended: '; color:#7e8a92; font-size:11px; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+}
+
 </style>
 </head>
 <body>
@@ -2106,10 +2160,18 @@
         <b>Manual irrigation mode.</b> Program your controller to fire <b id="autgManualShots">—</b> P1 ramp shots of <b id="autgManualVol">—</b> spaced <b id="autgManualInt">—</b> apart, then a single end-of-P1 kicker shot of <b id="autgManualKick">—</b>. AUTOMAIT is OFF — the calculator shows the pure-physics ideal. Toggle AUTOMAIT on to translate this into literal AROYA guardrail fields with the execution compromises annotated.
       </div>
 
+      <div class="autg-phase-strip" id="autgPhaseStrip">
+        <div class="autg-phase-h">
+          <span class="autg-phase-eyebrow">Current phase strategy</span>
+          <span class="autg-phase-pill" id="autgPhasePill">— · ASI —</span>
+        </div>
+        <div class="autg-phase-body" id="autgPhaseBody">Set the room phase in <a href="#setup" data-jump="setup-room">Setup → Room Profile</a> to load phase-tuned recommendations.</div>
+      </div>
+
       <div class="autg-table-wrap">
         <table class="autg-table" id="autgTable">
           <thead>
-            <tr><th class="autg-th-field">AROYA field (UI label)</th><th class="autg-th-val">Value · GEN / VEG</th><th class="autg-th-why">Why (tied to calc input) · default per AUTOMAIT Complete Guide v2.3</th></tr>
+            <tr><th class="autg-th-field">AROYA field (UI label)</th><th class="autg-th-val">Your calc value</th><th class="autg-th-rec">Recommended (this phase) · GEN / VEG</th><th class="autg-th-why">Why (tied to calc input + AUTOMAIT Complete Guide v2.3)</th></tr>
           </thead>
           <tbody>
             <tr data-fld="irrWinStart">
@@ -6750,6 +6812,105 @@ runRoomChain();
 wireProfileUI();
 initProfiles();
 showTab((location.hash||'#home').slice(1));
+
+
+
+/* ============ Phase-aware AUTOMAIT guardrail recommendations ============ */
+const PHASE_GUARDRAILS = {
+  0: { label:'Propagation', asi:'8-10 · vegetative',
+       blurb:'Clones / seedlings. High moisture availability, no dryback push. Hold near FC with very small, frequent shots.',
+       rec:{ irrWinStart:'30-60', irrSafetyCutoff:'30-60', ecpwMax:'4 / 3', vwcMin:'38 / 38',
+             suppShot:'≥ P1', p1ShotPct:'2-3', p1MaxDur:'match P1 window',
+             p2ShotPct:'1-2', waitMin:'15', waitMax:'45', drainGoal:'15-20', flushEvent:'5' } },
+  1: { label:'Vegetative', asi:'7-10 · vegetative push',
+       blurb:'Canopy + biomass building. Maintain high moisture, no controlled stress. Drainage daily to flush salts and turn over nutrients.',
+       rec:{ irrWinStart:'60', irrSafetyCutoff:'60', ecpwMax:'5 / 4', vwcMin:'30 / 30',
+             suppShot:'≥ P1', p1ShotPct:'4-5', p1MaxDur:'match P1 window',
+             p2ShotPct:'2-3', waitMin:'15', waitMax:'60', drainGoal:'15-20', flushEvent:'5' } },
+  2: { label:'Early Flower (W1-3)', asi:'3-5 · moderate generative',
+       blurb:'Generative push. Deep dryback suppresses stretch, fires reproductive signal. EC stack drives flower-site initiation. Tight P0 buffer + long P3 to extend dryback window.',
+       rec:{ irrWinStart:'90-120', irrSafetyCutoff:'90-120', ecpwMax:'11 / 6', vwcMin:'18-20 / 25',
+             suppShot:'≥ P1', p1ShotPct:'5-6', p1MaxDur:'match P1 window',
+             p2ShotPct:'3-4', waitMin:'15', waitMax:'30', drainGoal:'5-10', flushEvent:'5' } },
+  3: { label:'Mid Flower (W4-5)', asi:'5-7 · balanced',
+       blurb:'Bulking — flower mass accumulation. Moderate dryback + heavy daily drainage to flush EC stack and let plant pull turgor. Push runoff higher than any other phase.',
+       rec:{ irrWinStart:'60-90', irrSafetyCutoff:'60-90', ecpwMax:'9 / 7', vwcMin:'22-25 / 28',
+             suppShot:'≥ P1', p1ShotPct:'5-6', p1MaxDur:'match P1 window',
+             p2ShotPct:'3-4', waitMin:'15', waitMax:'60', drainGoal:'20-30', flushEvent:'5' } },
+  4: { label:'Late Flower (W6-7)', asi:'4-6 · gentle generative',
+       blurb:'Finishing weight + trichome maturation. Pull EC ceiling back, taper drainage. Still moderate dryback but no aggressive stress.',
+       rec:{ irrWinStart:'60-90', irrSafetyCutoff:'90', ecpwMax:'9 / 7', vwcMin:'20-22 / 25',
+             suppShot:'≥ P1', p1ShotPct:'5', p1MaxDur:'match P1 window',
+             p2ShotPct:'3', waitMin:'15', waitMax:'45', drainGoal:'10-15', flushEvent:'5' } },
+  5: { label:'Ripening (W7+)', asi:'1-3 · strong generative',
+       blurb:'Strong generative finish. Deep dryback drives terpene + anthocyanin signaling. Long P0 buffer, tight wait-max, low drainage (let salts stack to finish the ripening signal).',
+       rec:{ irrWinStart:'120-180', irrSafetyCutoff:'120', ecpwMax:'9 / 7', vwcMin:'15-18 / 22',
+             suppShot:'≥ P1', p1ShotPct:'4-5', p1MaxDur:'match P1 window',
+             p2ShotPct:'2-3', waitMin:'15', waitMax:'30', drainGoal:'5-10', flushEvent:'5' } },
+  6: { label:'Dry/Cure', asi:'n/a · no irrigation',
+       blurb:'Plants harvested — no active irrigation. Guardrails irrelevant; reset for next cycle.',
+       rec:{ irrWinStart:'n/a', irrSafetyCutoff:'n/a', ecpwMax:'n/a', vwcMin:'n/a',
+             suppShot:'n/a', p1ShotPct:'n/a', p1MaxDur:'n/a',
+             p2ShotPct:'n/a', waitMin:'n/a', waitMax:'n/a', drainGoal:'n/a', flushEvent:'n/a' } }
+};
+function _autParseRange(raw){
+  if(raw === null || raw === undefined) return null;
+  const m = String(raw).match(/(\d+(?:\.\d+)?)\s*[-–]\s*(\d+(?:\.\d+)?)/);
+  if(m) return [parseFloat(m[1]), parseFloat(m[2])];
+  const m2 = String(raw).match(/(\d+(?:\.\d+)?)/);
+  if(m2){ const v = parseFloat(m2[1]); return [v, v]; }
+  return null;
+}
+function _autCompareVal(calcVal, recVal){
+  if(calcVal === null || calcVal === undefined || calcVal === '—') return 'unset';
+  const calcN = _autParseRange(calcVal);
+  const recN  = _autParseRange(recVal);
+  if(!calcN || !recN) return 'unset';
+  const c = calcN[0];
+  const [lo, hi] = recN;
+  if(c >= lo && c <= hi) return 'ok';
+  const tol = Math.max(1, (hi - lo) || (hi * 0.25));
+  if(c >= lo - tol && c <= hi + tol) return 'warn';
+  return 'bad';
+}
+function _autPaintRecommendations(phaseIdx){
+  const ph = PHASE_GUARDRAILS[phaseIdx] || PHASE_GUARDRAILS[2];
+  const pill = document.getElementById('autgPhasePill');
+  const body = document.getElementById('autgPhaseBody');
+  if(pill) pill.textContent = ph.label + ' · ASI ' + ph.asi;
+  if(body) body.innerHTML = '<b>Strategy:</b> ' + ph.blurb;
+  Object.keys(ph.rec).forEach(fld => {
+    const row = document.querySelector('#autgTable tr[data-fld="' + fld + '"]');
+    if(!row) return;
+    const cell = row.querySelector('.autg-rec');
+    if(!cell) return;
+    const recVal = ph.rec[fld];
+    const calcVal = (row.querySelector('.autg-num') || {}).textContent || '';
+    const valEl = cell.querySelector('.autg-rec-val');
+    const statusEl = cell.querySelector('.autg-rec-status');
+    if(valEl) valEl.textContent = recVal;
+    const status = _autCompareVal(calcVal, recVal);
+    if(statusEl){
+      statusEl.className = 'autg-rec-status ' + status;
+      statusEl.textContent =
+        status === 'ok'   ? 'on target' :
+        status === 'warn' ? 'tighten'   :
+        status === 'bad'  ? 'drift'     : 'set in AROYA';
+    }
+  });
+}
+/* Wrap the existing refresh so we paint recommendations after every recalc */
+if(typeof refreshAutomaitGuardrails === 'function' && !refreshAutomaitGuardrails._wrapped){
+  const _origRefresh = refreshAutomaitGuardrails;
+  refreshAutomaitGuardrails = function(ctx){
+    _origRefresh(ctx);
+    try{
+      const phaseIdx = (typeof ROOM !== 'undefined' && ROOM && typeof ROOM.phaseIdx === 'number') ? ROOM.phaseIdx : 2;
+      _autPaintRecommendations(phaseIdx);
+    }catch(e){}
+  };
+  refreshAutomaitGuardrails._wrapped = true;
+}
 
 </script>
 </body>
