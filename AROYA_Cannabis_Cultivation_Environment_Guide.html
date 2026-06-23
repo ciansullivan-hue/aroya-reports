@@ -1442,6 +1442,16 @@
   .autg-table td.autg-rec::before{ content:'Recommended: '; color:#7e8a92; font-size:11px; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
 }
 
+
+/* Locked seg (Kicker / Extra ramps) when AUTOMAIT is enabled */
+#irrRunoffModeSeg button[disabled]{
+  cursor:not-allowed; opacity:0.55;
+  filter:saturate(0.6);
+}
+#irrRunoffModeSeg button[disabled]:not(.active){
+  opacity:0.32;
+}
+
 </style>
 </head>
 <body>
@@ -4622,6 +4632,9 @@ document.querySelectorAll('#irrEmittersSeg button').forEach(b=>{
 /* Runoff delivery mode */
 document.querySelectorAll('#irrRunoffModeSeg button').forEach(b=>{
   b.onclick=()=>{
+    /* If AUTOMAIT is enabled, the seg is locked to 'extra' — refuse clicks. */
+    const autCb = document.getElementById('automaitEnabled');
+    if(autCb && autCb.checked) return;
     document.querySelectorAll('#irrRunoffModeSeg button').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
     RUNOFF_MODE = b.dataset.v;
@@ -6708,12 +6721,50 @@ function refreshAutomaitGuardrails(ctx){
   if(!cb) return;
   const initial = _autReadEnabled();
   cb.checked = initial;
+
+  /* Remember the user's pre-AUTOMAIT runoff choice so toggling OFF restores it. */
+  let _userRunoffPick = (typeof RUNOFF_MODE === 'string') ? RUNOFF_MODE : 'kicker';
+
+  function _autApplyMode(){
+    const on = !!cb.checked;
+    const segBtns = document.querySelectorAll('#irrRunoffModeSeg button');
+    if(on){
+      /* Snapshot whatever the user had picked before AUTOMAIT was flipped on. */
+      if(typeof RUNOFF_MODE === 'string' && RUNOFF_MODE !== 'extra'){
+        _userRunoffPick = RUNOFF_MODE;
+      }
+      RUNOFF_MODE = 'extra';
+      segBtns.forEach(b=>{
+        b.classList.toggle('active', b.dataset.v === 'extra');
+        b.disabled = true;
+        b.setAttribute('aria-disabled','true');
+        b.title = 'AUTOMAIT executes uniform shot sizes — kicker mode is disabled when AUTOMAIT is on';
+      });
+      const hint = document.getElementById('runoffModeHint');
+      if(hint) hint.innerHTML = '<b>Locked by AUTOMAIT</b> — AUTOMAIT can\'t fire a variable-sized kicker shot. Runoff is delivered as extra same-size ramp shots fired after FC until target is hit.';
+    } else {
+      RUNOFF_MODE = _userRunoffPick || 'kicker';
+      segBtns.forEach(b=>{
+        b.classList.toggle('active', b.dataset.v === RUNOFF_MODE);
+        b.disabled = false;
+        b.removeAttribute('aria-disabled');
+        b.title = '';
+      });
+      const hint = document.getElementById('runoffModeHint');
+      if(hint) hint.textContent = RUNOFF_MODE === 'extra'
+        ? 'Same-size shots — fire more standard ramp shots after FC until target is hit. Predictable runtime per shot, but achieved % steps in shot-size increments.'
+        : 'Single larger shot at the end of P1 — one event, one runtime to set in the controller. Hits the target exactly.';
+    }
+    if(typeof updateIrrigation === 'function') updateIrrigation();
+  }
+
   cb.addEventListener('change', () => {
     _autWriteEnabled(cb.checked);
-    if(_autLastCtx) refreshAutomaitGuardrails(_autLastCtx);
+    _autApplyMode();           /* re-locks/unlocks the seg + recomputes */
   });
-  /* If the calc has already run, refresh now */
-  if(_autLastCtx) refreshAutomaitGuardrails(_autLastCtx);
+
+  /* Apply once on boot so the initial toggle state is reflected. */
+  _autApplyMode();
 })();
 
 
