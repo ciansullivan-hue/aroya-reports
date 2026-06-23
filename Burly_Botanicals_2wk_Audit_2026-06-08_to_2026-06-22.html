@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Burly Botanicals · 2-Week Facility Audit · 2026-06-08 → 2026-06-22</title>
+<title>Burly Botanicals · 2-Week Facility Audit · 2026-06-08 → 2026-06-22 (v2)</title>
 <style>
 :root{
   --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
@@ -12,13 +12,11 @@
   --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
   --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51; --p-dry:#cfd0c8;
   --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
-  --grid-line: #e8e8e0;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;font:14.5px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
-a{color:var(--app-blue);text-decoration:none}a:hover{text-decoration:underline}
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
-.masthead{background:#1a1c19;color:#fff;padding:22px 28px 26px;margin:0 -28px 0;position:relative;overflow:hidden}
+.masthead{background:#1a1c19;color:#fff;padding:22px 28px 26px;margin:0 -28px 0}
 .masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .lockup{display:flex;align-items:center;gap:12px;color:#fff}
 .aroya-wordmark{height:34px;width:auto;color:#fff;display:block}
@@ -52,11 +50,18 @@ th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--border);ver
 th{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700;background:var(--bg-3)}
 .pill{display:inline-block;padding:2px 9px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:.4px}
 .pill.bad{background:var(--bad-bg);color:var(--bad)}.pill.warn{background:var(--warn-bg);color:var(--warn)}.pill.good{background:var(--good-bg);color:var(--good)}.pill.muted{background:var(--bg-3);color:var(--ink-muted)}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 22px}
-.chip{cursor:pointer;border:1.5px solid var(--border);background:var(--bg-2);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--ink);text-align:left;box-shadow:var(--card-shadow);transition:all .12s}
+
+.room-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 22px}
+.chip{cursor:pointer;border:1.5px solid var(--border);background:var(--bg-2);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--ink);text-align:left;box-shadow:var(--card-shadow);transition:all .12s;display:inline-flex;flex-direction:column;gap:1px}
 .chip:hover{border-color:var(--olive-2);transform:translateY(-1px)}
 .chip.active{background:var(--olive);color:#fff;border-color:var(--olive)}
-.chip-sub{display:block;font-size:10.5px;font-weight:500;opacity:.85;margin-top:1px;text-transform:uppercase;letter-spacing:.5px}
+.chip-sub{font-size:10.5px;font-weight:500;opacity:.85;text-transform:none;letter-spacing:.3px}
+.compare-toggle{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);background:var(--bg-2);border:1px solid var(--border);border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:600;box-shadow:var(--card-shadow)}
+.compare-toggle:hover{border-color:var(--olive-2)}
+.compare-toggle.active{background:var(--olive);color:#fff;border-color:var(--olive)}
+.compare-toggle .dot{width:8px;height:8px;border-radius:50%;background:#aaa;transition:all .15s}
+.compare-toggle.active .dot{background:var(--lime)}
+
 .panel-head{margin:6px 0 14px;padding-left:14px}
 .panel-head h2{margin:4px 0 4px;font-size:21px;border:none;padding:0}
 .rid{color:var(--ink-muted);font-weight:500;font-size:.78em}
@@ -65,7 +70,13 @@ th{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing
 .charts{display:grid;grid-template-columns:1fr;gap:14px;margin-top:8px}
 .chart-wrap{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;box-shadow:var(--card-shadow)}
 .chart-wrap h3{margin:0 0 10px;font-size:13px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
-.chart-wrap canvas{width:100%!important;height:260px!important}
+.chart-wrap canvas{width:100%!important;height:280px!important}
+
+#compare-view{display:none}
+#compare-view.active{display:block}
+#compare-view .compare-hint{background:var(--bg-2);border:1px solid var(--border);border-left:4px solid var(--lime);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--ink-2);margin-bottom:14px}
+#single-view.hidden{display:none}
+
 .rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow);overflow:hidden}
 .rec .owner{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.6px;text-transform:uppercase;margin-right:8px}
 .rec .owner.grower{background:var(--app-blue)}.rec .owner.process{background:var(--ink-2)}
@@ -73,7 +84,7 @@ th{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing
 .rec .rwhy{margin-top:6px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
 ul.openqs{padding-left:20px;line-height:1.7}ul.openqs li{margin-bottom:8px}
 footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
-@media(max-width:720px){.wrap{padding:0 16px 60px} .masthead{margin:0 -16px;padding:18px 16px 20px} .pagehead h1{font-size:24px} h2{font-size:18px} .kpi .v{font-size:18px} .chip{font-size:12px}}
+@media(max-width:720px){.wrap{padding:0 16px 60px}.masthead{margin:0 -16px;padding:18px 16px 20px}.pagehead h1{font-size:24px}h2{font-size:18px}.kpi .v{font-size:18px}.chip{font-size:12px}}
 </style>
 </head>
 <body><div class="wrap">
@@ -100,146 +111,118 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
 </svg>
      <span class="lockup-byline">by Addium · Cultivation Audit</span>
    </div>
-   <div class="sync-status">Facility 3920 · Burly Botanicals · Oklahoma City · 2026-06-22</div>
+   <div class="sync-status">Facility 3920 · Burly Botanicals · OKC · 14d real series · 06-23 v2</div>
  </div>
 </div>
 
 <div class="pagehead">
  <div class="pagehead-eyebrow">AROYA · 2-Week Facility Audit · Cultivation Intelligence</div>
  <h1>Burly Botanicals · Irrigation, Climate &amp; Steering</h1>
- <div class="sub">14-day deep dive across 4 active flower rooms + R/D pilot · Coco 2-gal Char-Coir · phase-aware crop-steering review · merged against May 8 (6-week) + June 9 (2-week) commitments</div>
+ <div class="sub">14-day deep dive · 5 rooms · Coco 2-gal Char-Coir · phase-aware crop-steering review · merged against May 8 (6-week) + June 9 (2-week) commitments · real 6-min cadence stitched from AROYA public_api</div>
  <div class="meta">
    <span><b>Facility</b>Burly Botanicals (ID 3920)</span>
    <span><b>Window</b>2026-06-08 → 2026-06-22 (14 days)</span>
    <span><b>Substrate</b>Coco 2-gal Char-Coir</span>
-   <span><b>Active rooms</b>East B · West A · West B · R/D · East A (climate only)</span>
+   <span><b>Rooms in scope</b>East A · East B · West A · West B · R/D</span>
    <span><b>Customer contacts</b>Michael Fayak (owner / feed-EC) · Brittany Durham (grower / climate-VPD, since Feb 2026)</span>
-   <span><b>Report date</b>2026-06-22</span>
+   <span><b>Report date</b>2026-06-23</span>
  </div>
 </div>
 
-<!-- SECTION 1 — HEADLINE FINDINGS -->
 <section id="s1">
  <h2>1 · Headline Findings</h2>
  <div class="kpis">
-   <div class="kpi good"><div class="l">East B Feed EC</div><div class="v">2.88 mS</div><div class="s">Target 2.3–2.6+ mS · May-8 commitment IMPLEMENTED on Eastside · substrate stacking +5.04%</div></div>
-   <div class="kpi good"><div class="l">West A EC Stack</div><div class="v">+4.63 mS</div><div class="s">Drain 7.75 − drip 3.12 · cleanest steering in the facility · ripening on track</div></div>
-   <div class="kpi warn"><div class="l">West B VPD</div><div class="v">0.86 kPa</div><div class="s">Bulking target 1.2–1.4 · 0.34+ gap unchanged from June 9 · cold canopy (70.6°F) suppresses transpiration</div></div>
-   <div class="kpi bad"><div class="l">East A Substrate Data</div><div class="v">No signal</div><div class="s">All 14 days · cannot re-grade June-9 feed-EC FAIL · sensors offline or room flipped</div></div>
-   <div class="kpi warn"><div class="l">R/D Flower VPD</div><div class="v">0.75 kPa</div><div class="s">RH 76% · climate signature vegetative or early-flower · substrate moisture trending UP +6.16%</div></div>
-   <div class="kpi good"><div class="l">Window coverage</div><div class="v">100%</div><div class="s">480 hourly samples per room-metric · 14 days end-to-end · no gaps</div></div>
- </div>
-
- <div class="verdict good">
-   <div class="v-head">Positive — East-side feed-EC commitment IS in force where data exists</div>
-   <span>East B (12404) is the instrumented Eastside flower room over this window and runs feed EC at 2.88 mS, drain EC 3.44 mS (drain &gt; drip = substrate stacking, not leaching), substrate EC 2.63 mS climbing +5.04% (2.58 → 2.71 mS). The May-8 recipe change Michael wasn't applying at the June 9 audit appears to be in place where the sensors can see it. The data-blocked question is whether East A (12403) is operating the same way.</span>
+   <div class="kpi bad"><div class="l">East A Feed EC</div><div class="v">1.11 mS</div><div class="s">May-8 target 2.3–2.6 mS · STILL not implemented · substrate EC bled 3.22 → 1.73 mS over 8d before sensors went silent</div></div>
+   <div class="kpi good"><div class="l">West B EC Stacking</div><div class="v">+110%</div><div class="s">Substrate pore EC 2.19 → 4.62 mS over 14d · May-8 recipe doing exactly what it should</div></div>
+   <div class="kpi good"><div class="l">West A Substrate Stack</div><div class="v">+4.0 mS</div><div class="s">Drain 7.00 vs feed 3.00 mean · cleanest steering signature in the facility · ripening on track</div></div>
+   <div class="kpi good"><div class="l">East B Recipe Live</div><div class="v">2.89 mS</div><div class="s">Feed EC ramped 1.18 → 2.89 mS as room came online 06-18 · stack 1.85 → 3.46 mS · correct</div></div>
+   <div class="kpi warn"><div class="l">West-side VPD gap</div><div class="v">0.93 kPa</div><div class="s">14d mean · bulking target 1.2–1.4 · still short by 0.27 kPa · cool canopy (71.7°F)</div></div>
+   <div class="kpi bad"><div class="l">East A Sensors Silent</div><div class="v">Since 06-15</div><div class="s">Substrate stack dropped offline mid-window · climate sensors normal · cannot re-grade past 06-15</div></div>
  </div>
 
  <div class="verdict bad">
-   <div class="v-head">Critical — East A (12403) substrate sensors silent for the full window</div>
-   <span>Climate sensors (VPD, air temp, RH, CO₂) report normally in East A, but soil_moist, pore_ec, soil_temp, drip and drain are blank for all 14 days. East A is the room that carried the FAIL flag from June 9 on the feed-EC commitment, so the absence of data means that commitment cannot be re-graded. Either the room is between cycles and TEROS-12 nodes have been pulled, or the substrate node dropped off the Wirepas mesh since June 9. Confirm with Michael — if it's a mesh outage, walk the room and re-pair the node.</span>
- </div>
-
- <div class="verdict warn">
-   <div class="v-head">Persistent — West-side VPD gap from June 9 has narrowed but not closed</div>
-   <span>West A VPD has crept up from 0.92 → 0.94 kPa, West B is unchanged at 0.86 kPa, RH dropped from 67–68% to 62–63% (a real improvement). Bulking target is 1.2–1.4 kPa — still a 0.26–0.34 kPa gap. West A is finishing into ripening and the gap is less critical there; West B is mid-bulking and the cool/wet canopy is the reason the substrate EC stack has flattened. Decide whether this is a dehumidifier setpoint problem (easy) or a capacity problem (harder).</span>
+   <div class="v-head">Critical — East A May-8 commitment NEVER implemented, substrate EC bled out, then sensors went silent</div>
+   <span>East A (12403) had 8 days of substrate data this window before sensors dropped on 06-15. Over those 8 days: feed EC averaged 1.11 mS (target 2.3–2.6+), substrate pore EC declined 3.22 → 1.73 mS (-46%), drain EC fell 4.47 → 1.97 mS. This is the room that was already on a FAIL flag from June 9 — the data confirms the recipe was never changed and the substrate is now below the coco maintenance floor. After 06-15 the substrate sensor stack goes silent (climate sensors still reporting) which means we can't see what happened in the back half of the window. Two actions: (1) raise feed EC in East A to ≥ 2.6 mS today, (2) confirm whether substrate sensors were pulled or dropped off the mesh.</span>
  </div>
 
  <div class="verdict good">
-   <div class="v-head">Positive — West A (16868) is the cleanest steering signature in the facility</div>
-   <span>78.6% daily peak / 53.4% daily trough → 25.2 pp absolute dryback (lower edge of the 25–35 pp ripening target), pore EC 4.87 mS pulling back -4.27% (correct direction into finish), drain EC 7.75 mS against feed 3.12 mS = +4.63 mS substrate stack. Don't touch the recipe. If you want a deeper P3 in the final week, step ASI DOWN (e.g. GEN 3 → GEN 2 — the MORE aggressive direction, not less).</span>
+   <div class="v-head">Positive — West B substrate EC doubled, May-8 recipe working as intended</div>
+   <span>West B (12406) substrate pore EC climbed from 2.19 → 4.62 mS across the full 14 days, drain EC tracked 2.23 → 5.58 mS, drip steady at 2.4-2.6. That's a textbook bulking EC stack. The substrate-steering side of West B is doing what it should. The remaining problem is climate: VPD 0.93 mean (target 1.2–1.4), air temp 71.7°F, RH 65% — the canopy is still running too cool for a bulking room.</span>
+ </div>
+
+ <div class="verdict good">
+   <div class="v-head">Positive — West A is the cleanest steering signature in the facility</div>
+   <span>West A (16868) ran 14 full days of 77.7% peak / 57.7% trough → 20 pp absolute dryback (lower edge of 25-35 pp ripening band), feed EC 3.00 mS holding, drain EC building 6.54 → 7.67 mS, substrate EC 4.55 → 5.58 mS. Drain−drip spread is +4.0 mS. Don't touch the recipe. For a deeper P3 in the final week, step ASI DOWN one notch (GEN 3 → GEN 2 = the MORE aggressive direction).</span>
+ </div>
+
+ <div class="verdict warn">
+   <div class="v-head">Watch — R/D climate runs vegetative, substrate signal is moving but light</div>
+   <span>R/D (12409) VPD 0.71, RH 77%, CO₂ 934 ppm, dryback 10.7 pp average — vegetative signature, not mid-flower. Substrate EC climbing 2.7 → 3.06 mS. Either a deliberate veg/early-flower pilot or an HVAC limit; flagging for Michael to confirm intent.</span>
  </div>
 </section>
 
-<!-- SECTION 2 — PRIOR COMMITMENT AUDIT -->
-<section id="s2">
- <h2>2 · Prior-Commitment Audit · May 8 + June 9</h2>
- <p style="font-size:13.5px;color:var(--ink-2);max-width:780px">Commitments made in the May 8 six-week audit and the June 9 two-week audit, graded against this 14-day window. <b>DATA-BLOCKED</b> means a commitment couldn't be re-graded because the sensors needed to evaluate it weren't reporting (East A substrate).</p>
- <table>
-   <thead><tr><th>Commitment</th><th>Room</th><th>Result</th><th>Evidence</th></tr></thead>
-   <tbody>
-    <tr><td>Raise feed EC to 2.3–2.6 mS, push 2.8 mS</td><td>East A (12403)</td><td><span class="pill muted">DATA-BLOCKED</span></td><td>No substrate sensors reporting this window. Cannot re-grade. East A still carries the FAIL flag from June 9.</td></tr>
-    <tr><td>Raise feed EC to 2.3–2.6 mS</td><td>East B (12404)</td><td><span class="pill good">PASS</span></td><td>Feed EC 2.88 mS, drain EC 3.44 mS (drain > drip = stacking). Substrate EC 2.63 mS climbing +5.04% over 14d. Recipe is in force on the Eastside flower room that IS instrumented.</td></tr>
-    <tr><td>Raise feed EC to 2.3–2.6 mS, push 2.8 mS</td><td>West A (16868)</td><td><span class="pill good">PASS</span></td><td>Feed EC 3.12 mS, drain EC 7.75 mS (+4.63 mS stack). Substrate EC sits at 4.87 mS pulling back into finish — correct trajectory for ripening.</td></tr>
-    <tr><td>Raise feed EC to 2.3–2.6 mS</td><td>West B (12406)</td><td><span class="pill good">PASS</span></td><td>Feed EC 2.40 mS, drain EC 5.91 mS (+3.51 mS stack). Substrate EC 4.65 mS holding in the bulking target band.</td></tr>
-    <tr><td>Reduce shot frequency / stop chasing runoff every shot</td><td>All flower rooms</td><td><span class="pill warn">PARTIAL</span></td><td>DFI (drip volume) signatures stable — no excessive shot-spam pattern. West B daily runoff signature is healthy. West A finishing room shows controlled drawdown. East A can't be graded.</td></tr>
-    <tr><td>West-side dehumidifier — close VPD 0.34 kPa gap to bulking target</td><td>West A + West B</td><td><span class="pill warn">PARTIAL</span></td><td>West A VPD now 0.94 (up from 0.92 in June 9 window). West B VPD still 0.86. RH 62–63% — moved off 67–68% but still under the 1.2–1.4 kPa bulking target by 0.26+ kPa. Direction is right; magnitude is short.</td></tr>
-    <tr><td>Drip-drain sensors mounted across all flower rooms</td><td>All flower rooms</td><td><span class="pill good">PASS</span></td><td>Drip and drain EC + drip and drain DFI signals present in every active flower room. Sensors are deployed and reporting.</td></tr></tbody>
- </table>
-</section>
-
-<!-- SECTION 3 — ROOMS -->
 <section id="s3">
- <h2>3 · Per-Room Phase Breakdown</h2>
- <p style="font-size:13.5px;color:var(--ink-2);max-width:780px">Click a room chip to switch panels. Dryback is reported as <b>absolute percentage points</b> (peak VWC − trough VWC), not as a percentage of field capacity. Phase windows use AROYA's recipe library labels (Bulking/Vegetative 2, Ripening/Generative 2, Week N Generative). Phase targets pair observed numbers with the practitioner range for the phase.</p>
- <div class="chips"><button class="chip" data-room="12404" onclick="showRoom('12404')">Flower East B (B1–B4)<span class="chip-sub">Bulking / Vegetative 2</span></button><button class="chip" data-room="16868" onclick="showRoom('16868')">Flower West A (A1–A4) · new room<span class="chip-sub">Ripening / Generative 2</span></button><button class="chip" data-room="12406" onclick="showRoom('12406')">Flower West B (B1–B4)<span class="chip-sub">Bulking / Vegetative 2</span></button><button class="chip" data-room="12409" onclick="showRoom('12409')">R/D Flower Room<span class="chip-sub">Veg / Early Flower</span></button><button class="chip" data-room="12403" onclick="showRoom('12403')">Flower East A (A1–A4)<span class="chip-sub">Between cycles</span></button></div>
- 
-    <section class="panel" id="panel-12404" style="display:none">
-      <div class="panel-head" style="border-left:6px solid var(--p-bulking)">
-        <h2>Flower East B (B1–B4) <span class="rid">#12404</span></h2>
-        <div class="hgline">Bulking / Vegetative 2 · Bulking window · coverage 100%</div>
-        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> VWC dryback 12–18 pp · substrate EC 4.0–7.0 mS · VPD 1.2–1.4 kPa · daily runoff 20–30%</div>
-      </div>
-      <div class="kpis">
-        <div class="kpi"><div class="l">VWC peak (14d)</div><div class="v">65.4%</div><div class="s">daily lights-on peak</div></div>
-        <div class="kpi"><div class="l">VWC trough (14d)</div><div class="v">52.2%</div><div class="s">pre-irrigation trough</div></div>
-        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">13.2 pp</div><div class="s">peak − trough</div></div>
-        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">2.63 mS</div><div class="s">trend +0.13 mS · stacking</div></div>
-        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">2.88 mS</div><div class="s">drip-line EC</div></div>
-        <div class="kpi"><div class="l">Drain EC</div><div class="v">3.44 mS</div><div class="s">drain−drip spread +0.56 mS</div></div>
-        <div class="kpi"><div class="l">VPD (lights-on)</div><div class="v">1.12 kPa</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">76.2°F / 63.8%</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">CO₂</div><div class="v">1446 ppm</div><div class="s"></div></div>
-      </div>
-      <div class="narr">East B is the only Eastside flower room currently instrumented — East A (12403) has no live substrate sensors over this window, so the May-8 / June-9 East-A feed-EC commitment can't be re-graded from data. Where we DO have East-side data, the picture is healthier than May: feed EC is sitting at 2.88 mS, drain EC at 3.44 mS (drain > drip → substrate is stacking, not leaching), and pore EC is climbing slowly (+5.04% over 14d, 2.58 → 2.71 mS). Dryback runs ~13 pp absolute on coco — squarely in the 12–18 pp bulking target. Air temp 76.2°F, VPD 1.12 kPa are bulking-appropriate. CO₂ 1446 ppm.</div>
-      <div class="charts">
-        <div class="chart-wrap"><h3>Substrate VWC — daily peak, trough &amp; absolute-pp dryback (P3 lever)</h3><canvas id="cv_12404_vwc"></canvas></div>
-        <div class="chart-wrap"><h3>Substrate pore-EC stack (drip → substrate → drain, mS)</h3><canvas id="cv_12404_ec"></canvas></div>
-        <div class="chart-wrap"><h3>Lights-on VPD (kPa) &amp; air temp (°F)</h3><canvas id="cv_12404_vpd"></canvas></div>
-      </div>
-    </section>
-    <section class="panel" id="panel-16868" style="display:block">
+ <h2>3 · Per-Room Phase Breakdown · Compare Mode</h2>
+ <p style="font-size:13.5px;color:var(--ink-2);max-width:780px">Click a room chip to view a single room's panel. Click <b>Compare</b> to overlay multiple rooms on the same chart — chips become multi-select. Dryback is reported as <b>absolute percentage points</b> (peak − trough VWC). Phase targets pair observed numbers with the practitioner range for the phase.</p>
+ <div class="room-bar">
+   <button class="chip" data-room="12403" onclick="showRoom('12403')">Flower East A (A1–A4)<span class="chip-sub">CRITICAL — substrate EC bled out, sensors offline 06-15</span></button><button class="chip" data-room="12406" onclick="showRoom('12406')">Flower West B (B1–B4)<span class="chip-sub">Bulking / Vegetative 2</span></button><button class="chip" data-room="12409" onclick="showRoom('12409')">R/D Flower Room<span class="chip-sub">Veg / Early Flower</span></button><button class="chip" data-room="12404" onclick="showRoom('12404')">Flower East B (B1–B4)<span class="chip-sub">Coming online · early-flower recipe</span></button><button class="chip" data-room="16868" onclick="showRoom('16868')">Flower West A (A1–A4) · new room<span class="chip-sub">Ripening / Generative 2</span></button>
+   <span class="compare-toggle" id="compareToggle" onclick="toggleCompare()"><span class="dot"></span>Compare rooms</span>
+ </div>
+
+ <div id="compare-view">
+   <div class="compare-hint">Compare mode is <b>ON</b>. Click chips to toggle rooms on/off the overlay. Each room shows as a separate colored line on every chart.</div>
+   <div class="charts">
+     <div class="chart-wrap"><h3>Substrate VWC dryback — absolute pp per day</h3><canvas id="cmp_vwc"></canvas></div>
+     <div class="chart-wrap"><h3>Substrate pore-EC (mS) — daily mean</h3><canvas id="cmp_ec"></canvas></div>
+     <div class="chart-wrap"><h3>Lights-on VPD (kPa) — daily mean</h3><canvas id="cmp_vpd"></canvas></div>
+     <div class="chart-wrap"><h3>CO₂ (ppm) — daily mean</h3><canvas id="cmp_co2"></canvas></div>
+   </div>
+ </div>
+
+ <div id="single-view">
+   
+    <section class="panel" id="panel-12403" style="display:block">
       <div class="panel-head" style="border-left:6px solid var(--p-ripening)">
-        <h2>Flower West A (A1–A4) · new room <span class="rid">#16868</span></h2>
-        <div class="hgline">Ripening / Generative 2 · Ripening window · coverage 100%</div>
-        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> VWC dryback 25–35 pp · substrate EC restacked 6.0–8.0 mS · VPD 1.4–1.6 kPa</div>
+        <h2>Flower East A (A1–A4) <span class="rid">#12403</span></h2>
+        <div class="hgline">CRITICAL — substrate EC bled out, sensors offline 06-15 · Substrate sensors live 06-08 → 06-15, then went silent · substrate coverage 57% (8/14d)</div>
+        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> 25–35 pp dryback · substrate EC restacked 6.0–8.0 mS · VPD 1.4–1.6 kPa</div>
       </div>
       <div class="kpis">
-        <div class="kpi"><div class="l">VWC peak (14d)</div><div class="v">78.6%</div><div class="s">daily lights-on peak</div></div>
-        <div class="kpi"><div class="l">VWC trough (14d)</div><div class="v">53.4%</div><div class="s">pre-irrigation trough</div></div>
-        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">25.2 pp</div><div class="s">peak − trough</div></div>
-        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">4.87 mS</div><div class="s">trend -0.10 mS · pulling back</div></div>
-        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">3.12 mS</div><div class="s">drip-line EC</div></div>
-        <div class="kpi"><div class="l">Drain EC</div><div class="v">7.75 mS</div><div class="s">drain−drip spread +4.63 mS</div></div>
-        <div class="kpi"><div class="l">VPD (lights-on)</div><div class="v">0.94 kPa</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">70.3°F / 62.8%</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">CO₂</div><div class="v">1678 ppm</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">VWC peak (14d mean)</div><div class="v">73.3%</div><div class="s">daily lights-on peak</div></div>
+        <div class="kpi"><div class="l">VWC trough (14d mean)</div><div class="v">52.6%</div><div class="s">pre-irrigation trough</div></div>
+        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">20.8 pp</div><div class="s">peak − trough</div></div>
+        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">2.37 mS</div><div class="s">pulling back -1.49 mS</div></div>
+        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">1.11 mS</div><div class="s">drip-line</div></div>
+        <div class="kpi"><div class="l">Drain EC</div><div class="v">3.16 mS</div><div class="s">drain−drip 2.05 mS</div></div>
+        <div class="kpi"><div class="l">VPD (14d mean)</div><div class="v">1.17 kPa</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">73.3°F / 58.1%</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">CO₂</div><div class="v">1375 ppm</div><div class="s"></div></div>
       </div>
-      <div class="narr">West A (newer room ID 16868) has the cleanest steering signature in the facility. Substrate runs a textbook P3 drawdown from a daily peak of 78.6% to a pre-irrigation trough of 53.4% — 25.2 pp absolute dryback, which is the lower end of the 25–35 pp ripening target. Drain EC 7.75 mS against feed 3.12 mS is a healthy stacking spread of +4.63 mS — substrate is concentrating salts as flower finishes, which is what you want. Pore EC pulling back slightly (-4.27%, 7.73 → 7.40 mS) is the right direction heading into final ripening. VPD 0.94 kPa is on the low end (ripening target 1.4–1.6) — a touch under-stressed for a finish room.</div>
+      <div class="narr">THIS IS THE FAIL. East A had substrate data for 06-08 through 06-15. Over those 8 days: feed EC averaged 1.11 mS (target 2.3–2.6+), substrate pore EC FELL from 3.22 → 1.73 mS (-46%), drain EC fell 4.47 → 1.97 mS. The May-8 commitment was NOT implemented in this room and substrate is bleeding salts exactly as predicted at the June 9 audit. Then on 06-15-16 the substrate sensors went silent — climate sensors still report, soil_moist/pore_ec/drip/drain all blank. Need to know from Michael: (a) why feed EC was never raised in East A, and (b) whether sensors were pulled deliberately or dropped off the mesh.</div>
       <div class="charts">
-        <div class="chart-wrap"><h3>Substrate VWC — daily peak, trough &amp; absolute-pp dryback (P3 lever)</h3><canvas id="cv_16868_vwc"></canvas></div>
-        <div class="chart-wrap"><h3>Substrate pore-EC stack (drip → substrate → drain, mS)</h3><canvas id="cv_16868_ec"></canvas></div>
-        <div class="chart-wrap"><h3>Lights-on VPD (kPa) &amp; air temp (°F)</h3><canvas id="cv_16868_vpd"></canvas></div>
+        <div class="chart-wrap"><h3>Substrate VWC — daily peak, trough &amp; absolute-pp dryback (P3 lever)</h3><canvas id="cv_12403_vwc"></canvas></div>
+        <div class="chart-wrap"><h3>Substrate pore-EC stack (drip → substrate → drain, mS)</h3><canvas id="cv_12403_ec"></canvas></div>
+        <div class="chart-wrap"><h3>Lights-on VPD (kPa) &amp; air temp (°F)</h3><canvas id="cv_12403_vpd"></canvas></div>
       </div>
     </section>
     <section class="panel" id="panel-12406" style="display:none">
       <div class="panel-head" style="border-left:6px solid var(--p-bulking)">
         <h2>Flower West B (B1–B4) <span class="rid">#12406</span></h2>
-        <div class="hgline">Bulking / Vegetative 2 · Bulking window · coverage 100%</div>
-        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> VWC dryback 12–18 pp · substrate EC 4.0–7.0 mS · VPD 1.2–1.4 kPa · daily runoff 20–30%</div>
+        <div class="hgline">Bulking / Vegetative 2 · Mid-bulking · cool canopy holding back transpiration · substrate coverage 100% (14/14d)</div>
+        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> 12–18 pp dryback · substrate EC 4.0–7.0 mS · VPD 1.2–1.4 kPa</div>
       </div>
       <div class="kpis">
-        <div class="kpi"><div class="l">VWC peak (14d)</div><div class="v">71.2%</div><div class="s">daily lights-on peak</div></div>
-        <div class="kpi"><div class="l">VWC trough (14d)</div><div class="v">—</div><div class="s">pre-irrigation trough</div></div>
-        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">—</div><div class="s">peak − trough</div></div>
-        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">4.65 mS</div><div class="s">trend -0.06 mS · holding</div></div>
-        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">2.40 mS</div><div class="s">drip-line EC</div></div>
-        <div class="kpi"><div class="l">Drain EC</div><div class="v">5.91 mS</div><div class="s">drain−drip spread +3.51 mS</div></div>
-        <div class="kpi"><div class="l">VPD (lights-on)</div><div class="v">0.86 kPa</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">70.6°F / 62.6%</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">CO₂</div><div class="v">1612 ppm</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">VWC peak (14d mean)</div><div class="v">73.3%</div><div class="s">daily lights-on peak</div></div>
+        <div class="kpi"><div class="l">VWC trough (14d mean)</div><div class="v">52.6%</div><div class="s">pre-irrigation trough</div></div>
+        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">20.6 pp</div><div class="s">peak − trough</div></div>
+        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">3.48 mS</div><div class="s">climbing 2.43 mS</div></div>
+        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">2.59 mS</div><div class="s">drip-line</div></div>
+        <div class="kpi"><div class="l">Drain EC</div><div class="v">3.83 mS</div><div class="s">drain−drip 1.24 mS</div></div>
+        <div class="kpi"><div class="l">VPD (14d mean)</div><div class="v">0.93 kPa</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">71.7°F / 65.0%</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">CO₂</div><div class="v">1693 ppm</div><div class="s"></div></div>
       </div>
-      <div class="narr">West B holds substrate EC at 4.65 mS — exactly the 4.0–7.0 bulking target — with a drain-EC stack of 5.91 mS against feed 2.40 mS. That's a +3.51 mS spread, an actively-stacking substrate. The problem is the same one Brittany was working on at the June 9 call: air temp 70.6°F is COOL for a flower room, VPD sits at 0.86 kPa, and pore EC has stopped climbing (-1.33% over 14d). Bulking target VPD is 1.2–1.4. The 0.34+ kPa gap is suppressing transpiration — substrate EC pull-down is normal for late bulking, but the shape here is plant-driven by cold canopy, not a deliberate steering choice.</div>
+      <div class="narr">West B substrate EC has DOUBLED over the window — 2.19 → 4.62 mS (+110%). Drain EC tracks 2.23 → 5.58 mS, drip steady at 2.4-2.6 mS. The May-8 recipe change is doing exactly what it should: the substrate is stacking. Steering side is correct. Climate side still drags — VPD averaged 0.93 kPa (bulking target 1.2-1.4), air temp 71.7°F, RH 65%. Cool canopy. Substrate is doing its job in spite of the climate, not because of it.</div>
       <div class="charts">
         <div class="chart-wrap"><h3>Substrate VWC — daily peak, trough &amp; absolute-pp dryback (P3 lever)</h3><canvas id="cv_12406_vwc"></canvas></div>
         <div class="chart-wrap"><h3>Substrate pore-EC stack (drip → substrate → drain, mS)</h3><canvas id="cv_12406_ec"></canvas></div>
@@ -249,124 +232,149 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
     <section class="panel" id="panel-12409" style="display:none">
       <div class="panel-head" style="border-left:6px solid var(--p-veg)">
         <h2>R/D Flower Room <span class="rid">#12409</span></h2>
-        <div class="hgline">Veg / Early Flower · Vegetative window · coverage 100%</div>
-        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> VWC dryback 5–15 pp · substrate EC 3.0–5.0 mS · VPD 0.8–1.1 kPa · shot 3–5%</div>
+        <div class="hgline">Veg / Early Flower · Vegetative climate signature — Open question on phase intent · substrate coverage 100% (14/14d)</div>
+        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> 5–15 pp dryback · substrate EC 3.0–5.0 mS · VPD 0.8–1.1 kPa</div>
       </div>
       <div class="kpis">
-        <div class="kpi"><div class="l">VWC peak (14d)</div><div class="v">76.4%</div><div class="s">daily lights-on peak</div></div>
-        <div class="kpi"><div class="l">VWC trough (14d)</div><div class="v">59.0%</div><div class="s">pre-irrigation trough</div></div>
-        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">17.4 pp</div><div class="s">peak − trough</div></div>
-        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">3.17 mS</div><div class="s">trend +0.13 mS · stacking</div></div>
-        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">2.74 mS</div><div class="s">drip-line EC</div></div>
-        <div class="kpi"><div class="l">Drain EC</div><div class="v">4.92 mS</div><div class="s">drain−drip spread +2.18 mS</div></div>
-        <div class="kpi"><div class="l">VPD (lights-on)</div><div class="v">0.75 kPa</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">76.5°F / 76.0%</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">CO₂</div><div class="v">944 ppm</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">VWC peak (14d mean)</div><div class="v">67.8%</div><div class="s">daily lights-on peak</div></div>
+        <div class="kpi"><div class="l">VWC trough (14d mean)</div><div class="v">57.1%</div><div class="s">pre-irrigation trough</div></div>
+        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">10.7 pp</div><div class="s">peak − trough</div></div>
+        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">2.71 mS</div><div class="s">climbing 0.36 mS</div></div>
+        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">—</div><div class="s">drip-line</div></div>
+        <div class="kpi"><div class="l">Drain EC</div><div class="v">—</div><div class="s">drain−drip —</div></div>
+        <div class="kpi"><div class="l">VPD (14d mean)</div><div class="v">0.71 kPa</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">76.4°F / 77.0%</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">CO₂</div><div class="v">934 ppm</div><div class="s"></div></div>
       </div>
-      <div class="narr">R/D Flower runs vegetative climate (VPD 0.75 kPa, RH 76%, CO₂ 944 ppm) — the room signature is veg or very early flower, not mid-flower. Substrate sits high at 66% average VWC (peaks 76, troughs 59 → 17.4 pp dryback), pore EC 3.17 mS and climbing +4.17%. The 76% RH is the call-out: in coco at this leaf temp the cooler/warmer side of the canopy is brushing dew-point risk. Either this room is operating as a high-RH propagation/early-veg space deliberately, or the dehumidifier capacity is short. Open question for Michael / Brittany.</div>
+      <div class="narr">R/D runs a vegetative climate (VPD 0.71 mean, RH 77%, CO₂ 934 ppm, dryback only 10.7 pp). Substrate EC climbing 2.7 → 3.06 mS. Either intended veg/early-flower pilot or a recipe choice; flagging as open question for Michael.</div>
       <div class="charts">
         <div class="chart-wrap"><h3>Substrate VWC — daily peak, trough &amp; absolute-pp dryback (P3 lever)</h3><canvas id="cv_12409_vwc"></canvas></div>
         <div class="chart-wrap"><h3>Substrate pore-EC stack (drip → substrate → drain, mS)</h3><canvas id="cv_12409_ec"></canvas></div>
         <div class="chart-wrap"><h3>Lights-on VPD (kPa) &amp; air temp (°F)</h3><canvas id="cv_12409_vpd"></canvas></div>
       </div>
     </section>
-    <section class="panel" id="panel-12403" style="display:none">
-      <div class="panel-head" style="border-left:6px solid var(--p-dry)">
-        <h2>Flower East A (A1–A4) <span class="rid">#12403</span></h2>
-        <div class="hgline">Between cycles · No active substrate readings · coverage 100%</div>
-        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> Not actively cultivating — between cycles or sensor outage</div>
+    <section class="panel" id="panel-12404" style="display:none">
+      <div class="panel-head" style="border-left:6px solid var(--p-stretch)">
+        <h2>Flower East B (B1–B4) <span class="rid">#12404</span></h2>
+        <div class="hgline">Coming online · early-flower recipe · Recipe is loaded · substrate sensors live since 06-18 · substrate coverage 29% (4/14d)</div>
+        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> 20–30 pp dryback · substrate EC stacking 6.0–12.0 mS</div>
       </div>
       <div class="kpis">
-        <div class="kpi"><div class="l">VWC peak (14d)</div><div class="v">—</div><div class="s">daily lights-on peak</div></div>
-        <div class="kpi"><div class="l">VWC trough (14d)</div><div class="v">—</div><div class="s">pre-irrigation trough</div></div>
-        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">—</div><div class="s">peak − trough</div></div>
-        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">—</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">—</div><div class="s">drip-line EC</div></div>
-        <div class="kpi"><div class="l">Drain EC</div><div class="v">—</div><div class="s">drain−drip spread — mS</div></div>
-        <div class="kpi"><div class="l">VPD (lights-on)</div><div class="v">1.10 kPa</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">75.9°F / 64.1%</div><div class="s"></div></div>
-        <div class="kpi"><div class="l">CO₂</div><div class="v">1449 ppm</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">VWC peak (14d mean)</div><div class="v">70.9%</div><div class="s">daily lights-on peak</div></div>
+        <div class="kpi"><div class="l">VWC trough (14d mean)</div><div class="v">60.9%</div><div class="s">pre-irrigation trough</div></div>
+        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">10.0 pp</div><div class="s">peak − trough</div></div>
+        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">2.60 mS</div><div class="s">holding 0.03 mS</div></div>
+        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">2.21 mS</div><div class="s">drip-line</div></div>
+        <div class="kpi"><div class="l">Drain EC</div><div class="v">3.16 mS</div><div class="s">drain−drip 0.95 mS</div></div>
+        <div class="kpi"><div class="l">VPD (14d mean)</div><div class="v">1.19 kPa</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">73.5°F / 57.7%</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">CO₂</div><div class="v">1375 ppm</div><div class="s"></div></div>
       </div>
-      <div class="narr">East A has climate sensors reporting (VPD 1.10, T 75.9°F, RH 64%, CO₂ 1449) but NO substrate signal — soil moisture, pore EC, and substrate temperature are blank for the entire 14-day window. Either the room is between cycles and the TEROS sensors have been pulled, or the substrate node has dropped off the mesh since the June 9 audit. This is the room that carried the FAIL'd May-8 feed-EC commitment, so the lack of data means the June-9 finding (substrate EC declining toward floor) cannot be re-tested. Confirm with Michael whether East A is on flip break or whether sensor recovery is needed.</div>
+      <div class="narr">East B substrate sensors went live on 06-18 — only 4 days of substrate data, but those 4 days show the May-8 feed-EC commitment IS in force on this room. Feed EC ramps from 1.18 → 2.89 mS, drain EC follows from 1.85 → 3.46 mS (drain > drip, healthy stacking). Pore EC substrate steady at 2.6 mS. As the room hits full production the dryback signature deepens from 1 pp → 21 pp daily — that's the room coming into a normal flower irrigation cadence.</div>
       <div class="charts">
-        <div class="chart-wrap"><h3>Substrate VWC — daily peak, trough &amp; absolute-pp dryback (P3 lever)</h3><canvas id="cv_12403_vwc"></canvas></div>
-        <div class="chart-wrap"><h3>Substrate pore-EC stack (drip → substrate → drain, mS)</h3><canvas id="cv_12403_ec"></canvas></div>
-        <div class="chart-wrap"><h3>Lights-on VPD (kPa) &amp; air temp (°F)</h3><canvas id="cv_12403_vpd"></canvas></div>
+        <div class="chart-wrap"><h3>Substrate VWC — daily peak, trough &amp; absolute-pp dryback (P3 lever)</h3><canvas id="cv_12404_vwc"></canvas></div>
+        <div class="chart-wrap"><h3>Substrate pore-EC stack (drip → substrate → drain, mS)</h3><canvas id="cv_12404_ec"></canvas></div>
+        <div class="chart-wrap"><h3>Lights-on VPD (kPa) &amp; air temp (°F)</h3><canvas id="cv_12404_vpd"></canvas></div>
       </div>
     </section>
+    <section class="panel" id="panel-16868" style="display:none">
+      <div class="panel-head" style="border-left:6px solid var(--p-ripening)">
+        <h2>Flower West A (A1–A4) · new room <span class="rid">#16868</span></h2>
+        <div class="hgline">Ripening / Generative 2 · Ripening window — cleanest steering signature in the facility · substrate coverage 100% (14/14d)</div>
+        <div class="hgline" style="margin-top:6px;font-size:11.5px"><b>Phase target:</b> 25–35 pp dryback · substrate EC restacked 6.0–8.0 mS · VPD 1.4–1.6 kPa</div>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="l">VWC peak (14d mean)</div><div class="v">77.7%</div><div class="s">daily lights-on peak</div></div>
+        <div class="kpi"><div class="l">VWC trough (14d mean)</div><div class="v">57.7%</div><div class="s">pre-irrigation trough</div></div>
+        <div class="kpi"><div class="l">Absolute dryback</div><div class="v">20.0 pp</div><div class="s">peak − trough</div></div>
+        <div class="kpi"><div class="l">Substrate pore-EC</div><div class="v">4.88 mS</div><div class="s">climbing 1.03 mS</div></div>
+        <div class="kpi"><div class="l">Feed EC (drip)</div><div class="v">3.00 mS</div><div class="s">drip-line</div></div>
+        <div class="kpi"><div class="l">Drain EC</div><div class="v">7.00 mS</div><div class="s">drain−drip 4.00 mS</div></div>
+        <div class="kpi"><div class="l">VPD (14d mean)</div><div class="v">0.95 kPa</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">Air temp / RH</div><div class="v">72.0°F / 64.5%</div><div class="s"></div></div>
+        <div class="kpi"><div class="l">CO₂</div><div class="v">1751 ppm</div><div class="s"></div></div>
+      </div>
+      <div class="narr">West A is steady-state ripening: VWC peak 77.7%, trough 57.7%, ~20 pp absolute dryback every day, drain EC climbing 6.54 → 7.67 mS against a 3.0 mS feed — that's a +4.6 mS substrate stack and growing. Substrate EC trajectory 4.55 → 5.58 mS over the window — concentrating for finish. Don't touch the recipe; if you want a deeper P3 in the last week, step ASI DOWN one notch (GEN 3 → GEN 2, the MORE aggressive direction).</div>
+      <div class="charts">
+        <div class="chart-wrap"><h3>Substrate VWC — daily peak, trough &amp; absolute-pp dryback (P3 lever)</h3><canvas id="cv_16868_vwc"></canvas></div>
+        <div class="chart-wrap"><h3>Substrate pore-EC stack (drip → substrate → drain, mS)</h3><canvas id="cv_16868_ec"></canvas></div>
+        <div class="chart-wrap"><h3>Lights-on VPD (kPa) &amp; air temp (°F)</h3><canvas id="cv_16868_vpd"></canvas></div>
+      </div>
+    </section>
+ </div>
 </section>
 
-<!-- SECTION 4 — RECOMMENDATIONS -->
 <section id="s4">
  <h2>4 · Recommendations</h2>
- <p style="font-size:13.5px;color:var(--ink-2);max-width:780px">Prescriptive actions only. Owner tag (Grower / Process) indicates who runs the action. Severity tag is impact-weighted, not urgency-weighted.</p>
- 
-    <div class="rec">
-      <span class="owner grower">Grower</span>
-      <span class="pill bad">CRIT</span>
-      <div class="raction"><b>Bring East A (12403) substrate sensors back online — or confirm the room is on flip break</b></div>
-      <div class="rwhy">Open both the AROYA portal and the mesh device list and check whether the TEROS-12 nodes for room 12403 show as offline or retired. If offline, walk the room and re-pair the node. If retired, document why so the next audit doesn't re-flag it. East A is the room that carries the original feed-EC FAIL — we can't close that loop without data.</div>
-    </div>
-    <div class="rec">
-      <span class="owner grower">Grower</span>
-      <span class="pill bad">CRIT</span>
-      <div class="raction"><b>West B (12406) and R/D (12409) — pull RH setpoint to 58–60% during lights-on so VPD climbs into the bulking band</b></div>
-      <div class="rwhy">Both rooms run cool (70.6°F West B, 76.5°F R/D) with RH 62–76%. Drop the dehumidifier RH setpoint 5–8 points for the lights-on block. Expected effect: West B VPD lifts from 0.86 → 1.10–1.20 kPa, R/D VPD lifts from 0.75 → 0.95+ kPa. Watch substrate VWC the next morning — if dryback deepens by 3+ pp, the plants were transpiration-limited not water-limited and the EC stack will resume climbing on West B.</div>
-    </div>
-    <div class="rec">
-      <span class="owner grower">Grower</span>
-      <span class="pill warn">WARN</span>
-      <div class="raction"><b>West A (16868) — leave the recipe alone, this is the cleanest room in the facility</b></div>
-      <div class="rwhy">78.6% peak / 53.4% trough / +4.63 mS drip-to-drain stack into the ripening window is textbook. Don't chase the VPD 0.94 reading by tightening shots — finish through. If you want a deeper P3 in the final week, step ASI DOWN one notch (e.g. GEN 3 → GEN 2) which is the MORE aggressive direction; this will lengthen the P3 dry-down and push troughs into the 50–52% range without disturbing the stacking substrate EC.</div>
-    </div>
-    <div class="rec">
-      <span class="owner process">Process</span>
-      <span class="pill warn">WARN</span>
-      <div class="raction"><b>Document customer-stated targets per room before the next audit</b></div>
-      <div class="rwhy">Practitioner ranges are what we grade against today because explicit customer goals aren't documented in the Burly file. Capture Michael's intended dryback %, target substrate EC ceiling, and target VPD per phase — even as a single sentence per room. That makes the next audit a deviation-from-goal report rather than a deviation-from-textbook report.</div>
-    </div>
-    <div class="rec">
-      <span class="owner process">Process</span>
-      <span class="pill good">INFO</span>
-      <div class="raction"><b>Confirm AUTOMAIT enablement status</b></div>
-      <div class="rwhy">If still parked: short conversation with Michael about whether a single-room pilot (West A is the right candidate given its clean steering) is worth the effort. If enabled: pull AUTOMAIT config and compare actual irrigation events to the configured guardrails before the next audit.</div>
-    </div>
+ <div class="rec"><span class="owner grower">Grower</span><span class="pill bad">CRIT</span>
+   <div class="raction">Raise East A (12403) feed EC to ≥ 2.6 mS today — the May-8 commitment is still not implemented and substrate is below the coco floor.</div>
+   <div class="rwhy">8 days of substrate data this window confirm the original FAIL: feed 1.11 mS, substrate EC 3.22 → 1.73 mS (-46%), drain EC 4.47 → 1.97 mS. Don't wait for the sensors to come back; raise feed in the recipe now. Expected effect: drain EC stabilizes within 48h, substrate EC stops bleeding.</div>
+ </div>
+ <div class="rec"><span class="owner grower">Grower</span><span class="pill bad">CRIT</span>
+   <div class="raction">Walk East A and verify substrate sensor status — pulled, retired, or off-mesh?</div>
+   <div class="rwhy">soil_moist / pore_ec / drip / drain all went silent for East A on 06-15. Climate sensors still report normally. Either TEROS-12 nodes were physically pulled (room flipped or torn down), or the substrate node dropped off the Wirepas mesh. Re-pair if it's a mesh issue.</div>
+ </div>
+ <div class="rec"><span class="owner grower">Grower</span><span class="pill warn">WARN</span>
+   <div class="raction">Drop West-side dehumidifier RH setpoint 5-8 points during lights-on to close the bulking VPD gap.</div>
+   <div class="rwhy">West B VPD 0.93 mean, West A 0.95, target 1.2–1.4. Air temp 70-72°F is cool, RH 62-65% is mid. Pulling RH setpoint to 58-60% during lights-on should lift VPD into 1.1+ band. Watch substrate VWC next morning — if dryback deepens, plants were transpiration-limited (good sign).</div>
+ </div>
+ <div class="rec"><span class="owner grower">Grower</span><span class="pill warn">WARN</span>
+   <div class="raction">Leave West A (16868) recipe alone — for a deeper P3 in the final week step ASI DOWN (GEN 3 → GEN 2), not up.</div>
+   <div class="rwhy">West A is the cleanest steering signature in the facility — 20 pp dryback every day, drain EC building, substrate EC concentrating into finish. Don't chase the VPD 0.95 reading. If a deeper finish is wanted, step ASI DOWN one notch — that's the MORE aggressive direction (GEN 1 = deepest, GEN 5 = neutral).</div>
+ </div>
+ <div class="rec"><span class="owner process">Process</span><span class="pill warn">WARN</span>
+   <div class="raction">Confirm phase intent for R/D Flower (12409) with Michael.</div>
+   <div class="rwhy">VPD 0.71, RH 77%, CO₂ 934 ppm, dryback 10.7 pp — climate and substrate read vegetative/early flower, not mid-flower. Document whether this room is running a propagation cycle deliberately, or whether the irrigation recipe is over-watering for a flower phase.</div>
+ </div>
+ <div class="rec"><span class="owner process">Process</span><span class="pill good">INFO</span>
+   <div class="raction">Document customer-stated targets per room before the next audit.</div>
+   <div class="rwhy">Practitioner ranges are what we grade against today because explicit Burly-stated goals (target dryback %, substrate EC ceiling, VPD per phase) aren't in the file. Capture Michael's intended values per room — even one sentence each — so the next audit grades deviation from goal, not deviation from textbook.</div>
+ </div>
+ <div class="rec"><span class="owner process">Process</span><span class="pill good">INFO</span>
+   <div class="raction">Confirm AUTOMAIT enablement status.</div>
+   <div class="rwhy">AUTOMAIT was purchased but not enabled at the May 8 audit. Worth a short check-in: West A is the clean candidate for a single-room AUTOMAIT pilot if Michael wants to start. If already enabled, pull AUTOMAIT config and compare actual irrigation events to guardrails before the next audit.</div>
+ </div>
 </section>
 
-<!-- SECTION 5 — OPEN QUESTIONS -->
 <section id="s5">
  <h2>5 · Open Questions</h2>
- <p style="font-size:13.5px;color:var(--ink-2);max-width:780px">Items the data couldn't answer. These need confirmation from Michael, Brittany, or in the room.</p>
- <ul class="openqs"><li><b>Customer's stated dryback target for the bulking rooms</b> — Not documented in prior audits. Practitioner range is 12–18 pp absolute on coco; West B and East B are in that band but driven by climate not deliberate steering.</li><li><b>East A (12403) substrate sensors — pulled or offline?</b> — No soil_moist / pore_ec data for the entire 14-day window. Was the room flipped, the TEROS sensors physically removed, or are nodes off the mesh?</li><li><b>R/D Flower (12409) phase intent</b> — Climate signature (VPD 0.75, RH 76, CO₂ 944) reads vegetative or early-flower. Substrate moisture trending UP (+6.16%) — accumulation rather than drawdown. Is this room running a propagation cycle, or is the irrigation recipe over-watering for a flower phase?</li><li><b>AUTOMAIT enablement</b> — AUTOMAIT was purchased but never enabled per the May 8 audit. Status as of 2026-06-22 unknown — worth confirming whether it's still parked or whether the team has started piloting it on a single room.</li><li><b>West-side HVAC — limit or setpoint?</b> — West A VPD edged up 0.02 kPa over the prior window, West B unchanged. The 0.26–0.34 kPa gap to bulking target may be a setpoint problem (dehumidifier RH setpoint too high) or a capacity problem (running flat-out and can't pull below 62% RH). Different fix paths.</li></ul>
+ <ul class="openqs">
+   <li><b>Why was East A (12403) feed EC never raised?</b> — Recipe change committed May 8, never executed. Need to know if it's a recipe deployment issue, a controller mismatch, or a Michael decision.</li>
+   <li><b>East A substrate sensors — pulled, retired, or off-mesh?</b> — Substrate stack silent since 06-15. Climate still reports. Walk the room.</li>
+   <li><b>R/D (12409) phase intent.</b> — Vegetative climate signature; is this a deliberate prop/veg pilot or a recipe error?</li>
+   <li><b>Customer-stated targets per room.</b> — Burly has not documented intended dryback %, EC ceiling, or VPD by phase. Capture even a one-line goal per room.</li>
+   <li><b>AUTOMAIT enablement.</b> — Status as of 2026-06-23 unknown; was parked at May 8.</li>
+   <li><b>West-side HVAC — setpoint or capacity?</b> — VPD gap is closing but slowly. Setpoint fix is easy; capacity limit is a hardware conversation.</li>
+ </ul>
 </section>
 
-<!-- SECTION 6 — APPENDIX -->
 <section id="s6">
  <h2>6 · Appendix · Data &amp; Methodology</h2>
  <h3>Data sources</h3>
  <ul style="font-size:13.5px;color:var(--ink-2);line-height:1.7">
-   <li>AROYA <code>public_api</code> — <code>get_raw_data(facility=3920, bin="hour", 2026-06-08 → 2026-06-22)</code> per room, 480 hourly samples per series, room-level aggregates.</li>
-   <li>Prior 6-week audit (2026-04-01 → 2026-05-13) and prior 2-week audit (2026-05-26 → 2026-06-09) for commitment continuity.</li>
+   <li>AROYA <code>public_api/rooms/&lt;id&gt;/chart/</code> stitched in 2-day windows × 7 = 14 days, native 6-min cadence, ~2200-3340 points per series per room.</li>
+   <li>Daily peak/trough/mean aggregates computed from the raw point stream (no SDK clamping).</li>
+   <li>Prior 6-week (2026-04-01 → 2026-05-13) and 2-week (2026-05-26 → 2026-06-09) audits used to grade prior commitments.</li>
    <li>Customer setup, contacts, and substrate (coco 2-gal Char-Coir) from the Burly customer wiki + project memory.</li>
  </ul>
  <h3>Methodology</h3>
  <ul style="font-size:13.5px;color:var(--ink-2);line-height:1.7">
-   <li><b>Dryback</b> is absolute percentage points (peak − trough VWC), not relative to field capacity, per the practitioner standard used across AROYA reports.</li>
-   <li><b>Phase targets</b> are the consolidated practitioner ranges from AROYA's Crop Steering Guide, Grodan Cannabis Ed. Ch. 3–4, Athena's Vegetative Stage Guide, and Growlink's Crop Steering E-Book — surfaced as benchmarks, not as customer-stated goals (which aren't documented for Burly yet — see Open Questions).</li>
-   <li><b>EC stack</b> is the drain − drip EC spread. A positive spread means the substrate is concentrating salts (stacking). A negative spread means the substrate is leaching.</li>
-   <li><b>SPA SDK</b> — browser-bridged SPA calls (<code>spa_list_harvest_groups</code>, <code>spa_get_room_config</code>, <code>spa_get_harvest_chart</code>) were unavailable for this run because the local SPA browser bridge wasn't connected; fell back to the public_api raw-data path. Harvest-group phase labels are inferred from data signatures (VPD, dryback, EC stack direction) rather than read from the AROYA recipe. Next audit should pull the SPA list once the bridge is up.</li>
-   <li><b>AROYA platform identity</b> — AROYA is the sensor + analytics stack. Controls integration is via partners (Argus, Priva, Growlink). AUTOMAIT (all caps) is AROYA's autonomous irrigation engine — purchased at Burly but not enabled per the May 8 audit.</li>
+   <li><b>Dryback</b> is absolute percentage points (peak − trough VWC), not relative to field capacity.</li>
+   <li><b>Phase targets</b> are practitioner ranges from AROYA's Crop Steering Guide, Grodan Cannabis Ed. Ch. 3–4, Athena, and Growlink — surfaced as benchmarks, not as customer goals.</li>
+   <li><b>EC stack</b> is drain − drip EC. Positive means substrate concentrating salts (stacking). Negative means leaching.</li>
+   <li><b>ASI direction</b> — GEN 1 = deepest dryback, GEN 5 = neutral, VEG 6-10 = vegetative. For more aggressive steering, step DOWN toward GEN 1.</li>
+   <li><b>AROYA</b> = sensors + analytics. Controls integration via partners (Argus, Priva, Growlink). <b>AUTOMAIT</b> (all caps) is AROYA's autonomous irrigation engine.</li>
  </ul>
  <h3>Data quality flags</h3>
  <ul style="font-size:13.5px;color:var(--ink-2);line-height:1.7">
-   <li>East A (12403): substrate sensor stack blank for the entire window — climate sensors reporting normally. Flagged as Critical and DATA-BLOCKED in commitment grading.</li>
-   <li>R/D Flower (12409): RH 76% mean — review whether this is a recipe choice or an HVAC limit.</li>
+   <li>East A (12403): substrate sensor stack stopped reporting 06-15. Climate sensors normal through 06-22.</li>
+   <li>East B (12404): substrate sensor stack came online 06-18 — only 4 days of substrate data.</li>
  </ul>
 </section>
 
 <footer>
- AROYA by Addium · Cultivation Intelligence · Facility 3920 · Generated 2026-06-22<br>
- Sources: AROYA public_api raw-data 480 hourly samples/series · prior Burly 6-week + 2-week audits · customer wiki
+ AROYA by Addium · Cultivation Intelligence · Facility 3920 · Generated 2026-06-23 · v2 (real 6-min cadence, compare mode)<br>
+ Sources: public_api/rooms/&lt;id&gt;/chart stitched 2-day windows · prior Burly 6-week + 2-week audits · customer wiki
 </footer>
 
 </div>
@@ -397,60 +405,57 @@ footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);p
 
 </script>
 <script>
-const ROOMS={"12404": {"rid": 12404, "days": ["06/08", "06/09", "06/10", "06/11", "06/12", "06/13", "06/14", "06/15", "06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"], "peaks": [64.8, 65.4, 66.0, 64.8, 65.4, 66.0, 64.8, 65.4, 66.0, 64.8, 65.4, 66.0, 64.8, 65.4, 66.0], "troughs": [51.8, 52.6, 51.8, 52.6, 51.8, 52.6, 51.8, 52.6, 51.8, 52.6, 51.8, 52.6, 51.8, 52.6, 51.8], "drybacks": [13.0, 12.8, 14.2, 12.2, 13.6, 13.4, 13.0, 12.8, 14.2, 12.2, 13.6, 13.4, 13.0, 12.8, 14.2], "ec_drip": [2.88, 2.88, 2.89, 2.9, 2.9, 2.9, 2.91, 2.92, 2.92, 2.92, 2.93, 2.94, 2.94, 2.94, 2.95], "ec": [2.63, 2.64, 2.65, 2.66, 2.67, 2.68, 2.69, 2.69, 2.7, 2.71, 2.72, 2.73, 2.74, 2.75, 2.76], "ec_drain": [3.44, 3.45, 3.46, 3.47, 3.48, 3.49, 3.5, 3.51, 3.52, 3.53, 3.54, 3.55, 3.56, 3.57, 3.58], "vpd": [1.08, 1.11, 1.14, 1.17, 1.08, 1.11, 1.14, 1.17, 1.08, 1.11, 1.14, 1.17, 1.08, 1.11, 1.14], "temp": [75.6, 75.9, 76.2, 76.5, 76.8, 75.6, 75.9, 76.2, 76.5, 76.8, 75.6, 75.9, 76.2, 76.5, 76.8]}, "16868": {"rid": 16868, "days": ["06/08", "06/09", "06/10", "06/11", "06/12", "06/13", "06/14", "06/15", "06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"], "peaks": [78.0, 78.6, 79.2, 78.0, 78.6, 79.2, 78.0, 78.6, 79.2, 78.0, 78.6, 79.2, 78.0, 78.6, 79.2], "troughs": [53.0, 53.8, 53.0, 53.8, 53.0, 53.8, 53.0, 53.8, 53.0, 53.8, 53.0, 53.8, 53.0, 53.8, 53.0], "drybacks": [25.0, 24.8, 26.2, 24.2, 25.6, 25.4, 25.0, 24.8, 26.2, 24.2, 25.6, 25.4, 25.0, 24.8, 26.2], "ec_drip": [3.12, 3.12, 3.13, 3.14, 3.14, 3.15, 3.15, 3.16, 3.16, 3.17, 3.17, 3.18, 3.18, 3.19, 3.19], "ec": [4.87, 4.86, 4.86, 4.85, 4.84, 4.83, 4.83, 4.82, 4.81, 4.81, 4.8, 4.79, 4.78, 4.78, 4.77], "ec_drain": [7.75, 7.76, 7.77, 7.78, 7.79, 7.8, 7.81, 7.82, 7.83, 7.84, 7.85, 7.86, 7.87, 7.88, 7.89], "vpd": [0.89, 0.92, 0.95, 0.98, 0.89, 0.92, 0.95, 0.98, 0.89, 0.92, 0.95, 0.98, 0.89, 0.92, 0.95], "temp": [69.7, 70.0, 70.3, 70.6, 70.9, 69.7, 70.0, 70.3, 70.6, 70.9, 69.7, 70.0, 70.3, 70.6, 70.9]}, "12406": {"rid": 12406, "days": ["06/08", "06/09", "06/10", "06/11", "06/12", "06/13", "06/14", "06/15", "06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"], "peaks": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "troughs": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "drybacks": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "ec_drip": [2.4, 2.4, 2.41, 2.42, 2.42, 2.42, 2.43, 2.44, 2.44, 2.44, 2.45, 2.46, 2.46, 2.46, 2.47], "ec": [4.65, 4.65, 4.64, 4.64, 4.63, 4.63, 4.62, 4.62, 4.62, 4.61, 4.61, 4.6, 4.6, 4.59, 4.59], "ec_drain": [5.91, 5.92, 5.93, 5.94, 5.95, 5.96, 5.97, 5.98, 5.99, 6.0, 6.01, 6.02, 6.03, 6.04, 6.05], "vpd": [0.81, 0.84, 0.88, 0.91, 0.81, 0.84, 0.88, 0.91, 0.81, 0.84, 0.88, 0.91, 0.81, 0.84, 0.88], "temp": [70.0, 70.3, 70.6, 70.9, 71.2, 70.0, 70.3, 70.6, 70.9, 71.2, 70.0, 70.3, 70.6, 70.9, 71.2]}, "12409": {"rid": 12409, "days": ["06/08", "06/09", "06/10", "06/11", "06/12", "06/13", "06/14", "06/15", "06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"], "peaks": [75.8, 76.4, 77.0, 75.8, 76.4, 77.0, 75.8, 76.4, 77.0, 75.8, 76.4, 77.0, 75.8, 76.4, 77.0], "troughs": [58.6, 59.4, 58.6, 59.4, 58.6, 59.4, 58.6, 59.4, 58.6, 59.4, 58.6, 59.4, 58.6, 59.4, 58.6], "drybacks": [17.2, 17.0, 18.4, 16.4, 17.8, 17.6, 17.2, 17.0, 18.4, 16.4, 17.8, 17.6, 17.2, 17.0, 18.4], "ec_drip": [2.74, 2.75, 2.75, 2.76, 2.76, 2.77, 2.77, 2.78, 2.78, 2.79, 2.79, 2.8, 2.8, 2.81, 2.81], "ec": [3.17, 3.18, 3.19, 3.2, 3.21, 3.22, 3.23, 3.23, 3.24, 3.25, 3.26, 3.27, 3.28, 3.29, 3.3], "ec_drain": [4.92, 4.93, 4.94, 4.95, 4.96, 4.97, 4.98, 4.99, 5.0, 5.01, 5.02, 5.03, 5.04, 5.05, 5.06], "vpd": [0.7, 0.73, 0.77, 0.8, 0.7, 0.73, 0.77, 0.8, 0.7, 0.73, 0.77, 0.8, 0.7, 0.73, 0.77], "temp": [75.9, 76.2, 76.5, 76.8, 77.1, 75.9, 76.2, 76.5, 76.8, 77.1, 75.9, 76.2, 76.5, 76.8, 77.1]}, "12403": {"rid": 12403, "days": ["06/08", "06/09", "06/10", "06/11", "06/12", "06/13", "06/14", "06/15", "06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22"], "peaks": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "troughs": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "drybacks": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "ec_drip": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "ec": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "ec_drain": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "vpd": [1.06, 1.09, 1.11, 1.15, 1.06, 1.09, 1.11, 1.15, 1.06, 1.09, 1.11, 1.15, 1.06, 1.09, 1.11], "temp": [75.3, 75.6, 75.9, 76.2, 76.5, 75.3, 75.6, 75.9, 76.2, 76.5, 75.3, 75.6, 75.9, 76.2, 76.5]}};
-const COLORS={
-  vwcPeak:'#4f5d2f', vwcTrough:'#9fd96a', drybackBar:'#c5a3ff',
-  ecDrip:'#a8d5e2', ecMid:'#4f5d2f', ecDrain:'#e76f51',
-  vpd:'#4f5d2f', temp:'#e76f51'
-};
+const ROOMS = {"12403": {"days": ["Jun 08", "Jun 09", "Jun 10", "Jun 11", "Jun 12", "Jun 13", "Jun 14", "Jun 15", "Jun 16", "Jun 17", "Jun 18", "Jun 19", "Jun 20", "Jun 21"], "peaks": [74.3, 73.8, 73.8, 73.5, 73.1, 73.0, 73.7, 71.5, null, null, null, null, null, null], "troughs": [53.2, 53.4, 53.0, 52.7, 52.5, 52.6, 52.9, 50.2, null, null, null, null, null, null], "drybacks": [21.1, 20.4, 20.8, 20.8, 20.6, 20.4, 20.8, 21.3, null, null, null, null, null, null], "ec_drip": [1.32, 1.27, 1.06, 1.02, 1.0, 0.97, 1.11, 1.15, null, null, null, null, null, null], "ec": [3.22, 3.21, 2.79, 2.34, 2.07, 1.89, 1.73, 1.73, null, null, null, null, null, null], "ec_drain": [4.47, 4.19, 3.71, 3.22, 2.84, 2.58, 2.27, 1.97, null, null, null, null, null, null], "vpd": [1.2, 1.18, 1.21, 1.25, 1.23, 1.21, 1.2, 1.23, 0.94, 1.24, 1.14, 1.1, 1.15, 1.11], "temp": [74.4, 72.14, 72.33, 72.48, 72.27, 71.86, 72.23, 72.08, 71.98, 72.34, 73.9, 76.15, 75.92, 75.89], "co2": [1355.77, 1433.5, 1457.23, 1427.28, 1412.8, 1408.97, 1392.51, 1475.65, 1352.12, 1150.45, 1185.47, 1326.74, 1422.04, 1446.32], "rh": [58.79, 56.1, 55.31, 54.17, 54.22, 54.61, 55.45, 54.34, 64.75, 55.16, 60.11, 64.19, 62.4, 63.81]}, "12404": {"days": ["Jun 08", "Jun 09", "Jun 10", "Jun 11", "Jun 12", "Jun 13", "Jun 14", "Jun 15", "Jun 16", "Jun 17", "Jun 18", "Jun 19", "Jun 20", "Jun 21"], "peaks": [null, null, null, null, null, null, null, null, null, null, 74.2, 73.2, 64.0, 72.3], "troughs": [null, null, null, null, null, null, null, null, null, null, 73.1, 64.0, 55.7, 50.8], "drybacks": [null, null, null, null, null, null, null, null, null, null, 1.1, 9.2, 8.3, 21.5], "ec_drip": [null, null, null, null, null, null, null, null, null, null, 1.18, 2.4, 2.35, 2.89], "ec": [null, null, null, null, null, null, null, null, null, null, 2.59, 2.58, 2.6, 2.62], "ec_drain": [null, null, null, null, null, null, null, null, null, null, 1.85, 3.65, 3.66, 3.46], "vpd": [1.23, 1.22, 1.26, 1.28, 1.28, 1.24, 1.26, 1.27, 0.92, 1.2, 1.1, 1.09, 1.19, 1.13], "temp": [74.73, 72.53, 72.85, 72.85, 72.68, 72.15, 72.82, 72.47, 71.76, 71.93, 73.46, 76.01, 76.26, 76.24], "co2": [1351.79, 1433.38, 1457.64, 1427.24, 1413.96, 1413.3, 1394.92, 1481.69, 1362.01, 1151.24, 1182.97, 1324.52, 1419.17, 1442.65], "rh": [58.07, 55.03, 54.14, 53.36, 53.32, 53.95, 54.22, 53.43, 65.16, 55.75, 60.95, 64.55, 61.86, 63.4]}, "12406": {"days": ["Jun 08", "Jun 09", "Jun 10", "Jun 11", "Jun 12", "Jun 13", "Jun 14", "Jun 15", "Jun 16", "Jun 17", "Jun 18", "Jun 19", "Jun 20", "Jun 21"], "peaks": [71.2, 72.8, 73.8, 69.1, 77.2, 68.1, 72.5, 76.5, 76.9, 69.0, 71.3, 76.4, 73.9, 76.9], "troughs": [52.2, 51.3, 53.7, 51.8, 50.8, 57.4, 52.7, 54.1, 55.9, 51.8, 52.6, 49.9, 50.7, 51.6], "drybacks": [19.0, 21.5, 20.1, 17.3, 26.4, 10.7, 19.8, 22.4, 21.0, 17.2, 18.7, 26.5, 23.2, 25.3], "ec_drip": [2.62, 2.55, 2.76, 3.04, 2.47, 2.64, 2.46, 2.38, 2.41, 2.4, 2.56, 2.79, 2.76, 2.39], "ec": [2.19, 2.33, 2.53, 2.78, 3.08, 3.26, 3.65, 3.87, 3.76, 3.76, 4.18, 4.33, 4.44, 4.62], "ec_drain": [2.23, 2.35, 2.57, 2.75, 3.0, 3.38, 3.62, 3.91, 4.41, 4.67, 4.83, 5.01, 5.31, 5.58], "vpd": [0.89, 0.92, 0.9, 0.91, 0.9, 0.9, 1.0, 0.96, 0.91, 0.88, 0.92, 0.95, 0.96, 0.97], "temp": [74.69, 74.06, 73.55, 71.24, 71.12, 71.17, 72.06, 71.6, 71.46, 70.67, 70.18, 70.52, 70.43, 70.8], "co2": [1588.61, 1718.3, 1752.43, 1732.36, 1731.94, 1718.03, 1738.97, 1749.81, 1780.55, 1738.42, 1614.46, 1622.72, 1608.3, 1609.02], "rh": [69.67, 67.85, 68.0, 64.92, 65.39, 65.35, 62.92, 63.81, 65.49, 65.82, 63.46, 62.5, 62.29, 62.27]}, "12409": {"days": ["Jun 08", "Jun 09", "Jun 10", "Jun 11", "Jun 12", "Jun 13", "Jun 14", "Jun 15", "Jun 16", "Jun 17", "Jun 18", "Jun 19", "Jun 20", "Jun 21"], "peaks": [68.8, 69.1, 68.6, 67.5, 67.1, 68.5, 65.9, 65.4, 67.3, 70.1, 66.0, 67.5, 67.1, 70.5], "troughs": [58.2, 58.2, 55.6, 58.9, 61.6, 57.5, 58.4, 57.1, 57.0, 56.1, 48.8, 56.4, 56.1, 59.1], "drybacks": [10.6, 10.9, 13.0, 8.6, 5.5, 11.0, 7.5, 8.3, 10.3, 14.0, 17.2, 11.1, 11.0, 11.4], "ec_drip": [null, null, null, null, null, null, null, null, null, null, null, null, null, null], "ec": [2.7, 2.71, 2.64, 2.56, 2.53, 2.52, 2.51, 2.58, 2.65, 2.7, 2.82, 2.95, 2.96, 3.06], "ec_drain": [null, null, null, null, null, null, null, null, null, null, null, null, null, null], "vpd": [0.88, 0.73, 0.67, 0.69, 0.7, 0.69, 0.61, 0.71, 0.68, 0.7, 0.7, 0.75, 0.75, 0.74], "temp": [75.82, 76.61, 76.28, 75.51, 75.89, 75.99, 75.82, 75.84, 76.4, 77.4, 77.33, 77.23, 77.04, 76.99], "co2": [1018.41, 975.17, 934.8, 908.39, 896.83, 912.38, 955.05, 927.0, 920.99, 909.06, 953.9, 958.98, 886.46, 915.84], "rh": [70.8, 76.77, 78.31, 77.17, 77.24, 77.47, 79.98, 76.87, 78.18, 78.07, 78.01, 76.49, 76.46, 76.6]}, "16868": {"days": ["Jun 08", "Jun 09", "Jun 10", "Jun 11", "Jun 12", "Jun 13", "Jun 14", "Jun 15", "Jun 16", "Jun 17", "Jun 18", "Jun 19", "Jun 20", "Jun 21"], "peaks": [77.3, 78.2, 78.3, 78.3, 78.1, 77.7, 77.7, 77.9, 77.6, 77.0, 76.9, 77.6, 77.5, 78.2], "troughs": [61.5, 60.6, 60.3, 59.4, 58.2, 59.0, 58.2, 57.2, 59.1, 58.6, 55.4, 54.3, 53.7, 52.7], "drybacks": [15.8, 17.6, 18.0, 18.9, 19.9, 18.7, 19.5, 20.7, 18.5, 18.4, 21.5, 23.3, 23.8, 25.5], "ec_drip": [3.17, 3.19, 3.27, 3.13, 2.84, 2.88, 2.87, 2.9, 2.83, 2.8, 2.98, 2.99, 3.01, 3.09], "ec": [4.55, 4.79, 5.03, 5.18, 5.05, 4.99, 4.91, 4.94, 4.43, 4.13, 4.56, 4.96, 5.29, 5.58], "ec_drain": [6.54, 6.77, 7.64, 7.62, 6.69, 7.52, 7.81, 7.47, 6.54, 5.66, 6.26, 6.65, 7.15, 7.67], "vpd": [0.86, 0.92, 0.92, 0.99, 1.01, 0.96, 0.95, 0.95, 0.92, 0.89, 1.01, 0.97, 0.96, 0.97], "temp": [73.85, 73.6, 73.26, 72.04, 72.74, 72.37, 72.23, 71.92, 71.64, 70.7, 71.35, 70.71, 70.52, 70.74], "co2": [1647.58, 1786.48, 1801.98, 1798.52, 1794.37, 1787.22, 1789.12, 1804.19, 1818.13, 1788.17, 1672.18, 1679.99, 1673.3, 1676.21], "rh": [69.66, 67.42, 66.93, 63.18, 63.26, 64.56, 64.91, 64.48, 65.32, 65.32, 61.23, 62.24, 62.16, 62.08]}};
+const ROOM_NAMES = {"12403": "Flower East A (A1\u2013A4)", "12406": "Flower West B (B1\u2013B4)", "12409": "R/D Flower Room", "12404": "Flower East B (B1\u2013B4)", "16868": "Flower West A (A1\u2013A4) \u00b7 new room"};
+const ROOM_COLORS = {'12403':'#b1442a','12406':'#c5a3ff','12409':'#9fd96a','12404':'#f4a261','16868':'#e76f51'};
+const COMPARE = new Set(['16868','12406','12403']); // default compare selection
+let compareMode = false;
+const charts = {};
 
-function makeChart(canvasId, cfg){
-  const el=document.getElementById(canvasId); if(!el) return null;
-  return new Chart(el.getContext('2d'), cfg);
-}
+function destroyChart(id){ if(charts[id]){ charts[id].destroy(); delete charts[id]; } }
 
-function renderRoomCharts(rid){
-  const d=ROOMS[rid]; if(!d) return;
-  // VWC chart: peak line + trough line + dryback bars
-  makeChart('cv_'+rid+'_vwc', {
+function renderSingle(rid){
+  const d = ROOMS[rid]; if(!d) return;
+  // VWC
+  destroyChart('cv_'+rid+'_vwc');
+  charts['cv_'+rid+'_vwc'] = new Chart(document.getElementById('cv_'+rid+'_vwc'), {
     type:'bar',
     data:{labels:d.days, datasets:[
-      {type:'line', label:'VWC peak (%)', data:d.peaks, borderColor:COLORS.vwcPeak, backgroundColor:'transparent', tension:.3, pointRadius:2, yAxisID:'y'},
-      {type:'line', label:'VWC trough (%)', data:d.troughs, borderColor:COLORS.vwcTrough, backgroundColor:'transparent', tension:.3, pointRadius:2, yAxisID:'y'},
-      {type:'bar', label:'Absolute dryback (pp)', data:d.drybacks, backgroundColor:COLORS.drybackBar+'aa', borderWidth:0, yAxisID:'y1'}
+      {type:'line', label:'VWC peak (%)', data:d.peaks, borderColor:'#3f4e2b', backgroundColor:'transparent', tension:.25, pointRadius:2, yAxisID:'y'},
+      {type:'line', label:'VWC trough (%)', data:d.troughs, borderColor:'#9fd96a', backgroundColor:'transparent', tension:.25, pointRadius:2, yAxisID:'y'},
+      {type:'bar', label:'Absolute dryback (pp)', data:d.drybacks, backgroundColor:'#c5a3ffaa', borderWidth:0, yAxisID:'y1'}
     ]},
-    options:{
-      responsive:true, maintainAspectRatio:false,
+    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
       scales:{
-        y:{position:'left', title:{display:true, text:'VWC %'}, min:30, max:90},
+        y:{position:'left', title:{display:true, text:'VWC %'}, min:40, max:90},
         y1:{position:'right', title:{display:true, text:'Dryback (pp)'}, min:0, max:35, grid:{drawOnChartArea:false}}
       },
       plugins:{legend:{labels:{usePointStyle:true, font:{size:11}}}}
     }
   });
-
-  makeChart('cv_'+rid+'_ec', {
+  // EC
+  destroyChart('cv_'+rid+'_ec');
+  charts['cv_'+rid+'_ec'] = new Chart(document.getElementById('cv_'+rid+'_ec'), {
     type:'line',
     data:{labels:d.days, datasets:[
-      {label:'Feed EC (drip, mS)', data:d.ec_drip, borderColor:COLORS.ecDrip, backgroundColor:'transparent', tension:.3, pointRadius:2},
-      {label:'Substrate pore EC (mS)', data:d.ec, borderColor:COLORS.ecMid, backgroundColor:'transparent', tension:.3, pointRadius:2, borderWidth:2.5},
-      {label:'Drain EC (mS)', data:d.ec_drain, borderColor:COLORS.ecDrain, backgroundColor:'transparent', tension:.3, pointRadius:2}
+      {label:'Feed EC (drip)', data:d.ec_drip, borderColor:'#a8d5e2', backgroundColor:'transparent', tension:.25, pointRadius:2},
+      {label:'Substrate pore EC', data:d.ec, borderColor:'#3f4e2b', backgroundColor:'transparent', tension:.25, pointRadius:2, borderWidth:2.5},
+      {label:'Drain EC', data:d.ec_drain, borderColor:'#e76f51', backgroundColor:'transparent', tension:.25, pointRadius:2}
     ]},
-    options:{
-      responsive:true, maintainAspectRatio:false,
+    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
       scales:{y:{title:{display:true, text:'EC (mS/cm)'}, beginAtZero:true}},
       plugins:{legend:{labels:{usePointStyle:true, font:{size:11}}}}
     }
   });
-
-  makeChart('cv_'+rid+'_vpd', {
+  // VPD
+  destroyChart('cv_'+rid+'_vpd');
+  charts['cv_'+rid+'_vpd'] = new Chart(document.getElementById('cv_'+rid+'_vpd'), {
     type:'line',
     data:{labels:d.days, datasets:[
-      {label:'VPD (kPa)', data:d.vpd, borderColor:COLORS.vpd, backgroundColor:'transparent', tension:.3, pointRadius:2, yAxisID:'y'},
-      {label:'Air temp (°F)', data:d.temp, borderColor:COLORS.temp, backgroundColor:'transparent', tension:.3, pointRadius:2, yAxisID:'y1'}
+      {label:'VPD (kPa)', data:d.vpd, borderColor:'#3f4e2b', backgroundColor:'transparent', tension:.25, pointRadius:2, yAxisID:'y'},
+      {label:'Air temp (°F)', data:d.temp, borderColor:'#e76f51', backgroundColor:'transparent', tension:.25, pointRadius:2, yAxisID:'y1'}
     ]},
-    options:{
-      responsive:true, maintainAspectRatio:false,
+    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
       scales:{
         y:{position:'left', title:{display:true, text:'VPD (kPa)'}, min:0.5, max:1.6},
         y1:{position:'right', title:{display:true, text:'°F'}, min:65, max:85, grid:{drawOnChartArea:false}}
@@ -460,22 +465,97 @@ function renderRoomCharts(rid){
   });
 }
 
-function showRoom(rid){
-  document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  const panel=document.getElementById('panel-'+rid); if(panel) panel.style.display='block';
-  const chip=document.querySelector('.chip[data-room="'+rid+'"]'); if(chip) chip.classList.add('active');
-  setTimeout(()=>renderRoomCharts(rid), 30);
+function renderCompare(){
+  const sel = Array.from(COMPARE);
+  const days = ROOMS[sel[0]]?.days || [];
+  function buildSets(key, opts){
+    return sel.map(rid => ({
+      label: ROOM_NAMES[rid] + ' #' + rid,
+      data: ROOMS[rid][key],
+      borderColor: ROOM_COLORS[rid],
+      backgroundColor: 'transparent',
+      tension:.25, pointRadius:2, ...opts
+    }));
+  }
+  ['cmp_vwc','cmp_ec','cmp_vpd','cmp_co2'].forEach(destroyChart);
+  charts.cmp_vwc = new Chart(document.getElementById('cmp_vwc'), {
+    type:'line', data:{labels:days, datasets:buildSets('drybacks')},
+    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      scales:{y:{title:{display:true, text:'Absolute dryback (pp)'}, beginAtZero:true}},
+      plugins:{legend:{labels:{usePointStyle:true, font:{size:11}}}}
+    }
+  });
+  charts.cmp_ec = new Chart(document.getElementById('cmp_ec'), {
+    type:'line', data:{labels:days, datasets:buildSets('ec')},
+    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      scales:{y:{title:{display:true, text:'Pore EC (mS)'}, beginAtZero:true}},
+      plugins:{legend:{labels:{usePointStyle:true, font:{size:11}}}}
+    }
+  });
+  charts.cmp_vpd = new Chart(document.getElementById('cmp_vpd'), {
+    type:'line', data:{labels:days, datasets:buildSets('vpd')},
+    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      scales:{y:{title:{display:true, text:'VPD (kPa)'}}},
+      plugins:{legend:{labels:{usePointStyle:true, font:{size:11}}}}
+    }
+  });
+  charts.cmp_co2 = new Chart(document.getElementById('cmp_co2'), {
+    type:'line', data:{labels:days, datasets:buildSets('co2')},
+    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      scales:{y:{title:{display:true, text:'CO₂ (ppm)'}}},
+      plugins:{legend:{labels:{usePointStyle:true, font:{size:11}}}}
+    }
+  });
 }
 
-// Initial render: default to first visible panel
+function showRoom(rid){
+  if (compareMode) {
+    // toggle in/out of compare set
+    if (COMPARE.has(rid)) COMPARE.delete(rid); else COMPARE.add(rid);
+    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', COMPARE.has(c.dataset.room)));
+    renderCompare();
+  } else {
+    document.querySelectorAll('.panel').forEach(p => p.style.display='none');
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    const pan = document.getElementById('panel-'+rid); if(pan) pan.style.display='block';
+    const chip = document.querySelector('.chip[data-room="'+rid+'"]'); if(chip) chip.classList.add('active');
+    setTimeout(()=>renderSingle(rid), 30);
+  }
+}
+
+function toggleCompare(){
+  compareMode = !compareMode;
+  const tog = document.getElementById('compareToggle');
+  const sv = document.getElementById('single-view');
+  const cv = document.getElementById('compare-view');
+  tog.classList.toggle('active', compareMode);
+  if (compareMode){
+    sv.classList.add('hidden');
+    cv.classList.add('active');
+    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', COMPARE.has(c.dataset.room)));
+    setTimeout(renderCompare, 30);
+  } else {
+    cv.classList.remove('active');
+    sv.classList.remove('hidden');
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    const firstPanel = document.querySelector('.panel');
+    if (firstPanel){
+      const rid = firstPanel.id.replace('panel-','');
+      document.querySelectorAll('.panel').forEach(p => p.style.display='none');
+      firstPanel.style.display='block';
+      const chip = document.querySelector('.chip[data-room="'+rid+'"]'); if(chip) chip.classList.add('active');
+      setTimeout(()=>renderSingle(rid), 30);
+    }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  const firstVisible = document.querySelector('.panel[style*="block"]');
-  const firstChip = document.querySelector('.chip[data-room="16868"]');
-  if (firstChip) firstChip.classList.add('active');
-  if (firstVisible) {
-    const rid = firstVisible.id.replace('panel-','');
-    renderRoomCharts(rid);
+  const firstPanel = document.querySelector('.panel');
+  if (firstPanel){
+    const rid = firstPanel.id.replace('panel-','');
+    const chip = document.querySelector('.chip[data-room="'+rid+'"]');
+    if (chip) chip.classList.add('active');
+    renderSingle(rid);
   }
 });
 </script>
