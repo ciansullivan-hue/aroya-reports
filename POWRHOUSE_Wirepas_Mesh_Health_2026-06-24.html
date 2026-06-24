@@ -168,10 +168,15 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 <section>
   <h2>13-child slot rule <span class="small">why this is the load-bearing metric</span></h2>
   <div class="callout danger">
-    A Wirepas parent node — gateway or relay — supports at most <b>13 direct hop-1 children</b>.
-    Once a parent crosses that line, additional devices either fail to join, get pushed to a worse
-    parent at higher hop count, or thrash between slots. The symptoms operators see — long travel
-    times, retries, growing data gaps — almost always trace back to a parent that's at or over 13.
+    Each parent node in the Wirepas mesh — gateway or relay — supports at most <b>13 DIRECT children</b>.
+    <b>Grandchildren count against their immediate parent's slots, NOT against the grandparent's.</b>
+    Mid-layer relays can be saturated even when the gateway above them has plenty of headroom — so
+    saturation has to be checked at <b>every</b> level of the topology, not just gateway-level.
+    Once a parent crosses 13, additional devices either fail to join, get pushed to a worse parent
+    at higher hop count, or thrash between slots — producing the long travel times, retries, and
+    growing data gaps operators see.
+    <br><br>
+    Counts in this report are per-immediate-parent: <code>n_children = len([d for d in all_devices if d.nextHop == this_parent])</code>.
     <br><br>
     <b>🟢 ≤10 children</b> headroom · <b>🟠 11–12</b> near saturation · <b>🔴 13</b> at limit ·
     <b>🔴🔴 &gt;13</b> over-subscribed (orphaned devices &amp; multi-hop spillover).
