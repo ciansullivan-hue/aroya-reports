@@ -176,7 +176,13 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
     at higher hop count, or thrash between slots — producing the long travel times, retries, and
     growing data gaps operators see.
     <br><br>
-    Counts in this report are per-immediate-parent: <code>n_children = len([d for d in all_devices if d.nextHop == this_parent])</code>.
+    <b>Dash-2 dedup:</b> two AROYA serials sharing the same base number where one has a
+    <code>-2</code> suffix (e.g. <code>H4210005066</code> and <code>H4210005066-2</code>) are ONE
+    radio with two sensor heads, not two mesh nodes. They fill <b>one</b> slot on their parent.
+    This report deduplicates by base serial before counting — counts are per <b>unique radio</b>,
+    not per raw serial.
+    <br><br>
+    Counts are per-immediate-parent: <code>n_children(P) = unique base serials whose nextHop == P</code>.
     <br><br>
     <b>🟢 ≤10 children</b> headroom · <b>🟠 11–12</b> near saturation · <b>🔴 13</b> at limit ·
     <b>🔴🔴 &gt;13</b> over-subscribed (orphaned devices &amp; multi-hop spillover).
@@ -187,13 +193,13 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
   <h2>Mesh health KPIs</h2>
   <div class="kpis">
     <div class="kpi">
-      <div class="kpi-v">29</div>
-      <div class="kpi-l">Devices</div>
-      
+      <div class="kpi-v">21</div>
+      <div class="kpi-l">Unique radios</div>
+      <div class="kpi-s">29 raw serials, −8 dash-2 pairs</div>
     </div><div class="kpi">
-      <div class="kpi-v">20</div>
+      <div class="kpi-v">15</div>
       <div class="kpi-l">Online</div>
-      <div class="kpi-s">69.0%</div>
+      <div class="kpi-s">71.4% of radios</div>
     </div><div class="kpi">
       <div class="kpi-v">5/6</div>
       <div class="kpi-l">Gateways</div>
@@ -226,8 +232,8 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </div>
           <div class="gw-stats">
             <div><b>1</b> hop-1 children</div>
-            <div><b>3</b> total routing</div>
-            <div><b>3/3</b> online</div>
+            <div><b>2</b> total routing</div>
+            <div><b>2/2</b> online</div>
           </div>
           <div class="gw-hops">(no children resolved)</div>
         </div><div class="gw-card" style="border-left:4px solid #3a6a8a">
@@ -236,12 +242,12 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <div class="gw-ser">H2110001266</div>
               <div class="gw-meta">id 202015 · ggVersion 2 · OFFLINE</div>
             </div>
-            <div><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">🟢&nbsp;4/13 · Headroom</span></div>
+            <div><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">🟢&nbsp;3/13 · Headroom</span></div>
           </div>
           <div class="gw-stats">
-            <div><b>4</b> hop-1 children</div>
-            <div><b>4</b> total routing</div>
-            <div><b>0/4</b> online</div>
+            <div><b>3</b> hop-1 children</div>
+            <div><b>3</b> total routing</div>
+            <div><b>0/3</b> online</div>
           </div>
           <div class="gw-hops">(no children resolved)</div>
         </div><div class="gw-card" style="border-left:4px solid #3a6a8a">
@@ -268,8 +274,8 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </div>
           <div class="gw-stats">
             <div><b>1</b> hop-1 children</div>
-            <div><b>3</b> total routing</div>
-            <div><b>3/3</b> online</div>
+            <div><b>2</b> total routing</div>
+            <div><b>2/2</b> online</div>
           </div>
           <div class="gw-hops">(no children resolved)</div>
         </div><div class="gw-card" style="border-left:4px solid #3a6a8a">
@@ -282,8 +288,8 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </div>
           <div class="gw-stats">
             <div><b>2</b> hop-1 children</div>
-            <div><b>6</b> total routing</div>
-            <div><b>6/6</b> online</div>
+            <div><b>4</b> total routing</div>
+            <div><b>4/4</b> online</div>
           </div>
           <div class="gw-hops">(no children resolved)</div>
         </div><div class="gw-card" style="border-left:4px solid #3a6a8a">
@@ -292,12 +298,12 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <div class="gw-ser">H2200001039</div>
               <div class="gw-meta">id 222789 · ggVersion 2 · online</div>
             </div>
-            <div><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">🟢&nbsp;3/13 · Headroom</span></div>
+            <div><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">🟢&nbsp;2/13 · Headroom</span></div>
           </div>
           <div class="gw-stats">
-            <div><b>3</b> hop-1 children</div>
-            <div><b>7</b> total routing</div>
-            <div><b>3/7</b> online</div>
+            <div><b>2</b> hop-1 children</div>
+            <div><b>4</b> total routing</div>
+            <div><b>2/4</b> online</div>
           </div>
           <div class="gw-hops">(no children resolved)</div>
         </div></div>
@@ -305,13 +311,13 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 
 <section>
   <h2>Mesh topology tree</h2>
-  <div class="map-wrap"><svg viewBox="0 0 1560 400" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid #e5e7eb;border-radius:12px" aria-label="Mesh topology tree color-coded by 13-child slot saturation"><g font-family="-apple-system, ui-sans-serif, sans-serif" font-size="11" fill="#555"><text x="14" y="20" font-weight="600" font-size="13">Mesh topology — colored by parent's child-slot saturation</text><rect x="14" y="32" width="14" height="14" rx="3" fill="#5b8c5a" opacity="0.7"/><text x="34" y="44">🟢 ≤10</text><rect x="104" y="32" width="14" height="14" rx="3" fill="#c97e00" opacity="0.7"/><text x="124" y="44">🟠 11–12</text><rect x="194" y="32" width="14" height="14" rx="3" fill="#b3261e" opacity="0.7"/><text x="214" y="44">🔴 13</text><rect x="284" y="32" width="14" height="14" rx="3" fill="#b3261e" opacity="0.7"/><text x="304" y="44">🔴🔴 >13</text></g><g><rect x="30" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="130" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2100005595</text><text x="130" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 1/13 hop-1 · 3 total</text></g><line x1="130" y1="108" x2="50" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="127" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210006646 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="145.2" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440013462 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="163.39999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440013462-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><g><rect x="290" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="390" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">○ GW · H2110001266</text><text x="390" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 4/13 hop-1 · 4 total</text></g><line x1="390" y1="108" x2="310" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="305" cy="127" r="3.5" fill="#b3261e" opacity="0.95"/><text x="314" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3310009922 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="390" y1="108" x2="310" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="305" cy="145.2" r="3.5" fill="#b3261e" opacity="0.95"/><text x="314" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H5200001002 <tspan fill="#888" font-size="9">·h520·h?</tspan></text><line x1="390" y1="108" x2="310" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="305" cy="163.39999999999998" r="3.5" fill="#b3261e" opacity="0.95"/><text x="314" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8200001003 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="390" y1="108" x2="310" y2="181.59999999999997" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="305" cy="181.59999999999997" r="3.5" fill="#b3261e" opacity="0.95"/><text x="314" y="185.59999999999997" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8200001003-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><g><rect x="550" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="650" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2110001269</text><text x="650" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 0/13 hop-1 · 0 total</text></g><g><rect x="810" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="910" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2110001287</text><text x="910" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 1/13 hop-1 · 3 total</text></g><line x1="910" y1="108" x2="830" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="825" cy="127" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="834" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005146 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="910" y1="108" x2="830" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="825" cy="145.2" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="834" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014928 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="910" y1="108" x2="830" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="825" cy="163.39999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="834" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014928-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><g><rect x="1070" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="1170" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2200001038</text><text x="1170" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 2/13 hop-1 · 6 total</text></g><line x1="1170" y1="108" x2="1090" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="127" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005159 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="1170" y1="108" x2="1090" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="145.2" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005930 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="1170" y1="108" x2="1090" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="163.39999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014948 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1170" y1="108" x2="1090" y2="181.59999999999997" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="181.59999999999997" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="185.59999999999997" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014948-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1170" y1="108" x2="1090" y2="199.79999999999995" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="199.79999999999995" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="203.79999999999995" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014947 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1170" y1="108" x2="1090" y2="217.99999999999994" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="217.99999999999994" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="221.99999999999994" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014947-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><g><rect x="1330" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="1430" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2200001039</text><text x="1430" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 3/13 hop-1 · 7 total</text></g><line x1="1430" y1="108" x2="1350" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="127" r="3.5" fill="#b3261e" opacity="0.95"/><text x="1354" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440015299 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1430" y1="108" x2="1350" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="145.2" r="3.5" fill="#b3261e" opacity="0.95"/><text x="1354" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440015383 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1430" y1="108" x2="1350" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="163.39999999999998" r="3.5" fill="#b3261e" opacity="0.95"/><text x="1354" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440015383-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1430" y1="108" x2="1350" y2="181.59999999999997" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="181.59999999999997" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1354" y="185.59999999999997" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210004507 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="1430" y1="108" x2="1350" y2="199.79999999999995" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="199.79999999999995" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1354" y="203.79999999999995" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014929 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1430" y1="108" x2="1350" y2="217.99999999999994" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="217.99999999999994" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1354" y="221.99999999999994" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014929-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1430" y1="108" x2="1350" y2="236.19999999999993" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="236.19999999999993" r="3.5" fill="#b3261e" opacity="0.95"/><text x="1354" y="240.19999999999993" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440015299-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text></svg></div>
+  <div class="map-wrap"><svg viewBox="0 0 1560 400" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid #e5e7eb;border-radius:12px" aria-label="Mesh topology tree color-coded by 13-child slot saturation"><g font-family="-apple-system, ui-sans-serif, sans-serif" font-size="11" fill="#555"><text x="14" y="20" font-weight="600" font-size="13">Mesh topology — colored by parent's child-slot saturation</text><rect x="14" y="32" width="14" height="14" rx="3" fill="#5b8c5a" opacity="0.7"/><text x="34" y="44">🟢 ≤10</text><rect x="104" y="32" width="14" height="14" rx="3" fill="#c97e00" opacity="0.7"/><text x="124" y="44">🟠 11–12</text><rect x="194" y="32" width="14" height="14" rx="3" fill="#b3261e" opacity="0.7"/><text x="214" y="44">🔴 13</text><rect x="284" y="32" width="14" height="14" rx="3" fill="#b3261e" opacity="0.7"/><text x="304" y="44">🔴🔴 >13</text></g><g><rect x="30" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="130" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2100005595</text><text x="130" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 1/13 hop-1 · 2 total</text></g><line x1="130" y1="108" x2="50" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="127" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210006646 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="145.2" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440013462 <tspan fill="#888" font-size="9">·node·h?</tspan></text><g><rect x="290" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="390" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">○ GW · H2110001266</text><text x="390" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 3/13 hop-1 · 3 total</text></g><line x1="390" y1="108" x2="310" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="305" cy="127" r="3.5" fill="#b3261e" opacity="0.95"/><text x="314" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3310009922 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="390" y1="108" x2="310" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="305" cy="145.2" r="3.5" fill="#b3261e" opacity="0.95"/><text x="314" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H5200001002 <tspan fill="#888" font-size="9">·h520·h?</tspan></text><line x1="390" y1="108" x2="310" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="305" cy="163.39999999999998" r="3.5" fill="#b3261e" opacity="0.95"/><text x="314" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8200001003 <tspan fill="#888" font-size="9">·node·h?</tspan></text><g><rect x="550" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="650" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2110001269</text><text x="650" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 0/13 hop-1 · 0 total</text></g><g><rect x="810" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="910" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2110001287</text><text x="910" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 1/13 hop-1 · 2 total</text></g><line x1="910" y1="108" x2="830" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="825" cy="127" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="834" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005146 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="910" y1="108" x2="830" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="825" cy="145.2" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="834" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014928 <tspan fill="#888" font-size="9">·node·h?</tspan></text><g><rect x="1070" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="1170" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2200001038</text><text x="1170" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 2/13 hop-1 · 4 total</text></g><line x1="1170" y1="108" x2="1090" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="127" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005159 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="1170" y1="108" x2="1090" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="145.2" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005930 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="1170" y1="108" x2="1090" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="163.39999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014948 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1170" y1="108" x2="1090" y2="181.59999999999997" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1085" cy="181.59999999999997" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1094" y="185.59999999999997" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014947 <tspan fill="#888" font-size="9">·node·h?</tspan></text><g><rect x="1330" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="1430" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2200001039</text><text x="1430" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 2/13 hop-1 · 4 total</text></g><line x1="1430" y1="108" x2="1350" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="127" r="3.5" fill="#b3261e" opacity="0.95"/><text x="1354" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440015299 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1430" y1="108" x2="1350" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="145.2" r="3.5" fill="#b3261e" opacity="0.95"/><text x="1354" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440015383 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="1430" y1="108" x2="1350" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="163.39999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1354" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210004507 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="1430" y1="108" x2="1350" y2="181.59999999999997" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="1345" cy="181.59999999999997" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="1354" y="185.59999999999997" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014929 <tspan fill="#888" font-size="9">·node·h?</tspan></text></svg></div>
   <div class="map-caption">Each column is one gateway. Box color = sink's 13-child saturation. Edge color = child's RSSI tier. Devices listed in hop / signal order; capped at 50 per gateway for legibility.</div>
 </section>
 
 <section>
   <h2>Telemetry map <span class="small">logical layout — AROYA exposes no spatial coordinates for these devices</span></h2>
-  <div class="map-wrap"><svg viewBox="0 0 960 640" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid #e5e7eb;border-radius:12px" aria-label="Telemetry map — logical mesh layout (AROYA does not expose physical device coordinates for this facility)"><g font-family="-apple-system, ui-sans-serif, sans-serif"><text x="14" y="22" font-weight="700" font-size="14" fill="#222">Telemetry map · logical mesh layout</text><text x="14" y="40" font-size="11" fill="#777">AROYA does not expose physical device coordinates (lat/lng/what3words = null on all devices); positions inferred from mesh parent→child graph + hop depth.</text></g><circle cx="480.0" cy="320.0" r="160" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="240" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="320" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="400" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><text x="642.0" y="324.0" font-size="9" fill="#aaa">hop-1</text><text x="722.0" y="324.0" font-size="9" fill="#aaa">hop-2</text><text x="802.0" y="324.0" font-size="9" fill="#aaa">hop-3+</text><circle cx="480.0" cy="230.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="480.0" y="214.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2100005595</text><text x="480.0" y="234.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">1</text><circle cx="557.9422863405995" cy="275.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="557.9422863405995" y="259.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2110001266</text><text x="557.9422863405995" y="279.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">4</text><circle cx="557.9422863405995" cy="365.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="557.9422863405995" y="349.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2110001269</text><text x="557.9422863405995" y="369.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">0</text><circle cx="480.0" cy="410.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="480.0" y="394.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2110001287</text><text x="480.0" y="414.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">1</text><circle cx="402.0577136594005" cy="365.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="402.0577136594005" y="349.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2200001038</text><text x="402.0577136594005" y="369.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">2</text><circle cx="402.0577136594005" cy="275.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="402.0577136594005" y="259.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2200001039</text><text x="402.0577136594005" y="279.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">3</text></svg></div>
+  <div class="map-wrap"><svg viewBox="0 0 960 640" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid #e5e7eb;border-radius:12px" aria-label="Telemetry map — logical mesh layout (AROYA does not expose physical device coordinates for this facility)"><g font-family="-apple-system, ui-sans-serif, sans-serif"><text x="14" y="22" font-weight="700" font-size="14" fill="#222">Telemetry map · logical mesh layout</text><text x="14" y="40" font-size="11" fill="#777">AROYA does not expose physical device coordinates (lat/lng/what3words = null on all devices); positions inferred from mesh parent→child graph + hop depth.</text></g><circle cx="480.0" cy="320.0" r="160" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="240" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="320" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="400" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><text x="642.0" y="324.0" font-size="9" fill="#aaa">hop-1</text><text x="722.0" y="324.0" font-size="9" fill="#aaa">hop-2</text><text x="802.0" y="324.0" font-size="9" fill="#aaa">hop-3+</text><circle cx="480.0" cy="230.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="480.0" y="214.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2100005595</text><text x="480.0" y="234.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">1</text><circle cx="557.9422863405995" cy="275.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="557.9422863405995" y="259.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2110001266</text><text x="557.9422863405995" y="279.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">3</text><circle cx="557.9422863405995" cy="365.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="557.9422863405995" y="349.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2110001269</text><text x="557.9422863405995" y="369.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">0</text><circle cx="480.0" cy="410.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="480.0" y="394.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2110001287</text><text x="480.0" y="414.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">1</text><circle cx="402.0577136594005" cy="365.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="402.0577136594005" y="349.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2200001038</text><text x="402.0577136594005" y="369.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">2</text><circle cx="402.0577136594005" cy="275.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="402.0577136594005" y="259.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2200001039</text><text x="402.0577136594005" y="279.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">2</text></svg></div>
   <div class="map-caption">
     Hub-and-spoke layout per gateway, hop depth shown as concentric contours, node color = RSSI tier
     (green ≥ −75 dBm · amber −75 to −85 · red &lt; −85). Halo opacity shows weak-coverage envelope.
@@ -332,32 +338,32 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           <h4 class="rec-title">Restore 1 offline devices on gateway gateway-None</h4>
           <div class="rec-row"><b>Finding</b><div>1 devices route through gateway gateway-None but are currently offline / stale (&gt;24h since last comm).</div></div>
           <div class="rec-row"><b>Action</b><div>Physical check: verify gateway is online and antenna seated; swap battery on Node devices; for non-Node PoE devices verify power + Ethernet. List: H2110001266 (gateway)</div></div>
-          <div class="rec-row"><b>Expected outcome</b><div class="exp">After swap / power-restore: 1 devices return to online state within 5–15 min of physical fix; fleet online-rate climbs by 4 pp.</div></div>
+          <div class="rec-row"><b>Expected outcome</b><div class="exp">After swap / power-restore: 1 devices return to online state within 5–15 min of physical fix; fleet online-rate climbs by 7 pp.</div></div>
           <details class="rec-targets"><summary>Affected devices (1)</summary><ul><li>H2110001266 · gateway</li></ul></details>
         </div>
 <div class="rec rec-p1">
           <div class="rec-head">
             <span class="pill prio" style="background:#c97e00;color:#fff;border-color:#c97e00">P1</span>
             <span class="rec-cat">DEVICE</span>
-            <span class="rec-meta">Impact: <b>Medium</b> · Effort: <b>Medium</b></span>
+            <span class="rec-meta">Impact: <b>Medium</b> · Effort: <b>Low</b></span>
           </div>
-          <h4 class="rec-title">Restore 4 offline devices on gateway H2110001266</h4>
-          <div class="rec-row"><b>Finding</b><div>4 devices route through gateway H2110001266 but are currently offline / stale (&gt;24h since last comm).</div></div>
-          <div class="rec-row"><b>Action</b><div>Physical check: verify gateway is online and antenna seated; swap battery on Node devices; for non-Node PoE devices verify power + Ethernet. List: H3310009922 (node), H5200001002 (h520), H8200001003 (node), H8200001003-2 (node)</div></div>
-          <div class="rec-row"><b>Expected outcome</b><div class="exp">After swap / power-restore: 4 devices return to online state within 5–15 min of physical fix; fleet online-rate climbs by 17 pp.</div></div>
-          <details class="rec-targets"><summary>Affected devices (4)</summary><ul><li>H3310009922 · node · room 19935</li><li>H5200001002 · h520 · room 19935</li><li>H8200001003 · node · room 19935</li><li>H8200001003-2 · node · room 19935</li></ul></details>
+          <h4 class="rec-title">Restore 3 offline devices on gateway H2110001266</h4>
+          <div class="rec-row"><b>Finding</b><div>3 devices route through gateway H2110001266 but are currently offline / stale (&gt;24h since last comm).</div></div>
+          <div class="rec-row"><b>Action</b><div>Physical check: verify gateway is online and antenna seated; swap battery on Node devices; for non-Node PoE devices verify power + Ethernet. List: H3310009922 (node), H5200001002 (h520), H8200001003 (node)</div></div>
+          <div class="rec-row"><b>Expected outcome</b><div class="exp">After swap / power-restore: 3 devices return to online state within 5–15 min of physical fix; fleet online-rate climbs by 20 pp.</div></div>
+          <details class="rec-targets"><summary>Affected devices (3)</summary><ul><li>H3310009922 · node · room 19935</li><li>H5200001002 · h520 · room 19935</li><li>H8200001003 · node · room 19935</li></ul></details>
         </div>
 <div class="rec rec-p1">
           <div class="rec-head">
             <span class="pill prio" style="background:#c97e00;color:#fff;border-color:#c97e00">P1</span>
             <span class="rec-cat">DEVICE</span>
-            <span class="rec-meta">Impact: <b>Medium</b> · Effort: <b>Medium</b></span>
+            <span class="rec-meta">Impact: <b>Medium</b> · Effort: <b>Low</b></span>
           </div>
-          <h4 class="rec-title">Restore 4 offline devices on gateway H2200001039</h4>
-          <div class="rec-row"><b>Finding</b><div>4 devices route through gateway H2200001039 but are currently offline / stale (&gt;24h since last comm).</div></div>
-          <div class="rec-row"><b>Action</b><div>Physical check: verify gateway is online and antenna seated; swap battery on Node devices; for non-Node PoE devices verify power + Ethernet. List: H3440015299 (node), H3440015299-2 (node), H3440015383 (node), H3440015383-2 (node)</div></div>
-          <div class="rec-row"><b>Expected outcome</b><div class="exp">After swap / power-restore: 4 devices return to online state within 5–15 min of physical fix; fleet online-rate climbs by 17 pp.</div></div>
-          <details class="rec-targets"><summary>Affected devices (4)</summary><ul><li>H3440015299 · node · room 20154</li><li>H3440015299-2 · node · room 20154</li><li>H3440015383 · node · room 20155</li><li>H3440015383-2 · node · room 20155</li></ul></details>
+          <h4 class="rec-title">Restore 2 offline devices on gateway H2200001039</h4>
+          <div class="rec-row"><b>Finding</b><div>2 devices route through gateway H2200001039 but are currently offline / stale (&gt;24h since last comm).</div></div>
+          <div class="rec-row"><b>Action</b><div>Physical check: verify gateway is online and antenna seated; swap battery on Node devices; for non-Node PoE devices verify power + Ethernet. List: H3440015299 (node), H3440015383 (node)</div></div>
+          <div class="rec-row"><b>Expected outcome</b><div class="exp">After swap / power-restore: 2 devices return to online state within 5–15 min of physical fix; fleet online-rate climbs by 13 pp.</div></div>
+          <details class="rec-targets"><summary>Affected devices (2)</summary><ul><li>H3440015299 · node · room 20154</li><li>H3440015383 · node · room 20155</li></ul></details>
         </div>
 <div class="rec rec-p3">
           <div class="rec-head">
@@ -384,14 +390,14 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 <li>
           <span class="seq">02</span>
           <span class="pill prio" style="background:#c97e00;color:#fff;border-color:#c97e00">P1</span>
-          <span class="plan-title">Restore 4 offline devices on gateway H2110001266</span>
-          <span class="plan-tags">Impact: <b>Medium</b> · Effort: <b>Medium</b></span>
+          <span class="plan-title">Restore 3 offline devices on gateway H2110001266</span>
+          <span class="plan-tags">Impact: <b>Medium</b> · Effort: <b>Low</b></span>
         </li>
 <li>
           <span class="seq">03</span>
           <span class="pill prio" style="background:#c97e00;color:#fff;border-color:#c97e00">P1</span>
-          <span class="plan-title">Restore 4 offline devices on gateway H2200001039</span>
-          <span class="plan-tags">Impact: <b>Medium</b> · Effort: <b>Medium</b></span>
+          <span class="plan-title">Restore 2 offline devices on gateway H2200001039</span>
+          <span class="plan-tags">Impact: <b>Medium</b> · Effort: <b>Low</b></span>
         </li>
 <li>
           <span class="seq">04</span>
@@ -404,22 +410,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 <section>
   <h2>Per-room device tables</h2>
   <details class="room-block" >
-          <summary><b>Fiacre FR1</b> · 3 devices · 3 online · 0 crit · 0 warn</summary>
+          <summary><b>Fiacre FR1</b> · 2 devices · 2 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440013462</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>7</td>
-              <td>100</td>
-              <td>—</td>
-              <td>220608</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440013462-2</td>
+              <td>H3440013462 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -444,11 +439,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" open>
-          <summary><b>Fiacre FR2</b> · 2 devices · 0 online · 2 crit · 0 warn</summary>
+          <summary><b>Fiacre FR2</b> · 1 devices · 0 online · 1 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-crit">
-              <td>H3440015299</td>
+              <td>H3440015299 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>○</td>
               <td>100</td>
@@ -458,37 +453,15 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td>217431</td>
               <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
               <td class="flags">offline, link-poor</td>
-            </tr><tr class="sev-crit">
-              <td>H3440015299-2</td>
-              <td>node</td>
-              <td>○</td>
-              <td>100</td>
-              <td>5</td>
-              <td>100</td>
-              <td>—</td>
-              <td>217431</td>
-              <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
-              <td class="flags">offline</td>
             </tr></tbody>
           </table></div>
         </details>
 <details class="room-block" open>
-          <summary><b>Fiacre FR3</b> · 2 devices · 0 online · 2 crit · 0 warn</summary>
+          <summary><b>Fiacre FR3</b> · 1 devices · 0 online · 1 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-crit">
-              <td>H3440015383</td>
-              <td>node</td>
-              <td>○</td>
-              <td>100</td>
-              <td>1</td>
-              <td>15</td>
-              <td>—</td>
-              <td>222788</td>
-              <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
-              <td class="flags">offline, link-poor</td>
-            </tr><tr class="sev-crit">
-              <td>H3440015383-2</td>
+              <td>H3440015383 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>○</td>
               <td>100</td>
@@ -502,22 +475,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Fiacre FR4</b> · 3 devices · 3 online · 0 crit · 0 warn</summary>
+          <summary><b>Fiacre FR4</b> · 2 devices · 2 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014929</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>5</td>
-              <td>100</td>
-              <td>—</td>
-              <td>192022</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014929-2</td>
+              <td>H3440014929 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -542,22 +504,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Fiacre FR5</b> · 3 devices · 3 online · 0 crit · 0 warn</summary>
+          <summary><b>Fiacre FR5</b> · 2 devices · 2 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014928</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>4</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201226</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014928-2</td>
+              <td>H3440014928 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -582,22 +533,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Fiacre FR6</b> · 3 devices · 3 online · 0 crit · 0 warn</summary>
+          <summary><b>Fiacre FR6</b> · 2 devices · 2 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014948</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>3</td>
-              <td>99</td>
-              <td>—</td>
-              <td>217431</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014948-2</td>
+              <td>H3440014948 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -622,22 +562,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Fiacre FR7</b> · 3 devices · 3 online · 0 crit · 0 warn</summary>
+          <summary><b>Fiacre FR7</b> · 2 devices · 2 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014947</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>6</td>
-              <td>99</td>
-              <td>—</td>
-              <td>201270</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014947-2</td>
+              <td>H3440014947 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -662,7 +591,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" open>
-          <summary><b>Joe&#x27;s Demo</b> · 4 devices · 0 online · 4 crit · 0 warn</summary>
+          <summary><b>Joe&#x27;s Demo</b> · 3 devices · 0 online · 3 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-crit">
@@ -688,18 +617,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
               <td class="flags">offline</td>
             </tr><tr class="sev-crit">
-              <td>H8200001003</td>
-              <td>node</td>
-              <td>○</td>
-              <td>100</td>
-              <td>6</td>
-              <td>100</td>
-              <td>—</td>
-              <td>202014</td>
-              <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
-              <td class="flags">offline</td>
-            </tr><tr class="sev-crit">
-              <td>H8200001003-2</td>
+              <td>H8200001003 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>○</td>
               <td>100</td>

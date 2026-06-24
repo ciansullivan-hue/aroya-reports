@@ -162,8 +162,8 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 
 <section>
   <h2>Executive summary</h2>
-  <ul class="exec"><li><b>2 parents are in the 'watch' tier (11–12 children).</b> No parent is at or over the 13-child Wirepas slot limit yet, but adding any device whose closest parent is one of 2 will push that parent over the line.</li>
-<li><b>Single-gateway dependency:</b> all 92 devices route through one gateway — a single point of failure for the entire facility.</li></ul>
+  <ul class="exec"><li><b>Mesh backbone is healthy:</b> 55/57 devices online (96.5%), all 1 gateways online, no parent at or over the 13-child Wirepas slot limit.</li>
+<li><b>Single-gateway dependency:</b> all 56 devices route through one gateway — a single point of failure for the entire facility.</li></ul>
 </section>
 
 <section>
@@ -177,7 +177,13 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
     at higher hop count, or thrash between slots — producing the long travel times, retries, and
     growing data gaps operators see.
     <br><br>
-    Counts in this report are per-immediate-parent: <code>n_children = len([d for d in all_devices if d.nextHop == this_parent])</code>.
+    <b>Dash-2 dedup:</b> two AROYA serials sharing the same base number where one has a
+    <code>-2</code> suffix (e.g. <code>H4210005066</code> and <code>H4210005066-2</code>) are ONE
+    radio with two sensor heads, not two mesh nodes. They fill <b>one</b> slot on their parent.
+    This report deduplicates by base serial before counting — counts are per <b>unique radio</b>,
+    not per raw serial.
+    <br><br>
+    Counts are per-immediate-parent: <code>n_children(P) = unique base serials whose nextHop == P</code>.
     <br><br>
     <b>🟢 ≤10 children</b> headroom · <b>🟠 11–12</b> near saturation · <b>🔴 13</b> at limit ·
     <b>🔴🔴 &gt;13</b> over-subscribed (orphaned devices &amp; multi-hop spillover).
@@ -188,13 +194,13 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
   <h2>Mesh health KPIs</h2>
   <div class="kpis">
     <div class="kpi">
-      <div class="kpi-v">93</div>
-      <div class="kpi-l">Devices</div>
-      
+      <div class="kpi-v">57</div>
+      <div class="kpi-l">Unique radios</div>
+      <div class="kpi-s">93 raw serials, −36 dash-2 pairs</div>
     </div><div class="kpi">
-      <div class="kpi-v">91</div>
+      <div class="kpi-v">55</div>
       <div class="kpi-l">Online</div>
-      <div class="kpi-s">97.8%</div>
+      <div class="kpi-s">96.5% of radios</div>
     </div><div class="kpi">
       <div class="kpi-v">1/1</div>
       <div class="kpi-l">Gateways</div>
@@ -203,8 +209,8 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
       <div class="kpi-v">0</div>
       <div class="kpi-l">Parents over 13</div>
       <div class="kpi-s">Wirepas 13-child limit</div>
-    </div><div class="kpi emp">
-      <div class="kpi-v">2</div>
+    </div><div class="kpi">
+      <div class="kpi-v">0</div>
       <div class="kpi-l">Parents 11–12</div>
       <div class="kpi-s">watch tier</div>
     </div><div class="kpi">
@@ -217,18 +223,18 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 
 <section>
   <h2>Per-gateway summary</h2>
-  <div class="gw-grid"><div class="gw-card" style="border-left:4px solid #c97e00">
+  <div class="gw-grid"><div class="gw-card" style="border-left:4px solid #3a6a8a">
           <div class="gw-head">
             <div>
               <div class="gw-ser">H2110001181</div>
               <div class="gw-meta">id 198079 · ggVersion 2 · online</div>
             </div>
-            <div><span class="pill" style="background:#c97e001a;color:#c97e00;border-color:#c97e0055">🟠&nbsp;11/13 · Near saturation</span></div>
+            <div><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">🟢&nbsp;7/13 · Headroom</span></div>
           </div>
           <div class="gw-stats">
-            <div><b>11</b> hop-1 children</div>
-            <div><b>92</b> total routing</div>
-            <div><b>90/92</b> online</div>
+            <div><b>7</b> hop-1 children</div>
+            <div><b>56</b> total routing</div>
+            <div><b>54/56</b> online</div>
           </div>
           <div class="gw-hops">(no children resolved)</div>
         </div></div>
@@ -236,13 +242,13 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 
 <section>
   <h2>Mesh topology tree</h2>
-  <div class="map-wrap"><svg viewBox="0 0 960 1820" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid #e5e7eb;border-radius:12px" aria-label="Mesh topology tree color-coded by 13-child slot saturation"><g font-family="-apple-system, ui-sans-serif, sans-serif" font-size="11" fill="#555"><text x="14" y="20" font-weight="600" font-size="13">Mesh topology — colored by parent's child-slot saturation</text><rect x="14" y="32" width="14" height="14" rx="3" fill="#5b8c5a" opacity="0.7"/><text x="34" y="44">🟢 ≤10</text><rect x="104" y="32" width="14" height="14" rx="3" fill="#c97e00" opacity="0.7"/><text x="124" y="44">🟠 11–12</text><rect x="194" y="32" width="14" height="14" rx="3" fill="#b3261e" opacity="0.7"/><text x="214" y="44">🔴 13</text><rect x="284" y="32" width="14" height="14" rx="3" fill="#b3261e" opacity="0.7"/><text x="304" y="44">🔴🔴 >13</text></g><g><rect x="30" y="60" width="200" height="48" rx="8" fill="#c97e00" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="130" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2110001181</text><text x="130" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 11/13 hop-1 · 92 total</text></g><line x1="130" y1="108" x2="50" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="127" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3400003019 <tspan fill="#888" font-size="9">·repeater·h?</tspan></text><line x1="130" y1="108" x2="50" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="145.2" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3400003020 <tspan fill="#888" font-size="9">·repeater·h?</tspan></text><line x1="130" y1="108" x2="50" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="163.39999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3400003021 <tspan fill="#888" font-size="9">·repeater·h?</tspan></text><line x1="130" y1="108" x2="50" y2="181.59999999999997" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="181.59999999999997" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="185.59999999999997" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014640 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="199.79999999999995" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="199.79999999999995" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="203.79999999999995" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014640-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="217.99999999999994" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="217.99999999999994" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="221.99999999999994" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014715 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="236.19999999999993" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="236.19999999999993" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="240.19999999999993" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014715-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="254.39999999999992" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="254.39999999999992" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="258.3999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014717 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="272.5999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="272.5999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="276.5999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014717-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="290.7999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="290.7999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="294.7999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014719 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="308.9999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="308.9999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="312.9999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014719-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="327.1999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="327.1999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="331.1999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014721 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="345.39999999999986" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="345.39999999999986" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="349.39999999999986" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014721-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="363.59999999999985" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="363.59999999999985" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="367.59999999999985" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014725 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="381.79999999999984" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="381.79999999999984" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="385.79999999999984" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014725-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="399.99999999999983" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="399.99999999999983" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="403.99999999999983" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014726 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="418.1999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="418.1999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="422.1999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014726-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="436.3999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="436.3999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="440.3999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014727 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="454.5999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="454.5999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="458.5999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014727-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="472.7999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="472.7999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="476.7999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210004996 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="490.9999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="490.9999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="494.9999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005100 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="509.19999999999976" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="509.19999999999976" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="513.1999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005106 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="527.3999999999997" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="527.3999999999997" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="531.3999999999997" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005141 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="545.5999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="545.5999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="549.5999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005142 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="563.7999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="563.7999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="567.7999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005143 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="581.9999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="581.9999999999999" r="3.5" fill="#b3261e" opacity="0.95"/><text x="54" y="585.9999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005537 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="600.1999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="600.1999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="604.1999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005539 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="618.4" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="618.4" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="622.4" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001785 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="636.6" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="636.6" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="640.6" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001785-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="654.8000000000001" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="654.8000000000001" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="658.8000000000001" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001830 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="673.0000000000001" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="673.0000000000001" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="677.0000000000001" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001830-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="691.2000000000002" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="691.2000000000002" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="695.2000000000002" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014641 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="709.4000000000002" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="709.4000000000002" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="713.4000000000002" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014641-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="727.6000000000003" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="727.6000000000003" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="731.6000000000003" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014718 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="745.8000000000003" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="745.8000000000003" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="749.8000000000003" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014718-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="764.0000000000003" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="764.0000000000003" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="768.0000000000003" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014720 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="782.2000000000004" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="782.2000000000004" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="786.2000000000004" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014720-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="800.4000000000004" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="800.4000000000004" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="804.4000000000004" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014723 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="818.6000000000005" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="818.6000000000005" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="822.6000000000005" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014723-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="836.8000000000005" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="836.8000000000005" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="840.8000000000005" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014730 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="855.0000000000006" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="855.0000000000006" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="859.0000000000006" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014730-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="873.2000000000006" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="873.2000000000006" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="877.2000000000006" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210004990 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="891.4000000000007" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="891.4000000000007" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="895.4000000000007" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001821 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="909.6000000000007" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="909.6000000000007" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="913.6000000000007" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001821-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="927.8000000000008" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="927.8000000000008" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="931.8000000000008" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001832 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="946.0000000000008" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="946.0000000000008" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="950.0000000000008" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001832-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="964.2000000000008" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="964.2000000000008" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="968.2000000000008" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001837 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="982.4000000000009" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="982.4000000000009" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="986.4000000000009" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001837-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="1000.6000000000009" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="1000.6000000000009" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="1004.6000000000009" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014728 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="1018.800000000001" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="1018.800000000001" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="1022.800000000001" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014728-2 <tspan fill="#888" font-size="9">·node·h?</tspan></text><text x="54" y="1041.000000000001" font-family="-apple-system,sans-serif" font-size="10" fill="#666" font-style="italic">… and 42 more</text></svg></div>
+  <div class="map-wrap"><svg viewBox="0 0 960 1708" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid #e5e7eb;border-radius:12px" aria-label="Mesh topology tree color-coded by 13-child slot saturation"><g font-family="-apple-system, ui-sans-serif, sans-serif" font-size="11" fill="#555"><text x="14" y="20" font-weight="600" font-size="13">Mesh topology — colored by parent's child-slot saturation</text><rect x="14" y="32" width="14" height="14" rx="3" fill="#5b8c5a" opacity="0.7"/><text x="34" y="44">🟢 ≤10</text><rect x="104" y="32" width="14" height="14" rx="3" fill="#c97e00" opacity="0.7"/><text x="124" y="44">🟠 11–12</text><rect x="194" y="32" width="14" height="14" rx="3" fill="#b3261e" opacity="0.7"/><text x="214" y="44">🔴 13</text><rect x="284" y="32" width="14" height="14" rx="3" fill="#b3261e" opacity="0.7"/><text x="304" y="44">🔴🔴 >13</text></g><g><rect x="30" y="60" width="200" height="48" rx="8" fill="#5b8c5a" opacity="0.92" stroke="#222" stroke-width="0.6"/><text x="130" y="79" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">● GW · H2110001181</text><text x="130" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#fff" opacity="0.95">sink: 7/13 hop-1 · 56 total</text></g><line x1="130" y1="108" x2="50" y2="127" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="127" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="131" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3400003019 <tspan fill="#888" font-size="9">·repeater·h?</tspan></text><line x1="130" y1="108" x2="50" y2="145.2" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="145.2" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="149.2" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3400003020 <tspan fill="#888" font-size="9">·repeater·h?</tspan></text><line x1="130" y1="108" x2="50" y2="163.39999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="163.39999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="167.39999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3400003021 <tspan fill="#888" font-size="9">·repeater·h?</tspan></text><line x1="130" y1="108" x2="50" y2="181.59999999999997" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="181.59999999999997" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="185.59999999999997" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014640 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="199.79999999999995" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="199.79999999999995" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="203.79999999999995" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014715 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="217.99999999999994" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="217.99999999999994" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="221.99999999999994" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014717 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="236.19999999999993" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="236.19999999999993" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="240.19999999999993" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014719 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="254.39999999999992" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="254.39999999999992" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="258.3999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014721 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="272.5999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="272.5999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="276.5999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014725 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="290.7999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="290.7999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="294.7999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014726 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="308.9999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="308.9999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="312.9999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014727 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="327.1999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="327.1999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="331.1999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210004996 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="345.39999999999986" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="345.39999999999986" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="349.39999999999986" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005100 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="363.59999999999985" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="363.59999999999985" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="367.59999999999985" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005106 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="381.79999999999984" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="381.79999999999984" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="385.79999999999984" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005141 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="399.99999999999983" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="399.99999999999983" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="403.99999999999983" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005142 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="418.1999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="418.1999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="422.1999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005143 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="436.3999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="436.3999999999998" r="3.5" fill="#b3261e" opacity="0.95"/><text x="54" y="440.3999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005537 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="454.5999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="454.5999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="458.5999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005539 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="472.7999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="472.7999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="476.7999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001785 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="490.9999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="490.9999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="494.9999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001830 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="509.19999999999976" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="509.19999999999976" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="513.1999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014641 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="527.3999999999997" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="527.3999999999997" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="531.3999999999997" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014718 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="545.5999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="545.5999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="549.5999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014720 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="563.7999999999998" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="563.7999999999998" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="567.7999999999998" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014723 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="581.9999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="581.9999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="585.9999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014730 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="600.1999999999999" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="600.1999999999999" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="604.1999999999999" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210004990 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="618.4" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="618.4" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="622.4" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001821 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="636.6" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="636.6" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="640.6" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001832 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="654.8000000000001" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="654.8000000000001" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="658.8000000000001" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001837 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="673.0000000000001" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="673.0000000000001" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="677.0000000000001" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014728 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="691.2000000000002" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="691.2000000000002" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="695.2000000000002" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014729 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="709.4000000000002" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="709.4000000000002" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="713.4000000000002" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005001 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="727.6000000000003" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="727.6000000000003" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="731.6000000000003" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005103 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="745.8000000000003" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="745.8000000000003" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="749.8000000000003" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005140 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="764.0000000000003" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="764.0000000000003" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="768.0000000000003" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001823 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="782.2000000000004" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="782.2000000000004" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="786.2000000000004" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3400002893 <tspan fill="#888" font-size="9">·repeater·h?</tspan></text><line x1="130" y1="108" x2="50" y2="800.4000000000004" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="800.4000000000004" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="804.4000000000004" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3400003001 <tspan fill="#888" font-size="9">·repeater·h?</tspan></text><line x1="130" y1="108" x2="50" y2="818.6000000000005" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="818.6000000000005" r="3.5" fill="#b3261e" opacity="0.95"/><text x="54" y="822.6000000000005" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005066 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="836.8000000000005" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="836.8000000000005" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="840.8000000000005" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001831 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="855.0000000000006" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="855.0000000000006" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="859.0000000000006" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001833 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="873.2000000000006" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="873.2000000000006" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="877.2000000000006" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001838 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="891.4000000000007" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="891.4000000000007" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="895.4000000000007" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014716 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="909.6000000000007" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="909.6000000000007" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="913.6000000000007" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005097 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="927.8000000000008" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="927.8000000000008" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="931.8000000000008" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H4210005109 <tspan fill="#888" font-size="9">·h421·h?</tspan></text><line x1="130" y1="108" x2="50" y2="946.0000000000008" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="946.0000000000008" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="950.0000000000008" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001834 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="964.2000000000008" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="964.2000000000008" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="968.2000000000008" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014722 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="982.4000000000009" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="982.4000000000009" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="986.4000000000009" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014724 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="1000.6000000000009" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="1000.6000000000009" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="1004.6000000000009" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H3440014731 <tspan fill="#888" font-size="9">·node·h?</tspan></text><line x1="130" y1="108" x2="50" y2="1018.800000000001" stroke="#5b8c5a" stroke-width="0.8" opacity="0.5"/><circle cx="45" cy="1018.800000000001" r="3.5" fill="#5b8c5a" opacity="0.95"/><text x="54" y="1022.800000000001" font-family="-apple-system,ui-monospace,monospace" font-size="10" fill="#222">H8100001788 <tspan fill="#888" font-size="9">·node·h?</tspan></text><text x="54" y="1041.000000000001" font-family="-apple-system,sans-serif" font-size="10" fill="#666" font-style="italic">… and 6 more</text></svg></div>
   <div class="map-caption">Each column is one gateway. Box color = sink's 13-child saturation. Edge color = child's RSSI tier. Devices listed in hop / signal order; capped at 50 per gateway for legibility.</div>
 </section>
 
 <section>
   <h2>Telemetry map <span class="small">logical layout — AROYA exposes no spatial coordinates for these devices</span></h2>
-  <div class="map-wrap"><svg viewBox="0 0 960 640" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid #e5e7eb;border-radius:12px" aria-label="Telemetry map — logical mesh layout (AROYA does not expose physical device coordinates for this facility)"><g font-family="-apple-system, ui-sans-serif, sans-serif"><text x="14" y="22" font-weight="700" font-size="14" fill="#222">Telemetry map · logical mesh layout</text><text x="14" y="40" font-size="11" fill="#777">AROYA does not expose physical device coordinates (lat/lng/what3words = null on all devices); positions inferred from mesh parent→child graph + hop depth.</text></g><circle cx="480.0" cy="320.0" r="160" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="240" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="320" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="400" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><text x="642.0" y="324.0" font-size="9" fill="#aaa">hop-1</text><text x="722.0" y="324.0" font-size="9" fill="#aaa">hop-2</text><text x="802.0" y="324.0" font-size="9" fill="#aaa">hop-3+</text><circle cx="480.0" cy="230.0" r="11" fill="#c97e00" stroke="#fff" stroke-width="2"/><text x="480.0" y="214.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2110001181</text><text x="480.0" y="234.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">11</text></svg></div>
+  <div class="map-wrap"><svg viewBox="0 0 960 640" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid #e5e7eb;border-radius:12px" aria-label="Telemetry map — logical mesh layout (AROYA does not expose physical device coordinates for this facility)"><g font-family="-apple-system, ui-sans-serif, sans-serif"><text x="14" y="22" font-weight="700" font-size="14" fill="#222">Telemetry map · logical mesh layout</text><text x="14" y="40" font-size="11" fill="#777">AROYA does not expose physical device coordinates (lat/lng/what3words = null on all devices); positions inferred from mesh parent→child graph + hop depth.</text></g><circle cx="480.0" cy="320.0" r="160" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="240" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="320" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><circle cx="480.0" cy="320.0" r="400" fill="none" stroke="#ddd" stroke-dasharray="2 4" stroke-width="0.7"/><text x="642.0" y="324.0" font-size="9" fill="#aaa">hop-1</text><text x="722.0" y="324.0" font-size="9" fill="#aaa">hop-2</text><text x="802.0" y="324.0" font-size="9" fill="#aaa">hop-3+</text><circle cx="480.0" cy="230.0" r="11" fill="#3a6a8a" stroke="#fff" stroke-width="2"/><text x="480.0" y="214.0" text-anchor="middle" font-size="11" font-weight="700" fill="#222" font-family="-apple-system,sans-serif">H2110001181</text><text x="480.0" y="234.0" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">7</text></svg></div>
   <div class="map-caption">
     Hub-and-spoke layout per gateway, hop depth shown as concentric contours, node color = RSSI tier
     (green ≥ −75 dBm · amber −75 to −85 · red &lt; −85). Halo opacity shows weak-coverage envelope.
@@ -263,7 +269,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           <h4 class="rec-title">Restore 2 offline devices on gateway H2110001181</h4>
           <div class="rec-row"><b>Finding</b><div>2 devices route through gateway H2110001181 but are currently offline / stale (&gt;24h since last comm).</div></div>
           <div class="rec-row"><b>Action</b><div>Physical check: verify gateway is online and antenna seated; swap battery on Node devices; for non-Node PoE devices verify power + Ethernet. List: H4210005066 (h421), H4210005537 (h421)</div></div>
-          <div class="rec-row"><b>Expected outcome</b><div class="exp">After swap / power-restore: 2 devices return to online state within 5–15 min of physical fix; fleet online-rate climbs by 2 pp.</div></div>
+          <div class="rec-row"><b>Expected outcome</b><div class="exp">After swap / power-restore: 2 devices return to online state within 5–15 min of physical fix; fleet online-rate climbs by 4 pp.</div></div>
           <details class="rec-targets"><summary>Affected devices (2)</summary><ul><li>H4210005066 · h421 · room 18758</li><li>H4210005537 · h421 · room 18758</li></ul></details>
         </div>
 <div class="rec rec-p2">
@@ -273,21 +279,9 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
             <span class="rec-meta">Impact: <b>High</b> · Effort: <b>High</b></span>
           </div>
           <h4 class="rec-title">Add a second gateway for redundancy</h4>
-          <div class="rec-row"><b>Finding</b><div>Facility has only 1 gateway serving 92 devices. Single point of failure: a gateway outage cascades to fleet-wide blackout.</div></div>
+          <div class="rec-row"><b>Finding</b><div>Facility has only 1 gateway serving 56 devices. Single point of failure: a gateway outage cascades to fleet-wide blackout.</div></div>
           <div class="rec-row"><b>Action</b><div>Procure and deploy a second AROYA gateway in the geometric centroid of the device population, ideally serving a different VLAN / uplink for true diversity. Provision and wait for natural rebalance.</div></div>
-          <div class="rec-row"><b>Expected outcome</b><div class="exp">Mesh self-rebalances within 12-24h — each gateway settles to ~46 devices, hop depth drops by 1, single-gateway outage no longer fleet-fatal.</div></div>
-          
-        </div>
-<div class="rec rec-p3">
-          <div class="rec-head">
-            <span class="pill prio" style="background:#6e8c4a;color:#fff;border-color:#6e8c4a">P3</span>
-            <span class="rec-cat">PROCESS</span>
-            <span class="rec-meta">Impact: <b>Medium</b> · Effort: <b>Low</b></span>
-          </div>
-          <h4 class="rec-title">Set up an early-warning alert for parent saturation ≥ 11 children</h4>
-          <div class="rec-row"><b>Finding</b><div>Several parents are at or above 11 children — the &#x27;watch&#x27; threshold. Without a monitor, the next added device may silently push a parent over 13.</div></div>
-          <div class="rec-row"><b>Action</b><div>Configure an AROYA computed alert that fires when any device parent count ≥ 11. Add to the facility&#x27;s standard alert pack; review in the weekly device-health digest.</div></div>
-          <div class="rec-row"><b>Expected outcome</b><div class="exp">Preemptive intervention before saturation creates measurable gap-rate degradation. Catches new-device adds that would over-subscribe.</div></div>
+          <div class="rec-row"><b>Expected outcome</b><div class="exp">Mesh self-rebalances within 12-24h — each gateway settles to ~28 devices, hop depth drops by 1, single-gateway outage no longer fleet-fatal.</div></div>
           
         </div>
 <div class="rec rec-p3">
@@ -321,12 +315,6 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 <li>
           <span class="seq">03</span>
           <span class="pill prio" style="background:#6e8c4a;color:#fff;border-color:#6e8c4a">P3</span>
-          <span class="plan-title">Set up an early-warning alert for parent saturation ≥ 11 children</span>
-          <span class="plan-tags">Impact: <b>Medium</b> · Effort: <b>Low</b></span>
-        </li>
-<li>
-          <span class="seq">04</span>
-          <span class="pill prio" style="background:#6e8c4a;color:#fff;border-color:#6e8c4a">P3</span>
           <span class="plan-title">Document as-built mesh topology in customer wiki</span>
           <span class="plan-tags">Impact: <b>Low</b> · Effort: <b>Low</b></span>
         </li></ol>
@@ -335,7 +323,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 <section>
   <h2>Per-room device tables</h2>
   <details class="room-block" >
-          <summary><b>Room 1 (21 LED)</b> · 6 devices · 6 online · 0 crit · 0 warn</summary>
+          <summary><b>Room 1 (21 LED)</b> · 4 devices · 4 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
@@ -350,18 +338,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014716</td>
-              <td>node</td>
-              <td>●</td>
-              <td>88</td>
-              <td>5</td>
-              <td>100</td>
-              <td>—</td>
-              <td>199651</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014716-2</td>
+              <td>H3440014716 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>88</td>
@@ -383,18 +360,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001785</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>98</td>
-              <td>—</td>
-              <td>198078</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001785-2</td>
+              <td>H8100001785 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -408,11 +374,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Room 10(27 lights)</b> · 7 devices · 7 online · 0 crit · 0 warn</summary>
+          <summary><b>Room 10(27 lights)</b> · 4 devices · 4 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014720</td>
+              <td>H3440014720 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -423,29 +389,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014720-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>2</td>
-              <td>100</td>
-              <td>—</td>
-              <td>199657</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014727</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>76</td>
-              <td>—</td>
-              <td>199649</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014727-2</td>
+              <td>H3440014727 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -467,18 +411,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001821</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>2</td>
-              <td>100</td>
-              <td>—</td>
-              <td>205704</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001821-2</td>
+              <td>H8100001821 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -492,11 +425,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Room 11(31 lights)</b> · 7 devices · 7 online · 0 crit · 0 warn</summary>
+          <summary><b>Room 11(31 lights)</b> · 4 devices · 4 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014717</td>
+              <td>H3440014717 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -507,29 +440,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014717-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201009</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014722</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>199737</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014722-2</td>
+              <td>H3440014722 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -551,18 +462,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001837</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>2</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201005</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001837-2</td>
+              <td>H8100001837 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -576,7 +476,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Room 2 (99 LED)</b> · 10 devices · 10 online · 0 crit · 0 warn</summary>
+          <summary><b>Room 2 (99 LED)</b> · 7 devices · 7 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
@@ -591,7 +491,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014721</td>
+              <td>H3440014721 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -602,29 +502,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014721-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>95</td>
-              <td>—</td>
-              <td>198078</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014724</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>200999</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014724-2</td>
+              <td>H3440014724 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -668,18 +546,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001831</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>4</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201007</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001831-2</td>
+              <td>H8100001831 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -693,7 +560,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Room 3 (42 LED)</b> · 8 devices · 8 online · 0 crit · 0 warn</summary>
+          <summary><b>Room 3 (42 LED)</b> · 5 devices · 5 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
@@ -708,7 +575,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014726</td>
+              <td>H3440014726 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -719,29 +586,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014726-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>100</td>
-              <td>—</td>
-              <td>205704</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014729</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>3</td>
-              <td>100</td>
-              <td>—</td>
-              <td>196774</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014729-2</td>
+              <td>H3440014729 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -763,18 +608,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001823</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>3</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201005</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001823-2</td>
+              <td>H8100001823 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -788,22 +622,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Room 4(16 lights)</b> · 5 devices · 5 online · 0 crit · 0 warn</summary>
+          <summary><b>Room 4(16 lights)</b> · 3 devices · 3 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014719</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>83</td>
-              <td>—</td>
-              <td>198078</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014719-2</td>
+              <td>H3440014719 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -825,18 +648,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001788</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201009</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001788-2</td>
+              <td>H8100001788 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -850,22 +662,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Room 5(24 lights)</b> · 5 devices · 5 online · 0 crit · 0 warn</summary>
+          <summary><b>Room 5(24 lights)</b> · 3 devices · 3 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014640</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201009</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014640-2</td>
+              <td>H3440014640 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -887,18 +688,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001834</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>6</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201001</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001834-2</td>
+              <td>H8100001834 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -912,7 +702,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" open>
-          <summary><b>Room 6(75 lights)</b> · 9 devices · 7 online · 2 crit · 0 warn</summary>
+          <summary><b>Room 6(75 lights)</b> · 6 devices · 4 online · 2 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-crit">
@@ -949,7 +739,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014715</td>
+              <td>H3440014715 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -960,18 +750,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014715-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>100</td>
-              <td>—</td>
-              <td>191514</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014731</td>
+              <td>H3440014731 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -982,29 +761,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014731-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>196774</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001832</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>2</td>
-              <td>100</td>
-              <td>—</td>
-              <td>199534</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001832-2</td>
+              <td>H8100001832 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1018,7 +775,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Room 8(49 lights)</b> · 9 devices · 9 online · 0 crit · 0 warn</summary>
+          <summary><b>Room 8(49 lights)</b> · 6 devices · 6 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
@@ -1033,7 +790,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014725</td>
+              <td>H3440014725 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1044,29 +801,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014725-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201007</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014728</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>3</td>
-              <td>100</td>
-              <td>—</td>
-              <td>191514</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014728-2</td>
+              <td>H3440014728 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1099,18 +834,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#6e8c4a1a;color:#6e8c4a;border-color:#6e8c4a55">INFO</span></td>
               <td class="flags">link-marginal</td>
             </tr><tr class="sev-ok">
-              <td>H8100001833</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>4</td>
-              <td>100</td>
-              <td>—</td>
-              <td>201003</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001833-2</td>
+              <td>H8100001833 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1124,11 +848,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Room 9(27 lights)</b> · 7 devices · 7 online · 0 crit · 0 warn</summary>
+          <summary><b>Room 9(27 lights)</b> · 4 devices · 4 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014723</td>
+              <td>H3440014723 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1139,29 +863,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014723-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>2</td>
-              <td>100</td>
-              <td>—</td>
-              <td>199657</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014730</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>2</td>
-              <td>100</td>
-              <td>—</td>
-              <td>199655</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014730-2</td>
+              <td>H3440014730 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1183,18 +885,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001838</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>4</td>
-              <td>100</td>
-              <td>—</td>
-              <td>199649</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001838-2</td>
+              <td>H8100001838 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1208,11 +899,11 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>veg room</b> · 5 devices · 5 online · 0 crit · 0 warn</summary>
+          <summary><b>veg room</b> · 3 devices · 3 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
-              <td>H3440014641</td>
+              <td>H3440014641 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1223,29 +914,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H3440014641-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>2</td>
-              <td>100</td>
-              <td>—</td>
-              <td>199649</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014718</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>2</td>
-              <td>100</td>
-              <td>—</td>
-              <td>199655</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H3440014718-2</td>
+              <td>H3440014718 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1270,7 +939,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
           </table></div>
         </details>
 <details class="room-block" >
-          <summary><b>Unassigned / infrastructure (15 devices)</b> · 15 devices · 15 online · 0 crit · 0 warn</summary>
+          <summary><b>Unassigned / infrastructure (8 devices)</b> · 8 devices · 8 online · 0 crit · 0 warn</summary>
           <div class="table-wrap"><table class="dev-tbl">
             <thead><tr><th>Serial</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ</th><th>Hop</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
             <tbody><tr class="sev-ok">
@@ -1285,7 +954,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001814</td>
+              <td>H8100001814 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1296,7 +965,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001814-2</td>
+              <td>H8100001819 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1307,7 +976,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001819</td>
+              <td>H8100001827 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1318,40 +987,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001819-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>200285</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001827</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>200285</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001827-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>200285</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001830</td>
+              <td>H8100001830 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1362,18 +998,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001830-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>1</td>
-              <td>84</td>
-              <td>—</td>
-              <td>198078</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001835</td>
+              <td>H8100001835 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1384,7 +1009,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001835-2</td>
+              <td>H8100001836 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
@@ -1395,40 +1020,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
               <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
               <td class="flags">healthy</td>
             </tr><tr class="sev-ok">
-              <td>H8100001836</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>200285</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001836-2</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>200285</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001839</td>
-              <td>node</td>
-              <td>●</td>
-              <td>100</td>
-              <td>8</td>
-              <td>100</td>
-              <td>—</td>
-              <td>200285</td>
-              <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
-              <td class="flags">healthy</td>
-            </tr><tr class="sev-ok">
-              <td>H8100001839-2</td>
+              <td>H8100001839 <span class="muted" style="font-size:9px">(2-head)</span></td>
               <td>node</td>
               <td>●</td>
               <td>100</td>
