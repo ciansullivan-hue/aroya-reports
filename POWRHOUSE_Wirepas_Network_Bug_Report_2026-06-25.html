@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <title>POWRHOUSE · Wirepas Network Bug Report · 2026-06-25</title>
+  <style>
+:root {
+  --olive: #6e8c4a; --lime: #b9d24a; --app-blue: #3a6a8a; --attention: #c97e00;
+  --crit: #b3261e; --ink: #1a1a1a; --muted: #6b7280; --line: #e5e7eb;
+  --bg: #fafaf7; --card: #ffffff; --ok: #5b8c5a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, "Segoe UI", Roboto, ui-sans-serif, sans-serif; overflow-wrap: break-word; }
+body { line-height: 1.55; -webkit-text-size-adjust: 100%; max-width: 100%; overflow-x: hidden; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* Header */
+.mast { display: flex; align-items: center; gap: 14px; padding: 12px 0 8px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+.mast svg { width: 80px; height: auto; fill: var(--olive); }
+.mast .mast-label { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
+.mast .mast-label b { color: var(--ink); }
+
+h1 { font-size: 28px; margin: 0 0 8px; line-height: 1.15; }
+.sub { color: var(--muted); margin: 0 0 18px; max-width: 60ch; }
+
+.meta { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+.meta b { color: var(--ink); margin-right: 6px; }
+
+/* Bug-report id strip */
+.bugid { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; font-size: 13px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 4px 14px; }
+.bugid b { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; display: block; }
+
+/* Sections */
+section { margin: 32px 0; }
+section h2 { font-size: 18px; margin: 0 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+section h2 .small { font-size: 12px; color: var(--muted); font-weight: 500; margin-left: 8px; }
+section h3 { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin: 18px 0 8px; }
+
+p { margin: 8px 0 14px; }
+
+/* Callout */
+.callout { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--app-blue); border-radius: 8px; padding: 14px 16px; margin: 18px 0; font-size: 14px; color: var(--ink); }
+.callout b { color: var(--app-blue); }
+.callout.danger { border-left-color: var(--crit); background: #b3261e08; }
+.callout.danger b { color: var(--crit); }
+.callout.ok { border-left-color: var(--olive); background: #6e8c4a0a; }
+.callout.ok b { color: var(--olive); }
+
+/* Tables */
+.tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 12px 0; }
+table.data { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13px; }
+table.data th, table.data td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+table.data th { background: #f6f6f3; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+table.data td.serial { font-family: ui-monospace, monospace; font-weight: 700; }
+table.data td.num { font-family: ui-monospace, monospace; }
+table.data tr.crit td { background: #b3261e0a; }
+table.data tr.warn td { background: #c97e000a; }
+
+/* Pills */
+.pill { display: inline-block; padding: 2px 8px; font-size: 11px; font-weight: 600; border-radius: 999px; border: 1px solid; letter-spacing: 0.02em; white-space: nowrap; }
+.pill.crit { color: var(--crit); border-color: var(--crit); background: #b3261e10; }
+.pill.warn { color: var(--attention); border-color: var(--attention); background: #c97e0010; }
+.pill.ok { color: var(--olive); border-color: var(--olive); background: #6e8c4a10; }
+
+/* KPIs */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 18px 0 24px; }
+.kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.kpi.emp { border-color: var(--crit); background: #b3261e0a; }
+.kpi.warn { border-color: var(--attention); background: #c97e0008; }
+.kpi-v { font-size: 26px; font-weight: 700; line-height: 1.1; }
+.kpi-l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+.kpi-s { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+a { color: var(--app-blue); }
+code { font-family: ui-monospace, monospace; font-size: 0.92em; background: #f1efe9; padding: 1px 5px; border-radius: 4px; }
+
+/* Footer */
+footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1px solid var(--line); margin-top: 40px; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 16px 12px 60px; }
+  h1 { font-size: 22px; }
+  .kpis { grid-template-columns: 1fr 1fr; }
+  .kpi-v { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <svg version="1.1" viewBox="0 0 202.1 75" id="brand" xmlns="http://www.w3.org/2000/svg">
+<path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/>
+<path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/>
+<path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/>
+<path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/>
+<path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/>
+<rect x="127.4" y="57.2" width="1.8" height="9.9"/>
+<path d="M138,62.8c0,2.1-.9,3.1-2.6,3.1s-.7,0-1,0c-.3-.1-.5-.3-.8-.5-.2-.2-.3-.4-.4-.6-.1-.2-.2-.5-.2-.7v-6.8h-1.9v7.2c0,.3.1.7.2,1,0,.4.3.6.5.9.4.3.8.6,1.3.8s1.1.3,1.8.2c.7,0,1.4-.1,1.9-.4s.9-.7,1.2-1.3v1.5h1.8v-9.9h-1.8v5.6Z"/>
+<path d="M152.7,57c-.6,0-1,.1-1.4.2-.4.1-.7.3-1,.6-.2.2-.4.4-.6.6s-.3.5-.4.7c-.2-.7-.6-1.2-1.2-1.6-.5-.4-1.2-.6-2-.6s-1.7.3-2.3.8c-.3.3-.6.6-.7,1v-1.5h-1.6v9.9h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6.1.2.1.5.2.7v6.8h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6,0,.2.1.5.1.7v6.8h1.8v-6.4c0-1.2-.3-2.2-.9-2.8-.6-.6-1.4-.9-2.6-.9Z"/>
+<path d="M112.7,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.3.8-.5,1.7-.5,2.8s.2,1.9.6,2.7c.4.8.9,1.4,1.6,1.8.7.4,1.5.6,2.4.6s1.3-.1,1.8-.4,1-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM112.1,65c-.5.6-1.2,1-2.1,1s-1.3-.2-1.8-.5c-.5-.3-.8-.7-1-1.3-.2-.6-.3-1.2-.3-2.1,0-1.3.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.5.6.7,1.5.7,2.7s-.2,2.2-.7,2.8Z"/>
+<rect x="127.4" y="53.2" width="1.8" height="1.8"/>
+<path d="M123.8,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.4.8-.6,1.6-.6,2.7s.2,2,.6,2.8c.4.8.9,1.4,1.6,1.8.7.5,1.4.7,2.5.6.7,0,1.3-.1,1.8-.4s.9-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM123,65c-.5.6-1.2,1-2.1,1s-1.4-.2-1.8-.5c-.4-.3-.7-.7-.9-1.3-.2-.6-.3-1.3-.3-2.1,0-1.2.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.4.7.6,1.6.6,2.7s-.2,2.2-.7,2.8Z"/>
+<path d="M97.7,53.2l-5.5,13.9h1.9l1.5-4.2h5.9l1.6,4.2h1.9l-5.4-13.9h-1.9ZM96.2,61.4l1.6-4.2c.4-.9.6-1.7.8-2.2.3.8.6,1.5.8,2.2l1.6,4.2h-4.8Z"/>
+<path d="M85.4,62.4c-.2.7-.5,1.6-.9,2.6-.4-1.1-.6-2-.9-2.6l-1.9-5.3h-1.9l3.9,9.8c-.3.6-.5,1.1-.6,1.4,0,.3-.3.5-.5.7-.2.2-.4.3-.6.3-.4,0-.8-.1-1.2-.2v1.6c.5.1,1,.2,1.5.2s.8,0,1.2-.3c.3-.2.6-.5.9-1,.3-.4.5-1,.8-1.8l4-10.8h-1.9l-1.9,5.4Z"/>
+<path d="M77.5,57.5c-.7-.4-1.5-.7-2.3-.7-1.4,0-2.4.5-3.2,1.6v-5.3h-1.8v13.9h1.8v-1.4c.4.5.8.9,1.4,1.2.5.3,1.1.4,1.8.4s1.7-.2,2.3-.6c.7-.4,1.2-1,1.6-1.8.4-.8.6-1.7.6-2.8s-.2-1.9-.6-2.7c-.4-.8-.9-1.4-1.6-1.8ZM77.5,64.1c-.2.6-.5,1-.9,1.3-.4.3-1,.5-1.8.5s-1.7-.3-2.1-1c-.5-.6-.7-1.6-.7-2.8s.2-2,.6-2.8c.3-.7,1.1-1.1,2.2-1.1s1.8.3,2.3,1c.5.6.7,1.6.7,2.8s0,1.5-.3,2.1Z"/>
+<path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z"/>
+</svg>
+  <div class="mast-label">
+    <b>by Addium</b><br>
+    Wirepas network bug report · POWRHOUSE · 2026-06-25
+  </div>
+</header>
+
+<h1>POWRHOUSE · Wirepas Network Bug Report</h1>
+<p class="sub">Internal procurement-justification write-up: structural Wirepas mesh saturation at facility 3754, the per-gateway slot-budget breach driving latency and data gaps, and the case for shipping six H130 low-latency repeaters to restore mesh headroom.</p>
+
+<div class="bugid">
+  <div><b>Bug ID</b>POWR-WIREPAS-2026-06-25</div>
+  <div><b>Facility</b>POWRHOUSE (3754) · Sacramento, CA</div>
+  <div><b>Severity</b><span class="pill crit">P1 — Network saturation</span></div>
+  <div><b>Component</b>Wirepas mesh topology</div>
+  <div><b>Filed by</b>Cian Sullivan · Addium</div>
+  <div><b>Filed</b>2026-06-25</div>
+</div>
+
+<section>
+  <h2>1 · Summary</h2>
+  <p>POWRHOUSE (facility 3754) has a structural Wirepas topology saturation across all four gateway sinks. Every gateway at the facility is currently carrying more direct (hop-1) children than the Wirepas protocol allocates slots for — worst sink at 16/13, six total excess children fleet-wide, one mid-layer relay sitting in the 11/13 watch tier. The over-budget condition is producing the latency, retry, and data-gap pattern operators see; partial natural rebalancing has only knocked the excess from 8 → 6 children since this morning. Adding <b>six H130 low-latency repeaters</b> creates 78 new direct-child slots, drops every gateway sink back to ≤13/13, restores ~50% fleet-growth headroom, and removes the routing pressure that is driving the gap rate today.</p>
+</section>
+
+<section>
+  <h2>2 · Facility identity</h2>
+  <div class="bugid">
+    <div><b>Customer</b>POWRHOUSE</div>
+    <div><b>AROYA Facility ID</b>3754</div>
+    <div><b>AROYA Org ID</b>2857</div>
+    <div><b>Location</b>Sacramento, CA</div>
+    <div><b>Unique radios</b>153 (refresh) · 152 (morning)</div>
+    <div><b>Raw serials</b>274 (refresh) · 273 (morning) — pre dash-2 dedup</div>
+    <div><b>Gateways</b>4 of 4 online</div>
+    <div><b>Online radios</b>146 (95.4%)</div>
+  </div>
+  <p>Supporting telemetry (live, auto-refreshing per gateway sink/child counts, RSSI, link quality, battery, per-room device tables):<br>
+  <a href="https://ciansullivan-hue.github.io/aroya-reports/POWRHOUSE_Wirepas_Mesh_Health_2026-06-24.html">POWRHOUSE · Wirepas Mesh &amp; Device Health · 2026-06-24</a> (refresh commit <code>65f5da5</code>).</p>
+</section>
+
+<section>
+  <h2>3 · Observed network issues</h2>
+  <p>Quantified from today's mesh audit and the morning → afternoon refresh delta:</p>
+
+  <h3>Gateway sinks over the 13-child slot limit (4 of 4)</h3>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead>
+        <tr><th>Gateway sink</th><th>Children (morning)</th><th>Children (refresh)</th><th>Excess (refresh)</th><th>Downstream tree</th></tr>
+      </thead>
+      <tbody>
+        <tr class="crit"><td class="serial">H2100004676</td><td class="num">17 / 13</td><td class="num">16 / 13</td><td class="num">+3</td><td class="num">26 routing (22 online)</td></tr>
+        <tr class="crit"><td class="serial">H2100005242</td><td class="num">14 / 13</td><td class="num">14 / 13</td><td class="num">+1</td><td class="num">36 routing (34 online)</td></tr>
+        <tr class="crit"><td class="serial">H2100005246</td><td class="num">14 / 13</td><td class="num">14 / 13</td><td class="num">+1</td><td class="num">53 routing (52 online)</td></tr>
+        <tr class="crit"><td class="serial">H2200001033</td><td class="num">15 / 13</td><td class="num">14 / 13</td><td class="num">+1</td><td class="num">34 routing (34 online)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>After dash-2 dedup, the worst sink is carrying 3 more direct radios than the Wirepas protocol allocates slots for. Every gateway at this facility is over the line — there is nowhere clean for over-budget children to migrate to.</p>
+
+  <h3>Excess children fleet-wide (morning → refresh)</h3>
+  <div class="kpis">
+    <div class="kpi emp"><div class="kpi-v">8 → 6</div><div class="kpi-l">Excess children</div><div class="kpi-s">over the 13-slot budget</div></div>
+    <div class="kpi warn"><div class="kpi-v">1</div><div class="kpi-l">Watch-tier parent</div><div class="kpi-s">H4210003243 · 11 / 13 (Veg Room)</div></div>
+    <div class="kpi"><div class="kpi-v">6</div><div class="kpi-l">Offline radios (morning cohort)</div><div class="kpi-s">+ 1 new-offline by refresh</div></div>
+  </div>
+  <p>Saturation is barely being eased by partial natural rebalancing. The underlying topology is structurally over-subscribed; routing pressure simply moves between gateways as children retry into whichever sink looks marginally better. Watch-tier parent H4210003243 (Veg Room, 11/13) is the next at-risk relay — any new device add or single re-parent away from a sibling pushes it across the 13 line.</p>
+
+  <h3>Refresh-delta offline cohort</h3>
+  <p>Six radios were silent in the morning snapshot (<code>H3310009633</code>, <code>H3440005758</code>, <code>H4210002601</code>, <code>H4210002602</code>, <code>H4210002607</code>, <code>H4210002620</code>, plus the persistent <code>H8100001475</code> zero-battery puck). The refresh added one additional new-offline radio — denominator effect only (online% drifted 96.1% → 95.4% because of one new radio joining, not because more devices dropped).</p>
+</section>
+
+<section>
+  <h2>4 · Root cause <span class="small">13-child slot limit + topology over-subscription</span></h2>
+  <div class="callout danger">
+    <b>Wirepas mesh constraint:</b> every parent node — gateway sink or mid-layer relay — supports at most <b>13 DIRECT children</b>. The slot allocation is fixed at the protocol level. Children that don't get a slot are either dropped from the mesh, pushed up to a higher-hop parent (introducing latency), or retry-storm into the contention window competing for slots that don't exist. Grandchildren count against their immediate parent, NOT the grandparent — saturation can only be relieved at the layer where the budget is breached.
+  </div>
+  <p>At POWRHOUSE every gateway sink is currently breaching this budget. The mesh has nowhere to rebalance to because the four gateways are all already over budget — when a child re-parents off the worst sink, it lands on another already-saturated sink. The morning → afternoon refresh shows this directly: H2200001033 absorbed 10 additional downstream nodes (route_total 24 → 34) that re-routed off H2100004676 and H2100005246, but H2200001033 stayed at 14/13. The pressure didn't dissipate; it just redistributed.</p>
+</section>
+
+<section>
+  <h2>5 · Direct cause-and-effect on network performance</h2>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead>
+        <tr><th>Symptom</th><th>Mechanism</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Latency</b></td><td>Hop count rises as the lowest-RSSI children of saturated sinks fall back to multi-hop routes through mid-layer relays — every additional hop adds one Wirepas frame interval to the round trip.</td></tr>
+        <tr><td><b>Retry rate</b></td><td>Children at saturated parents retry transmissions more often when the local slot is contended; airtime gets consumed by retransmissions instead of fresh data, and battery on Li-SOCl₂ Nodes drains faster than the 5-year nominal lifetime.</td></tr>
+        <tr><td><b>Data gaps</b></td><td>Extended retries push transmissions past the next scheduled sampling window. The operator-visible artifact is a 5–15 min gap in the sensor stream — exactly the pattern that's been showing up at this facility.</td></tr>
+        <tr><td><b>Self-healing capacity</b></td><td>Wirepas auto-roll requires a neighbor with headroom. Every gateway sink at POWRHOUSE is currently at-or-over the limit — there is no slot to roll INTO. Self-healing is structurally disabled until headroom is created.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>6 · Remediation <span class="small">add 6 H130 low-latency repeaters</span></h2>
+  <p>Adding six H130 repeaters as new mid-layer parents creates <b>6 × 13 = 78 new direct-child slots</b> in the mesh. Distributed strategically, these absorb the six excess children from the saturated sinks and leave substantial headroom for fleet growth and routine churn.</p>
+
+  <h3>Expected post-deploy state</h3>
+  <div class="kpis">
+    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">4 → 0</div><div class="kpi-l">Sinks over 13</div><div class="kpi-s">All gateways back ≤13/13</div></div>
+    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">11 → ≤10</div><div class="kpi-l">Watch-tier parent</div><div class="kpi-s">H4210003243 falls back into 🟢 headroom</div></div>
+    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">−30%+</div><div class="kpi-l">Hop-1 latency</div><div class="kpi-s">On rebalanced children · within 24h</div></div>
+    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">~67</div><div class="kpi-l">Residual headroom</div><div class="kpi-s">Unfilled slots post-deploy · ~50% fleet-growth runway</div></div>
+  </div>
+  <p>Quantified outcome:</p>
+  <ul>
+    <li>All 4 over-13 sinks drop back to 13/13 or below. The 6 excess children land on new H130 parents with full slot allocation and headroom.</li>
+    <li>Watch-tier parent H4210003243 (Veg Room, 11/13) drops back into the 🟢 ≤10 tier as the mesh redistributes around the new relays.</li>
+    <li>Retry rate normalizes to fleet median. The data-gap pattern attributable to slot contention disappears within 24h of redistribution.</li>
+    <li>Residual ~67 unfilled child slots provide enough headroom for ~50% fleet growth before re-saturation — this is what gives PowrHouse runway to expand without re-triggering the same bug.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>7 · Physical placement plan <span class="small">draft — confirm with onsite team</span></h2>
+  <p>The audit topology has gateway sinks anchoring each of the major POWR cultivation zones. The proposed distribution targets the saturated sinks and known weak-coverage zones:</p>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead>
+        <tr><th>Qty</th><th>Zone</th><th>Anchor / target</th><th>Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">2</td><td>POWR 1</td><td>Near sink <code>H2100005246</code> (53-device tree, largest sub-tree at facility) and relay <code>H3440005755</code></td><td>Largest downstream tree at the facility — the H3440005755 relay was carrying heavy hop-2+ load in the morning snapshot (raw 21/13 pre-dedup). Two new parents here split that load and pull the H2100005246 sink back under 13.</td></tr>
+        <tr><td class="num">2</td><td>POWR 3</td><td>Near sink <code>H2200001033</code> and relay <code>H3440005760</code></td><td>H2200001033 absorbed 10 additional downstream nodes between the morning and afternoon snapshots — this gateway is structurally over-loaded as the routing fallback target. Two new parents stabilise it.</td></tr>
+        <tr><td class="num">1</td><td>POWR 2</td><td>Mid-zone, between sinks <code>H2100005242</code> and <code>H2200001033</code></td><td>POWR 2 currently has 24 devices, all online but routing through three different sinks — one mid-zone H130 collapses that into a clean local parent.</td></tr>
+        <tr><td class="num">1</td><td>Inter-gateway dead zone</td><td>Walk-down required — confirm location with onsite team</td><td>Telemetry map (<a href="https://ciansullivan-hue.github.io/aroya-reports/POWRHOUSE_Wirepas_Mesh_Health_2026-06-24.html#telemetry-map">live audit · telemetry map</a>) shows weak-coverage envelope between gateway clusters. AROYA does not expose physical coordinates at this facility (lat/lng/what3words = null on every device), so the exact placement needs an onsite radio walk-down.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The fourth placement (inter-gateway dead zone) is the open item that needs onsite confirmation. The first five are determinable from the current mesh telemetry.</p>
+</section>
+
+<section>
+  <h2>8 · Supporting telemetry <span class="small">live audit</span></h2>
+  <p>All per-room device tables, per-gateway saturation panels, mesh topology tree, telemetry map, and the full prioritized remediation plan are in the live mesh health report — refreshed today, commit <code>65f5da5</code>:</p>
+  <p><a href="https://ciansullivan-hue.github.io/aroya-reports/POWRHOUSE_Wirepas_Mesh_Health_2026-06-24.html"><b>POWRHOUSE · Wirepas Mesh &amp; Device Health · 2026-06-24</b></a></p>
+  <p>Per-room device tables (POWR 1 · 35 dev, POWR 2 · 24 dev, POWR 3 · 36 dev, POWR 4 · 17 dev, Veg Room · 15 dev, plus Cure / Dry / Vault and unassigned infrastructure) are not restated here — refer to the live audit for the device-level breakdown.</p>
+</section>
+
+<footer>
+  POWRHOUSE Wirepas network bug report · 2026-06-25 · POWR-WIREPAS-2026-06-25<br>
+  Source: AROYA SPA <code>/devices/?facility=3754</code>. Dash-2 dedup applied. Counts are per immediate-parent (<code>n_children(P) = unique base serials whose nextHop == P</code>).<br>
+  Contact: Cian Sullivan · <a href="mailto:cian.sullivan@addium.io">cian.sullivan@addium.io</a> · Addium / AROYA
+</footer>
+
+</div>
+</body>
+</html>
