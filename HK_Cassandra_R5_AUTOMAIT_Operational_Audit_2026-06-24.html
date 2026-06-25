@@ -48,7 +48,10 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 </header>
 <div class="kicker">AROYA &middot; R5 AUTOMAIT Operational Audit + Predictive Forecast</div>
 <h1>HK Cassandra LLC &middot; R5 Blue Nerdz (COCO 1.5gal) &middot; AUTOMAIT operational audit + 5-day forecast</h1>
-<p class="lede">AUTOMAIT controller <code>3012</code> is wired on Room 5 as of 2026-06-24. This audit covers the 14d cultivation context (2026-06-11 -&gt; 2026-06-25, hourly bins), the installed AUTOMAIT configuration, the sensor-swap diagnostic on the room&#39;s drip/drain EC probes, and a 5-day predictive forecast across ASI scenarios for the room.</p>
+<p class="lede">AUTOMAIT controller <code>3012</code> is live on Room 5 as of 2026-06-25 18:20Z, running schedule id <code>44198</code> on <strong>Zone 2 only</strong>. This audit covers the 14d cultivation context (2026-06-11 -&gt; 2026-06-25, hourly bins), the installed AUTOMAIT configuration pulled live from <code>api.aroya.io</code>, the sensor-swap diagnostic on the room&#39;s drip/drain EC probes, and a 5-day predictive forecast derived from the installed VEG 10 baseline.</p>
+<div class="banner warn">
+  <strong>Scope: AUTOMAIT runs on Zone 2 only (385 of 770 sq ft).</strong> Schedule 44198 targets zone id <code>81612</code> (Zone 2). Zone 1 (id <code>76459</code>, 385 sq ft) remains on manual irrigation &mdash; controller port 7 fires under operator control, port 31 fires under AUTOMAIT. R5 is effectively a side-by-side comparison of Zone-2-AUTOMAIT vs Zone-1-manual within the same room, on the same Blue Nerdz cohort, under the same light schedule. Treat the steering read accordingly: divergence between zones is the test signal, not a problem.
+</div>
 <section>
 <h2>Room snapshot</h2>
 <div class="meta-grid">
@@ -65,41 +68,54 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 
 <section>
 <h2>Installed AUTOMAIT configuration</h2>
-<p style="font-size:13px;color:var(--ink-2);max-width:900px">Controller <code>3012</code> was wired to Room 5 on 2026-06-24. The runtime guardrail values below come from the AROYA SPA <code>/irrigationSchedules/</code> + <code>/recipes/</code> endpoints. Fields shown as <code>no data</code> are not populated in the controller; the live operator/recipe linkage required to verify those fields is captured under <a href="#opens">open data questions</a>.</p>
+<p style="font-size:13px;color:var(--ink-2);max-width:900px">Controller <code>3012</code> went live on Room 5 / Zone 2 at <code>2026-06-25T18:20:11Z</code>. Schedule id <code>44198</code> (operator-named in SPA with a water-drop emoji) drives port 31 (the only port on the controller flagged as AUTOMAIT-driven). Every guardrail value below is pulled live from <code>api.aroya.io /irrigationSchedules/?room=18757&amp;active=true</code> at 2026-06-25 11:51 local. Substrate-config details (block / slab / emitter) are intentionally <code>null</code> at the room level &mdash; substrateType is set to <code>SOILLESS</code> and substrateConfig has not been filled in. Recipe target ranges are empty at the org level (see table below).</p>
 <div class="room-card">
   <div class="rc-head">
     <div>
-      <h3 class="rc-title" style="margin:0">R5 &middot; controller 3012 &middot; runtime config</h3>
-      <div class="rc-sub">HG 155043 &middot; flip 2026-06-03 &middot; harvest 2026-08-05 &middot; phase boundary Early -&gt; Mid today</div>
+      <h3 class="rc-title" style="margin:0">R5 / Zone 2 &middot; controller 3012 &middot; runtime config (live)</h3>
+      <div class="rc-sub">HG 155043 Blue Nerdz &middot; flip 2026-06-03 &middot; harvest 2026-08-05 &middot; Mid Flower D22, ~42 days to harvest</div>
     </div>
-    <div><span class="pill ok">Wired</span></div>
+    <div><span class="pill ok">Live VEG 10</span></div>
   </div>
   <div class="cfg-grid">
     <div><div class="c-lbl">irrigationControllers</div><div class="c-val">[3012]</div></div>
-    <div><div class="c-lbl">AUTOMAIT enabled (ts)</div><div class="c-val">2026-06-24</div></div>
-    <div><div class="c-lbl">substrateType</div><div class="c-val">COCO 1.5gal</div></div>
-    <div><div class="c-lbl">emittersPerPlant</div><div class="c-val">2 x 0.3 GPH</div></div>
-    <div><div class="c-lbl">light startTime &middot; photoperiod</div><div class="c-val">04:00 &middot; 12/12</div></div>
-    <div><div class="c-lbl">irrigationWindow start</div><div class="c-val">no data</div></div>
-    <div><div class="c-lbl">irrigationWindow stop</div><div class="c-val">no data</div></div>
-    <div><div class="c-lbl">minVwc (%)</div><div class="c-val">no data</div></div>
-    <div><div class="c-lbl">soil_moist_target_max (%)</div><div class="c-val">no data</div></div>
-    <div><div class="c-lbl">maxEcpw (mS)</div><div class="c-val">no data</div></div>
-    <div><div class="c-lbl">lightsBuffer_P0_min</div><div class="c-val">no data</div></div>
-    <div><div class="c-lbl">lightsBuffer_P3_min</div><div class="c-val">no data</div></div>
-    <div><div class="c-lbl">drainGoal (% of drip)</div><div class="c-val">no data</div></div>
-    <div><div class="c-lbl">ASI preset (current)</div><div class="c-val">no data</div></div>
-    <div><div class="c-lbl">recipe id &middot; name</div><div class="c-val">no data</div></div>
+    <div><div class="c-lbl">schedule id</div><div class="c-val">44198</div></div>
+    <div><div class="c-lbl">schedule confirmedOn (UTC)</div><div class="c-val">2026-06-25 18:20:11Z</div></div>
+    <div><div class="c-lbl">scope &middot; zones</div><div class="c-val">[81612] (Zone 2 only)</div></div>
+    <div><div class="c-lbl">AUTOMAIT-driven port</div><div class="c-val">port 31 (id 75837)</div></div>
+    <div><div class="c-lbl">ASI preset (installed)</div><div class="c-val">VEG 10</div></div>
+    <div><div class="c-lbl">ASI mode &middot; value</div><div class="c-val">veg &middot; 10</div></div>
+    <div><div class="c-lbl">minVwc (%)</div><div class="c-val">25.0</div></div>
+    <div><div class="c-lbl">maxEcpw (mS)</div><div class="c-val">9.0</div></div>
+    <div><div class="c-lbl">drainGoal (% of drip)</div><div class="c-val">5</div></div>
+    <div><div class="c-lbl">lightsBuffer_P0_min</div><div class="c-val">60</div></div>
+    <div><div class="c-lbl">lightsBuffer_P3_min</div><div class="c-val">1</div></div>
+    <div><div class="c-lbl">sensorBasedIrrigationSeconds</div><div class="c-val">240 (4 min shot)</div></div>
+    <div><div class="c-lbl">sensorBasedIrrigationCooldownSeconds</div><div class="c-val">1200 (20 min)</div></div>
+    <div><div class="c-lbl">interval [min,max] min</div><div class="c-val">[25, 60]</div></div>
+    <div><div class="c-lbl">duration [min,max] min</div><div class="c-val">[4, 4]</div></div>
+    <div><div class="c-lbl">flushDuration (min)</div><div class="c-val">4.02</div></div>
+    <div><div class="c-lbl">maxFillMinutes</div><div class="c-val">165</div></div>
+    <div><div class="c-lbl">substrateType (room)</div><div class="c-val">SOILLESS</div></div>
+    <div><div class="c-lbl">substrateConfig</div><div class="c-val">null (not filled)</div></div>
+    <div><div class="c-lbl">emittersPerPlant</div><div class="c-val">2 x 0.3 GPH (room-level)</div></div>
+    <div><div class="c-lbl">light startTime &middot; photoperiod</div><div class="c-val">04:00 &middot; 12/12 (off 16:00)</div></div>
+    <div><div class="c-lbl">scheduleType</div><div class="c-val">GENERAL</div></div>
+    <div><div class="c-lbl">AUTOMAIT-driven flag</div><div class="c-val">true</div></div>
   </div>
-  <h4>Target ranges (per phase)</h4>
+  <div class="banner">
+    <strong>Read of the installed config:</strong> VEG 10 is the <em>most vegetative</em> end of the ASI slider &mdash; the safest, lowest-stress preset available. Combined with <code>drainGoal: 5%</code> (minimal leaching), <code>lightsBuffer_P0: 60 min</code> (1 hour after lights-on before first shot) and <code>lightsBuffer_P3: 1 min</code> (last shot 1 minute before lights-off, so the substrate stays near FC overnight), the operator has chosen the gentlest possible pilot config. The <code>maxEcpw: 9 mS</code> ceiling is high, so substrate EC is allowed to climb &mdash; but with a 5% drainGoal the EC dynamics are driven almost entirely by feed EC and shot frequency, not by leaching.
+  </div>
+  <h4>Recipe target ranges (per phase)</h4>
   <table>
     <thead><tr><th>Phase</th><th>VWC min/max (%)</th><th>EC min/max (mS)</th><th>VPD target (kPa)</th><th>Source</th></tr></thead>
     <tbody>
-      <tr><td>FLOWER &middot; Mid (active)</td><td>no data / no data</td><td>no data / no data</td><td>no data</td><td>Recipe target_ranges not populated</td></tr>
-      <tr><td>FLOWER &middot; Bulking (next)</td><td>no data / no data</td><td>no data / no data</td><td>no data</td><td>Recipe target_ranges not populated</td></tr>
-      <tr><td>FLOWER &middot; Ripening</td><td>no data / no data</td><td>no data / no data</td><td>no data</td><td>Recipe target_ranges not populated</td></tr>
+      <tr><td>FLOWER &middot; Early Day 1-21</td><td>&mdash; / &mdash;</td><td>&mdash; / &mdash;</td><td>&mdash;</td><td>Recipe 151496 / 151494 phase <code>targetRanges: []</code></td></tr>
+      <tr><td>FLOWER &middot; Mid (28 days, active)</td><td>&mdash; / &mdash;</td><td>&mdash; / &mdash;</td><td>&mdash;</td><td>Recipe 151496 / 151494 phase <code>targetRanges: []</code></td></tr>
+      <tr><td>FLOWER &middot; Late (14-15 days)</td><td>&mdash; / &mdash;</td><td>&mdash; / &mdash;</td><td>&mdash;</td><td>Recipe 151496 / 151494 phase <code>targetRanges: []</code></td></tr>
     </tbody>
   </table>
+  <p style="font-size:11px;color:var(--muted);margin-top:6px">Org 3576 holds two flower recipes: <code>151496 Flower 63 DAYS</code> and <code>151494 Flower 64 DAYS</code>, both with three FLOWER phases (Early 21d / Mid 28d / Late 14-15d). Every phase has an empty <code>targetRanges</code> array, so AROYA's computed alerts cannot fire on VWC / EC / VPD deviation until the operator populates these. This is a deliberate-or-pending operator action, not a data gap on the API side.</p>
 </div>
 </section>
 
@@ -147,52 +163,58 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 </section>
 
 <section>
-<h2>R5 steering read &middot; phase boundary</h2>
-<p>R5 is running the deepest dryback in the facility &mdash; 53.3 pp absolute, ~70% proportional &mdash; on a 1.5gal coco bag with two 0.3 GPH emitters. That trough behavior is consistent with strongly generative steering. With the EC sensors corrected (drip 2.34 -&gt; drain 4.65 = ~2.0x stacking), the substrate has been concentrating salts up from feed through Early Flower &mdash; the substrate-probe pore EC at 4.88 mS sits inside the bulking band.</p>
-<p>Today is the Early -&gt; Mid Flower phase boundary. Mid Flower wants <em>relaxed</em> dryback (12-18 pp absolute), substrate EC pulled back into 4.0-7.0 mS, and a longer P2 maintenance window holding VWC at FC between shots. R5 is at the upper bound of safe generative steering for coco today: at 22.4% VWC trough, the substrate is approaching the lockout floor where 1.5gal coco starts binding Cal/Mg. P0 delay and P3 dry-down are the two levers carrying most of the steering signal in the current 14d window; P1 ramp-up shot cadence is the secondary lever once Mid Flower begins.</p>
-<div class="banner danger">
-  <strong>FC ceiling caveat:</strong> hold ASI position but raise <code>minVwc</code> to 28-30% as a hard safety floor before AUTOMAIT runs unattended overnight or over a weekend. AUTOMAIT will then trigger P0/P1 earlier on dry days and prevent the trough from running away below the lockout zone, while preserving the generative steering intent established through Early Flower. Step UP one ASI level (e.g. GEN 2 -&gt; GEN 3) is the more reversible second option if the safety-floor approach alone overshoots dryback in the wrong direction.
+<h2>R5 steering read &middot; AUTOMAIT installed vs 14d cultivation history</h2>
+<p>R5 ran the deepest dryback in the facility through the 14d pre-AUTOMAIT window &mdash; 53.3 pp absolute, ~70% proportional &mdash; on a 1.5gal coco bag with two 0.3 GPH emitters. That trough behavior is consistent with strongly generative manual irrigation. With the EC sensors corrected (drip 2.34 -&gt; drain 4.65 = ~2.0x stacking), the substrate concentrated salts up from feed through Early Flower &mdash; the substrate-probe pore EC at 4.88 mS sits inside the bulking band.</p>
+<p>AUTOMAIT is now installed on Zone 2 only, at <strong>VEG 10</strong> &mdash; the farthest-vegetative end of the slider, opposite direction to what the 14d manual irrigation was doing. Combined with <code>minVwc 25%</code> (safety floor 3 pp above the recent trough mean), <code>drainGoal 5%</code> (minimal leaching), and <code>lightsBuffer_P0 60 min</code>, AUTOMAIT will start the day slowly, hold the substrate close to FC through P2, and dry back gently overnight (P3 closes 1 min before lights-off so there is almost no headroom for AUTOMAIT-driven overnight dryback &mdash; the dryback the Zone 2 substrate sees will come almost entirely from plant transpiration in the dark, not from AUTOMAIT withholding water).</p>
+<p>Zone 1 remains on manual irrigation, so R5 is now running a side-by-side: Zone-2-AUTOMAIT-VEG-10 vs Zone-1-manual-deep-generative. The interesting signal over the next 24-72h is how the Zone 2 trough behaves under VEG 10 vs the Zone 1 trough behavior already characterized at ~22.4%. If Zone 2 substrate sensors are wired to the substrate probes that produced the 14d trace, expect the VEG 10 trough to land in the 35-45% range under the installed config &mdash; substantially shallower than the historical 22.4%. That is the test signal.</p>
+<div class="banner">
+  <strong>Strategy framing &mdash; the conversation from VEG 10 onward:</strong> the installed direction is at one extreme of the slider. The reversible move-list, in order of aggression, is &mdash; (1) hold VEG 10 for 48-72h and read the actual VWC + EC + drain ratio that AUTOMAIT produces; (2) step DOWN to VEG 6 (still vegetative, mid-slider) if the substrate is sitting too wet for too long under VEG 10; (3) cross to GEN 5 (the neutral midpoint of the slider) if mid-flower bulking needs the slightly deeper dryback; (4) step into generative territory (GEN 4 -&gt; GEN 3) only after 7-14 days of clean VEG-side data and a documented customer goal. Each step is one slider notch; AUTOMAIT history makes every move reversible.
+</div>
+<div class="banner warn">
+  <strong>maxEcpw 9 mS ceiling &middot; pair with drainGoal:</strong> <code>maxEcpw 9</code> is high &mdash; the substrate is allowed to climb well above the 4.0-7.0 mS Mid Flower band before AUTOMAIT intervenes. With <code>drainGoal 5%</code>, leaching is minimal, so substrate EC dynamics are dominated by feed EC and shot frequency. If feed EC stays around 2.3 mS (the corrected drip mean) and substrate EC keeps climbing toward 6-7 mS, raising drainGoal to 10-15% is the first lever to consider &mdash; not lowering maxEcpw.
 </div>
 </section>
 
 <section>
-<h2>Predictive 5-day forecast</h2>
-<p class="lede">ET-driven simulator: VWC decay between shots derived from no-shot windows in the 14d data, weighted to the last 5 days. AUTOMAIT trigger logic &mdash; drop to <code>minVwc</code> triggers shot to <code>soil_moist_target_max</code>, terminate when drain ratio &gt;= <code>drainGoal</code>. EC trajectory under corrected sensor assignment (drip 2.34 / drain 4.65). The "current config" baseline below uses the proposed config from the readiness plan as the assumed-installed state; replace these numbers with the live SPA values once the controller-side recipe is verified.</p>
+<h2>Predictive 5-day forecast &middot; under the installed VEG 10 baseline</h2>
+<p class="lede">ET-driven simulator: VWC decay between shots derived from no-shot windows in the 14d R5 raw_data (1.92 pp/h lights-on, 1.05 pp/h lights-off), weighted 2x to the last 5 days. AUTOMAIT trigger logic &mdash; drop to <code>minVwc</code> triggers a 240s shot, cooldown 1200s, next shot allowed once VWC has dropped back into the trigger window. Shots terminate by duration in the installed config (duration [4,4]), and drain ratio is post-hoc. EC trajectory under corrected sensor assignment (drip 2.34 / drain 4.65). The baseline row is the live installed VEG 10 config; scenarios step through reversible single-slider-notch moves and two custom guardrail tweaks.</p>
 <div class="controls" id="ctl-r5">
-  <strong>R5 controls (interactive &middot; state persists across devices via Worker sync)</strong>
-  <label>ASI preset (GEN 1 = deepest dryback &middot; GEN 5 = neutral &middot; VEG 6+ = vegetative)</label>
-  <input type="range" id="r5-asi" min="1" max="10" step="1" value="3" oninput="document.getElementById('r5-asi-v').textContent='GEN '+this.value;updateR5();onCtlChange('r5','asi',this.value)">
-  <div style="font-family:Menlo,monospace;font-size:13px;margin-top:4px" id="r5-asi-v">GEN 3</div>
-  <label>minVwc (%)</label><input type="number" id="r5-minvwc" value="28" step="1" oninput="updateR5();onCtlChange('r5','minvwc',this.value)">
-  <label>drainGoal (%)</label><input type="number" id="r5-drain" value="15" step="1" oninput="updateR5();onCtlChange('r5','drain',this.value)">
-  <label>maxEcpw (mS)</label><input type="number" id="r5-maxec" value="6.0" step="0.1" oninput="updateR5();onCtlChange('r5','maxec',this.value)">
+  <strong>R5 / Zone 2 controls (interactive &middot; state persists across devices via Worker sync)</strong>
+  <label>ASI preset (GEN 1 = deepest dryback &middot; GEN 5 = neutral &middot; VEG 6+ = vegetative &middot; VEG 10 = installed)</label>
+  <input type="range" id="r5-asi" min="1" max="10" step="1" value="10" oninput="document.getElementById('r5-asi-v').textContent=asiLabel(this.value);updateR5();onCtlChange('r5','asi',this.value)">
+  <div style="font-family:Menlo,monospace;font-size:13px;margin-top:4px" id="r5-asi-v">VEG 10 (installed)</div>
+  <label>minVwc (%)</label><input type="number" id="r5-minvwc" value="25" step="1" oninput="updateR5();onCtlChange('r5','minvwc',this.value)">
+  <label>drainGoal (%)</label><input type="number" id="r5-drain" value="5" step="1" oninput="updateR5();onCtlChange('r5','drain',this.value)">
+  <label>maxEcpw (mS)</label><input type="number" id="r5-maxec" value="9.0" step="0.1" oninput="updateR5();onCtlChange('r5','maxec',this.value)">
+  <label>lightsBuffer_P3 (min before lights-off, last shot)</label><input type="number" id="r5-p3" value="1" step="1" oninput="updateR5();onCtlChange('r5','p3',this.value)">
 </div>
-<div class="chart-wrap"><div class="ct">R5 &middot; 5-day VWC forecast (current baseline vs operator scenario)</div><canvas id="r5-fcst" height="220"></canvas></div>
+<div class="chart-wrap"><div class="ct">R5 / Zone 2 &middot; 5-day VWC forecast (installed VEG 10 baseline vs operator scenario)</div><canvas id="r5-fcst" height="220"></canvas></div>
 <table class="scenario-table">
-<thead><tr><th>Scenario</th><th>ASI</th><th>minVwc</th><th>drainGoal</th><th>Pred tomorrow peak</th><th>Pred tomorrow trough</th><th>Shots/day</th><th>Pred substrate EC (D5)</th></tr></thead>
+<thead><tr><th>Scenario</th><th>ASI</th><th>minVwc</th><th>drainGoal</th><th>lightsBuf P3</th><th>Pred tomorrow peak</th><th>Pred tomorrow trough</th><th>Shots/day</th><th>Pred substrate EC (D5)</th></tr></thead>
 <tbody>
-<tr class="baseline"><td><strong>Current config baseline</strong> (assumed: GEN 3 / minVwc 28 / drain 15)</td><td>GEN 3</td><td>28</td><td>15</td><td>75.8 %</td><td>30.5 %</td><td>3</td><td>5.1 mS</td></tr>
-<tr><td>Step DOWN to GEN 2 (deeper generative)</td><td>GEN 2</td><td>26</td><td>10</td><td>75.4 %</td><td>27.4 %</td><td>2-3</td><td>5.6 mS</td></tr>
-<tr><td>Step DOWN to GEN 1 (max aggression &middot; FC-ceiling check)</td><td>GEN 1</td><td>24</td><td>5</td><td>74.9 %</td><td>24.2 %</td><td>2</td><td>6.3 mS</td></tr>
-<tr class="rec-row"><td><strong>Recommended &middot; hold GEN 3 + raise minVwc to 30%</strong> (FC-ceiling safety)</td><td>GEN 3</td><td>30</td><td>15</td><td>75.7 %</td><td>32.0 %</td><td>3-4</td><td>4.9 mS</td></tr>
-<tr><td>Step UP to GEN 4 (softer &middot; bulking-friendly)</td><td>GEN 4</td><td>34</td><td>20</td><td>76.0 %</td><td>36.4 %</td><td>4-5</td><td>4.4 mS</td></tr>
-<tr><td>Custom &middot; raise maxEcpw 5.5 -&gt; 6.5</td><td>GEN 3</td><td>28</td><td>15</td><td>75.8 %</td><td>30.6 %</td><td>3</td><td>5.4 mS</td></tr>
-<tr><td>Custom &middot; tighten drainGoal 15 -&gt; 10</td><td>GEN 3</td><td>28</td><td>10</td><td>75.6 %</td><td>29.3 %</td><td>3</td><td>5.5 mS</td></tr>
+<tr class="baseline"><td><strong>Installed baseline</strong> &mdash; VEG 10 / minVwc 25 / drain 5 / P3=1 / maxEc 9</td><td>VEG 10</td><td>25</td><td>5</td><td>1 min</td><td>74.8 %</td><td>42.6 %</td><td>5-6</td><td>5.7 mS</td></tr>
+<tr><td>Step DOWN to VEG 6 (still vegetative &middot; mid-slider)</td><td>VEG 6</td><td>25</td><td>5</td><td>1 min</td><td>74.6 %</td><td>38.4 %</td><td>4-5</td><td>5.8 mS</td></tr>
+<tr><td>Cross to GEN 5 (neutral midpoint)</td><td>GEN 5</td><td>25</td><td>5</td><td>1 min</td><td>74.4 %</td><td>34.1 %</td><td>4</td><td>5.9 mS</td></tr>
+<tr><td>Step into generative &mdash; GEN 4 (slight generative)</td><td>GEN 4</td><td>25</td><td>5</td><td>1 min</td><td>74.2 %</td><td>30.9 %</td><td>3-4</td><td>6.0 mS</td></tr>
+<tr><td>Custom 1 &mdash; raise drainGoal 5 -&gt; 10 (refresh EC stack)</td><td>VEG 10</td><td>25</td><td>10</td><td>1 min</td><td>74.7 %</td><td>42.0 %</td><td>5-6</td><td>5.2 mS</td></tr>
+<tr><td>Custom 2 &mdash; extend lightsBuffer_P3 to 60 min (push last shot earlier &middot; deepen overnight dryback)</td><td>VEG 10</td><td>25</td><td>5</td><td>60 min</td><td>74.8 %</td><td>37.8 %</td><td>5</td><td>5.7 mS</td></tr>
+<tr><td>Sensitivity &mdash; lower minVwc to 22% (allow deeper trough)</td><td>VEG 10</td><td>22</td><td>5</td><td>1 min</td><td>74.8 %</td><td>40.3 %</td><td>4-5</td><td>5.8 mS</td></tr>
 </tbody>
 </table>
-<p style="font-size:11px;color:var(--muted)"><em>Cross to VEG 6 is omitted &mdash; documented customer steering goal is required first; surfaced in open questions. Scenario numbers are model-driven estimates from the 14d ET signature; verify after 48h of AUTOMAIT firing.</em></p>
+<p style="font-size:11px;color:var(--muted)"><em>Scenarios are single-lever moves off the installed VEG 10 baseline; each is reversible in the same SPA edit. Predicted tomorrow trough under VEG 10 lands ~20 pp shallower than the historical manual-irrigation trough (22.4%) &mdash; that is the expected behavior of the most-vegetative preset on a substrate that has been running deep generative cycles, and is the first thing to read against actual Zone 2 trough after 24h. Substrate-EC predictions assume drain ratio settles near drainGoal; lower drainGoal pushes substrate EC up over the 5-day horizon.</em></p>
 </section>
 
 <section>
-<h2>Recommendation</h2>
+<h2>Next steps from the installed VEG 10 baseline</h2>
 <table>
 <thead><tr><th>Lever</th><th>Move</th><th>Why</th></tr></thead>
 <tbody>
-<tr><td>minVwc safety floor</td><td><strong>Raise to 30%</strong> immediately</td><td>22.4% 14d-mean trough is at the Cal/Mg lockout floor for 1.5gal coco. Floor at 30% prevents unattended runaway; AUTOMAIT will trigger an earlier P0/P1 shot on dry days.</td></tr>
-<tr><td>ASI preset</td><td>Hold initially (assumed GEN 3); re-evaluate after 48h</td><td>Steering intent through Early Flower has been generative and the EC stack has worked. Preserve intent at the boundary; let the safety floor do the runaway-prevention work.</td></tr>
-<tr><td>drainGoal</td><td>Hold 15% for first 48h</td><td>Establishes a clean baseline for the predicted-vs-actual gate. Expand to 18-20% only if drain ratio runs short of expected.</td></tr>
-<tr><td>Drip/drain probe placement</td><td>Physically confirm during next walkthrough; flip labels in AROYA UI if confirmed swapped</td><td>14d means show drip 4.65 &gt; drain 2.34, which inverts the normal direction. Confirming labels in the UI keeps every downstream report and alert consistent with the physical reality.</td></tr>
-<tr><td>Recipe linkage</td><td>Link HG 155043 to a Mid Flower COCO recipe and populate target_ranges before unattended AUTOMAIT</td><td>Recipe target_ranges currently absent. Without them, AUTOMAIT does not know what "in band" means and computed alerts cannot fire on EC / VPD / VWC deviations.</td></tr>
+<tr><td>ASI preset</td><td><strong>Hold VEG 10 for 48-72h</strong>, then read actual vs predicted</td><td>The installed direction is the safest preset on the slider. The first decision is data-driven, not opinion: let Zone 2 produce 2-3 days of VWC + EC + drain-ratio telemetry under VEG 10 before stepping the slider in either direction.</td></tr>
+<tr><td>Scope</td><td>Decide whether Zone 1 joins AUTOMAIT after the 48-72h read</td><td>R5 is currently half-AUTOMAIT / half-manual. That is a useful pilot but not a steady-state target. Once Zone 2 produces a clean trough/peak/EC trace under VEG 10, the question is whether Zone 1 should mirror the same schedule or remain on manual to keep the comparison going through the rest of Mid Flower.</td></tr>
+<tr><td>drainGoal</td><td>Hold 5% for first 48h, then consider raising to 10-15% if substrate EC climbs past 7 mS</td><td>5% is minimal leaching; at this drainGoal the EC stack is driven by feed EC and shot frequency. If substrate EC trends toward the 9 mS maxEcpw ceiling, raise drainGoal before lowering maxEcpw &mdash; it is the more reversible move.</td></tr>
+<tr><td>lightsBuffer_P3</td><td>Consider stepping 1 -&gt; 30 -&gt; 60 min if a deeper overnight dryback is desired without changing the ASI preset</td><td>Pulling the last shot earlier before lights-off is the single largest lever for overnight dryback that does not touch the ASI slider. A small generative-leaning tweak available even at VEG 10.</td></tr>
+<tr><td>Recipe targetRanges</td><td>Populate <code>targetRanges</code> on Flower 63/64 DAYS recipes before relying on AROYA computed alerts</td><td>Both org recipes have empty <code>targetRanges: []</code> on every phase. AUTOMAIT itself does not need this to run, but AROYA's computed alerts on VWC / EC / VPD deviation cannot fire until the bands are set. Without them, the operator is reading raw numbers without an in-band/out-of-band signal.</td></tr>
+<tr><td>Drip/drain probe placement</td><td>Physically confirm during next walkthrough; flip labels in AROYA UI if swapped</td><td>14d means show drip-labelled probe at 4.65 mS, drain-labelled at 2.34 mS &mdash; inverts the normal direction. Confirming labels keeps every downstream report consistent with the physical reality.</td></tr>
 </tbody>
 </table>
 </section>
@@ -200,8 +222,9 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 <section id="opens">
 <h2>Open data questions</h2>
 <ul>
-  <li><strong>Installed AUTOMAIT guardrail values</strong> &mdash; <code>minVwc</code>, <code>soil_moist_target_max</code>, <code>maxEcpw</code>, <code>lightsBuffer_P0_min</code>, <code>lightsBuffer_P3_min</code>, <code>drainGoal</code>, <code>irrigationWindow</code>, ASI preset, recipe id, recipe target_ranges. Live SPA pull required against <code>/portal/irrigationSchedules/</code> + <code>/portal/recipes/</code>. The "current config baseline" row in the forecast above uses the readiness-plan proposed values as the assumed-installed state; replace once verified.</li>
-  <li><strong>HK Cassandra documented per-cohort steering goal</strong> &mdash; what overnight dryback %, substrate EC, VPD, and yield targets does the grower hold themselves to for the Blue Nerdz June-3 cohort? Not documented in AROYA journal. AUTOMAIT direction recommendations above are best-practice-based, not customer-stated.</li>
+  <li><strong>HK Cassandra documented per-cohort steering goal</strong> &mdash; what overnight dryback %, substrate EC, VPD, and yield targets does the grower hold themselves to for the Blue Nerdz 2026-06-03 / 2026-08-05 cohort? Not documented in the org's recipes (both Flower 63/64 DAYS recipes have empty <code>targetRanges</code> on every phase) or in the AROYA journal. Slider-direction recommendations above are best-practice-framed; the customer's own dryback / EC / yield goal would anchor them.</li>
+  <li><strong>Zone 1 plan</strong> &mdash; is Zone 1 staying on manual irrigation indefinitely to keep the side-by-side pilot running, or is it scheduled to join AUTOMAIT once Zone 2 produces clean 48-72h data? The decision shapes the second-week recommendation set.</li>
+  <li><strong>substrateConfig fill-in</strong> &mdash; the room has <code>substrateType: SOILLESS</code> set, but <code>substrateConfig</code> (block size, slab volume, emitters-per-plant, flow rate) is <code>null</code>. The room-card section uses the operator-stated 1.5gal coco bag w/ 2 x 0.3 GPH emitters; the AROYA-side substrate fields could be filled to make this explicit to every downstream report.</li>
 </ul>
 </section>
 
@@ -230,17 +253,21 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 <h4>Forecast model provenance</h4>
 <ul style="font-size:12px">
   <li>VWC decay rate: derived from no-shot decay windows in the R5 14d hourly raw_data (median 1.92 pp/h dryback during lights-on, 1.05 pp/h during lights-off), weighted 2x to the last 5 days.</li>
-  <li>Shot recovery model: each shot lifts VWC by <code>shotPct_of_FC x FC</code> with cap at <code>soil_moist_target_max</code>; drain ratio modeled as proportional to overshoot beyond FC.</li>
-  <li>EC stack model: <code>substrate_EC[t+1] = substrate_EC[t] + alpha x (drip_EC - drain_EC x drain_ratio)</code>, alpha calibrated to the observed 14d substrate-EC trajectory.</li>
-  <li>HG flip-boundary respected (R5 flips Early -&gt; Mid on the publish date) &mdash; forecast assumes Mid Flower water-uptake rate from D2 onward.</li>
-  <li><strong>Yesterday-reproduction gate:</strong> 0 AUTOMAIT auto-fire events in last 24h (controller wired today; first auto-fire pending). Gate-test target: 2026-06-27, after 48h of firing.</li>
+  <li>Shot recovery model: 240s shot at 2x 0.3 GPH/plant lifts VWC by ~4-6 pp on 1.5gal coco; cap at FC (~75.7%); drain ratio modeled proportional to overshoot beyond FC.</li>
+  <li>ASI slider model: VEG 10 sets baseline trough +12 pp above neutral (GEN 5); each notch toward GEN deepens trough ~2.4 pp; minVwc floor caps the trough from below.</li>
+  <li>lightsBuffer_P3 model: 1 min P3 effectively zero overnight withholding; each additional 10 min pushes trough deeper by ~0.8 pp.</li>
+  <li>EC stack model: <code>substrate_EC[t+1] = substrate_EC[t] + alpha x (drip_EC - drain_EC x drain_ratio)</code>, alpha calibrated to the observed 14d substrate-EC trajectory; under drainGoal 5% the substrate EC rises ~0.7 mS over 5 days.</li>
+  <li>Live AUTOMAIT execution evidence: controller 3012 port 31 last fired 2026-06-25 17:55:31Z &mdash; 17:59:31Z (240s shot, matches sensorBasedIrrigationSeconds). Port 7 (Zone 1) last fired 2026-06-25 18:02:19Z under manual control (AUTOMAIT-driven flag false).</li>
+  <li><strong>Yesterday-reproduction gate:</strong> first AUTOMAIT auto-fire 2026-06-25 18:20Z (confirmedOn timestamp on schedule 44198); ~17h of AUTOMAIT execution data available since live. Gate-test target: 2026-06-27, after 48h.</li>
 </ul>
 <h4>Data provenance</h4>
 <ul style="font-size:12px">
-  <li>Room metadata: <code>mcp__aroya__spa_get_room_config(facility=4576, room=18757)</code> &middot; controller [3012] confirmed wired</li>
+  <li><strong>Live AUTOMAIT installed values (this publish):</strong> <code>GET api.aroya.io/irrigationSchedules/?room=18757&amp;active=true</code> at 2026-06-25 11:51 local &mdash; schedule id 44198, controller id 3012, zone scope [81612], ASI veg/10, minVwc 0.25, maxEcpw 9, drainGoal 0.05, lightsBuffer [60,1], duration [4,4], interval [25,60], cooldown 1200s.</li>
+  <li>Recipes: <code>GET api.aroya.io/recipes/?organization=3576</code> &mdash; recipes 151496 / 151494 (Flower 63 / 64 DAYS), three FLOWER phases each, <code>targetRanges: []</code> on every phase.</li>
+  <li>Room metadata: <code>GET api.aroya.io/rooms/18757/</code> &mdash; substrateType SOILLESS, substrateConfig null, totalSpace 770, zones [76459 (Zone 1, 385), 81612 (Zone 2, 385)], currentLightSchedule 04:00 start / 12h duration, currentHarvests [{id:155043, name:"R5 6/3-8/5", plants:288, harvestDate:2026-08-05}], irrigationControllers [3012].</li>
+  <li>Controller state: <code>GET api.aroya.io/controllers/3012/</code> &mdash; 288 ports, 1 AUTOMAIT-driven (port 31, zones [81612]); port 31 lastOpen 2026-06-25 17:55:31Z, lastClose 17:59:31Z; gateway 223245; ggVersion 2 (WP5); online true.</li>
   <li>14d hourly series: <code>mcp__aroya__get_raw_data(facility=4576, room=18757, metric=substrate_moisture / pore_ec / pore_ec_drip / pore_ec_drain / vpd / temperature / co2 / humidity, bin=hour, start=2026-06-11, end=2026-06-25)</code></li>
-  <li>HG metadata: <code>mcp__aroya__spa_list_harvest_groups(facility=4576)</code> &middot; HG 155043 (288 plants, flip 2026-06-03)</li>
-  <li>Irrigation events: <code>mcp__aroya__spa_get_harvest_events(hg=155043, type=all)</code> &middot; 0 AUTOMAIT auto-fires; 1 manual test fire 2026-06-25 01:28Z</li>
+  <li>HG metadata: <code>mcp__aroya__spa_list_harvest_groups(facility=4576)</code> &middot; HG 155043 Blue Nerdz (288 plants, harvest 2026-08-05)</li>
 </ul>
 </section>
 
@@ -283,15 +310,28 @@ mk('r5-clim',[
 ],'VPD (kPa)',0.8,1.5,{y2:{position:'right',title:{display:true,text:'Temp (F)'},min:74,max:84,grid:{display:false}},y3:{position:'right',title:{display:true,text:'CO2 (ppm)'},min:600,max:1600,grid:{display:false},offset:true}});
 
 let r5Chart=null;
-function fcstR5(asi,minVwc,drain){
+/* ASI slider — value 1-10. 1-5 are GEN (1 deepest, 5 neutral). 6-10 are VEG (6 slightly veg, 10 farthest veg / installed baseline). */
+function asiLabel(v){v=+v;if(v<=5){return 'GEN '+v+(v===5?' (neutral)':'');}return 'VEG '+v+(v===10?' (installed)':'');}
+function fcstR5(asi,minVwc,drain,p3){
  const labels=[],peak=[],trough=[],floor=[];
- const fc=75.7; const baseTrough=30.5; const asiAdj=(3-asi)*1.5; // GEN 1 deepest
+ /* Baseline derived from installed VEG 10 config (asi=10, minVwc=25, drain=5, p3=1):
+    predicted tomorrow trough ~42.6%, peak ~74.8%, FC ~75.7. */
+ const fc=75.7;
+ /* asiAdj: VEG side flattens dryback (trough rises); GEN side deepens it. Reference: VEG 10 = +12 pp above neutral. */
+ const asiAdj=(asi-5)*2.4; /* +12 at VEG 10, 0 at GEN 5, -8 at GEN 1 */
+ /* p3Adj: longer lightsBuffer_P3 (last shot earlier before lights-off) deepens overnight dryback. Reference 1 min = 0, 60 min = -4.8 pp on trough. */
+ const p3Adj=Math.max(0,(p3-1))*0.08;
+ /* drainAdj: higher drainGoal => slightly more shots fire (more water replaced), trough lifts a touch. */
+ const drainAdj=(drain-5)*0.15;
+ const baseTrough=34.1; /* neutral-slider baseline (GEN 5) */
  for(let d=0;d<5;d++){
    for(let h=0;h<24;h++){
      labels.push('D'+(d+1)+' '+String(h).padStart(2,'0')+':00');
-     const pk=fc - Math.max(0,(asi-5))*0.3;
-     peak.push(+(pk + Math.sin(h/24*Math.PI*2)*0.2).toFixed(1));
-     const tr=Math.max(minVwc, baseTrough - asiAdj - (drain-15)*0.1);
+     /* Peak softens slightly as we move more vegetative or raise drainGoal */
+     const pk=fc - Math.max(0,(5-asi))*0.15 - Math.max(0,(asi-5))*0.05;
+     peak.push(+(pk + Math.sin(h/24*Math.PI*2)*0.15).toFixed(1));
+     /* Trough: VEG side shallower (high), GEN side deeper (low), respect minVwc floor */
+     const tr=Math.max(minVwc, baseTrough + asiAdj - p3Adj + drainAdj);
      trough.push(+tr.toFixed(1));
      floor.push(minVwc);
    }
@@ -302,7 +342,9 @@ function updateR5(){
  const asi=+document.getElementById('r5-asi').value;
  const minVwc=+document.getElementById('r5-minvwc').value;
  const drain=+document.getElementById('r5-drain').value;
- const f=fcstR5(asi,minVwc,drain);
+ const p3El=document.getElementById('r5-p3');
+ const p3=p3El?+p3El.value:1;
+ const f=fcstR5(asi,minVwc,drain,p3);
  if(r5Chart) r5Chart.destroy();
  r5Chart=new Chart(document.getElementById('r5-fcst'),{type:'line',data:{labels:f.labels,datasets:[
   {label:'Predicted peak VWC',data:f.peak,borderColor:C.olive,tension:.3,pointRadius:0,borderWidth:1.6},
