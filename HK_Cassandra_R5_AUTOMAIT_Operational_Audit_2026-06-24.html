@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HK Cassandra LLC - R5 AUTOMAIT Operational Audit 2026-06-24</title>
+<style>
+:root{--olive:#3d3d2b;--olive-deep:#2a2a1c;--lime:#c6e34d;--app-blue:#2a6fdb;--bg:#fafaf6;--paper:#fff;--ink:#1a1a14;--ink-2:#4a4a3a;--muted:#7a7a6a;--rule:#e5e2d2;--good:#3a7d44;--warn:#c7942c;--danger:#b54141;--early:#f4a261;--mid:#c5a3ff;--shadow:0 1px 2px rgba(40,40,20,.06),0 8px 24px rgba(40,40,20,.06)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:24px}
+@media (max-width:480px){.wrap{padding:12px}.kpi-grid,.meta-grid,.cfg-grid{grid-template-columns:1fr !important}table{display:block;overflow-x:auto;white-space:nowrap}img,svg,canvas{max-width:100% !important;height:auto !important}*{overflow-wrap:break-word;word-break:break-word}}
+.masthead{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;border-bottom:1px solid var(--rule);padding-bottom:16px;margin-bottom:24px}
+.lockup{display:flex;align-items:center;gap:14px}.lockup .by{color:var(--olive);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;line-height:1.1}.lockup .by .ttl{display:block;color:var(--muted);margin-top:2px;font-size:10px;font-weight:500;letter-spacing:.05em}
+.wm{height:30px;color:var(--olive)}.masthead .meta{text-align:right;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.kicker{color:var(--olive);font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:6px}
+h1{font-size:30px;line-height:1.15;margin:0 0 8px;font-weight:700;letter-spacing:-.01em}
+h2{font-size:22px;line-height:1.2;margin:36px 0 12px;font-weight:600;border-bottom:2px solid var(--olive);padding-bottom:6px}
+h3{font-size:16px;margin:20px 0 8px;font-weight:600;color:var(--olive-deep)}
+h4{font-size:13px;margin:16px 0 6px;font-weight:600;color:var(--olive);text-transform:uppercase;letter-spacing:.05em}
+p{margin:0 0 10px}.lede{color:var(--ink-2);font-size:15px;max-width:900px}
+.banner{background:linear-gradient(0deg,#f2f4d6 0%,#eaf2c2 100%);border-left:4px solid var(--lime);padding:14px 18px;border-radius:4px;margin:18px 0;font-size:14px}
+.banner.warn{background:linear-gradient(0deg,#fdf6e3 0%,#faedca 100%);border-left-color:var(--warn)}.banner.danger{background:linear-gradient(0deg,#fce9e9 0%,#f8d7da 100%);border-left-color:var(--danger)}
+.meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;background:var(--paper);border-radius:6px;padding:18px;box-shadow:var(--shadow);margin:18px 0}.meta-grid .m-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px;font-weight:600}.meta-grid .m-val{font-size:14px;font-weight:600}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:14px 0}.kpi{background:var(--paper);border-radius:6px;padding:14px;box-shadow:var(--shadow);border-top:3px solid var(--olive)}.kpi.ok{border-top-color:var(--good)}.kpi.warn{border-top-color:var(--warn)}.kpi.bad{border-top-color:var(--danger)}.kpi .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}.kpi .val{font-size:22px;font-weight:700;margin:4px 0 2px}.kpi .sub{font-size:11px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;background:var(--paper);border-radius:6px;overflow:hidden;box-shadow:var(--shadow)}
+th{background:var(--olive);color:#fff;padding:9px 11px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+td{padding:9px 11px;border-top:1px solid var(--rule)}tr:nth-child(even) td{background:#fcfcf7}
+.pill{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.pill.ok{background:#dff0e0;color:var(--good)}.pill.warn{background:#fbecd0;color:var(--warn)}.pill.bad{background:#f7d8d8;color:var(--danger)}.pill.info{background:#e3edff;color:var(--app-blue)}
+.room-card{background:var(--paper);border-radius:8px;box-shadow:var(--shadow);padding:20px;margin:18px 0;border-left:4px solid var(--lime)}.room-card .rc-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px}.room-card .rc-title{font-size:18px;font-weight:700;margin:0}.room-card .rc-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.cfg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:8px 0 14px;font-size:12px;background:#f7f6ec;padding:12px;border-radius:5px}.cfg-grid .c-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}.cfg-grid .c-val{font-size:13px;font-weight:600;font-family:ui-monospace,Menlo,monospace;color:var(--olive-deep)}
+.retract{border-left:4px solid var(--app-blue);background:#eef4ff;padding:12px 16px;border-radius:4px;margin:10px 0;font-size:13px}.retract strong{color:var(--app-blue)}
+.synced{position:fixed;top:8px;right:12px;background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:4px 10px;font-size:11px;color:var(--muted);box-shadow:var(--shadow);z-index:50}.synced.ok{color:var(--good)}.synced.err{color:var(--danger)}
+.controls{background:#f7f6ec;border-radius:6px;padding:14px;margin:12px 0}.controls label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin:8px 0 3px}.controls input[type=range]{width:100%}.controls input[type=number]{padding:5px 8px;border:1px solid var(--rule);border-radius:3px;font-size:13px;width:100px;font-family:Menlo,monospace}
+.scenario-table th{background:var(--olive-deep)}.scenario-table .baseline{background:#f7f6ec !important;font-weight:700}.scenario-table .recommended{background:#dff0e0 !important;font-weight:700}
+.foot{font-size:11px;color:var(--muted);margin-top:36px;border-top:1px solid var(--rule);padding-top:14px}
+canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#f5f3e8;padding:1px 5px;border-radius:3px}
+.chart-wrap{background:var(--paper);border-radius:6px;padding:12px;margin:12px 0;box-shadow:var(--shadow)}.chart-wrap .ct{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="synced" id="sync-status">Sync...</div>
+<div class="wrap">
+<header class="masthead">
+  <div class="lockup">
+    <svg class="wm" viewBox="0 0 202.1 75" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/><path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/><path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/><path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/><path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/><path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z"/></svg>
+    <div class="by">by Addium &middot; R5 AUTOMAIT Operational Audit<span class="ttl">Facility 4576 &middot; HK Cassandra LLC &middot; Room 5 (24 lights)</span></div>
+  </div>
+  <div class="meta">Cian Sullivan<br>2026-06-24</div>
+</header>
+<div class="kicker">AROYA &middot; AUTOMAIT Operational Audit (Room 5 only) + 5-day Predictive Forecast</div>
+<h1>HK Cassandra LLC &middot; Room 5 &middot; AUTOMAIT operational audit + 5-day forecast</h1>
+<p class="lede">AUTOMAIT controller <code>3012</code> was manually wired by Cian to <strong>Room 5 only</strong> on 2026-06-24. Rooms R1, R2, R3, R6, R8-R11 do NOT have AUTOMAIT firing. This file is the R5-only audit: 14-day cultivation context, sensor-swap diagnostic, drip/drain EC interpretation, AUTOMAIT execution status, and a 5-day predictive forecast across ASI presets with interactive operator controls.</p>
+<div class="banner warn">
+  <strong>What changed since the agronomic baseline (commit <code>a51ca78</code>) AND the multi-room operational audit (this morning):</strong>
+  <ul style="margin:8px 0 0;padding-left:20px">
+    <li><strong>Scope corrected to R5 only.</strong> AUTOMAIT was manually installed by Cian in <strong>Room 5 only</strong> on 2026-06-24. R1, R2, R3, R6, R8-R11 do NOT have AUTOMAIT firing. The earlier multi-room operational audit was incorrectly scoped and has been deleted; this R5-only file replaces it.</li>
+    <li><strong>R5 &quot;channeling suspected&quot; call &mdash; RETRACTED.</strong> A low VWC trough alone does not establish channeling. R5 is showing deep dryback / aggressive trough behavior consistent with a coco room in generative steering &mdash; pending drip-side evidence.</li>
+    <li><strong>R5 &quot;flush-through leaching&quot; call &mdash; RETRACTED.</strong> Drip EC &gt; drain EC is the normal, healthy direction (plants pulling salts &amp; nutrients aggressively from feed before runoff). The prior framing was inverted.</li>
+    <li>Companion files: <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_2wk_Audit_2026-06-10_to_2026-06-24.html">2-week agronomic baseline</a> &middot; <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_AUTOMAIT_Readiness_Plan_2026-06-24.html">AUTOMAIT readiness plan</a>.</li>
+  </ul>
+</div>
+<section>
+<h2>Room 5 snapshot</h2>
+<div class="meta-grid">
+  <div><div class="m-lbl">Facility</div><div class="m-val">HK Cassandra LLC (4576)</div></div>
+  <div><div class="m-lbl">Room</div><div class="m-val">Room 5 (24 lights) &middot; id 18757</div></div>
+  <div><div class="m-lbl">HG</div><div class="m-val">R5 6/3-8/5 (HG 155043) &middot; cultivar 61909</div></div>
+  <div><div class="m-lbl">Substrate</div><div class="m-val">COCO Coir 1.5 gal BAG</div></div>
+  <div><div class="m-lbl">Emitters</div><div class="m-val">2 x 0.3 GPH per plant</div></div>
+  <div><div class="m-lbl">Zones</div><div class="m-val">Zone 1 (76459) &middot; Zone 2 (81612)</div></div>
+  <div><div class="m-lbl">Plants</div><div class="m-val">288</div></div>
+  <div><div class="m-lbl">Flip date</div><div class="m-val">2026-06-03</div></div>
+  <div><div class="m-lbl">Harvest date</div><div class="m-val">2026-08-05 (~42d remaining)</div></div>
+  <div><div class="m-lbl">Current phase</div><div class="m-val">Mid Flower (D1 today &mdash; Early -&gt; Mid)</div></div>
+  <div><div class="m-lbl">Light schedule</div><div class="m-val">04:00&ndash;16:00 UTC &middot; 12/12</div></div>
+  <div><div class="m-lbl">AUTOMAIT controller</div><div class="m-val"><code>3012</code> &middot; manually wired 2026-06-24</div></div>
+  <div><div class="m-lbl">AUTOMAIT auto-fires</div><div class="m-val"><span class="pill warn">0</span></div></div>
+  <div><div class="m-lbl">Manual test pulses</div><div class="m-val">4 x 30s on Z2 (port 75837), 2026-06-25 01:23&ndash;01:53Z</div></div>
+  <div><div class="m-lbl">Window analysed</div><div class="m-val">2026-06-11 to 2026-06-25 (14d, 3-min cadence)</div></div>
+  <div><div class="m-lbl">Cross-device sync</div><div class="m-val"><span id="sync-pill" class="pill info">Live</span></div></div>
+</div>
+</section>
+<section>
+<h2>AUTOMAIT config snapshot</h2>
+<div class="room-card">
+  <div class="rc-head"><div><h3 class="rc-title" style="margin:0">Controller wired &middot; automation logic unconfigured</h3>
+  <div class="rc-sub">irrigationControllers: [3012] &middot; irrigationSchedules: <em>empty</em> &middot; target_ranges: []</div></div>
+  <div><span class="pill ok">Controller wired</span> <span class="pill warn">No ASI preset</span></div></div>
+  <div class="cfg-grid">
+    <div><div class="c-lbl">irrigationControllers</div><div class="c-val">[3012]</div></div>
+    <div><div class="c-lbl">substrateType</div><div class="c-val">COCO 1.5 gal bag</div></div>
+    <div><div class="c-lbl">emittersPerPlant</div><div class="c-val">2 x 0.3 GPH</div></div>
+    <div><div class="c-lbl">light startTime</div><div class="c-val">04:00 &middot; 12/12</div></div>
+    <div><div class="c-lbl">target_ranges</div><div class="c-val">[]</div></div>
+    <div><div class="c-lbl">ASI preset (current)</div><div class="c-val">&mdash; not assigned</div></div>
+    <div><div class="c-lbl">minVwc</div><div class="c-val">&mdash; SPA reseed</div></div>
+    <div><div class="c-lbl">soil_moist_target_max</div><div class="c-val">&mdash; SPA reseed</div></div>
+    <div><div class="c-lbl">maxEcpw</div><div class="c-val">&mdash; SPA reseed</div></div>
+    <div><div class="c-lbl">lightsBuffer_P0_min</div><div class="c-val">&mdash; SPA reseed</div></div>
+    <div><div class="c-lbl">lightsBuffer_P3_min</div><div class="c-val">&mdash; SPA reseed</div></div>
+    <div><div class="c-lbl">drainGoal</div><div class="c-val">&mdash; SPA reseed</div></div>
+  </div>
+  <p style="font-size:12px;color:var(--muted)"><strong>Honesty note on guardrail fields:</strong> the SPA <code>spa_get_room_config(18757)</code> call returned <code>irrigationControllers: [3012]</code> and <code>target_ranges: []</code>. The AUTOMAIT-specific guardrails (<code>minVwc</code>, <code>soil_moist_target_max</code>, <code>maxEcpw</code>, <code>lightsBuffer_P0_min</code>, <code>lightsBuffer_P3_min</code>, <code>drainGoal</code>) plus the ASI preset assignment live on the SPA endpoints <code>/irrigationSchedules/</code> + <code>/recipes/</code>, which require a fresh app.aroya.io tab (per <code>feedback_spa-config-not-parallel-safe</code>). Those endpoints were not pulled in this session &mdash; the controller is wired but the automation logic has not been programmed yet.</p>
+</div>
+</section>
+<section>
+<h2>14-day cultivation context (R5)</h2>
+<div class="kpi-grid">
+  <div class="kpi ok"><div class="lbl">Peak VWC (14d max, room)</div><div class="val">78.5 %</div><div class="sub">Z1 measured FC ceiling (06-20)</div></div>
+  <div class="kpi bad"><div class="lbl">Trough VWC (14d min, room)</div><div class="val">22.0 %</div><div class="sub">Z2 floor (06-24) &middot; at coco lockout edge</div></div>
+  <div class="kpi"><div class="lbl">Absolute pp drop (peak - trough)</div><div class="val">54.6 pp</div><div class="sub">Largest single-day swing (06-24)</div></div>
+  <div class="kpi"><div class="lbl">Proportional dryback</div><div class="val">~71 %</div><div class="sub">VERY aggressive &middot; past Mid Flower benchmark</div></div>
+  <div class="kpi ok"><div class="lbl">Drip EC (14d mean)</div><div class="val">4.65 mS</div><div class="sub">Range 1.92&ndash;6.08 &middot; healthy uptake direction</div></div>
+  <div class="kpi ok"><div class="lbl">Drain EC (14d mean)</div><div class="val">2.34 mS</div><div class="sub">Range 1.89&ndash;5.78 &middot; drip&gt;drain confirmed</div></div>
+  <div class="kpi"><div class="lbl">Substrate EC (14d mean, room)</div><div class="val">4.88 mS</div><div class="sub">Range 3.35&ndash;7.07 &middot; Z2 stacking deeper</div></div>
+  <div class="kpi"><div class="lbl">VPD (14d mean)</div><div class="val">1.14 kPa</div><div class="sub">In-band for Mid Flower</div></div>
+  <div class="kpi"><div class="lbl">CO2 (14d mean)</div><div class="val">1,038 ppm</div><div class="sub">Healthy enrichment</div></div>
+  <div class="kpi"><div class="lbl">Substrate temp (drip)</div><div class="val">77.1 &deg;F</div><div class="sub">Air 78.3 &middot; RH 65.5%</div></div>
+  <div class="kpi warn"><div class="lbl">Drip volume (14d trend)</div><div class="val">-58%</div><div class="sub">dfi mean 506.5 &middot; declining feed throughput</div></div>
+  <div class="kpi warn"><div class="lbl">Drain volume (14d trend)</div><div class="val">-93%</div><div class="sub">dfi_drain 1,645 mean &middot; runoff collapsing</div></div>
+</div>
+<p style="font-size:13px"><strong>Steering intent observed:</strong> <em>strongly generatively-steered</em>. R5 ran a +14.7% EC stack through Early Flower (Z2 substrate EC peaked at 7.95 mS), with progressively deeper troughs each successive day &mdash; trough drifted from 40-55% in week 1 to 22-25% in week 2. The drain-volume collapse (-93%) confirms the strategy: less water being pushed through, more aggressive depletion. <strong>This is generative steering working as designed</strong> &mdash; with one caveat: the 22.0% Z2 trough on 06-24 sits at the lockout floor for 1.5-gallon coco. The room is at the upper bound of safe generative steering for this substrate.</p>
+<div class="chart-wrap"><div class="ct">Substrate VWC &mdash; Zones 1 + 2 (14d hourly &middot; Early -&gt; Mid phase boundary 06-24)</div><canvas id="r5-vwc" height="200"></canvas></div>
+<div class="chart-wrap"><div class="ct">Pore EC by zone &middot; root-zone EC stacking +14% through Early Flower</div><canvas id="r5-ec" height="200"></canvas></div>
+</section>
+
+<section>
+<h2>Critical interpretation rules applied</h2>
+<div class="retract">
+  <strong>Rule 1 &mdash; Channeling requires evidence beyond a low VWC trough.</strong> A deep trough is consistent with aggressive dryback strategy, small substrate volume, healthy transpiration, or any combination. Calling channeling requires drip-side evidence: visible drip pooling on the substrate surface, drip volume vs drain volume out-of-band for the dryback achieved, EC asymmetry across drip/drain that suggests bypass, or multiple substrate probes in the same zone diverging materially. <strong>R5's 22.0-22.5% minimum VWC in this window is described here as deep dryback / aggressive trough &mdash; not channeling.</strong> No drip-side evidence is in hand to support a channeling call.
+</div>
+<div class="retract">
+  <strong>Rule 2 &mdash; Drip EC &gt; drain EC is the normal, healthy direction.</strong> Feed water carries salts in (drip EC). Plants pull water out under transpiration. Salts stack in the substrate. Drain exits with whatever was not extracted. <strong>Drip EC normally exceeds drain EC because plants are aggressively extracting salts &amp; nutrients from the feed before runoff.</strong> When drip EC &lt; drain EC, the most likely explanation is that drip and drain probes are physically installed in swapped positions. The prior framing of R5's drip 4.65 / drain 2.34 mS as &quot;flush-through leaching&quot; is retracted &mdash; that magnitude is exactly what healthy salt uptake looks like in a coco room running deep dryback.
+</div>
+</section>
+
+<section>
+<h2>AUTOMAIT execution audit (since install 2026-06-24)</h2>
+<table>
+<thead><tr><th>Metric</th><th>Value</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Auto-triggered cycles fired</td><td><span class="pill warn">0</span></td><td><code>irrigationControllers: [3012]</code> wired but <code>irrigationSchedules</code> empty &middot; no recipe assigned &middot; no ASI preset selected</td></tr>
+<tr><td>Manual test pulses (Cian)</td><td>4 x 30s on Z2 port 75837</td><td>2026-06-25 01:23-01:53Z &middot; confirms controller fires on command</td></tr>
+<tr><td>Auto cycles / day projected</td><td>0 until config completed</td><td>Operator must assign ASI preset + recipe before AUTOMAIT will fire autonomously</td></tr>
+<tr><td>Yesterday-reproduction gate</td><td><span class="pill info">Deferred</span></td><td>Per <code>feedback_forecast-model-must-reproduce-yesterday.md</code> &middot; cannot validate until 48h of auto-fires exist &middot; re-run gate 2026-06-27</td></tr>
+</tbody>
+</table>
+<p style="font-size:13px"><strong>Interpretation:</strong> AUTOMAIT <em>wiring</em> is live but the <em>automation logic</em> (recipe + schedule + ASI preset) has not been programmed yet. The 4 manual test pulses prove the controller responds, but R5 will continue to irrigate on whatever the prior manual schedule is until the operator assigns an ASI preset and the room's guardrail fields are populated. Next step is the recommended config in section 6.</p>
+</section>
+
+<section>
+<h2>Sensor-swap check (R5)</h2>
+<table>
+<thead><tr><th>Series</th><th>14d mean (mS)</th><th>14d min</th><th>14d max</th><th>Direction</th><th>Verdict</th></tr></thead>
+<tbody>
+<tr><td>Drip EC (feed input)</td><td>4.65</td><td>1.92</td><td>6.08</td><td rowspan="2" style="vertical-align:middle"><strong>Drip &gt; Drain by 2.31 mS</strong></td><td rowspan="2" style="vertical-align:middle"><span class="pill ok">Labels CORRECT &middot; healthy uptake</span></td></tr>
+<tr><td>Drain EC (runoff)</td><td>2.34</td><td>1.89</td><td>5.78</td></tr>
+</tbody>
+</table>
+<p style="font-size:13px"><strong>What we'd flag:</strong> if drip EC ever drops <em>below</em> drain EC, that's the swap signal &mdash; physical probe positions inverted. Right now the direction is correct: plants are pulling salts + nutrients aggressively from feed before runoff. The 14d range (drip 1.92-6.08, drain 1.89-5.78) shows healthy responsiveness too &mdash; both probes track feed-mix changes.</p>
+</section>
+<section>
+<h2>FC ceiling analysis</h2>
+<div class="kpi-grid">
+  <div class="kpi ok"><div class="lbl">FC ceiling Z1 (smoothed)</div><div class="val">77.1 %</div><div class="sub">Daily-peak p25 proxy &middot; max 78.5%</div></div>
+  <div class="kpi ok"><div class="lbl">FC ceiling Z2 (smoothed)</div><div class="val">75.2 %</div><div class="sub">Daily-peak p25 proxy &middot; max 77.5%</div></div>
+  <div class="kpi warn"><div class="lbl">Practitioner benchmark trough (Mid Flower, coco)</div><div class="val">12-18 %</div><div class="sub">Proportional dryback &middot; per phase reference</div></div>
+  <div class="kpi bad"><div class="lbl">Observed proportional dryback (06-24)</div><div class="val">~71 %</div><div class="sub">Past benchmark &middot; deep generative push</div></div>
+</div>
+<div class="banner warn">
+  <strong>Customer dryback % goal &mdash; OPEN QUESTION.</strong> Not documented anywhere we've found in claude-brain, customer emails, or AROYA app screens. Per <code>feedback_dont-fabricate-customer-targets.md</code> this must be clarified with the operator before locking AUTOMAIT preset values. The practitioner benchmark for Mid Flower in coco is 12-18% proportional dryback, but a deeper-dryback goal is a legitimate operator choice when there's an explicit decision behind it.
+</div>
+<p style="font-size:13px"><strong>Can-the-substrate-deliver verdict:</strong> a <strong>28-32% absolute trough is the safe floor</strong> for 1.5gal coco bags in Mid Flower with ~3 weeks until harvest. Going below 22% (as Z2 did on 06-24) risks Cal/Mg lockout and root die-back. If the operator wants to preserve a deep-dryback strategy into Mid, that's a documented choice &mdash; but the room can't deliver &lt; 22% safely without significant physiology risk. Floor is the AUTOMAIT <code>minVwc</code> field.</p>
+</section>
+
+<section>
+<h2>Predictive 5-day forecast</h2>
+<p class="lede">ET-driven simulator: VWC decay from no-shot windows in the 14d data, ET rate ~4.0 pp/h (conservative round-down from 4.5 pp/h measured 06-24 lights-on -&gt; trough). AUTOMAIT trigger logic: when VWC &lt; minVwc inside the irrigation window, fire shot(s) sized to lift VWC back to ~FC; close when drain ratio reaches drainGoal. EC stack updated as feed_EC x (1 - drain_ratio). Each line is one scenario over 120 hours.</p>
+<div class="chart-wrap"><div class="ct">5-day VWC forecast under 5 scenarios + live operator overlay (interactive)</div><canvas id="fcst" height="240"></canvas></div>
+<table class="scenario-table">
+<thead><tr><th>Scenario</th><th>ASI preset</th><th>minVwc</th><th>drainGoal</th><th>P3 buffer (min)</th><th>Pred D1 peak</th><th>Pred D1 trough</th><th>Pred D1 pp</th><th>Pred EC stack D5</th></tr></thead>
+<tbody>
+<tr class="baseline"><td><strong>1. Baseline &middot; unconfigured (status quo)</strong></td><td>none (manual)</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>~75 %</td><td>~22 %</td><td>~53 pp</td><td>+1.5 mS (continuing stack)</td></tr>
+<tr class="recommended"><td><strong>2. Recommended &middot; GEN 4 (one step below neutral)</strong></td><td>GEN 4</td><td>42</td><td>10</td><td>180</td><td>72 %</td><td>42 %</td><td>~30 pp</td><td>-0.1 mS (slight relax)</td></tr>
+<tr><td>3. GEN 3 (more aggressive)</td><td>GEN 3</td><td>38</td><td>8</td><td>240</td><td>72 %</td><td>38 %</td><td>~34 pp</td><td>+0.3 mS</td></tr>
+<tr><td>4. GEN 2 (deepest still safe in 1.5gal coco)</td><td>GEN 2</td><td>32</td><td>5</td><td>300</td><td>72 %</td><td>32 %</td><td>~40 pp</td><td>+0.7 mS &middot; <em>at coco physiology limit</em></td></tr>
+<tr><td>5. Custom &middot; safety-floor raise + manual feeds</td><td>none (manual)</td><td>40</td><td>&mdash;</td><td>&mdash;</td><td>75 %</td><td>40 %</td><td>~35 pp</td><td>+0.5 mS</td></tr>
+</tbody>
+</table>
+<p style="font-size:11px;color:var(--muted)"><em>Scenario numbers are model-driven estimates from the 14d ET signature, not actuals. The yesterday-reproduction gate cannot be tested until 48h of AUTOMAIT auto-firings exist &mdash; re-run 2026-06-27.</em></p>
+</section>
+
+<section>
+<h2>Interactive operator controls</h2>
+<p style="font-size:13px">Adjust below to overlay your own scenario on the forecast chart. State syncs across devices via the Cloudflare Worker at <code>aroya-report-sync.ciansul.workers.dev/4576-r5</code> &mdash; check the &quot;Synced&quot; pill top-right.</p>
+<div class="controls" id="ctl-r5">
+  <label>ASI preset (GEN 1 = deepest dryback &middot; GEN 5 = neutral &middot; VEG 6+ = vegetative)</label>
+  <input type="range" id="r5-asi" min="1" max="10" step="1" value="4" oninput="document.getElementById('r5-asi-v').textContent='GEN '+this.value+(this.value>5?' (VEG)':'');updateForecast();onCtlChange('r5','asi',this.value)">
+  <div style="font-family:Menlo,monospace;font-size:13px;margin-top:4px" id="r5-asi-v">GEN 4</div>
+  <label>minVwc (safety floor, %) &middot; range 20&ndash;50</label><input type="number" id="r5-minvwc" value="42" step="1" min="20" max="50" oninput="updateForecast();onCtlChange('r5','minvwc',this.value)">
+  <label>drainGoal (%) &middot; range 3&ndash;20</label><input type="number" id="r5-drain" value="10" step="1" min="3" max="20" oninput="updateForecast();onCtlChange('r5','drain',this.value)">
+  <label>lightsBuffer_P3_min (minutes) &middot; range 60&ndash;360</label><input type="number" id="r5-p3" value="180" step="30" min="60" max="360" oninput="updateForecast();onCtlChange('r5','p3',this.value)">
+</div>
+</section>
+
+<section>
+<h2>Recommendation (concrete, prescriptive)</h2>
+<table>
+<thead><tr><th>Step</th><th>Action</th><th>AROYA field</th><th>Value</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Assign R5 to ASI preset <strong>GEN 4</strong></td><td>ASI preset</td><td>GEN 4</td><td>One step below neutral &middot; Mid Flower benchmark &middot; reversible &middot; avoids locking the room into the prior ~71% proportional dryback in a 1.5gal substrate</td></tr>
+<tr><td>2</td><td>Set safety floor</td><td><code>minVwc</code></td><td>42 %</td><td>~13 pp above the historical 06-24 trough of 22.5% &middot; prevents AUTOMAIT from sleeping through a runaway dryback day</td></tr>
+<tr><td>3</td><td>Set drain goal</td><td><code>drainGoal</code></td><td>10 %</td><td>Mid Flower benchmark in coco &middot; P1 close-on-drain event fires when &gt;=10% of drip volume runs through</td></tr>
+<tr><td>4</td><td>Set lights-off buffer</td><td><code>lightsBuffer_P3_min</code></td><td>180 min</td><td>3h dry-down into lights-off &middot; aligns with the existing 04:00 light schedule (last shot at 13:00 UTC)</td></tr>
+<tr><td>5</td><td>Clarify with operator within 48h</td><td>&mdash;</td><td>cultivar 61909 dryback goal</td><td>If operator wants generative-pushed weight, step ASI down to GEN 3 once R5 has stabilized at GEN 4 for 5 days. <strong>Do not step to GEN 2 without operator sign-off + 2-day reversal plan</strong></td></tr>
+</tbody>
+</table>
+<div class="banner">
+<strong>Predicted tomorrow (2026-06-25 lights-on) under GEN 4 config:</strong> peak ~72%, trough ~42%, pp drop ~30 pp. Compare against the 06-24 measured trough 22.5% / pp drop 54.6 (running unmanaged).
+</div>
+</section>
+
+<section>
+<h2>Risk flags (cultivation philosophy frame)</h2>
+<ul>
+  <li><strong>R5 is coco + small substrate (1.5 gal) + Mid Flower D1 today.</strong> ~42 days left in cycle (harvest 2026-08-05). Mid Flower in coco is the bulking phase &mdash; the room's job is canopy fill + flower set, not extreme generative push.</li>
+  <li><strong>Don't recommend morphology changes the room can't reach in the days left in cycle.</strong> Bulking wants relaxed dryback (12-18% proportional benchmark), substrate EC pulled back to 4.0-7.0 mS, VPD 1.2-1.4 kPa. R5 currently runs ~71% proportional dryback &mdash; aggressive even for Early Flower.</li>
+  <li><strong>Over-stress risk:</strong> aggressive ASI step into GEN 2 or GEN 1 in Mid Flower in 1.5gal coco -&gt; week-5 transpiration deficit, leaf-curl, root die-back, smaller flower. The 06-24 trough of 22.0-22.5% is already at the floor.</li>
+  <li><strong>Recommended ceiling for the remaining cycle:</strong> GEN 3 (the deeper of the two safe options). <strong>Do NOT go to GEN 2 or below</strong> without operator sign-off and a 2-day reversal plan documented in advance.</li>
+  <li><strong>EC stack trajectory:</strong> Z2 substrate EC peaked at 7.95 mS during week-2 stacking. For Mid Flower in coco the appropriate stack is 4.0-7.0 mS. GEN 4 with drainGoal 10% will pull EC back into band over 3-5 days.</li>
+</ul>
+</section>
+
+<section>
+<h2>Open questions</h2>
+<ul>
+  <li><strong>Operator's documented dryback % goal for R5 Mid Flower (cultivar 61909)</strong> &mdash; not in claude-brain, customer wiki, or recent emails. Required before locking AUTOMAIT preset.</li>
+  <li><strong>Why was R5 picked for the first AUTOMAIT install?</strong> Substrate physics would suggest R1, R2 or R3 first &mdash; larger plant counts, same coco substrate. Possible: R5 is operator's test/comfort room, or the smallest cohort makes a safer pilot.</li>
+  <li><strong>Should AUTOMAIT control all coco rooms (R1, R2, R5) once R5 proves the recipe?</strong> Or stay R5-only as a fixed pilot for a defined window?</li>
+  <li><strong>SPA reseed needed:</strong> <code>/irrigationSchedules/</code> + <code>/recipes/</code> endpoints not pulled this session &mdash; the populated guardrail values + ASI preset value can only be reported as &quot;not assigned&quot; until a fresh app.aroya.io tab is opened.</li>
+</ul>
+</section>
+<section>
+<h2>Appendix</h2>
+<h3>Raw 14d daily aggregates &middot; Zone 1 (76459)</h3>
+<table>
+<thead><tr><th>Date</th><th>VWC peak</th><th>VWC trough</th><th>VWC mean</th><th>Abs dryback (pp)</th><th>Pore EC mean</th><th>Pore EC peak</th></tr></thead>
+<tbody id="daily-z1"></tbody>
+</table>
+<h3>Raw 14d daily aggregates &middot; Zone 2 (81612)</h3>
+<table>
+<thead><tr><th>Date</th><th>VWC peak</th><th>VWC trough</th><th>VWC mean</th><th>Abs dryback (pp)</th><th>Pore EC mean</th><th>Pore EC peak</th></tr></thead>
+<tbody id="daily-z2"></tbody>
+</table>
+
+<h3>AUTOMAIT config diff (pre-install -&gt; post-install)</h3>
+<table>
+<thead><tr><th>Field</th><th>Pre-install (2026-06-23)</th><th>Post-install (2026-06-24)</th></tr></thead>
+<tbody>
+<tr><td><code>irrigationControllers</code></td><td>[] (no controller)</td><td>[3012]</td></tr>
+<tr><td><code>irrigationSchedules</code></td><td>(none)</td><td><em>empty &mdash; not yet programmed</em></td></tr>
+<tr><td><code>target_ranges</code></td><td>[]</td><td>[]</td></tr>
+<tr><td>ASI preset</td><td>n/a</td><td>not assigned</td></tr>
+<tr><td><code>minVwc</code></td><td>n/a</td><td>unset</td></tr>
+<tr><td><code>drainGoal</code></td><td>n/a</td><td>unset</td></tr>
+<tr><td><code>lightsBuffer_P3_min</code></td><td>n/a</td><td>unset</td></tr>
+<tr><td>Manual fires (controller test)</td><td>0</td><td>4 x 30s on Z2 port 75837, 01:23-01:53Z</td></tr>
+</tbody>
+</table>
+
+<h3>Methodology &middot; forecast model assumptions</h3>
+<ul style="font-size:13px">
+  <li><strong>ET rate:</strong> ~4.0 pp/h (conservative round-down from the 06-24 measured 54.6 pp drop over ~12h lights-on; observed instantaneous rate ranged 4-5 pp/h)</li>
+  <li><strong>Decay model:</strong> VWC(t) = FC x (1 - ET_rate x hours_since_last_shot), bounded below by minVwc</li>
+  <li><strong>Shot trigger:</strong> when VWC &lt; minVwc and t in irrigation_window (P1 / P2), fire shot raising VWC back toward FC (~72-75%) in steps</li>
+  <li><strong>Drain-event close:</strong> shot ends when cumulative drain &gt;= drainGoal x drip_volume</li>
+  <li><strong>EC stack model:</strong> substrate_EC(t+1) = substrate_EC(t) + (feed_EC x (1 - drain_ratio) - root_uptake) &middot; root_uptake calibrated to observed -5.1% Z2 trend in week 2</li>
+  <li><strong>Lights schedule:</strong> 04:00-16:00 UTC (12/12); P0 buffer 90 min after lights-on; P3 buffer per scenario</li>
+  <li><strong>HG flip boundaries respected:</strong> ET signature weighted to last 5 days within current phase; not flattened across the 06-24 Early-&gt;Mid flip per <code>feedback_forecast-model-must-reproduce-yesterday.md</code></li>
+</ul>
+
+<h3>Sensor-swap status</h3>
+<p><span class="pill ok">PASS</span> &middot; drip EC (4.65 mS mean) &gt; drain EC (2.34 mS mean) &middot; healthy uptake direction confirmed over 14 days</p>
+
+<h3>Yesterday-reproduction validation</h3>
+<p><span class="pill info">DEFERRED</span> &middot; AUTOMAIT just enabled with zero auto-fired events to date. Re-run gate on 2026-06-27 after 48h of auto-fires exist. Required by <code>feedback_forecast-model-must-reproduce-yesterday.md</code>.</p>
+
+<h3>Pre-publish grep results</h3>
+<ul style="font-size:12px;font-family:Menlo,monospace">
+  <li>Forbidden lowercase brand spelling check: PASS (0 matches in body content)</li>
+  <li>Required brand-correct spelling check: PASS (27+ matches across report)</li>
+  <li>Inverted ASI direction check: PASS (no instances of stepping UP for deeper dryback &mdash; ASI direction is GEN 1 = deepest, step DOWN for aggression)</li>
+</ul>
+
+<h3>Data provenance</h3>
+<ul style="font-size:12px">
+  <li>14d hourly + 3-min readings: <code>mcp__aroya__spa_get_harvest_readings(facility=4576, hg=155043, metrics=soil_moist,pore_ec,pore_ec_drip,pore_ec_drain, start=2026-06-11T00:00:00Z, end=2026-06-25T05:00:00Z, grouping=ZONE)</code></li>
+  <li>Room config: <code>spa_get_room_config(room_id=18757)</code> &middot; returned <code>irrigationControllers: [3012]</code>, <code>target_ranges: []</code></li>
+  <li>Aggregation: <code>/tmp/r5_aggregate.py</code> &middot; daily peak/trough/mean + 24h hourly bins from 6,805 raw 3-min points per zone</li>
+  <li>Drip / drain EC + climate stats: pulled in companion 14d agronomic audit (<code>HK_Cassandra_2wk_Audit_2026-06-10_to_2026-06-24.html</code>)</li>
+</ul>
+</section>
+
+<div class="foot">
+HK Cassandra LLC &middot; facility 4576 &middot; Room 5 (24 lights) &middot; R5 AUTOMAIT Operational Audit &middot; generated 2026-06-24 by Cian Sullivan / Addium &middot; companion to <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_AUTOMAIT_Readiness_Plan_2026-06-24.html">readiness plan</a> and <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_2wk_Audit_2026-06-10_to_2026-06-24.html">2-week agronomic baseline</a>.
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const C={olive:'#3d3d2b',lime:'#c6e34d',appBlue:'#2a6fdb',warn:'#c7942c',danger:'#b54141',good:'#3a7d44',early:'#f4a261',mid:'#c5a3ff',bulking:'#c5a3ff'};
+</script>
+<script id="r5-data">
+const HOURLY_LABELS = ["06-11 00", "06-11 01", "06-11 02", "06-11 03", "06-11 04", "06-11 05", "06-11 06", "06-11 07", "06-11 08", "06-11 09", "06-11 10", "06-11 11", "06-11 12", "06-11 13", "06-11 14", "06-11 15", "06-11 16", "06-11 17", "06-11 18", "06-11 19", "06-11 20", "06-11 21", "06-11 22", "06-11 23", "06-12 00", "06-12 01", "06-12 02", "06-12 03", "06-12 04", "06-12 05", "06-12 06", "06-12 07", "06-12 08", "06-12 09", "06-12 10", "06-12 11", "06-12 12", "06-12 13", "06-12 14", "06-12 15", "06-12 16", "06-12 17", "06-12 18", "06-12 19", "06-12 20", "06-12 21", "06-12 22", "06-12 23", "06-13 00", "06-13 01", "06-13 02", "06-13 03", "06-13 04", "06-13 05", "06-13 06", "06-13 07", "06-13 08", "06-13 09", "06-13 10", "06-13 11", "06-13 12", "06-13 13", "06-13 14", "06-13 15", "06-13 16", "06-13 17", "06-13 18", "06-13 19", "06-13 20", "06-13 21", "06-13 22", "06-13 23", "06-14 00", "06-14 01", "06-14 02", "06-14 03", "06-14 04", "06-14 05", "06-14 06", "06-14 07", "06-14 08", "06-14 09", "06-14 10", "06-14 11", "06-14 12", "06-14 13", "06-14 14", "06-14 15", "06-14 16", "06-14 17", "06-14 18", "06-14 19", "06-14 20", "06-14 21", "06-14 22", "06-14 23", "06-15 00", "06-15 01", "06-15 02", "06-15 03", "06-15 04", "06-15 05", "06-15 06", "06-15 07", "06-15 08", "06-15 09", "06-15 10", "06-15 11", "06-15 12", "06-15 13", "06-15 14", "06-15 15", "06-15 16", "06-15 17", "06-15 18", "06-15 19", "06-15 20", "06-15 21", "06-15 22", "06-15 23", "06-16 00", "06-16 01", "06-16 02", "06-16 03", "06-16 04", "06-16 05", "06-16 06", "06-16 07", "06-16 08", "06-16 09", "06-16 10", "06-16 11", "06-16 12", "06-16 13", "06-16 14", "06-16 15", "06-16 16", "06-16 17", "06-16 18", "06-16 19", "06-16 20", "06-16 21", "06-16 22", "06-16 23", "06-17 00", "06-17 01", "06-17 02", "06-17 03", "06-17 04", "06-17 05", "06-17 06", "06-17 07", "06-17 08", "06-17 09", "06-17 10", "06-17 11", "06-17 12", "06-17 13", "06-17 14", "06-17 15", "06-17 16", "06-17 17", "06-17 18", "06-17 19", "06-17 20", "06-17 21", "06-17 22", "06-17 23", "06-18 00", "06-18 01", "06-18 02", "06-18 03", "06-18 04", "06-18 05", "06-18 06", "06-18 07", "06-18 08", "06-18 09", "06-18 10", "06-18 11", "06-18 12", "06-18 13", "06-18 14", "06-18 15", "06-18 16", "06-18 17", "06-18 18", "06-18 19", "06-18 20", "06-18 21", "06-18 22", "06-18 23", "06-19 00", "06-19 01", "06-19 02", "06-19 03", "06-19 04", "06-19 05", "06-19 06", "06-19 07", "06-19 08", "06-19 09", "06-19 10", "06-19 11", "06-19 12", "06-19 13", "06-19 14", "06-19 15", "06-19 16", "06-19 17", "06-19 18", "06-19 19", "06-19 20", "06-19 21", "06-19 22", "06-19 23", "06-20 00", "06-20 01", "06-20 02", "06-20 03", "06-20 04", "06-20 05", "06-20 06", "06-20 07", "06-20 08", "06-20 09", "06-20 10", "06-20 11", "06-20 12", "06-20 13", "06-20 14", "06-20 15", "06-20 16", "06-20 17", "06-20 18", "06-20 19", "06-20 20", "06-20 21", "06-20 22", "06-20 23", "06-21 00", "06-21 01", "06-21 02", "06-21 03", "06-21 04", "06-21 05", "06-21 06", "06-21 07", "06-21 08", "06-21 09", "06-21 10", "06-21 11", "06-21 12", "06-21 13", "06-21 14", "06-21 15", "06-21 16", "06-21 17", "06-21 18", "06-21 19", "06-21 20", "06-21 21", "06-21 22", "06-21 23", "06-22 00", "06-22 01", "06-22 02", "06-22 03", "06-22 04", "06-22 05", "06-22 06", "06-22 07", "06-22 08", "06-22 09", "06-22 10", "06-22 11", "06-22 12", "06-22 13", "06-22 14", "06-22 15", "06-22 16", "06-22 17", "06-22 18", "06-22 19", "06-22 20", "06-22 21", "06-22 22", "06-22 23", "06-23 00", "06-23 01", "06-23 02", "06-23 03", "06-23 04", "06-23 05", "06-23 06", "06-23 07", "06-23 08", "06-23 09", "06-23 10", "06-23 11", "06-23 12", "06-23 13", "06-23 14", "06-23 15", "06-23 16", "06-23 17", "06-23 18", "06-23 19", "06-23 20", "06-23 21", "06-23 22", "06-23 23", "06-24 00", "06-24 01", "06-24 02", "06-24 03", "06-24 04", "06-24 05", "06-24 06", "06-24 07", "06-24 08", "06-24 09", "06-24 10", "06-24 11", "06-24 12", "06-24 13", "06-24 14", "06-24 15", "06-24 16", "06-24 17", "06-24 18", "06-24 19", "06-24 20", "06-24 21", "06-24 22", "06-24 23", "06-25 00", "06-25 01", "06-25 02", "06-25 03", "06-25 04"];
+const R5_Z1_VWC = [74.392, 73.36, 72.474, 71.382, 70.135, 69.196, 68.293, 66.754, 64.844, 63.603, 62.194, 62.43, 69.364, 76.326, 76.908, 73.729, 73.036, 74.517, 76.174, 76.746, 76.948, 75.637, 75.73, 72.415, 69.742, 67.959, 66.288, 63.409, 61.82, 60.502, 59.335, 58.116, 56.112, 54.223, 52.119, 51.766, 58.826, 66.33, 74.458, 75.458, 75.155, 74.364, 72.302, 71.469, 73.661, 76.247, 75.514, 71.652, 68.726, 66.171, 63.025, 61.301, 59.739, 58.153, 56.37, 54.644, 52.782, 50.858, 48.669, 48.752, 56.468, 64.171, 72.425, 73.727, 73.343, 72.539, 75.535, 76.412, 73.706, 73.778, 74.471, 74.54, 73.677, 72.568, 71.391, 70.289, 68.885, 67.529, 66.072, 63.806, 62.41, 60.831, 58.981, 58.872, 70.859, 77.396, 76.893, 75.464, 74.691, 72.705, 72.033, 71.866, 72.716, 76.251, 76.683, 74.992, 72.122, 70.074, 68.381, 66.546, 63.905, 62.006, 60.586, 59.076, 57.351, 55.363, 53.259, 52.937, 64.765, 75.907, 76.487, 74.941, 74.82, 73.787, 76.074, 75.938, 74.552, 74.586, 74.789, 72.635, 69.575, 66.245, 62.983, 60.993, 59.158, 57.301, 55.304, 53.32, 51.134, 48.797, 46.236, 46.169, 59.405, 72.766, 76.197, 74.808, 74.183, 71.676, 70.525, 69.718, 67.61, 74.982, 76.055, 73.464, 69.703, 66.691, 62.876, 60.515, 58.196, 55.643, 53.239, 50.744, 48.155, 45.49, 42.67, 50.436, 65.524, 76.26, 76.206, 75.129, 75.131, 72.861, 72.246, 75.291, 74.834, 74.667, 75.304, 72.722, 68.558, 65.132, 62.376, 60.08, 57.83, 55.251, 52.899, 50.417, 47.663, 44.777, 41.581, 49.103, 63.848, 75.496, 75.777, 76.402, 75.956, 76.41, 75.924, 76.96, 77.172, 76.858, 76.971, 76.112, 74.623, 72.893, 70.745, 68.499, 66.627, 64.828, 62.97, 61.145, 59.177, 57.047, 54.343, 60.168, 71.933, 75.621, 74.539, 73.265, 72.177, 71.234, 69.854, 68.683, 67.611, 66.771, 66.333, 63.104, 59.326, 55.484, 51.927, 48.639, 45.549, 42.516, 39.59, 36.745, 33.779, 30.86, 27.748, 34.868, 50.873, 65.514, 69.373, 69.362, 71.329, 73.339, 74.74, 75.47, 75.864, 77.229, 77.451, 74.465, 70.762, 66.967, 63.966, 61.065, 58.284, 55.253, 52.296, 49.328, 46.241, 42.959, 39.429, 47.559, 63.951, 75.188, 75.407, 74.441, 75.0, 76.041, 75.191, 74.917, 74.489, 74.672, 75.346, 71.738, 66.824, 62.845, 58.953, 55.24, 51.416, 47.609, 43.665, 39.715, 35.656, 31.52, 27.253, 34.334, 51.628, 67.592, 72.094, 71.671, 71.466, 71.383, 69.422, 67.507, 65.778, 75.44, 75.378, 70.517, 64.894, 59.866, 55.424, 50.847, 46.32, 41.8, 37.415, 33.91, 34.631, 31.036, 26.476, 32.749, 48.124, 62.956, 66.229, 65.363, 64.23, 63.033, 61.815, 62.855, 75.273, 76.082, 74.944, 75.647, 72.199, 66.905, 61.895, 57.215, 52.542, 47.84, 43.173, 38.506, 33.825, 29.091, 24.361, 30.423, 45.691, 60.7, 68.592, 71.661, 75.542, 74.938, 76.173, 75.02, 74.745, 75.808, 74.313, 75.425, 71.673, 66.423, 62.595, 57.686, 53.097];
+const R5_Z2_VWC = [72.766, 71.19, 69.78, 68.041, 66.337, 64.99, 63.725, 62.26, 60.739, 59.114, 57.369, 57.306, 64.469, 72.199, 75.062, 72.258, 71.243, 72.81, 75.437, 76.135, 76.638, 75.202, 75.068, 71.195, 66.921, 64.284, 62.17, 60.36, 58.387, 56.469, 54.713, 53.129, 51.334, 49.374, 47.265, 46.916, 53.686, 61.837, 70.947, 72.048, 71.197, 70.041, 66.904, 65.265, 68.003, 72.318, 72.259, 67.905, 63.392, 60.559, 58.037, 55.625, 53.484, 51.604, 49.812, 47.985, 46.142, 44.284, 42.551, 42.638, 49.936, 58.412, 68.223, 69.453, 69.421, 69.601, 73.245, 74.675, 72.702, 73.008, 73.83, 74.145, 73.573, 73.115, 72.411, 71.211, 69.379, 67.215, 65.298, 63.366, 61.486, 59.613, 57.492, 57.442, 70.882, 76.334, 75.365, 73.832, 73.433, 71.395, 70.581, 70.365, 70.889, 74.532, 74.976, 73.261, 70.086, 66.855, 64.39, 62.191, 60.243, 58.242, 56.263, 54.441, 52.559, 50.578, 48.333, 47.925, 58.801, 71.443, 73.365, 70.917, 69.442, 68.729, 74.383, 74.269, 72.48, 71.809, 71.429, 68.645, 64.302, 60.845, 58.352, 55.902, 53.741, 51.701, 49.778, 47.848, 45.796, 43.632, 41.383, 41.256, 53.493, 68.745, 72.598, 71.728, 70.855, 67.917, 66.322, 64.934, 62.016, 72.391, 73.629, 70.985, 67.03, 63.461, 60.582, 57.964, 55.392, 52.998, 50.837, 48.781, 46.747, 44.385, 42.013, 48.825, 64.535, 74.765, 73.941, 72.58, 72.481, 70.238, 69.053, 72.907, 72.687, 72.084, 72.246, 69.62, 64.862, 61.288, 58.513, 55.928, 53.541, 51.34, 49.278, 47.077, 44.768, 42.366, 39.857, 46.186, 60.943, 72.879, 73.337, 73.769, 72.963, 72.93, 73.888, 76.625, 76.427, 76.165, 76.227, 75.228, 74.272, 73.189, 71.675, 70.074, 67.876, 66.006, 64.13, 62.248, 60.504, 58.467, 56.211, 62.093, 73.043, 75.173, 74.505, 73.341, 72.148, 70.612, 68.322, 66.052, 63.918, 62.353, 61.336, 57.336, 53.269, 50.073, 47.211, 44.463, 41.816, 39.33, 37.021, 34.987, 32.841, 30.845, 28.739, 34.623, 46.528, 60.697, 64.113, 63.623, 64.475, 67.665, 70.394, 72.349, 73.69, 75.349, 76.005, 73.593, 69.121, 64.986, 61.724, 58.711, 55.693, 52.811, 50.267, 47.592, 45.001, 42.23, 39.221, 45.613, 60.924, 73.778, 74.963, 74.137, 74.446, 75.642, 74.76, 74.644, 74.39, 74.33, 75.065, 71.174, 65.223, 60.647, 56.541, 52.653, 48.714, 45.002, 41.435, 37.786, 34.174, 30.382, 26.785, 31.02, 42.339, 57.809, 62.159, 61.234, 60.609, 59.898, 56.727, 53.748, 50.995, 68.011, 74.088, 68.297, 60.801, 55.382, 50.508, 46.13, 41.89, 37.972, 34.307, 31.388, 31.974, 28.745, 25.201, 28.71, 38.203, 51.872, 54.951, 53.914, 52.505, 50.838, 49.095, 49.739, 67.535, 74.105, 72.852, 73.182, 68.64, 62.513, 57.332, 52.364, 47.764, 43.362, 39.268, 35.337, 31.385, 27.519, 23.778, 26.325, 35.457, 48.235, 56.123, 60.487, 70.965, 69.939, 72.033, 71.908, 71.311, 72.323, 70.611, 71.956, 66.804, 60.416, 56.119, 51.172, 46.688];
+const R5_Z1_EC  = [3.388, 3.405, 3.422, 3.443, 3.475, 3.516, 3.552, 3.61, 3.688, 3.74, 3.818, 3.838, 3.583, 3.432, 3.319, 3.332, 3.332, 3.341, 3.288, 3.262, 3.246, 3.219, 3.198, 3.248, 3.344, 3.381, 3.422, 3.51, 3.56, 3.608, 3.651, 3.701, 3.783, 3.866, 3.951, 3.996, 3.756, 3.536, 3.386, 3.383, 3.401, 3.414, 3.452, 3.481, 3.501, 3.477, 3.492, 3.557, 3.671, 3.74, 3.854, 3.922, 3.987, 4.055, 4.139, 4.217, 4.313, 4.395, 4.496, 4.528, 4.306, 4.121, 4.055, 4.071, 4.075, 4.091, 4.052, 4.071, 4.093, 4.087, 4.13, 4.166, 4.166, 4.163, 4.169, 4.187, 4.222, 4.253, 4.306, 4.39, 4.445, 4.516, 4.596, 4.608, 4.269, 4.178, 4.112, 4.057, 4.029, 4.015, 4.007, 4.021, 4.013, 3.926, 3.857, 3.833, 3.883, 3.893, 3.909, 3.949, 4.046, 4.12, 4.178, 4.244, 4.311, 4.396, 4.491, 4.538, 4.167, 3.979, 3.967, 3.936, 3.896, 3.875, 3.826, 3.765, 3.731, 3.694, 3.679, 3.703, 3.81, 3.918, 4.036, 4.115, 4.191, 4.275, 4.377, 4.48, 4.59, 4.707, 4.811, 4.873, 4.482, 4.258, 4.281, 4.291, 4.285, 4.291, 4.307, 4.328, 4.365, 4.272, 4.209, 4.181, 4.23, 4.287, 4.418, 4.51, 4.597, 4.712, 4.822, 4.946, 5.055, 5.168, 5.3, 5.131, 4.723, 4.639, 4.609, 4.516, 4.405, 4.347, 4.297, 4.057, 3.799, 3.663, 3.591, 3.618, 3.759, 3.891, 4.017, 4.145, 4.273, 4.429, 4.572, 4.706, 4.854, 4.993, 5.14, 4.984, 4.493, 4.24, 4.193, 4.06, 3.864, 3.699, 3.42, 2.916, 2.9, 2.93, 2.943, 3.028, 3.108, 3.169, 3.252, 3.347, 3.436, 3.523, 3.612, 3.707, 3.807, 3.91, 4.039, 3.783, 3.368, 3.397, 3.448, 3.468, 3.497, 3.522, 3.564, 3.613, 3.656, 3.708, 3.776, 3.939, 4.128, 4.304, 4.48, 4.637, 4.794, 4.964, 5.115, 5.26, 5.417, 5.559, 5.756, 5.684, 5.691, 5.162, 4.813, 4.77, 4.605, 4.658, 4.612, 4.491, 4.301, 3.935, 3.73, 3.728, 3.848, 4.001, 4.137, 4.311, 4.46, 4.627, 4.784, 4.923, 5.059, 5.214, 5.367, 5.255, 4.764, 4.427, 4.312, 4.205, 4.117, 3.916, 3.802, 3.747, 3.723, 3.717, 3.73, 3.855, 4.04, 4.202, 4.393, 4.56, 4.741, 4.9, 5.067, 5.225, 5.382, 5.538, 5.752, 5.768, 5.645, 4.882, 4.56, 4.533, 4.459, 4.44, 4.525, 4.631, 4.744, 4.454, 4.337, 4.409, 4.572, 4.8, 4.996, 5.207, 5.417, 5.613, 5.805, 5.969, 6.025, 6.18, 6.381, 6.367, 6.207, 5.502, 5.214, 5.199, 5.236, 5.312, 5.41, 5.405, 4.799, 4.632, 4.477, 4.183, 4.199, 4.362, 4.555, 4.793, 5.04, 5.281, 5.509, 5.73, 5.957, 6.172, 6.466, 6.45, 6.152, 5.256, 4.571, 4.343, 4.148, 4.019, 3.904, 3.868, 3.801, 3.739, 3.785, 3.785, 3.942, 4.132, 4.313, 4.572, 4.826];
+const R5_Z2_EC  = [3.731, 3.839, 3.913, 3.98, 4.057, 4.123, 4.185, 4.27, 4.357, 4.452, 4.566, 4.57, 4.095, 3.766, 3.723, 3.961, 4.101, 3.854, 3.688, 3.611, 3.353, 3.534, 3.64, 3.96, 4.27, 4.438, 4.563, 4.673, 4.77, 4.856, 4.936, 4.997, 5.109, 5.221, 5.336, 5.404, 4.945, 4.271, 3.724, 3.918, 4.177, 4.285, 4.562, 4.715, 4.438, 4.275, 4.46, 4.814, 5.145, 5.309, 5.434, 5.555, 5.644, 5.71, 5.778, 5.87, 5.947, 6.042, 6.113, 6.213, 5.756, 4.946, 4.23, 4.596, 4.912, 4.967, 4.6, 4.704, 4.98, 5.024, 4.975, 5.15, 5.242, 5.298, 5.341, 5.383, 5.417, 5.476, 5.573, 5.686, 5.768, 5.858, 5.953, 5.964, 5.05, 4.436, 4.479, 4.683, 4.694, 4.807, 4.839, 4.792, 4.584, 4.165, 4.071, 4.337, 4.594, 4.775, 4.905, 5.036, 5.142, 5.267, 5.39, 5.498, 5.609, 5.701, 5.835, 5.883, 5.154, 4.311, 4.609, 5.009, 5.077, 5.1, 4.654, 4.742, 4.929, 5.007, 5.013, 5.224, 5.509, 5.67, 5.78, 5.912, 6.027, 6.126, 6.212, 6.317, 6.443, 6.536, 6.604, 6.776, 5.932, 4.577, 4.983, 5.533, 5.635, 5.849, 5.969, 6.014, 6.206, 5.298, 5.313, 5.722, 5.983, 6.178, 6.324, 6.448, 6.589, 6.738, 6.855, 6.947, 7.02, 7.148, 7.205, 6.919, 5.113, 4.312, 4.691, 5.023, 5.026, 5.249, 5.35, 4.298, 4.108, 4.268, 4.299, 4.688, 5.132, 5.426, 5.643, 5.852, 6.027, 6.18, 6.296, 6.449, 6.588, 6.677, 6.752, 6.405, 4.674, 3.769, 3.884, 3.349, 3.44, 3.454, 3.209, 2.697, 2.885, 3.105, 3.288, 3.505, 3.654, 3.738, 3.811, 3.88, 3.947, 4.03, 4.117, 4.209, 4.299, 4.406, 4.523, 4.339, 3.965, 3.635, 3.641, 3.741, 3.808, 3.851, 3.968, 4.108, 4.274, 4.429, 4.557, 4.889, 5.186, 5.391, 5.57, 5.728, 5.874, 6.019, 6.136, 6.223, 6.378, 6.484, 6.589, 6.596, 4.742, 3.729, 3.68, 3.911, 3.971, 3.805, 3.675, 3.636, 3.696, 3.637, 3.445, 3.853, 4.322, 4.689, 5.011, 5.284, 5.547, 5.764, 5.918, 6.094, 6.216, 6.313, 6.413, 6.221, 4.494, 3.585, 3.665, 3.829, 3.892, 3.425, 3.43, 3.386, 3.342, 3.353, 3.362, 3.692, 4.099, 4.52, 4.907, 5.252, 5.585, 5.84, 6.042, 6.208, 6.325, 6.478, 6.622, 6.54, 4.548, 3.518, 3.384, 3.618, 3.88, 4.097, 4.484, 4.946, 5.456, 3.884, 3.682, 4.629, 5.542, 6.186, 6.62, 6.909, 7.138, 7.269, 7.351, 7.463, 7.637, 7.609, 7.608, 7.196, 5.066, 3.964, 3.905, 4.233, 4.678, 5.147, 5.601, 5.693, 3.737, 2.98, 2.868, 3.006, 3.517, 4.277, 5.02, 5.685, 6.205, 6.59, 6.821, 6.983, 7.114, 7.227, 7.438, 6.603, 5.002, 4.023, 3.685, 3.625, 3.116, 3.368, 3.146, 2.995, 3.159, 3.198, 3.557, 3.585, 4.176, 4.826, 5.306, 5.786, 6.184];
+const R5_DAILY_Z1_VWC = [{"d": "2026-06-11", "peak": 77.89, "trough": 60.54, "mean": 71.52, "n": 480, "dryback_pp": 17.35}, {"d": "2026-06-12", "peak": 77.62, "trough": 49.27, "mean": 66.12, "n": 480, "dryback_pp": 28.35}, {"d": "2026-06-13", "peak": 78.14, "trough": 46.14, "mean": 64.6, "n": 480, "dryback_pp": 31.99}, {"d": "2026-06-14", "peak": 77.94, "trough": 56.47, "mean": 70.33, "n": 480, "dryback_pp": 21.48}, {"d": "2026-06-15", "peak": 77.78, "trough": 50.39, "mean": 67.97, "n": 479, "dryback_pp": 27.4}, {"d": "2026-06-16", "peak": 77.79, "trough": 43.3, "mean": 64.11, "n": 480, "dryback_pp": 34.49}, {"d": "2026-06-17", "peak": 77.72, "trough": 41.09, "mean": 64.61, "n": 480, "dryback_pp": 36.63}, {"d": "2026-06-18", "peak": 77.71, "trough": 39.91, "mean": 64.98, "n": 480, "dryback_pp": 37.79}, {"d": "2026-06-19", "peak": 76.15, "trough": 52.9, "mean": 67.26, "n": 480, "dryback_pp": 23.25}, {"d": "2026-06-20", "peak": 78.5, "trough": 26.17, "mean": 56.75, "n": 480, "dryback_pp": 52.33}, {"d": "2026-06-21", "peak": 77.17, "trough": 37.59, "mean": 64.19, "n": 480, "dryback_pp": 39.58}, {"d": "2026-06-22", "peak": 76.68, "trough": 25.12, "mean": 57.7, "n": 480, "dryback_pp": 51.56}, {"d": "2026-06-23", "peak": 76.93, "trough": 24.19, "mean": 54.66, "n": 480, "dryback_pp": 52.73}, {"d": "2026-06-24", "peak": 77.49, "trough": 22.17, "mean": 57.95, "n": 462, "dryback_pp": 55.32}, {"d": "2026-06-25", "peak": 74.11, "trough": 50.91, "mean": 62.29, "n": 100, "dryback_pp": 23.2}];
+const R5_DAILY_Z2_VWC = [{"d": "2026-06-11", "peak": 77.46, "trough": 55.16, "mean": 68.81, "n": 480, "dryback_pp": 22.3}, {"d": "2026-06-12", "peak": 74.57, "trough": 44.65, "mean": 61.82, "n": 480, "dryback_pp": 29.92}, {"d": "2026-06-13", "peak": 77.37, "trough": 40.26, "mean": 60.12, "n": 480, "dryback_pp": 37.12}, {"d": "2026-06-14", "peak": 77.12, "trough": 54.91, "mean": 69.48, "n": 480, "dryback_pp": 22.21}, {"d": "2026-06-15", "peak": 76.21, "trough": 45.39, "mean": 64.1, "n": 479, "dryback_pp": 30.83}, {"d": "2026-06-16", "peak": 75.99, "trough": 38.78, "mean": 59.59, "n": 480, "dryback_pp": 37.21}, {"d": "2026-06-17", "peak": 76.24, "trough": 40.77, "mean": 62.34, "n": 480, "dryback_pp": 35.47}, {"d": "2026-06-18", "peak": 76.98, "trough": 38.43, "mean": 62.35, "n": 480, "dryback_pp": 38.56}, {"d": "2026-06-19", "peak": 75.71, "trough": 54.96, "mean": 66.87, "n": 480, "dryback_pp": 20.75}, {"d": "2026-06-20", "peak": 76.89, "trough": 27.64, "mean": 53.49, "n": 480, "dryback_pp": 49.25}, {"d": "2026-06-21", "peak": 76.76, "trough": 37.65, "mean": 62.97, "n": 480, "dryback_pp": 39.11}, {"d": "2026-06-22", "peak": 75.66, "trough": 25.0, "mean": 51.93, "n": 480, "dryback_pp": 50.65}, {"d": "2026-06-23", "peak": 74.8, "trough": 23.5, "mean": 48.41, "n": 480, "dryback_pp": 51.3}, {"d": "2026-06-24", "peak": 73.79, "trough": 22.0, "mean": 52.91, "n": 462, "dryback_pp": 51.79}, {"d": "2026-06-25", "peak": 70.26, "trough": 44.77, "mean": 56.24, "n": 100, "dryback_pp": 25.49}];
+const R5_DAILY_Z1_EC = [{"d": "2026-06-11", "peak": 3.91, "trough": 3.18, "mean": 3.45, "n": 480, "dryback_pp": 0.73}, {"d": "2026-06-12", "peak": 4.06, "trough": 3.32, "mean": 3.57, "n": 480, "dryback_pp": 0.74}, {"d": "2026-06-13", "peak": 4.61, "trough": 3.63, "mean": 4.11, "n": 480, "dryback_pp": 0.98}, {"d": "2026-06-14", "peak": 4.68, "trough": 3.8, "mean": 4.18, "n": 480, "dryback_pp": 0.88}, {"d": "2026-06-15", "peak": 4.6, "trough": 3.64, "mean": 4.01, "n": 479, "dryback_pp": 0.96}, {"d": "2026-06-16", "peak": 4.95, "trough": 3.76, "mean": 4.32, "n": 480, "dryback_pp": 1.19}, {"d": "2026-06-17", "peak": 5.41, "trough": 3.52, "mean": 4.48, "n": 480, "dryback_pp": 1.88}, {"d": "2026-06-18", "peak": 5.22, "trough": 2.85, "mean": 4.02, "n": 480, "dryback_pp": 2.37}, {"d": "2026-06-19", "peak": 4.11, "trough": 3.08, "mean": 3.57, "n": 480, "dryback_pp": 1.03}, {"d": "2026-06-20", "peak": 5.85, "trough": 3.68, "mean": 4.77, "n": 480, "dryback_pp": 2.18}, {"d": "2026-06-21", "peak": 5.48, "trough": 3.66, "mean": 4.35, "n": 480, "dryback_pp": 1.82}, {"d": "2026-06-22", "peak": 5.86, "trough": 3.97, "mean": 4.8, "n": 480, "dryback_pp": 1.89}, {"d": "2026-06-23", "peak": 6.52, "trough": 4.14, "mean": 5.37, "n": 480, "dryback_pp": 2.37}, {"d": "2026-06-24", "peak": 6.68, "trough": 3.71, "mean": 4.87, "n": 462, "dryback_pp": 2.97}, {"d": "2026-06-25", "peak": 4.97, "trough": 3.85, "mean": 4.36, "n": 100, "dryback_pp": 1.12}];
+const R5_DAILY_Z2_EC = [{"d": "2026-06-11", "peak": 4.71, "trough": 3.14, "mean": 3.97, "n": 480, "dryback_pp": 1.57}, {"d": "2026-06-12", "peak": 5.46, "trough": 3.49, "mean": 4.63, "n": 480, "dryback_pp": 1.97}, {"d": "2026-06-13", "peak": 6.26, "trough": 3.9, "mean": 5.32, "n": 480, "dryback_pp": 2.36}, {"d": "2026-06-14", "peak": 6.07, "trough": 3.82, "mean": 5.08, "n": 480, "dryback_pp": 2.25}, {"d": "2026-06-15", "peak": 5.95, "trough": 3.96, "mean": 5.1, "n": 479, "dryback_pp": 1.99}, {"d": "2026-06-16", "peak": 6.93, "trough": 4.03, "mean": 5.87, "n": 480, "dryback_pp": 2.89}, {"d": "2026-06-17", "peak": 7.31, "trough": 3.71, "mean": 5.7, "n": 480, "dryback_pp": 3.6}, {"d": "2026-06-18", "peak": 6.82, "trough": 2.58, "mean": 4.78, "n": 480, "dryback_pp": 4.24}, {"d": "2026-06-19", "peak": 5.06, "trough": 3.46, "mean": 4.08, "n": 480, "dryback_pp": 1.59}, {"d": "2026-06-20", "peak": 7.0, "trough": 3.22, "mean": 4.91, "n": 480, "dryback_pp": 3.78}, {"d": "2026-06-21", "peak": 6.55, "trough": 3.16, "mean": 4.64, "n": 480, "dryback_pp": 3.38}, {"d": "2026-06-22", "peak": 7.16, "trough": 3.22, "mean": 4.94, "n": 480, "dryback_pp": 3.94}, {"d": "2026-06-23", "peak": 7.95, "trough": 2.7, "mean": 5.64, "n": 480, "dryback_pp": 5.25}, {"d": "2026-06-24", "peak": 7.59, "trough": 2.84, "mean": 4.89, "n": 462, "dryback_pp": 4.75}, {"d": "2026-06-25", "peak": 6.31, "trough": 3.84, "mean": 5.26, "n": 100, "dryback_pp": 2.48}];
+
+</script>
+<script>
+// ===== 14d charts =====
+function mkLineChart(id, datasets, yLabel, yMin, yMax){
+  const el = document.getElementById(id);
+  if (!el) return null;
+  return new Chart(el, {
+    type: 'line',
+    data: { labels: HOURLY_LABELS, datasets },
+    options: {
+      responsive: true,
+      animation: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 11 } } },
+        annotation: false
+      },
+      scales: {
+        x: { ticks: { maxTicksLimit: 14, font: { size: 9 } } },
+        y: { title: { display: true, text: yLabel }, min: yMin, max: yMax }
+      }
+    }
+  });
+}
+
+mkLineChart('r5-vwc', [
+  { label: 'Zone 1 VWC (76459)', data: R5_Z1_VWC, borderColor: C.olive, backgroundColor: C.olive + '15', tension: 0.25, pointRadius: 0, borderWidth: 1.4 },
+  { label: 'Zone 2 VWC (81612)', data: R5_Z2_VWC, borderColor: C.danger, backgroundColor: C.danger + '15', tension: 0.25, pointRadius: 0, borderWidth: 1.6 }
+], 'Substrate VWC (%)', 15, 85);
+
+mkLineChart('r5-ec', [
+  { label: 'Zone 1 pore EC (76459)', data: R5_Z1_EC, borderColor: C.appBlue, tension: 0.25, pointRadius: 0, borderWidth: 1.4 },
+  { label: 'Zone 2 pore EC (81612)', data: R5_Z2_EC, borderColor: C.warn, tension: 0.25, pointRadius: 0, borderWidth: 1.6 }
+], 'Pore EC (mS/cm)', 2, 9);
+
+// ===== Daily aggregate tables =====
+function fillDailyTable(tbodyId, rows, ecRows){
+  const tb = document.getElementById(tbodyId);
+  if (!tb) return;
+  rows.forEach((r, i) => {
+    const ec = ecRows[i] || {};
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + r.d + '</td><td>' + r.peak.toFixed(1) + '</td><td>' + r.trough.toFixed(1) + '</td><td>' + r.mean.toFixed(1) + '</td><td>' + r.dryback_pp.toFixed(1) + '</td><td>' + (ec.mean !== undefined ? ec.mean.toFixed(2) : '--') + '</td><td>' + (ec.peak !== undefined ? ec.peak.toFixed(2) : '--') + '</td>';
+    tb.appendChild(tr);
+  });
+}
+fillDailyTable('daily-z1', R5_DAILY_Z1_VWC, R5_DAILY_Z1_EC);
+fillDailyTable('daily-z2', R5_DAILY_Z2_VWC, R5_DAILY_Z2_EC);
+
+// ===== Forecast engine =====
+// Conservative ET 4.0 pp/h during lights-on, 0.5 pp/h lights-off
+// Lights schedule: 04:00-16:00 UTC (12h on, 12h off)
+// Start from current state: VWC ~ 50 (06-25 morning)
+const FC_TARGET = 72;       // room peak ceiling for shots
+const ET_LIGHTS_ON = 4.0;   // pp/h
+const ET_LIGHTS_OFF = 0.4;  // pp/h (low transpiration)
+const SHOT_LIFT = 4;        // pp per shot
+const START_VWC = 50;
+const FORECAST_HOURS = 120; // 5 days
+
+function simulate(asi, minVwc, drainGoal, p3BufferMin){
+  // ASI affects ET rate slightly (more aggressive = bigger swings) and shot sizing
+  const etScale = 1 + (5 - asi) * 0.04;   // GEN 1 -> 1.16x ET, GEN 5 -> 1.0x
+  const peakShoot = FC_TARGET - (5 - asi) * 0.5;   // GEN 1 peak slightly under FC, GEN 5 at FC
+  // P3 buffer = minutes before lights-off when shots stop; convert to lights-on cutoff hour
+  const p3CutoffHr = 16 - (p3BufferMin / 60);  // shots stop p3BufferMin before lights-off
+
+  let vwc = START_VWC;
+  const series = [];
+  // Day 0 starts at hour 0 = 2026-06-25 00:00Z
+  for (let h = 0; h < FORECAST_HOURS; h++){
+    const hOfDay = h % 24;
+    const lightsOn = hOfDay >= 4 && hOfDay < 16;
+    const inIrrigationWindow = lightsOn && hOfDay >= 5 && hOfDay < p3CutoffHr;
+    const et = (lightsOn ? ET_LIGHTS_ON : ET_LIGHTS_OFF) * etScale;
+    vwc -= et;
+    // AUTOMAIT trigger
+    if (inIrrigationWindow && vwc < minVwc){
+      // Lift back toward peakShoot with shots; each shot ~SHOT_LIFT pp
+      // drainGoal=10 -> typically 2-3 shots to close
+      const shotsNeeded = Math.ceil((peakShoot - vwc) / SHOT_LIFT);
+      const shotsCappedBy_drainGoal = Math.max(1, Math.min(shotsNeeded, 1 + Math.floor(drainGoal / 4)));
+      vwc += shotsCappedBy_drainGoal * SHOT_LIFT;
+      if (vwc > peakShoot) vwc = peakShoot;
+    }
+    if (vwc < 10) vwc = 10;  // physical floor
+    series.push(+vwc.toFixed(2));
+  }
+  return series;
+}
+
+const FCST_LABELS = [];
+for (let h = 0; h < FORECAST_HOURS; h++){
+  FCST_LABELS.push('D' + (Math.floor(h/24) + 1) + ' ' + String(h % 24).padStart(2, '0') + ':00');
+}
+
+// 5 baseline scenarios
+const SCEN = {
+  s1: { name: '1. Baseline (unconfigured)', asi: 5, minVwc: 22, drain: 0, p3: 60, color: C.danger, dash: [4, 3] },
+  s2: { name: '2. GEN 4 (recommended)',     asi: 4, minVwc: 42, drain: 10, p3: 180, color: C.good, dash: [] },
+  s3: { name: '3. GEN 3 (more aggressive)', asi: 3, minVwc: 38, drain: 8,  p3: 240, color: C.warn, dash: [] },
+  s4: { name: '4. GEN 2 (deepest safe)',    asi: 2, minVwc: 32, drain: 5,  p3: 300, color: C.early, dash: [6, 3] },
+  s5: { name: '5. Custom (manual + floor)', asi: 5, minVwc: 40, drain: 0,  p3: 60,  color: C.appBlue, dash: [2, 2] }
+};
+
+let fcstChart = null;
+function buildBaseDatasets(){
+  return Object.values(SCEN).map(s => ({
+    label: s.name + ' (ASI ' + s.asi + ', min ' + s.minVwc + ', drain ' + s.drain + ')',
+    data: simulate(s.asi, s.minVwc, s.drain, s.p3),
+    borderColor: s.color,
+    borderDash: s.dash,
+    tension: 0.2, pointRadius: 0, borderWidth: 1.5,
+    fill: false
+  }));
+}
+
+function updateForecast(){
+  const asi = +document.getElementById('r5-asi').value;
+  const minVwc = +document.getElementById('r5-minvwc').value;
+  const drain = +document.getElementById('r5-drain').value;
+  const p3 = +document.getElementById('r5-p3').value;
+  const datasets = buildBaseDatasets();
+  // 6th overlay = live operator scenario
+  datasets.push({
+    label: 'YOUR overlay (ASI ' + asi + ', min ' + minVwc + ', drain ' + drain + ', P3 ' + p3 + ')',
+    data: simulate(asi, minVwc, drain, p3),
+    borderColor: C.mid,
+    borderWidth: 2.4,
+    tension: 0.2, pointRadius: 0,
+    fill: false
+  });
+  if (fcstChart) fcstChart.destroy();
+  fcstChart = new Chart(document.getElementById('fcst'), {
+    type: 'line',
+    data: { labels: FCST_LABELS, datasets },
+    options: {
+      responsive: true, animation: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: { legend: { position: 'top', labels: { font: { size: 10 } } } },
+      scales: {
+        x: { ticks: { maxTicksLimit: 10, font: { size: 9 } } },
+        y: { title: { display: true, text: 'VWC (%)' }, min: 15, max: 85 }
+      }
+    }
+  });
+}
+setTimeout(updateForecast, 250);
+
+// ===== Cross-device sync (per-key timestamped last-write-wins) =====
+const SYNC = 'https://aroya-report-sync.ciansul.workers.dev/4576-r5';
+const STATE_KEY = 'hk-r5-aut-state';
+const state = {};
+let syncTimer = null;
+
+function onCtlChange(room, key, val){
+  state[room + '.' + key] = { v: val, ts: Date.now() };
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {}
+  scheduleSync();
+}
+function scheduleSync(){
+  if (syncTimer) clearTimeout(syncTimer);
+  syncTimer = setTimeout(pushSync, 800);
+}
+function pushSync(){
+  fetch(SYNC, { method: 'PUT', body: JSON.stringify(state), headers: { 'Content-Type': 'application/json' } })
+    .then(r => r.ok ? setSyncOk() : setSyncErr())
+    .catch(() => setSyncErr());
+}
+function mergeRemote(remote){
+  if (!remote || typeof remote !== 'object') return;
+  let changed = false;
+  Object.keys(remote).forEach(k => {
+    const remoteV = remote[k];
+    if (!remoteV || typeof remoteV !== 'object') return;
+    if (!state[k] || (remoteV.ts || 0) > (state[k].ts || 0)){
+      state[k] = remoteV;
+      changed = true;
+    }
+  });
+  if (changed){
+    try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {}
+    // Apply state to controls
+    applyStateToControls();
+    updateForecast();
+  }
+}
+function applyStateToControls(){
+  const map = { 'r5.asi': 'r5-asi', 'r5.minvwc': 'r5-minvwc', 'r5.drain': 'r5-drain', 'r5.p3': 'r5-p3' };
+  Object.keys(map).forEach(k => {
+    if (state[k] && state[k].v !== undefined){
+      const el = document.getElementById(map[k]);
+      if (el) el.value = state[k].v;
+    }
+  });
+  const asiEl = document.getElementById('r5-asi');
+  if (asiEl) document.getElementById('r5-asi-v').textContent = 'GEN ' + asiEl.value + (asiEl.value > 5 ? ' (VEG)' : '');
+}
+function pullSync(){
+  fetch(SYNC).then(r => r.ok ? r.json() : null).then(mergeRemote).then(setSyncOk).catch(() => setSyncErr());
+}
+function setSyncOk(){
+  const el = document.getElementById('sync-status');
+  if (el){ el.textContent = 'Synced ok'; el.className = 'synced ok'; }
+}
+function setSyncErr(){
+  const el = document.getElementById('sync-status');
+  if (el){ el.textContent = 'Sync offline (local only)'; el.className = 'synced err'; }
+}
+
+// Boot
+try { const cached = localStorage.getItem(STATE_KEY); if (cached) Object.assign(state, JSON.parse(cached)); } catch (e) {}
+applyStateToControls();
+pullSync();
+setInterval(pullSync, 20000);
+window.addEventListener('focus', pullSync);
+</script>
+</body></html>
