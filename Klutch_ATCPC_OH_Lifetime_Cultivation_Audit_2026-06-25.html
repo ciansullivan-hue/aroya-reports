@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Klutch Cannabis · ATCPC Ohio · Lifetime Cultivation Audit · 2020-2026</title>
+<style>
+
+  :root[data-theme="light"]{
+    --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
+    --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
+    --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
+    --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
+    --attention:#e76f51; --attention-2:#f4a261;
+    --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
+    --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
+    --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51;
+    --card-shadow:0 1px 3px rgba(0,0,0,0.04),0 4px 16px rgba(0,0,0,0.05);
+    --grid-line:#e8e8e0;
+  }
+  :root[data-theme="dark"]{
+    --bg:#13160f; --bg-2:#1a1e15; --bg-3:#22281c; --border:#2e3624;
+    --ink:#e8ead9; --ink-2:#b9bda5; --ink-muted:#7e836e;
+    --olive:#8aa05c; --olive-2:#a7bb74; --lime:#b9e587; --lime-2:#6b8d3d;
+    --app-blue:#6cb5d8; --app-blue-2:#3a6d80;
+    --attention:#f48066; --attention-2:#f4a261;
+    --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
+    --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
+    --p-rootin:#7fbacd; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#b694ea; --p-ripening:#e76f51;
+    --card-shadow:0 1px 3px rgba(0,0,0,0.5),0 8px 28px rgba(0,0,0,0.45);
+    --grid-line:#2a3220;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;font:14px/1.5 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","ss03"}
+  a{color:var(--app-blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+  .masthead{background:#1a1c19;color:#fff;padding:20px 28px 24px;margin:0 -28px 0;position:relative;overflow:hidden;min-height:80px}
+  .masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1;flex-wrap:wrap}
+  .lockup{position:relative;display:flex;align-items:center;gap:10px;color:#fff;padding-bottom:14px}
+  .lockup-mark{font-family:'Inter',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:1;color:#fff}
+  .lockup-glyph{display:inline-block;width:26px;height:26px;position:relative;flex:none}
+  .lockup-glyph::before,.lockup-glyph::after{content:"";position:absolute;background:#fff;border-radius:2px}
+  .lockup-glyph::before{top:0;right:0;width:13px;height:13px}
+  .lockup-glyph::after{bottom:0;left:0;width:17px;height:17px;border-top-right-radius:0}
+  .lockup-byline{position:absolute;top:34px;left:0;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;color:#aaa;letter-spacing:0;line-height:1}
+  .controls{display:flex;gap:6px;align-items:center}
+  .btn{background:transparent;color:#cccccc;border:1px solid #3a3d35;border-radius:6px;padding:6px 12px;cursor:pointer;font:500 12px/1 'Inter',sans-serif;letter-spacing:.04em;transition:all .12s}
+  .btn:hover{background:rgba(203,238,176,.08);color:#cbeeb0;border-color:#cbeeb0}
+  .btn.active{background:#cbeeb0;color:#1a1c19;border-color:#cbeeb0}
+  .tick{position:absolute;width:7px;height:7px;background:#3a3d35;border-radius:1px;z-index:0}
+  .tick.t1{top:14px;left:42%} .tick.t2{top:14px;left:48%;width:8px;height:8px} .tick.t3{top:14px;right:24%;width:6px;height:6px}
+  .tick.t4{bottom:12px;left:18%} .tick.t5{bottom:12px;left:22%;width:5px;height:5px}
+  .tick.t6{top:46%;right:18px} .tick.t7{bottom:12px;right:32%;width:6px;height:6px}
+  .pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+  .pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
+  .pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
+  .pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+  .pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+  .pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+  section{margin-top:40px;scroll-margin-top:20px}
+  h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+  h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+  h4{font-size:14px;margin:18px 0 6px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
+  p{margin:0 0 12px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+  .kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
+  .kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
+  .kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+  .kpi .val{font-size:22px;font-weight:700;color:var(--ink)}
+  .kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
+  .kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
+  .card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
+  .phase{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .phase.rootin{background:var(--p-rootin);color:#0c2a35}
+  .phase.veg{background:var(--p-veg);color:#1c3700}
+  .phase.stretch{background:var(--p-stretch);color:#4a1d00}
+  .phase.bulking{background:var(--p-bulking);color:#2c1750}
+  .phase.ripening{background:var(--p-ripening);color:#3c0f00}
+  .phase.dry{background:var(--bg-3);color:var(--ink-muted)}
+  .verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
+  .verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
+  .verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
+  .verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
+  .verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+  table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+  th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
+  .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
+  .chartwrap{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 16px 14px;margin:14px 0;box-shadow:var(--card-shadow)}
+  .chartwrap h4{margin-top:0}
+  .chartwrap .legend{font-size:12px;color:var(--ink-muted);margin-top:8px}
+  .chart-canvas{position:relative;height:280px;width:100%}
+  .chart-canvas canvas{max-width:100%}
+  .rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow)}
+  .rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
+  .rec .owner.grower{background:var(--app-blue)}
+  .rec .owner.process{background:var(--ink-2)}
+  .rec .rphase{color:var(--ink-muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-left:4px}
+  .rec .raction{margin-top:6px;font-weight:500}
+  .rec .rwhy{margin-top:4px;font-size:13px;color:var(--ink-2)}
+  .rec .rdollar{margin-top:6px;font-size:12px;color:var(--olive);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+  .bp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .bp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  .bp-table th{background:var(--bg-3);padding:8px 10px;text-align:left;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1.5px solid var(--border);white-space:nowrap}
+  .bp-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .bp-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .timeline-era{padding:12px 16px;margin:8px 0;border-left:4px solid var(--olive);background:var(--bg-2);border-radius:0 8px 8px 0;box-shadow:var(--card-shadow)}
+  .timeline-era .era-date{font-size:11px;color:var(--olive);font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .timeline-era .era-event{font-size:15px;font-weight:600;color:var(--ink);margin-top:4px}
+  .timeline-era .era-note{font-size:13px;color:var(--ink-2);margin-top:4px}
+  .muted{color:var(--ink-muted);font-style:italic}
+  .toc{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:20px 0;box-shadow:var(--card-shadow)}
+  .toc h4{margin:0 0 8px}
+  .toc ol{margin:0;padding-left:20px;columns:2;column-gap:24px}
+  .toc li{padding:3px 0;font-size:13px}
+  .toc a{color:var(--ink-2)}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0}
+  @media (max-width:760px){
+    .wrap{padding:0 14px 60px}
+    .masthead{padding:16px 14px 18px;margin:0 -14px 0}
+    .masthead-inner{flex-direction:column;align-items:flex-start;gap:12px}
+    .lockup-mark{font-size:24px}
+    .pagehead h1{font-size:24px}
+    .pagehead .meta{grid-template-columns:1fr 1fr}
+    .kpis{grid-template-columns:1fr 1fr}
+    .kpi .val{font-size:18px}
+    .twocol{grid-template-columns:1fr}
+    .toc ol{columns:1}
+    table{font-size:12.5px}
+    th,td{padding:6px 8px}
+    h2{font-size:18px}
+    h3{font-size:15px}
+    .chart-canvas{height:240px}
+  }
+
+</style>
+</head>
+<body class="en">
+<div class="wrap">
+<div class="masthead">
+  <span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span><span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
+  <div class="masthead-inner">
+    <div class="lockup"><span class="lockup-mark">AROYA</span><span class="lockup-glyph" aria-hidden="true"></span><span class="lockup-byline">by Addium</span></div>
+    <div class="controls"><button class="btn theme-btn active" data-theme="light">Light</button><button class="btn theme-btn" data-theme="dark">Dark</button></div>
+  </div>
+</div>
+<div class="pagehead">
+  <div class="pagehead-eyebrow">AROYA · Lifetime Cultivation Audit · Multi-Year Facility Intelligence</div>
+  <h1>Klutch Cannabis · ATCPC Ohio — Lifetime Cultivation Audit</h1>
+  <div class="sub">~6 years of AROYA cultivation history · 2020-06-22 → 2026-06-25 · 334 harvest groups · 176 cultivars run · 26 rooms instrumented · prepared for Mike Lentz and the Klutch / Calyx Peak team</div>
+  <div class="meta">
+    <span><b>Facility</b>Klutch Cannabis: ATCPC Ohio (ID 1503)</span>
+    <span><b>Organization</b>Calyx Peak Companies/ Klutch Cannabis (ID 1186)</span>
+    <span><b>Location</b>1055 Home Avenue Akron, OH 44310 United States</span>
+    <span><b>Timezone</b>America/New_York</span>
+    <span><b>Total cultivated space</b>33,596 ft²</span>
+    <span><b>Account lifespan</b>2020-06-22 → present (~6 years)</span>
+    <span><b>Window</b>Full account history</span>
+    <span><b>Report date</b>2026-06-25</span>
+  </div>
+</div>
+<nav class="toc">
+  <h4>Contents</h4>
+  <ol>
+    <li><a href="#headline">Lifetime KPIs</a></li>
+    <li><a href="#thelead">The Lead — six years in one read</a></li>
+    <li><a href="#evolution">Facility evolution timeline</a></li>
+    <li><a href="#cadence">Harvest cadence by year</a></li>
+    <li><a href="#cultivars">Cultivar deep dive</a></li>
+    <li><a href="#newgenetics">New genetics momentum (2024 onward)</a></li>
+    <li><a href="#rooms">Per-room lifetime utilization</a></li>
+    <li><a href="#tracking">Plant-out tracking — the 2024+ gap</a></li>
+    <li><a href="#phases">Phase-duration discipline</a></li>
+    <li><a href="#recipes">Recipe program</a></li>
+    <li><a href="#devices">Device fleet evolution</a></li>
+    <li><a href="#current">Current state (week of 2026-06-25)</a></li>
+    <li><a href="#recommendations">Operational recommendations</a></li>
+    <li><a href="#openquestions">Open questions for Klutch</a></li>
+    <li><a href="#dataquality">Data quality &amp; methodology</a></li>
+    <li><a href="#appendix">Appendix · full HG list</a></li>
+  </ol>
+</nav>
+<section id="headline">
+  <h2>Lifetime KPIs</h2>
+  <div class="kpis">
+    <div class="kpi good"><div class="label">Harvest groups (all-time)</div><div class="val">334</div><div class="delta">across 14 flower rooms and 7 cycle years</div></div>
+    <div class="kpi good"><div class="label">Cultivated space</div><div class="val">33,596 ft²</div><div class="delta">26 rooms instrumented · 14 flower · 2 veg · 2 mom · 2 clone · 3 dry · 1 cure · 2 fertigation</div></div>
+    <div class="kpi good"><div class="label">Plants entered</div><div class="val">315,804</div><div class="delta">2020-06-22 → 2026-06-17 · cumulative plant population through the system</div></div>
+    <div class="kpi warn"><div class="label">Plants tracked to harvest</div><div class="val">148,902</div><div class="delta">harvestedCount field stopped being populated after 2023 — see §8</div></div>
+    <div class="kpi good"><div class="label">Cultivars run lifetime</div><div class="val">176</div><div class="delta">170 in the active library; 50 catalogued but never planted</div></div>
+    <div class="kpi good"><div class="label">Devices on the mesh</div><div class="val">469</div><div class="delta">136 TER12 + 70 TER15 · 29 ATM14 · 40 repeaters · 4 gateways · 29 lifetime retired</div></div>
+    <div class="kpi good"><div class="label">Active harvest groups now</div><div class="val">17</div><div class="delta">12 in flower · 3 cloning for the next flips · 2 in vegetative — see §12</div></div>
+    <div class="kpi good"><div class="label">Mesh battery health</div><div class="val">90%</div><div class="delta">10 of 369 online battery-powered nodes below 30% — overall fleet healthy</div></div>
+  </div>
+</section>
+<section id="thelead">
+  <h2>The Lead — six years in one read</h2>
+  <div class="verdict good">
+    <div class="v-head">What the lifetime tells us</div>
+    <p><b>Klutch Cannabis · ATCPC Ohio is a mature, disciplined indoor program.</b> The account opened on <b>2020-06-22</b> with two rooms (Dry 1 and Flower Room 1) and was built out in three deliberate waves: the original five flower rooms came online in 2020, the mid-build expansion (Flower 6–10 plus Mom 2, Veg 2, Clone 2, Cure 2) landed mid-2021, and the back-half flower rooms (Flower 11–14) came online summer 2022. By the end of 2022 the facility was running at its design ceiling — peak concurrency hit <b>24 simultaneously active harvest groups on 2022-10-23</b>, and HG cadence has held steady at <b>60–75 cycles per year</b> ever since. The <b>median flower phase has been exactly 63 days, every single year since 2021</b> — that consistency across 273 flower cycles is the strongest signal in the dataset that the controls program works.</p>
+    <p>The cultivar program is bifurcated: a tight workhorse core of <b>Orange 43 (214 lifetime HGs) and Ice Cream Cake (191 HGs)</b> that has carried the room year after year, plus an aggressive testing pipeline — <b>111 new cultivars added in 2024–2026</b>, and 25 of those are already running at scale (≥3 HGs in 2025–2026). The shift in 2024 from "we have 16 cultivars" to "we have 170 in the library" is the clearest operational change in the dataset. The current week-of week confirms it: of 17 active HGs, the workhorses still anchor Flower Room 1/2/3, but the supporting strains are now Blue Raz, Donny Solo Burger, Hash Burger, Zamosa, College Park, Grape Jam, Meltdown — all 2024+ additions.</p>
+    <p><b>What needs the meeting time:</b> (1) the <b>harvestedCount field went to zero after 2023</b> — either operators stopped closing out HGs in AROYA in favour of METRC alone, or the close-out workflow broke; either way the room-mean yield trend can't be read from AROYA without resolving this. (2) <b>Yield weights (packagedWeight, frozenWeight, finalPackageWeight) are zero on every HG</b> — Klutch is not recording weights in AROYA at all; they live in METRC. (3) The <b>14 flower rooms have an uneven plant-load profile</b>: Flower Room 1–4 carry ~36k–40k plants lifetime each, Flower 6–9 + 11–14 carry ~11k–27k each, but Flower 10 has carried only 3,760 plants across 23 runs — the fresh-frozen room. (4) The <b>two ripening rooms in the most recent audit (Flower 8 and Flower 13) carried EC restacks that ran 3.0–3.8 mS against a 6.0–8.0 mS ripening band</b>; the lifetime cadence shows this isn't a one-off but a pattern.</p>
+  </div>
+</section><section id="evolution">
+  <h2>Facility evolution timeline</h2>
+  <p>Reading the room first-use dates from every HG's phase log lets us reconstruct the four expansion waves the facility went through. The build cadence — five flower rooms in 2020, six rooms (including five more flower) in mid-2021, then four more flower rooms in summer 2022 — is the visible signature of a deliberate growth plan executed over 24 months. Once Flower 14 came online on 2022-08-20, the facility hit its current 14-flower-room ceiling, and the focus shifted from build-out to cycle discipline. The 2023+ growth has happened inside the existing rooms (more cycles per room, deeper cultivar testing), not by adding bricks.</p>
+  <div class="timeline-era">
+    <div class="era-date">Q3 2020 — Account launch · first room online 2020-06-22</div>
+    <div class="era-event">Dry 1 (2020-06-22), Flower Room 1 (2020-06-22), Flower Room 4 (2020-07-22), Flower Room 2 (2020-07-28), Flower Room 5 (2020-08-22), Flower Room 3 (2020-08-22)</div>
+  </div>
+  <div class="timeline-era">
+    <div class="era-date">Q4 2020 — Vegetative side wired up · first room online 2020-12-16</div>
+    <div class="era-event">Veg 1 (2020-12-16)</div>
+  </div>
+  <div class="timeline-era">
+    <div class="era-date">H1 2021 — First major expansion (props/clones/dry) · first room online 2021-03-14</div>
+    <div class="era-event">Clone 1 (2021-03-14), Flower 10 (2021-06-04), Dry 2 (2021-06-04), Flower 6 (2021-06-04), Mom 1 (2021-06-04), Veg 2 (2021-06-14), Flower 8 (2021-06-14), Clone 2 (2021-06-24)</div>
+  </div>
+  <div class="timeline-era">
+    <div class="era-date">H2 2021 — Flower 6–10 build-out + cure rebalance · first room online 2021-07-04</div>
+    <div class="era-event">Flower 7 (2021-07-04), Flower 9 (2021-07-25), Cure 2 (2021-08-16)</div>
+  </div>
+  <div class="timeline-era">
+    <div class="era-date">H1 2022 — Dry 3 added; F11 platform · first room online 2022-02-25</div>
+    <div class="era-event">Dry 3 (2022-02-25), Flower 11 (2022-06-25)</div>
+  </div>
+  <div class="timeline-era">
+    <div class="era-date">H2 2022 — Final flower build (F11–F14) · first room online 2022-07-13</div>
+    <div class="era-event">Flower 13 (2022-07-13), Flower 12 (2022-08-01), Flower 14 (2022-08-20)</div>
+  </div>
+</section>
+<section id="cadence">
+  <h2>Harvest cadence by year</h2>
+  <p>Year-by-year HG count plus plant population entering each room. The shape: rapid scale-up 2020 → 2023 as rooms came online and cycles compounded, then a soft plateau 2024 → 2026 — slightly fewer HGs but with bigger plant counts per HG, meaning fewer-but-denser runs as the program matured. 2023 is the cycle ceiling: 73 HGs running 69,377 plants. The 2024–2026 dip is not a problem (the facility didn't shrink) — it reflects the move toward higher-plant-count per HG that comes with consolidating cultivar blocks per room.</p>
+  <div class="chartwrap">
+    <h4>HG count + plant population by year</h4>
+    <div class="chart-canvas"><canvas id="cadence_chart"></canvas></div>
+    <div class="legend">Bars = HG count (left axis). Line = plants entered the system (right axis). 2026 is a partial year (~6 months).</div>
+  </div>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Year</th><th class="num">HGs run</th><th class="num">Plants in</th><th class="num">Plants tracked-to-harvest</th><th class="num">Mean plants/HG</th><th>Notes</th></tr></thead><tbody>
+      <tr><td><b>2020</b></td><td class="num">8</td><td class="num">9,363</td><td class="num">9,363</td><td class="num">1170</td><td>Account opened June; 5 flower rooms by year-end</td></tr>
+      <tr><td><b>2021</b></td><td class="num">30</td><td class="num">31,945</td><td class="num">29,589</td><td class="num">1065</td><td>Flower 6–10 + Veg 2 + Clone 2 online; vegetative/propagation half built</td></tr>
+      <tr><td><b>2022</b></td><td class="num">51</td><td class="num">51,967</td><td class="num">48,553</td><td class="num">1019</td><td>Flower 11–14 finish the build; 24 concurrent HGs at peak (Oct)</td></tr>
+      <tr><td><b>2023</b></td><td class="num">73</td><td class="num">69,377</td><td class="num">61,397</td><td class="num">950</td><td>Cycle ceiling — 73 HGs, 69k plants</td></tr>
+      <tr><td><b>2024</b></td><td class="num">65</td><td class="num">63,557</td><td class="num">0</td><td class="num">978</td><td>Cycle count down slightly; per-HG density up; genetics testing accelerates (32 new cultivars)</td></tr>
+      <tr><td><b>2025</b></td><td class="num">62</td><td class="num">57,415</td><td class="num">0</td><td class="num">926</td><td>Steady cadence; 79 new cultivars added — most aggressive testing year on record</td></tr>
+      <tr><td><b>2026</b></td><td class="num">45</td><td class="num">32,180</td><td class="num">0</td><td class="num">715</td><td>Partial year (Jan–Jun); on pace for ~90 HGs run by year-end</td></tr>
+    </tbody></table></div>
+</section>
+<section id="cultivars">
+  <h2>Cultivar deep dive</h2>
+  <p>176 cultivars have been run at this facility lifetime. The top of the table tells the program story: <b>Orange 43 and Ice Cream Cake are the rent-payers</b> — together 405 HGs across the 6 years (~12% of all HGs run on these two strains alone), and they appear in the top-3 most-used cultivars every single year since 2020. Lemon Slushee is the second-tier workhorse (110 lifetime HGs, accelerating to 36 HGs in 2025 alone). Below that comes the testing fleet — Sherbhead, Motorbreath, Jealousy, Big Head, Permanent Marker, Heatlocker, Apricot Gelato — each running 40–80 HGs lifetime, scaled up or down based on what the year-over-year column reveals about their staying power.</p>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Cultivar</th><th class="num">Lifetime HGs</th><th class="num">2020</th><th class="num">2021</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th></tr></thead><tbody>
+      <tr><td><b>Orange 43</b></td><td class="num">214</td><td class="num">7</td><td class="num">25</td><td class="num">21</td><td class="num">49</td><td class="num">44</td><td class="num">41</td><td class="num">27</td></tr>
+      <tr><td><b>Ice Cream Cake</b></td><td class="num">191</td><td class="num">7</td><td class="num">27</td><td class="num">22</td><td class="num">49</td><td class="num">44</td><td class="num">15</td><td class="num">27</td></tr>
+      <tr><td><b>Lemon Slushee</b></td><td class="num">110</td><td class="num">·</td><td class="num">14</td><td class="num">22</td><td class="num">18</td><td class="num">14</td><td class="num">36</td><td class="num">6</td></tr>
+      <tr><td><b>Sherbhead</b></td><td class="num">80</td><td class="num">6</td><td class="num">26</td><td class="num">15</td><td class="num">13</td><td class="num">10</td><td class="num">3</td><td class="num">7</td></tr>
+      <tr><td><b>Motorbreath</b></td><td class="num">73</td><td class="num">2</td><td class="num">12</td><td class="num">15</td><td class="num">14</td><td class="num">12</td><td class="num">11</td><td class="num">7</td></tr>
+      <tr><td><b>Jealousy</b></td><td class="num">64</td><td class="num">·</td><td class="num">2</td><td class="num">17</td><td class="num">13</td><td class="num">12</td><td class="num">12</td><td class="num">8</td></tr>
+      <tr><td><b>Big Head</b></td><td class="num">63</td><td class="num">·</td><td class="num">16</td><td class="num">19</td><td class="num">13</td><td class="num">9</td><td class="num">3</td><td class="num">3</td></tr>
+      <tr><td><b>Permanent Marker</b></td><td class="num">46</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">2</td><td class="num">26</td><td class="num">11</td><td class="num">7</td></tr>
+      <tr><td><b>Heatlocker</b></td><td class="num">45</td><td class="num">·</td><td class="num">9</td><td class="num">10</td><td class="num">10</td><td class="num">7</td><td class="num">2</td><td class="num">7</td></tr>
+      <tr><td><b>Apricot Gelato</b></td><td class="num">45</td><td class="num">·</td><td class="num">2</td><td class="num">14</td><td class="num">8</td><td class="num">7</td><td class="num">8</td><td class="num">6</td></tr>
+      <tr><td><b>Lemon Cherry Gelato</b></td><td class="num">40</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">14</td><td class="num">11</td><td class="num">4</td><td class="num">11</td></tr>
+      <tr><td><b>Catfish</b></td><td class="num">36</td><td class="num">3</td><td class="num">6</td><td class="num">9</td><td class="num">9</td><td class="num">5</td><td class="num">3</td><td class="num">1</td></tr>
+      <tr><td><b>MAC 1</b></td><td class="num">36</td><td class="num">3</td><td class="num">5</td><td class="num">4</td><td class="num">10</td><td class="num">10</td><td class="num">3</td><td class="num">1</td></tr>
+      <tr><td><b>Rose Gold R'ntz</b></td><td class="num">34</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">15</td><td class="num">9</td><td class="num">8</td><td class="num">2</td></tr>
+      <tr><td><b>Rainbow Belts</b></td><td class="num">32</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">12</td><td class="num">6</td><td class="num">8</td><td class="num">6</td></tr>
+      <tr><td><b>Kush Mints</b></td><td class="num">29</td><td class="num">2</td><td class="num">3</td><td class="num">4</td><td class="num">6</td><td class="num">6</td><td class="num">1</td><td class="num">7</td></tr>
+      <tr><td><b>Purp 43</b></td><td class="num">28</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">12</td><td class="num">10</td><td class="num">6</td></tr>
+      <tr><td><b>?7578</b></td><td class="num">27</td><td class="num">·</td><td class="num">9</td><td class="num">16</td><td class="num">2</td><td class="num">·</td><td class="num">·</td><td class="num">·</td></tr>
+      <tr><td><b>RS11</b></td><td class="num">27</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">2</td><td class="num">13</td><td class="num">5</td><td class="num">7</td></tr>
+      <tr><td><b>Pacific Cool</b></td><td class="num">27</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">5</td><td class="num">12</td><td class="num">10</td></tr>
+      <tr><td><b>Blue Raz</b></td><td class="num">27</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">21</td><td class="num">6</td></tr>
+      <tr><td><b>?4866</b></td><td class="num">26</td><td class="num">6</td><td class="num">6</td><td class="num">10</td><td class="num">3</td><td class="num">·</td><td class="num">1</td><td class="num">·</td></tr>
+      <tr><td><b>Violet Fog</b></td><td class="num">26</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">15</td><td class="num">4</td><td class="num">3</td><td class="num">4</td></tr>
+      <tr><td><b>R'ntz</b></td><td class="num">24</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">12</td><td class="num">10</td><td class="num">2</td><td class="num">·</td></tr>
+      <tr><td><b>Zoap</b></td><td class="num">24</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">12</td><td class="num">5</td><td class="num">7</td></tr>
+    </tbody></table></div>
+  <h3>Top three cultivars per year — the dominance shift</h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Year</th><th>#1 strain</th><th>#2 strain</th><th>#3 strain</th></tr></thead><tbody>
+      <tr><td><b>2020</b></td><td>Orange 43 (7)</td><td>Ice Cream Cake (7)</td><td>Super Lemon Dawg (7)</td></tr>
+      <tr><td><b>2021</b></td><td>Ice Cream Cake (27)</td><td>Sherbhead (26)</td><td>Orange 43 (25)</td></tr>
+      <tr><td><b>2022</b></td><td>Ice Cream Cake (22)</td><td>Lemon Slushee (22)</td><td>Orange 43 (21)</td></tr>
+      <tr><td><b>2023</b></td><td>Orange 43 (49)</td><td>Ice Cream Cake (49)</td><td>Lemon Slushee (18)</td></tr>
+      <tr><td><b>2024</b></td><td>Orange 43 (44)</td><td>Ice Cream Cake (44)</td><td>Permanent Marker (26)</td></tr>
+      <tr><td><b>2025</b></td><td>Orange 43 (41)</td><td>Lemon Slushee (36)</td><td>Blue Raz (21)</td></tr>
+      <tr><td><b>2026</b></td><td>Orange 43 (27)</td><td>Ice Cream Cake (27)</td><td>Meltdown (12)</td></tr>
+    </tbody></table></div>
+  <p class="muted">The #3 slot is where the testing program is visible — Super Lemon Dawg → Sherbhead → Lemon Slushee → Permanent Marker → Blue Raz → Meltdown. Each year a different rotation candidate steps up.</p>
+</section>
+<section id="newgenetics">
+  <h2>New genetics momentum (2024 onward)</h2>
+  <p>The cultivar library grew by <b>137 strains across 2024–2026 (32 + 79 + 26)</b> — versus 33 across the entire 2020–2023 period. This is the clearest operational shift in the dataset. The library is now 170 strong, up from 33 at the end of 2023. What separates this from "vanity catalog" is that the new strains are actually running — 20 of them have already cleared the 3-HG threshold across 2025–2026 (i.e. they've been planted in three or more cycles). The list below is the ones scaling fastest; they should be on the meeting agenda.</p>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Cultivar</th><th class="num">Added (year)</th><th class="num">HGs run since 2025</th></tr></thead><tbody>
+      <tr><td><b>Blue Raz</b></td><td class="num">2024</td><td class="num">27</td></tr>
+      <tr><td><b>Ridgeline Lantz</b></td><td class="num">2024</td><td class="num">21</td></tr>
+      <tr><td><b>Donny Solo Burger</b></td><td class="num">2024</td><td class="num">15</td></tr>
+      <tr><td><b>Hash Burger</b></td><td class="num">2024</td><td class="num">15</td></tr>
+      <tr><td><b>OG Kiss</b></td><td class="num">2025</td><td class="num">15</td></tr>
+      <tr><td><b>Strawberry Jam</b></td><td class="num">2025</td><td class="num">15</td></tr>
+      <tr><td><b>Zamosa</b></td><td class="num">2025</td><td class="num">15</td></tr>
+      <tr><td><b>College Park</b></td><td class="num">2024</td><td class="num">14</td></tr>
+      <tr><td><b>Grape Jam</b></td><td class="num">2025</td><td class="num">14</td></tr>
+      <tr><td><b>Meltdown</b></td><td class="num">2025</td><td class="num">13</td></tr>
+      <tr><td><b>That Badu</b></td><td class="num">2024</td><td class="num">12</td></tr>
+      <tr><td><b>Gasablanca</b></td><td class="num">2025</td><td class="num">10</td></tr>
+      <tr><td><b>Keylime</b></td><td class="num">2025</td><td class="num">9</td></tr>
+      <tr><td><b>Kockeyed</b></td><td class="num">2025</td><td class="num">9</td></tr>
+      <tr><td><b>Pine Berry Sorbet</b></td><td class="num">2025</td><td class="num">9</td></tr>
+      <tr><td><b>Grape Pop</b></td><td class="num">2025</td><td class="num">8</td></tr>
+      <tr><td><b>Lemon OG</b></td><td class="num">2024</td><td class="num">8</td></tr>
+      <tr><td><b>Rainbow Ice</b></td><td class="num">2025</td><td class="num">8</td></tr>
+      <tr><td><b>Shaloha</b></td><td class="num">2024</td><td class="num">8</td></tr>
+      <tr><td><b>Berniehanna Butter</b></td><td class="num">2024</td><td class="num">7</td></tr>
+    </tbody></table></div>
+  <h3>Library growth by year (catalogue additions)</h3>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Year</th><th class="num">Cultivars added</th></tr></thead><tbody>
+      <tr><td><b>2020</b></td><td class="num">16</td></tr>
+      <tr><td><b>2021</b></td><td class="num">4</td></tr>
+      <tr><td><b>2022</b></td><td class="num">6</td></tr>
+      <tr><td><b>2023</b></td><td class="num">7</td></tr>
+      <tr><td><b>2024</b></td><td class="num">32</td></tr>
+      <tr><td><b>2025</b></td><td class="num">79</td></tr>
+      <tr><td><b>2026</b></td><td class="num">26</td></tr>
+    </tbody></table></div>
+  <p class="muted">50 cultivars sit in the library catalogued but never planted in any HG — historical catalog accumulation. Worth a yearly cleanup pass; nothing urgent.</p>
+</section>
+<section id="rooms">
+  <h2>Per-room lifetime utilization</h2>
+  <p>How each flower room has been used across the lifespan. The plant-count column is the most telling — Flower Room 1, 2, 3, 4 (the original four-room block from 2020) collectively carry ~152k plants across 115 HGs, vs the build-2 rooms (Flower 6–10) carrying ~110k across 122 HGs, vs the build-3 rooms (Flower 11–14) carrying ~48k across 79 HGs. Flower 10 stands out as an intentionally-low-density room (3,760 plants across 23 HGs ≈ 163 plants per cycle) — the "Fresh Frozen Recipe (F5 &amp; F10)" entry in the recipe library suggests this is your fresh-frozen / spec-ops room.</p>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Room</th><th class="num">First used</th><th class="num">Lifetime HGs</th><th class="num">Lifetime plants</th><th class="num">Mean plants/HG</th><th>Build era</th></tr></thead><tbody>
+      <tr><td><b>Flower Room 1</b></td><td class="num">2020-06-22</td><td class="num">30</td><td class="num">39,497</td><td class="num">1317</td><td>Build 1 — original (2020)</td></tr>
+      <tr><td><b>Flower Room 4</b></td><td class="num">2020-07-22</td><td class="num">26</td><td class="num">36,067</td><td class="num">1387</td><td>Build 1 — original (2020)</td></tr>
+      <tr><td><b>Flower Room 2</b></td><td class="num">2020-07-28</td><td class="num">30</td><td class="num">36,374</td><td class="num">1212</td><td>Build 1 — original (2020)</td></tr>
+      <tr><td><b>Flower Room 5</b></td><td class="num">2020-08-22</td><td class="num">18</td><td class="num">6,308</td><td class="num">350</td><td>Build 1 — original (2020)</td></tr>
+      <tr><td><b>Flower Room 3</b></td><td class="num">2020-08-22</td><td class="num">29</td><td class="num">39,973</td><td class="num">1378</td><td>Build 1 — original (2020)</td></tr>
+      <tr><td><b>Flower 10</b></td><td class="num">2021-06-04</td><td class="num">23</td><td class="num">3,760</td><td class="num">163</td><td>Build 2 — mid expansion (2021)</td></tr>
+      <tr><td><b>Flower 6</b></td><td class="num">2021-06-04</td><td class="num">25</td><td class="num">26,634</td><td class="num">1065</td><td>Build 2 — mid expansion (2021)</td></tr>
+      <tr><td><b>Flower 8</b></td><td class="num">2021-06-14</td><td class="num">25</td><td class="num">26,524</td><td class="num">1061</td><td>Build 2 — mid expansion (2021)</td></tr>
+      <tr><td><b>Flower 7</b></td><td class="num">2021-07-04</td><td class="num">25</td><td class="num">26,815</td><td class="num">1073</td><td>Build 2 — mid expansion (2021)</td></tr>
+      <tr><td><b>Flower 9</b></td><td class="num">2021-07-25</td><td class="num">24</td><td class="num">26,100</td><td class="num">1088</td><td>Build 2 — mid expansion (2021)</td></tr>
+      <tr><td><b>Flower 11</b></td><td class="num">2022-06-25</td><td class="num">20</td><td class="num">12,163</td><td class="num">608</td><td>Build 3 — final (2022)</td></tr>
+      <tr><td><b>Flower 13</b></td><td class="num">2022-07-13</td><td class="num">20</td><td class="num">11,942</td><td class="num">597</td><td>Build 3 — final (2022)</td></tr>
+      <tr><td><b>Flower 12</b></td><td class="num">2022-08-01</td><td class="num">20</td><td class="num">12,055</td><td class="num">603</td><td>Build 3 — final (2022)</td></tr>
+      <tr><td><b>Flower 14</b></td><td class="num">2022-08-20</td><td class="num">19</td><td class="num">11,592</td><td class="num">610</td><td>Build 3 — final (2022)</td></tr>
+    </tbody></table></div>
+  <h3>Support rooms (mom, clone, veg, dry, cure, fertigation)</h3>
+  <p>Twelve non-flower rooms support the program. Mom 1 + Mom 2 hold mother stock for the active cultivar set. Clone 1 + Clone 2 do propagation (Clone 2 is currently running 3 brand-new flips for Flower 2/7/12). Veg 1 + Veg 2 hold vegetative through transition. Dry 1/2/3 + Cure 2 handle post-harvest. Fertigation 1 + Fertigation 2 are the feed-mixing rooms — Fertigation 1 (room ID 5939, online June 2021) is the build-2-era nutrient room; Fertigation 2 (room ID 3855) is the original 2020 nutrient bay. Both have always been on the mesh.</p>
+</section><section id="tracking">
+  <h2>Plant-out tracking — the 2024+ gap</h2>
+  <div class="verdict warn">
+    <div class="v-head">Data quality flag — needs a yes/no from Klutch</div>
+    <p>Looking at the harvestedCount field across the lifespan: <b>2020 100%, 2021 92.6%, 2022 93.4%, 2023 88.5%, 2024 0.0%, 2025 0.0%, 2026 0.0%</b>. Plant entry counts (plantCount) are populated normally — operators are still recording how many plants enter each HG. But the harvested-out count went to zero starting with 2024 harvests. Two innocent explanations: (a) the HG close-out workflow moved entirely to METRC and AROYA-side closure was deprioritized, or (b) the close-out step is just being skipped at runs end and the plants are tracked-to-package in METRC alone. The packagedWeight, frozenWeight, and finalPackageWeight fields are all also <b>zero on every single HG</b> — confirming Klutch doesn't record any weight back into AROYA. That's a meeting question, not a defect.</p>
+  </div>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Year</th><th class="num">Plants entered</th><th class="num">Plants tracked-to-harvest</th><th class="num">Survival rate</th></tr></thead><tbody>
+      <tr><td><b>2020</b></td><td class="num">9,363</td><td class="num">9,363</td><td class="num"><span class="pill good">100.0%</span></td></tr>
+      <tr><td><b>2021</b></td><td class="num">31,945</td><td class="num">29,589</td><td class="num"><span class="pill good">92.6%</span></td></tr>
+      <tr><td><b>2022</b></td><td class="num">51,967</td><td class="num">48,553</td><td class="num"><span class="pill good">93.4%</span></td></tr>
+      <tr><td><b>2023</b></td><td class="num">69,377</td><td class="num">61,397</td><td class="num"><span class="pill good">88.5%</span></td></tr>
+      <tr><td><b>2024</b></td><td class="num">63,557</td><td class="num">0</td><td class="num"><span class="pill bad">0.0%</span></td></tr>
+      <tr><td><b>2025</b></td><td class="num">57,415</td><td class="num">0</td><td class="num"><span class="pill bad">0.0%</span></td></tr>
+      <tr><td><b>2026</b></td><td class="num">32,180</td><td class="num">0</td><td class="num"><span class="pill bad">0.0%</span></td></tr>
+    </tbody></table></div>
+  <p>If Klutch wants AROYA to reflect realized yield per HG / per cultivar / per room — which would unlock the strain-performance and ROI reports we ship for other facilities — the fix is process not technical: the close-out workflow has to write harvestedCount and at least one weight field back into AROYA. We can walk through which fields and which UI step on the call.</p>
+</section>
+<section id="phases">
+  <h2>Phase-duration discipline</h2>
+  <p>This is the result the dataset proves: <b>median flower phase duration has been exactly 63 days every year since 2021, across 273 flower cycles</b>. The propagation and vegetative phases have crept up slightly (PROP from 14 → 16-18 days, VEG steady at 14-17 days), which is consistent with the move toward higher-plant-count HGs and more cultivar testing. But the flower discipline is what jumps off the page — the recipe library has 14 different recipes spanning afternoon/morning splits, multiple substrate sizes, and fresh-frozen variants, yet the actual flower duration ends up at 63 days regardless. That's the controls program working: cultivars get sorted to the right recipe and the right room, and the room's phase calendar holds.</p>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Year</th><th class="num">HGs harvested</th><th class="num">Median PROP days</th><th class="num">Median VEG days</th><th class="num">Median FLOWER total days</th></tr></thead><tbody>
+      <tr><td><b>2020</b></td><td class="num">8</td><td class="num">0</td><td class="num">1</td><td class="num"><span class="pill warn">62 d</span></td></tr>
+      <tr><td><b>2021</b></td><td class="num">30</td><td class="num">14</td><td class="num">14</td><td class="num"><span class="pill good">63 d</span></td></tr>
+      <tr><td><b>2022</b></td><td class="num">51</td><td class="num">17</td><td class="num">16</td><td class="num"><span class="pill good">63 d</span></td></tr>
+      <tr><td><b>2023</b></td><td class="num">73</td><td class="num">18</td><td class="num">16</td><td class="num"><span class="pill good">63 d</span></td></tr>
+      <tr><td><b>2024</b></td><td class="num">65</td><td class="num">18</td><td class="num">17</td><td class="num"><span class="pill good">63 d</span></td></tr>
+      <tr><td><b>2025</b></td><td class="num">62</td><td class="num">18</td><td class="num">17</td><td class="num"><span class="pill good">63 d</span></td></tr>
+      <tr><td><b>2026</b></td><td class="num">45</td><td class="num">16</td><td class="num">17</td><td class="num"><span class="pill good">63 d</span></td></tr>
+    </tbody></table></div>
+</section>
+<section id="recipes">
+  <h2>Recipe program</h2>
+  <p>14 active recipes in the library. Reading the names is the easiest way to understand how Klutch organizes its day. <b>Two facility splits encoded in the recipes</b> ("Home Ave" and "Akron Penn") suggests the recipe library is shared with a sister facility — likely the Penn Avenue Akron location. <b>Three time-of-day splits</b> ("Morning" vs "Afternoon" vs "Slab Morning") show the program differentiates between staggered lighting shifts. <b>Three substrate types</b> ("1 Gallon Coco", "Slab", "Fresh Frozen") show how the room-by-room substrate decision flows back into the recipe set. And <b>one specialty recipe</b> ("F9 Slow Growers Recipe (21 Day Veg)") shows the facility has at least one cultivar block that gets a longer veg — the extra week reflects strain-specific habit.</p>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Recipe name</th><th class="num">Phases</th><th>What it tells us</th></tr></thead><tbody>
+      <tr><td><b>Morning Home Ave 1 Gallon Coco (H1)</b></td><td class="num">6</td><td>Morning shift · Home Ave · 1 gal coco</td></tr>
+      <tr><td><b>Morning Home Ave 1 Gallon Coco (H2)</b></td><td class="num">7</td><td>Morning shift · Home Ave · 1 gal coco · revision</td></tr>
+      <tr><td><b>Afternoon Home Ave 1 Gallon Coco (H1)</b></td><td class="num">6</td><td>Afternoon shift · Home Ave · 1 gal coco</td></tr>
+      <tr><td><b>Afternoon Home Ave 1 Gallon Coco (H2)</b></td><td class="num">7</td><td>Afternoon shift · Home Ave · 1 gal coco · revision</td></tr>
+      <tr><td><b>Akron Penn Morning Coco 1gal</b></td><td class="num">14</td><td>Penn Ave sister facility · morning · 14-phase</td></tr>
+      <tr><td><b>Akron Penn Afternoon Coco 1gal</b></td><td class="num">14</td><td>Penn Ave sister facility · afternoon · 14-phase</td></tr>
+      <tr><td><b>Slab Morning Recipe</b></td><td class="num">6</td><td>Rockwool slab · morning shift</td></tr>
+      <tr><td><b>Fresh Frozen Recipe (F5 & F10)</b></td><td class="num">7</td><td>Fresh frozen recipe · Flower 5 and Flower 10</td></tr>
+      <tr><td><b>Hugo Morning Recipe</b></td><td class="num">7</td><td>Hugo substrate · morning</td></tr>
+      <tr><td><b>Hugo Afternoon Recipe</b></td><td class="num">7</td><td>Hugo substrate · afternoon</td></tr>
+      <tr><td><b>F9 Slow Growers Recipe (21 Day Veg)</b></td><td class="num">6</td><td>Extended-veg recipe for slow strains</td></tr>
+      <tr><td><b>Flower Only</b></td><td class="num">5</td><td>Generic flower-only · no propagation phase</td></tr>
+      <tr><td><b>Veg/Flower/Dry Recipe</b></td><td class="num">7</td><td>Catch-all generic</td></tr>
+      <tr><td><b>F 1 3/17-6/22</b></td><td class="num">14</td><td>HG-specific recipe (artifact)</td></tr>
+    </tbody></table></div>
+  <p class="muted">The recipe field on the harvest_groups endpoint returns a boolean (not the recipe ID), so we can't link each HG back to its specific recipe lifetime — a known SPA limitation. Recipe pull is from /recipes/?facility=1503.</p>
+</section>
+<section id="devices">
+  <h2>Device fleet evolution</h2>
+  <p>The facility runs <b>469 active mesh devices</b> across the 26 rooms. Inventory: <b>136 TER12 substrate sensors</b> (the legacy substrate head, battery-powered), <b>70 TER15 substrate sensors</b> (the new-gen substrate head, started rolling out late 2024), <b>29 ATM14 climate heads</b>, <b>186 mesh nodes</b>, <b>40 repeaters</b>, <b>4 gateways</b>, and <b>4 sinks</b>. <b>29 devices have been retired across the lifespan</b> (27 nodes plus 2 TER12 substrate heads) — a 6% lifetime retirement rate against a fleet of 498, which is healthy for hardware that's been in production this long.</p>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>Device model</th><th>Type</th><th>Power</th><th class="num">Active</th><th class="num">Retired</th><th>Notes</th></tr></thead><tbody>
+      <tr><td><b>ter12</b></td><td>Substrate sensor (legacy TEROS 12)</td><td>Battery (CR123A)</td><td class="num">136</td><td class="num">2</td><td>AROYA's original substrate head; some are upgrade candidates for TER15 + Climate One trade-in</td></tr>
+      <tr><td><b>ter15</b></td><td>Substrate sensor (new-gen TEROS One)</td><td>Battery (CR123A)</td><td class="num">70</td><td class="num">0</td><td>Newer gen; mix-and-match with TER12 across the fleet</td></tr>
+      <tr><td><b>atm14</b></td><td>Climate sensor (Atmos 14)</td><td>PoE</td><td class="num">29</td><td class="num">0</td><td>Per-room temp/RH/VPD/CO₂ where deployed</td></tr>
+      <tr><td><b>node</b></td><td>Wirepas mesh node</td><td>Battery / PoE</td><td class="num">186</td><td class="num">27</td><td>Mesh-routing radio + power for the substrate head</td></tr>
+      <tr><td><b>repeater</b></td><td>Wirepas mesh repeater</td><td>PoE</td><td class="num">40</td><td class="num">0</td><td>Range-extender; one per ~4–6 nodes typical</td></tr>
+      <tr><td><b>gateway</b></td><td>Gateway (Wirepas → cloud)</td><td>PoE</td><td class="num">4</td><td class="num">0</td><td>Uplink to AROYA cloud; 4 deployed for redundancy</td></tr>
+      <tr><td><b>sink</b></td><td>Wirepas sink</td><td>PoE</td><td class="num">4</td><td class="num">0</td><td>Network entry-point; 4 deployed</td></tr>
+    </tbody></table></div>
+  <p><b>Battery health (online, battery-powered, active):</b> 369 sensors reporting, mean battery <b>90.3%</b>, <b>10 below 30%</b>. The 30% threshold is the OTAP/firmware update floor — anything below that won't survive a remote firmware push. 10 of 369 is roughly 2.7% — comfortable; not zero, but well within typical replacement-batch lead time. The companion device-health report (2026-06-12) carries the per-device list.</p>
+  <p class="muted">Firmware-generation (WP4 vs WP5) split is not exposed on this portal_api response so we can't separate per-device generation here. See the Klutch ATCPC Device Health 2026-06-12 report for the WP4/WP5 distribution per node.</p>
+</section>
+<section id="current">
+  <h2>Current state (week of 2026-06-25)</h2>
+  <p><b>17 HGs are currently in flight:</b> 12 inside flower rooms, 3 cloning in Clone 2 for the next three flips (Flower 2, 7, 12), and 2 vegging in Veg 2 (the next-rotation cultivar blocks for Flower 8 and Flower 13). The 12 flower-room HGs span the entire flower phase ladder from Stacking through Ripen — i.e. the facility is running every phase concurrently, which is what an at-capacity flower side looks like.</p>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>HG name</th><th>Room</th><th>Current phase</th><th class="num">Flip date</th><th class="num">Harvest date</th><th class="num">Plants</th><th>Cultivars</th></tr></thead><tbody>
+      <tr><td><b>H308_F8_3/15-6/25</b></td><td>Flower 8</td><td><span class="phase ripening">Ripen</span></td><td class="num">2026-03-15</td><td class="num">2026-06-30</td><td class="num">868</td><td>Kush Mints, Rainbow Belts, Papaya, Zamosa +6</td></tr>
+      <tr><td><b>H309_F13_3/15-6/25</b></td><td>Flower 13</td><td><span class="phase ripening">Ripen</span></td><td class="num">2026-03-15</td><td class="num">2026-06-30</td><td class="num">504</td><td>Orange 43, Ice Cream Cake, Lemon Slushee, Donny Solo Burger +1</td></tr>
+      <tr><td><b>H311_F_7_4/4-7/22</b></td><td>Flower 7</td><td><span class="phase ripening">Ripen</span></td><td class="num">2026-04-04</td><td class="num">2026-07-23</td><td class="num">868</td><td>Orange 43, Ice Cream Cake, Motorbreath, OG Kush Story +3</td></tr>
+      <tr><td><b>H312_F12_4/4-7/22</b></td><td>Flower 12</td><td><span class="phase ripening">Ripen</span></td><td class="num">2026-04-04</td><td class="num">2026-07-23</td><td class="num">504</td><td>Jealousy, Permanent Marker, RS11, Hash Burger +2</td></tr>
+      <tr><td><b>H310_F2_4/8-7/6</b></td><td>Flower Room 2</td><td><span class="phase bulking">Bulking</span></td><td class="num">2026-04-08</td><td class="num">2026-07-06</td><td class="num">880</td><td>Orange 43, Ice Cream Cake, Sherbhead, Heatlocker +5</td></tr>
+      <tr><td><b>H314_F9_4/22-8/9</b></td><td>Flower 9</td><td><span class="phase bulking">Bulking</span></td><td class="num">2026-04-22</td><td class="num">2026-08-13</td><td class="num">868</td><td>Orange 43, Ice Cream Cake, Sherbhead, Big Head +3</td></tr>
+      <tr><td><b>H315_F14_4/22-8/9</b></td><td>Flower 14</td><td><span class="phase bulking">Bulking</span></td><td class="num">2026-04-22</td><td class="num">2026-08-13</td><td class="num">504</td><td>Violet Fog, Lemon Cherry Gelato, Pacific Cool, Purp 43 +2</td></tr>
+      <tr><td><b>H313_F3_4/26-7/24</b></td><td>Flower Room 3</td><td><span class="phase bulking">Bulking</span></td><td class="num">2026-04-26</td><td class="num">2026-07-31</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, Kush Mints, Papaya +4</td></tr>
+      <tr><td><b>F10_H10-23_5/1-8/18</b></td><td>Flower 10</td><td><span class="phase stretch">Stacking</span></td><td class="num">2026-05-01</td><td class="num">2026-08-20</td><td class="num">120</td><td>OG Kiss, Meltdown, Lemon G</td></tr>
+      <tr><td><b>H317_F6_5/10-8/27</b></td><td>Flower 6</td><td><span class="phase stretch">Stacking</span></td><td class="num">2026-05-10</td><td class="num">2026-08-29</td><td class="num">868</td><td>Kush Mints, Papaya, Zamosa, Grape Jam +3</td></tr>
+      <tr><td><b>H318_F11_5/10-8/27</b></td><td>Flower 11</td><td><span class="phase stretch">Stacking</span></td><td class="num">2026-05-10</td><td class="num">2026-08-27</td><td class="num">432</td><td>Orange 43, Ice Cream Cake, Lemon Slushee, Donny Solo Burger +2</td></tr>
+      <tr><td><b>H316_F1_5/14-8/11</b></td><td>Flower Room 1</td><td><span class="phase stretch">Transition</span></td><td class="num">2026-05-14</td><td class="num">2026-08-11</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, Jealousy, Permanent Marker +8</td></tr>
+      <tr><td><b>H319_F8_5/28-9/14</b></td><td>Veg 2</td><td><span class="phase veg">Veg</span></td><td class="num">2026-05-28</td><td class="num">2026-09-14</td><td class="num">868</td><td>Sherbhead, Heatlocker, Lemon Cherry Gelato, Zoap +4</td></tr>
+      <tr><td><b>H320_F13_5/28-9/14</b></td><td>Veg 2</td><td><span class="phase veg">Veg</span></td><td class="num">2026-05-28</td><td class="num">2026-09-14</td><td class="num">432</td><td>Orange 43, Ice Cream Cake, Apricot Gelato, OG Kiss +1</td></tr>
+      <tr><td><b>H321_F2_6/13-9/10</b></td><td>Clone 2</td><td><span class="phase rootin">Clone</span></td><td class="num">2026-06-13</td><td class="num">2026-09-10</td><td class="num">880</td><td>Orange 43, Ice Cream Cake, Pacific Cool, College Park +6</td></tr>
+      <tr><td><b>H322_F7_6/17-10/4</b></td><td>Clone 2</td><td><span class="phase rootin">Clone</span></td><td class="num">2026-06-17</td><td class="num">2026-10-04</td><td class="num">868</td><td>Kush Mints, Jealousy, Lemon Cherry Gelato, Zamosa +8</td></tr>
+      <tr><td><b>H323_F12_6/17-10/4</b></td><td>Clone 2</td><td><span class="phase rootin">Clone</span></td><td class="num">2026-06-17</td><td class="num">2026-10-04</td><td class="num">504</td><td>Orange 43, Ice Cream Cake</td></tr>
+    </tbody></table></div>
+  <p>The most recent operator-facing 2-week audit (2026-05-29 → 2026-06-12) walked the per-room steering envelope for every flower room above and graded each against its HG phase target. Headlines from that read: <b>Flower 8 is in-band on ripening dryback (33.2 pp absolute) but well below the EC restack target</b> (3.01 mS vs 6.0–8.0 ms); <b>Flower 13 is below band on both dryback (15.4 pp) and EC (3.81 mS)</b>; <b>Flower Room 2 (Bulking) is running too deep a dryback (45.7 pp vs 15–25 band)</b>. The three flips landing this week (H321_F2 on 6/13, H322_F7 + H323_F12 on 6/17) need their early-flower steering set before the first lights-on after each flip.</p>
+</section>
+<section id="recommendations">
+  <h2>Operational recommendations</h2>
+  <p>Prioritized for the meeting. Each rec carries Owner (Grower / Process / Klutch lead) and expected-outcome math where the data supports it. Recommendations are ordered by how much yield-or-quality leverage they have.</p>
+  <div class="rec">
+    <span class="owner process">Process</span>
+    <span class="rphase">P1 · Data</span>
+    <div class="raction">Reinstate the harvested-count + final-weight write-back in AROYA, or commit to METRC-only and tell us so we stop trying to grade yield from AROYA</div>
+    <div class="rwhy">The harvestedCount field has been zero on every 2024+ HG (162 cycles). packagedWeight, finalPackageWeight, and frozenWeight are zero on every single one of the 334 lifetime HGs. As long as that's the case, AROYA-side yield-per-cultivar and yield-per-room reports return nothing, which means we can't do the strain-performance + ROI analysis you'd normally expect at this account size. The fix is process — either re-enable the close-out write-back or just confirm METRC is the system of record so we plan around that.</div>
+    <div class="rdollar">Expected outcome: Unlocks per-cultivar/per-room yield ranking across 162 recent HGs + future runs.</div>
+  </div>
+  <div class="rec">
+    <span class="owner grower">Grower</span>
+    <span class="rphase">P1 · Steering</span>
+    <div class="raction">Lift the ripening-phase EC restack target — at least Flower 8 and Flower 13 in the current cycle, then verify across the next two rotations</div>
+    <div class="rwhy">Both ripening rooms in the most recent audit ran pore EC at 3.0–3.8 mS against a 6.0–8.0 mS ripening band. Per the AROYA crop-steering playbook, the EC restack in the final weeks is one of the two main drivers of finish quality (the other being dryback depth, which is already in-band on Flower 8 and shallow on Flower 13). This is a 2–3 pp pull-back in feed EC over the last 14 days of bulking → into ripen, not a wholesale change.</div>
+    <div class="rdollar">Expected outcome: Tighter ripening EC discipline correlates with measurable improvement in trichome density and terpene retention in similar SOG programs.</div>
+  </div>
+  <div class="rec">
+    <span class="owner grower">Grower</span>
+    <span class="rphase">P1 · Flips</span>
+    <div class="raction">Set early-flower steering on the three flips landing this week (H321_F2 on 6/13, H322_F7 + H323_F12 on 6/17) before first lights-on</div>
+    <div class="rwhy">Stretch is decided in the first 10–14 days. A room that's vegetatively watered through early flower stretches out of control. The lifetime data shows your phase calendar (63-day flower) holds — but only if early-flower steering is set before the cycle gets ahead of you. Generative setup: P0 delay 120–240 min, dryback target 20–30 pp absolute, EC stacking 6–12 mS, shot size 6–10% of substrate.</div>
+    <div class="rdollar">Expected outcome: Direct effect on internode spacing and final canopy density.</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Process</span>
+    <span class="rphase">P2 · Sensors</span>
+    <div class="raction">Add CO₂ sensing to the flower rooms that lack it — confirmed gap from the 2-week audit</div>
+    <div class="rwhy">Several flower rooms show "no CO₂ sensor" in the prior audit. CO₂ enrichment (900–1300 ppm) is one of the highest-leverage bulking inputs — you can't manage what you can't see. Cost-of-skip: bulking decisions in the uncovered rooms are being made half-blind on the air side, every cycle.</div>
+    <div class="rdollar">Expected outcome: CO₂ enrichment from baseline-ambient to 1000-1200 ppm is conventionally cited as a 10–15% bulking yield bump where it isn't already in place.</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Process</span>
+    <span class="rphase">P2 · Library</span>
+    <div class="raction">Archive the 50 cultivars in the library that have never been planted in any HG</div>
+    <div class="rwhy">Cultivar dropdowns get longer every year. 50 catalogued strains have been added but never used — historic catalog accumulation from the 137-strain refresh across 2024–2026. Clean-up keeps the operator UI fast and prevents pick-the-wrong-strain mistakes at plant-in time.</div>
+    <div class="rdollar">Expected outcome: No yield effect; UX hygiene only.</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Process</span>
+    <span class="rphase">P2 · Reporting</span>
+    <div class="raction">Stand up a per-cultivar performance dashboard against the top 25 strains</div>
+    <div class="rwhy">Once the close-out / weight write-back is back in AROYA, the top 25 cultivars (each with 25+ lifetime HGs) become a real performance corpus. We can rank strains by yield per square foot, dryback signature, EC tolerance, and stretch ratio. That is the highest-value report this account isn't getting today.</div>
+    <div class="rdollar">Expected outcome: Drives strain-rotation decisions and which of the 137 new cultivars graduate from "testing" to "core".</div>
+  </div>
+  <div class="rec">
+    <span class="owner grower">Grower</span>
+    <span class="rphase">P3 · Climate</span>
+    <div class="raction">Tighten lights-off RH discipline in the bulking and ripening rooms</div>
+    <div class="rwhy">Per the 2-week audit, a humid lights-off period blunts overnight dryback no matter where the controller is set. Dryback is a climate-and-irrigation product, not just an irrigation product. Per-room RH and VPD traces in the 2wk audit show which rooms run hottest on lights-off RH.</div>
+    <div class="rdollar">Expected outcome: Improves dryback consistency cycle-over-cycle; reduces disease pressure in the high-canopy phase.</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Process</span>
+    <span class="rphase">P3 · Hardware</span>
+    <div class="raction">Plan a TEROS-12 → TEROS-One trade-in for the 136 TER12 substrate heads over the next 12 months</div>
+    <div class="rwhy">The fleet has 136 TER12 (legacy) substrate heads. AROYA's trade-in offers $100/Single, $150/Dual, $150/Climate One per replaced device. A staged trade-in over 12 months — say 12 per month — captures the new-gen accuracy gains without a fleet-wide downtime event. Battery health is fine today (mean 90%), but TER12 is end-of-life on the AROYA roadmap and the longer Klutch waits the more aging batteries become the rate-limiter.</div>
+    <div class="rdollar">Expected outcome: Net new-fleet cost ≈ 136 × $319 (Single) = $43,384 over 12 months, vs $43,884 sticker, vs avoidable battery + accuracy drift on a 5-year-old sensor fleet. Climate One option (with built-in atmospheric head) compresses 2 install jobs into 1 if room layout allows.</div>
+  </div>
+</section>
+<section id="openquestions">
+  <h2>Open questions for Klutch</h2>
+  <p>These are things the SPA + portal_api wouldn't answer that the Klutch team can. Listed in priority order for the meeting.</p>
+  <div class="rec">
+    <span class="owner process">Q</span>
+    <span class="rphase">Yield + weight reporting</span>
+    <div class="raction">Why did harvestedCount + packagedWeight + finalPackageWeight stop being recorded after 2023? Is this a deliberate move to METRC-only, or a workflow that broke?</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Q</span>
+    <span class="rphase">Penn Avenue sister facility</span>
+    <div class="raction">The recipe library references "Akron Penn Morning Coco 1gal" — is that a sister Calyx Peak / Klutch facility? Are we covering it in AROYA?</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Q</span>
+    <span class="rphase">Fresh-frozen room scope</span>
+    <div class="raction">Flower 10 carries only 3,760 plants across 23 lifetime cycles (163 plants/HG, vs ~1,500/HG in the standard rooms). Is it the dedicated fresh-frozen room, or is the low density driven by something else (e.g. lighting tier, specialty cultivar block)?</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Q</span>
+    <span class="rphase">Plant-out closure workflow</span>
+    <div class="raction">When a HG hits harvest, who in your team is responsible for entering the harvest weight, and into which system? AROYA, METRC, both?</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Q</span>
+    <span class="rphase">Cultivar rotation governance</span>
+    <div class="raction">Who decides which of the 25 "scaling fast" new cultivars graduates from testing to core rotation, and when?</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Q</span>
+    <span class="rphase">Substrate type evolution</span>
+    <div class="raction">The recipe names show 1-gallon coco, slabs, and "Hugo" — does each flower room have a single substrate, or do they mix? Substrate decisions tie back to the dryback strategy.</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Q</span>
+    <span class="rphase">Penn Ave morning/afternoon split</span>
+    <div class="raction">The recipe names show morning and afternoon shifts — is that a per-room lighting stagger inside ATCPC, or does it tie to the sister facility too?</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Q</span>
+    <span class="rphase">Drew Applin / Tyler Miszuk vs Mike Lentz</span>
+    <div class="raction">Our prior contacts at Klutch were Drew Applin and Tyler Miszuk. Mike Lentz is a new contact for us — does he own the cultivation function across both ATCPC and Penn Ave, or only ATCPC?</div>
+  </div>
+</section>
+<section id="dataquality">
+  <h2>Data quality &amp; methodology</h2>
+  <div class="verdict warn">
+    <div class="v-head">Lifetime-level limitations</div>
+    <ul style="margin:6px 0 0;padding-left:20px;font-size:13.5px;line-height:1.55;color:var(--ink-2)">
+      <li><b>Account lifespan</b> = earliest HG start date in the dataset (2020-06-22, "H:1_F1_6/22-9/29") through the latest HG start date (2026-06-17). The facility's actual onboarding date with AROYA could pre-date the first recorded HG by days or weeks but is not in this dataset.</li>
+      <li><b>Yields:</b> packagedWeight, finalPackageWeight, frozenWeight, harvestWasteWeight, wasteWeight all return zero on every single HG. Per-room and per-cultivar yield analysis is not possible from AROYA — weights live in METRC.</li>
+      <li><b>harvestedCount</b> is populated for 2020–2023 HGs but goes to zero starting with 2024 harvests. Plant survival rate above is computed on the years it's populated only.</li>
+      <li><b>Per-HG recipe link</b> is not exposed (the recipe field is a boolean rather than an ID), so we can't graph "which recipe was used for which HG over time".</li>
+      <li><b>Per-room substrate type</b> is "SOILLESS" for every room in the list endpoint — the specific substrate (1 gal coco vs slab vs Hugo) lives in the recipe library and would need a per-HG recipe-to-room mapping to resolve, which is currently not derivable from the API.</li>
+      <li><b>Device firmware generation</b> (WP4 vs WP5) is not on the portal_api device response — the prior device health report (2026-06-12) carries this dimension at a per-device level.</li>
+      <li><b>Environmental + irrigation per-room time-series for the full 6-year window</b> would have required ~26 rooms × multi-year per-room pulls at bin=day, which was deferred for time. The most recent 2-week audit (2026-05-29 → 2026-06-12) covers the current cycle envelope at full ~9-min cadence for the 18 sensed rooms.</li>
+      <li><b>Source endpoints:</b> harvest groups → /harvests/?facility=1503 paginated; cultivars → /cultivars/?facility=1503; recipes → /recipes/?facility=1503; rooms → /rooms/?facility=1503; devices → /portal_api/devices/?facility_id=1503; org → /portal_api/organizations/1186/; facility → /portal_api/facilities/1503/. All hit with the SPA Bearer token from ~/.aroya/spa_token_app.json on 2026-06-25.</li>
+      <li><b>Active-HGs definition:</b> currentPhase != null in the /harvests/ payload. 17 HGs match (12 in flower-room phases, 3 in Clone 2, 2 in Veg 2).</li>
+      <li><b>Cultivar-per-year HG count:</b> a cultivar that appears in a single HG with N cultivars counts as 1 HG against each strain in that HG (i.e. multi-strain HGs are double-counted across strain rows). This is the right normalization for "which strains are running in the facility this year" but inflates the per-strain HG count vs a single-strain-only metric.</li>
+    </ul>
+  </div>
+</section>
+<section id="appendix">
+  <h2>Appendix · Full harvest-group list (newest first)</h2>
+  <p>All 334 harvest groups across the lifespan, newest first. Shown: HG name, flip date, harvest date, primary flower room, plant count, cultivar headline (first 3 + count of others).</p>
+  <div class="bp-scroll"><table class="bp-table">
+    <thead><tr><th>HG name</th><th class="num">Flip</th><th class="num">Harvest</th><th>Flower room</th><th class="num">Plants</th><th>Cultivars</th></tr></thead><tbody>
+      <tr><td><b>H322_F7_6/17-10/4</b></td><td class="num">2026-06-17</td><td class="num">2026-10-04</td><td>Flower 7</td><td class="num">868</td><td>Kush Mints, Jealousy, Lemon Cherry Gelato +9</td></tr>
+      <tr><td><b>H323_F12_6/17-10/4</b></td><td class="num">2026-06-17</td><td class="num">2026-10-04</td><td>Flower 12</td><td class="num">504</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H319_F8_5/28-9/14</b></td><td class="num">2026-05-28</td><td class="num">2026-09-14</td><td>Flower 8</td><td class="num">868</td><td>Sherbhead, Heatlocker, Lemon Cherry Gelato +5</td></tr>
+      <tr><td><b>H320_F13_5/28-9/14</b></td><td class="num">2026-05-28</td><td class="num">2026-09-14</td><td>Flower 13</td><td class="num">432</td><td>Orange 43, Ice Cream Cake, Apricot Gelato +2</td></tr>
+      <tr><td><b>H321_F2_6/13-9/10</b></td><td class="num">2026-06-13</td><td class="num">2026-09-10</td><td>Flower Room 2</td><td class="num">880</td><td>Orange 43, Ice Cream Cake, Pacific Cool +7</td></tr>
+      <tr><td><b>H317_F6_5/10-8/27</b></td><td class="num">2026-05-10</td><td class="num">2026-08-29</td><td>Flower 6</td><td class="num">868</td><td>Kush Mints, Papaya, Zamosa +4</td></tr>
+      <tr><td><b>H318_F11_5/10-8/27</b></td><td class="num">2026-05-10</td><td class="num">2026-08-27</td><td>Flower 11</td><td class="num">432</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +3</td></tr>
+      <tr><td><b>F10_H10-23_5/1-8/18</b></td><td class="num">2026-05-01</td><td class="num">2026-08-20</td><td>Flower 10</td><td class="num">120</td><td>OG Kiss, Meltdown, Lemon G</td></tr>
+      <tr><td><b>H314_F9_4/22-8/9</b></td><td class="num">2026-04-22</td><td class="num">2026-08-13</td><td>Flower 9</td><td class="num">868</td><td>Orange 43, Ice Cream Cake, Sherbhead +4</td></tr>
+      <tr><td><b>H315_F14_4/22-8/9</b></td><td class="num">2026-04-22</td><td class="num">2026-08-13</td><td>Flower 14</td><td class="num">504</td><td>Violet Fog, Lemon Cherry Gelato, Pacific Cool +3</td></tr>
+      <tr><td><b>H316_F1_5/14-8/11</b></td><td class="num">2026-05-14</td><td class="num">2026-08-11</td><td>Flower Room 1</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, Jealousy +9</td></tr>
+      <tr><td><b>H313_F3_4/26-7/24</b></td><td class="num">2026-04-26</td><td class="num">2026-07-31</td><td>Flower Room 3</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, Kush Mints +5</td></tr>
+      <tr><td><b>H311_F_7_4/4-7/22</b></td><td class="num">2026-04-04</td><td class="num">2026-07-23</td><td>Flower 7</td><td class="num">868</td><td>Orange 43, Ice Cream Cake, Motorbreath +4</td></tr>
+      <tr><td><b>H312_F12_4/4-7/22</b></td><td class="num">2026-04-04</td><td class="num">2026-07-23</td><td>Flower 12</td><td class="num">504</td><td>Jealousy, Permanent Marker, RS11 +3</td></tr>
+      <tr><td><b>H310_F2_4/8-7/6</b></td><td class="num">2026-04-08</td><td class="num">2026-07-06</td><td>Flower Room 2</td><td class="num">880</td><td>Orange 43, Ice Cream Cake, Sherbhead +6</td></tr>
+      <tr><td><b>H308_F8_3/15-6/25</b></td><td class="num">2026-03-15</td><td class="num">2026-06-30</td><td>Flower 8</td><td class="num">868</td><td>Kush Mints, Rainbow Belts, Papaya +7</td></tr>
+      <tr><td><b>H309_F13_3/15-6/25</b></td><td class="num">2026-03-15</td><td class="num">2026-06-30</td><td>Flower 13</td><td class="num">504</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +2</td></tr>
+      <tr><td><b>H305_F6_2/25-6/7</b></td><td class="num">2026-02-25</td><td class="num">2026-06-10</td><td>Flower 6</td><td class="num">868</td><td>Orange 43, Ice Cream Cake, Sherbhead +5</td></tr>
+      <tr><td><b>H306_F11_2/25-6/7</b></td><td class="num">2026-02-25</td><td class="num">2026-06-10</td><td>Flower 11</td><td class="num">504</td><td>Apricot Gelato, Violet Fog, Lemon Cherry Gelato +5</td></tr>
+      <tr><td><b>H307_F1_3/9-6/6</b></td><td class="num">2026-03-09</td><td class="num">2026-06-10</td><td>Flower Room 1</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, Motorbreath +11</td></tr>
+      <tr><td><b>H304_F3_2/19-5/19</b></td><td class="num">2026-02-19</td><td class="num">2026-05-28</td><td>Flower Room 3</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, Kush Mints +7</td></tr>
+      <tr><td><b>H302_F9_2/7-5/20</b></td><td class="num">2026-02-07</td><td class="num">2026-05-22</td><td>Flower 9</td><td class="num">868</td><td>Motorbreath, Jealousy, Permanent Marker +7</td></tr>
+      <tr><td><b>H303_F14_2/7-5/20</b></td><td class="num">2026-02-07</td><td class="num">2026-05-22</td><td>Flower 14</td><td class="num">504</td><td>Orange 43, Ice Cream Cake, Cherry R'ntz</td></tr>
+      <tr><td><b>H299_F7_1/20-5/2</b></td><td class="num">2026-01-20</td><td class="num">2026-05-05</td><td>Flower 7</td><td class="num">868</td><td>Kush Mints, Lemon Slushee, Rainbow Belts +5</td></tr>
+      <tr><td><b>H300_F12_1/20-5/2</b></td><td class="num">2026-01-20</td><td class="num">2026-05-05</td><td>Flower 12</td><td class="num">504</td><td>Orange 43, Ice Cream Cake, Kockeyed</td></tr>
+      <tr><td><b>H301_F2_1/31-4/30</b></td><td class="num">2026-01-31</td><td class="num">2026-05-02</td><td>Flower Room 2</td><td class="num">880</td><td>Orange 43, Ice Cream Cake, Sherbhead +5</td></tr>
+      <tr><td><b>H10-22_F10_1/16-4/15</b></td><td class="num">2026-01-16</td><td class="num">2026-04-22</td><td>Flower 10</td><td class="num">132</td><td>Catfish, Motorbreath</td></tr>
+      <tr><td><b>H296_F1_1/2-4/1</b></td><td class="num">2026-01-02</td><td class="num">2026-04-04</td><td>Flower Room 1</td><td class="num">1040</td><td>Orange 43, Ice Cream Cake, Sherbhead +9</td></tr>
+      <tr><td><b>H298_F13_12/31-3/30</b></td><td class="num">2025-12-31</td><td class="num">2026-04-02</td><td>Flower 13</td><td class="num">504</td><td>Motorbreath, Jealousy, Violet Fog +4</td></tr>
+      <tr><td><b>H297_F8_12/31-3/30</b></td><td class="num">2025-12-31</td><td class="num">2026-04-01</td><td>Flower 8</td><td class="num">868</td><td>Orange 43, Ice Cream Cake, Lemon Cherry Gelato +4</td></tr>
+      <tr><td><b>H295_F3_12/23-3/30</b></td><td class="num">2025-12-23</td><td class="num">2026-03-29</td><td>Flower Room 3</td><td class="num">1040</td><td>Orange 43, Ice Cream Cake, Rainbow Belts +7</td></tr>
+      <tr><td><b>H293_F6_12/13-3/20</b></td><td class="num">2025-12-13</td><td class="num">2026-03-20</td><td>Flower 6</td><td class="num">868</td><td>OGKS, Motorbreath, Jealousy +7</td></tr>
+      <tr><td><b>H294_F11_12/13-3/20</b></td><td class="num">2025-12-13</td><td class="num">2026-03-20</td><td>Flower 11</td><td class="num">504</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H292_F2_12/5-3/12</b></td><td class="num">2025-12-05</td><td class="num">2026-03-11</td><td>Flower Room 2</td><td class="num">880</td><td>Orange 43, Ice Cream Cake, Sherbhead +7</td></tr>
+      <tr><td><b>H290_F9_11/25-3/2</b></td><td class="num">2025-11-25</td><td class="num">2026-03-02</td><td>Flower 9</td><td class="num">868</td><td>Kush Mints, Rainbow Belts, Papaya +5</td></tr>
+      <tr><td><b>H291_F14_11/25-3/2</b></td><td class="num">2025-11-25</td><td class="num">2026-03-02</td><td>Flower 14</td><td class="num">504</td><td>Orange 43, Ice Cream Cake, Ridgeline Lantz</td></tr>
+      <tr><td><b>H287_F7_11/7-2/12</b></td><td class="num">2025-11-07</td><td class="num">2026-02-12</td><td>Flower 7</td><td class="num">868</td><td>Apricot Gelato, Violet Fog, Lemon Cherry Gelato +6</td></tr>
+      <tr><td><b>H288_F12_11/7-2/12</b></td><td class="num">2025-11-07</td><td class="num">2026-02-12</td><td>Flower 12</td><td class="num">504</td><td>Orange 43, Ice Cream Cake, Rose Gold R'ntz +1</td></tr>
+      <tr><td><b>H286_F1_10/28-2/2</b></td><td class="num">2025-10-28</td><td class="num">2026-02-03</td><td>Flower Room 1</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, MAC 1 +8</td></tr>
+      <tr><td><b>H284_F8_10/18-1/23</b></td><td class="num">2025-10-18</td><td class="num">2026-01-23</td><td>Flower 8</td><td class="num">868</td><td>OGKS, Motorbreath, Jealousy +5</td></tr>
+      <tr><td><b>H285_F13_10/18-1/23</b></td><td class="num">2025-10-18</td><td class="num">2026-01-23</td><td>Flower 13</td><td class="num">504</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +2</td></tr>
+      <tr><td><b>H10-21_F10_9/20-12/26</b></td><td class="num">2025-09-30</td><td class="num">2026-01-15</td><td>Flower 10</td><td class="num">132</td><td>OGKS, OG Kiss</td></tr>
+      <tr><td><b>H283_F3_10/10-1/15</b></td><td class="num">2025-10-10</td><td class="num">2026-01-15</td><td>Flower Room 3</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, Lemon Cherry Gelato +7</td></tr>
+      <tr><td><b>H281_F6_9/30-1/5</b></td><td class="num">2025-09-30</td><td class="num">2026-01-06</td><td>Flower 6</td><td class="num">868</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +3</td></tr>
+      <tr><td><b>H282_F11_9/30-1/5</b></td><td class="num">2025-09-30</td><td class="num">2026-01-06</td><td>Flower 11</td><td class="num">504</td><td>Rainbow Belts, Giraffe, Zamosa +3</td></tr>
+      <tr><td><b>H280_F2_9/20-12/26</b></td><td class="num">2025-09-20</td><td class="num">2025-12-26</td><td>Flower Room 2</td><td class="num">880</td><td>Orange 43, Ice Cream Cake, OGKS +8</td></tr>
+      <tr><td><b>H278_F9_9/12-12/18</b></td><td class="num">2025-09-12</td><td class="num">2025-12-20</td><td>Flower 9</td><td class="num">868</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +5</td></tr>
+      <tr><td><b>H279_F14_9/12-12/18</b></td><td class="num">2025-09-12</td><td class="num">2025-12-20</td><td>Flower 14</td><td class="num">504</td><td>Jealousy, Rose Gold R'ntz, Rainbow Belts +5</td></tr>
+      <tr><td><b>H277_F4_9/2-12/8</b></td><td class="num">2025-09-02</td><td class="num">2025-12-08</td><td>Flower Room 4</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, Motorbreath +10</td></tr>
+      <tr><td><b>H275_F7_8/23-11/28</b></td><td class="num">2025-08-23</td><td class="num">2025-11-28</td><td>Flower 7</td><td class="num">894</td><td>Ice Cream Cake, Josh D OG, Apricot Gelato +5</td></tr>
+      <tr><td><b>H276_F12_8/23-11/28</b></td><td class="num">2025-08-23</td><td class="num">2025-11-28</td><td>Flower 12</td><td class="num">504</td><td>Orange 43, Pacific Cool, Lemon OG</td></tr>
+      <tr><td><b>H274_F1_8/15-11/20</b></td><td class="num">2025-08-15</td><td class="num">2025-11-20</td><td>Flower Room 1</td><td class="num">960</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +12</td></tr>
+      <tr><td><b>H272_F8_8/5-11/10</b></td><td class="num">2025-08-05</td><td class="num">2025-11-10</td><td>Flower 8</td><td class="num">806</td><td>Motorbreath, Donny Solo Burger, Hash Burger +4</td></tr>
+      <tr><td><b>H273_F13_8/5-11/10</b></td><td class="num">2025-08-05</td><td class="num">2025-11-10</td><td>Flower 13</td><td class="num">504</td><td>Orange 43, Lemon Slushee, Violet Fog +3</td></tr>
+      <tr><td><b>H271_F3_7/26-10/31</b></td><td class="num">2025-07-26</td><td class="num">2025-10-31</td><td>Flower Room 3</td><td class="num">960</td><td>Orange 43, Motorbreath, Lemon Slushee +7</td></tr>
+      <tr><td><b>H269_F6_7/18-10/23</b></td><td class="num">2025-07-18</td><td class="num">2025-10-23</td><td>Flower 6</td><td class="num">868</td><td>Sherbhead, Permanent Marker, Fire Cake +4</td></tr>
+      <tr><td><b>H270_F11_7/18-10/23</b></td><td class="num">2025-07-18</td><td class="num">2025-10-23</td><td>Flower 11</td><td class="num">504</td><td>Orange 43, Lemon Slushee, Jealousy +4</td></tr>
+      <tr><td><b>H268_F2_7/8-10/13</b></td><td class="num">2025-07-08</td><td class="num">2025-10-13</td><td>Flower Room 2</td><td class="num">880</td><td>Orange 43, Ice Cream Cake, Motorbreath +7</td></tr>
+      <tr><td><b>F10-20_ 8/1-11/6</b></td><td class="num">2025-07-16</td><td class="num">2025-10-04</td><td>Flower 10</td><td class="num">132</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H266_F9_6/28-10/3</b></td><td class="num">2025-06-28</td><td class="num">2025-10-04</td><td>Flower 9</td><td class="num">1134</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +5</td></tr>
+      <tr><td><b>H267_F14_6/28-10/3</b></td><td class="num">2025-06-28</td><td class="num">2025-10-04</td><td>Flower 14</td><td class="num">504</td><td>Josh D OG, Apricot Gelato, Pacific Cool +4</td></tr>
+      <tr><td><b>H265_F4_6/20-9/25</b></td><td class="num">2025-06-20</td><td class="num">2025-09-25</td><td>Flower Room 4</td><td class="num">960</td><td>Orange 43, Lemon Slushee, Jealousy +10</td></tr>
+      <tr><td><b>H263_F7_6/10-9/15</b></td><td class="num">2025-06-10</td><td class="num">2025-09-15</td><td>Flower 7</td><td class="num">1134</td><td>Purp 43, Lemon OG, Lemon Ice +5</td></tr>
+      <tr><td><b>H264_F12_ 6/10-9/15</b></td><td class="num">2025-06-10</td><td class="num">2025-09-15</td><td>Flower 12</td><td class="num">504</td><td>Lemon Slushee, Donny Solo Burger, Blue Raz +4</td></tr>
+      <tr><td><b>H262_F1_5/31-9/5</b></td><td class="num">2025-05-31</td><td class="num">2025-09-05</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +8</td></tr>
+      <tr><td><b>H260_F8_5/23-8/28</b></td><td class="num">2025-05-23</td><td class="num">2025-09-02</td><td>Flower 8</td><td class="num">837</td><td>Apricot Gelato, College Park, Divine Banana +6</td></tr>
+      <tr><td><b>H261_F13_5/23-8/28</b></td><td class="num">2025-05-23</td><td class="num">2025-09-02</td><td>Flower 13</td><td class="num">504</td><td>Orange 43, Lemon Slushee, Papaya +3</td></tr>
+      <tr><td><b>H259_F3_5/13-8/18</b></td><td class="num">2025-05-13</td><td class="num">2025-08-19</td><td>Flower Room 3</td><td class="num">1467</td><td>Orange 43, Jealousy, Rainbow Belts +8</td></tr>
+      <tr><td><b>H257_F6_5/3-8/8</b></td><td class="num">2025-05-03</td><td class="num">2025-08-12</td><td>Flower 6</td><td class="num">1134</td><td>Motorbreath, Pacific Cool, Fire Cake +7</td></tr>
+      <tr><td><b>H258_F11_5/3-8/8</b></td><td class="num">2025-05-03</td><td class="num">2025-08-12</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Lemon Slushee, Lemon Cherry Gelato +3</td></tr>
+      <tr><td><b>H256_F2_4/25-7/31</b></td><td class="num">2025-04-25</td><td class="num">2025-08-01</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Lemon Slushee, Raskal Lemons +4</td></tr>
+      <tr><td><b>H10-19 4/8-7/14</b></td><td class="num">2025-04-08</td><td class="num">2025-07-31</td><td>Flower 10</td><td class="num">168</td><td>Zamosa, Cherry R'ntz, Strawberry Jam +10</td></tr>
+      <tr><td><b>H254_F9_4/15-7/21</b></td><td class="num">2025-04-15</td><td class="num">2025-07-24</td><td>Flower 9</td><td class="num">1134</td><td>Orange 43, That Badu, Ridgeline Lantz +3</td></tr>
+      <tr><td><b>H255_F14_4/15-7/21</b></td><td class="num">2025-04-15</td><td class="num">2025-07-24</td><td>Flower 14</td><td class="num">648</td><td>Lemon Slushee, Purp 43, Lemon OG +3</td></tr>
+      <tr><td><b>H253_F4_4/5-7/11</b></td><td class="num">2025-04-05</td><td class="num">2025-07-12</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Motorbreath, Josh D OG +10</td></tr>
+      <tr><td><b>H251_F7_3/28-7/3</b></td><td class="num">2025-03-28</td><td class="num">2025-07-03</td><td>Flower 7</td><td class="num">1116</td><td>Bobby Shaloha, Blue Raz, Cheetah P +5</td></tr>
+      <tr><td><b>H252_F12_3/28-7/3</b></td><td class="num">2025-03-28</td><td class="num">2025-07-03</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Lemon Slushee, Jealousy +3</td></tr>
+      <tr><td><b>H250_F1_3/18-6/23</b></td><td class="num">2025-03-18</td><td class="num">2025-06-24</td><td>Flower Room 1</td><td class="num">1380</td><td>Orange 43, Lemon Slushee, Jealousy +5</td></tr>
+      <tr><td><b>H248_F8_3/8-6/13</b></td><td class="num">2025-03-08</td><td class="num">2025-06-14</td><td>Flower 8</td><td class="num">1134</td><td>Orange 43, Lemon Slushee, Rose Gold R'ntz +4</td></tr>
+      <tr><td><b>H249_F13_3/8-6/13</b></td><td class="num">2025-03-08</td><td class="num">2025-06-14</td><td>Flower 13</td><td class="num">648</td><td>Violet Fog, Berniehanna Butter, Hollywood +2</td></tr>
+      <tr><td><b>H247_F3_2/28-6/5</b></td><td class="num">2025-02-28</td><td class="num">2025-06-08</td><td>Flower Room 3</td><td class="num">1458</td><td>Orange 43, MAC 1, Lemon Slushee +7</td></tr>
+      <tr><td><b>H245_F6_2/18-5/26</b></td><td class="num">2025-02-18</td><td class="num">2025-05-27</td><td>Flower 6</td><td class="num">1134</td><td>Jealousy, Zoap, Purp 43 +4</td></tr>
+      <tr><td><b>H246_F11_2/18-5/26</b></td><td class="num">2025-02-18</td><td class="num">2025-05-27</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Lemon Slushee, Baja +3</td></tr>
+      <tr><td><b>H244_F2_2/8-5/16</b></td><td class="num">2025-02-08</td><td class="num">2025-05-20</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Lemon Slushee, Apricot Gelato +5</td></tr>
+      <tr><td><b>H242_F9_1/31-5/8</b></td><td class="num">2025-01-31</td><td class="num">2025-05-15</td><td>Flower 9</td><td class="num">1134</td><td>Papaya, Bobby Shaloha, Blue Raz +6</td></tr>
+      <tr><td><b>H243_F14_1/31-5/8</b></td><td class="num">2025-01-31</td><td class="num">2025-05-15</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, MAC 1, Lemon Slushee +3</td></tr>
+      <tr><td><b>H10-18 1/8-4/15</b></td><td class="num">2025-01-17</td><td class="num">2025-05-02</td><td>Flower 10</td><td class="num">176</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +13</td></tr>
+      <tr><td><b>H241_F4_1/21-4/28</b></td><td class="num">2025-01-21</td><td class="num">2025-05-02</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Big Head, Lemon Slushee +9</td></tr>
+      <tr><td><b>H239_F7_1/11-4/18</b></td><td class="num">2025-01-11</td><td class="num">2025-04-17</td><td>Flower 7</td><td class="num">1134</td><td>Catfish, Motorbreath, Josh D OG +7</td></tr>
+      <tr><td><b>H240_F12_1/11-4/18</b></td><td class="num">2025-01-11</td><td class="num">2025-04-17</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Lemon Slushee, Hollywood +2</td></tr>
+      <tr><td><b>H238_F1_1/3-4/10</b></td><td class="num">2025-01-03</td><td class="num">2025-04-09</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ghost OG, Motorbreath +12</td></tr>
+      <tr><td><b>H236_F8_12/24-3/31</b></td><td class="num">2024-12-24</td><td class="num">2025-04-03</td><td>Flower 8</td><td class="num">1134</td><td>MAC 1, Super Lemon Dog, Jealousy +10</td></tr>
+      <tr><td><b>H237_F13_12/24-3/31</b></td><td class="num">2024-12-24</td><td class="num">2025-04-03</td><td>Flower 13</td><td class="num">648</td><td>Orange 43, Lemon Slushee, ?48955 +4</td></tr>
+      <tr><td><b>H235_F3_12/14-3/21</b></td><td class="num">2024-12-14</td><td class="num">2025-03-22</td><td>Flower Room 3</td><td class="num">1464</td><td>Orange 43, Sherbhead, Josh D OG +9</td></tr>
+      <tr><td><b>H233_F6_12/6-3/13</b></td><td class="num">2024-12-06</td><td class="num">2025-03-14</td><td>Flower 6</td><td class="num">1051</td><td>Kush Mints, Motorbreath, Pacific Cool +9</td></tr>
+      <tr><td><b>H234_F11_12/6-3/13</b></td><td class="num">2024-12-06</td><td class="num">2025-03-14</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Lemon Slushee, ?48955 +2</td></tr>
+      <tr><td><b>H232_F2_11/26-3/3</b></td><td class="num">2024-11-26</td><td class="num">2025-03-07</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, ?4866 +5</td></tr>
+      <tr><td><b>H230_F9_11/16-2/21</b></td><td class="num">2024-11-16</td><td class="num">2025-02-22</td><td>Flower 9</td><td class="num">1133</td><td>Ice Cream Cake, Sherbhead, Big Head +7</td></tr>
+      <tr><td><b>H231_F14_11/16-2/21</b></td><td class="num">2024-11-16</td><td class="num">2025-02-22</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Lemon Slushee, ?48955 +4</td></tr>
+      <tr><td><b>H229_F4_11/8-2/13</b></td><td class="num">2024-11-08</td><td class="num">2025-02-18</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Catfish, Ghost OG +11</td></tr>
+      <tr><td><b>H227_F7_10/29-2/3</b></td><td class="num">2024-10-29</td><td class="num">2025-02-05</td><td>Flower 7</td><td class="num">1134</td><td>Jealousy, Apricot Gelato, Lemon Cherry Gelato +7</td></tr>
+      <tr><td><b>H228_F12_10/29-2/3</b></td><td class="num">2024-10-29</td><td class="num">2025-02-05</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Lemon Slushee, ?47845 +2</td></tr>
+      <tr><td><b>H10-17_10/17-1/22</b></td><td class="num">2024-10-19</td><td class="num">2025-01-28</td><td>Flower 10</td><td class="num">176</td><td>Orange 43, Ice Cream Cake, Permanent Marker +13</td></tr>
+      <tr><td><b>H226_F1_10/19-1/24</b></td><td class="num">2024-10-19</td><td class="num">2025-01-28</td><td>Flower Room 1</td><td class="num">1320</td><td>Orange 43, Ice Cream Cake, Big Head +6</td></tr>
+      <tr><td><b>H224_F8_10/29-2/3</b></td><td class="num">2024-10-11</td><td class="num">2025-01-16</td><td>Flower 8</td><td class="num">1134</td><td>Catfish, Lemon Slushee, Sherb'anger +4</td></tr>
+      <tr><td><b>H225_F13_10/11-1/16</b></td><td class="num">2024-10-11</td><td class="num">2025-01-16</td><td>Flower 13</td><td class="num">648</td><td>Orange 43, Baja, Blue Raz</td></tr>
+      <tr><td><b>H:223_F3_10/1-1/6</b></td><td class="num">2024-10-01</td><td class="num">2025-01-08</td><td>Flower Room 3</td><td class="num">1587</td><td>Orange 43, Ice Cream Cake, OGKS +9</td></tr>
+      <tr><td><b>H:221_F6_9/21-12/27</b></td><td class="num">2024-09-21</td><td class="num">2024-12-28</td><td>Flower 6</td><td class="num">1053</td><td>Sherbhead, Big Head, Lemon Slushee +5</td></tr>
+      <tr><td><b>H:222_F11_ 9/21-12/27</b></td><td class="num">2024-09-21</td><td class="num">2024-12-28</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, ?47849 +1</td></tr>
+      <tr><td><b>H220_F2_9/13-12/19</b></td><td class="num">2024-09-13</td><td class="num">2024-12-23</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, Super Lemon Dawg +5</td></tr>
+      <tr><td><b>H:218_F9_9/3-12/9</b></td><td class="num">2024-09-03</td><td class="num">2024-12-10</td><td>Flower 9</td><td class="num">1134</td><td>Ghost OG, OGKS, Jealousy +4</td></tr>
+      <tr><td><b>H:219_F14_9/3-12/9</b></td><td class="num">2024-09-03</td><td class="num">2024-12-10</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, ?47844 +1</td></tr>
+      <tr><td><b>H:217_F4_8/24-11/29</b></td><td class="num">2024-08-24</td><td class="num">2024-11-30</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Sherbhead +6</td></tr>
+      <tr><td><b>H:215_F7_8/16-11/21</b></td><td class="num">2024-08-16</td><td class="num">2024-11-26</td><td>Flower 7</td><td class="num">1296</td><td>MAC 1, Motorbreath, Violet Fog +4</td></tr>
+      <tr><td><b>H:216_F12_8/16-11/21</b></td><td class="num">2024-08-16</td><td class="num">2024-11-26</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, ?47847 +1</td></tr>
+      <tr><td><b>H:10-16_9/16-12/22</b></td><td class="num">2024-08-28</td><td class="num">2024-11-16</td><td>Flower 10</td><td class="num">176</td><td>Orange 43</td></tr>
+      <tr><td><b>H:214_F1_8/7-11/12</b></td><td class="num">2024-08-07</td><td class="num">2024-11-16</td><td>Flower Room 1</td><td class="num">1390</td><td>Orange 43, Ice Cream Cake, Sherbhead +8</td></tr>
+      <tr><td><b>H:212_F8_7/28-11/2</b></td><td class="num">2024-07-28</td><td class="num">2024-11-02</td><td>Flower 8</td><td class="num">1134</td><td>Sherbhead, Catfish, Lemon Slushee +6</td></tr>
+      <tr><td><b>H:213_F13_7/28-11/2</b></td><td class="num">2024-07-28</td><td class="num">2024-11-02</td><td>Flower 13</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:211_F3_7/20-10/25</b></td><td class="num">2024-07-20</td><td class="num">2024-10-24</td><td>Flower Room 3</td><td class="num">1464</td><td>Orange 43, Ice Cream Cake, Motorbreath +4</td></tr>
+      <tr><td><b>H:209_F6_ 7/9-10/14</b></td><td class="num">2024-07-09</td><td class="num">2024-10-16</td><td>Flower 6</td><td class="num">1134</td><td>Ghost OG, OGKS, Jealousy +4</td></tr>
+      <tr><td><b>H:210_F11_7/10-10/15</b></td><td class="num">2024-07-10</td><td class="num">2024-10-16</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:208_F2_6/30-10/5</b></td><td class="num">2024-06-30</td><td class="num">2024-10-05</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, Super Lemon Dawg +5</td></tr>
+      <tr><td><b>H:206_F9_6/21-9/26</b></td><td class="num">2024-06-22</td><td class="num">2024-09-26</td><td>Flower 9</td><td class="num">1134</td><td>OGKS, Motorbreath, Big Head +5</td></tr>
+      <tr><td><b>H:207_F14_6/22-9/27</b></td><td class="num">2024-06-22</td><td class="num">2024-09-26</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:205_F4_6/12-9/17</b></td><td class="num">2024-06-12</td><td class="num">2024-09-17</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Permanent Marker +4</td></tr>
+      <tr><td><b>H:203_F7_6/2-9/7</b></td><td class="num">2024-06-02</td><td class="num">2024-09-10</td><td>Flower 7</td><td class="num">1134</td><td>MAC 1, Super Lemon Dog, Jealousy +6</td></tr>
+      <tr><td><b>H:204_F12_6/2-9/7</b></td><td class="num">2024-06-02</td><td class="num">2024-09-10</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:202_F1_5/25-8/30</b></td><td class="num">2024-05-25</td><td class="num">2024-09-01</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Motorbreath +5</td></tr>
+      <tr><td><b>H:10-15_7/4-10/9</b></td><td class="num">2024-07-04</td><td class="num">2024-08-31</td><td>Flower 10</td><td class="num">176</td><td>Ice Cream Cake</td></tr>
+      <tr><td><b>H:200_F8_5/15-8/20</b></td><td class="num">2024-05-15</td><td class="num">2024-08-21</td><td>Flower 8</td><td class="num">1053</td><td>Big Head, Violet Fog, Permanent Marker +6</td></tr>
+      <tr><td><b>H:201_F13_5/15-8/20</b></td><td class="num">2024-05-15</td><td class="num">2024-08-21</td><td>Flower 13</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:199_F3_5/5-8/10</b></td><td class="num">2024-05-05</td><td class="num">2024-08-14</td><td>Flower Room 3</td><td class="num">1344</td><td>Orange 43, Ice Cream Cake, MAC 1 +7</td></tr>
+      <tr><td><b>H:198_F11_5/27-9/1</b></td><td class="num">2024-04-27</td><td class="num">2024-08-13</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:197_F6_4/27-8/2</b></td><td class="num">2024-04-27</td><td class="num">2024-08-03</td><td>Flower 6</td><td class="num">1134</td><td>Catfish, Ghost OG, Motorbreath +5</td></tr>
+      <tr><td><b>H:196_F2_4/17-7/23</b></td><td class="num">2024-04-17</td><td class="num">2024-07-23</td><td>Flower Room 2</td><td class="num">1189</td><td>Orange 43, Ice Cream Cake, Sherbhead +4</td></tr>
+      <tr><td><b>H:194_F9_7/12/2024</b></td><td class="num">2024-04-04</td><td class="num">2024-07-13</td><td>Flower 9</td><td class="num">1134</td><td>MAC 1, Kush Mints, Jealousy +3</td></tr>
+      <tr><td><b>H:195_F14_4/7-7/13</b></td><td class="num">2024-04-07</td><td class="num">2024-07-13</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, Rose Gold R'ntz</td></tr>
+      <tr><td><b>H:193_F4_7/4/2024</b></td><td class="num">2024-03-30</td><td class="num">2024-07-04</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Motorbreath +4</td></tr>
+      <tr><td><b>H:191_F7_6/24/2024</b></td><td class="num">2024-03-20</td><td class="num">2024-06-25</td><td>Flower 7</td><td class="num">1134</td><td>?4883, Permanent Marker, Zoap +3</td></tr>
+      <tr><td><b>H:192_F12_6/24/2024</b></td><td class="num">2024-03-20</td><td class="num">2024-06-25</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:190_F1_3/10-6/15</b></td><td class="num">2024-03-10</td><td class="num">2024-06-15</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, MAC 1 +4</td></tr>
+      <tr><td><b>H:188_F8_3/2-6/7</b></td><td class="num">2024-03-02</td><td class="num">2024-06-06</td><td>Flower 8</td><td class="num">1134</td><td>Ghost OG, Motorbreath, Big Head +8</td></tr>
+      <tr><td><b>H:189_F13_3/2-6/7</b></td><td class="num">2024-03-02</td><td class="num">2024-06-06</td><td>Flower 13</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:187_F3_2/21-5/28</b></td><td class="num">2024-02-21</td><td class="num">2024-05-29</td><td>Flower Room 3</td><td class="num">1435</td><td>Orange 43, Ice Cream Cake, Sherbhead +5</td></tr>
+      <tr><td><b>H:185_F6_2/11-5/18</b></td><td class="num">2024-02-11</td><td class="num">2024-05-18</td><td>Flower 6</td><td class="num">1134</td><td>MAC 1, Kush Mints, Whip it +5</td></tr>
+      <tr><td><b>H:186_F11_2/11-5/18</b></td><td class="num">2024-02-11</td><td class="num">2024-05-18</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:184_F2_2/3-5/10</b></td><td class="num">2024-02-03</td><td class="num">2024-05-09</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, Motorbreath +5</td></tr>
+      <tr><td><b>H:182_F9_1/24-4/30</b></td><td class="num">2024-01-24</td><td class="num">2024-05-02</td><td>Flower 9</td><td class="num">1134</td><td>Sherbhead, Super Lemon Dog, Lemon Slushee +4</td></tr>
+      <tr><td><b>H:183_F14_1/24-4/30</b></td><td class="num">2024-01-24</td><td class="num">2024-05-02</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:5-20_3/4-6/9</b></td><td class="num">2024-01-25</td><td class="num">2024-04-23</td><td>Flower Room 5</td><td class="num">359</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:181_F4_1/14-4/20</b></td><td class="num">2024-01-14</td><td class="num">2024-04-19</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, MAC 1 +6</td></tr>
+      <tr><td><b>H:179_F7_1/5-4/11</b></td><td class="num">2024-01-05</td><td class="num">2024-04-11</td><td>Flower 7</td><td class="num">1134</td><td>Catfish, Motorbreath, Big Head +8</td></tr>
+      <tr><td><b>H:180_F12_1/6-4/12</b></td><td class="num">2024-01-06</td><td class="num">2024-04-11</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:178_F1_12/27-4/2</b></td><td class="num">2023-12-27</td><td class="num">2024-04-02</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +5</td></tr>
+      <tr><td><b>H:10-14_12/8-3/14</b></td><td class="num">2023-12-08</td><td class="num">2024-03-24</td><td>Flower 10</td><td class="num">176</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:176_F8_12/17-3/23</b></td><td class="num">2023-12-17</td><td class="num">2024-03-24</td><td>Flower 8</td><td class="num">1134</td><td>MAC 1, Kush Mints, Apricot Gelato +4</td></tr>
+      <tr><td><b>H:177_F13_12/17-3/23</b></td><td class="num">2023-12-17</td><td class="num">2024-03-24</td><td>Flower 13</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:175_F3_12/9-3/15</b></td><td class="num">2023-12-09</td><td class="num">2024-03-15</td><td>Flower Room 3</td><td class="num">1464</td><td>Orange 43, Ice Cream Cake, Motorbreath +6</td></tr>
+      <tr><td><b>H173_F6_1/29-3/5</b></td><td class="num">2023-11-29</td><td class="num">2024-03-07</td><td>Flower 6</td><td class="num">1134</td><td>Sherbhead, Lemon Slushee, Jealousy +4</td></tr>
+      <tr><td><b>H:174_F11_11/29-3/5</b></td><td class="num">2023-11-29</td><td class="num">2024-03-07</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:172_F2_11/19-2/24</b></td><td class="num">2023-11-19</td><td class="num">2024-02-25</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, MAC 1 +2</td></tr>
+      <tr><td><b>H:170_F9_11/11-2/16</b></td><td class="num">2023-11-11</td><td class="num">2024-02-15</td><td>Flower 9</td><td class="num">1134</td><td>?4883, Catfish, Motorbreath +7</td></tr>
+      <tr><td><b>H:171_F14_11/11-2/16</b></td><td class="num">2023-11-11</td><td class="num">2024-02-15</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:5-19_11/3</b></td><td class="num">2023-11-03</td><td class="num">2024-02-11</td><td>Flower Room 5</td><td class="num">360</td><td>Orange 43, Ice Cream Cake, Lemon Slushee</td></tr>
+      <tr><td><b>H:169_F4_11/1-2/6</b></td><td class="num">2023-11-01</td><td class="num">2024-02-06</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Sherbhead +8</td></tr>
+      <tr><td><b>H:167_F7_10/28-2/2</b></td><td class="num">2023-10-22</td><td class="num">2024-01-28</td><td>Flower 7</td><td class="num">1134</td><td>Orange 43, Ice Cream Cake, Apricot Gelato +2</td></tr>
+      <tr><td><b>H:168_F12_10/22-1/27</b></td><td class="num">2023-10-22</td><td class="num">2024-01-28</td><td>Flower 12</td><td class="num">648</td><td>MAC 1, Kush Mints, ?10745 +4</td></tr>
+      <tr><td><b>H:10-13_10/13</b></td><td class="num">2023-09-29</td><td class="num">2024-01-20</td><td>Flower 10</td><td class="num">176</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:166_F1_10/14-1/19</b></td><td class="num">2023-10-14</td><td class="num">2024-01-20</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Motorbreath +8</td></tr>
+      <tr><td><b>H:164_F8_10/4-1/9</b></td><td class="num">2023-10-04</td><td class="num">2024-01-10</td><td>Flower 8</td><td class="num">1134</td><td>Sherbhead, Lemon Slushee, Jealousy +7</td></tr>
+      <tr><td><b>H:165_F13_10/4-1/9</b></td><td class="num">2023-10-04</td><td class="num">2024-01-10</td><td>Flower 13</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:163_F3_9/24-12/30</b></td><td class="num">2023-09-24</td><td class="num">2023-12-30</td><td>Flower Room 3</td><td class="num">1464</td><td>Orange 43, Ice Cream Cake, MAC 1 +5</td></tr>
+      <tr><td><b>H:159_F14_8/27-12/2</b></td><td class="num">2023-08-27</td><td class="num">2023-12-20</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:161_F6_9/16-12/22</b></td><td class="num">2023-09-16</td><td class="num">2023-12-20</td><td>Flower 6</td><td class="num">1134</td><td>?4883, Motorbreath, Big Head +8</td></tr>
+      <tr><td><b>H:162_F11_9/16-12/22</b></td><td class="num">2023-09-16</td><td class="num">2023-12-20</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:160_F2_9/6-12/12</b></td><td class="num">2023-09-06</td><td class="num">2023-12-13</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, Sherbhead +3</td></tr>
+      <tr><td><b>H:158_F9_8/27-12/2</b></td><td class="num">2023-08-27</td><td class="num">2023-12-02</td><td>Flower 9</td><td class="num">1134</td><td>MAC 1, Apricot Gelato, Lemon Cherry Gelato +4</td></tr>
+      <tr><td><b>H:5-18_9/27-1/2</b></td><td class="num">2023-08-25</td><td class="num">2023-12-01</td><td>Flower Room 5</td><td class="num">360</td><td>Orange 43, Ice Cream Cake, Lemon Slushee</td></tr>
+      <tr><td><b>H:157_F4_8/19-12/12</b></td><td class="num">2023-08-19</td><td class="num">2023-11-23</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, ?4883 +7</td></tr>
+      <tr><td><b>H:155_F7_8/9-12/2</b></td><td class="num">2023-08-09</td><td class="num">2023-11-14</td><td>Flower 7</td><td class="num">1134</td><td>Sherbhead, Catfish, ORyan OG +4</td></tr>
+      <tr><td><b>H:156_F12_8/9-12/2</b></td><td class="num">2023-08-09</td><td class="num">2023-11-14</td><td>Flower 12</td><td class="num">607</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:153_F13_7/22-11/14</b></td><td class="num">2023-07-22</td><td class="num">2023-11-13</td><td>Flower 13</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, Heatlocker</td></tr>
+      <tr><td><b>H:154_F1_7/30-11/22</b></td><td class="num">2023-07-30</td><td class="num">2023-11-04</td><td>Flower Room 1</td><td class="num">1366</td><td>Orange 43, Ice Cream Cake, MAC 1 +5</td></tr>
+      <tr><td><b>H:10-12_8/24-11/30</b></td><td class="num">2023-07-21</td><td class="num">2023-11-01</td><td>Flower 10</td><td class="num">176</td><td>Orange 43, Ice Cream Cake, ?20181 +1</td></tr>
+      <tr><td><b>H:152_F8_7/22-11/14</b></td><td class="num">2023-07-22</td><td class="num">2023-10-26</td><td>Flower 8</td><td class="num">1134</td><td>?4883, Motorbreath, Whip it +6</td></tr>
+      <tr><td><b>H:151_F3_7/12-11/4</b></td><td class="num">2023-07-12</td><td class="num">2023-10-18</td><td>Flower Room 3</td><td class="num">1464</td><td>Orange 43, Ice Cream Cake, Catfish +6</td></tr>
+      <tr><td><b>H:146_F9_6/14-10/7</b></td><td class="num">2023-06-14</td><td class="num">2023-10-08</td><td>Flower 9</td><td class="num">1134</td><td>Sherbhead, ORyan OG, Super Lemon Dog +3</td></tr>
+      <tr><td><b>H:147_F14_6/14-10/7</b></td><td class="num">2023-06-14</td><td class="num">2023-10-08</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, Catfish</td></tr>
+      <tr><td><b>H:149_F6_7/2-10/25</b></td><td class="num">2023-07-02</td><td class="num">2023-10-07</td><td>Flower 6</td><td class="num">1133</td><td>Ice Cream Cake, MAC 1, ?4884 +2</td></tr>
+      <tr><td><b>H:150_F11_7/2-10/25</b></td><td class="num">2023-07-02</td><td class="num">2023-10-07</td><td>Flower 11</td><td class="num">647</td><td>Orange 43, Kush Mints, Jealousy +2</td></tr>
+      <tr><td><b>H:148_F2_6/24-10/17</b></td><td class="num">2023-06-24</td><td class="num">2023-09-29</td><td>Flower Room 2</td><td class="num">1237</td><td>Orange 43, Ice Cream Cake, Motorbreath +4</td></tr>
+      <tr><td><b>H:5-17_ 7/24</b></td><td class="num">2023-06-16</td><td class="num">2023-09-22</td><td>Flower Room 5</td><td class="num">360</td><td>Orange 43, Ice Cream Cake, Lemon Slushee</td></tr>
+      <tr><td><b>H:144_F12_5/27-9/19</b></td><td class="num">2023-05-27</td><td class="num">2023-09-18</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, Sunset R'ntz</td></tr>
+      <tr><td><b>H:145_F4_6/4-9/27</b></td><td class="num">2023-06-04</td><td class="num">2023-09-09</td><td>Flower Room 4</td><td class="num">1430</td><td>Orange 43, Ice Cream Cake, MAC 1 +7</td></tr>
+      <tr><td><b>H:142_F1_5/17-9/9</b></td><td class="num">2023-05-17</td><td class="num">2023-09-08</td><td>Flower Room 1</td><td class="num">1439</td><td>Orange 43, Ice Cream Cake, Sherbhead +5</td></tr>
+      <tr><td><b>H:143_F7_5/27-9/19</b></td><td class="num">2023-05-27</td><td class="num">2023-08-31</td><td>Flower 7</td><td class="num">1132</td><td>?4883, Motorbreath, Whip it +4</td></tr>
+      <tr><td><b>H:10-11_5/12-8/18</b></td><td class="num">2023-05-12</td><td class="num">2023-08-20</td><td>Flower 10</td><td class="num">152</td><td>Orange 43, Ice Cream Cake, Catfish +1</td></tr>
+      <tr><td><b>H:138_F11_4/19-8/12</b></td><td class="num">2023-04-19</td><td class="num">2023-08-12</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:140_F8_5/7-8/30</b></td><td class="num">2023-05-07</td><td class="num">2023-08-12</td><td>Flower 8</td><td class="num">1118</td><td>Orange 43, Ice Cream Cake, Ghost OG +5</td></tr>
+      <tr><td><b>H:141_F13_5/7-8/30</b></td><td class="num">2023-05-07</td><td class="num">2023-08-12</td><td>Flower 13</td><td class="num">636</td><td>MAC 1, Kush Mints, ?4884 +2</td></tr>
+      <tr><td><b>H:139_F3_4/29-8/22</b></td><td class="num">2023-04-29</td><td class="num">2023-08-03</td><td>Flower Room 3</td><td class="num">1467</td><td>Orange 43, Ice Cream Cake, ?4866 +5</td></tr>
+      <tr><td><b>H:136_F2_4/9-8/2</b></td><td class="num">2023-04-09</td><td class="num">2023-08-02</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +4</td></tr>
+      <tr><td><b>H:134_F9_4/1-7/25</b></td><td class="num">2023-04-01</td><td class="num">2023-07-24</td><td>Flower 9</td><td class="num">1134</td><td>?4883, Motorbreath, Big Head +6</td></tr>
+      <tr><td><b>H:135_F14_4/1-7/25</b></td><td class="num">2023-04-01</td><td class="num">2023-07-24</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:137_F6_4/11-8/4</b></td><td class="num">2023-04-19</td><td class="num">2023-07-24</td><td>Flower 6</td><td class="num">1133</td><td>Sherbhead, Catfish, Super Lemon Dog +6</td></tr>
+      <tr><td><b>H:5-16_4/6</b></td><td class="num">2023-04-07</td><td class="num">2023-07-21</td><td>Flower Room 5</td><td class="num">360</td><td>Orange 43, Ice Cream Cake, Lemon Slushee</td></tr>
+      <tr><td><b>H:133_F4_3/22-7/15</b></td><td class="num">2023-03-22</td><td class="num">2023-07-15</td><td>Flower Room 4</td><td class="num">1379</td><td>Orange 43, Ice Cream Cake, Sherbhead +7</td></tr>
+      <tr><td><b>H:131_F7_3/12-7/5</b></td><td class="num">2023-03-12</td><td class="num">2023-07-05</td><td>Flower 7</td><td class="num">1134</td><td>MAC 1, Kush Mints, Ghost OG +7</td></tr>
+      <tr><td><b>H:132_F12_3/12-7/5</b></td><td class="num">2023-03-12</td><td class="num">2023-07-05</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:130_F1_3/4-6/27</b></td><td class="num">2023-03-04</td><td class="num">2023-06-25</td><td>Flower Room 1</td><td class="num">1429</td><td>Orange 43, Ice Cream Cake, Motorbreath +4</td></tr>
+      <tr><td><b>H:128_F8_2/22-6/17</b></td><td class="num">2023-02-22</td><td class="num">2023-06-17</td><td>Flower 8</td><td class="num">1134</td><td>Sherbhead, Catfish, Cold Snap +5</td></tr>
+      <tr><td><b>H:129_F13_2/22-6/17</b></td><td class="num">2023-02-22</td><td class="num">2023-06-17</td><td>Flower 13</td><td class="num">632</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:10-10_3/3-6/9</b></td><td class="num">2023-03-03</td><td class="num">2023-06-16</td><td>Flower 10</td><td class="num">176</td><td>Orange 43, Ice Cream Cake, Motorbreath +1</td></tr>
+      <tr><td><b>H:127_F3_2/12-6/7</b></td><td class="num">2023-02-12</td><td class="num">2023-06-06</td><td>Flower Room 3</td><td class="num">1464</td><td>Orange 43, Ice Cream Cake, MAC 1 +5</td></tr>
+      <tr><td><b>H:125_F6_2/4-5/30</b></td><td class="num">2023-02-04</td><td class="num">2023-05-29</td><td>Flower 6</td><td class="num">1134</td><td>Motorbreath, Whip it, Big Head +5</td></tr>
+      <tr><td><b>H:126_F11_2/4-5/30</b></td><td class="num">2023-02-04</td><td class="num">2023-05-29</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Ice Cream Cake</td></tr>
+      <tr><td><b>H:124_F2_1/25-5/20</b></td><td class="num">2023-01-25</td><td class="num">2023-05-20</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, Sherbhead +5</td></tr>
+      <tr><td><b>H:122_F9_1/15-5/10</b></td><td class="num">2023-01-15</td><td class="num">2023-05-10</td><td>Flower 9</td><td class="num">1129</td><td>Orange 43, MAC 1, Kush Mints +6</td></tr>
+      <tr><td><b>H:123_F14_1/15-5/10</b></td><td class="num">2023-01-15</td><td class="num">2023-05-10</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, Lemon Slushee</td></tr>
+      <tr><td><b>F5-15_1/27-5/5</b></td><td class="num">2023-01-27</td><td class="num">2023-05-05</td><td>Flower Room 5</td><td class="num">360</td><td>Orange 43, Ice Cream Cake, Lemon Slushee</td></tr>
+      <tr><td><b>H:121_F4_1/7-5/2</b></td><td class="num">2023-01-07</td><td class="num">2023-05-02</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, ?4880 +9</td></tr>
+      <tr><td><b>H:119_F7_12/28-4/22</b></td><td class="num">2022-12-28</td><td class="num">2023-04-22</td><td>Flower 7</td><td class="num">1134</td><td>Sherbhead, Catfish, ORyan OG +7</td></tr>
+      <tr><td><b>H:120_F12_12/28-4/22</b></td><td class="num">2022-12-28</td><td class="num">2023-04-22</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, Cold Snap +1</td></tr>
+      <tr><td><b>H:118_F1_12/18-4/12</b></td><td class="num">2022-12-18</td><td class="num">2023-04-12</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +7</td></tr>
+      <tr><td><b>H:10-9_12/23-3/31</b></td><td class="num">2022-12-23</td><td class="num">2023-04-09</td><td>Flower 10</td><td class="num">176</td><td>Orange 43, Ice Cream Cake, Jealousy +1</td></tr>
+      <tr><td><b>H:116_F8_12/10-4/4</b></td><td class="num">2022-12-10</td><td class="num">2023-04-03</td><td>Flower 8</td><td class="num">1134</td><td>?4883, Big Head, Heatlocker +4</td></tr>
+      <tr><td><b>H:117_F13_12/10-4/4</b></td><td class="num">2022-12-10</td><td class="num">2023-04-03</td><td>Flower 13</td><td class="num">594</td><td>Orange 43, Ice Cream Cake, ?4866 +4</td></tr>
+      <tr><td><b>H:115_F3_11/30-3/25</b></td><td class="num">2022-11-30</td><td class="num">2023-03-26</td><td>Flower Room 3</td><td class="num">1464</td><td>Orange 43, Ice Cream Cake, Sherbhead +7</td></tr>
+      <tr><td><b>H:113_F6_11/20-3/15</b></td><td class="num">2022-11-20</td><td class="num">2023-03-15</td><td>Flower 6</td><td class="num">1076</td><td>MAC 1, Ghost OG, Josh D OG +5</td></tr>
+      <tr><td><b>H:114_F11_11/20</b></td><td class="num">2022-11-20</td><td class="num">2023-03-15</td><td>Flower 11</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, Lemon Slushee +1</td></tr>
+      <tr><td><b>H:112_F2_11/12-3/7</b></td><td class="num">2022-11-12</td><td class="num">2023-03-06</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, Motorbreath +5</td></tr>
+      <tr><td><b>H:110_F9_11/2-2/25</b></td><td class="num">2022-11-02</td><td class="num">2023-02-25</td><td>Flower 9</td><td class="num">1134</td><td>Sherbhead, Cold Snap, Jealousy +3</td></tr>
+      <tr><td><b>H:111_F14_11/2-2/25</b></td><td class="num">2022-11-02</td><td class="num">2023-02-25</td><td>Flower 14</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, Super Lemon Dog +2</td></tr>
+      <tr><td><b>F5-14_11/18-2/24</b></td><td class="num">2022-11-18</td><td class="num">2023-02-23</td><td>Flower Room 5</td><td class="num">360</td><td>Orange 43, Ice Cream Cake, Lemon Slushee</td></tr>
+      <tr><td><b>H:109_F4_10/23-2/15</b></td><td class="num">2022-10-23</td><td class="num">2023-02-15</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Ghost OG +9</td></tr>
+      <tr><td><b>H:107_F7_10/15-2/7</b></td><td class="num">2022-10-15</td><td class="num">2023-02-06</td><td>Flower 7</td><td class="num">1133</td><td>?4883, Motorbreath, Whip it +5</td></tr>
+      <tr><td><b>H:108_F12_10/15-2/7</b></td><td class="num">2022-10-15</td><td class="num">2023-02-06</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Ice Cream Cake, ?4866 +3</td></tr>
+      <tr><td><b>H:106_F1_10/5-1/28</b></td><td class="num">2022-10-05</td><td class="num">2023-01-28</td><td>Flower Room 1</td><td class="num">1440</td><td>Ice Cream Cake, Sherbhead, ?7578 +6</td></tr>
+      <tr><td><b>H:104_F8_9/28-1/21</b></td><td class="num">2022-09-25</td><td class="num">2023-01-21</td><td>Flower 8</td><td class="num">1129</td><td>?4883, Ghost OG, Josh D OG +6</td></tr>
+      <tr><td><b>H:105_F13_9/25-1/18</b></td><td class="num">2022-09-25</td><td class="num">2023-01-21</td><td>Flower 13</td><td class="num">648</td><td>Orange 43, Rose Gold R'ntz, Rainbow Belts</td></tr>
+      <tr><td><b>F10-8 10/14-1/20</b></td><td class="num">2022-10-14</td><td class="num">2023-01-20</td><td>Flower 10</td><td class="num">176</td><td>?25643, ?25644, Rose Gold R'ntz +1</td></tr>
+      <tr><td><b>H:103_F3_9/17-1/10</b></td><td class="num">2022-09-17</td><td class="num">2023-01-09</td><td>Flower Room 3</td><td class="num">1464</td><td>Motorbreath, Big Head, Heatlocker +7</td></tr>
+      <tr><td><b>H:101_F6_9/7-12/31</b></td><td class="num">2022-09-07</td><td class="num">2023-01-04</td><td>Flower 6</td><td class="num">1131</td><td>Sherbhead, Catfish, ORyan OG +5</td></tr>
+      <tr><td><b>H:102_F11_9/7-12/31</b></td><td class="num">2022-09-07</td><td class="num">2023-01-04</td><td>Flower 11</td><td class="num">648</td><td>Ice Cream Cake, ?20181</td></tr>
+      <tr><td><b>H:100_F2_8/28-12/21</b></td><td class="num">2022-08-28</td><td class="num">2022-12-21</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ghost OG, Josh D OG +4</td></tr>
+      <tr><td><b>F5-13_9/19-12/26</b></td><td class="num">2022-09-09</td><td class="num">2022-12-14</td><td>Flower Room 5</td><td class="num">360</td><td>Orange 43, Ice Cream Cake, Lemon Slushee</td></tr>
+      <tr><td><b>H:98_F9_8/20-12/13</b></td><td class="num">2022-08-20</td><td class="num">2022-12-12</td><td>Flower 9</td><td class="num">1134</td><td>?4866, Whip it, ?11339 +4</td></tr>
+      <tr><td><b>H:99_F14_8/20-12/13</b></td><td class="num">2022-08-20</td><td class="num">2022-12-12</td><td>Flower 14</td><td class="num">648</td><td>Motorbreath, Big Head, Heatlocker</td></tr>
+      <tr><td><b>H:97_F4_8/10-12/3</b></td><td class="num">2022-08-10</td><td class="num">2022-12-04</td><td>Flower Room 4</td><td class="num">1440</td><td>Ice Cream Cake, Sherbhead, Catfish +6</td></tr>
+      <tr><td><b>H:95_F7_8/1-11/24</b></td><td class="num">2022-08-01</td><td class="num">2022-11-23</td><td>Flower 7</td><td class="num">1134</td><td>?4883, Ghost OG, Josh D OG +4</td></tr>
+      <tr><td><b>H:96_F12_8/1-11/24</b></td><td class="num">2022-08-01</td><td class="num">2022-11-23</td><td>Flower 12</td><td class="num">648</td><td>Orange 43, Lemon Slushee, Apricot Gelato</td></tr>
+      <tr><td><b>F10-7_8/10-11/16</b></td><td class="num">2022-08-10</td><td class="num">2022-11-17</td><td>Flower 10</td><td class="num">176</td><td>Orange 43, Ice Cream Cake, Lemon Slushee</td></tr>
+      <tr><td><b>H:94_F1_7/23-11/15</b></td><td class="num">2022-07-23</td><td class="num">2022-11-14</td><td>Flower Room 1</td><td class="num">1438</td><td>Ice Cream Cake, ?4866, Motorbreath +8</td></tr>
+      <tr><td><b>H:92_F8_7/13-11/5</b></td><td class="num">2022-07-13</td><td class="num">2022-11-05</td><td>Flower 8</td><td class="num">1133</td><td>Ice Cream Cake, Sherbhead, ?7578 +3</td></tr>
+      <tr><td><b>H:93_F13_7/13-11/5</b></td><td class="num">2022-07-13</td><td class="num">2022-11-05</td><td>Flower 13</td><td class="num">648</td><td>ORyan OG, Jealousy, ?14987 +1</td></tr>
+      <tr><td><b>H:89_F6_6/25-10/18</b></td><td class="num">2022-06-25</td><td class="num">2022-10-31</td><td>Flower 6</td><td class="num">1134</td><td>?4866, Motorbreath, Heatlocker +2</td></tr>
+      <tr><td><b>H:90_F11_6/25-10/18</b></td><td class="num">2022-06-25</td><td class="num">2022-10-31</td><td>Flower 11</td><td class="num">644</td><td>?14954, ?19652, ?19653 +1</td></tr>
+      <tr><td><b>H:91_F3_7/3-10/26</b></td><td class="num">2022-07-03</td><td class="num">2022-10-26</td><td>Flower Room 3</td><td class="num">1464</td><td>Orange 43, Catfish, Ghost OG +6</td></tr>
+      <tr><td><b>H:88_F2_6/15-10/8</b></td><td class="num">2022-06-15</td><td class="num">2022-10-05</td><td>Flower Room 2</td><td class="num">1312</td><td>Ice Cream Cake, Sherbhead, Catfish +5</td></tr>
+      <tr><td><b>H:87_F9_6/5-9/28</b></td><td class="num">2022-06-05</td><td class="num">2022-09-28</td><td>Flower 9</td><td class="num">1089</td><td>Orange 43, Ghost OG, Josh D OG +5</td></tr>
+      <tr><td><b>F10-6_ 6/7-9/13</b></td><td class="num">2022-06-07</td><td class="num">2022-09-26</td><td>Flower 10</td><td class="num">176</td><td>?11339, ?19651, ?19653 +1</td></tr>
+      <tr><td><b>H:86_F4_5/28-9/20</b></td><td class="num">2022-05-28</td><td class="num">2022-09-24</td><td>Flower Room 4</td><td class="num">1385</td><td>?4866, Sherbhead, Motorbreath +8</td></tr>
+      <tr><td><b>F5-12_6/18-9/24</b></td><td class="num">2022-06-18</td><td class="num">2022-09-23</td><td>Flower Room 5</td><td class="num">360</td><td>?11333, ?11339, ?17947 +1</td></tr>
+      <tr><td><b>H:85_F7_5/18-9/10</b></td><td class="num">2022-05-18</td><td class="num">2022-09-10</td><td>Flower 7</td><td class="num">1134</td><td>Orange 43, Super Lemon Dawg, ?4883 +5</td></tr>
+      <tr><td><b>H:84_F1_5/8-8/31</b></td><td class="num">2022-05-08</td><td class="num">2022-09-01</td><td>Flower Room 1</td><td class="num">1434</td><td>Ice Cream Cake, ?4866, Sherbhead +3</td></tr>
+      <tr><td><b>H:83_F8_4/22-8/15</b></td><td class="num">2022-04-30</td><td class="num">2022-08-17</td><td>Flower 8</td><td class="num">1100</td><td>Super Lemon Dawg, MAC 1, ?4884 +7</td></tr>
+      <tr><td><b>H:82_F3_4/20-8/13</b></td><td class="num">2022-04-20</td><td class="num">2022-08-13</td><td>Flower Room 3</td><td class="num">1464</td><td>Orange 43, Kush Mints, Motorbreath +5</td></tr>
+      <tr><td><b>H:81_F6_4/10-8/3</b></td><td class="num">2022-04-10</td><td class="num">2022-08-03</td><td>Flower 6</td><td class="num">1131</td><td>Ice Cream Cake, ?4866, Whip it +4</td></tr>
+      <tr><td><b>H:80_F2_4/4-7/26</b></td><td class="num">2022-04-03</td><td class="num">2022-07-26</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Sherbhead, ?4883 +5</td></tr>
+      <tr><td><b>H:79_F9_3/20-7/11</b></td><td class="num">2022-03-22</td><td class="num">2022-07-20</td><td>Flower 9</td><td class="num">1134</td><td>MAC 1, Kush Mints, ?4884 +7</td></tr>
+      <tr><td><b>F5-11_4/12-7/19</b></td><td class="num">2022-04-12</td><td class="num">2022-07-16</td><td>Flower Room 5</td><td class="num">360</td><td>Ghost OG, OGKS, Motorbreath +2</td></tr>
+      <tr><td><b>H:78_F4_2/16-6/9</b></td><td class="num">2022-03-13</td><td class="num">2022-07-05</td><td>Flower Room 4</td><td class="num">1513</td><td>Orange 43, Sherbhead, ?4883 +6</td></tr>
+      <tr><td><b>F10-5_ 3/29-7/5</b></td><td class="num">2022-03-29</td><td class="num">2022-07-01</td><td>Flower 10</td><td class="num">176</td><td>?4866, Ghost OG, Motorbreath +1</td></tr>
+      <tr><td><b>H:77_F7_3/6-6/27</b></td><td class="num">2022-03-05</td><td class="num">2022-06-28</td><td>Flower 7</td><td class="num">1134</td><td>Ice Cream Cake, ?4880, Catfish +5</td></tr>
+      <tr><td><b>H:76_F1_2/26-6/19</b></td><td class="num">2022-02-25</td><td class="num">2022-06-15</td><td>Flower Room 1</td><td class="num">1433</td><td>Orange 43, Ice Cream Cake, ?4866 +8</td></tr>
+      <tr><td><b>H:75_F8_2/21-6/10</b></td><td class="num">2022-02-17</td><td class="num">2022-06-08</td><td>Flower 8</td><td class="num">1134</td><td>Ice Cream Cake, Sherbhead, Big Head +5</td></tr>
+      <tr><td><b>H:74_F3_2/10-5/30</b></td><td class="num">2022-02-07</td><td class="num">2022-06-01</td><td>Flower Room 3</td><td class="num">1369</td><td>Orange 43, Ice Cream Cake, Motorbreath +4</td></tr>
+      <tr><td><b>H:73_F6_1/31-5/20</b></td><td class="num">2022-01-27</td><td class="num">2022-05-23</td><td>Flower 6</td><td class="num">1126</td><td>?4866, Super Lemon Dawg, Sherbhead +7</td></tr>
+      <tr><td><b>H:72_F2_1/21-5/12</b></td><td class="num">2022-01-21</td><td class="num">2022-05-16</td><td>Flower Room 2</td><td class="num">1309</td><td>Orange 43, Ice Cream Cake, Big Head +5</td></tr>
+      <tr><td><b>F10-4_ 1/11-4/15</b></td><td class="num">2022-01-11</td><td class="num">2022-05-08</td><td>Flower 10</td><td class="num">176</td><td>?4883, Jealousy, ?11351 +1</td></tr>
+      <tr><td><b>F5-10_F5_ 2/2-5/7</b></td><td class="num">2022-02-02</td><td class="num">2022-05-08</td><td>Flower Room 5</td><td class="num">338</td><td>Josh D OG, Heatlocker, Lemon Slushee +1</td></tr>
+      <tr><td><b>H:71_F9_12/30-4/20</b></td><td class="num">2022-01-04</td><td class="num">2022-05-03</td><td>Flower 9</td><td class="num">1134</td><td>MAC 1, Kush Mints, ?4884 +3</td></tr>
+      <tr><td><b>H:70_F4_12/30-4/18</b></td><td class="num">2021-12-30</td><td class="num">2022-04-20</td><td>Flower Room 4</td><td class="num">1495</td><td>Orange 43, Super Lemon Dawg, Motorbreath +6</td></tr>
+      <tr><td><b>H:69_F7_12/20-4/8</b></td><td class="num">2021-12-20</td><td class="num">2022-04-11</td><td>Flower 7</td><td class="num">1134</td><td>Ice Cream Cake, Sherbhead, Big Head +5</td></tr>
+      <tr><td><b>H:68_F1_12/9-3/28</b></td><td class="num">2021-12-09</td><td class="num">2022-04-01</td><td>Flower Room 1</td><td class="num">1285</td><td>Orange 43, Ice Cream Cake, ?4883 +7</td></tr>
+      <tr><td><b>H:67_F8_11/29-3/20</b></td><td class="num">2021-11-29</td><td class="num">2022-03-22</td><td>Flower 8</td><td class="num">1134</td><td>Ice Cream Cake, Sherbhead, Big Head +4</td></tr>
+      <tr><td><b>H:66_F3_11/18-3/9</b></td><td class="num">2021-11-18</td><td class="num">2022-03-13</td><td>Flower Room 3</td><td class="num">1551</td><td>Orange 43, Ice Cream Cake, Catfish +4</td></tr>
+      <tr><td><b>H:5-9_F5_ 11/26-2/28</b></td><td class="num">2021-11-26</td><td class="num">2022-02-27</td><td>Flower Room 5</td><td class="num">360</td><td>?4866, Big Head, ?10745 +1</td></tr>
+      <tr><td><b>H:65_F6_11/15-2/4/21</b></td><td class="num">2021-11-08</td><td class="num">2022-02-27</td><td>Flower 6</td><td class="num">1133</td><td>Orange 43, Ice Cream Cake, Whip it +5</td></tr>
+      <tr><td><b>H:10-3_F10_11/3</b></td><td class="num">2021-10-29</td><td class="num">2022-02-21</td><td>Flower 10</td><td class="num">171</td><td>Whip it, Lemon Slushee, ?11351 +1</td></tr>
+      <tr><td><b>H:64_F2_10/28</b></td><td class="num">2021-10-28</td><td class="num">2022-02-19</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, Sherbhead +3</td></tr>
+      <tr><td><b>H:63_F9_10/11-2/4</b></td><td class="num">2021-10-11</td><td class="num">2022-02-07</td><td>Flower 9</td><td class="num">1133</td><td>MAC 1, Kush Mints, ?4884 +3</td></tr>
+      <tr><td><b>H:62_F4_10/7-1/26</b></td><td class="num">2021-10-07</td><td class="num">2022-01-29</td><td>Flower Room 4</td><td class="num">1512</td><td>Orange 43, Ice Cream Cake, Motorbreath +4</td></tr>
+      <tr><td><b>H:61_F7_9/27-1/14</b></td><td class="num">2021-09-27</td><td class="num">2022-01-16</td><td>Flower 7</td><td class="num">761</td><td>Orange 43, Ice Cream Cake, Sherbhead +4</td></tr>
+      <tr><td><b>H:60_F1_9/16-1/3</b></td><td class="num">2021-09-16</td><td class="num">2022-01-05</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Sherbhead +8</td></tr>
+      <tr><td><b>H:59_F8_9/6-12/24</b></td><td class="num">2021-09-06</td><td class="num">2021-12-26</td><td>Flower 8</td><td class="num">1134</td><td>Orange 43, Ice Cream Cake, Sherbhead +4</td></tr>
+      <tr><td><b>H:58_F3_8/26-12/13</b></td><td class="num">2021-08-26</td><td class="num">2021-12-18</td><td>Flower Room 3</td><td class="num">1549</td><td>Orange 43, Ice Cream Cake, Sherbhead +8</td></tr>
+      <tr><td><b>H:57_F6_8/16-12/3</b></td><td class="num">2021-08-16</td><td class="num">2021-12-13</td><td>Flower 6</td><td class="num">1134</td><td>Orange 43, Ice Cream Cake, Motorbreath +6</td></tr>
+      <tr><td><b>H:5-8_F5_9/17-12/18</b></td><td class="num">2021-10-02</td><td class="num">2021-12-08</td><td>Flower Room 5</td><td class="num">324</td><td>Orange 43, Ice Cream Cake, Sherbhead +4</td></tr>
+      <tr><td><b>H:56_F2_8/17-12/4</b></td><td class="num">2021-08-17</td><td class="num">2021-12-06</td><td>Flower Room 2</td><td class="num">1271</td><td>Orange 43, Ice Cream Cake, ?4866 +4</td></tr>
+      <tr><td><b>H:10-2_F10_8/20-12/7</b></td><td class="num">2021-08-20</td><td class="num">2021-11-21</td><td>Flower 10</td><td class="num">176</td><td>Jealousy, Apricot Gelato, ?11351 +1</td></tr>
+      <tr><td><b>H:55_F9_10/25/2021</b></td><td class="num">2021-07-25</td><td class="num">2021-11-13</td><td>Flower 9</td><td class="num">1134</td><td>Orange 43, Ice Cream Cake, Sherbhead +4</td></tr>
+      <tr><td><b>H:54_F4_10/14/21</b></td><td class="num">2021-07-15</td><td class="num">2021-11-01</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Sherbhead +3</td></tr>
+      <tr><td><b>H:53_F7_10/5/2021</b></td><td class="num">2021-07-04</td><td class="num">2021-10-24</td><td>Flower 7</td><td class="num">1135</td><td>Orange 43, Ice Cream Cake, Sherbhead +4</td></tr>
+      <tr><td><b>H:52_F1_10/02/21</b></td><td class="num">2021-06-24</td><td class="num">2021-10-20</td><td>Flower Room 1</td><td class="num">972</td><td>Orange 43, Ice Cream Cake, ?4866 +8</td></tr>
+      <tr><td><b>H:5-7_F5_6/26-9/25</b></td><td class="num">2021-06-26</td><td class="num">2021-10-13</td><td>Flower Room 5</td><td class="num">252</td><td>Orange 43, Ice Cream Cake, Sherbhead +2</td></tr>
+      <tr><td><b>H:51_F8_9/12/21</b></td><td class="num">2021-06-14</td><td class="num">2021-10-01</td><td>Flower 8</td><td class="num">1134</td><td>Orange 43, Ice Cream Cake, Sherbhead +2</td></tr>
+      <tr><td><b>H:50_F3_9/7/21</b></td><td class="num">2021-06-09</td><td class="num">2021-09-26</td><td>Flower Room 3</td><td class="num">1201</td><td>Orange 43, Ice Cream Cake, Super Lemon Dawg +4</td></tr>
+      <tr><td><b>H:10-1_F10_8/18/21</b></td><td class="num">2021-06-04</td><td class="num">2021-09-21</td><td>Flower 10</td><td class="num">113</td><td>Ice Cream Cake, Sherbhead, Lemon Slushee</td></tr>
+      <tr><td><b>H:49_F6_9/3/21</b></td><td class="num">2021-06-04</td><td class="num">2021-09-21</td><td>Flower 6</td><td class="num">987</td><td>Orange 43, Ice Cream Cake, ?4866 +4</td></tr>
+      <tr><td><b>H:48_F2_5/21-8/20</b></td><td class="num">2021-05-21</td><td class="num">2021-09-16</td><td>Flower Room 2</td><td class="num">1252</td><td>Orange 43, Ice Cream Cake, Sherbhead +3</td></tr>
+      <tr><td><b>H:47_F4_4/22-7/22</b></td><td class="num">2021-04-22</td><td class="num">2021-08-09</td><td>Flower Room 4</td><td class="num">1380</td><td>Orange 43, Ice Cream Cake, Sherbhead +4</td></tr>
+      <tr><td><b>H:46_F1_4/1-7/19</b></td><td class="num">2021-04-01</td><td class="num">2021-07-21</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, Sherbhead +7</td></tr>
+      <tr><td><b>H:45_F3_3/14-7/1</b></td><td class="num">2021-03-14</td><td class="num">2021-07-01</td><td>Flower Room 3</td><td class="num">1526</td><td>Orange 43, Ice Cream Cake, ?4865 +7</td></tr>
+      <tr><td><b>H:5-6_F5_3/8-5/31</b></td><td class="num">2021-04-11</td><td class="num">2021-06-13</td><td>Flower Room 5</td><td class="num">360</td><td>Motorbreath, Lemon Slushee, ?7581</td></tr>
+      <tr><td><b>H:44_F2_3/20</b></td><td class="num">2021-03-20</td><td class="num">2021-06-11</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, Sherbhead +4</td></tr>
+      <tr><td><b>H:43_F4_2/28-5/2</b></td><td class="num">2021-02-28</td><td class="num">2021-05-14</td><td>Flower Room 4</td><td class="num">1380</td><td>Orange 43, Ice Cream Cake, Sherbhead +6</td></tr>
+      <tr><td><b>H:42_F1_2/6-4/10</b></td><td class="num">2021-02-06</td><td class="num">2021-04-26</td><td>Flower Room 1</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, ?4865 +9</td></tr>
+      <tr><td><b>H:41_F3_1/21-4/6</b></td><td class="num">2021-01-21</td><td class="num">2021-04-06</td><td>Flower Room 3</td><td class="num">1560</td><td>Orange 43, Ice Cream Cake, ?4865 +4</td></tr>
+      <tr><td><b>FR 5 1/16-4/1</b></td><td class="num">2021-01-16</td><td class="num">2021-04-01</td><td>Flower Room 5</td><td class="num">360</td><td>Sherbhead, Lemon Slushee, ?7484</td></tr>
+      <tr><td><b>H:40_F2_12/16-3/1</b></td><td class="num">2020-12-16</td><td class="num">2021-03-20</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, ?4865 +2</td></tr>
+      <tr><td><b>H:39_F4_12/13-2/26</b></td><td class="num">2020-12-13</td><td class="num">2021-03-02</td><td>Flower Room 4</td><td class="num">1380</td><td>Orange 43, Ice Cream Cake, ?4865 +6</td></tr>
+      <tr><td><b>H:38_F1_11/25-2/8</b></td><td class="num">2020-11-25</td><td class="num">2021-02-08</td><td>Flower Room 1</td><td class="num">1439</td><td>Orange 43, Ice Cream Cake, ?4865 +8</td></tr>
+      <tr><td><b>FR 5 11/6-1/20</b></td><td class="num">2020-11-06</td><td class="num">2021-01-20</td><td>Flower Room 5</td><td class="num">360</td><td>Ice Cream Cake, ?4866, Kush Mints</td></tr>
+      <tr><td><b>H:37_F3_11/3-1/17</b></td><td class="num">2020-11-03</td><td class="num">2021-01-17</td><td>Flower Room 3</td><td class="num">1488</td><td>Orange 43, Ice Cream Cake, Super Lemon Dawg +7</td></tr>
+      <tr><td><b>H:36_F2_10/15-12/29</b></td><td class="num">2020-10-15</td><td class="num">2020-12-29</td><td>Flower Room 2</td><td class="num">1312</td><td>Orange 43, Ice Cream Cake, ?4865 +3</td></tr>
+      <tr><td><b>H:35_F4_9/30-12/11</b></td><td class="num">2020-09-30</td><td class="num">2020-12-11</td><td>Flower Room 4</td><td class="num">1440</td><td>Orange 43, Ice Cream Cake, ?4865 +8</td></tr>
+      <tr><td><b>H:34_F1_9/11-11/22</b></td><td class="num">2020-09-11</td><td class="num">2020-11-22</td><td>Flower Room 1</td><td class="num">1438</td><td>Orange 43, Ice Cream Cake, ?4865 +8</td></tr>
+      <tr><td><b>H:33_F3_8/22-11/2</b></td><td class="num">2020-08-22</td><td class="num">2020-11-02</td><td>Flower Room 3</td><td class="num">1451</td><td>Orange 43, ?4865, ?4866 +5</td></tr>
+      <tr><td><b>H:5-3_F5_8/22-11/2</b></td><td class="num">2020-08-22</td><td class="num">2020-11-02</td><td>Flower Room 5</td><td class="num">355</td><td>Ice Cream Cake, Super Lemon Dawg, ?5163</td></tr>
+      <tr><td><b>H:32_F2_ 7/28-10/8</b></td><td class="num">2020-07-28</td><td class="num">2020-10-08</td><td>Flower Room 2</td><td class="num">1220</td><td>Orange 43, Ice Cream Cake, ?4866 +3</td></tr>
+      <tr><td><b>H:31_F4_7/22-10/2</b></td><td class="num">2020-07-22</td><td class="num">2020-10-02</td><td>Flower Room 4</td><td class="num">1133</td><td>Orange 43, Ice Cream Cake, ?4865 +4</td></tr>
+      <tr><td><b>H:30_F1_ 6/22-9/2</b></td><td class="num">2020-06-22</td><td class="num">2020-09-03</td><td>Flower Room 1</td><td class="num">1014</td><td>Orange 43, Ice Cream Cake, ?4865 +7</td></tr>
+    </tbody></table></div>
+</section>
+<footer>
+  <p><b>Data sources:</b> AROYA SPA REST endpoints (/harvests/, /cultivars/, /recipes/, /rooms/, /portal_api/facilities/, /portal_api/organizations/, /portal_api/devices/). Pulled 2026-06-25 using the SPA bearer token from ~/.aroya/spa_token_app.json. Account lifespan: 2020-06-22 → 2026-06-25 (~6 years). 334 harvest groups · 170 cultivars in library · 469 active mesh devices · 26 instrumented rooms. Facility 1503 (Klutch Cannabis · ATCPC Ohio), 1055 Home Avenue, Akron OH 44310.</p>
+  <p><b>Companion reports:</b> Klutch ATCPC Ohio 2-Week Cultivation Audit 2026-05-29 → 2026-06-12 (per-room steering envelope) · Klutch ATCPC Ohio Device Health 2026-06-12 (per-device mesh and battery state). Apply the lifetime view in this report alongside those two for full context.</p>
+  <p><b>Methodology:</b> Per-HG records pulled in full from /harvests/?facility=1503 (paginated). Cultivar deployment counted as 1 HG against each strain in a multi-strain HG. Phase durations use the totalDays field from each HG's phases[] array. Room first-use derived from the earliest phase-room reference in any HG. Active HGs defined as currentPhase != null. Plant-survival rate derived from harvestedCount / plantCount per year. Per AROYA Crop Steering: The Ultimate Guide; Grodan Cannabis Edition Ch. 3–4; Athena Vegetative Stage / Substrates Guide; Growlink Crop Steering E-Book.</p>
+  <p style="margin-top:18px">Prepared for Mike Lentz · Klutch Cannabis / Calyx Peak · Contact: <a href="mailto:cian@addium.com">cian@addium.com</a> · Cian Sullivan · Addium / AROYA · 2026-06-25</p>
+</footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<script>
+
+document.querySelectorAll('.theme-btn').forEach(b=>{b.addEventListener('click',e=>{
+  const t=e.target.dataset.theme;
+  document.documentElement.dataset.theme=t;
+  document.querySelectorAll('.theme-btn').forEach(x=>x.classList.toggle('active',x.dataset.theme===t));
+});});
+
+
+window.addEventListener('load', () => {
+  const ctx = document.getElementById('cadence_chart');
+  if (!ctx) return;
+  const css = getComputedStyle(document.documentElement);
+  const olive = css.getPropertyValue('--olive').trim() || '#3f4e2b';
+  const lime = css.getPropertyValue('--lime').trim() || '#9fd96a';
+  const appblue = css.getPropertyValue('--app-blue').trim() || '#1f78b4';
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026"],
+      datasets: [
+        { label: 'HGs run', data: [8, 30, 51, 73, 65, 62, 45], backgroundColor: lime, borderColor: olive, borderWidth: 1, yAxisID: 'y1' },
+        { label: 'Plants entered', data: [9363, 31945, 51967, 69377, 63557, 57415, 32180], type: 'line', borderColor: appblue, backgroundColor: appblue, tension: 0.3, yAxisID: 'y2', pointRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: {
+        y1: { type: 'linear', position: 'left', title: { display: true, text: 'HGs run' }, grid: { color: css.getPropertyValue('--grid-line').trim() } },
+        y2: { type: 'linear', position: 'right', title: { display: true, text: 'Plants entered' }, grid: { display: false } }
+      }
+    }
+  });
+});
+
+</script>
+</body></html>
