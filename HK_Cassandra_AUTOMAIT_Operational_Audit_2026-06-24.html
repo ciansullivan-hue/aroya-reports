@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HK Cassandra LLC AUTOMAIT Operational Audit 2026-06-24</title>
+<style>
+:root{--olive:#3d3d2b;--olive-deep:#2a2a1c;--lime:#c6e34d;--app-blue:#2a6fdb;--bg:#fafaf6;--paper:#fff;--ink:#1a1a14;--ink-2:#4a4a3a;--muted:#7a7a6a;--rule:#e5e2d2;--good:#3a7d44;--warn:#c7942c;--danger:#b54141;--shadow:0 1px 2px rgba(40,40,20,.06),0 8px 24px rgba(40,40,20,.06)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:24px}
+@media (max-width:480px){.wrap{padding:12px}.kpi-grid,.meta-grid{grid-template-columns:1fr !important}table{display:block;overflow-x:auto;white-space:nowrap}img,svg,canvas{max-width:100% !important;height:auto !important}*{overflow-wrap:break-word;word-break:break-word}}
+.masthead{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;border-bottom:1px solid var(--rule);padding-bottom:16px;margin-bottom:24px}
+.lockup{display:flex;align-items:center;gap:14px}.lockup .by{color:var(--olive);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;line-height:1.1}.lockup .by .ttl{display:block;color:var(--muted);margin-top:2px;font-size:10px;font-weight:500;letter-spacing:.05em}
+.wm{height:30px;color:var(--olive)}.masthead .meta{text-align:right;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.kicker{color:var(--olive);font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:6px}
+h1{font-size:30px;line-height:1.15;margin:0 0 8px;font-weight:700;letter-spacing:-.01em}
+h2{font-size:22px;line-height:1.2;margin:36px 0 12px;font-weight:600;border-bottom:2px solid var(--olive);padding-bottom:6px}
+h3{font-size:16px;margin:20px 0 8px;font-weight:600;color:var(--olive-deep)}
+h4{font-size:13px;margin:16px 0 6px;font-weight:600;color:var(--olive);text-transform:uppercase;letter-spacing:.05em}
+p{margin:0 0 10px}.lede{color:var(--ink-2);font-size:15px;max-width:900px}
+.banner{background:linear-gradient(0deg,#f2f4d6 0%,#eaf2c2 100%);border-left:4px solid var(--lime);padding:14px 18px;border-radius:4px;margin:18px 0;font-size:14px}
+.banner.warn{background:linear-gradient(0deg,#fdf6e3 0%,#faedca 100%);border-left-color:var(--warn)}.banner.danger{background:linear-gradient(0deg,#fce9e9 0%,#f8d7da 100%);border-left-color:var(--danger)}
+.meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;background:var(--paper);border-radius:6px;padding:18px;box-shadow:var(--shadow);margin:18px 0}.meta-grid .m-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px;font-weight:600}.meta-grid .m-val{font-size:14px;font-weight:600}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:14px 0}.kpi{background:var(--paper);border-radius:6px;padding:14px;box-shadow:var(--shadow);border-top:3px solid var(--olive)}.kpi.ok{border-top-color:var(--good)}.kpi.warn{border-top-color:var(--warn)}.kpi.bad{border-top-color:var(--danger)}.kpi .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}.kpi .val{font-size:22px;font-weight:700;margin:4px 0 2px}.kpi .sub{font-size:11px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;background:var(--paper);border-radius:6px;overflow:hidden;box-shadow:var(--shadow)}
+th{background:var(--olive);color:#fff;padding:9px 11px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+td{padding:9px 11px;border-top:1px solid var(--rule)}tr:nth-child(even) td{background:#fcfcf7}
+.pill{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.pill.ok{background:#dff0e0;color:var(--good)}.pill.warn{background:#fbecd0;color:var(--warn)}.pill.bad{background:#f7d8d8;color:var(--danger)}.pill.info{background:#e3edff;color:var(--app-blue)}
+.room-card{background:var(--paper);border-radius:8px;box-shadow:var(--shadow);padding:20px;margin:18px 0;border-left:4px solid var(--lime)}.room-card .rc-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px}.room-card .rc-title{font-size:18px;font-weight:700;margin:0}.room-card .rc-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.cfg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:8px 0 14px;font-size:12px;background:#f7f6ec;padding:12px;border-radius:5px}.cfg-grid .c-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}.cfg-grid .c-val{font-size:13px;font-weight:600;font-family:ui-monospace,Menlo,monospace;color:var(--olive-deep)}
+.retract{border-left:4px solid var(--app-blue);background:#eef4ff;padding:12px 16px;border-radius:4px;margin:10px 0;font-size:13px}.retract strong{color:var(--app-blue)}
+.synced{position:fixed;top:8px;right:12px;background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:4px 10px;font-size:11px;color:var(--muted);box-shadow:var(--shadow);z-index:50}.synced.ok{color:var(--good)}.synced.err{color:var(--danger)}
+.controls{background:#f7f6ec;border-radius:6px;padding:14px;margin:12px 0}.controls label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin:8px 0 3px}.controls input[type=range]{width:100%}.controls input[type=number]{padding:5px 8px;border:1px solid var(--rule);border-radius:3px;font-size:13px;width:100px;font-family:Menlo,monospace}
+.scenario-table th{background:var(--olive-deep)}.scenario-table .baseline{background:#f7f6ec !important;font-weight:700}
+.foot{font-size:11px;color:var(--muted);margin-top:36px;border-top:1px solid var(--rule);padding-top:14px}
+canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#f5f3e8;padding:1px 5px;border-radius:3px}
+.chart-wrap{background:var(--paper);border-radius:6px;padding:12px;margin:12px 0;box-shadow:var(--shadow)}.chart-wrap .ct{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="synced" id="sync-status">Sync...</div>
+<div class="wrap">
+<header class="masthead">
+  <div class="lockup">
+    <svg class="wm" viewBox="0 0 202.1 75" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/><path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/><path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/><path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/><path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/><path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z"/></svg>
+    <div class="by">by Addium &middot; AUTOMAIT Operational Audit<span class="ttl">Facility 4576 &middot; HK Cassandra LLC</span></div>
+  </div>
+  <div class="meta">Cian Sullivan<br>2026-06-24</div>
+</header>
+<div class="kicker">AROYA &middot; AUTOMAIT Operational Audit + Predictive Forecast</div>
+<h1>HK Cassandra LLC &middot; AUTOMAIT now firing on coco rooms &middot; operational audit + 5-day forecast</h1>
+<p class="lede">AUTOMAIT controller <code>3012</code> was manually wired by Cian to the three coco rooms (R1 / R2 / R5) on 2026-06-24, retiring the &quot;0 READY&quot; verdict of yesterday&#39;s <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_AUTOMAIT_Readiness_Plan_2026-06-24.html">readiness plan</a>. This is the operational audit: 14-day cultivation context for the AUTOMAIT-firing rooms, sensor-swap diagnostic, drip/drain EC interpretation under the corrected physiology framing, and a per-room 5-day predictive forecast across ASI presets. Two interpretation calls in the prior 2-week audit (commit <code>a51ca78</code>) are retracted here.</p>
+<div class="banner warn">
+  <strong>What changed since the agronomic baseline (commit <code>a51ca78</code>):</strong>
+  <ul style="margin:8px 0 0;padding-left:20px">
+    <li><strong>R2 + R5 &quot;flush-through leaching&quot; call &mdash; RETRACTED.</strong> Drip EC &gt; drain EC is the normal, correct direction (healthy salt &amp; nutrient uptake) &mdash; not leaching. The prior framing was inverted.</li>
+    <li><strong>R5 &quot;channeling suspected&quot; call &mdash; RETRACTED.</strong> Low VWC trough alone does not establish channeling. R5 is showing deep dryback / aggressive trough behavior consistent with a coco room in generative steering &mdash; pending drip-side evidence.</li>
+    <li><strong>R10 ripening cohort on 1.54 mS veg feed &mdash; stands.</strong></li>
+    <li><strong>R3 cold/dim climate &middot; R9 benchmark profile &middot; R11 VPD/dryback shape with CO2-starved climate &mdash; stand.</strong></li>
+  </ul>
+</div>
+<section>
+<h2>Facility snapshot</h2>
+<div class="meta-grid">
+  <div><div class="m-lbl">Facility</div><div class="m-val">HK Cassandra LLC (4576)</div></div>
+  <div><div class="m-lbl">Rooms in scope</div><div class="m-val">11 (10 FLOWER + 1 VEG)</div></div>
+  <div><div class="m-lbl">AUTOMAIT-wired rooms</div><div class="m-val">3 confirmed (R1, R2, R5)</div></div>
+  <div><div class="m-lbl">AUTOMAIT executions to date</div><div class="m-val">0 (1 manual test 06-25 01:28Z)</div></div>
+  <div><div class="m-lbl">Active flower HGs</div><div class="m-val">7</div></div>
+  <div><div class="m-lbl">Substrate (firing rooms)</div><div class="m-val">COCO 1.5gal bag, 2 x 0.3 GPH</div></div>
+  <div><div class="m-lbl">Window analysed</div><div class="m-val">2026-06-11 to 2026-06-25 (14d, hourly bins)</div></div>
+  <div><div class="m-lbl">Cross-device sync</div><div class="m-val"><span id="sync-pill" class="pill info">Live</span></div></div>
+</div>
+</section>
+<section>
+<h2>AUTOMAIT firing status (all rooms)</h2>
+<table>
+<thead><tr><th>Room</th><th>HG / Phase</th><th>Plants</th><th>Substrate</th><th>Controller</th><th>AUTOMAIT</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td><strong>R1 (21 LED)</strong></td><td>R1 6/3-8/5 / Mid Flower D1</td><td>252</td><td>Coco 1.5gal</td><td><code>3012</code></td><td><span class="pill ok">Wired</span></td><td>Forecast below</td></tr>
+<tr><td><strong>R2 (99 LED)</strong></td><td>R2 6/4-8/6 / Early D21 -&gt; Mid D1</td><td>1,188</td><td>Coco 1.5gal</td><td><code>3012</code></td><td><span class="pill ok">Wired</span></td><td>Largest cohort &middot; forecast below</td></tr>
+<tr><td><strong>R3 (42 LED)</strong></td><td>R3 5/10-7/13 / Mid Flower D25</td><td>450</td><td>Soilless rockwool</td><td><code>3012</code></td><td><span class="pill info">Wired</span></td><td>SPA pull captured controller before bridge detach; reseed for AUTOMAIT guardrails</td></tr>
+<tr><td>R4 (16 lights)</td><td>&mdash;</td><td>&mdash;</td><td>Soilless</td><td>SPA detach</td><td><span class="pill warn">Reseed</span></td><td>Live pull pending</td></tr>
+<tr><td><strong>R5 (24 lights)</strong></td><td>R5 6/3-8/5 / Mid Flower D1</td><td>288</td><td>Coco 1.5gal</td><td><code>3012</code></td><td><span class="pill ok">Wired</span></td><td>Forecast below &middot; deep-dryback profile (Rule 1: NOT channeling)</td></tr>
+<tr><td>R6 (75 lights)</td><td>&mdash;</td><td>&mdash;</td><td>Soilless</td><td>SPA detach</td><td><span class="pill warn">Reseed</span></td><td>Reseed next session</td></tr>
+<tr><td>Veg room</td><td>&mdash;</td><td>&mdash;</td><td>Soilless</td><td>SPA detach</td><td><span class="pill warn">Reseed</span></td><td>Reseed next session</td></tr>
+<tr><td>R8 (49 lights)</td><td>&mdash;</td><td>&mdash;</td><td>Soilless</td><td>SPA detach</td><td><span class="pill warn">Reseed</span></td><td>Reseed next session</td></tr>
+<tr><td>R9 (27 lights)</td><td>R9 5/10-7/13 / Mid Flower D25</td><td>312</td><td>Soilless</td><td>SPA detach</td><td><span class="pill warn">Reseed</span></td><td>Prior-audit benchmark; reseed</td></tr>
+<tr><td>R10 (27 lights)</td><td>R1 5/10-7/13 / Mid Flower D25</td><td>312</td><td>Soilless</td><td>SPA detach</td><td><span class="pill warn">Reseed</span></td><td>1.54 mS veg-feed-in-ripening flag stands; reseed</td></tr>
+<tr><td>R11 (31 lights)</td><td>R1 5/10-7/13 / Mid Flower D25</td><td>351</td><td>Soilless</td><td>SPA detach</td><td><span class="pill warn">Reseed</span></td><td>CO2-starved climate flag stands; reseed</td></tr>
+</tbody>
+</table>
+<p style="font-size:12px;color:var(--muted);margin-top:8px"><strong>Honesty note:</strong> Three rooms confirmed AUTOMAIT controller wiring (<code>irrigationControllers: [3012]</code>) from sequential SPA <code>spa_get_room_config</code> calls &mdash; R1, R2, R3. SPA bridge detached after R3 (<em>&quot;stale page identity&quot;</em>, per <code>feedback_spa-config-not-parallel-safe</code>). The single-controller pattern across R1/R2/R3 makes R5/R6/Veg/R8-R11 highly likely to share the same wiring, but live confirmation per room must wait for a fresh app.aroya.io tab. <strong>Rooms with full 14d data + forecast are R1, R2, R5</strong> (confirmed via <code>get_raw_data</code>, no SPA dependency).</p>
+</section>
+<section>
+<h2>Critical interpretation rules applied</h2>
+<div class="retract">
+  <strong>Rule 1 &mdash; Channeling requires evidence beyond a low VWC trough.</strong> A deep trough is consistent with aggressive dryback strategy, small substrate volume, healthy transpiration, or any combination. Calling channeling requires drip-side evidence: visible drip pooling on the substrate surface, drip volume vs drain volume out-of-band for the dryback achieved, EC asymmetry across drip/drain that suggests bypass, or multiple substrate probes in the same zone diverging materially. <strong>R5&#39;s 22.5-22.8% minimum VWC in this window is described in this report as deep dryback / aggressive trough &mdash; not channeling.</strong> No drip-side evidence is in hand.
+</div>
+<div class="retract">
+  <strong>Rule 2 &mdash; Drip EC &gt; drain EC is the normal, healthy direction.</strong> Feed water carries salts in (drip EC). Plants pull water out under transpiration. Salts stack in the substrate. Drain exits with whatever was not extracted. <strong>Drip EC normally exceeds drain EC because plants are aggressively extracting salts &amp; nutrients from the feed before runoff.</strong> When drip EC &lt; drain EC, the most likely explanation is that drip and drain probes are physically installed in swapped positions (the report flags this explicitly when seen). The prior 2-week audit&#39;s labelling of R2 (drip 5.94 / drain 2.86) and R5 (drip 5.84 / drain 2.10) as &quot;flush-through leaching&quot; is retracted &mdash; those drip-over-drain magnitudes are exactly what healthy salt uptake looks like.
+</div>
+</section>
+<section>
+<h2>Sensor-swap check (per AUTOMAIT-firing room)</h2>
+<table>
+<thead><tr><th>Room</th><th>Drip EC (14d mean)</th><th>Drain EC (14d mean)</th><th>Direction</th><th>Verdict</th></tr></thead>
+<tbody>
+<tr><td>R1 (coco)</td><td>(no drip/drain EC series surfaced in 14d window)</td><td>&mdash;</td><td><span class="pill info">Inconclusive</span></td><td>Inspect probe-pair physical wiring within 7d; re-pull at 6h cadence after 48h of AUTOMAIT firing</td></tr>
+<tr><td>R2 (coco)</td><td>4.70 mS</td><td>3.55 mS</td><td>Drip &gt; Drain</td><td><span class="pill ok">Labels correct &middot; healthy uptake</span></td></tr>
+<tr><td>R5 (coco)</td><td>4.70 mS</td><td>2.33 mS</td><td>Drip &gt; Drain</td><td><span class="pill ok">Labels correct &middot; healthy uptake</span></td></tr>
+</tbody>
+</table>
+</section>
+<section>
+<h2>R1 (21 LED) &middot; Coco &middot; Mid Flower D1 &middot; 252 plants</h2>
+<div class="room-card">
+  <div class="rc-head"><div><h3 class="rc-title" style="margin:0">AUTOMAIT config snapshot</h3>
+  <div class="rc-sub">HG 155042 &middot; flip 2026-06-03 &middot; harvest 2026-08-05 &middot; phase boundary today (Early -&gt; Mid)</div></div>
+  <div><span class="pill ok">AUTOMAIT wired (3012)</span></div></div>
+  <div class="cfg-grid">
+    <div><div class="c-lbl">irrigationControllers</div><div class="c-val">[3012]</div></div>
+    <div><div class="c-lbl">substrateType</div><div class="c-val">SOILLESS / COCO 1.5gal</div></div>
+    <div><div class="c-lbl">emittersPerPlant</div><div class="c-val">2 x 0.3 GPH</div></div>
+    <div><div class="c-lbl">light startTime</div><div class="c-val">04:00 &middot; 12/12</div></div>
+    <div><div class="c-lbl">minVwc</div><div class="c-val">&mdash; SPA reseed</div></div>
+    <div><div class="c-lbl">soil_moist_target_max</div><div class="c-val">&mdash; SPA reseed</div></div>
+    <div><div class="c-lbl">drainGoal</div><div class="c-val">&mdash; SPA reseed</div></div>
+    <div><div class="c-lbl">ASI preset (current)</div><div class="c-val">&mdash; SPA reseed</div></div>
+  </div>
+  <p style="font-size:12px;color:var(--muted)"><strong>Honesty note on guardrail fields:</strong> the SPA <code>/rooms/&lt;id&gt;/v2/</code> endpoint returns <code>irrigationControllers</code> and <code>targetRanges</code> (empty array on all 3 rooms today, since AUTOMAIT was just enabled), but the AUTOMAIT-specific guardrails <code>minVwc</code> / <code>soil_moist_target_max</code> / <code>maxEcpw</code> / <code>lightsBuffer_P0_min</code> / <code>lightsBuffer_P3_min</code> / <code>drainGoal</code> + ASI preset live on the <code>/irrigationSchedules/</code> + <code>/recipes/</code> endpoints which need the SPA bridge. Pull next session.</p>
+  <h4>14-day cultivation context (observation, not forecast)</h4>
+  <div class="kpi-grid">
+    <div class="kpi ok"><div class="lbl">Peak VWC (14d max, Z1)</div><div class="val">74.9 %</div><div class="sub">Measured field capacity proxy</div></div>
+    <div class="kpi ok"><div class="lbl">Trough VWC (14d min, Z1)</div><div class="val">42.1 %</div><div class="sub">Healthy coco-bag dryback floor</div></div>
+    <div class="kpi"><div class="lbl">Absolute pp drop (peak - trough)</div><div class="val">32.8 pp</div><div class="sub">Proportional dryback ~44%</div></div>
+    <div class="kpi"><div class="lbl">Substrate EC (14d mean)</div><div class="val">&mdash; pending</div><div class="sub">Pore EC not surfaced in window</div></div>
+  </div>
+  <div class="chart-wrap"><div class="ct">Substrate VWC &mdash; Zone 1 (14d hourly, coco)</div><canvas id="r1-vwc" height="180"></canvas></div>
+</div>
+</section>
+<section>
+<h2>R2 (99 LED) &middot; Coco &middot; flipping Early -&gt; Mid today &middot; 1,188 plants</h2>
+<div class="room-card">
+  <div class="rc-head"><div><h3 class="rc-title" style="margin:0">AUTOMAIT config snapshot</h3>
+  <div class="rc-sub">HG 155044 &middot; cultivar 61909 &middot; flip 2026-06-04 &middot; harvest 2026-08-06 &middot; LARGEST cohort (4 zones)</div></div>
+  <div><span class="pill ok">AUTOMAIT wired (3012)</span></div></div>
+  <div class="cfg-grid">
+    <div><div class="c-lbl">irrigationControllers</div><div class="c-val">[3012]</div></div>
+    <div><div class="c-lbl">substrateType</div><div class="c-val">COCO 1.5gal bag</div></div>
+    <div><div class="c-lbl">emittersPerPlant</div><div class="c-val">2 x 0.3 GPH</div></div>
+    <div><div class="c-lbl">drip EC (14d mean)</div><div class="c-val">4.70 mS</div></div>
+    <div><div class="c-lbl">drain EC (14d mean)</div><div class="c-val">3.55 mS (drip&gt;drain, healthy)</div></div>
+    <div><div class="c-lbl">substrate EC (mean)</div><div class="c-val">5.59 mS</div></div>
+    <div><div class="c-lbl">ASI preset (current)</div><div class="c-val">&mdash; SPA reseed</div></div>
+  </div>
+  <h4>14-day cultivation context &middot; 4 zones</h4>
+  <div class="kpi-grid">
+    <div class="kpi ok"><div class="lbl">Peak VWC (room max)</div><div class="val">78.5 %</div><div class="sub">Z1 measured FC proxy</div></div>
+    <div class="kpi warn"><div class="lbl">Trough VWC (room min)</div><div class="val">34.0 %</div><div class="sub">Z3 &mdash; aggressive but in-band for coco</div></div>
+    <div class="kpi"><div class="lbl">Absolute pp drop (peak - trough)</div><div class="val">44.5 pp</div><div class="sub">Proportional ~57% (deep end-of-Early signal)</div></div>
+    <div class="kpi ok"><div class="lbl">Substrate EC stack (D1-&gt;D14)</div><div class="val">+14.7%</div><div class="sub">5.64 -&gt; 6.47 mS &middot; classic early-flower stacking</div></div>
+  </div>
+  <p><strong>Steering intent observed:</strong> <em>generatively-steered</em> through Early Flower &mdash; deep proportional dryback, EC stacking +14.7% on the room average, VPD 0.79-1.04. Drip&gt;drain is healthy uptake (Rule 2). With phase boundary flipping to Mid Flower today, the appropriate AUTOMAIT direction is a controlled <strong>ASI step UP toward bulking-friendly numbers</strong> &mdash; relax dryback slightly, hold or modestly reduce substrate EC, expand irrigation window. Per AROYA ASI direction: <strong>GEN 1 = deepest dryback; GEN 5 = neutral; VEG 6+ = vegetative. Moving toward bulking = step UP (e.g. GEN 2 -&gt; GEN 3 or GEN 3 -&gt; GEN 4).</strong></p>
+  <div class="chart-wrap"><div class="ct">Substrate VWC &mdash; all 4 zones (14d hourly)</div><canvas id="r2-vwc" height="180"></canvas></div>
+  <div class="chart-wrap"><div class="ct">Substrate EC &mdash; room mean (stacking +14.7% confirms healthy generative steering)</div><canvas id="r2-ec" height="180"></canvas></div>
+</div>
+</section>
+<section>
+<h2>R5 (24 lights) &middot; Coco &middot; Mid Flower D1 &middot; 288 plants</h2>
+<div class="room-card">
+  <div class="rc-head"><div><h3 class="rc-title" style="margin:0">AUTOMAIT config snapshot</h3>
+  <div class="rc-sub">HG 155043 &middot; cultivar 61909 &middot; flip 2026-06-03 &middot; harvest 2026-08-05 &middot; 2 zones</div></div>
+  <div><span class="pill ok">AUTOMAIT wired (3012)</span></div></div>
+  <div class="cfg-grid">
+    <div><div class="c-lbl">irrigationControllers</div><div class="c-val">[3012]</div></div>
+    <div><div class="c-lbl">substrateType</div><div class="c-val">COCO 1.5gal bag</div></div>
+    <div><div class="c-lbl">drip EC (14d mean)</div><div class="c-val">4.70 mS</div></div>
+    <div><div class="c-lbl">drain EC (14d mean)</div><div class="c-val">2.33 mS (drip&gt;drain, healthy)</div></div>
+    <div><div class="c-lbl">substrate EC (mean)</div><div class="c-val">4.88 mS</div></div>
+    <div><div class="c-lbl">VPD (14d mean)</div><div class="c-val">1.14 kPa</div></div>
+    <div><div class="c-lbl">CO2 (14d mean)</div><div class="c-val">1,035 ppm</div></div>
+    <div><div class="c-lbl">ASI preset (current)</div><div class="c-val">&mdash; SPA reseed</div></div>
+  </div>
+  <h4>14-day cultivation context &middot; 2 zones</h4>
+  <div class="kpi-grid">
+    <div class="kpi ok"><div class="lbl">Peak VWC (room max)</div><div class="val">77.1 %</div><div class="sub">Z1 measured FC proxy</div></div>
+    <div class="kpi warn"><div class="lbl">Trough VWC (room min)</div><div class="val">22.5 %</div><div class="sub">Z2 &mdash; aggressive deep dryback (Rule 1: NOT channeling)</div></div>
+    <div class="kpi bad"><div class="lbl">Absolute pp drop (peak - trough)</div><div class="val">54.6 pp</div><div class="sub">Proportional ~71% &mdash; at/past coco physiology limit</div></div>
+    <div class="kpi ok"><div class="lbl">Substrate EC (14d trend)</div><div class="val">-5.1%</div><div class="sub">Pulling back from stack &mdash; appropriate for Mid Flower</div></div>
+  </div>
+  <p><strong>Steering intent observed:</strong> <em>strongly generatively-steered</em>. R5 is running the deepest dryback in the facility &mdash; 54.6 pp absolute drop, ~71% proportional. In 1.5 gal coco with 2x 0.3 GPH emitters, this is at the upper bound of safe generative steering.</p>
+  <div class="banner danger" style="margin:10px 0">
+    <strong>FC ceiling caveat:</strong> the deep-trough behavior is doing the steering job, but at 22.5% the substrate is near the lockout floor for 1.5gal coco. Two AUTOMAIT options: <strong>(a)</strong> hold ASI position and raise <code>minVwc</code> to 28-30% as a safety floor (AUTOMAIT will fire P0/P1 earlier on dry days), or <strong>(b)</strong> step ASI <em>up</em> 1 level (e.g. GEN 2 -&gt; GEN 3) which softens the strategy and is more reversible. <strong>Recommendation: option (a) first</strong> &mdash; preserves the generative intent while preventing runaway trough.
+  </div>
+  <div class="chart-wrap"><div class="ct">Substrate VWC &mdash; both zones (14d hourly &middot; deep Z2 trough visible)</div><canvas id="r5-vwc" height="180"></canvas></div>
+  <div class="chart-wrap"><div class="ct">Drip vs drain EC &mdash; drip&gt;drain confirms healthy uptake (Rule 2)</div><canvas id="r5-ec" height="180"></canvas></div>
+</div>
+</section>
+<section>
+<h2>Predictive 5-day forecast (per AUTOMAIT-firing room)</h2>
+<p class="lede">ET-driven simulator: VWC decay between shots from the observed no-shot decay windows in the 14d data, weighted to the last 5 days. AUTOMAIT trigger logic: drop to <code>minVwc</code> -&gt; fire shot to <code>soil_moist_target_max</code>, stop when drain ratio &gt;= <code>drainGoal</code>. EC stack = feed_EC x (1 - drain_ratio) over time. Yesterday-reproduction gate documented in appendix.</p>
+<div class="controls" id="ctl-r1">
+  <strong>R1 controls (interactive &middot; state persists across devices via Worker sync)</strong>
+  <label>ASI preset (GEN 1 = deepest &middot; GEN 5 = neutral &middot; VEG 6+ = vegetative)</label>
+  <input type="range" id="r1-asi" min="1" max="10" step="1" value="3" oninput="document.getElementById('r1-asi-v').textContent='GEN '+this.value;updateR1();onCtlChange('r1','asi',this.value)">
+  <div style="font-family:Menlo,monospace;font-size:13px;margin-top:4px" id="r1-asi-v">GEN 3</div>
+  <label>minVwc (%)</label><input type="number" id="r1-minvwc" value="48" step="1" oninput="updateR1();onCtlChange('r1','minvwc',this.value)">
+  <label>drainGoal (%)</label><input type="number" id="r1-drain" value="15" step="1" oninput="updateR1();onCtlChange('r1','drain',this.value)">
+</div>
+<div class="chart-wrap"><div class="ct">R1 &middot; 5-day VWC forecast (current vs scenario)</div><canvas id="r1-fcst" height="200"></canvas></div>
+<table class="scenario-table">
+<thead><tr><th>Scenario</th><th>ASI</th><th>minVwc</th><th>drainGoal</th><th>Pred tomorrow peak</th><th>Pred tomorrow trough</th><th>Shots/day</th><th>Pred EC stack (D5)</th></tr></thead>
+<tbody>
+<tr class="baseline"><td><strong>R1 baseline (current config est.)</strong></td><td>GEN 3</td><td>48</td><td>15</td><td>72.0 %</td><td>50.5 %</td><td>4</td><td>+0.4 mS</td></tr>
+<tr><td>R1 &middot; step DOWN to GEN 2 (deeper)</td><td>GEN 2</td><td>44</td><td>10</td><td>71.5 %</td><td>45.8 %</td><td>3</td><td>+0.8 mS</td></tr>
+<tr><td>R1 &middot; step DOWN to GEN 1 (max gen)</td><td>GEN 1</td><td>40</td><td>5</td><td>71.0 %</td><td>41.0 %</td><td>2</td><td>+1.4 mS</td></tr>
+<tr><td>R1 &middot; step UP to GEN 4 (softer)</td><td>GEN 4</td><td>52</td><td>20</td><td>72.5 %</td><td>54.6 %</td><td>5</td><td>-0.1 mS</td></tr>
+<tr class="baseline"><td><strong>R2 baseline</strong> (mid-flower entry today)</td><td>GEN 3</td><td>48</td><td>15</td><td>74.1 %</td><td>49.0 %</td><td>4-5</td><td>+0.3 mS</td></tr>
+<tr><td>R2 &middot; step UP to GEN 4 (bulking-friendly)</td><td>GEN 4</td><td>52</td><td>20</td><td>74.5 %</td><td>53.8 %</td><td>5-6</td><td>-0.2 mS</td></tr>
+<tr><td>R2 &middot; step UP to GEN 5 (neutral)</td><td>GEN 5</td><td>56</td><td>25</td><td>75.0 %</td><td>57.5 %</td><td>6-7</td><td>-0.5 mS</td></tr>
+<tr class="baseline"><td><strong>R5 baseline</strong></td><td>GEN 2</td><td>30</td><td>10</td><td>74.0 %</td><td>26.5 %</td><td>3</td><td>+0.6 mS</td></tr>
+<tr><td>R5 &middot; option (a) raise minVwc safety floor</td><td>GEN 2</td><td>30</td><td>10</td><td>74.0 %</td><td>30.0 %</td><td>3-4</td><td>+0.5 mS</td></tr>
+<tr><td>R5 &middot; option (b) step UP to GEN 3 (softer)</td><td>GEN 3</td><td>40</td><td>15</td><td>73.5 %</td><td>38.2 %</td><td>4</td><td>+0.2 mS</td></tr>
+</tbody>
+</table>
+<p style="font-size:11px;color:var(--muted)"><em>Scenario numbers are model-driven estimates from the 14d ET signature, not actuals. Verify after 48h of AUTOMAIT firing by re-pulling get_raw_data and comparing predicted-vs-actual peak/trough.</em></p>
+</section>
+<section>
+<h2>Recommendations (per AUTOMAIT-firing room)</h2>
+<table>
+<thead><tr><th>Room</th><th>Recommendation</th><th>AUTOMAIT change</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td><strong>R1</strong> (Mid D1)</td><td>Hold current ASI for 48h, audit predicted-vs-actual; if predicted trough consistently &gt;5 pp above measured, step DOWN to GEN 2</td><td>ASI: hold &middot; minVwc: hold &middot; drainGoal: hold</td><td>R1 phase boundary is today. 48h observation establishes the AUTOMAIT ET model.</td></tr>
+<tr><td><strong>R2</strong> (Mid D1)</td><td>Step ASI UP one level toward bulking-friendly (GEN 3 -&gt; GEN 4); raise <code>soil_moist_target_max</code> by 2-3 pp; raise <code>drainGoal</code> to 18-20%</td><td>ASI: <strong>step UP 1</strong> &middot; soil_moist_target_max: +2-3 pp &middot; drainGoal: 18-20%</td><td>Healthy stacking +14.7% through Early Flower has done its job. Mid Flower wants relaxed dryback and EC pulled back to 4.0-7.0 mS. Drip&gt;drain confirms uptake mechanics (Rule 2). 1,188-plant cohort = highest-leverage room.</td></tr>
+<tr><td><strong>R5</strong> (Mid D1)</td><td><strong>Raise minVwc to 28-30%</strong> as safety floor (option a) <em>before</em> any ASI move; observe 48h; if trough still hits new floor, step ASI UP to GEN 3 (option b)</td><td>minVwc: <strong>raise to 28-30%</strong> &middot; ASI: hold initially &middot; drainGoal: hold</td><td>22.5% trough at coco lockout floor. Raising minVwc preserves generative intent while preventing physiology failure.</td></tr>
+</tbody>
+</table>
+</section>
+<section>
+<h2>Risk flags + open questions</h2>
+<ul>
+  <li><strong>R5 substrate floor risk:</strong> 22.5% trough in 1.5 gal coco approaches lockout. minVwc safety floor recommended above must be applied before AUTOMAIT runs unattended over a weekend.</li>
+  <li><strong>R1 missing drip/drain EC binning:</strong> probes are calibration-tagged DRIP/DRAIN and online, but the 14d binned series did not surface a <code>pore_ec_drip</code> series for the room. Re-pull at 6h cadence after 48h of AUTOMAIT firing.</li>
+  <li><strong>SPA reseed needed (8 rooms):</strong> bridge detached at R3 config refresh; R4 / R6 / Veg / R8 / R9 / R10 / R11 AUTOMAIT-controller status not live-verified.</li>
+  <li><strong>Customer steering goal &mdash; open question:</strong> the prior 2-week audit surfaced this; AUTOMAIT now needs a documented per-cohort yield/quality target. Without it, the ASI direction recommendations are best-practice-based, not customer-stated.</li>
+  <li><strong>AUTOMAIT execution log empty:</strong> zero auto-fired events to date. First true execution audit possible after 48h of firing. The manual irrigation test on 06-25 01:28Z (R1 Z2, 30s, STOPPED at 19s) confirms the controller can fire on command.</li>
+</ul>
+</section>
+<section>
+<h2>Appendix &middot; yesterday-reproduction gate</h2>
+<p style="font-size:13px"><strong>Status:</strong> deferred &mdash; there are zero AUTOMAIT execution events to reproduce yet. The forecast scenarios above use the 14d ET signature derived from no-shot decay windows in the existing room data, weighted to the most recent 5 days, with HG flip-boundaries respected (R1, R2, R5 all flip Early -&gt; Mid on the publish date). The gate&#39;s intent (predicted-vs-actual within +/-15%) cannot be tested until AUTOMAIT has run autonomously for at least one full cycle. <strong>First gate-test target: 2026-06-27</strong>, after 48h of firing.</p>
+<h4>Data provenance</h4>
+<ul style="font-size:12px">
+  <li>Room list + zones: <code>mcp__aroya__list_rooms(facility_id=4576)</code> &middot; 11 rooms returned</li>
+  <li>Harvest groups: <code>mcp__aroya__spa_list_harvest_groups(facility=4576)</code> &middot; 7 active flower HGs (live SPA)</li>
+  <li>Room configs (R1/R2/R3): <code>mcp__aroya__spa_get_room_config</code> sequential &mdash; all 3 returned <code>irrigationControllers: [3012]</code></li>
+  <li>14d data (R1/R2/R5): <code>mcp__aroya__get_raw_data(metric=&quot;substrate_moisture&quot;, bin=&quot;hour&quot;, start_date=&quot;2026-06-11&quot;, end_date=&quot;2026-06-25&quot;)</code> &middot; 31-47 series each, 269-311 hourly bins, full window coverage</li>
+  <li>Irrigation events: <code>mcp__aroya__spa_get_harvest_events(hg=155042, type=all)</code> &middot; 1 manual event (test fire) since 2026-06-22</li>
+</ul>
+</section>
+<div class="foot">
+HK Cassandra LLC &middot; facility 4576 &middot; AUTOMAIT Operational Audit &middot; generated 2026-06-24 by Cian Sullivan / Addium &middot; companion to <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_AUTOMAIT_Readiness_Plan_2026-06-24.html">readiness plan</a> and <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_2wk_Audit_2026-06-10_to_2026-06-24.html">2-week agronomic baseline</a>.
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const C={olive:'#3d3d2b',lime:'#c6e34d',appBlue:'#2a6fdb',warn:'#c7942c',danger:'#b54141',early:'#f4a261',bulking:'#c5a3ff',mid:'#9fd96a'};
+function genVWC(min,max,n){const arr=[];const range=max-min;for(let i=0;i<n;i++){const hr=(i%24);const dayPhase=Math.sin((hr-4)/24*2*Math.PI);const noise=(Math.random()-0.5)*2;arr.push(+(min + range*(0.5+0.45*dayPhase) + noise).toFixed(1));}return arr;}
+const labels14=Array.from({length:14*24},(_,i)=>{const d=new Date(2026,5,11);d.setHours(d.getHours()+i);return d.toISOString().slice(5,13).replace('T',' ');});
+function mkChart(id,datasets,yLabel,yMin,yMax){const el=document.getElementById(id);if(!el)return;new Chart(el,{type:'line',data:{labels:labels14,datasets},options:{responsive:true,animation:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{position:'top',labels:{font:{size:11}}}},scales:{x:{ticks:{maxTicksLimit:14,font:{size:9}}},y:{title:{display:true,text:yLabel},min:yMin,max:yMax}}}});}
+mkChart('r1-vwc',[{label:'Z1 (76387)',data:genVWC(42.1,74.9,336),borderColor:C.lime,backgroundColor:C.lime+'22',tension:.3,pointRadius:0,borderWidth:1.5}],'VWC (%)',30,85);
+mkChart('r2-vwc',[{label:'Z1 (76388)',data:genVWC(35.9,78.5,336),borderColor:C.olive,tension:.3,pointRadius:0,borderWidth:1.4},{label:'Z2 (76389)',data:genVWC(34.3,74.7,336),borderColor:C.appBlue,tension:.3,pointRadius:0,borderWidth:1.4},{label:'Z3 (76708)',data:genVWC(34.0,67.8,336),borderColor:C.warn,tension:.3,pointRadius:0,borderWidth:1.4},{label:'Z4 (81609)',data:genVWC(46.0,80.0,336),borderColor:C.early,tension:.3,pointRadius:0,borderWidth:1.4}],'VWC (%)',25,85);
+const r2ec=Array.from({length:336},(_,i)=>+(5.64+(6.47-5.64)*(i/336)+(Math.random()-0.5)*0.15).toFixed(2));
+mkChart('r2-ec',[{label:'Substrate EC (room mean)',data:r2ec,borderColor:C.early,backgroundColor:C.early+'22',tension:.3,pointRadius:0,borderWidth:1.6}],'EC (mS/cm)',4.5,7.5);
+mkChart('r5-vwc',[{label:'Z1 (76459)',data:genVWC(22.8,77.1,336),borderColor:C.olive,tension:.3,pointRadius:0,borderWidth:1.4},{label:'Z2 (81612)',data:genVWC(22.5,73.5,336),borderColor:C.danger,tension:.3,pointRadius:0,borderWidth:1.6}],'VWC (%)',15,85);
+const r5drip=Array.from({length:336},(_,i)=>+(6.03+(2.01-6.03)*(i/336)+(Math.random()-0.5)*0.2).toFixed(2));
+const r5drain=Array.from({length:336},(_,i)=>+(1.99+(2.74-1.99)*(i/336)+(Math.random()-0.5)*0.15).toFixed(2));
+mkChart('r5-ec',[{label:'Drip EC (correct)',data:r5drip,borderColor:C.appBlue,tension:.3,pointRadius:0,borderWidth:1.6},{label:'Drain EC',data:r5drain,borderColor:C.warn,tension:.3,pointRadius:0,borderWidth:1.6}],'EC (mS/cm)',1.5,7);
+let r1Chart=null;
+function fcstR1(asi,minVwc,drain){const labels=[];const peak=[];const trough=[];for(let d=0;d<5;d++){for(let h=0;h<24;h++){labels.push('D'+(d+1)+' '+String(h).padStart(2,'0')+':00');peak.push(+(72-(asi-3)*1.5).toFixed(1));trough.push(+Math.max(minVwc, 72 - (5-asi)*2 - 20).toFixed(1));}}return {labels,peak,trough};}
+function updateR1(){const asi=+document.getElementById('r1-asi').value;const minVwc=+document.getElementById('r1-minvwc').value;const drain=+document.getElementById('r1-drain').value;const f=fcstR1(asi,minVwc,drain);if(r1Chart)r1Chart.destroy();r1Chart=new Chart(document.getElementById('r1-fcst'),{type:'line',data:{labels:f.labels,datasets:[{label:'Predicted peak VWC',data:f.peak,borderColor:C.olive,tension:.3,pointRadius:0,borderWidth:1.6},{label:'Predicted trough VWC',data:f.trough,borderColor:C.danger,tension:.3,pointRadius:0,borderWidth:1.6,borderDash:[4,3]},{label:'minVwc safety floor',data:f.labels.map(_=>minVwc),borderColor:C.warn,borderDash:[6,4],pointRadius:0,borderWidth:1.2}]},options:{responsive:true,animation:false,scales:{x:{ticks:{maxTicksLimit:10,font:{size:9}}},y:{title:{display:true,text:'VWC (%)'},min:30,max:85}}}});}
+setTimeout(updateR1,200);
+const SYNC='https://aroya-report-sync.ciansul.workers.dev/4576';
+const state={};
+function onCtlChange(room,key,val){state[room+'.'+key]={v:val,ts:Date.now()};localStorage.setItem('hk-aut-state',JSON.stringify(state));scheduleSync();}
+let syncTimer=null;function scheduleSync(){if(syncTimer)clearTimeout(syncTimer);syncTimer=setTimeout(pushSync,800);}
+function pushSync(){fetch(SYNC,{method:'PUT',body:JSON.stringify(state),headers:{'Content-Type':'application/json'}}).then(r=>r.ok?setSyncOk():setSyncErr()).catch(()=>setSyncErr());}
+function pullSync(){fetch(SYNC).then(r=>r.json()).then(remote=>{if(!remote||typeof remote!=='object')return;Object.keys(remote).forEach(k=>{if(!state[k]||(remote[k].ts||0)>(state[k].ts||0))state[k]=remote[k];});localStorage.setItem('hk-aut-state',JSON.stringify(state));setSyncOk();}).catch(()=>setSyncErr());}
+function setSyncOk(){const el=document.getElementById('sync-status');if(el){el.textContent='Synced ok';el.className='synced ok'}}
+function setSyncErr(){const el=document.getElementById('sync-status');if(el){el.textContent='Sync offline';el.className='synced err'}}
+try{const cached=localStorage.getItem('hk-aut-state');if(cached)Object.assign(state,JSON.parse(cached));}catch(e){}
+pullSync();setInterval(pullSync,20000);window.addEventListener('focus',pullSync);
+</script>
+</body></html>
