@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <title>Palladium · Wirepas Mesh &amp; Device Health · 2026-06-25</title>
+  <style>
+:root {
+  --olive: #6e8c4a; --lime: #b9d24a; --app-blue: #3a6a8a; --attention: #c97e00;
+  --crit: #b3261e; --ink: #1a1a1a; --muted: #6b7280; --line: #e5e7eb;
+  --bg: #fafaf7; --card: #ffffff; --ok: #5b8c5a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, "Segoe UI", Roboto, ui-sans-serif, sans-serif; overflow-wrap: break-word; }
+body { line-height: 1.5; -webkit-text-size-adjust: 100%; max-width: 100%; overflow-x: hidden; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px 80px; }
+.mast { display: flex; align-items: center; gap: 14px; padding: 12px 0 8px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+.mast svg { width: 80px; height: auto; fill: var(--olive); }
+.mast .mast-label { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
+.mast .mast-label b { color: var(--ink); }
+h1 { font-size: 28px; margin: 0 0 8px; line-height: 1.15; overflow-wrap: break-word; }
+.sub { color: var(--muted); margin: 0 0 18px; max-width: 60ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+.meta b { color: var(--ink); margin-right: 6px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 18px 0 24px; }
+.kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 14px 12px; }
+.kpi.emp { border-color: var(--crit); background: #b3261e0a; }
+.kpi.warn { border-color: var(--attention); background: #c97e0008; }
+.kpi-v { font-size: 26px; font-weight: 700; line-height: 1.1; color: var(--ink); }
+.kpi-l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+.kpi-s { font-size: 11px; color: var(--muted); margin-top: 2px; }
+section { margin: 32px 0; }
+section h2 { font-size: 18px; margin: 0 0 12px; padding-top: 16px; border-top: 1px solid var(--line); overflow-wrap: break-word; }
+section h2 .small { font-size: 12px; color: var(--muted); font-weight: 500; margin-left: 8px; }
+ul.exec { padding-left: 20px; margin: 0 0 16px; }
+ul.exec li { margin: 8px 0; }
+.callout { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--app-blue); border-radius: 8px; padding: 14px 16px; margin: 18px 0; font-size: 14px; color: var(--ink); }
+.callout b { color: var(--app-blue); }
+.callout.danger { border-left-color: var(--crit); background: #b3261e08; }
+.callout.danger b { color: var(--crit); }
+.pill { display: inline-block; padding: 2px 8px; font-size: 11px; font-weight: 600; border-radius: 999px; border: 1px solid; letter-spacing: 0.02em; white-space: nowrap; }
+.gw-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.gw-card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+.gw-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.gw-ser { font-weight: 700; font-family: ui-monospace, monospace; font-size: 14px; }
+.gw-meta { color: var(--muted); font-size: 11px; margin-top: 2px; }
+.gw-stats { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 12px; color: var(--muted); margin: 8px 0; }
+.gw-stats b { color: var(--ink); font-size: 16px; }
+.gw-hops { font-size: 11px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 8px; }
+.map-wrap { margin: 12px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.map-caption { font-size: 11px; color: var(--muted); margin: -4px 0 12px; }
+.room-block { background: var(--card); border: 1px solid var(--line); border-radius: 10px; margin: 10px 0; padding: 10px 14px; }
+.room-block summary { cursor: pointer; padding: 6px 0; font-size: 14px; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 8px; }
+.dev-tbl { width: 100%; min-width: 720px; border-collapse: collapse; font-size: 12px; font-family: ui-monospace, monospace; }
+.dev-tbl th, .dev-tbl td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+.dev-tbl th { background: #f6f6f3; font-weight: 600; font-size: 11px; }
+.dev-tbl tr.sev-crit td { background: #b3261e08; }
+.dev-tbl tr.sev-warn td { background: #c97e0008; }
+.dev-tbl td.flags { font-size: 10px; color: var(--muted); }
+.rec { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px; margin: 12px 0; }
+.rec-p0 { border-left: 4px solid var(--crit); }
+.rec-p1 { border-left: 4px solid var(--attention); }
+.rec-p2 { border-left: 4px solid var(--app-blue); }
+.rec-p3 { border-left: 4px solid var(--olive); }
+.rec-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.rec-cat { font-weight: 600; letter-spacing: 0.04em; }
+.rec-meta { margin-left: auto; }
+.rec-title { font-size: 15px; margin: 4px 0 10px; line-height: 1.3; }
+.rec-row { display: grid; grid-template-columns: 110px 1fr; gap: 12px; margin: 6px 0; font-size: 13px; }
+.rec-row b { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 2px; }
+.rec-row .exp { color: var(--olive); font-weight: 500; }
+.muted { color: var(--muted); }
+ol.plan { list-style: none; padding: 0; margin: 8px 0; }
+ol.plan li { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; margin: 6px 0; font-size: 13px; flex-wrap: wrap; }
+ol.plan .seq { font-family: ui-monospace, monospace; font-weight: 700; color: var(--muted); width: 32px; }
+ol.plan .plan-title { flex: 1; min-width: 200px; }
+ol.plan .plan-tags { font-size: 11px; color: var(--muted); }
+@media (max-width: 640px) {
+  .wrap { padding: 16px 12px 60px; }
+  h1 { font-size: 22px; }
+  .kpis { grid-template-columns: 1fr 1fr; }
+  .kpi-v { font-size: 22px; }
+  .gw-grid { grid-template-columns: 1fr; }
+  .rec-row { grid-template-columns: 1fr; gap: 4px; }
+  .rec-row b { padding-top: 0; }
+  ol.plan li { font-size: 12px; padding: 8px 10px; }
+}
+footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1px solid var(--line); margin-top: 40px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <svg version="1.1" viewBox="0 0 202.1 75" id="brand" xmlns="http://www.w3.org/2000/svg">
+<path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/>
+<path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/>
+<path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/>
+<path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/>
+<path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/>
+<rect x="127.4" y="57.2" width="1.8" height="9.9"/>
+<path d="M138,62.8c0,2.1-.9,3.1-2.6,3.1s-.7,0-1,0c-.3-.1-.5-.3-.8-.5-.2-.2-.3-.4-.4-.6-.1-.2-.2-.5-.2-.7v-6.8h-1.9v7.2c0,.3.1.7.2,1,0,.4.3.6.5.9.4.3.8.6,1.3.8s1.1.3,1.8.2c.7,0,1.4-.1,1.9-.4s.9-.7,1.2-1.3v1.5h1.8v-9.9h-1.8v5.6Z"/>
+<path d="M152.7,57c-.6,0-1,.1-1.4.2-.4.1-.7.3-1,.6-.2.2-.4.4-.6.6s-.3.5-.4.7c-.2-.7-.6-1.2-1.2-1.6-.5-.4-1.2-.6-2-.6s-1.7.3-2.3.8c-.3.3-.6.6-.7,1v-1.5h-1.6v9.9h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6.1.2.1.5.2.7v6.8h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6,0,.2.1.5.1.7v6.8h1.8v-6.4c0-1.2-.3-2.2-.9-2.8-.6-.6-1.4-.9-2.6-.9Z"/>
+<path d="M112.7,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.3.8-.5,1.7-.5,2.8s.2,1.9.6,2.7c.4.8.9,1.4,1.6,1.8.7.4,1.5.6,2.4.6s1.3-.1,1.8-.4,1-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM112.1,65c-.5.6-1.2,1-2.1,1s-1.3-.2-1.8-.5c-.5-.3-.8-.7-1-1.3-.2-.6-.3-1.2-.3-2.1,0-1.3.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.5.6.7,1.5.7,2.7s-.2,2.2-.7,2.8Z"/>
+<rect x="127.4" y="53.2" width="1.8" height="1.8"/>
+<path d="M123.8,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.4.8-.6,1.6-.6,2.7s.2,2,.6,2.8c.4.8.9,1.4,1.6,1.8.7.5,1.4.7,2.5.6.7,0,1.3-.1,1.8-.4s.9-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM123,65c-.5.6-1.2,1-2.1,1s-1.4-.2-1.8-.5c-.4-.3-.7-.7-.9-1.3-.2-.6-.3-1.3-.3-2.1,0-1.2.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.4.7.6,1.6.6,2.7s-.2,2.2-.7,2.8Z"/>
+<path d="M97.7,53.2l-5.5,13.9h1.9l1.5-4.2h5.9l1.6,4.2h1.9l-5.4-13.9h-1.9ZM96.2,61.4l1.6-4.2c.4-.9.6-1.7.8-2.2.3.8.6,1.5.8,2.2l1.6,4.2h-4.8Z"/>
+<path d="M85.4,62.4c-.2.7-.5,1.6-.9,2.6-.4-1.1-.6-2-.9-2.6l-1.9-5.3h-1.9l3.9,9.8c-.3.6-.5,1.1-.6,1.4,0,.3-.3.5-.5.7-.2.2-.4.3-.6.3-.4,0-.8-.1-1.2-.2v1.6c.5.1,1,.2,1.5.2s.8,0,1.2-.3c.3-.2.6-.5.9-1,.3-.4.5-1,.8-1.8l4-10.8h-1.9l-1.9,5.4Z"/>
+<path d="M77.5,57.5c-.7-.4-1.5-.7-2.3-.7-1.4,0-2.4.5-3.2,1.6v-5.3h-1.8v13.9h1.8v-1.4c.4.5.8.9,1.4,1.2.5.3,1.1.4,1.8.4s1.7-.2,2.3-.6c.7-.4,1.2-1,1.6-1.8.4-.8.6-1.7.6-2.8s-.2-1.9-.6-2.7c-.4-.8-.9-1.4-1.6-1.8ZM77.5,64.1c-.2.6-.5,1-.9,1.3-.4.3-1,.5-1.8.5s-1.7-.3-2.1-1c-.5-.6-.7-1.6-.7-2.8s.2-2,.6-2.8c.3-.7,1.1-1.1,2.2-1.1s1.8.3,2.3,1c.5.6.7,1.6.7,2.8s0,1.5-.3,2.1Z"/>
+<path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z"/>
+</svg>
+  <div class="mast-label">
+    <b>by Addium</b><br>
+    Wirepas mesh &amp; device health · Palladium · 2026-06-25
+  </div>
+</header>
+
+<h1>Palladium · Wirepas Mesh &amp; Device Health</h1>
+<p class="sub">Live snapshot of every AROYA device at the facility — mesh parent linkages, child-slot saturation against the Wirepas 13-child rule, RSSI / link quality / battery health, and a prioritized remediation plan.</p>
+
+<div class="meta">
+  <span><b>Facility</b>Palladium (4699)</span>
+  <span><b>Pulled</b>2026-06-25 19:24 UTC</span>
+  <span><b>Source</b>AROYA SPA /devices/?facility=4699</span>
+  <span><b>Rooms</b>10 flower rooms, 51 zones</span>
+</div>
+
+<section>
+  <h2>Executive summary</h2>
+  <ul class="exec"><li><b>Wirepas 13-child slot limit is breached on 1 parent</b> at this facility. The worst-loaded parent is <b>H2200001022</b> (sink) carrying <b>14 children</b> — <b>1 over</b> the 13-slot limit. Total excess load across all over-subscribed parents: <b>1 children</b>. Each over-13 child contends for a slot that doesn't exist — devices either get pushed to a worse parent (extra hops, weaker signal) or fail to keep their slot, producing the data-gap pattern operators see.</li><li><b>1 of 2 gateways are OFFLINE</b> (H2200001029). With 2 gateways planned for redundancy at Palladium, losing one cuts mesh fail-over headroom in half. This is the single highest-leverage fix in the plan.</li><li><b>1 room (Room 8) has zero AROYA radios deployed</b>. Either physically empty / in build-out, or device assignments were dropped. Confirm with operator before next batch flip into those rooms.</li><li>2 rooms running with ≥50% of radios offline: <b>Room 9</b> (4/6 dark), <b>Room 10</b> (6/8 dark). Substrate VWC + climate data is degraded in these rooms, so AROYA crop-steering recommendations cannot be trusted there until restored.</li><li><b>Battery health is excellent</b>: every battery-powered radio is reporting ≥99% (recent deployment, fresh Li-SOCl₂ cells). No battery-driven dropouts expected for ~5 years on current cells.</li></ul>
+</section>
+
+<section>
+  <h2>13-child slot rule <span class="small">why this is the load-bearing metric</span></h2>
+  <div class="callout danger">
+    Each parent node in the Wirepas mesh — gateway sink or relay — supports at most <b>13 DIRECT children</b>.
+    <b>Grandchildren count against their immediate parent's slots, NOT against the grandparent's.</b>
+    Mid-layer relays can be saturated even when the gateway above them has plenty of headroom — so
+    saturation has to be checked at <b>every</b> level of the topology, not just gateway-level.
+    Once a parent crosses 13, additional devices either fail to join, get pushed to a worse parent
+    at higher hop count, or thrash between slots — producing the long travel times, retries, and
+    growing data gaps operators see.
+    <br><br>
+    <b>Dash-2 dedup:</b> two AROYA serials sharing the same base number where one has a
+    <code>-2</code> suffix (e.g. <code>H3440017858</code> and <code>H3440017858-2</code>) are ONE
+    radio with two sensor heads, not two mesh nodes. They fill <b>one</b> slot on their parent.
+    This report deduplicates by base serial before counting — counts are per <b>unique radio</b>,
+    not per raw serial. (52 duplicate sensor-head entries collapsed for this facility.)
+    <br><br>
+    Counts are per-immediate-parent: <code>n_children(P) = unique base serials whose nextHop == P</code>.
+    <br><br>
+    <b>🟢 ≤10 children</b> headroom · <b>🟠 11–12</b> near saturation · <b>🔴 13</b> at limit ·
+    <b>🔴🔴 &gt;13</b> over-subscribed (orphaned devices &amp; multi-hop spillover).
+  </div>
+</section>
+
+<section>
+  <h2>Mesh health KPIs</h2>
+  <div class="kpis">
+<div class="kpi">
+  <div class="kpi-v">76</div>
+  <div class="kpi-l">Unique radios</div>
+  <div class="kpi-s">128 raw serials, −52 dash-2 dedup</div>
+</div>
+<div class="kpi emp">
+  <div class="kpi-v">56</div>
+  <div class="kpi-l">Online</div>
+  <div class="kpi-s">74% · 20 offline</div>
+</div>
+<div class="kpi emp">
+  <div class="kpi-v">1/2</div>
+  <div class="kpi-l">Gateways</div>
+  <div class="kpi-s">1 offline</div>
+</div>
+<div class="kpi emp">
+  <div class="kpi-v">1</div>
+  <div class="kpi-l">Parents over 13</div>
+  <div class="kpi-s">Wirepas 13-child limit</div>
+</div>
+<div class="kpi warn">
+  <div class="kpi-v">1</div>
+  <div class="kpi-l">Parents 11–13</div>
+  <div class="kpi-s">watch tier (no headroom)</div>
+</div>
+<div class="kpi emp">
+  <div class="kpi-v">1</div>
+  <div class="kpi-l">Excess children</div>
+  <div class="kpi-s">over 13-slot budget</div>
+</div>
+<div class="kpi emp">
+  <div class="kpi-v">9/10</div>
+  <div class="kpi-l">Rooms instrumented</div>
+  <div class="kpi-s">Room 8 dark</div>
+</div>
+<div class="kpi">
+  <div class="kpi-v">56/56</div>
+  <div class="kpi-l">Batteries ≥ 99%</div>
+  <div class="kpi-s">recent deploy — fresh cells</div>
+</div>
+</div>
+</section>
+
+<section>
+  <h2>Per-gateway summary <span class="small">2 gateways · saturation tier checked at the sink</span></h2>
+  <div class="gw-grid"><div class="gw-card" style="border-left:4px solid #b3261e">
+  <div class="gw-head">
+    <div>
+      <div class="gw-ser">H2200001022</div>
+      <div class="gw-meta">id 219837 · ggVersion 2 · WP5 · online</div>
+    </div>
+    <div><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">🔴🔴&nbsp;14/13 · Over-subscribed (+1)</span></div>
+  </div>
+  <div class="gw-stats">
+    <div><b>14</b> hop-1 children</div>
+    <div><b>73</b> total radios in tree</div>
+    <div><b>55/73</b> online</div>
+  </div>
+  <div class="gw-hops">Sink id 219836 (hop-0 anchor). Saturation tier checked at the sink, not the gateway itself.</div>
+</div><div class="gw-card" style="border-left:4px solid #b3261e">
+  <div class="gw-head">
+    <div>
+      <div class="gw-ser">H2200001029 <span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">OFFLINE</span></div>
+      <div class="gw-meta">id 219853 · ggVersion 2 · WP5 · OFFLINE · last comm 444h ago</div>
+    </div>
+    <div><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">🟢&nbsp;1/13</span></div>
+  </div>
+  <div class="gw-stats">
+    <div><b>1</b> hop-1 children</div>
+    <div><b>1</b> total radios in tree</div>
+    <div><b>0/1</b> online</div>
+  </div>
+  <div class="gw-hops">Sink id 219852 (hop-0 anchor). Saturation tier checked at the sink, not the gateway itself.</div>
+</div></div>
+</section>
+
+<section>
+  <h2>Mesh topology tree</h2>
+  <div class="map-wrap"><svg viewBox="0 0 1080 624" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto;background:#fff;border:1px solid #e5e7eb;border-radius:8px"><rect x="20" y="20" width="500" height="44" fill="#fff" stroke="#5b8c5a" stroke-width="2" rx="6"/><text x="32" y="40" font-family="ui-monospace,monospace" font-size="13" font-weight="700">H2200001022</text><text x="32" y="56" font-family="ui-monospace,monospace" font-size="10" fill="#6b7280">gateway · ONLINE</text><rect x="20" y="76" width="500" height="38" fill="#b3261e1a" stroke="#b3261e" stroke-width="2" rx="6"/><text x="32" y="96" font-family="-apple-system,sans-serif" font-size="12" font-weight="600">SINK (anchor)</text><text x="32" y="110" font-family="-apple-system,sans-serif" font-size="11" fill="#b3261e">🔴🔴 14/13 · Over-subscribed (+1)</text><line x1="50" y1="114" x2="50" y2="138" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="142" x2="70" y2="142" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="130" width="450" height="24" fill="#fff" stroke="#b3261e" stroke-width="1" rx="4"/><circle cx="82" cy="142" r="4" fill="#b3261e"/><text x="92" y="146" font-family="ui-monospace,monospace" font-size="10">H3440017869 · node</text><line x1="50" y1="114" x2="50" y2="170" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="174" x2="70" y2="174" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="162" width="450" height="24" fill="#fff" stroke="#b3261e" stroke-width="1" rx="4"/><circle cx="82" cy="174" r="4" fill="#b3261e"/><text x="92" y="178" font-family="ui-monospace,monospace" font-size="10">H3440017870 · node</text><line x1="50" y1="114" x2="50" y2="202" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="206" x2="70" y2="206" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="194" width="450" height="24" fill="#fff" stroke="#5b8c5a" stroke-width="1" rx="4"/><circle cx="82" cy="206" r="4" fill="#5b8c5a"/><text x="92" y="210" font-family="ui-monospace,monospace" font-size="10">H3440017871 · node</text><line x1="50" y1="114" x2="50" y2="234" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="238" x2="70" y2="238" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="226" width="450" height="24" fill="#fff" stroke="#b3261e" stroke-width="1" rx="4"/><circle cx="82" cy="238" r="4" fill="#b3261e"/><text x="92" y="242" font-family="ui-monospace,monospace" font-size="10">H3440017873 · node</text><line x1="50" y1="114" x2="50" y2="266" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="270" x2="70" y2="270" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="258" width="450" height="24" fill="#fff" stroke="#5b8c5a" stroke-width="1" rx="4"/><circle cx="82" cy="270" r="4" fill="#5b8c5a"/><text x="92" y="274" font-family="ui-monospace,monospace" font-size="10">H3440017874 · node</text><line x1="50" y1="114" x2="50" y2="298" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="302" x2="70" y2="302" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="290" width="450" height="24" fill="#fff" stroke="#5b8c5a" stroke-width="1" rx="4"/><circle cx="82" cy="302" r="4" fill="#5b8c5a"/><text x="92" y="306" font-family="ui-monospace,monospace" font-size="10">H3440017875 · node</text><line x1="50" y1="114" x2="50" y2="330" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="334" x2="70" y2="334" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="322" width="450" height="24" fill="#fff" stroke="#b3261e" stroke-width="1" rx="4"/><circle cx="82" cy="334" r="4" fill="#b3261e"/><text x="92" y="338" font-family="ui-monospace,monospace" font-size="10">H3440017877 · node</text><line x1="50" y1="114" x2="50" y2="362" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="366" x2="70" y2="366" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="354" width="450" height="24" fill="#fff" stroke="#b3261e" stroke-width="1" rx="4"/><circle cx="82" cy="366" r="4" fill="#b3261e"/><text x="92" y="370" font-family="ui-monospace,monospace" font-size="10">H3440017878 · node</text><line x1="50" y1="114" x2="50" y2="394" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="398" x2="70" y2="398" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="386" width="450" height="24" fill="#fff" stroke="#5b8c5a" stroke-width="1" rx="4"/><circle cx="82" cy="398" r="4" fill="#5b8c5a"/><text x="92" y="402" font-family="ui-monospace,monospace" font-size="10">H3440017924 · node</text><line x1="50" y1="114" x2="50" y2="426" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="430" x2="70" y2="430" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="418" width="450" height="24" fill="#fff" stroke="#5b8c5a" stroke-width="1" rx="4"/><circle cx="82" cy="430" r="4" fill="#5b8c5a"/><text x="92" y="434" font-family="ui-monospace,monospace" font-size="10">H3440017926 · node</text><line x1="50" y1="114" x2="50" y2="458" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="462" x2="70" y2="462" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="450" width="450" height="24" fill="#fff" stroke="#5b8c5a" stroke-width="1" rx="4"/><circle cx="82" cy="462" r="4" fill="#5b8c5a"/><text x="92" y="466" font-family="ui-monospace,monospace" font-size="10">H3440017931 · node</text><line x1="50" y1="114" x2="50" y2="490" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="494" x2="70" y2="494" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="482" width="450" height="24" fill="#fff" stroke="#5b8c5a" stroke-width="1" rx="4"/><circle cx="82" cy="494" r="4" fill="#5b8c5a"/><text x="92" y="498" font-family="ui-monospace,monospace" font-size="10">H3440017934 · node · 1 kids</text><line x1="50" y1="114" x2="50" y2="522" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="526" x2="70" y2="526" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="514" width="450" height="24" fill="#fff" stroke="#5b8c5a" stroke-width="1" rx="4"/><circle cx="82" cy="526" r="4" fill="#5b8c5a"/><text x="92" y="530" font-family="ui-monospace,monospace" font-size="10">H4210006601 · h421 · 6 kids</text><line x1="50" y1="114" x2="50" y2="554" stroke="#cbd5e1" stroke-width="1"/><line x1="50" y1="558" x2="70" y2="558" stroke="#cbd5e1" stroke-width="1"/><rect x="70" y="546" width="450" height="24" fill="#fff" stroke="#5b8c5a" stroke-width="1" rx="4"/><circle cx="82" cy="558" r="4" fill="#5b8c5a"/><text x="92" y="562" font-family="ui-monospace,monospace" font-size="10">H4210006604 · h421 · 7 kids</text><rect x="540" y="20" width="500" height="44" fill="#fff" stroke="#b3261e" stroke-width="2" rx="6"/><text x="552" y="40" font-family="ui-monospace,monospace" font-size="13" font-weight="700">H2200001029</text><text x="552" y="56" font-family="ui-monospace,monospace" font-size="10" fill="#6b7280">gateway · OFFLINE</text><rect x="540" y="76" width="500" height="38" fill="#5b8c5a1a" stroke="#5b8c5a" stroke-width="2" rx="6"/><text x="552" y="96" font-family="-apple-system,sans-serif" font-size="12" font-weight="600">SINK (anchor)</text><text x="552" y="110" font-family="-apple-system,sans-serif" font-size="11" fill="#5b8c5a">🟢 1/13</text><line x1="570" y1="114" x2="570" y2="138" stroke="#cbd5e1" stroke-width="1"/><line x1="570" y1="142" x2="590" y2="142" stroke="#cbd5e1" stroke-width="1"/><rect x="590" y="130" width="450" height="24" fill="#fff" stroke="#b3261e" stroke-width="1" rx="4"/><circle cx="602" cy="142" r="4" fill="#b3261e"/><text x="612" y="146" font-family="ui-monospace,monospace" font-size="10">H4210006593 · h421</text></svg></div>
+  <div class="map-caption">Each column is one gateway. Sink box color = 13-child saturation tier. Children listed in sort order; numbers next to a child = its own child count (it's a relay). Capped at 30 children per gateway for legibility.</div>
+</section>
+
+<section>
+  <h2>Telemetry map <span class="small">logical layout — AROYA exposes no spatial coordinates for these devices</span></h2>
+  <div class="map-wrap"><svg viewBox="0 0 1080 520" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto;background:#fff;border:1px solid #e5e7eb;border-radius:8px"><circle cx="360.0" cy="260.0" r="60" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 4"/><circle cx="360.0" cy="260.0" r="110" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 4"/><circle cx="360.0" cy="260.0" r="160" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 4"/><circle cx="360.0" cy="260.0" r="210" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 4"/><circle cx="360.0" cy="260.0" r="22" fill="#b3261e" opacity="0.18"/><circle cx="360.0" cy="260.0" r="14" fill="#b3261e"/><text x="360.0" y="230.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="700">H2200001022</text><text x="360.0" y="298.0" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#b3261e">14 direct kids</text><line x1="360.0" y1="260.0" x2="360.0" y2="150.0" stroke="#5b8c5a" stroke-width="1" opacity="0.5"/><circle cx="360.0" cy="150.0" r="9" fill="#5b8c5a" opacity="0.85"/><text x="360.0" y="153.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#fff" font-weight="700">7</text><line x1="360.0" y1="150.0" x2="360.0" y2="118.0" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="360.0" cy="118.0" r="2.5" fill="#5b8c5a"/><line x1="360.0" y1="150.0" x2="385.01860743897697" y2="130.04832634052053" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="385.01860743897697" cy="130.04832634052053" r="2.5" fill="#5b8c5a"/><line x1="360.0" y1="150.0" x2="391.1976931898184" y2="157.12066988660206" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="391.1976931898184" cy="157.12066988660206" r="2.5" fill="#5b8c5a"/><line x1="360.0" y1="150.0" x2="373.88427965176186" y2="178.8310037728774" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="373.88427965176186" cy="178.8310037728774" r="2.5" fill="#5b8c5a"/><line x1="360.0" y1="150.0" x2="346.11572034823814" y2="178.8310037728774" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="346.11572034823814" cy="178.8310037728774" r="2.5" fill="#5b8c5a"/><line x1="360.0" y1="150.0" x2="328.8023068101816" y2="157.12066988660206" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="328.8023068101816" cy="157.12066988660206" r="2.5" fill="#5b8c5a"/><line x1="360.0" y1="150.0" x2="334.98139256102303" y2="130.04832634052053" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="334.98139256102303" cy="130.04832634052053" r="2.5" fill="#5b8c5a"/><line x1="360.0" y1="260.0" x2="407.72721130293144" y2="160.8934245307339" stroke="#5b8c5a" stroke-width="1" opacity="0.5"/><circle cx="407.72721130293144" cy="160.8934245307339" r="9" fill="#5b8c5a" opacity="0.85"/><text x="407.72721130293144" y="163.8934245307339" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#fff" font-weight="700">6</text><line x1="407.72721130293144" y1="160.8934245307339" x2="416.0094207462121" y2="129.9837980894837" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="416.0094207462121" cy="129.9837980894837" r="2.5" fill="#5b8c5a"/><line x1="407.72721130293144" y1="160.8934245307339" x2="438.6368377441816" y2="152.61121508745325" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="438.6368377441816" cy="152.61121508745325" r="2.5" fill="#5b8c5a"/><line x1="407.72721130293144" y1="160.8934245307339" x2="430.35462830090097" y2="183.52084152870344" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="430.35462830090097" cy="183.52084152870344" r="2.5" fill="#5b8c5a"/><line x1="407.72721130293144" y1="160.8934245307339" x2="399.44500185965074" y2="191.8030509719841" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="399.44500185965074" cy="191.8030509719841" r="2.5" fill="#5b8c5a"/><line x1="407.72721130293144" y1="160.8934245307339" x2="376.81758486168127" y2="169.17563397401457" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="376.81758486168127" cy="169.17563397401457" r="2.5" fill="#5b8c5a"/><line x1="407.72721130293144" y1="160.8934245307339" x2="385.0997943049619" y2="138.26600753276438" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="385.0997943049619" cy="138.26600753276438" r="2.5" fill="#5b8c5a"/><line x1="360.0" y1="260.0" x2="446.0014630714833" y2="191.4161217955393" stroke="#5b8c5a" stroke-width="1" opacity="0.5"/><circle cx="446.0014630714833" cy="191.4161217955393" r="6" fill="#5b8c5a" opacity="0.85"/><text x="446.0014630714833" y="194.4161217955393" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#fff" font-weight="700">1</text><line x1="446.0014630714833" y1="191.4161217955393" x2="462.0014630714833" y2="163.70330887443728" stroke="#5b8c5a" stroke-width="0.6" opacity="0.5"/><circle cx="462.0014630714833" cy="163.70330887443728" r="2.5" fill="#5b8c5a"/><line x1="360.0" y1="260.0" x2="467.2420703400006" y2="235.5226972648054" stroke="#b3261e" stroke-width="1" opacity="0.5"/><circle cx="467.2420703400006" cy="235.5226972648054" r="6" fill="#b3261e" opacity="0.85"/><line x1="360.0" y1="260.0" x2="467.2420703400006" y2="284.4773027351946" stroke="#b3261e" stroke-width="1" opacity="0.5"/><circle cx="467.2420703400006" cy="284.4773027351946" r="6" fill="#b3261e" opacity="0.85"/><line x1="360.0" y1="260.0" x2="446.0014630714833" y2="328.5838782044607" stroke="#5b8c5a" stroke-width="1" opacity="0.5"/><circle cx="446.0014630714833" cy="328.5838782044607" r="6" fill="#5b8c5a" opacity="0.85"/><line x1="360.0" y1="260.0" x2="407.72721130293144" y2="359.1065754692661" stroke="#b3261e" stroke-width="1" opacity="0.5"/><circle cx="407.72721130293144" cy="359.1065754692661" r="6" fill="#b3261e" opacity="0.85"/><line x1="360.0" y1="260.0" x2="360.0" y2="370.0" stroke="#5b8c5a" stroke-width="1" opacity="0.5"/><circle cx="360.0" cy="370.0" r="6" fill="#5b8c5a" opacity="0.85"/><line x1="360.0" y1="260.0" x2="312.2727886970686" y2="359.1065754692661" stroke="#5b8c5a" stroke-width="1" opacity="0.5"/><circle cx="312.2727886970686" cy="359.1065754692661" r="6" fill="#5b8c5a" opacity="0.85"/><line x1="360.0" y1="260.0" x2="273.9985369285167" y2="328.5838782044607" stroke="#b3261e" stroke-width="1" opacity="0.5"/><circle cx="273.9985369285167" cy="328.5838782044607" r="6" fill="#b3261e" opacity="0.85"/><line x1="360.0" y1="260.0" x2="252.75792965999938" y2="284.47730273519454" stroke="#b3261e" stroke-width="1" opacity="0.5"/><circle cx="252.75792965999938" cy="284.47730273519454" r="6" fill="#b3261e" opacity="0.85"/><line x1="360.0" y1="260.0" x2="252.75792965999943" y2="235.52269726480537" stroke="#5b8c5a" stroke-width="1" opacity="0.5"/><circle cx="252.75792965999943" cy="235.52269726480537" r="6" fill="#5b8c5a" opacity="0.85"/><line x1="360.0" y1="260.0" x2="273.9985369285167" y2="191.4161217955393" stroke="#5b8c5a" stroke-width="1" opacity="0.5"/><circle cx="273.9985369285167" cy="191.4161217955393" r="6" fill="#5b8c5a" opacity="0.85"/><line x1="360.0" y1="260.0" x2="312.27278869706856" y2="160.8934245307339" stroke="#5b8c5a" stroke-width="1" opacity="0.5"/><circle cx="312.27278869706856" cy="160.8934245307339" r="6" fill="#5b8c5a" opacity="0.85"/><circle cx="720.0" cy="260.0" r="60" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 4"/><circle cx="720.0" cy="260.0" r="110" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 4"/><circle cx="720.0" cy="260.0" r="160" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 4"/><circle cx="720.0" cy="260.0" r="210" fill="none" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 4"/><circle cx="720.0" cy="260.0" r="22" fill="#b3261e" opacity="0.18"/><circle cx="720.0" cy="260.0" r="14" fill="#b3261e"/><text x="720.0" y="230.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="700">H2200001029</text><text x="720.0" y="298.0" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#b3261e">1 direct kids</text><line x1="720.0" y1="260.0" x2="720.0" y2="150.0" stroke="#b3261e" stroke-width="1" opacity="0.5"/><circle cx="720.0" cy="150.0" r="6" fill="#b3261e" opacity="0.85"/><g font-family="-apple-system,sans-serif" font-size="10"><rect x="14" y="474" width="240" height="36" fill="#fff" stroke="#e5e7eb" rx="4"/><circle cx="26" cy="488" r="5" fill="#5b8c5a"/><text x="38" y="491">online</text><circle cx="98" cy="488" r="5" fill="#b3261e"/><text x="110" y="491">offline</text><circle cx="170" cy="488" r="5" fill="#c97e00"/><text x="182" y="491">11–12 children</text><text x="18" y="504" fill="#6b7280">spoke thickness = saturation tier · ring = hop depth</text></g></svg></div>
+  <div class="map-caption">Hub-and-spoke per gateway. Concentric rings = hop depth. Spoke nodes = direct h421/relay children. Spoke size proportional to grandchild count; small dots = grandchildren clustered around their relay. Color = online/offline status, with saturation tier overlay on relays carrying ≥11 kids.</div>
+</section>
+
+<section>
+  <h2>Per-room device tables</h2>
+  <details class="room-block">
+  <summary><b>Mesh infrastructure</b> · 16 radios · 6/16 online <span class="muted" style="font-size:11px">— gateways, sinks, repeaters not bound to a grow room</span></summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok"><td>H2200001022</td><td>gateway</td><td>●</td><td>—</td><td>—</td><td>—</td><td>WP5</td><td>(root)</td><td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td><td class="flags">gateway</td></tr><tr class="sev-crit"><td>H2200001029</td><td>gateway</td><td>○</td><td>—</td><td>—</td><td>—</td><td>WP5</td><td>(root)</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr><tr class="sev-crit"><td>H3400003318</td><td>repeater</td><td>○</td><td>100</td><td>1</td><td>100</td><td>—</td><td>H4210006891</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr><tr class="sev-crit"><td>H3400003322</td><td>repeater</td><td>○</td><td>100</td><td>4</td><td>100</td><td>—</td><td>H4210006891</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr><tr class="sev-crit"><td>H3400003323</td><td>repeater</td><td>○</td><td>100</td><td>8</td><td>100</td><td>—</td><td>H3440017861</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr><tr class="sev-crit"><td>H3400003324</td><td>repeater</td><td>○</td><td>100</td><td>8</td><td>100</td><td>—</td><td>H3440017861</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr><tr class="sev-crit"><td>H3440017861</td><td>node</td><td>○</td><td>100</td><td>1</td><td>76</td><td>—</td><td>H4210006595</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr><tr class="sev-ok"><td>H3440017871</td><td>node</td><td>●</td><td>100</td><td>1</td><td>100</td><td>—</td><td>sink/H2200001022</td><td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td><td class="flags">node</td></tr><tr class="sev-ok"><td>H3440017875</td><td>node</td><td>●</td><td>100</td><td>2</td><td>100</td><td>—</td><td>sink/H2200001022</td><td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td><td class="flags">node</td></tr><tr class="sev-crit"><td>H3440017917</td><td>node</td><td>○</td><td>100</td><td>1</td><td>100</td><td>—</td><td>H4210006891</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr><tr class="sev-crit"><td>H3440017918</td><td>node</td><td>○</td><td>100</td><td>8</td><td>100</td><td>—</td><td>H3440017861</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr><tr class="sev-crit"><td>H3440017919</td><td>node</td><td>○</td><td>100</td><td>8</td><td>100</td><td>—</td><td>H3440017861</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr><tr class="sev-ok"><td>H3440017925</td><td>node</td><td>●</td><td>100</td><td>5</td><td>100</td><td>—</td><td>H4210006899</td><td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td><td class="flags">node</td></tr><tr class="sev-ok"><td>H3440017934</td><td>node</td><td>●</td><td>100</td><td>1</td><td>91</td><td>—</td><td>sink/H2200001022</td><td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td><td class="flags">node</td></tr><tr class="sev-ok"><td>H3440017938</td><td>node</td><td>●</td><td>100</td><td>2</td><td>100</td><td>—</td><td>H4210006592</td><td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td><td class="flags">node</td></tr><tr class="sev-crit"><td>H4210006593</td><td>h421</td><td>○</td><td>—</td><td>5</td><td>100</td><td>—</td><td>sink/H2200001029</td><td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td><td class="flags">offline</td></tr></tbody>
+  </table></div>
+</details><details class="room-block" >
+  <summary><b>Room 1</b> · 7 radios · 7/7 online</summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok">
+  <td>H3440017867</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006604</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017872</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>8</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H3440017934</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017874</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>1</td>
+  <td>96</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017879</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006601</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017931</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>1</td>
+  <td>91</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006600</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006601</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006601</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>1</td>
+  <td>96</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr></tbody>
+  </table></div>
+</details><details class="room-block" >
+  <summary><b>Room 2</b> · 8 radios · 8/8 online</summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok">
+  <td>H3440017914</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>3</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006601</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017915</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>5</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006601</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017921</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>5</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006604</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017922</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>3</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006604</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017924</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>1</td>
+  <td>100</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017932</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>6</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006597</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006597</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006604</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr></tbody>
+  </table></div>
+</details><details class="room-block" >
+  <summary><b>Room 3</b> · 8 radios · 8/8 online</summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok">
+  <td>H3440017910</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>1</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006902</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017912</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006601</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017916</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>1</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017923</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>3</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017926</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017927</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>3</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006604</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006896</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>3</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006905</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>3</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006896</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr></tbody>
+  </table></div>
+</details><details class="room-block" >
+  <summary><b>Room 4</b> · 8 radios · 8/8 online</summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok">
+  <td>H3440017859</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>3</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017862</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>5</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017863</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>4</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017864</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>2</td>
+  <td>96</td>
+  <td>—</td>
+  <td>H4210006595</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017865</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>1</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006604</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017868</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>3</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006899</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>1</td>
+  <td>95</td>
+  <td>—</td>
+  <td>H4210006604</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006902</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006604</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr></tbody>
+  </table></div>
+</details><details class="room-block" >
+  <summary><b>Room 5</b> · 7 radios · 7/7 online</summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok">
+  <td>H3440017911</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>4</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006599</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017929</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017933</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006896</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017935</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017937</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>7</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006595</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006595</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>1</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006902</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006599</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>2</td>
+  <td>98</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr></tbody>
+  </table></div>
+</details><details class="room-block" >
+  <summary><b>Room 6</b> · 7 radios · 7/7 online</summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok">
+  <td>H3440017913</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>3</td>
+  <td>99</td>
+  <td>—</td>
+  <td>H4210006595</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017928</td><td>node</td>
+  <td>●</td>
+  <td>99</td>
+  <td>1</td>
+  <td>97</td>
+  <td>—</td>
+  <td>H4210006599</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017930</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>1</td>
+  <td>98</td>
+  <td>—</td>
+  <td>H4210006599</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017936</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>5</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006592</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H3440017939</td><td>node</td>
+  <td>●</td>
+  <td>100</td>
+  <td>4</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006595</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006592</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>2</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006902</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006598</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>1</td>
+  <td>98</td>
+  <td>—</td>
+  <td>H4210006899</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr></tbody>
+  </table></div>
+</details><details class="room-block" >
+  <summary><b>Room 7</b> · 1 radios · 1/1 online</summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok">
+  <td>H4210006908</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>1</td>
+  <td>78</td>
+  <td>—</td>
+  <td>H4210006601</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr></tbody>
+  </table></div>
+</details><details class="room-block" open>
+  <summary><b>Room 8</b> · <span style="color:#b3261e">0 devices</span> — NO instrumentation</summary>
+  <div style="padding:10px 0;color:#6b7280;font-size:13px">This room has zero AROYA radios assigned to it. Either physically empty (no plants), in build-out, or device assignment in AROYA is missing.</div>
+</details><details class="room-block" open>
+  <summary><b>Room 9</b> · 6 radios · 2/6 online · <span style="color:#b3261e">4 crit</span></summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok">
+  <td>H4210006596</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>1</td>
+  <td>89</td>
+  <td>—</td>
+  <td>H4210006891</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006602</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>1</td>
+  <td>96</td>
+  <td>—</td>
+  <td>H4210006908</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-crit">
+  <td>H3440017858</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>4</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006891</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr><tr class="sev-crit">
+  <td>H3440017860</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>3</td>
+  <td>98</td>
+  <td>—</td>
+  <td>H4210006891</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr><tr class="sev-crit">
+  <td>H3440017866</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>1</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006891</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr><tr class="sev-crit">
+  <td>H3440017920</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>1</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006891</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr></tbody>
+  </table></div>
+</details><details class="room-block" open>
+  <summary><b>Room 10</b> · 8 radios · 2/8 online · <span style="color:#b3261e">6 crit</span></summary>
+  <div class="table-wrap"><table class="dev-tbl">
+    <thead><tr><th>Serial (base)</th><th>Model</th><th>On</th><th>Bat%</th><th>RSSI</th><th>LinkQ%</th><th>FW</th><th>Parent</th><th>State</th><th>Flags</th></tr></thead>
+    <tbody><tr class="sev-ok">
+  <td>H4210006603</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>1</td>
+  <td>91</td>
+  <td>—</td>
+  <td>H4210006891</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-ok">
+  <td>H4210006891</td><td>h421</td>
+  <td>●</td>
+  <td>—</td>
+  <td>6</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006908</td>
+  <td><span class="pill" style="background:#5b8c5a1a;color:#5b8c5a;border-color:#5b8c5a55">OK</span></td>
+  <td class="flags">healthy</td>
+</tr><tr class="sev-crit">
+  <td>H3440017869</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>1</td>
+  <td>47</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr><tr class="sev-crit">
+  <td>H3440017870</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>1</td>
+  <td>95</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr><tr class="sev-crit">
+  <td>H3440017873</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>1</td>
+  <td>84</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr><tr class="sev-crit">
+  <td>H3440017876</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>1</td>
+  <td>100</td>
+  <td>—</td>
+  <td>H4210006597</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr><tr class="sev-crit">
+  <td>H3440017877</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>1</td>
+  <td>45</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr><tr class="sev-crit">
+  <td>H3440017878</td><td>node</td>
+  <td>○</td>
+  <td>100</td>
+  <td>3</td>
+  <td>19</td>
+  <td>—</td>
+  <td>sink/H2200001022</td>
+  <td><span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">CRITICAL</span></td>
+  <td class="flags">offline</td>
+</tr></tbody>
+  </table></div>
+</details>
+</section>
+
+<section>
+  <h2>Prescriptive remediations <span class="small">10 items · prioritized P0 → P3</span></h2>
+  <div class="rec rec-p0">
+  <div class="rec-head">
+    <span class="rec-cat">GATEWAY</span>
+    <span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">P0 · Now</span>
+    <span class="rec-meta">#1</span>
+  </div>
+  <h4 class="rec-title">Restore offline gateway H2200001029</h4>
+  <div class="rec-row"><b>Finding</b><div>Gateway H2200001029 (id 219853) has been OFFLINE for 444h (18.5 days), last seen 2026-06-07. Its entire mesh subtree — every device routing through it — is dark. The 2-gateway design at Palladium means losing one gateway cuts active mesh redundancy in half.</div></div>
+  <div class="rec-row"><b>Action</b><div>Onsite: verify gateway PoE power (gateways are PoE — no battery). Check ethernet link to the switch, switch port status, switch uplink. If the gateway is up but unreachable, restart the gateway and re-check 5min after boot. If power/network is fine but it stays down, RMA via AROYA support.</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">Gateway returns to online. Its only descendant (H4210006593) rejoins within ~5min. Cross-gateway fail-over restored for the rest of the fleet.</div></div>
+</div><div class="rec rec-p0">
+  <div class="rec-head">
+    <span class="rec-cat">TOPOLOGY</span>
+    <span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">P0 · Now</span>
+    <span class="rec-meta">#2</span>
+  </div>
+  <h4 class="rec-title">Redistribute 1 children off sink of gateway H2200001022</h4>
+  <div class="rec-row"><b>Finding</b><div>Parent H2200001022 carries 14 direct children, 1 over the Wirepas 13-slot limit. Excess children compete for non-existent slots → orphan attempts, multi-hop spillover, and growing data-gap rate on those devices.</div></div>
+  <div class="rec-row"><b>Action</b><div>Move 1 children to alternate parent(s). In-room candidates with headroom (radios on same gateway, currently online, <11 children): H4210006596 (n=0/13), H4210006598 (n=0/13), H4210006600 (n=0/13), H4210006602 (n=0/13). Power-cycle the moved children so they re-join via the new parent (or wait for the next Wirepas route refresh ~30min).</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">After rebalance: H2200001022 drops from 14/13 to ≤13/13. Retry rate on the rebalanced children falls toward fleet median within 24h; hop-1 latency on remaining children drops ≥30%.</div></div>
+</div><div class="rec rec-p0">
+  <div class="rec-head">
+    <span class="rec-cat">COVERAGE</span>
+    <span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">P0 · Now</span>
+    <span class="rec-meta">#3</span>
+  </div>
+  <h4 class="rec-title">Room 8 has zero AROYA radios deployed</h4>
+  <div class="rec-row"><b>Finding</b><div>Room 8 (room_id 19949) shows 0 assigned devices in the AROYA inventory. The facility overview confirmed this room reports all-null on VWC/temp/VPD. Either it is physically empty / in build-out, or a previous deployment was un-assigned and never re-bound.</div></div>
+  <div class="rec-row"><b>Action</b><div>Operator confirmation: is Room 8 an active grow room? If yes — schedule deployment of climate (h421) + substrate nodes per the standard 1× h421 + 5× nodes per room template. If no — mark room ARCHIVED in AROYA so the facility overview stops flagging it.</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">No more null-data confusion in the facility overview. If activated: telemetry parity with sibling rooms.</div></div>
+</div><div class="rec rec-p0">
+  <div class="rec-head">
+    <span class="rec-cat">ROOM</span>
+    <span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">P0 · Now</span>
+    <span class="rec-meta">#4</span>
+  </div>
+  <h4 class="rec-title">Room 9: 4/6 radios offline (67%)</h4>
+  <div class="rec-row"><b>Finding</b><div>Room 9 has 4 of 6 radios dropped. The dominant pattern: 4 of the offline radios route through parent H4210006891. This is consistent with either (a) the shared parent having a radio/PoE issue, or (b) a dead-zone in this room with weak signal to the only nearby relay.</div></div>
+  <div class="rec-row"><b>Action</b><div>Onsite walk: verify parent H4210006891 is physically present and powered (h421 Climate One = PoE). Check the offline nodes for physical damage / displacement. If parent looks fine but children are clustered far away, add a mesh repeater (H4110*) midway. Confirm no metal racking has been moved between parent and children since deployment.</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">After fix: Room 9 returns to ≥90% online. Substrate VWC + climate data resumes for any plants in those zones.</div></div>
+</div><div class="rec rec-p0">
+  <div class="rec-head">
+    <span class="rec-cat">ROOM</span>
+    <span class="pill" style="background:#b3261e1a;color:#b3261e;border-color:#b3261e55">P0 · Now</span>
+    <span class="rec-meta">#5</span>
+  </div>
+  <h4 class="rec-title">Room 10: 6/8 radios offline (75%)</h4>
+  <div class="rec-row"><b>Finding</b><div>Room 10 has 6 of 8 radios dropped. The dominant pattern: 5 of the offline radios route through parent sink/H2200001022. This is consistent with either (a) the shared parent having a radio/PoE issue, or (b) a dead-zone in this room with weak signal to the only nearby relay.</div></div>
+  <div class="rec-row"><b>Action</b><div>Onsite walk: verify parent sink/H2200001022 is physically present and powered (h421 Climate One = PoE). Check the offline nodes for physical damage / displacement. If parent looks fine but children are clustered far away, add a mesh repeater (H4110*) midway. Confirm no metal racking has been moved between parent and children since deployment.</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">After fix: Room 10 returns to ≥90% online. Substrate VWC + climate data resumes for any plants in those zones.</div></div>
+</div><div class="rec rec-p1">
+  <div class="rec-head">
+    <span class="rec-cat">TOPOLOGY</span>
+    <span class="pill" style="background:#c97e001a;color:#c97e00;border-color:#c97e0055">P1 · This week</span>
+    <span class="rec-meta">#6</span>
+  </div>
+  <h4 class="rec-title">Watch parent H4210006899 — at 13/13 limit</h4>
+  <div class="rec-row"><b>Finding</b><div>Parent H4210006899 sits at exactly 13 direct children. ZERO headroom. Adding any device to its area pushes it over — and devices already attached will spill if a sibling rejoins or a Wirepas reshuffle occurs.</div></div>
+  <div class="rec-row"><b>Action</b><div>No immediate action required. Block any new devices from binding to H4210006899 until you intentionally move one child off first. Add an alert at saturation ≥ 12.</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">No future "why did Room X drop?" surprises tied to silent saturation.</div></div>
+</div><div class="rec rec-p1">
+  <div class="rec-head">
+    <span class="rec-cat">INFRA</span>
+    <span class="pill" style="background:#c97e001a;color:#c97e00;border-color:#c97e0055">P1 · This week</span>
+    <span class="rec-meta">#7</span>
+  </div>
+  <h4 class="rec-title">1 mesh repeater/h421 radios offline >24h with no room assignment</h4>
+  <div class="rec-row"><b>Finding</b><div>These radios appear to be in the mesh infrastructure pool (no room bound) but are NOT routing traffic. Either staged/spare devices that were never decommissioned, or in-room relays that lost their room binding. Either way they're dead weight in the AROYA inventory and may confuse future deploy planning.</div></div>
+  <div class="rec-row"><b>Action</b><div>For each: confirm physical location. If staged spare — leave offline and tag in AROYA. If field-deployed but unbound — assign to correct room and verify power/signal. Decommission anything genuinely retired.</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">Cleaner inventory. Accurate spare-pool count for future deployments.</div></div>
+</div><div class="rec rec-p2">
+  <div class="rec-head">
+    <span class="rec-cat">MONITORING</span>
+    <span class="pill" style="background:#3a6a8a1a;color:#3a6a8a;border-color:#3a6a8a55">P2 · This quarter</span>
+    <span class="rec-meta">#8</span>
+  </div>
+  <h4 class="rec-title">Add early-warning alert for parent saturation ≥ 11 children</h4>
+  <div class="rec-row"><b>Finding</b><div>Saturation issues arrive silently — operators see "Room X has data gaps" days after the topology slipped over the line. Surface the leading indicator before children start dropping.</div></div>
+  <div class="rec-row"><b>Action</b><div>Add a script that runs the saturation check from this report daily and pings #aroya-alerts when any parent crosses 11/13. Easy: re-use `_palladium_mesh_pull.py` + a small thresholding wrapper.</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">You see saturation drift in the 11→12→13 progression before children fail. Reduces firefighting time by ~80% for this class of issue.</div></div>
+</div><div class="rec rec-p3">
+  <div class="rec-head">
+    <span class="rec-cat">FIRMWARE</span>
+    <span class="pill" style="background:#6e8c4a1a;color:#6e8c4a;border-color:#6e8c4a55">P3 · Backlog</span>
+    <span class="rec-meta">#9</span>
+  </div>
+  <h4 class="rec-title">Both gateways are on WP5 — fleet is firmware-current at the root</h4>
+  <div class="rec-row"><b>Finding</b><div>Both Palladium gateways (H2200001022, H2200001029) report ggVersion=2 (Wirepas Profile 5). Node-level ggVersion is not exposed by the /devices/ endpoint, so per-node WP4-vs-WP5 status cannot be confirmed from this snapshot alone. The OTAP firmware push model means a sensor that was online during a previous push is on the same generation as its gateway.</div></div>
+  <div class="rec-row"><b>Action</b><div>No action required for the network. If a node-by-node firmware audit is requested, that data lives in a different SPA endpoint (firmware status detail per device) and would need a separate pull.</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">Continued WP4↔WP5 compatibility across the mesh. Future firmware pushes can be remote OTAP — no onsite needed unless a device is offline during the push window.</div></div>
+</div><div class="rec rec-p3">
+  <div class="rec-head">
+    <span class="rec-cat">DOCUMENTATION</span>
+    <span class="pill" style="background:#6e8c4a1a;color:#6e8c4a;border-color:#6e8c4a55">P3 · Backlog</span>
+    <span class="rec-meta">#10</span>
+  </div>
+  <h4 class="rec-title">Document Palladium as-built mesh topology in customer wiki</h4>
+  <div class="rec-row"><b>Finding</b><div>No customer wiki entry exists for Palladium as of this audit. As a 2-gateway / 76-radio / 10-room facility, the as-built topology + parent→child map should live in the vault so the next mesh question doesn't require a full re-pull.</div></div>
+  <div class="rec-row"><b>Action</b><div>Add `03-Clients/palladium/` org folder + per-facility file in claude-brain. Include this report's gateway-card data + topology tree. Update on every device add.</div></div>
+  <div class="rec-row"><b>Expected outcome</b><div class="exp">Faster context for future audits. No "where was that parent change last month" thrashing.</div></div>
+</div>
+</section>
+
+<section>
+  <h2>Prioritized action plan</h2>
+  <ol class="plan"><li>
+  <span class="seq">01</span>
+  <span class="plan-title">Restore offline gateway H2200001029 (dark 18.5d)</span>
+  <span class="plan-tags">Impact: <b>High</b> · Effort: <b>Medium</b></span>
+</li><li>
+  <span class="seq">02</span>
+  <span class="plan-title">Redistribute 1 children off sink of gateway H2200001022</span>
+  <span class="plan-tags">Impact: <b>High</b> · Effort: <b>Low</b></span>
+</li><li>
+  <span class="seq">03</span>
+  <span class="plan-title">Watch parent H4210006899 at 13/13</span>
+  <span class="plan-tags">Impact: <b>Medium</b> · Effort: <b>Low</b></span>
+</li><li>
+  <span class="seq">04</span>
+  <span class="plan-title">Resolve Room 8 zero-device state (deploy or archive)</span>
+  <span class="plan-tags">Impact: <b>High</b> · Effort: <b>Medium</b></span>
+</li><li>
+  <span class="seq">05</span>
+  <span class="plan-title">Restore 4 offline radios in Room 9</span>
+  <span class="plan-tags">Impact: <b>High</b> · Effort: <b>Medium</b></span>
+</li><li>
+  <span class="seq">06</span>
+  <span class="plan-title">Restore 6 offline radios in Room 10</span>
+  <span class="plan-tags">Impact: <b>High</b> · Effort: <b>Medium</b></span>
+</li><li>
+  <span class="seq">07</span>
+  <span class="plan-title">Triage 1 long-down infra radios</span>
+  <span class="plan-tags">Impact: <b>Low</b> · Effort: <b>Low</b></span>
+</li><li>
+  <span class="seq">08</span>
+  <span class="plan-title">Add saturation alert at ≥ 11 children</span>
+  <span class="plan-tags">Impact: <b>Medium</b> · Effort: <b>Low</b></span>
+</li><li>
+  <span class="seq">09</span>
+  <span class="plan-title">Create Palladium customer wiki entry</span>
+  <span class="plan-tags">Impact: <b>Low</b> · Effort: <b>Low</b></span>
+</li></ol>
+</section>
+
+<footer>
+  Pulled live from AROYA SPA at 2026-06-25 19:24 UTC. Dash-2 deduped before counts. 13-child rule per Wirepas spec.
+  Source: <code>/devices/?facility=4699</code> · <code>/rooms/[19942–19951]/v2/</code>.
+  Telemetry map is a logical (hub-and-spoke) rendering — AROYA does not expose physical lat/lon for these radios.
+</footer>
+
+</div>
+</body>
+</html>
