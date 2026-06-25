@@ -1,0 +1,881 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HK Cassandra LLC · AUTOMAIT Readiness &amp; Implementation Plan · 2026-06-24</title>
+<style>
+:root{
+  --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
+  --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
+  --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
+  --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
+  --attention:#e76f51; --attention-2:#f4a261;
+  --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
+  --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
+  --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51; --p-dry:#cfd0c8;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font:14.5px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+.masthead{background:#1a1c19;color:#fff;padding:22px 28px 26px;margin:0 -28px 0}
+.masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.lockup{display:flex;align-items:center;gap:12px;color:#fff}
+.aroya-wordmark{height:34px;width:auto;color:#fff;display:block}
+.lockup-byline{font-size:11px;color:#aaa;letter-spacing:.04em}
+.sync-status{font-size:11px;color:#aaa}
+.pagehead{max-width:1180px;margin:0 auto;padding:30px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+.pagehead-eyebrow{font-size:11px;font-weight:600;color:var(--olive);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+.pagehead h1{font-size:32px;line-height:1.15;letter-spacing:-.018em;margin:0 0 8px;color:var(--ink);font-weight:600}
+.pagehead .sub{color:var(--ink-2);font-size:15px;line-height:1.5}
+.pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+.pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+.pagehead .meta b{color:var(--ink);font-weight:600;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+section{margin-top:40px}
+h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+h4{font-size:14px;margin:14px 0 6px;font-weight:600;color:var(--olive)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:18px}
+.kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
+.kpi.bad::before{background:var(--bad)}.kpi.warn::before{background:var(--warn)}.kpi.good::before{background:var(--good)}
+.kpi .l{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.kpi .v{font-size:21px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--ink-2);margin-top:3px}
+.kpi.bad .v{color:var(--bad)}.kpi.warn .v{color:var(--warn)}.kpi.good .v{color:var(--good)}
+.verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
+.verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
+.verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
+.verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
+.verdict.info{background:linear-gradient(90deg,#e8f1f7 0%,transparent 100%);border-color:var(--app-blue)}
+.verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
+table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:13.5px}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700;background:var(--bg-3)}
+.pill{display:inline-block;padding:2px 9px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:.4px;white-space:nowrap}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}.pill.warn{background:var(--warn-bg);color:var(--warn)}.pill.good{background:var(--good-bg);color:var(--good)}.pill.muted{background:var(--bg-3);color:var(--ink-muted)}.pill.info{background:#e8f1f7;color:var(--app-blue)}
+.room-card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;box-shadow:var(--card-shadow);border-left:4px solid var(--olive)}
+.room-card.benchmark{border-left-color:var(--good)}
+.room-card.coco{border-left-color:var(--attention-2)}
+.room-card.priority{border-left-color:var(--bad)}
+.room-card h3{margin-top:0;font-size:18px}
+.room-card .rid{color:var(--ink-muted);font-weight:500;font-size:.78em;margin-left:6px}
+.room-card .hgline{color:var(--ink-muted);font-size:12.5px;margin-top:-4px;margin-bottom:14px}
+.room-card pre{background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;font-size:12px;line-height:1.5;font-family:'JetBrains Mono','SF Mono','Menlo',monospace;color:var(--ink)}
+.narr{background:var(--bg-3);border-left:3px solid var(--lime);border-radius:6px;padding:12px 16px;margin:10px 0;font-size:13.5px;line-height:1.6}
+.section-intro{font-size:13.5px;color:var(--ink-2);max-width:880px;line-height:1.6}
+.rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow);overflow:hidden}
+.rec .owner{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.6px;text-transform:uppercase;margin-right:8px}
+.rec .owner.customer{background:var(--bad)}.rec .owner.cian{background:var(--app-blue)}.rec .owner.grower{background:var(--olive-2)}
+.rec .raction{margin-top:8px;font-weight:500;font-size:14.5px}
+.rec .rwhy{margin-top:6px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.phase-strip{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.phase-card{flex:1;min-width:220px;background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;box-shadow:var(--card-shadow)}
+.phase-card .ph{font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;font-weight:700;color:var(--olive);margin-bottom:6px}
+.phase-card .ph-title{font-size:14px;font-weight:600;margin-bottom:6px}
+.phase-card .ph-detail{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+ul.openqs{padding-left:20px;line-height:1.7}ul.openqs li{margin-bottom:8px}
+.tier-ready{color:var(--good);font-weight:700}
+.tier-partial{color:var(--warn);font-weight:700}
+.tier-needs{color:var(--bad);font-weight:700}
+.tier-oos{color:var(--ink-muted);font-weight:700}
+footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+@media(max-width:720px){.wrap{padding:0 16px 60px}.masthead{margin:0 -16px;padding:18px 16px 20px}.pagehead h1{font-size:24px}h2{font-size:18px}.kpi .v{font-size:18px}.room-card{padding:14px 16px}.room-card pre{font-size:11px}}
+</style>
+</head>
+<body><div class="wrap">
+
+<div class="masthead">
+ <div class="masthead-inner">
+   <div class="lockup">
+     <svg class="aroya-wordmark" viewBox="0 0 202.1 75" fill="currentColor" role="img" aria-label="AROYA" xmlns="http://www.w3.org/2000/svg">
+<path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/>
+<path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/>
+<path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/>
+<path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/>
+<path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/>
+<rect x="127.4" y="57.2" width="1.8" height="9.9"/>
+<path d="M138,62.8c0,2.1-.9,3.1-2.6,3.1s-.7,0-1,0c-.3-.1-.5-.3-.8-.5-.2-.2-.3-.4-.4-.6-.1-.2-.2-.5-.2-.7v-6.8h-1.9v7.2c0,.3.1.7.2,1,0,.4.3.6.5.9.4.3.8.6,1.3.8s1.1.3,1.8.2c.7,0,1.4-.1,1.9-.4s.9-.7,1.2-1.3v1.5h1.8v-9.9h-1.8v5.6Z"/>
+<path d="M152.7,57c-.6,0-1,.1-1.4.2-.4.1-.7.3-1,.6-.2.2-.4.4-.6.6s-.3.5-.4.7c-.2-.7-.6-1.2-1.2-1.6-.5-.4-1.2-.6-2-.6s-1.7.3-2.3.8c-.3.3-.6.6-.7,1v-1.5h-1.6v9.9h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6.1.2.1.5.2.7v6.8h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6,0,.2.1.5.1.7v6.8h1.8v-6.4c0-1.2-.3-2.2-.9-2.8-.6-.6-1.4-.9-2.6-.9Z"/>
+<path d="M112.7,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.3.8-.5,1.7-.5,2.8s.2,1.9.6,2.7c.4.8.9,1.4,1.6,1.8.7.4,1.5.6,2.4.6s1.3-.1,1.8-.4,1-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM112.1,65c-.5.6-1.2,1-2.1,1s-1.3-.2-1.8-.5c-.5-.3-.8-.7-1-1.3-.2-.6-.3-1.2-.3-2.1,0-1.3.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.5.6.7,1.5.7,2.7s-.2,2.2-.7,2.8Z"/>
+<rect x="127.4" y="53.2" width="1.8" height="1.8"/>
+<path d="M123.8,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.4.8-.6,1.6-.6,2.7s.2,2,.6,2.8c.4.8.9,1.4,1.6,1.8.7.5,1.4.7,2.5.6.7,0,1.3-.1,1.8-.4s.9-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM123,65c-.5.6-1.2,1-2.1,1s-1.4-.2-1.8-.5c-.4-.3-.7-.7-.9-1.3-.2-.6-.3-1.3-.3-2.1,0-1.2.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.4.7.6,1.6.6,2.7s-.2,2.2-.7,2.8Z"/>
+<path d="M97.7,53.2l-5.5,13.9h1.9l1.5-4.2h5.9l1.6,4.2h1.9l-5.4-13.9h-1.9ZM96.2,61.4l1.6-4.2c.4-.9.6-1.7.8-2.2.3.8.6,1.5.8,2.2l1.6,4.2h-4.8Z"/>
+<path d="M85.4,62.4c-.2.7-.5,1.6-.9,2.6-.4-1.1-.6-2-.9-2.6l-1.9-5.3h-1.9l3.9,9.8c-.3.6-.5,1.1-.6,1.4,0,.3-.3.5-.5.7-.2.2-.4.3-.6.3-.4,0-.8-.1-1.2-.2v1.6c.5.1,1,.2,1.5.2s.8,0,1.2-.3c.3-.2.6-.5.9-1,.3-.4.5-1,.8-1.8l4-10.8h-1.9l-1.9,5.4Z"/>
+<path d="M77.5,57.5c-.7-.4-1.5-.7-2.3-.7-1.4,0-2.4.5-3.2,1.6v-5.3h-1.8v13.9h1.8v-1.4c.4.5.8.9,1.4,1.2.5.3,1.1.4,1.8.4s1.7-.2,2.3-.6c.7-.4,1.2-1,1.6-1.8.4-.8.6-1.7.6-2.8s-.2-1.9-.6-2.7c-.4-.8-.9-1.4-1.6-1.8ZM77.5,64.1c-.2.6-.5,1-.9,1.3-.4.3-1,.5-1.8.5s-1.7-.3-2.1-1c-.5-.6-.7-1.6-.7-2.8s.2-2,.6-2.8c.3-.7,1.1-1.1,2.2-1.1s1.8.3,2.3,1c.5.6.7,1.6.7,2.8s0,1.5-.3,2.1Z"/>
+<path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z"/>
+</svg>
+     <span class="lockup-byline">by Addium · AUTOMAIT Readiness Plan</span>
+   </div>
+   <div class="sync-status">Facility 4576 · HK Cassandra LLC · 2026-06-24</div>
+ </div>
+</div>
+
+<div class="pagehead">
+ <div class="pagehead-eyebrow">AROYA · AUTOMAIT Readiness &amp; Implementation Plan</div>
+ <h1>HK Cassandra LLC · AUTOMAIT Readiness Audit + Per-Room Plan</h1>
+ <div class="sub">Per-room readiness scoring · proposed AUTOMAIT <code>irrigationSchedule</code> shapes · initial ASI presets · rollback triggers · cross-room risk synthesis · staged rollout sequencing across all 11 rooms · plan-only (no fields will be written until Cian approves)</div>
+ <div class="meta">
+   <span><b>Facility</b>HK Cassandra LLC (ID 4576) · Org 3576</span>
+   <span><b>Plan date</b>2026-06-24</span>
+   <span><b>Rooms in scope</b>11 total (10 FLOWER + 1 VEG) · 7 active flower HGs · 4 dormant</span>
+   <span><b>Substrate split</b>SOILLESS rockwool (5 active) · COCO 1.5gal bag, 2×0.3 GPH (R2 + R5)</span>
+   <span><b>Cohorts</b>May-10 (19d to harvest July-13) · June-3 (42-43d to harvest Aug-5/6)</span>
+   <span><b>Baseline audit</b>Companion <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_2wk_Audit_2026-06-10_to_2026-06-24.html" style="color:var(--app-blue)">2-week agronomic audit</a> (commit a51ca78) — this plan extends it</span>
+ </div>
+</div>
+
+<section id="s1">
+ <h2>1 · Executive Summary</h2>
+
+ <div class="verdict bad">
+   <div class="v-head">UNIVERSAL BLOCKER — No AUTOMAIT controller is wired on any room at this facility</div>
+   <span><b>Every one of the 11 room configs returns <code>irrigationControllers: []</code></b> in <code>spa_get_room_config</code>. AUTOMAIT cannot fire on any room until an AUTOMAIT-capable controller (Growlink, Modbus, or AROYA-supported integration) is provisioned and linked. Sensor coverage is otherwise complete: every flower room has 4 ter15 substrate probes (one per zone), 1 h421/ee894 climate stack, plus a DRIP-calibrated ter15 and a DRAIN-calibrated ter15. The cultivation telemetry side is ready; the actuation side is not. Until a controller is wired, the readiness floor for the facility is <span class="tier-needs">NEEDS-WORK</span> for every room.</span>
+ </div>
+
+ <div class="kpis">
+   <div class="kpi bad"><div class="l">Rooms with controller wired</div><div class="v">0 / 11</div><div class="s">universal blocker · AUTOMAIT cannot fire anywhere today</div></div>
+   <div class="kpi bad"><div class="l">HGs with recipe linked</div><div class="v">0 / 7</div><div class="s">2 recipes exist at facility level but no HG references either</div></div>
+   <div class="kpi bad"><div class="l">Rooms with documented steering intent</div><div class="v">0 / 7</div><div class="s">AROYA journal empty per room · foundational blocker</div></div>
+   <div class="kpi good"><div class="l">Rooms with full sensor coverage</div><div class="v">7 / 7</div><div class="s">4× substrate VWC + climate + DRIP + DRAIN per active room</div></div>
+   <div class="kpi good"><div class="l">First-room recommendation</div><div class="v">R9 (18761)</div><div class="s">benchmark room · cleanest signature · simplest substrate · brings up at next flip</div></div>
+   <div class="kpi warn"><div class="l">Highest-leverage cultivator-side fix</div><div class="v">R2 + R5 (COCO)</div><div class="s">channeling + leaching · must be physically resolved before AUTOMAIT</div></div>
+ </div>
+
+ <h3>Readiness summary</h3>
+ <div class="phase-strip">
+   <div class="phase-card">
+     <div class="ph">Tier</div>
+     <div class="ph-title"><span class="tier-ready">READY 0</span> / <span class="tier-partial">PARTIAL 0</span></div>
+     <div class="ph-detail">No room currently passes READY or PARTIAL because no controller is wired. Sensor coverage, FC measurements, and substrate config are in place — controller provisioning is the single binding gate.</div>
+   </div>
+   <div class="phase-card">
+     <div class="ph">Tier</div>
+     <div class="ph-title"><span class="tier-needs">NEEDS-WORK</span> · 10 rooms</div>
+     <div class="ph-detail">All 10 flower rooms. Once a controller is wired, R9 → R1 → R3/R10/R11 → R2/R5 unlocks in that order based on substrate physics + readiness signature.</div>
+   </div>
+   <div class="phase-card">
+     <div class="ph">Tier</div>
+     <div class="ph-title"><span class="tier-oos">OUT-OF-SCOPE</span> · 1 room</div>
+     <div class="ph-detail">veg room (18759) — AUTOMAIT typically deployed in flower first; bring up in Phase 5 only if HK Cassandra wants veg-phase automation later.</div>
+   </div>
+ </div>
+
+ <h3>Recommended first room</h3>
+ <div class="verdict good">
+   <div class="v-head">Room 9 (id 18761) — Confirmed as the right first AUTOMAIT bring-up</div>
+   <span>R9 has the cleanest ripening signature in the facility today (substrate EC 5.88, dryback 30 absolute pp, VPD 1.24 kPa, soil temp 73°F — per baseline audit), the simplest substrate (SOILLESS, not COCO), and the lowest measured field capacity of the active fleet (64.2%) which gives AUTOMAIT the largest dryback steering range to work with. It also flips at July-13 — so AUTOMAIT can come up on <b>Day 1 of Cycle N+1 with a fresh substrate</b>, not mid-cohort. That's the right place to start. The one prereq specific to R9 (beyond the universal controller blocker): steering intent must be documented in the AROYA journal AND a recipe must be assigned to the next HG that flips in.</span>
+ </div>
+
+ <h3>Suggested rollout sequence (full detail in §6)</h3>
+ <ol style="line-height:1.8;font-size:14px">
+   <li><b>Phase 0 (now → next 7 days)</b> — Cultivator-side fixes only. R2 P1 shot regime, R5 emitter walkdown, R10 ripening-intent decision, R3 climate correction, R11 CO₂ supplementation. No AUTOMAIT yet.</li>
+   <li><b>Phase 1 (Cycle N+1, Day 1 after July-13 flip)</b> — R9 as the benchmark bring-up. Shadow run for 24h, then 7 consecutive clean days before advancing.</li>
+   <li><b>Phase 2 (Cycle N+1, Week 2)</b> — R1 next (also SOILLESS, simpler room).</li>
+   <li><b>Phase 3 (Cycle N+1, Weeks 3-4)</b> — R3, R10, R11 staggered 48h apart. All SOILLESS, all benefit from R9's proven dial-point.</li>
+   <li><b>Phase 4 (Cycle N+1, Weeks 5-6)</b> — R2 then R5 (COCO, last). Coco physics + baseline channeling means highest-risk handoff — only after cultivator-side fixes verified manually for a full cycle.</li>
+   <li><b>Phase 5 (Cycle N+2)</b> — Bring up R4, R6, R8, veg room as HGs assigned. Resolve Room 6's silent h421s before any HG flips in (per today's mesh audit).</li>
+ </ol>
+</section>
+
+<section id="s2">
+ <h2>2 · Methodology — What AUTOMAIT Requires</h2>
+ <p class="section-intro">AUTOMAIT is a closed-loop crop-steering engine. To run safely it needs four things <b>per room</b>: (a) <b>actuation</b> — a wired controller endpoint AROYA can push setpoints to; (b) <b>sensing</b> — substrate VWC + EC + drip + drain telemetry of trustworthy quality and uptime; (c) <b>configuration</b> — a recipe linked to the HG plus an <code>irrigationSchedule</code> defining P0–P3 windows, shot sizing, drain triggers, and guardrails; (d) <b>intent</b> — a documented steering goal (generative vs vegetative, target dryback, EC stack trajectory) so the controller knows what success looks like.</p>
+
+ <h3>Readiness scoring criteria</h3>
+ <div class="table-wrap"><table>
+   <tr><th>Tier</th><th>Definition</th><th>Implication</th></tr>
+   <tr><td><span class="tier-ready">READY</span></td><td>Sensors online + controller wired + measured FC + recipe linked + intent documented</td><td>Can flip AUTOMAIT this cycle with a shadow-run gate</td></tr>
+   <tr><td><span class="tier-partial">PARTIAL</span></td><td>Sensors + controller wired but missing recipe assignment or documented intent</td><td>1–2 prerequisite items needed before bring-up</td></tr>
+   <tr><td><span class="tier-needs">NEEDS-WORK</span></td><td>Missing controller OR missing substrate sensors OR room empty between cycles</td><td>Multi-week prerequisite work — controller procurement / sensor reliability fix / cycle wait</td></tr>
+   <tr><td><span class="tier-oos">OUT-OF-SCOPE</span></td><td>Veg/prop/dry/cure rooms not in the flower automation scope</td><td>Defer to a later wave or skip</td></tr>
+ </table></div>
+
+ <h3>Phase model anchoring (per project irrigation rule)</h3>
+ <div class="phase-strip">
+   <div class="phase-card" style="border-left:4px solid var(--p-rootin)">
+     <div class="ph">P0 · Activation</div>
+     <div class="ph-title">Lights-on → first irrigation</div>
+     <div class="ph-detail">1–3h hold while plant ramps transpiration. <code>lightsBuffer_P0_min</code> sets the delay; <code>additionalDrybackTarget_pp</code> adds extra dryback before first shot. Deeper for generative phases.</div>
+   </div>
+   <div class="phase-card" style="border-left:4px solid var(--p-veg)">
+     <div class="ph">P1 · Ramp-up</div>
+     <div class="ph-title">Small shots → first runoff</div>
+     <div class="ph-detail">Small shots ~15–30 min apart back to FC + first runoff. <code>shotPct_of_FC</code>, <code>shotIntervalMin</code>, and <code>drainTrigger</code> control sizing/cadence/termination.</div>
+   </div>
+   <div class="phase-card" style="border-left:4px solid var(--p-bulking)">
+     <div class="ph">P2 · Maintenance</div>
+     <div class="ph-title">Hold VWC at FC, manage EC</div>
+     <div class="ph-detail">Pulses holding VWC at FC, managing substrate EC via runoff. Skipped or minimized in generative phases. <code>vwcMaintenanceFloor_pct</code> sets the top-up trigger.</div>
+   </div>
+   <div class="phase-card" style="border-left:4px solid var(--p-ripening)">
+     <div class="ph">P3 · Dry-down</div>
+     <div class="ph-title">Last shot → next morning</div>
+     <div class="ph-detail">Primary steering lever. <code>lightsBuffer_P3_min</code> sets pre-lights-off hold; <code>targetDryback_absPp</code> is the overnight dryback target; <code>minVwc_safetyFloor_pct</code> is the hard stop.</div>
+   </div>
+ </div>
+
+ <h3>ASI preset direction (critical — counterintuitive)</h3>
+ <div class="verdict info">
+   <div class="v-head">AROYA's ASI slider is inverted from intuition</div>
+   <span><b>GEN 1 = MOST aggressive</b> (deepest dryback, shortest window). GEN 5 = neutral. VEG 6–10 = vegetative. To go DEEPER on dryback you step <b>DOWN toward GEN 1</b>, NOT up. Every recommendation in §5 picks a preset in the GEN 3–5 range — neutral to mildly generative. Coco rooms (R2, R5) get GEN 5 (neutral) regardless of phase, because aggressive steering on a substrate that's already channeling will worsen Cal/Mg lockout. SOILLESS ripening rooms can step to GEN 3 once the cultivator confirms the climate side supports it.</span>
+ </div>
+</section>
+
+<section id="s3">
+ <h2>3 · Per-Room Readiness Scoring</h2>
+
+ <p class="section-intro">Every room's <code>spa_get_room_config</code> was pulled sequentially (SPA config is not parallel-safe per <code>feedback_spa-config-not-parallel-safe.md</code>). Cells reading "no" or "—" reflect actual API state, not gaps in pulling. Field-capacity values are the <b>measured</b> 14-day peak VWC from the baseline audit; no <code>fieldCapacity</code> ceiling is currently configured at the room level anywhere on the facility.</p>
+
+ <div class="table-wrap"><table>
+   <tr>
+     <th>Room</th><th>Room ID</th><th>Active HG</th><th>Substrate VWC sensors</th><th>Controller wired</th><th>Recipe linked</th><th>Measured FC</th><th>Intent documented</th><th>Tier</th><th>Missing items</th>
+   </tr>
+   <tr>
+     <td>Room 1 (21 LED)</td><td>18740</td><td>155042 Mid Flower</td><td>2/2 zones (ter15)</td><td><span class="pill bad">No</span></td><td><span class="pill bad">No</span></td><td>69.2%</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, recipe, FC ceiling, intent</td>
+   </tr>
+   <tr>
+     <td>Room 2 (99 LED) · COCO 1.5gal</td><td>18741</td><td>155044 Mid Flower entry</td><td>4/4 zones (ter15)</td><td><span class="pill bad">No</span></td><td><span class="pill bad">No</span></td><td>74.6%</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, recipe, FC ceiling, intent, <b>P1 shot regime fix</b></td>
+   </tr>
+   <tr>
+     <td>Room 3 (42 LED)</td><td>18742</td><td>153819 Ripening</td><td>4/4 zones (ter15)</td><td><span class="pill bad">No</span></td><td><span class="pill bad">No</span></td><td>64.2%</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, recipe, FC ceiling, intent, <b>climate fix</b></td>
+   </tr>
+   <tr>
+     <td>Room 4 (16 lights)</td><td>18743</td><td>—</td><td>2/2 zones</td><td><span class="pill bad">No</span></td><td><span class="pill muted">n/a</span></td><td>—</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, no active HG (Cycle N+2)</td>
+   </tr>
+   <tr>
+     <td>Room 5 (24 lights) · COCO 1.5gal</td><td>18757</td><td>155043 Mid Flower</td><td>2/2 zones (ter15)</td><td><span class="pill bad">No</span></td><td><span class="pill bad">No</span></td><td>75.6%</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, recipe, FC ceiling, intent, <b>emitter walkdown for channeling</b></td>
+   </tr>
+   <tr>
+     <td>Room 6 (75 lights)</td><td>18758</td><td>—</td><td>4/4 zones</td><td><span class="pill bad">No</span></td><td><span class="pill muted">n/a</span></td><td>—</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, no active HG, <b>2 silent h421 climate sensors</b> (per <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_Wirepas_Mesh_Health_2026-06-24.html" style="color:var(--app-blue)">mesh audit</a>)</td>
+   </tr>
+   <tr>
+     <td>veg room</td><td>18759</td><td>—</td><td>4/4 zones</td><td><span class="pill bad">No</span></td><td><span class="pill muted">n/a</span></td><td>—</td><td><span class="pill bad">No</span></td><td><span class="tier-oos">OUT-OF-SCOPE</span></td><td>Veg-phase — defer until flower automation proven</td>
+   </tr>
+   <tr>
+     <td>Room 8 (49 lights)</td><td>18760</td><td>—</td><td>4/4 zones</td><td><span class="pill bad">No</span></td><td><span class="pill muted">n/a</span></td><td>—</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, no active HG (Cycle N+2)</td>
+   </tr>
+   <tr style="background:var(--good-bg)">
+     <td><b>Room 9 (27 lights)</b> · BENCHMARK</td><td><b>18761</b></td><td>153820 Ripening</td><td>4/4 zones (ter15)</td><td><span class="pill bad">No</span></td><td><span class="pill bad">No</span></td><td>70.9%</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, recipe, FC ceiling, intent <i>(but otherwise the cleanest room — first AUTOMAIT bring-up)</i></td>
+   </tr>
+   <tr>
+     <td>Room 10 (27 lights)</td><td>18762</td><td>153822 Ripening</td><td>4/4 zones (ter15)</td><td><span class="pill bad">No</span></td><td><span class="pill bad">No</span></td><td>63.8%</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, recipe, FC ceiling, intent, <b>ripening-intent decision</b></td>
+   </tr>
+   <tr>
+     <td>Room 11 (31 lights)</td><td>18763</td><td>153824 Ripening</td><td>4/4 zones (ter15)*</td><td><span class="pill bad">No</span></td><td><span class="pill bad">No</span></td><td>70.7%</td><td><span class="pill bad">No</span></td><td><span class="tier-needs">NEEDS-WORK</span></td><td>Controller, recipe, FC ceiling, intent, <b>CO₂ supplementation fix</b>; * SPA bridge detached during R11 pull — re-verify device count</td>
+   </tr>
+ </table></div>
+
+ <p style="font-size:12.5px;color:var(--ink-muted);max-width:880px">Hardware coverage column reads "4/4 zones" or "2/2 zones" — every active flower room has one ter15 substrate probe per defined zone, plus a DRIP-calibrated and DRAIN-calibrated ter15 (drip/drain instrumentation is per-room, single emitter position). Drip volume data isn't exposed via <code>public_api</code> for this facility — <code>count_irrigation_events</code> returns 0 for every room (known SDK gap). Shot counts in §5 are inferred from VWC step-up signatures in the baseline audit.</p>
+</section>
+
+<section id="s4">
+ <h2>4 · Current Irrigation Strategy — Per Room</h2>
+
+ <p class="section-intro">For each active flower room, "current strategy" is reconstructed from <code>analyze_drip_drain</code> (14-day window 2026-06-10 → 2026-06-24), the baseline audit's VWC/EC numbers, and the drip/drain calibration positions. Shot counts are derived from VWC step-up signatures because <code>drip_volume</code> events aren't exposed via <code>public_api</code> on this facility. AUTOMAIT-mismatch flags are the operational gaps that must be closed before each room's irrigation regime maps cleanly to a closed-loop schedule.</p>
+
+ <div class="room-card">
+   <h3>Room 1 <span class="rid">(id 18740)</span></h3>
+   <div class="hgline">252-plant GX · SOILLESS · Mid Flower Day 21 · 42 days to harvest · HG 155042</div>
+   <div class="narr"><b>Operational signature:</b> single drip-instrumented zone (76387). Daily drip peak ≈ 1,249 mL, daily drain peak ≈ 4,110 mL — drain volume 3.3× drip at the metered position (drain pan captures multiple plants while drip is metered at one). Functional shot count: ~8–10 shots/day from VWC swing 35.9 absolute pp (33.3% trough to 69.2% peak). EC stack: drip 1.39 → substrate pore EC 3.40 → drain 1.91 (+0.52 mS substrate-over-drip stack — mild, healthy bulking posture). VPD 1.11 in-range. <b>Steering intent inferred:</b> vegetatively-leaning mid-flower regime that is over-drying for the phase. <b>AUTOMAIT mismatch:</b> (a) drip flow metering covers only 1 zone of 2 — manifold-level metering or an explicit single-zone-proxy confidence flag needed; (b) drip EC 1.39 mS is below any reasonable mid-flower feed — confirm with cultivator this isn't a stale-line reading before AUTOMAIT respects it as input.</div>
+ </div>
+
+ <div class="room-card priority">
+   <h3>Room 2 <span class="rid">(id 18741)</span> · COCO 1.5gal · HIGHEST-LEVERAGE FIX</h3>
+   <div class="hgline">1188-plant Blue Nerdz · COCO 1.5gal bag, 2×0.3 GPH emitters · Mid Flower entry Day 21 · 43 days to harvest · HG 155044</div>
+   <div class="narr"><b>Operational signature:</b> drip/drain on zone 76708 only (of 4 zones). Daily drip peak ≈ 3,792 mL, daily drain peak ≈ 2,657 mL → <b>drain ratio ~70%</b> at that emitter position — 3× the 20–30% coco bulking target. Functional shot count: ~8–12 large shots/day clustered in P1 (typical 07:00–11:00), little to no P2 maintenance. EC stack: drip 5.94 → mean substrate pore EC ~5.6 → drain 2.86 — drip ≈ substrate, drain dumps. <b>Substrate is NOT stacking</b> (drip-to-substrate gap ≈ 0). <b>Steering intent inferred:</b> vegetatively-steered (high volume, high drain, no stack) on an early/mid flower COCO bulking window that wants substrate EC stacking from 6.0 toward 8.0. Wrong-direction. <b>AUTOMAIT mismatch (LARGEST AT THIS FACILITY):</b> the current "fire 8+ big shots, let half drain" regime is the hardest pattern to hand to AUTOMAIT. Closed-loop wants more, smaller P1 shots (~2–3% VWC each) terminating on a defined drain trigger (5–10%), then P2 micro-pulses holding FC. Cultivator must collapse shot sizes, increase shot count, and adopt a runoff-end trigger BEFORE AUTOMAIT will steer correctly. Also: only 1 of 4 zones has drip/drain instrumentation.</div>
+ </div>
+
+ <div class="room-card">
+   <h3>Room 3 <span class="rid">(id 18742)</span></h3>
+   <div class="hgline">450-plant Blue Nerdz · SOILLESS · Mid/Late Ripening Day 45 · 19 days to harvest · HG 153819</div>
+   <div class="narr"><b>Operational signature:</b> drip series severely truncated — only 52h of <code>dfi:zone:76390</code> returned vs 311h of climate metrics → <b>drip flow meter offline ~8 of 14 days</b>. Daily drip peak (when active) ≈ 369 mL, daily drain peak ≈ 14 mL — drain ratio ~3.7% at the metered position (essentially no drain when measured). Functional shot count from VWC 30.2 pp swing: ~6–8 medium shots/day, appropriate for ripening. EC stack: drip 6.0 → mean pore EC 4.7 (zones 3.28–7.43, spread suggests uneven feed) → drain 1.77 (room-aggregate -4.23 mS leach). <b>Steering intent inferred:</b> vegetatively-leaning despite ripening phase (high feed, big leach). Wrong-direction for finishing — ripening wants substrate EC restacked 6.0–8.0 and longer P3 drydown. <b>AUTOMAIT mismatch:</b> (a) drip flow meter must be brought back online; (b) cultivator must reduce shot frequency and tighten P1 termination; (c) only 1 of 4 zones has drip/drain instrumentation; (d) cold-canopy climate (VPD 0.99, soil 70.7°F per baseline) limits transpiration — irrigation isn't the rate-limiter, climate is.</div>
+ </div>
+
+ <div class="room-card priority coco">
+   <h3>Room 5 <span class="rid">(id 18757)</span> · COCO 1.5gal · CHANNELING SUSPECTED</h3>
+   <div class="hgline">288-plant Blue Nerdz · COCO 1.5gal bag, 2×0.3 GPH emitters · Mid Flower Day 21 · 42 days to harvest · HG 155043</div>
+   <div class="narr"><b>Operational signature:</b> zone 76459 instrumented. Daily drip peak ≈ 1,248 mL, daily drain peak ≈ 3,469 mL — drain volume 2.8× drip volume at the metered position. <b>VWC span 53.2 pp (22.4% trough to 75.6% peak) is the diagnostic that matters</b>: at 22.4% VWC the COCO 1.5gal bag is well below permanent wilting point (FC 75.6%, wilting &lt;35%) — <b>catastrophic channeling confirmed by baseline</b>. Shots are running through preferred paths straight to drain without rehydrating bag mass. Functional shot count: 12–15+/day firing, but functional water uptake is sporadic. EC stack: drip 5.34 → mean pore EC ~4.9 → drain 2.21 (-3.13 leach). Substrate NOT holding feed EC because it's not holding water. <b>Steering intent inferred:</b> controller is running an aggressive vegetative regime, but <b>the substrate isn't responding</b> — channeling has decoupled controller intent from plant outcome. <b>AUTOMAIT mismatch:</b> R5 is not AUTOMAIT-ready at the substrate level — closed-loop steering will chase a moving target until the COCO bag channeling is physically remediated (emitter walkdown, possible bag rewet, possible repack). AUTOMAIT can only be enabled here AFTER manual rewet cycle confirms VWC trough recovers to ≥55% before each lights-on for 7 consecutive days.</div>
+ </div>
+
+ <div class="room-card benchmark">
+   <h3>Room 9 <span class="rid">(id 18761)</span> · BENCHMARK — CLEANEST RIPENING SIGNATURE</h3>
+   <div class="hgline">312-plant Blue Nerdz · SOILLESS · Ripening Day 45 · 19 days to harvest · HG 153820</div>
+   <div class="narr"><b>Operational signature:</b> zone 76466 instrumented. Daily drip peak ≈ 3,181 mL, daily drain peak ≈ 2,789 mL → drain ratio ~88% at the metered emitter (extreme but consistent with deliberate ripening leach). Functional shot count: ~8–10 shots/day. EC stack: drip 3.96 → mean pore EC 5.77 (across 4 zones 4.75–6.50) → drain 2.30. <b>Substrate stacks +1.81 mS over drip, drain dumps -1.66 mS below drip — the healthiest stack profile of all 7 rooms.</b> Substrate EC genuinely climbing into ripening (target 6.0–8.0, observed 5.77), drip EC moderate (3.96 = controlled finishing feed, not aggressive), drain releasing salt cleanly. <b>Steering intent inferred:</b> generatively-steered ripening, executing correctly. <b>This is WHY R9 is the benchmark</b> — it shows the operation CAN run a clean stack when inputs are right. <b>AUTOMAIT mismatch:</b> smallest gap of any room. Drip flow metering still single-zone — needs whole-room metering or single-zone-proxy confidence flag. R9 is the cultivator-side training example for what AUTOMAIT should produce in the other rooms.</div>
+ </div>
+
+ <div class="room-card">
+   <h3>Room 10 <span class="rid">(id 18762)</span></h3>
+   <div class="hgline">312-plant G-Runtz + MOB · SOILLESS · Ripening Day 45 · 19 days to harvest · HG 153822</div>
+   <div class="narr"><b>Operational signature:</b> zone 76467 instrumented. Daily drip peak ≈ 2,510 mL, daily drain peak ≈ <b>37 mL → drain ratio ~1.5% (effectively zero drain)</b>. Either drain meter blocked/offline or substrate bone-dry into ripening with no runoff. Baseline-confirmed drip EC 1.54 → drain EC 5.36 indicates drain pan is sitting stale and concentrating by evaporation — no fresh drain flow reaching sensor. Functional shot count: ~6–8 shots/day, modest. EC stack: drip 1.54 (very low — finishing flush) → mean pore EC 5.87 (across 4 zones 2.94–8.64 — <b>huge 5.7 mS spread suggests uneven feed delivery between zones</b>) → "drain" 5.36 is stale and not interpretable. <b>Steering intent inferred:</b> appears to be a controlled finishing flush (low drip EC, modest shots) but the no-drain reading prevents confident assessment. <b>AUTOMAIT mismatch:</b> (a) drain instrumentation must be restored — AUTOMAIT cannot run closed-loop without trustworthy drain volume + drain EC; (b) the 5.7 mS pore EC spread between zones means even drip distribution is broken — per-zone drip auditing + likely emitter/manifold service before enable; (c) ripening-intent decision needs to be made and documented THIS WEEK (see §7).</div>
+ </div>
+
+ <div class="room-card">
+   <h3>Room 11 <span class="rid">(id 18763)</span></h3>
+   <div class="hgline">351-plant G-Runtz · SOILLESS · Ripening Day 45 · 19 days to harvest · HG 153824</div>
+   <div class="narr"><b>Operational signature:</b> zone 76469 — <b>drip flow meter offline (dfi n=51 / mean=0 / max=0)</b> for nearly the entire window. Drain meter on the same zone is healthy (n=311, daily peak 2,278 mL). Room-level drip EC pulled from <code>pore_ec_drip:zone:room_18763</code> = 3.64 mean, drain EC 1.79 = -1.85 leach. Functional shot count from VWC 30 pp swing: ~6–8 shots/day, ripening-appropriate. EC stack: drip 3.64 → mean pore EC 5.07 (across 4 zones 2.81–7.98 — again 5.2 mS spread, uneven feed) → drain 1.79. Substrate holding +1.43 mS above drip — modest stack, lower than R9 benchmark but directionally correct for ripening. <b>Steering intent inferred:</b> generative-leaning ripening, executing reasonably. <b>AUTOMAIT mismatch:</b> (a) drip flow meter must be repaired before AUTOMAIT enable — current drip volume = 0 mL is a hardware failure not an irrigation choice; (b) zone-to-zone pore EC spread (2.81–7.98) indicates per-zone feed delivery is uneven — AUTOMAIT cannot compensate for upstream emitter inconsistency; (c) CO₂ 996 ppm is starving photosynthesis (per baseline) — irrigation isn't the rate-limiter, CO₂ is.</div>
+ </div>
+</section>
+
+<section id="s5">
+ <h2>5 · Proposed AUTOMAIT Config — Per Room</h2>
+
+ <p class="section-intro">For every active flower room: assumed steering goal (to verify with head grower), a proposed <code>irrigationSchedule</code> JSON shape anchored on the room's <b>measured</b> field capacity, an initial ASI preset, a rollback trigger, and per-room risks. All VWC numbers use <code>minVwc = FC × (1 − target_prop_dryback)</code>. <b>Substrate-aware:</b> COCO bag rooms cap target dryback below 30 pp (Cal/Mg lockout risk because coco CEC binds divalent cations preferentially as the bag dries). <b>ASI direction verified:</b> all presets pick GEN 3–5 (neutral to mildly generative); no recommendation steps toward GEN 6+ (which would be vegetative).</p>
+
+ <!-- R9 first - benchmark -->
+ <div class="room-card benchmark">
+   <h3>Room 9 <span class="rid">(id 18761)</span> · BENCHMARK · FIRST AUTOMAIT BRING-UP</h3>
+   <h4>A. Assumed steering goal</h4>
+   <p style="font-size:13.5px;line-height:1.55">Hold the existing clean ripening signature (36.3 pp dryback, +1.81 mS substrate stack, drain releasing salt cleanly). Default recommendation: <b>do NOT enable AUTOMAIT mid-cohort</b> on R9 — finish the current cycle manually, then bring AUTOMAIT up on Day 1 of the next flip when the substrate is fresh. If cultivator wants to enable now anyway, the schedule below mirrors current behavior. <i>To verify with head grower before implementation.</i></p>
+
+   <h4>B. Proposed <code>irrigationSchedule</code></h4>
+   <p style="font-size:12.5px;color:var(--ink-muted);margin-bottom:6px">FC 70.9%, target 36 pp absolute dryback → safety floor 32% VWC (1 pp below current trough 34.6%).</p>
+<pre>{
+  "phaseType": "FLOWER",
+  "phaseName": "Late Ripening - Benchmark mirror",
+  "p0": {
+    "lightsBuffer_P0_min": 180,
+    "additionalDrybackTarget_pp": 4
+  },
+  "p1": {
+    "shotPct_of_FC": 2.5,
+    "shotIntervalMin": 45,
+    "drainTrigger": "first_drain"
+  },
+  "p2": {
+    "enabled": false,
+    "shotPct_of_FC": 0,
+    "vwcMaintenanceFloor_pct": 0
+  },
+  "p3": {
+    "lightsBuffer_P3_min": 240,
+    "targetDryback_absPp": 36,
+    "minVwc_safetyFloor_pct": 32.0
+  },
+  "guardrails": {
+    "soil_moist_target_max_pct": 72.0,
+    "maxEcpw_mS": 8.5,
+    "drainGoal_pctOfDrip": 10.0
+  }
+}</pre>
+
+   <h4>C. Initial ASI preset</h4>
+   <p style="font-size:13.5px"><b>GEN 4</b> — only if cultivator forces an in-cycle enable. The room is performing at target; neutral-to-slightly-generative preserves the existing shape. Default remains: leave manual through July-13 harvest, then bring AUTOMAIT up on Day 1 of Cycle N+1.</p>
+
+   <h4>D. Rollback trigger</h4>
+   <p style="font-size:13.5px">If VWC trough drops below <b>30%</b> (root viability floor) OR substrate EC climbs above <b>9.5 mS</b> within 24h of enabling AUTOMAIT, revert to manual recipe (set HG <code>irrigationSchedule: null</code>) and notify head grower.</p>
+
+   <h4>E. Per-room risks</h4>
+   <ul style="font-size:13.5px;line-height:1.6">
+     <li>Only risk here is AUTOMAIT changing what's already working. Strong recommendation: exclude from initial in-cycle enable wave and use as visual control.</li>
+     <li>19 days to harvest — disrupting cadence now puts finished-product quality at risk for zero upside.</li>
+     <li>If kept manual through current cycle, R9 IS the validation reference for whether AUTOMAIT changes to R3/R10/R11 produced the intended convergence.</li>
+   </ul>
+ </div>
+
+ <!-- R1 -->
+ <div class="room-card">
+   <h3>Room 1 <span class="rid">(id 18740)</span></h3>
+   <h4>A. Assumed steering goal</h4>
+   <p style="font-size:13.5px;line-height:1.55">Continue the existing generative bias visible in the 35.9 pp dryback signature but moderate it as the room transitions from Mid Flower into Bulking over the next 14 days — target 18–22 pp dryback to protect bulking turgor. <i>To verify with head grower before implementation.</i></p>
+
+   <h4>B. Proposed <code>irrigationSchedule</code></h4>
+   <p style="font-size:12.5px;color:var(--ink-muted);margin-bottom:6px">FC 69.2%, target 20 pp absolute dryback → minVwc floor 49.2% (currently overshooting at 33.3% trough).</p>
+<pre>{
+  "phaseType": "FLOWER",
+  "phaseName": "Mid Flower - Bulking transition",
+  "p0": {
+    "lightsBuffer_P0_min": 90,
+    "additionalDrybackTarget_pp": 3
+  },
+  "p1": {
+    "shotPct_of_FC": 2.0,
+    "shotIntervalMin": 30,
+    "drainTrigger": "first_drain"
+  },
+  "p2": {
+    "enabled": true,
+    "shotPct_of_FC": 1.5,
+    "vwcMaintenanceFloor_pct": 55.0
+  },
+  "p3": {
+    "lightsBuffer_P3_min": 180,
+    "targetDryback_absPp": 20,
+    "minVwc_safetyFloor_pct": 45.0
+  },
+  "guardrails": {
+    "soil_moist_target_max_pct": 70.0,
+    "maxEcpw_mS": 6.5,
+    "drainGoal_pctOfDrip": 15.0
+  }
+}</pre>
+
+   <h4>C. Initial ASI preset</h4>
+   <p style="font-size:13.5px"><b>GEN 4</b> — room already shows generative shape (deep dryback, gentle EC stack). A neutral-to-slightly-generative preset moderates the swing as bulking begins rather than pushing it deeper.</p>
+
+   <h4>D. Rollback trigger</h4>
+   <p style="font-size:13.5px">If VWC trough drops below <b>42%</b> (Ca uptake floor in soilless) OR substrate EC climbs above <b>7.0 mS</b> within 24h, revert to manual and notify head grower.</p>
+
+   <h4>E. Per-room risks</h4>
+   <ul style="font-size:13.5px;line-height:1.6">
+     <li>Drip EC 1.39 is weak for bulking — AUTOMAIT respects drip EC as input. Feed concentration needs to climb to ~2.5–3.0 mS independently before AUTOMAIT can build the substrate stack needed for bulk.</li>
+     <li>252-plant count is moderate; soilless substrate is forgiving but the 35.9 pp baseline dryback is at the upper edge of bulking turgor tolerance.</li>
+     <li>Phase transition mid-window — re-evaluate ASI preset at Day 28 (flip to bulking proper).</li>
+   </ul>
+ </div>
+
+ <!-- R3 -->
+ <div class="room-card">
+   <h3>Room 3 <span class="rid">(id 18742)</span></h3>
+   <h4>A. Assumed steering goal</h4>
+   <p style="font-size:13.5px;line-height:1.55">Hold the existing ripening dryback shape (30 pp) and lean modestly more generative to drive metabolite finish over the last 19 days, while addressing the cold-canopy signature (VPD 0.99, soil 70.7°F) suppressing transpiration. <i>To verify with head grower before implementation.</i></p>
+
+   <h4>B. Proposed <code>irrigationSchedule</code></h4>
+   <p style="font-size:12.5px;color:var(--ink-muted);margin-bottom:6px">FC 64.2%, target 32 pp absolute dryback → minVwc floor 32.2% (currently 34% trough is close to target).</p>
+<pre>{
+  "phaseType": "FLOWER",
+  "phaseName": "Late Ripening",
+  "p0": {
+    "lightsBuffer_P0_min": 150,
+    "additionalDrybackTarget_pp": 4
+  },
+  "p1": {
+    "shotPct_of_FC": 2.5,
+    "shotIntervalMin": 45,
+    "drainTrigger": "first_drain"
+  },
+  "p2": {
+    "enabled": false,
+    "shotPct_of_FC": 0,
+    "vwcMaintenanceFloor_pct": 0
+  },
+  "p3": {
+    "lightsBuffer_P3_min": 240,
+    "targetDryback_absPp": 32,
+    "minVwc_safetyFloor_pct": 30.0
+  },
+  "guardrails": {
+    "soil_moist_target_max_pct": 65.0,
+    "maxEcpw_mS": 8.0,
+    "drainGoal_pctOfDrip": 10.0
+  }
+}</pre>
+
+   <h4>C. Initial ASI preset</h4>
+   <p style="font-size:13.5px"><b>GEN 3</b> — room is already in clean ripening shape; stepping toward GEN 3 (more aggressive than neutral GEN 5) deepens dryback modestly without forcing a swing AUTOMAIT can't deliver if canopy stays cold.</p>
+
+   <h4>D. Rollback trigger</h4>
+   <p style="font-size:13.5px">If VWC trough drops below <b>28%</b> (root viability floor for soilless ripening) OR substrate EC climbs above <b>9.0 mS</b> within 24h, revert to manual and notify head grower.</p>
+
+   <h4>E. Per-room risks</h4>
+   <ul style="font-size:13.5px;line-height:1.6">
+     <li><b>Cold canopy is the rate-limiter, not irrigation</b> — AUTOMAIT cannot drive deeper dryback if the plant isn't transpiring. Climate fix (lift soil temp toward 74°F, push VPD toward 1.4) must happen WITH or BEFORE the schedule change.</li>
+     <li>19 days to harvest leaves no recovery window if the room drifts — high-frequency check-ins (Day +2, +5, +10) required.</li>
+     <li>Drain EC 1.57 vs drip 4.22 shows substantial EC sink in substrate already; over-leaching during ripening burns finish quality.</li>
+   </ul>
+ </div>
+
+ <!-- R10 -->
+ <div class="room-card">
+   <h3>Room 10 <span class="rid">(id 18762)</span></h3>
+   <h4>A. Assumed steering goal</h4>
+   <p style="font-size:13.5px;line-height:1.55">Diagnose the drip-vs-drain EC inversion (drip 1.54 / drain 5.36 — drain HEAVIER than feed, indicating massive substrate EC dump out OR stale drain pan) before enabling AUTOMAIT. The 28 pp dryback shape is acceptable for ripening but the EC signature suggests either feed-tank labeling error, line crossover, or stale drain pan reading. <i>To verify with head grower before implementation.</i></p>
+
+   <h4>B. Proposed <code>irrigationSchedule</code></h4>
+   <p style="font-size:12.5px;color:var(--ink-muted);margin-bottom:6px">FC 63.8%, target 30 pp absolute dryback → minVwc floor 33.8% (currently 35.6% trough is close to target).</p>
+<pre>{
+  "phaseType": "FLOWER",
+  "phaseName": "Late Ripening - Pending EC diagnosis",
+  "p0": {
+    "lightsBuffer_P0_min": 150,
+    "additionalDrybackTarget_pp": 3
+  },
+  "p1": {
+    "shotPct_of_FC": 2.5,
+    "shotIntervalMin": 45,
+    "drainTrigger": "first_drain"
+  },
+  "p2": {
+    "enabled": false,
+    "shotPct_of_FC": 0,
+    "vwcMaintenanceFloor_pct": 0
+  },
+  "p3": {
+    "lightsBuffer_P3_min": 210,
+    "targetDryback_absPp": 30,
+    "minVwc_safetyFloor_pct": 32.0
+  },
+  "guardrails": {
+    "soil_moist_target_max_pct": 65.0,
+    "maxEcpw_mS": 7.5,
+    "drainGoal_pctOfDrip": 10.0
+  }
+}</pre>
+
+   <h4>C. Initial ASI preset</h4>
+   <p style="font-size:13.5px"><b>GEN 4</b> — slight generative bias to deepen dryback the small amount needed to hit ripening target, but ONLY AFTER drip EC anomaly is resolved. Do not enable until feed line is verified.</p>
+
+   <h4>D. Rollback trigger</h4>
+   <p style="font-size:13.5px">If VWC trough drops below <b>30%</b> OR if drain EC &gt; drip EC by more than <b>2.0 mS persists for 12h</b> after enable (confirming inversion is real, not sensor glitch), revert to manual.</p>
+
+   <h4>E. Per-room risks</h4>
+   <ul style="font-size:13.5px;line-height:1.6">
+     <li><b>EC inversion is the #1 risk</b> — drain EC 3.5× drip EC means either (a) substrate dumping accumulated stack (could be intentional ripening leach), (b) feed tank mislabel / line crossover, (c) drain sample contamination. AUTOMAIT respects drip EC as input — if input is wrong, engine starves the plant.</li>
+     <li>19 days to harvest, 312 plants — quality risk window is short.</li>
+     <li>If the EC pattern is actually a deliberate leach-down ripening step the cultivator chose, AUTOMAIT is the WRONG tool; manual is correct.</li>
+   </ul>
+ </div>
+
+ <!-- R11 -->
+ <div class="room-card">
+   <h3>Room 11 <span class="rid">(id 18763)</span></h3>
+   <h4>A. Assumed steering goal</h4>
+   <p style="font-size:13.5px;line-height:1.55">Mirror the R9 benchmark — this room has the right dryback shape (30 pp) and a clean EC stack-up signature; the bottleneck is CO₂ starvation (996 ppm) suppressing photosynthesis, not irrigation. Use AUTOMAIT only to hold what's working while CO₂ supplementation is fixed. <i>To verify with head grower before implementation.</i></p>
+
+   <h4>B. Proposed <code>irrigationSchedule</code></h4>
+   <p style="font-size:12.5px;color:var(--ink-muted);margin-bottom:6px">FC 70.7%, target 32 pp absolute dryback → minVwc floor 38.7% (currently 40.7% trough is just inside target).</p>
+<pre>{
+  "phaseType": "FLOWER",
+  "phaseName": "Late Ripening",
+  "p0": {
+    "lightsBuffer_P0_min": 150,
+    "additionalDrybackTarget_pp": 3
+  },
+  "p1": {
+    "shotPct_of_FC": 2.5,
+    "shotIntervalMin": 45,
+    "drainTrigger": "first_drain"
+  },
+  "p2": {
+    "enabled": false,
+    "shotPct_of_FC": 0,
+    "vwcMaintenanceFloor_pct": 0
+  },
+  "p3": {
+    "lightsBuffer_P3_min": 210,
+    "targetDryback_absPp": 32,
+    "minVwc_safetyFloor_pct": 36.0
+  },
+  "guardrails": {
+    "soil_moist_target_max_pct": 71.0,
+    "maxEcpw_mS": 8.0,
+    "drainGoal_pctOfDrip": 12.0
+  }
+}</pre>
+
+   <h4>C. Initial ASI preset</h4>
+   <p style="font-size:13.5px"><b>GEN 4</b> — slight generative bias to nudge dryback from 30 pp toward 32 pp; the existing shape is healthy and only needs preservation, not aggression.</p>
+
+   <h4>D. Rollback trigger</h4>
+   <p style="font-size:13.5px">If VWC trough drops below <b>34%</b> (root viability floor) OR substrate EC climbs above <b>9.0 mS</b> within 24h, revert to manual.</p>
+
+   <h4>E. Per-room risks</h4>
+   <ul style="font-size:13.5px;line-height:1.6">
+     <li><b>CO₂ starvation is the rate-limiter, not irrigation.</b> AUTOMAIT cannot improve yield if photosynthesis is capped. CO₂ fix (verify supplementation system, target 1100–1400 ppm during photoperiod) must run in parallel.</li>
+     <li>351 plants is the highest count in the ripening cohort — small per-plant changes scale up. Verify sensor placement is representative.</li>
+     <li>19 days to harvest — limited recovery window.</li>
+   </ul>
+ </div>
+
+ <!-- R2 - priority -->
+ <div class="room-card priority coco">
+   <h3>Room 2 <span class="rid">(id 18741)</span> · COCO 1.5gal · DEFER TO PHASE 4</h3>
+   <h4>A. Assumed steering goal</h4>
+   <p style="font-size:13.5px;line-height:1.55">Eliminate the channeling/leaching signature (-3.08 EC stack) and rebuild root-zone EC by switching to many small shots that wet the bag uniformly, while capping dryback below the Cal/Mg lockout threshold for coco. <i>To verify with head grower before implementation.</i></p>
+
+   <h4>B. Proposed <code>irrigationSchedule</code></h4>
+   <p style="font-size:12.5px;color:var(--ink-muted);margin-bottom:6px">FC 74.6%, target 18 pp dryback (coco-capped) → minVwc floor 56.6% (currently 37.6% trough is FAR too deep for coco — Cal/Mg lockout risk).</p>
+<pre>{
+  "phaseType": "FLOWER",
+  "phaseName": "Mid Flower - Bulking transition (COCO)",
+  "p0": {
+    "lightsBuffer_P0_min": 60,
+    "additionalDrybackTarget_pp": 2
+  },
+  "p1": {
+    "shotPct_of_FC": 1.5,
+    "shotIntervalMin": 20,
+    "drainTrigger": "shots:8"
+  },
+  "p2": {
+    "enabled": true,
+    "shotPct_of_FC": 1.0,
+    "vwcMaintenanceFloor_pct": 62.0
+  },
+  "p3": {
+    "lightsBuffer_P3_min": 120,
+    "targetDryback_absPp": 18,
+    "minVwc_safetyFloor_pct": 54.0
+  },
+  "guardrails": {
+    "soil_moist_target_max_pct": 76.0,
+    "maxEcpw_mS": 5.5,
+    "drainGoal_pctOfDrip": 20.0
+  }
+}</pre>
+
+   <h4>C. Initial ASI preset</h4>
+   <p style="font-size:13.5px"><b>GEN 5 (neutral)</b> — coco bag is already channeling and leaching at this dryback depth; a generative preset would deepen the swing and worsen Cal/Mg lockout. Neutral lets AUTOMAIT rebuild the substrate EC stack with small frequent shots first.</p>
+
+   <h4>D. Rollback trigger</h4>
+   <p style="font-size:13.5px">If VWC trough drops below <b>52%</b> (Cal/Mg lockout floor in 1.5gal coco) OR drain EC drops below drip EC by more than <b>4.0 mS</b> within 24h (worsening leach), revert to manual IMMEDIATELY and notify head grower.</p>
+
+   <h4>E. Per-room risks</h4>
+   <ul style="font-size:13.5px;line-height:1.6">
+     <li><b>1188 plants in coco</b> — largest room. Channeling probably has a physical root cause (drip stake alignment, bag compaction, uneven flow). AUTOMAIT will NOT fix dripper placement; walk-through BEFORE enable is mandatory.</li>
+     <li>Coco CEC binds Ca/Mg preferentially as bag dries — current 37 pp dryback is squarely in the lockout zone. Capping at 18 pp is non-negotiable.</li>
+     <li>Drip EC 5.94 is high but drain 2.86 shows it's not making it to the root zone — confirm dripper output uniformity by emitter check before flipping AUTOMAIT on.</li>
+     <li>Defer to Phase 4 (Cycle N+1 weeks 5–6) — coco is last because substrate physics + baseline channeling = highest failure cost.</li>
+   </ul>
+ </div>
+
+ <!-- R5 - priority coco -->
+ <div class="room-card priority coco">
+   <h3>Room 5 <span class="rid">(id 18757)</span> · COCO 1.5gal · HARDWARE PROBLEM FIRST</h3>
+   <h4>A. Assumed steering goal</h4>
+   <p style="font-size:13.5px;line-height:1.55">Stop the catastrophic 53 pp dryback swing that is almost certainly driven by physical channeling, restore even bag saturation with small frequent shots, and cap dryback well inside the coco safe range. <i>To verify with head grower before implementation.</i></p>
+
+   <h4>B. Proposed <code>irrigationSchedule</code></h4>
+   <p style="font-size:12.5px;color:var(--ink-muted);margin-bottom:6px">FC 75.6%, target 15 pp dryback (coco-capped, channeling-aware) → minVwc floor 60.6% (currently 22.4% trough is critical).</p>
+<pre>{
+  "phaseType": "FLOWER",
+  "phaseName": "Mid Flower - Recovery (COCO)",
+  "p0": {
+    "lightsBuffer_P0_min": 45,
+    "additionalDrybackTarget_pp": 1
+  },
+  "p1": {
+    "shotPct_of_FC": 1.0,
+    "shotIntervalMin": 15,
+    "drainTrigger": "shots:10"
+  },
+  "p2": {
+    "enabled": true,
+    "shotPct_of_FC": 1.0,
+    "vwcMaintenanceFloor_pct": 65.0
+  },
+  "p3": {
+    "lightsBuffer_P3_min": 90,
+    "targetDryback_absPp": 15,
+    "minVwc_safetyFloor_pct": 58.0
+  },
+  "guardrails": {
+    "soil_moist_target_max_pct": 78.0,
+    "maxEcpw_mS": 5.5,
+    "drainGoal_pctOfDrip": 25.0
+  }
+}</pre>
+
+   <h4>C. Initial ASI preset</h4>
+   <p style="font-size:13.5px"><b>GEN 5 (neutral)</b> — this room MUST NOT receive a generative preset until channeling is mechanically diagnosed and fixed; neutral lets AUTOMAIT establish even saturation as the baseline.</p>
+
+   <h4>D. Rollback trigger</h4>
+   <p style="font-size:13.5px">If VWC trough drops below <b>55%</b> (severe Cal/Mg lockout zone for coco) OR a single AUTOMAIT P1 phase fails to drive drain at the configured shot count within 24h (confirming channeling persists), revert to manual IMMEDIATELY and notify head grower.</p>
+
+   <h4>E. Per-room risks</h4>
+   <ul style="font-size:13.5px;line-height:1.6">
+     <li><b>THIS ROOM IS A HARDWARE PROBLEM FIRST.</b> 53 pp dryback in coco is not a steering choice — it's physical (channeling, dead drippers, uneven bag fill, or substrate sensor placed in dry pocket). AUTOMAIT cannot be enabled until walk-through diagnoses the cause.</li>
+     <li>288 plants in coco at 22% VWC trough may have already taken Cal/Mg uptake damage — visible deficiency may appear in the next 5–7 days regardless of fix.</li>
+     <li>Substrate sensor reliability check needed — single TEROS-12 reading 22% in a 1.5gal coco bag is either real (catastrophic) or sensor-in-channel (artifact). Cross-check against a second probe before any change.</li>
+     <li>Defer to Phase 4 (Cycle N+1 weeks 5–6) — only after R2 has proven coco AUTOMAIT works without leaf-tip burn or Cal/Mg symptom.</li>
+   </ul>
+ </div>
+</section>
+
+<section id="s6">
+ <h2>6 · Cross-Room Risk Synthesis + Staged Rollout</h2>
+
+ <h3>6.1 · Cross-room risks</h3>
+
+ <div class="verdict bad">
+   <div class="v-head">Substrate-physics risk · HIGH</div>
+   <span>R2 and R5 are 1.5gal coco bags; the other five active rooms are SOILLESS rockwool. AUTOMAIT recipes are not substrate-aware out of the box — if a SOILLESS recipe (peak VWC 65%, trough 35%, 30 pp dryback target) gets pushed to R2 or R5, coco's high CEC + low forgiveness will accelerate Cal/Mg lockout already implied by R2's drain–drip delta of -3.08 mS. R5's current 53 pp swing in COCO is the canary: applying a generative SOILLESS recipe here would compound channeling, not correct it. <b>Coco rooms need their own recipe family</b> with shallower dryback (12–18 pp), higher shot count, tighter P1 runoff gates.</span>
+ </div>
+
+ <div class="verdict bad">
+   <div class="v-head">Cohort-synchronization risk · HIGH</div>
+   <span>Four May-10 rooms (R3, R9, R10, R11) are 19 days from a coordinated July-13 harvest. Enabling AUTOMAIT mid-ripening means the controller takes over P3 depth and morning re-wet timing on a crop already metabolically committed. The cycle won't tolerate a coordinated transpiration shift — and if the controller mis-fires on one of four sister rooms, the cohort goes out of phase. <b>Defer all May-10 cohort AUTOMAIT to Cycle N+1 after July-13.</b> Non-negotiable per the project's "agronomic mistakes compound" principle.</span>
+ </div>
+
+ <div class="verdict warn">
+   <div class="v-head">Sensor reliability risk · MEDIUM, growing</div>
+   <span>Room 6's 2 silent h421 climate sensors (per <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_Wirepas_Mesh_Health_2026-06-24.html" style="color:var(--app-blue)">today's mesh audit</a>) are a leading indicator. AUTOMAIT mis-fires (or no-fires) on stale telemetry — a 30-minute substrate-EC outage during P1 means the controller can't close the runoff gate and the operator won't know. <b>Pre-AUTOMAIT mandatory check:</b> 14-day rolling sensor uptime ≥ 99% per room for substrate VWC, substrate EC, climate temp/RH, CO₂. No exceptions. Also: drip flow meters offline on R3 and R11, drain meter blocked/offline on R10 — all must be restored before those rooms can run closed-loop.</span>
+ </div>
+
+ <div class="verdict bad">
+   <div class="v-head">Cultivator-readiness risk · BLOCKING</div>
+   <span>Zero HK Cassandra HGs reference either of the 2 saved recipes (151496 "Flower 63 DAYS" / 151494 "Flower 64 DAYS"). AROYA journal has no documented steering intent (generative vs vegetative, per phase, per room) for ANY room. AUTOMAIT requires an explicit "what is this room trying to do" before it can decide what to fire. <b>This is the first blocker — everything else waits on it.</b></span>
+ </div>
+
+ <div class="verdict warn">
+   <div class="v-head">Operational compounding risk · MEDIUM</div>
+   <span>Per Cian's framing: agronomic mistakes compound through the 9-week cycle. A P1 mis-fire on Day 7 becomes a Cal/Mg lockout by Day 21 becomes a yield-down at harvest. Enabling AUTOMAIT on 5 rooms the same day during an active cohort multiplies the surface area for compounded failure with no clean rollback. <b>Doctrine:</b> one room at a time, verification gate between rooms, no parallel enablements within a cohort. Phases below enforce this structurally.</span>
+ </div>
+
+ <h3>6.2 · Staged rollout — the order-of-operations</h3>
+ <div class="table-wrap"><table>
+   <tr>
+     <th>Phase</th><th>Room(s)</th><th>When</th><th>Prerequisites</th><th>Success criteria</th><th>Advance gate</th><th>Rollback trigger</th>
+   </tr>
+   <tr>
+     <td><b>0</b></td>
+     <td>All 7 active rooms (cultivator-side only)</td>
+     <td>Now → next 7 days</td>
+     <td>None — pre-AUTOMAIT</td>
+     <td>R2 P1 shot count multiplied (smaller shots, more of them) · R5 emitter flow uniformity within ±10% post-walkdown · R10 ripening intent decision logged in AROYA journal · R3 VPD reaches 1.15+ via temperature lift · R11 CO₂ reaches 1100+ ppm during photoperiod</td>
+     <td>All 5 cultivator-side fixes verified by Cian on site</td>
+     <td>N/A — no AUTOMAIT firing yet</td>
+   </tr>
+   <tr style="background:var(--good-bg)">
+     <td><b>1</b></td>
+     <td><b>R9 (id 18761) — benchmark first</b></td>
+     <td>Cycle N+1, Day 1 after July-13 flip</td>
+     <td>Controller wired and verified · Steering intent documented in journal · Recipe assigned · R9 sensor uptime ≥99% over prior 14d · R9 substrate EC baseline ≤ 6.0 mS at flip</td>
+     <td>First P1 fires within 90s of lights-on · P1→P2 closes on first measurable drain (≥2% of shot volume) · trough VWC within 3 pp of recipe target · overnight dryback within 5 pp of recipe target · no Cal/Mg leaf symptoms by Day 7</td>
+     <td>7 consecutive days of clean fires, no manual overrides</td>
+     <td>Any single day with &gt;2 mis-fires OR substrate EC drift &gt;1.5 mS from target OR drain EC delta &lt; -2.0 mS → revert R9 to manual, hold all subsequent phases</td>
+   </tr>
+   <tr>
+     <td><b>2</b></td>
+     <td>R1 (id 18740)</td>
+     <td>Cycle N+1, Week 2 after R9 gate passed</td>
+     <td>R9 gate passed · R1 sensor uptime ≥99% · R1 recipe assigned (SOILLESS, generative early-flower bias given current 36 pp dryback indicates room runs hot) · feed EC corrected to ≥2.8 mS</td>
+     <td>Same as R9 + feed EC correction verified within first 3 P1 cycles</td>
+     <td>7 consecutive clean days, R1 substrate EC trajectory matches recipe intent</td>
+     <td>Same as R9</td>
+   </tr>
+   <tr>
+     <td><b>3</b></td>
+     <td>R3 → R10 → R11 (staggered, 48h between each)</td>
+     <td>Cycle N+1, Weeks 3–4</td>
+     <td>R9 + R1 both holding clean · R3 climate fix verified (VPD ≥1.15, soil ≥72°F) · R11 CO₂ fix verified (≥1100 ppm during photoperiod) · R10 intent decision implemented in recipe · drip/drain meters restored on all three</td>
+     <td>Per room: R9 gates plus the room-specific fix is stable under AUTOMAIT control (controller doesn't fight climate setpoint)</td>
+     <td>Each room must hold 5 clean days before next room enables</td>
+     <td>Any one of R3/R10/R11 fails → halt remaining SOILLESS bring-ups, hold COCO indefinitely</td>
+   </tr>
+   <tr style="background:var(--warn-bg)">
+     <td><b>4</b></td>
+     <td>R2 then R5 (COCO — sequential, 7 days apart)</td>
+     <td>Cycle N+1, Weeks 5–6</td>
+     <td>ALL SOILLESS rooms holding clean for 14+ days · coco-specific recipe authored and reviewed · R2 P1 shot regime proven manually for full prior cycle · R5 emitter uniformity verified post-walkdown · drain EC delta ≥ -1.0 mS (not -3.08) at flip</td>
+     <td>Trough VWC within 2 pp of coco recipe target (tighter than SOILLESS) · drain EC delta stays ≥ -1.5 mS · no leaf-tip burn · no interveinal chlorosis by Day 14</td>
+     <td>R2 holds 7 clean days before R5 enables; R5 holds 7 clean days before phase closes</td>
+     <td>Any drain EC delta &lt; -2.5 mS OR visible Cal/Mg symptom → revert to manual, defer COCO AUTOMAIT another full cycle</td>
+   </tr>
+   <tr>
+     <td><b>5</b></td>
+     <td>R4, R6, R8, veg room</td>
+     <td>Cycle N+2 as HGs are assigned</td>
+     <td>Room 6 silent h421s resolved + 14d uptime verified BEFORE any HG flips into R6 · each room follows R9-pattern bring-up (Day 1 of new HG, not mid-cycle)</td>
+     <td>Same as R9 baseline</td>
+     <td>Same as Phase 1</td>
+     <td>Same as Phase 1</td>
+   </tr>
+ </table></div>
+
+ <h3>6.3 · Why this sequence holds up</h3>
+ <ul style="font-size:13.5px;line-height:1.7">
+   <li><b>No mid-cohort enablement.</b> Every AUTOMAIT bring-up starts at Day 1 of a fresh HG flip — the controller learns the substrate from saturation, not from mid-cycle.</li>
+   <li><b>One room at a time within a phase.</b> Phase-to-phase requires the prior phase to hold its success criteria for the gate window.</li>
+   <li><b>COCO last.</b> Coco substrate physics + the baseline channeling/leaching signature on R2 + R5 = highest failure cost; SOILLESS proves the playbook first.</li>
+   <li><b>Sensor health is a hard prerequisite.</b> Not a nice-to-have — drip/drain meters and climate stack uptime gate every phase.</li>
+   <li><b>R9 is reserved as the visual control through Phase 0–1.</b> Letting it finish the current cycle manually preserves the dial-point that calibrates R3/R10/R11 in Phase 3.</li>
+ </ul>
+</section>
+
+<section id="s7">
+ <h2>7 · Open Questions for Cian + Customer</h2>
+
+ <p class="section-intro">Blockers Cian needs to resolve with HK Cassandra before any AUTOMAIT field gets written to the AROYA portal. Ranked by urgency.</p>
+
+ <div class="rec">
+   <span class="owner customer">CUSTOMER · BLOCKER 1</span>
+   <div class="raction">Document steering intent per room in the AROYA journal — generative vs vegetative, per phase, with target dryback / shot count / substrate EC trajectory.</div>
+   <div class="rwhy">AUTOMAIT cannot be configured without this. Foundational; blocks Phase 1 entirely. Without a documented "this room is going for [X yield / Y terpene / Z generative push]", the controller has nothing to decide against. <b>Owner:</b> HK Cassandra head grower + Cian. <b>Deadline:</b> before July-13 harvest.</div>
+ </div>
+
+ <div class="rec">
+   <span class="owner customer">CUSTOMER · BLOCKER 2</span>
+   <div class="raction">Confirm recipe assignments and author a coco-specific recipe.</div>
+   <div class="rwhy">Facility has 2 saved recipes (151496 "Flower 63 DAYS", 151494 "Flower 64 DAYS") but zero HGs reference them. Neither is differentiated by substrate. <b>Needs:</b> 1 SOILLESS recipe + 1 COCO recipe minimum, both with explicit P0/P1/P2/P3 targets matching the documented intent. Blocks Phase 1.</div>
+ </div>
+
+ <div class="rec">
+   <span class="owner customer">CUSTOMER · BLOCKER 3</span>
+   <div class="raction">R5 emitter walkdown + R2 P1 shot regime fix.</div>
+   <div class="rwhy">Substrate-physics blockers. Until R5's 53 pp swing is mechanically resolved (emitter flow uniformity, bag-to-bag VWC variance) and R2's drain–drip delta is brought from -3.08 mS into the -1.0 to -1.5 mS range via multiplied P1 shot count, AUTOMAIT cannot reliably hand off either room. Blocks Phase 4. <b>Deadline:</b> within current cycle (next 19 days) so the verification can run before Cycle N+1 starts.</div>
+ </div>
+
+ <div class="rec">
+   <span class="owner customer">CUSTOMER · URGENT</span>
+   <div class="raction">Decide R10 ripening intent THIS WEEK.</div>
+   <div class="rwhy">R10 has drip 1.54 mS on a ripening room — is the operator ramping for terpene drive (raise feed to 3.0+ mS over 5 days) or flushing for finish? Won't survive as an open question into next cycle; the recipe authoring in Blocker 2 depends on the answer. <b>Deadline:</b> by end of this week.</div>
+ </div>
+
+ <div class="rec">
+   <span class="owner cian">CIAN · OPERATIONS</span>
+   <div class="raction">Confirm controller procurement plan and target install date.</div>
+   <div class="rwhy">The universal blocker: <code>irrigationControllers: []</code> on every room. AUTOMAIT cannot fire on any room until a Growlink/Modbus/AROYA-supported controller is wired and linked. Procurement + install + commissioning is the long-pole — Phase 1 cannot start until at least R9's controller is online. <b>Action:</b> confirm with HK Cassandra what's purchased and when it lands; if nothing is on order, raise it as the gating step.</div>
+ </div>
+
+ <div class="rec">
+   <span class="owner cian">CIAN · TELEMETRY</span>
+   <div class="raction">Restore drip flow meter on R3 + R11, drain meter on R10.</div>
+   <div class="rwhy">Per Agent 2 drip/drain pull: R3 drip meter offline ~8/14 days · R11 drip meter offline (n=51, mean=0) · R10 drain meter reading stale (37 mL/day vs 2510 mL drip = ~1.5% drain). AUTOMAIT cannot run closed-loop without trustworthy drip+drain on each instrumented zone. Field service ticket before Phase 3 bring-ups.</div>
+ </div>
+
+ <div class="rec">
+   <span class="owner cian">CIAN · NEXT CYCLE</span>
+   <div class="raction">Resolve Room 6 silent h421s before any HG flips into R6.</div>
+   <div class="rwhy">Mesh audit flagged 2 silent climate sensors. Not blocking today (no active HG in R6), but blocks Phase 5 for R6 specifically. Coordinate with the mesh audit's remediation plan.</div>
+ </div>
+
+ <div class="rec">
+   <span class="owner grower">HEAD GROWER · DATA</span>
+   <div class="raction">Verify drip EC readings on R1 (1.39 mS) and R10 (1.54 mS) aren't stale-line artifacts.</div>
+   <div class="rwhy">Both rooms show drip EC well below any reasonable mid-flower / ripening feed setpoint. Either the cultivator is intentionally running a low-EC recipe (in which case document it as intent) or the in-line drip EC probe is reading stale water from a non-flowing section. AUTOMAIT will respect drip EC as input — if it's wrong, the engine starves the plant.</div>
+ </div>
+</section>
+
+<section id="s8">
+ <h2>8 · Cross-References</h2>
+ <ul style="font-size:14px;line-height:1.8">
+   <li><b>Companion 2-week agronomic audit (baseline) — commit a51ca78:</b> <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_2wk_Audit_2026-06-10_to_2026-06-24.html" style="color:var(--app-blue)">HK Cassandra 2wk Audit 2026-06-10 → 2026-06-24</a> — this plan extends but does not restate per-room agronomic findings. Read the baseline first.</li>
+   <li><b>Companion mesh-health audit (Wirepas):</b> <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_Wirepas_Mesh_Health_2026-06-24.html" style="color:var(--app-blue)">HK Cassandra Wirepas Mesh Health 2026-06-24</a> — Room 6's 2 silent h421s flagged here block Phase 5 for R6.</li>
+   <li><b>Project rule on irrigation framing:</b> 4-phase day (P0/P1/P2/P3), absolute pp dryback, practitioner vocabulary — per CLAUDE.md irrigation block + <code>reference_irrigation-phase-targets.md</code>.</li>
+   <li><b>ASI direction reference:</b> <code>reference_aroya-asi-slider-direction.md</code> — GEN 1 = MOST aggressive, step DOWN for deeper dryback.</li>
+   <li><b>AUTOMAIT audit methodology:</b> <code>feedback_automait-audit-methodology.md</code> — measured FC anchor, absolute pp first, customer goal as evaluation lens.</li>
+ </ul>
+</section>
+
+<section id="s9">
+ <h2>9 · Appendix — Data Gaps &amp; Methodology Notes</h2>
+
+ <h3>9.1 · Data gaps encountered</h3>
+ <ul style="font-size:13.5px;line-height:1.7">
+   <li><b>SPA browser bridge detached during R11 (18763) room-config pull</b> — after 4 retries the bridge stayed down. R11's readiness row in §3 is derived from facility-level substrate map + universal pattern across other 10 rooms. Re-pull when the app.aroya.io tab is refreshed if confirmation matters. Agent 1 also logged ~5 stale-page-identity 404s and 2 "Detached while handling command" events across other rooms (all recovered on retry except R11).</li>
+   <li><b><code>count_irrigation_events</code> returns 0 for every room</b> — <code>drip_volume</code> event-deltable series isn't exposed for this facility via <code>public_api</code>. Known AROYA SDK gap, not a facility hardware issue. Shot counts in §4 derived from VWC step-up signatures (baseline audit) rather than direct event counting.</li>
+   <li><b><code>spa_get_target_ranges</code> returns empty</b> for facility 4576 — no per-room or per-HG guardrails configured anywhere. Either a permissions issue or genuinely empty. Either way, AUTOMAIT enablement will require authoring fresh target ranges from the proposed schedules in §5.</li>
+   <li><b>Drip/drain instrumentation is single-zone per room</b> — every active flower room has one DRIP-calibrated ter15 and one DRAIN-calibrated ter15. Whole-room drip volume requires either (a) manifold-level metering install, or (b) explicit single-zone-as-proxy confidence flag in the AUTOMAIT enable docs.</li>
+   <li><b>Drip flow meters offline:</b> R3 ~8/14 days, R11 nearly entire window. R10 drain reading stale (37 mL/day). All three must be restored before those rooms can run closed-loop.</li>
+   <li><b>R6 silent h421 climate sensors</b> per today's mesh audit. R6 currently has no active HG so doesn't block today, but blocks Phase 5 for R6 specifically.</li>
+ </ul>
+
+ <h3>9.2 · Methodology — how readiness was scored</h3>
+ <p style="font-size:13.5px;line-height:1.6">For each of the 11 rooms, Agent 1 (parallel sub-agent) called <code>mcp__aroya__spa_get_room_config(facility=4576, room=&lt;id&gt;, window=30)</code> strictly sequentially (per <code>feedback_spa-config-not-parallel-safe.md</code>) and extracted: substrate VWC sensor count from <code>devices[]</code> (ter15 modelKey, calibrationType NONE counted as substrate); controller wiring from <code>room.irrigationControllers</code> list; light schedule from <code>currentLightSchedule</code>; substrate type from <code>substrateConfig</code> / <code>substrateType</code>; target ranges from <code>target_ranges</code> response field; recipe assignment cross-checked against <code>spa_get_recipes</code> (facility-level) and HG <code>phases_json[].recipe</code> linkage. Tier assignment used the table in §2.</p>
+
+ <h3>9.3 · Methodology — how proposed configs were derived</h3>
+ <p style="font-size:13.5px;line-height:1.6">For each active flower room, Agent 3 (parallel sub-agent) built the proposed <code>irrigationSchedule</code> from: (a) measured FC from baseline audit 14-day peak VWC; (b) target absolute pp dryback per phase per substrate (SOILLESS ripening 25–35 pp, mid-flower bulking 12–18 pp; COCO bag capped at 12–18 pp regardless of phase due to Cal/Mg lockout physics); (c) <code>minVwc = FC × (1 − target_prop_dryback)</code>. ASI presets verified against <code>reference_aroya-asi-slider-direction.md</code> — pre-publish grep on Agent 3's output confirmed no "step up", "ASI 7", "ASI 8", or "ASI 9" framings (inverted-direction signatures).</p>
+
+ <h3>9.4 · Methodology — staged rollout sequencing</h3>
+ <p style="font-size:13.5px;line-height:1.6">Sequence prioritizes: (1) cultivator-side fixes before any AUTOMAIT firing (Phase 0); (2) SOILLESS before COCO (substrate physics — coco's high CEC + low forgiveness makes channeling/leaching the highest-cost failure mode); (3) cleanest signature first (R9 benchmark before R1 before R3/R10/R11); (4) one room per phase with verification gates between rooms (per Cian's "agronomic mistakes compound" framing); (5) all May-10 cohort deferred to Cycle N+1 to avoid mid-cohort transpiration-shift risk on 4 sister rooms 19 days from a coordinated harvest.</p>
+
+ <h3>9.5 · Why this is plan-only</h3>
+ <p style="font-size:13.5px;line-height:1.6">No AUTOMAIT field will be written to the AROYA portal as part of this report. Per the request: Cian approves the plan, then implements room-by-room with the gates in §6.2 between each phase. Every proposed <code>irrigationSchedule</code> JSON in §5 is a draft for review, not a payload.</p>
+</section>
+
+<footer>
+HK Cassandra LLC · AUTOMAIT Readiness &amp; Implementation Plan · 2026-06-24 · AROYA by Addium · Cultivation Intelligence<br>
+Plan-only. No AUTOMAIT fields will be written without Cian's approval. Per-room implementation gated on §6.2 success criteria.
+</footer>
+
+</div></body></html>
