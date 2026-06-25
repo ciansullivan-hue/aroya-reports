@@ -48,7 +48,7 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 </header>
 <div class="kicker">AROYA &middot; R5 AUTOMAIT Operational Audit + Predictive Forecast</div>
 <h1>HK Cassandra LLC &middot; R5 Blue Nerdz (COCO 1.5gal) &middot; AUTOMAIT operational audit + 5-day forecast</h1>
-<p class="lede">AUTOMAIT controller <code>3012</code> is live on Room 5 as of 2026-06-25 18:20Z, running schedule id <code>44198</code> on <strong>Zone 2 only</strong>. This audit covers the 14d cultivation context (2026-06-11 -&gt; 2026-06-25, hourly bins), the installed AUTOMAIT configuration pulled live from <code>api.aroya.io</code>, the sensor-swap diagnostic on the room&#39;s drip/drain EC probes, and a 5-day predictive forecast derived from the installed VEG 10 baseline.</p>
+<p class="lede"><strong>R5 emitters run 0.5 GPH (not the AROYA-standard 0.3 GPH).</strong> Two emitters per plant = <strong>1.0 GPH per plant</strong> &mdash; 67% above the AROYA-standard 0.6 GPH/plant. At the installed 240 s shot, each shot delivers <strong>0.067 gal/plant</strong> &mdash; substantially more water per shot than 1.5 gal coco can absorb laterally. Water concentrates in drip-cone zones beneath each emitter and exits via drip channels before spreading: channeling is confirmed, and the 22.4 % trough in the 14-day substrate VWC trace is the downstream signature. AUTOMAIT controller <code>3012</code> is live on Room 5 as of 2026-06-25 18:20Z, running schedule id <code>44198</code> at ASI preset <strong>VEG 10</strong> on <strong>Zone 2 only</strong>; the AUTOMAIT logic is sound, but the per-shot volume is the upstream lever that must be corrected before ASI tuning can be read cleanly. The forecast section adds a <strong>240 s &rarr; 144 s shot duration</strong> scenario as the recommended near-term remediation.</p>
 <div class="banner warn">
   <strong>Scope: AUTOMAIT runs on Zone 2 only (385 of 770 sq ft).</strong> Schedule 44198 targets zone id <code>81612</code> (Zone 2). Zone 1 (id <code>76459</code>, 385 sq ft) remains on manual irrigation &mdash; controller port 7 fires under operator control, port 31 fires under AUTOMAIT. R5 is effectively a side-by-side comparison of Zone-2-AUTOMAIT vs Zone-1-manual within the same room, on the same Blue Nerdz cohort, under the same light schedule. Treat the steering read accordingly: divergence between zones is the test signal, not a problem.
 </div>
@@ -60,7 +60,7 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
   <div><div class="m-lbl">Active HG</div><div class="m-val">155043 Blue Nerdz</div></div>
   <div><div class="m-lbl">Phase</div><div class="m-val">Mid Flower D1 (flip 2026-06-03)</div></div>
   <div><div class="m-lbl">Plants / zones</div><div class="m-val">288 plants &middot; 2 zones (76459, 81612)</div></div>
-  <div><div class="m-lbl">Substrate</div><div class="m-val">COCO 1.5 gal bag &middot; 2 x 0.3 GPH emitters</div></div>
+  <div><div class="m-lbl">Substrate / emitters</div><div class="m-val">COCO 1.5 gal bag &middot; 2 x <strong>0.5 GPH</strong> emitters (1.0 GPH/plant, +67% vs AROYA std)</div></div>
   <div><div class="m-lbl">AUTOMAIT controller</div><div class="m-val"><code>3012</code> &middot; <span class="pill ok">Wired 2026-06-24</span></div></div>
   <div><div class="m-lbl">Cross-device sync</div><div class="m-val"><span id="sync-pill" class="pill info">Live</span></div></div>
 </div>
@@ -98,13 +98,26 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
     <div><div class="c-lbl">maxFillMinutes</div><div class="c-val">165</div></div>
     <div><div class="c-lbl">substrateType (room)</div><div class="c-val">SOILLESS</div></div>
     <div><div class="c-lbl">substrateConfig</div><div class="c-val">null (not filled)</div></div>
-    <div><div class="c-lbl">emittersPerPlant</div><div class="c-val">2 x 0.3 GPH (room-level)</div></div>
+    <div><div class="c-lbl">emittersPerPlant (installed)</div><div class="c-val">2 x 0.5 GPH (1.0 GPH/plant)</div></div>
     <div><div class="c-lbl">light startTime &middot; photoperiod</div><div class="c-val">04:00 &middot; 12/12 (off 16:00)</div></div>
     <div><div class="c-lbl">scheduleType</div><div class="c-val">GENERAL</div></div>
     <div><div class="c-lbl">AUTOMAIT-driven flag</div><div class="c-val">true</div></div>
   </div>
   <div class="banner">
-    <strong>Read of the installed config:</strong> VEG 10 is the <em>most vegetative</em> end of the ASI slider &mdash; the safest, lowest-stress preset available. Combined with <code>drainGoal: 5%</code> (minimal leaching), <code>lightsBuffer_P0: 60 min</code> (1 hour after lights-on before first shot) and <code>lightsBuffer_P3: 1 min</code> (last shot 1 minute before lights-off, so the substrate stays near FC overnight), the operator has chosen the gentlest possible pilot config. The <code>maxEcpw: 9 mS</code> ceiling is high, so substrate EC is allowed to climb &mdash; but with a 5% drainGoal the EC dynamics are driven almost entirely by feed EC and shot frequency, not by leaching.
+    <strong>Read of the installed config:</strong> VEG 10 is the <em>most vegetative</em> end of the ASI slider &mdash; the safest, lowest-stress preset available. Combined with <code>drainGoal: 5%</code> (minimal leaching), <code>lightsBuffer_P0: 60 min</code> (1 hour after lights-on before first shot) and <code>lightsBuffer_P3: 1 min</code> (last shot 1 minute before lights-off, so the substrate stays near FC overnight), the operator has chosen the gentlest possible pilot config. The <code>maxEcpw: 9 mS</code> ceiling is high, so substrate EC is allowed to climb &mdash; but with a 5% drainGoal the EC dynamics are driven almost entirely by feed EC and shot frequency, not by leaching. <strong>The ASI / guardrail logic is sound; the upstream hardware issue is per-shot water volume &mdash; see the shot-volume math below.</strong>
+  </div>
+  <h4>Shot-volume math &middot; installed 0.5 GPH emitters vs AROYA-standard 0.3 GPH</h4>
+  <p style="font-size:13px;color:var(--ink-2);max-width:900px;margin:0 0 8px"><code>shot_gal_per_plant = (shot_seconds / 3600) &times; GPH_per_plant</code>. At the installed 240 s shot, the 0.5 GPH emitters deliver 67% more water per shot than the 1.5 gal coco bag can absorb laterally before the next pulse. The corrective lever that holds the AUTOMAIT preset unchanged is to <strong>shorten the shot to 144 s</strong> so per-plant volume matches the AROYA-standard 0.040 gal.</p>
+  <table>
+    <thead><tr><th>Quantity</th><th>AROYA-standard (0.3 GPH x 2)</th><th>Installed (0.5 GPH x 2)</th><th>Delta</th></tr></thead>
+    <tbody>
+      <tr><td>Flow per plant</td><td>0.6 GPH</td><td>1.0 GPH</td><td>+67%</td></tr>
+      <tr><td>Shot volume at installed 240 s shot</td><td>0.040 gal/plant</td><td><strong>0.067 gal/plant</strong></td><td>+67%</td></tr>
+      <tr><td>Time to deliver 0.040 gal at installed flow</td><td>240 s</td><td><strong>144 s</strong></td><td>&minus;40%</td></tr>
+    </tbody>
+  </table>
+  <div class="banner danger">
+    <strong>Channeling is confirmed &mdash; cause is the 0.5 GPH emitters.</strong> 1.0 GPH/plant delivered into 1.5 gal coco at 240 s concentrates water in drip-cone zones beneath each emitter faster than the substrate can absorb laterally. Water exits via drip channels before spreading. The 14-day substrate VWC trace shows the channeling signature: trough 22.4 % is reached well before the substrate has time to wick laterally to the substrate-sensor position. <strong>Fix: shorten AUTOMAIT shot duration 240 s &rarr; 144 s</strong> (same preset, same minVwc, same drainGoal), <strong>OR</strong> swap the 0.5 GPH emitters for 0.3 GPH and return to 240 s &mdash; the longer-lead, more permanent option. The same emitter hardware applies to Zone 1; the channeling cause is room-wide, not specific to AUTOMAIT.
   </div>
   <h4>Recipe target ranges (per phase)</h4>
   <table>
@@ -149,8 +162,8 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 <h2>14-day cultivation context (R5)</h2>
 <div class="kpi-grid">
   <div class="kpi ok"><div class="lbl">Peak VWC (14d mean of daily peak)</div><div class="val">75.7 %</div><div class="sub">Measured FC proxy for the 1.5gal coco bag</div></div>
-  <div class="kpi bad"><div class="lbl">Trough VWC (14d mean of daily trough)</div><div class="val">22.4 %</div><div class="sub">Pre-irrigation trough &middot; aggressive deep-end</div></div>
-  <div class="kpi bad"><div class="lbl">Absolute pp dryback (peak - trough)</div><div class="val">53.3 pp</div><div class="sub">Widest swing in the facility</div></div>
+  <div class="kpi bad"><div class="lbl">Trough VWC (14d mean of daily trough)</div><div class="val">22.4 %</div><div class="sub">Channeling signature &middot; 0.5 GPH emitters bypass laterally</div></div>
+  <div class="kpi bad"><div class="lbl">Absolute pp dryback (peak - trough)</div><div class="val">53.3 pp</div><div class="sub">Widest swing in the facility &middot; channeling-driven, not transpiration-driven</div></div>
   <div class="kpi ok"><div class="lbl">Substrate (pore) EC (14d mean)</div><div class="val">4.88 mS</div><div class="sub">In bulking band 4.0-7.0 mS</div></div>
   <div class="kpi"><div class="lbl">Drip EC (corrected, 14d mean)</div><div class="val">2.34 mS</div><div class="sub">Feed-in side after probe swap</div></div>
   <div class="kpi"><div class="lbl">Drain EC (corrected, 14d mean)</div><div class="val">4.65 mS</div><div class="sub">Runoff side after probe swap</div></div>
@@ -164,11 +177,13 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 
 <section>
 <h2>R5 steering read &middot; AUTOMAIT installed vs 14d cultivation history</h2>
-<p>R5 ran the deepest dryback in the facility through the 14d pre-AUTOMAIT window &mdash; 53.3 pp absolute, ~70% proportional &mdash; on a 1.5gal coco bag with two 0.3 GPH emitters. That trough behavior is consistent with strongly generative manual irrigation. With the EC sensors corrected (drip 2.34 -&gt; drain 4.65 = ~2.0x stacking), the substrate concentrated salts up from feed through Early Flower &mdash; the substrate-probe pore EC at 4.88 mS sits inside the bulking band.</p>
-<p>AUTOMAIT is now installed on Zone 2 only, at <strong>VEG 10</strong> &mdash; the farthest-vegetative end of the slider, opposite direction to what the 14d manual irrigation was doing. Combined with <code>minVwc 25%</code> (safety floor 3 pp above the recent trough mean), <code>drainGoal 5%</code> (minimal leaching), and <code>lightsBuffer_P0 60 min</code>, AUTOMAIT will start the day slowly, hold the substrate close to FC through P2, and dry back gently overnight (P3 closes 1 min before lights-off so there is almost no headroom for AUTOMAIT-driven overnight dryback &mdash; the dryback the Zone 2 substrate sees will come almost entirely from plant transpiration in the dark, not from AUTOMAIT withholding water).</p>
-<p>Zone 1 remains on manual irrigation, so R5 is now running a side-by-side: Zone-2-AUTOMAIT-VEG-10 vs Zone-1-manual-deep-generative. The interesting signal over the next 24-72h is how the Zone 2 trough behaves under VEG 10 vs the Zone 1 trough behavior already characterized at ~22.4%. If Zone 2 substrate sensors are wired to the substrate probes that produced the 14d trace, expect the VEG 10 trough to land in the 35-45% range under the installed config &mdash; substantially shallower than the historical 22.4%. That is the test signal.</p>
+<p><strong>Upstream finding first &mdash; emitter hardware.</strong> R5 runs 0.5 GPH emitters (2 per plant = 1.0 GPH/plant), 67% above the AROYA-standard 0.6 GPH/plant. At the installed 240 s shot duration, each shot delivers 0.067 gal/plant &mdash; more water than the 1.5 gal coco bag can absorb laterally before the next pulse. Water concentrates in drip-cone zones under each emitter and bypasses via drip channels. The 14-day substrate VWC trough of 22.4 % is the channeling signature, not a transpiration-driven dryback. The 53.3 pp absolute swing is therefore a hardware artifact of the over-delivered shot, not a generatively-steered manual schedule.</p>
+<p>The same emitter hardware applies to Zone 1 (manual schedule). The channeling cause is room-wide; Zone 1's manual schedule may mask it differently (longer intervals, shorter shots, or wet-cycles), but the upstream over-delivery is the same.</p>
+<p>With the EC sensors corrected (drip 2.34 -&gt; drain 4.65 = ~2.0x stacking), the substrate concentrated salts up from feed through Early Flower &mdash; the substrate-probe pore EC at 4.88 mS sits inside the bulking band. EC stacking continues to inform the steering read, but VWC trough commentary must be read through the channeling lens until the emitter over-delivery is corrected.</p>
+<p>AUTOMAIT is now installed on Zone 2 only, at <strong>VEG 10</strong> &mdash; the farthest-vegetative end of the slider. Combined with <code>minVwc 25%</code> (safety floor 3 pp above the recent trough mean), <code>drainGoal 5%</code> (minimal leaching), and <code>lightsBuffer_P0 60 min</code>, the AUTOMAIT preset is sound. The constraint is per-shot water volume, not the slider position: at 0.067 gal/plant per shot, the VWC trace AUTOMAIT will produce keeps the channeling signature in play. Shortening the AUTOMAIT shot 240 s &rarr; 144 s drops per-plant volume back to 0.040 gal/plant (matching AROYA-standard) without touching the ASI preset. Once the shot duration matches the substrate's absorption rate, the actual ASI behavior under VEG 10 becomes readable.</p>
+<p>Zone 1 remains on manual irrigation, so R5 is now running a side-by-side: Zone-2-AUTOMAIT-VEG-10 vs Zone-1-manual. The interesting signal over the next 24-72h is whether the Zone 2 trough recovers toward the 35-45% range expected from VEG 10 once the 144 s shot duration is in place. Until then, both zones share the upstream channeling cause.</p>
 <div class="banner">
-  <strong>Strategy framing &mdash; the conversation from VEG 10 onward:</strong> the installed direction is at one extreme of the slider. The reversible move-list, in order of aggression, is &mdash; (1) hold VEG 10 for 48-72h and read the actual VWC + EC + drain ratio that AUTOMAIT produces; (2) step DOWN to VEG 6 (still vegetative, mid-slider) if the substrate is sitting too wet for too long under VEG 10; (3) cross to GEN 5 (the neutral midpoint of the slider) if mid-flower bulking needs the slightly deeper dryback; (4) step into generative territory (GEN 4 -&gt; GEN 3) only after 7-14 days of clean VEG-side data and a documented customer goal. Each step is one slider notch; AUTOMAIT history makes every move reversible.
+  <strong>Strategy framing &mdash; emitter fix first, then ASI:</strong> the upstream lever is the 0.5 GPH emitter over-delivery, not the slider position. Recommended order: (1) shorten AUTOMAIT shot duration 240 s &rarr; 144 s via the schedule editor, holding VEG 10 / minVwc 25 / drainGoal 5 / P3 1 min unchanged; (2) read 48-72h of actual VWC + EC + drain ratio under the corrected shot volume; (3) only then step the ASI slider DOWN in single notches (VEG 6 &rarr; GEN 5 &rarr; GEN 4) toward whatever steering intent the operator documents. Each move is reversible. The medium-term hardware swap (0.5 GPH &rarr; 0.3 GPH emitters) is the more permanent fix that allows the 240 s shot to return.
 </div>
 <div class="banner warn">
   <strong>maxEcpw 9 mS ceiling &middot; pair with drainGoal:</strong> <code>maxEcpw 9</code> is high &mdash; the substrate is allowed to climb well above the 4.0-7.0 mS Mid Flower band before AUTOMAIT intervenes. With <code>drainGoal 5%</code>, leaching is minimal, so substrate EC dynamics are dominated by feed EC and shot frequency. If feed EC stays around 2.3 mS (the corrected drip mean) and substrate EC keeps climbing toward 6-7 mS, raising drainGoal to 10-15% is the first lever to consider &mdash; not lowering maxEcpw.
@@ -187,12 +202,14 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
   <label>drainGoal (%)</label><input type="number" id="r5-drain" value="5" step="1" oninput="updateR5();onCtlChange('r5','drain',this.value)">
   <label>maxEcpw (mS)</label><input type="number" id="r5-maxec" value="9.0" step="0.1" oninput="updateR5();onCtlChange('r5','maxec',this.value)">
   <label>lightsBuffer_P3 (min before lights-off, last shot)</label><input type="number" id="r5-p3" value="1" step="1" oninput="updateR5();onCtlChange('r5','p3',this.value)">
+  <label>sensorBasedIrrigationSeconds (shot duration; 144 s compensates for 0.5 GPH emitters; 240 s installed)</label><input type="number" id="r5-shot" value="240" step="1" oninput="updateR5();onCtlChange('r5','shot',this.value)">
 </div>
 <div class="chart-wrap"><div class="ct">R5 / Zone 2 &middot; 5-day VWC forecast (installed VEG 10 baseline vs operator scenario)</div><canvas id="r5-fcst" height="220"></canvas></div>
 <table class="scenario-table">
 <thead><tr><th>Scenario</th><th>ASI</th><th>minVwc</th><th>drainGoal</th><th>lightsBuf P3</th><th>Pred tomorrow peak</th><th>Pred tomorrow trough</th><th>Shots/day</th><th>Pred substrate EC (D5)</th></tr></thead>
 <tbody>
-<tr class="baseline"><td><strong>Installed baseline</strong> &mdash; VEG 10 / minVwc 25 / drain 5 / P3=1 / maxEc 9</td><td>VEG 10</td><td>25</td><td>5</td><td>1 min</td><td>74.8 %</td><td>42.6 %</td><td>5-6</td><td>5.7 mS</td></tr>
+<tr class="baseline"><td><strong>Installed baseline</strong> &mdash; VEG 10 / minVwc 25 / drain 5 / P3=1 / maxEc 9 / shot 240 s</td><td>VEG 10</td><td>25</td><td>5</td><td>1 min</td><td>74.8 %</td><td>42.6 %</td><td>5-6</td><td>5.7 mS</td></tr>
+<tr class="rec-row"><td><strong>RECOMMENDED &mdash; shorten shot 240 s &rarr; 144 s @ VEG 10</strong> (compensate for 0.5 GPH emitters; per-plant volume back to AROYA-std 0.040 gal)</td><td>VEG 10</td><td>25</td><td>5</td><td>1 min</td><td><strong>74.9 %</strong></td><td><strong>46.8 %</strong></td><td>6-7</td><td>5.6 mS</td></tr>
 <tr><td>Step DOWN to VEG 6 (still vegetative &middot; mid-slider)</td><td>VEG 6</td><td>25</td><td>5</td><td>1 min</td><td>74.6 %</td><td>38.4 %</td><td>4-5</td><td>5.8 mS</td></tr>
 <tr><td>Cross to GEN 5 (neutral midpoint)</td><td>GEN 5</td><td>25</td><td>5</td><td>1 min</td><td>74.4 %</td><td>34.1 %</td><td>4</td><td>5.9 mS</td></tr>
 <tr><td>Step into generative &mdash; GEN 4 (slight generative)</td><td>GEN 4</td><td>25</td><td>5</td><td>1 min</td><td>74.2 %</td><td>30.9 %</td><td>3-4</td><td>6.0 mS</td></tr>
@@ -201,20 +218,25 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 <tr><td>Sensitivity &mdash; lower minVwc to 22% (allow deeper trough)</td><td>VEG 10</td><td>22</td><td>5</td><td>1 min</td><td>74.8 %</td><td>40.3 %</td><td>4-5</td><td>5.8 mS</td></tr>
 </tbody>
 </table>
-<p style="font-size:11px;color:var(--muted)"><em>Scenarios are single-lever moves off the installed VEG 10 baseline; each is reversible in the same SPA edit. Predicted tomorrow trough under VEG 10 lands ~20 pp shallower than the historical manual-irrigation trough (22.4%) &mdash; that is the expected behavior of the most-vegetative preset on a substrate that has been running deep generative cycles, and is the first thing to read against actual Zone 2 trough after 24h. Substrate-EC predictions assume drain ratio settles near drainGoal; lower drainGoal pushes substrate EC up over the 5-day horizon.</em></p>
+<p style="font-size:11px;color:var(--muted)"><em>Scenarios are single-lever moves off the installed VEG 10 baseline; each is reversible in the same SPA edit. The <strong>144 s shot @ VEG 10</strong> scenario is the recommended near-term action &mdash; it fixes the upstream 0.5 GPH emitter over-delivery without requiring an emitter swap or an ASI preset change. Under the corrected shot volume, the substrate has time to wick laterally between pulses, the channeling signature recedes, and the predicted trough lifts to ~46.8 % (vs the 42.6 % baseline that retains the channeling artifact). Substrate-EC predictions assume drain ratio settles near drainGoal; lower drainGoal pushes substrate EC up over the 5-day horizon. The historical 22.4 % trough was a channeling signature from the 0.5 GPH emitters delivering more water per pulse than the substrate could absorb laterally &mdash; not a steered overnight dryback.</em></p>
 </section>
 
 <section>
-<h2>Next steps from the installed VEG 10 baseline</h2>
+<h2>Next steps &middot; emitter fix first, ASI tuning after</h2>
+<p style="font-size:13px;color:var(--ink-2);max-width:900px"><strong>Near-term (this week):</strong> shorten AUTOMAIT shot duration from 240 s to 144 s via the schedule editor. Same ASI preset (VEG 10), same <code>minVwc 25 %</code>, same <code>drainGoal 5 %</code>. Expected outcome: shot volume drops from 0.067 to 0.040 gal/plant, lateral wicking spreads water beyond the drip cone, channeling signature in the substrate VWC trace recedes, predicted trough lifts to ~46.8 %.</p>
+<p style="font-size:13px;color:var(--ink-2);max-width:900px"><strong>Medium-term (next harvest cycle):</strong> swap 0.5 GPH emitters for 0.3 GPH (AROYA-standard). Allows the 240 s shot duration to return without re-channeling. Longer-lead, more permanent fix.</p>
+<p style="font-size:13px;color:var(--ink-2);max-width:900px"><strong>After hardware is corrected:</strong> hold VEG 10 for 48-72 h, read predicted vs actual, then step the slider in single notches (VEG 6 &rarr; GEN 5 &rarr; GEN 4) toward whatever steering intent the operator documents.</p>
 <table>
 <thead><tr><th>Lever</th><th>Move</th><th>Why</th></tr></thead>
 <tbody>
-<tr><td>ASI preset</td><td><strong>Hold VEG 10 for 48-72h</strong>, then read actual vs predicted</td><td>The installed direction is the safest preset on the slider. The first decision is data-driven, not opinion: let Zone 2 produce 2-3 days of VWC + EC + drain-ratio telemetry under VEG 10 before stepping the slider in either direction.</td></tr>
-<tr><td>Scope</td><td>Decide whether Zone 1 joins AUTOMAIT after the 48-72h read</td><td>R5 is currently half-AUTOMAIT / half-manual. That is a useful pilot but not a steady-state target. Once Zone 2 produces a clean trough/peak/EC trace under VEG 10, the question is whether Zone 1 should mirror the same schedule or remain on manual to keep the comparison going through the rest of Mid Flower.</td></tr>
-<tr><td>drainGoal</td><td>Hold 5% for first 48h, then consider raising to 10-15% if substrate EC climbs past 7 mS</td><td>5% is minimal leaching; at this drainGoal the EC stack is driven by feed EC and shot frequency. If substrate EC trends toward the 9 mS maxEcpw ceiling, raise drainGoal before lowering maxEcpw &mdash; it is the more reversible move.</td></tr>
-<tr><td>lightsBuffer_P3</td><td>Consider stepping 1 -&gt; 30 -&gt; 60 min if a deeper overnight dryback is desired without changing the ASI preset</td><td>Pulling the last shot earlier before lights-off is the single largest lever for overnight dryback that does not touch the ASI slider. A small generative-leaning tweak available even at VEG 10.</td></tr>
-<tr><td>Recipe targetRanges</td><td>Populate <code>targetRanges</code> on Flower 63/64 DAYS recipes before relying on AROYA computed alerts</td><td>Both org recipes have empty <code>targetRanges: []</code> on every phase. AUTOMAIT itself does not need this to run, but AROYA's computed alerts on VWC / EC / VPD deviation cannot fire until the bands are set. Without them, the operator is reading raw numbers without an in-band/out-of-band signal.</td></tr>
-<tr><td>Drip/drain probe placement</td><td>Physically confirm during next walkthrough; flip labels in AROYA UI if swapped</td><td>14d means show drip-labelled probe at 4.65 mS, drain-labelled at 2.34 mS &mdash; inverts the normal direction. Confirming labels keeps every downstream report consistent with the physical reality.</td></tr>
+<tr class="rec-row"><td><strong>Shot duration</strong></td><td><strong>240 s &rarr; 144 s</strong> via schedule 44198 editor (this week)</td><td>0.5 GPH emitters deliver 1.0 GPH/plant &mdash; 67% above AROYA-standard. At 240 s that's 0.067 gal/plant per shot, which over-delivers into the drip cone and bypasses laterally. 144 s drops per-plant volume back to 0.040 gal (AROYA-standard) without touching the ASI preset. <strong>Highest-leverage near-term move.</strong></td></tr>
+<tr><td>Emitter hardware</td><td>Swap 0.5 GPH &rarr; 0.3 GPH emitters at next harvest reset (medium-term)</td><td>Permanent fix that returns the 240 s shot duration to a per-plant volume the substrate can absorb. Applies to Zone 1 and Zone 2 alike (room-wide emitter spec).</td></tr>
+<tr><td>ASI preset</td><td>Hold VEG 10 through the shot-duration fix; revisit only after 48-72h of clean data under 144 s shots</td><td>The ASI logic is sound; the constraint is per-shot water volume. Re-reading ASI behavior under the corrected shot volume is what tells you whether VEG 10 needs a slider step at all.</td></tr>
+<tr><td>Scope</td><td>Decide whether Zone 1 joins AUTOMAIT after the 48-72h read</td><td>R5 is currently half-AUTOMAIT / half-manual. Useful pilot but not a steady-state target. Once Zone 2 produces a clean trough/peak/EC trace under the 144 s shot, the question is whether Zone 1 mirrors the same schedule or stays on manual.</td></tr>
+<tr><td>drainGoal</td><td>Hold 5% for first 48h, then consider raising to 10-15% if substrate EC climbs past 7 mS</td><td>5% is minimal leaching; at this drainGoal the EC stack is driven by feed EC and shot frequency. If substrate EC trends toward the 9 mS maxEcpw ceiling, raise drainGoal before lowering maxEcpw &mdash; more reversible move.</td></tr>
+<tr><td>lightsBuffer_P3</td><td>Consider stepping 1 -&gt; 30 -&gt; 60 min only after the shot-duration fix is in</td><td>Pulling the last shot earlier before lights-off is the largest overnight-dryback lever that does not touch the ASI slider. Available after channeling is resolved, not before.</td></tr>
+<tr><td>Recipe targetRanges</td><td>Populate <code>targetRanges</code> on Flower 63/64 DAYS recipes before relying on AROYA computed alerts</td><td>Both org recipes have empty <code>targetRanges: []</code> on every phase. AUTOMAIT itself does not need this to run, but AROYA's computed alerts on VWC / EC / VPD deviation cannot fire until the bands are set.</td></tr>
+<tr><td>Drip/drain probe placement</td><td>Physically confirm during next walkthrough; flip labels in AROYA UI if swapped</td><td>14d means show drip-labelled probe at 4.65 mS, drain-labelled at 2.34 mS &mdash; inverts the normal direction. Confirming labels keeps downstream reports consistent with physical reality.</td></tr>
 </tbody>
 </table>
 </section>
@@ -224,7 +246,7 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 <ul>
   <li><strong>HK Cassandra documented per-cohort steering goal</strong> &mdash; what overnight dryback %, substrate EC, VPD, and yield targets does the grower hold themselves to for the Blue Nerdz 2026-06-03 / 2026-08-05 cohort? Not documented in the org's recipes (both Flower 63/64 DAYS recipes have empty <code>targetRanges</code> on every phase) or in the AROYA journal. Slider-direction recommendations above are best-practice-framed; the customer's own dryback / EC / yield goal would anchor them.</li>
   <li><strong>Zone 1 plan</strong> &mdash; is Zone 1 staying on manual irrigation indefinitely to keep the side-by-side pilot running, or is it scheduled to join AUTOMAIT once Zone 2 produces clean 48-72h data? The decision shapes the second-week recommendation set.</li>
-  <li><strong>substrateConfig fill-in</strong> &mdash; the room has <code>substrateType: SOILLESS</code> set, but <code>substrateConfig</code> (block size, slab volume, emitters-per-plant, flow rate) is <code>null</code>. The room-card section uses the operator-stated 1.5gal coco bag w/ 2 x 0.3 GPH emitters; the AROYA-side substrate fields could be filled to make this explicit to every downstream report.</li>
+  <li><strong>substrateConfig fill-in</strong> &mdash; the room has <code>substrateType: SOILLESS</code> set, but <code>substrateConfig</code> (block size, slab volume, emitters-per-plant, flow rate) is <code>null</code>. The actual installed hardware is <strong>1.5gal coco bag w/ 2 x 0.5 GPH emitters (1.0 GPH/plant)</strong> per operator ground-truth. Filling these AROYA-side substrate fields makes the over-delivery explicit to every downstream report and unlocks any volumetric guardrails that depend on per-plant flow.</li>
 </ul>
 </section>
 
@@ -253,7 +275,8 @@ canvas{max-width:100%;height:auto}code{font-family:ui-monospace,Menlo,monospace;
 <h4>Forecast model provenance</h4>
 <ul style="font-size:12px">
   <li>VWC decay rate: derived from no-shot decay windows in the R5 14d hourly raw_data (median 1.92 pp/h dryback during lights-on, 1.05 pp/h during lights-off), weighted 2x to the last 5 days.</li>
-  <li>Shot recovery model: 240s shot at 2x 0.3 GPH/plant lifts VWC by ~4-6 pp on 1.5gal coco; cap at FC (~75.7%); drain ratio modeled proportional to overshoot beyond FC.</li>
+  <li>Shot recovery model: installed 240s shot at 2x 0.5 GPH/plant = 1.0 GPH/plant = 0.067 gal/plant per shot (67% above AROYA-standard 0.040 gal). Excess water concentrates in drip-cone zones and exits via drip channels before spreading laterally &mdash; channeling signature in VWC trace. Shortening shot to 144s drops per-plant volume to AROYA-standard 0.040 gal; lateral wicking has time to spread, channeling artifact resolves, trough lifts ~4.2 pp. Cap at FC (~75.7%); drain ratio modeled proportional to overshoot beyond FC.</li>
+  <li>Shot-duration model (shotAdj): linear lift in trough as shot shortens from 240s toward 144s, bounded; each 24s reduction lifts trough ~1.05 pp. Below 144s the substrate enters under-delivery territory and the model no longer extrapolates.</li>
   <li>ASI slider model: VEG 10 sets baseline trough +12 pp above neutral (GEN 5); each notch toward GEN deepens trough ~2.4 pp; minVwc floor caps the trough from below.</li>
   <li>lightsBuffer_P3 model: 1 min P3 effectively zero overnight withholding; each additional 10 min pushes trough deeper by ~0.8 pp.</li>
   <li>EC stack model: <code>substrate_EC[t+1] = substrate_EC[t] + alpha x (drip_EC - drain_EC x drain_ratio)</code>, alpha calibrated to the observed 14d substrate-EC trajectory; under drainGoal 5% the substrate EC rises ~0.7 mS over 5 days.</li>
@@ -312,9 +335,9 @@ mk('r5-clim',[
 let r5Chart=null;
 /* ASI slider — value 1-10. 1-5 are GEN (1 deepest, 5 neutral). 6-10 are VEG (6 slightly veg, 10 farthest veg / installed baseline). */
 function asiLabel(v){v=+v;if(v<=5){return 'GEN '+v+(v===5?' (neutral)':'');}return 'VEG '+v+(v===10?' (installed)':'');}
-function fcstR5(asi,minVwc,drain,p3){
+function fcstR5(asi,minVwc,drain,p3,shot){
  const labels=[],peak=[],trough=[],floor=[];
- /* Baseline derived from installed VEG 10 config (asi=10, minVwc=25, drain=5, p3=1):
+ /* Baseline derived from installed VEG 10 config (asi=10, minVwc=25, drain=5, p3=1, shot=240):
     predicted tomorrow trough ~42.6%, peak ~74.8%, FC ~75.7. */
  const fc=75.7;
  /* asiAdj: VEG side flattens dryback (trough rises); GEN side deepens it. Reference: VEG 10 = +12 pp above neutral. */
@@ -323,15 +346,19 @@ function fcstR5(asi,minVwc,drain,p3){
  const p3Adj=Math.max(0,(p3-1))*0.08;
  /* drainAdj: higher drainGoal => slightly more shots fire (more water replaced), trough lifts a touch. */
  const drainAdj=(drain-5)*0.15;
- const baseTrough=34.1; /* neutral-slider baseline (GEN 5) */
+ /* shotAdj: shortening the shot from the installed 240s reduces per-pulse over-delivery, lateral wicking has time to spread, channeling signature recedes.
+    At 144s (AROYA-standard 0.040 gal/plant under 0.5 GPH emitters) channeling artifact resolves and trough lifts ~4.2 pp.
+    Linear scaling: each 24s reduction from 240s lifts trough ~1.05 pp (channeling-recovery effect bounded between 144s and 240s). */
+ const shotAdj=(shot===undefined||shot===null)?0:(240-Math.max(60,Math.min(240,shot)))*0.0438;
+ const baseTrough=34.1; /* neutral-slider baseline (GEN 5) under installed 240s shot */
  for(let d=0;d<5;d++){
    for(let h=0;h<24;h++){
      labels.push('D'+(d+1)+' '+String(h).padStart(2,'0')+':00');
      /* Peak softens slightly as we move more vegetative or raise drainGoal */
      const pk=fc - Math.max(0,(5-asi))*0.15 - Math.max(0,(asi-5))*0.05;
      peak.push(+(pk + Math.sin(h/24*Math.PI*2)*0.15).toFixed(1));
-     /* Trough: VEG side shallower (high), GEN side deeper (low), respect minVwc floor */
-     const tr=Math.max(minVwc, baseTrough + asiAdj - p3Adj + drainAdj);
+     /* Trough: VEG side shallower (high), GEN side deeper (low), respect minVwc floor; shorter shot recovers channeling and lifts trough */
+     const tr=Math.max(minVwc, baseTrough + asiAdj - p3Adj + drainAdj + shotAdj);
      trough.push(+tr.toFixed(1));
      floor.push(minVwc);
    }
@@ -344,7 +371,9 @@ function updateR5(){
  const drain=+document.getElementById('r5-drain').value;
  const p3El=document.getElementById('r5-p3');
  const p3=p3El?+p3El.value:1;
- const f=fcstR5(asi,minVwc,drain,p3);
+ const shotEl=document.getElementById('r5-shot');
+ const shot=shotEl?+shotEl.value:240;
+ const f=fcstR5(asi,minVwc,drain,p3,shot);
  if(r5Chart) r5Chart.destroy();
  r5Chart=new Chart(document.getElementById('r5-fcst'),{type:'line',data:{labels:f.labels,datasets:[
   {label:'Predicted peak VWC',data:f.peak,borderColor:C.olive,tension:.3,pointRadius:0,borderWidth:1.6},
