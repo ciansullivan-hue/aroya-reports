@@ -114,7 +114,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 </header>
 
 <h1>POWRHOUSE · Wirepas Network Bug Report</h1>
-<p class="sub">Internal procurement-justification write-up: structural Wirepas mesh saturation at facility 3754, the per-gateway slot-budget breach driving latency and data gaps, and the case for shipping six H130 low-latency repeaters to restore mesh headroom.</p>
+<p class="sub">Internal procurement-justification write-up: structural Wirepas mesh saturation at facility 3754, the per-gateway 14-slot budget breach driving latency and data gaps, and the case for shipping six H130 low-latency repeaters to restore mesh headroom.</p>
 
 <div class="bugid">
   <div><b>Bug ID</b>POWR-WIREPAS-2026-06-25</div>
@@ -127,7 +127,7 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 
 <section>
   <h2>1 · Summary</h2>
-  <p>POWRHOUSE (facility 3754) has a structural Wirepas topology saturation across all four gateway sinks. Every gateway at the facility is currently carrying more direct (hop-1) children than the Wirepas protocol allocates slots for — worst sink at 16/13, six total excess children fleet-wide, one mid-layer relay sitting in the 11/13 watch tier. The over-budget condition is producing the latency, retry, and data-gap pattern operators see; partial natural rebalancing has only knocked the excess from 8 → 6 children since this morning. Adding <b>six H130 low-latency repeaters</b> creates 78 new direct-child slots, drops every gateway sink back to ≤13/13, restores ~50% fleet-growth headroom, and removes the routing pressure that is driving the gap rate today.</p>
+  <p>POWRHOUSE (facility 3754) is structurally saturated across all four gateway sinks against the Wirepas 14-slot direct-child ceiling. At the morning peak, two of the four sinks were over the limit (worst at 17/14) and the other two were pinned at the 14/14 ceiling with zero headroom. By the afternoon refresh, one sink remained over (16/14) and three were at 14/14. Four excess children at peak, two by the refresh — every gateway is at-or-over the slot budget, so over-subscribed children have nowhere to roll into and self-healing is structurally disabled. The over-budget condition is producing the latency, retry, and data-gap pattern operators see. Adding <b>six H130 low-latency repeaters</b> creates 84 new direct-child slots (6 × 14), drops the over-budget sinks back under the 14-slot ceiling, restores ~55% fleet-growth headroom, and removes the routing pressure that is driving the gap rate today.</p>
 </section>
 
 <section>
@@ -150,40 +150,40 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
   <h2>3 · Observed network issues</h2>
   <p>Quantified from today's mesh audit and the morning → afternoon refresh delta:</p>
 
-  <h3>Gateway sinks over the 13-child slot limit (4 of 4)</h3>
+  <h3>Gateway sinks at or over the 14-child slot ceiling (4 of 4)</h3>
   <div class="tbl-wrap">
     <table class="data">
       <thead>
-        <tr><th>Gateway sink</th><th>Children (morning)</th><th>Children (refresh)</th><th>Excess (refresh)</th><th>Downstream tree</th></tr>
+        <tr><th>Gateway sink</th><th>Children (morning)</th><th>Children (refresh)</th><th>Refresh state</th><th>Downstream tree</th></tr>
       </thead>
       <tbody>
-        <tr class="crit"><td class="serial">H2100004676</td><td class="num">17 / 13</td><td class="num">16 / 13</td><td class="num">+3</td><td class="num">26 routing (22 online)</td></tr>
-        <tr class="crit"><td class="serial">H2100005242</td><td class="num">14 / 13</td><td class="num">14 / 13</td><td class="num">+1</td><td class="num">36 routing (34 online)</td></tr>
-        <tr class="crit"><td class="serial">H2100005246</td><td class="num">14 / 13</td><td class="num">14 / 13</td><td class="num">+1</td><td class="num">53 routing (52 online)</td></tr>
-        <tr class="crit"><td class="serial">H2200001033</td><td class="num">15 / 13</td><td class="num">14 / 13</td><td class="num">+1</td><td class="num">34 routing (34 online)</td></tr>
+        <tr class="crit"><td class="serial">H2100004676</td><td class="num">17 / 14 (+3)</td><td class="num">16 / 14 (+2)</td><td>🔴🔴 over-subscribed</td><td class="num">26 routing (22 online)</td></tr>
+        <tr class="warn"><td class="serial">H2100005242</td><td class="num">14 / 14 (limit)</td><td class="num">14 / 14 (limit)</td><td>🔴 at limit · zero headroom</td><td class="num">36 routing (34 online)</td></tr>
+        <tr class="warn"><td class="serial">H2100005246</td><td class="num">14 / 14 (limit)</td><td class="num">14 / 14 (limit)</td><td>🔴 at limit · zero headroom</td><td class="num">53 routing (52 online)</td></tr>
+        <tr class="warn"><td class="serial">H2200001033</td><td class="num">15 / 14 (+1)</td><td class="num">14 / 14 (limit)</td><td>🔴 at limit · zero headroom</td><td class="num">34 routing (34 online)</td></tr>
       </tbody>
     </table>
   </div>
-  <p>After dash-2 dedup, the worst sink is carrying 3 more direct radios than the Wirepas protocol allocates slots for. Every gateway at this facility is over the line — there is nowhere clean for over-budget children to migrate to.</p>
+  <p>At morning peak, two of four sinks were over the 14-slot ceiling and the other two were pinned at exactly 14/14. By the afternoon refresh, one sink remained over (H2100004676 at 16/14) and the other three were sitting on the 14-slot ceiling with zero headroom. Pressure didn't dissipate — it redistributed. There is nowhere clean for any future child to migrate to anywhere on this mesh.</p>
 
   <h3>Excess children fleet-wide (morning → refresh)</h3>
   <div class="kpis">
-    <div class="kpi emp"><div class="kpi-v">8 → 6</div><div class="kpi-l">Excess children</div><div class="kpi-s">over the 13-slot budget</div></div>
-    <div class="kpi warn"><div class="kpi-v">1</div><div class="kpi-l">Watch-tier parent</div><div class="kpi-s">H4210003243 · 11 / 13 (Veg Room)</div></div>
+    <div class="kpi emp"><div class="kpi-v">4 → 2</div><div class="kpi-l">Excess children</div><div class="kpi-s">over the 14-slot budget</div></div>
+    <div class="kpi warn"><div class="kpi-v">3 / 4</div><div class="kpi-l">Sinks at-limit</div><div class="kpi-s">pinned at 14/14 with zero headroom</div></div>
     <div class="kpi"><div class="kpi-v">6</div><div class="kpi-l">Offline radios (morning cohort)</div><div class="kpi-s">+ 1 new-offline by refresh</div></div>
   </div>
-  <p>Saturation is barely being eased by partial natural rebalancing. The underlying topology is structurally over-subscribed; routing pressure simply moves between gateways as children retry into whichever sink looks marginally better. Watch-tier parent H4210003243 (Veg Room, 11/13) is the next at-risk relay — any new device add or single re-parent away from a sibling pushes it across the 13 line.</p>
+  <p>Saturation is barely being eased by partial natural rebalancing. The underlying topology is structurally over-subscribed; routing pressure simply moves between gateways as children retry into whichever sink looks marginally better. Three of four sinks are pinned at the 14-slot ceiling with zero headroom — any future device add or any child re-parenting away from H2100004676 lands on a parent that is already full. Self-healing has nowhere to go.</p>
 
   <h3>Refresh-delta offline cohort</h3>
   <p>Six radios were silent in the morning snapshot (<code>H3310009633</code>, <code>H3440005758</code>, <code>H4210002601</code>, <code>H4210002602</code>, <code>H4210002607</code>, <code>H4210002620</code>, plus the persistent <code>H8100001475</code> zero-battery puck). The refresh added one additional new-offline radio — denominator effect only (online% drifted 96.1% → 95.4% because of one new radio joining, not because more devices dropped).</p>
 </section>
 
 <section>
-  <h2>4 · Root cause <span class="small">13-child slot limit + topology over-subscription</span></h2>
+  <h2>4 · Root cause <span class="small">14-child slot ceiling + topology over-subscription</span></h2>
   <div class="callout danger">
-    <b>Wirepas mesh constraint:</b> every parent node — gateway sink or mid-layer relay — supports at most <b>13 DIRECT children</b>. The slot allocation is fixed at the protocol level. Children that don't get a slot are either dropped from the mesh, pushed up to a higher-hop parent (introducing latency), or retry-storm into the contention window competing for slots that don't exist. Grandchildren count against their immediate parent, NOT the grandparent — saturation can only be relieved at the layer where the budget is breached.
+    <b>Wirepas mesh constraint:</b> every parent node — gateway sink or mid-layer relay — supports at most <b>14 DIRECT children</b>. The slot allocation is fixed at the protocol level. Children that don't get a slot are either dropped from the mesh, pushed up to a higher-hop parent (introducing latency), or retry-storm into the contention window competing for slots that don't exist. Grandchildren count against their immediate parent, NOT the grandparent — saturation can only be relieved at the layer where the budget is breached.
   </div>
-  <p>At POWRHOUSE every gateway sink is currently breaching this budget. The mesh has nowhere to rebalance to because the four gateways are all already over budget — when a child re-parents off the worst sink, it lands on another already-saturated sink. The morning → afternoon refresh shows this directly: H2200001033 absorbed 10 additional downstream nodes (route_total 24 → 34) that re-routed off H2100004676 and H2100005246, but H2200001033 stayed at 14/13. The pressure didn't dissipate; it just redistributed.</p>
+  <p>At POWRHOUSE every gateway sink is currently at or over this ceiling. The mesh has nowhere to rebalance to because the four gateways are all already maxed out — when a child re-parents off the worst sink, it lands on another sink that is at exactly 14/14. The morning → afternoon refresh shows this directly: H2200001033 absorbed 10 additional downstream nodes (route_total 24 → 34) that re-routed off H2100004676 and H2100005246, but H2200001033 stayed at exactly 14 children — pinned at the 14-slot ceiling. The pressure didn't dissipate; it just redistributed against a fixed cap.</p>
 </section>
 
 <section>
@@ -205,21 +205,21 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
 
 <section>
   <h2>6 · Remediation <span class="small">add 6 H130 low-latency repeaters</span></h2>
-  <p>Adding six H130 repeaters as new mid-layer parents creates <b>6 × 13 = 78 new direct-child slots</b> in the mesh. Distributed strategically, these absorb the six excess children from the saturated sinks and leave substantial headroom for fleet growth and routine churn.</p>
+  <p>Adding six H130 repeaters as new mid-layer parents creates <b>6 × 14 = 84 new direct-child slots</b> in the mesh. Distributed strategically, these absorb the over-budget children from the saturated sink, take pressure off the three sinks pinned at 14/14, and leave substantial headroom for fleet growth and routine churn.</p>
 
   <h3>Expected post-deploy state</h3>
   <div class="kpis">
-    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">4 → 0</div><div class="kpi-l">Sinks over 13</div><div class="kpi-s">All gateways back ≤13/13</div></div>
-    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">11 → ≤10</div><div class="kpi-l">Watch-tier parent</div><div class="kpi-s">H4210003243 falls back into 🟢 headroom</div></div>
+    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">2 → 0</div><div class="kpi-l">Sinks over 14</div><div class="kpi-s">All gateways back ≤14/14 (peak basis)</div></div>
+    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">3 → ≤1</div><div class="kpi-l">Sinks pinned at 14/14</div><div class="kpi-s">Headroom restored on existing gateways</div></div>
     <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">−30%+</div><div class="kpi-l">Hop-1 latency</div><div class="kpi-s">On rebalanced children · within 24h</div></div>
-    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">~67</div><div class="kpi-l">Residual headroom</div><div class="kpi-s">Unfilled slots post-deploy · ~50% fleet-growth runway</div></div>
+    <div class="kpi ok" style="border-color: var(--olive); background: #6e8c4a0a;"><div class="kpi-v">~80</div><div class="kpi-l">Residual headroom</div><div class="kpi-s">Unfilled slots post-deploy · ~55% fleet-growth runway</div></div>
   </div>
   <p>Quantified outcome:</p>
   <ul>
-    <li>All 4 over-13 sinks drop back to 13/13 or below. The 6 excess children land on new H130 parents with full slot allocation and headroom.</li>
-    <li>Watch-tier parent H4210003243 (Veg Room, 11/13) drops back into the 🟢 ≤10 tier as the mesh redistributes around the new relays.</li>
+    <li>The over-budget sink (H2100004676) and any other sink still over the ceiling drop back to ≤14/14. The 4-at-peak / 2-at-refresh excess children land on new H130 parents with full slot allocation.</li>
+    <li>The three sinks currently pinned at 14/14 with zero headroom shed downstream children to the new mid-layer parents, opening up real slack on the existing gateways and re-enabling Wirepas auto-roll.</li>
     <li>Retry rate normalizes to fleet median. The data-gap pattern attributable to slot contention disappears within 24h of redistribution.</li>
-    <li>Residual ~67 unfilled child slots provide enough headroom for ~50% fleet growth before re-saturation — this is what gives PowrHouse runway to expand without re-triggering the same bug.</li>
+    <li>Residual ~80 unfilled child slots across the new H130 fleet provide enough headroom for ~55% fleet growth before re-saturation — runway to expand without re-triggering this bug.</li>
   </ul>
 </section>
 
@@ -232,8 +232,8 @@ footer { color: var(--muted); font-size: 11px; padding: 20px 0 0; border-top: 1p
         <tr><th>Qty</th><th>Zone</th><th>Anchor / target</th><th>Rationale</th></tr>
       </thead>
       <tbody>
-        <tr><td class="num">2</td><td>POWR 1</td><td>Near sink <code>H2100005246</code> (53-device tree, largest sub-tree at facility) and relay <code>H3440005755</code></td><td>Largest downstream tree at the facility — the H3440005755 relay was carrying heavy hop-2+ load in the morning snapshot (raw 21/13 pre-dedup). Two new parents here split that load and pull the H2100005246 sink back under 13.</td></tr>
-        <tr><td class="num">2</td><td>POWR 3</td><td>Near sink <code>H2200001033</code> and relay <code>H3440005760</code></td><td>H2200001033 absorbed 10 additional downstream nodes between the morning and afternoon snapshots — this gateway is structurally over-loaded as the routing fallback target. Two new parents stabilise it.</td></tr>
+        <tr><td class="num">2</td><td>POWR 1</td><td>Near sink <code>H2100005246</code> (53-device tree, largest sub-tree at facility) and relay <code>H3440005755</code></td><td>Largest downstream tree at the facility — the H3440005755 relay was carrying heavy hop-2+ load in the morning snapshot (raw 21/14 pre-dedup). Two new parents here split that load and pull the H2100005246 sink off the 14/14 ceiling.</td></tr>
+        <tr><td class="num">2</td><td>POWR 3</td><td>Near sink <code>H2200001033</code> and relay <code>H3440005760</code></td><td>H2200001033 absorbed 10 additional downstream nodes between the morning and afternoon snapshots and is now pinned at 14/14 — this gateway is the routing fallback target for two saturated neighbors. Two new parents stabilise it and open headroom for further rebalance.</td></tr>
         <tr><td class="num">1</td><td>POWR 2</td><td>Mid-zone, between sinks <code>H2100005242</code> and <code>H2200001033</code></td><td>POWR 2 currently has 24 devices, all online but routing through three different sinks — one mid-zone H130 collapses that into a clean local parent.</td></tr>
         <tr><td class="num">1</td><td>Inter-gateway dead zone</td><td>Walk-down required — confirm location with onsite team</td><td>Telemetry map (<a href="https://ciansullivan-hue.github.io/aroya-reports/POWRHOUSE_Wirepas_Mesh_Health_2026-06-24.html#telemetry-map">live audit · telemetry map</a>) shows weak-coverage envelope between gateway clusters. AROYA does not expose physical coordinates at this facility (lat/lng/what3words = null on every device), so the exact placement needs an onsite radio walk-down.</td></tr>
       </tbody>
