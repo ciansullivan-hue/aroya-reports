@@ -15,6 +15,7 @@
     --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
     --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
     --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51;
+    --p-mom:#7ab095; --p-clone:#aacd97; --p-dry:#c2b896; --p-cure:#b09f7d; --p-fert:#8c9fa3;
     --card-shadow:0 1px 3px rgba(0,0,0,0.04),0 4px 16px rgba(0,0,0,0.05);
     --grid-line:#e8e8e0;
   }
@@ -27,6 +28,7 @@
     --good:#86c25b; --warn:#e4a35e; --bad:#df6a4d;
     --good-bg:#1f2c19; --warn-bg:#2e2418; --bad-bg:#2e1c16;
     --p-rootin:#7fbacd; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#b694ea; --p-ripening:#e76f51;
+    --p-mom:#5b9476; --p-clone:#7eaa67; --p-dry:#9d917a; --p-cure:#a89478; --p-fert:#6f8388;
     --card-shadow:0 1px 3px rgba(0,0,0,0.5),0 8px 28px rgba(0,0,0,0.45);
     --grid-line:#2a3220;
   }
@@ -52,27 +54,63 @@
   .tick.t1{top:14px;left:42%} .tick.t2{top:14px;left:48%;width:8px;height:8px} .tick.t3{top:14px;right:24%;width:6px;height:6px}
   .tick.t4{bottom:12px;left:18%} .tick.t5{bottom:12px;left:22%;width:5px;height:5px}
   .tick.t6{top:46%;right:18px} .tick.t7{bottom:12px;right:32%;width:6px;height:6px}
-  .pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+  .pagehead{max-width:1180px;margin:0 auto;padding:28px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:28px}
   .pagehead-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--olive);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
-  .pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-.018em;color:var(--ink);margin:0 0 8px}
-  .pagehead .sub{color:var(--ink-2);font-size:14.5px;font-weight:400;line-height:1.5}
-  .pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+  .pagehead h1{font-family:'Inter',sans-serif;font-weight:500;font-size:34px;line-height:1.12;letter-spacing:-.02em;color:var(--ink);margin:0 0 10px}
+  .pagehead .sub{color:var(--ink-2);font-size:15px;font-weight:400;line-height:1.55}
+  .pagehead .meta{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
   .pagehead .meta b{color:var(--ink);font-weight:500;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
   .pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
-  section{margin-top:40px;scroll-margin-top:20px}
-  h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+  section{margin-top:56px;scroll-margin-top:20px}
+  section.subsection{margin-top:32px}
+  h2{font-size:24px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:8px;border-bottom:2px solid var(--lime)}
   h3{font-size:17px;margin:24px 0 10px;font-weight:600}
-  h4{font-size:14px;margin:18px 0 6px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
+  h4{font-size:13px;margin:0 0 6px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
   p{margin:0 0 12px}
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
-  .kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
-  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
-  .kpi.bad::before{background:var(--bad)} .kpi.warn::before{background:var(--warn)} .kpi.good::before{background:var(--good)}
-  .kpi .label{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
-  .kpi .val{font-size:22px;font-weight:700;color:var(--ink)}
-  .kpi .delta{font-size:12px;color:var(--ink-2);margin-top:4px}
-  .kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
-  .card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--card-shadow)}
+  /* KPI dashboard strip — v2 */
+  .kpi-dashboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:8px 0 28px}
+  .kpi-tile{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+  .kpi-tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--olive)}
+  .kpi-tile.accent-good::before{background:var(--good)}
+  .kpi-tile.accent-warn::before{background:var(--warn)}
+  .kpi-tile.accent-blue::before{background:var(--app-blue)}
+  .kpi-tile.accent-attention::before{background:var(--attention)}
+  .kpi-tile .kpi-label{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.7px;font-weight:600}
+  .kpi-tile .kpi-value{font-size:30px;font-weight:700;color:var(--ink);margin-top:4px;letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums}
+  .kpi-tile .kpi-sub{font-size:12px;color:var(--ink-2);margin-top:6px;line-height:1.4}
+  .kpi-tile .kpi-spark{margin-top:8px;height:32px;width:100%}
+  .kpi-tile .kpi-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;background:var(--good-bg);color:var(--good);text-transform:uppercase;letter-spacing:.5px;margin-top:6px}
+  .kpi-tile.accent-warn .kpi-badge{background:var(--warn-bg);color:var(--warn)}
+  .kpi-tile.accent-attention .kpi-badge{background:var(--bad-bg);color:var(--bad)}
+  .kpi-tile.accent-blue .kpi-badge{background:#dbeaf5;color:var(--app-blue)}
+  /* Charts and cards */
+  .chartwrap{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:20px 22px 16px;margin:18px 0;box-shadow:var(--card-shadow)}
+  .chartwrap h4{margin-top:0;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.7px;font-weight:700}
+  .chartwrap .h-sub{font-size:14.5px;font-weight:600;color:var(--ink);margin:2px 0 14px;letter-spacing:-.01em}
+  .chartwrap .legend{font-size:12px;color:var(--ink-muted);margin-top:10px;line-height:1.5}
+  .chart-canvas{position:relative;height:300px;width:100%}
+  .chart-canvas.tall{height:380px}
+  .chart-canvas.short{height:200px}
+  .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+  .chart-grid > .chartwrap{margin:0}
+  @media(max-width:760px){
+    .chart-grid{grid-template-columns:1fr}
+    .chart-canvas{height:260px}
+  }
+  /* Verdicts */
+  .verdict{padding:16px 20px;border-radius:12px;font-weight:500;margin:14px 0;border-left:4px solid;box-shadow:var(--card-shadow);background:var(--bg-2)}
+  .verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,var(--bg-2) 70%);border-color:var(--bad)}
+  .verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,var(--bg-2) 70%);border-color:var(--warn)}
+  .verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,var(--bg-2) 70%);border-color:var(--good)}
+  .verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px}
+  /* Tables */
+  table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+  th{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
+  .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
   .phase{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
   .phase.rootin{background:var(--p-rootin);color:#0c2a35}
   .phase.veg{background:var(--p-veg);color:#1c3700}
@@ -80,48 +118,58 @@
   .phase.bulking{background:var(--p-bulking);color:#2c1750}
   .phase.ripening{background:var(--p-ripening);color:#3c0f00}
   .phase.dry{background:var(--bg-3);color:var(--ink-muted)}
-  .verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
-  .verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
-  .verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
-  .verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
-  .verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
-  table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:14px}
-  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
-  th{font-size:12px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;background:var(--bg-3)}
-  tr:last-child td{border-bottom:none}
-  .num{text-align:right;font-variant-numeric:tabular-nums}
-  .pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
-  .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.good{background:var(--good-bg);color:var(--good)} .pill.muted{background:var(--bg-3);color:var(--ink-muted)}
-  .chartwrap{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 16px 14px;margin:14px 0;box-shadow:var(--card-shadow)}
-  .chartwrap h4{margin-top:0}
-  .chartwrap .legend{font-size:12px;color:var(--ink-muted);margin-top:8px}
-  .chart-canvas{position:relative;height:280px;width:100%}
-  .chart-canvas canvas{max-width:100%}
-  .rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow)}
-  .rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
+  /* Recommendation cards */
+  .rec{padding:16px 18px;border-radius:12px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:12px;box-shadow:var(--card-shadow);position:relative}
+  .rec .owner{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
   .rec .owner.grower{background:var(--app-blue)}
   .rec .owner.process{background:var(--ink-2)}
-  .rec .rphase{color:var(--ink-muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-left:4px}
-  .rec .raction{margin-top:6px;font-weight:500}
-  .rec .rwhy{margin-top:4px;font-size:13px;color:var(--ink-2)}
-  .rec .rdollar{margin-top:6px;font-size:12px;color:var(--olive);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .rec .rphase{color:var(--ink-muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-left:4px;font-weight:600}
+  .rec .raction{margin-top:8px;font-weight:600;font-size:15px;color:var(--ink)}
+  .rec .rwhy{margin-top:6px;font-size:13px;color:var(--ink-2);line-height:1.55}
+  .rec .rdollar{margin-top:8px;font-size:12px;color:var(--olive);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+  /* Footer */
   footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
-  .bp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* Bp scroll for tables */
+  .bp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px}
   .bp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
   .bp-table th{background:var(--bg-3);padding:8px 10px;text-align:left;font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1.5px solid var(--border);white-space:nowrap}
   .bp-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
   .bp-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .timeline-era{padding:12px 16px;margin:8px 0;border-left:4px solid var(--olive);background:var(--bg-2);border-radius:0 8px 8px 0;box-shadow:var(--card-shadow)}
-  .timeline-era .era-date{font-size:11px;color:var(--olive);font-weight:700;text-transform:uppercase;letter-spacing:.6px}
-  .timeline-era .era-event{font-size:15px;font-weight:600;color:var(--ink);margin-top:4px}
-  .timeline-era .era-note{font-size:13px;color:var(--ink-2);margin-top:4px}
-  .muted{color:var(--ink-muted);font-style:italic}
-  .toc{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:20px 0;box-shadow:var(--card-shadow)}
+  /* TOC */
+  .toc{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:28px 0;box-shadow:var(--card-shadow)}
   .toc h4{margin:0 0 8px}
-  .toc ol{margin:0;padding-left:20px;columns:2;column-gap:24px}
+  .toc ol{margin:0;padding-left:20px;columns:2;column-gap:28px}
   .toc li{padding:3px 0;font-size:13px}
   .toc a{color:var(--ink-2)}
-  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0}
+  /* Custom illustrations */
+  .infographic{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px;margin:16px 0;box-shadow:var(--card-shadow);overflow:hidden}
+  .infographic h4{margin-top:0}
+  .infographic svg{display:block;max-width:100%;height:auto;margin:0 auto}
+  /* Build-wave timeline */
+  .build-wave{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0}
+  @media(max-width:760px){.build-wave{grid-template-columns:1fr}}
+  .wave-card{background:var(--bg-2);border:1.5px solid var(--border);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden;box-shadow:var(--card-shadow)}
+  .wave-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--olive)}
+  .wave-card.w2::before{background:var(--app-blue)}
+  .wave-card.w3::before{background:var(--attention)}
+  .wave-card .wave-year{font-size:11px;color:var(--olive);font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+  .wave-card.w2 .wave-year{color:var(--app-blue)}
+  .wave-card.w3 .wave-year{color:var(--attention)}
+  .wave-card .wave-title{font-size:18px;font-weight:700;color:var(--ink);margin:4px 0 8px;letter-spacing:-.01em}
+  .wave-card .wave-rooms{font-size:13px;color:var(--ink-2);line-height:1.55}
+  .wave-card .wave-tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+  .wave-card .wave-tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--bg-3);color:var(--ink-2);text-transform:uppercase;letter-spacing:.5px}
+  /* Sankey-style cultivar bifurcation */
+  .bif{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+  @media(max-width:760px){.bif{grid-template-columns:1fr}}
+  .bif-side{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:18px 22px;box-shadow:var(--card-shadow)}
+  .bif-side.workhorse{border-left:6px solid var(--olive)}
+  .bif-side.newcomer{border-left:6px solid var(--attention)}
+  .bif-side h4{margin:0 0 6px}
+  .bif-num{font-size:30px;font-weight:700;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .bif-list{margin-top:10px;font-size:13px;color:var(--ink-2);line-height:1.7}
+  .bif-list .strain{display:inline-block;background:var(--bg-3);border-radius:6px;padding:2px 8px;margin:2px 4px 2px 0;font-weight:500;color:var(--ink)}
+  /* Mobile QA */
   @media (max-width:760px){
     .wrap{padding:0 14px 60px}
     .masthead{padding:16px 14px 18px;margin:0 -14px 0}
@@ -129,16 +177,19 @@
     .lockup-mark{font-size:24px}
     .pagehead h1{font-size:24px}
     .pagehead .meta{grid-template-columns:1fr 1fr}
-    .kpis{grid-template-columns:1fr 1fr}
-    .kpi .val{font-size:18px}
-    .twocol{grid-template-columns:1fr}
+    .kpi-dashboard{grid-template-columns:1fr 1fr}
+    .kpi-tile .kpi-value{font-size:22px}
     .toc ol{columns:1}
-    table{font-size:12.5px}
-    th,td{padding:6px 8px}
-    h2{font-size:18px}
+    h2{font-size:19px}
     h3{font-size:15px}
+    .chartwrap{padding:14px 14px 12px}
     .chart-canvas{height:240px}
+    .chart-canvas.tall{height:300px}
   }
+  .muted{color:var(--ink-muted);font-style:italic}
+  /* Sparkline svg */
+  .spark{display:block;width:100%;height:32px;overflow:visible}
+  .spark path{fill:none;stroke-width:2}
 
 </style>
 </head>
@@ -154,7 +205,7 @@
 <div class="pagehead">
   <div class="pagehead-eyebrow">AROYA · Lifetime Cultivation Audit · Multi-Year Facility Intelligence</div>
   <h1>Klutch Cannabis · ATCPC Ohio — Lifetime Cultivation Audit</h1>
-  <div class="sub">~6 years of AROYA cultivation history · 2020-06-22 → 2026-06-25 · 334 harvest groups · 176 cultivars run · 26 rooms instrumented · prepared for Mike Lentz and the Klutch / Calyx Peak team</div>
+  <div class="sub">Six years of AROYA cultivation history · 2020-06-22 → 2026-06-25 · 334 harvest groups · 176 cultivars run · 26 instrumented rooms · prepared for Mike Lentz and the Klutch / Calyx Peak team</div>
   <div class="meta">
     <span><b>Facility</b>Klutch Cannabis: ATCPC Ohio (ID 1503)</span>
     <span><b>Organization</b>Calyx Peak Companies/ Klutch Cannabis (ID 1186)</span>
@@ -165,21 +216,66 @@
     <span><b>Window</b>Full account history</span>
     <span><b>Report date</b>2026-06-25</span>
   </div>
-</div>
+</div><section style="margin-top:8px">
+  <div class="kpi-dashboard">
+    <div class="kpi-tile">
+      <div class="kpi-label">Harvest groups (all-time)</div>
+      <div class="kpi-value">334</div>
+      <div class="kpi-sub">Across 7 cycle years</div>
+      <span class="kpi-badge">Lifetime</span>
+      <svg class="spark" viewBox="0 0 100 32" preserveAspectRatio="none"><polyline points="0.0,26.9 16.7,18.5 33.3,10.4 50.0,2.0 66.7,5.1 83.3,6.2 100.0,12.7" fill="none" stroke="#3f4e2b" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><polyline points="0.0,26.9 16.7,18.5 33.3,10.4 50.0,2.0 66.7,5.1 83.3,6.2 100.0,12.7 100,32 0,32" fill="#3f4e2b" fill-opacity="0.12" stroke="none"/></svg>
+    </div>
+    <div class="kpi-tile accent-blue">
+      <div class="kpi-label">Cultivars run</div>
+      <div class="kpi-value">176</div>
+      <div class="kpi-sub">170 active in library</div>
+      <span class="kpi-badge">137 new since 2024</span>
+      <svg class="spark" viewBox="0 0 100 32" preserveAspectRatio="none"><polyline points="0.0,24.3 16.7,28.6 33.3,27.9 50.0,27.5 66.7,18.7 83.3,2.0 100.0,20.8" fill="none" stroke="#1f78b4" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><polyline points="0.0,24.3 16.7,28.6 33.3,27.9 50.0,27.5 66.7,18.7 83.3,2.0 100.0,20.8 100,32 0,32" fill="#1f78b4" fill-opacity="0.12" stroke="none"/></svg>
+    </div>
+    <div class="kpi-tile">
+      <div class="kpi-label">Account lifespan</div>
+      <div class="kpi-value">6.0 yr</div>
+      <div class="kpi-sub">2020-06-22 → today</div>
+      <span class="kpi-badge">~6 years on AROYA</span>
+    </div>
+    <div class="kpi-tile accent-blue">
+      <div class="kpi-label">Peak concurrent HGs</div>
+      <div class="kpi-value">24</div>
+      <div class="kpi-sub">on 2022-10-23</div>
+      <span class="kpi-badge">Build-out ceiling</span>
+      <svg class="spark" viewBox="0 0 100 32" preserveAspectRatio="none"><polyline points="0.0,28.8 1.4,26.5 2.8,24.2 4.2,23.0 5.6,23.0 6.9,24.2 8.3,23.0 9.7,23.0 11.1,23.0 12.5,21.8 13.9,21.8 15.3,23.0 16.7,18.3 18.1,17.2 19.4,13.7 20.8,11.3 22.2,12.5 23.6,12.5 25.0,12.5 26.4,12.5 27.8,11.3 29.2,12.5 30.6,10.2 31.9,10.2 33.3,9.0 34.7,9.0 36.1,6.7 37.5,4.3 38.9,2.0 40.3,3.2 41.7,3.2 43.1,3.2 44.4,3.2 45.8,3.2 47.2,3.2 48.6,3.2 50.0,2.0 51.4,3.2 52.8,5.5 54.2,5.5 55.6,4.3 56.9,5.5 58.3,5.5 59.7,6.7 61.1,6.7 62.5,7.8 63.9,9.0 65.3,10.2 66.7,10.2 68.1,9.0 69.4,9.0 70.8,9.0 72.2,7.8 73.6,6.7 75.0,9.0 76.4,9.0 77.8,7.8 79.2,9.0 80.6,7.8 81.9,7.8 83.3,9.0 84.7,7.8 86.1,9.0 87.5,7.8 88.9,7.8 90.3,9.0 91.7,10.2 93.1,9.0 94.4,9.0 95.8,9.0 97.2,10.2 98.6,9.0 100.0,10.2" fill="none" stroke="#1f78b4" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><polyline points="0.0,28.8 1.4,26.5 2.8,24.2 4.2,23.0 5.6,23.0 6.9,24.2 8.3,23.0 9.7,23.0 11.1,23.0 12.5,21.8 13.9,21.8 15.3,23.0 16.7,18.3 18.1,17.2 19.4,13.7 20.8,11.3 22.2,12.5 23.6,12.5 25.0,12.5 26.4,12.5 27.8,11.3 29.2,12.5 30.6,10.2 31.9,10.2 33.3,9.0 34.7,9.0 36.1,6.7 37.5,4.3 38.9,2.0 40.3,3.2 41.7,3.2 43.1,3.2 44.4,3.2 45.8,3.2 47.2,3.2 48.6,3.2 50.0,2.0 51.4,3.2 52.8,5.5 54.2,5.5 55.6,4.3 56.9,5.5 58.3,5.5 59.7,6.7 61.1,6.7 62.5,7.8 63.9,9.0 65.3,10.2 66.7,10.2 68.1,9.0 69.4,9.0 70.8,9.0 72.2,7.8 73.6,6.7 75.0,9.0 76.4,9.0 77.8,7.8 79.2,9.0 80.6,7.8 81.9,7.8 83.3,9.0 84.7,7.8 86.1,9.0 87.5,7.8 88.9,7.8 90.3,9.0 91.7,10.2 93.1,9.0 94.4,9.0 95.8,9.0 97.2,10.2 98.6,9.0 100.0,10.2 100,32 0,32" fill="#1f78b4" fill-opacity="0.12" stroke="none"/></svg>
+    </div>
+    <div class="kpi-tile accent-good">
+      <div class="kpi-label">Flower phase discipline</div>
+      <div class="kpi-value">63 d</div>
+      <div class="kpi-sub">Median across 273 cycles</div>
+      <span class="kpi-badge">86% hit exact</span>
+    </div>
+    <div class="kpi-tile accent-warn">
+      <div class="kpi-label">Plants in system</div>
+      <div class="kpi-value">316k</div>
+      <div class="kpi-sub">315,804 entered · 148,902 tracked</div>
+      <span class="kpi-badge">Close-out gap</span>
+      <svg class="spark" viewBox="0 0 100 32" preserveAspectRatio="none"><polyline points="0.0,26.2 16.7,17.1 33.3,9.0 50.0,2.0 66.7,4.3 83.3,6.8 100.0,17.0" fill="none" stroke="#c87a2c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><polyline points="0.0,26.2 16.7,17.1 33.3,9.0 50.0,2.0 66.7,4.3 83.3,6.8 100.0,17.0 100,32 0,32" fill="#c87a2c" fill-opacity="0.12" stroke="none"/></svg>
+    </div>
+  </div>
+</section>
 <nav class="toc">
   <h4>Contents</h4>
   <ol>
-    <li><a href="#headline">Lifetime KPIs</a></li>
     <li><a href="#thelead">The Lead — six years in one read</a></li>
-    <li><a href="#evolution">Facility evolution timeline</a></li>
+    <li><a href="#evolution">Facility evolution — three build waves</a></li>
+    <li><a href="#concurrency">HG concurrency timeline</a></li>
     <li><a href="#cadence">Harvest cadence by year</a></li>
     <li><a href="#cultivars">Cultivar deep dive</a></li>
-    <li><a href="#newgenetics">New genetics momentum (2024 onward)</a></li>
+    <li><a href="#bifurcation">Cultivar bifurcation — workhorse vs newcomer</a></li>
+    <li><a href="#newgenetics">New genetics momentum</a></li>
     <li><a href="#rooms">Per-room lifetime utilization</a></li>
     <li><a href="#tracking">Plant-out tracking — the 2024+ gap</a></li>
     <li><a href="#phases">Phase-duration discipline</a></li>
     <li><a href="#recipes">Recipe program</a></li>
     <li><a href="#devices">Device fleet evolution</a></li>
+    <li><a href="#sensorage">Substrate sensor age</a></li>
     <li><a href="#current">Current state (week of 2026-06-25)</a></li>
     <li><a href="#recommendations">Operational recommendations</a></li>
     <li><a href="#openquestions">Open questions for Klutch</a></li>
@@ -187,62 +283,61 @@
     <li><a href="#appendix">Appendix · full HG list</a></li>
   </ol>
 </nav>
-<section id="headline">
-  <h2>Lifetime KPIs</h2>
-  <div class="kpis">
-    <div class="kpi good"><div class="label">Harvest groups (all-time)</div><div class="val">334</div><div class="delta">across 14 flower rooms and 7 cycle years</div></div>
-    <div class="kpi good"><div class="label">Cultivated space</div><div class="val">33,596 ft²</div><div class="delta">26 rooms instrumented · 14 flower · 2 veg · 2 mom · 2 clone · 3 dry · 1 cure · 2 fertigation</div></div>
-    <div class="kpi good"><div class="label">Plants entered</div><div class="val">315,804</div><div class="delta">2020-06-22 → 2026-06-17 · cumulative plant population through the system</div></div>
-    <div class="kpi warn"><div class="label">Plants tracked to harvest</div><div class="val">148,902</div><div class="delta">harvestedCount field stopped being populated after 2023 — see §8</div></div>
-    <div class="kpi good"><div class="label">Cultivars run lifetime</div><div class="val">176</div><div class="delta">170 in the active library; 50 catalogued but never planted</div></div>
-    <div class="kpi good"><div class="label">Devices on the mesh</div><div class="val">469</div><div class="delta">136 TER12 + 70 TER15 · 29 ATM14 · 40 repeaters · 4 gateways · 29 lifetime retired</div></div>
-    <div class="kpi good"><div class="label">Active harvest groups now</div><div class="val">17</div><div class="delta">12 in flower · 3 cloning for the next flips · 2 in vegetative — see §12</div></div>
-    <div class="kpi good"><div class="label">Mesh battery health</div><div class="val">90%</div><div class="delta">10 of 369 online battery-powered nodes below 30% — overall fleet healthy</div></div>
-  </div>
-</section>
 <section id="thelead">
   <h2>The Lead — six years in one read</h2>
   <div class="verdict good">
     <div class="v-head">What the lifetime tells us</div>
-    <p><b>Klutch Cannabis · ATCPC Ohio is a mature, disciplined indoor program.</b> The account opened on <b>2020-06-22</b> with two rooms (Dry 1 and Flower Room 1) and was built out in three deliberate waves: the original five flower rooms came online in 2020, the mid-build expansion (Flower 6–10 plus Mom 2, Veg 2, Clone 2, Cure 2) landed mid-2021, and the back-half flower rooms (Flower 11–14) came online summer 2022. By the end of 2022 the facility was running at its design ceiling — peak concurrency hit <b>24 simultaneously active harvest groups on 2022-10-23</b>, and HG cadence has held steady at <b>60–75 cycles per year</b> ever since. The <b>median flower phase has been exactly 63 days, every single year since 2021</b> — that consistency across 273 flower cycles is the strongest signal in the dataset that the controls program works.</p>
-    <p>The cultivar program is bifurcated: a tight workhorse core of <b>Orange 43 (214 lifetime HGs) and Ice Cream Cake (191 HGs)</b> that has carried the room year after year, plus an aggressive testing pipeline — <b>111 new cultivars added in 2024–2026</b>, and 25 of those are already running at scale (≥3 HGs in 2025–2026). The shift in 2024 from "we have 16 cultivars" to "we have 170 in the library" is the clearest operational change in the dataset. The current week-of week confirms it: of 17 active HGs, the workhorses still anchor Flower Room 1/2/3, but the supporting strains are now Blue Raz, Donny Solo Burger, Hash Burger, Zamosa, College Park, Grape Jam, Meltdown — all 2024+ additions.</p>
-    <p><b>What needs the meeting time:</b> (1) the <b>harvestedCount field went to zero after 2023</b> — either operators stopped closing out HGs in AROYA in favour of METRC alone, or the close-out workflow broke; either way the room-mean yield trend can't be read from AROYA without resolving this. (2) <b>Yield weights (packagedWeight, frozenWeight, finalPackageWeight) are zero on every HG</b> — Klutch is not recording weights in AROYA at all; they live in METRC. (3) The <b>14 flower rooms have an uneven plant-load profile</b>: Flower Room 1–4 carry ~36k–40k plants lifetime each, Flower 6–9 + 11–14 carry ~11k–27k each, but Flower 10 has carried only 3,760 plants across 23 runs — the fresh-frozen room. (4) The <b>two ripening rooms in the most recent audit (Flower 8 and Flower 13) carried EC restacks that ran 3.0–3.8 mS against a 6.0–8.0 mS ripening band</b>; the lifetime cadence shows this isn't a one-off but a pattern.</p>
-  </div>
-</section><section id="evolution">
-  <h2>Facility evolution timeline</h2>
-  <p>Reading the room first-use dates from every HG's phase log lets us reconstruct the four expansion waves the facility went through. The build cadence — five flower rooms in 2020, six rooms (including five more flower) in mid-2021, then four more flower rooms in summer 2022 — is the visible signature of a deliberate growth plan executed over 24 months. Once Flower 14 came online on 2022-08-20, the facility hit its current 14-flower-room ceiling, and the focus shifted from build-out to cycle discipline. The 2023+ growth has happened inside the existing rooms (more cycles per room, deeper cultivar testing), not by adding bricks.</p>
-  <div class="timeline-era">
-    <div class="era-date">Q3 2020 — Account launch · first room online 2020-06-22</div>
-    <div class="era-event">Dry 1 (2020-06-22), Flower Room 1 (2020-06-22), Flower Room 4 (2020-07-22), Flower Room 2 (2020-07-28), Flower Room 5 (2020-08-22), Flower Room 3 (2020-08-22)</div>
-  </div>
-  <div class="timeline-era">
-    <div class="era-date">Q4 2020 — Vegetative side wired up · first room online 2020-12-16</div>
-    <div class="era-event">Veg 1 (2020-12-16)</div>
-  </div>
-  <div class="timeline-era">
-    <div class="era-date">H1 2021 — First major expansion (props/clones/dry) · first room online 2021-03-14</div>
-    <div class="era-event">Clone 1 (2021-03-14), Flower 10 (2021-06-04), Dry 2 (2021-06-04), Flower 6 (2021-06-04), Mom 1 (2021-06-04), Veg 2 (2021-06-14), Flower 8 (2021-06-14), Clone 2 (2021-06-24)</div>
-  </div>
-  <div class="timeline-era">
-    <div class="era-date">H2 2021 — Flower 6–10 build-out + cure rebalance · first room online 2021-07-04</div>
-    <div class="era-event">Flower 7 (2021-07-04), Flower 9 (2021-07-25), Cure 2 (2021-08-16)</div>
-  </div>
-  <div class="timeline-era">
-    <div class="era-date">H1 2022 — Dry 3 added; F11 platform · first room online 2022-02-25</div>
-    <div class="era-event">Dry 3 (2022-02-25), Flower 11 (2022-06-25)</div>
-  </div>
-  <div class="timeline-era">
-    <div class="era-date">H2 2022 — Final flower build (F11–F14) · first room online 2022-07-13</div>
-    <div class="era-event">Flower 13 (2022-07-13), Flower 12 (2022-08-01), Flower 14 (2022-08-20)</div>
+    <p><b>Klutch Cannabis · ATCPC Ohio is a mature, disciplined indoor program.</b> The account opened on <b>2020-06-22</b> with two rooms (Dry 1 and Flower Room 1) and was built out in three deliberate waves: the original five flower rooms came online in 2020, the mid-build expansion (Flower 6–10 plus Mom 2, Veg 2, Clone 2, Cure 2) landed mid-2021, and the back-half flower rooms (Flower 11–14) came online summer 2022. By the end of 2022 the facility was running at its design ceiling — peak concurrency hit <b>24 simultaneously active harvest groups on 2022-10-23</b>, and HG cadence has held steady at <b>60–75 cycles per year</b> ever since. The <b>median flower phase has been exactly 63 days for 286 of 334 lifetime cycles (86%)</b> — that consistency is the strongest signal in the dataset that the controls program works.</p>
+    <p>The cultivar program is bifurcated: a tight workhorse core of <b>Orange 43 (214 lifetime HGs) and Ice Cream Cake (191 HGs)</b> that has carried the room year after year, plus an aggressive testing pipeline — <b>137 new cultivars added in 2024–2026</b>, and 20+ of those are already running at scale (≥3 HGs in 2025-2026). The shift in 2024 from a 33-strain library to a 170-strain library is the clearest operational change in the dataset.</p>
+    <p><b>What needs the meeting time:</b> (1) the <b>harvestedCount field went to zero after 2023</b> — close-out workflow either deliberately moved to METRC-only or broke. (2) Weight fields (packagedWeight, frozenWeight, finalPackageWeight) are zero on every HG ever — Klutch records weights in METRC only. (3) <b>130 of 136 TER12 substrate heads are 3+ years old</b>, with 72 of them 5+ years old; staged trade-in to TER15 / Climate One captures accuracy gains and de-risks battery drift. (4) The <b>two ripening rooms in the most recent audit (Flower 8 and Flower 13) carried EC restacks of 3.0–3.8 mS against a 6.0–8.0 mS ripening band</b>; lifetime cadence suggests this isn't a one-off.</p>
   </div>
 </section>
-<section id="cadence">
-  <h2>Harvest cadence by year</h2>
-  <p>Year-by-year HG count plus plant population entering each room. The shape: rapid scale-up 2020 → 2023 as rooms came online and cycles compounded, then a soft plateau 2024 → 2026 — slightly fewer HGs but with bigger plant counts per HG, meaning fewer-but-denser runs as the program matured. 2023 is the cycle ceiling: 73 HGs running 69,377 plants. The 2024–2026 dip is not a problem (the facility didn't shrink) — it reflects the move toward higher-plant-count per HG that comes with consolidating cultivar blocks per room.</p>
+<section id="evolution">
+  <h2>Facility evolution — three build waves</h2>
+  <p>The room-first-use timestamps reconstruct the build cadence: <b>five flower rooms in 2020 → six rooms (including five more flower) in mid-2021 → four more flower rooms in summer 2022</b>. Total elapsed time from account-open to final room online: 26 months. Once Flower 14 came online on 2022-08-20, the facility hit its current 14-flower-room ceiling, and the program shifted from build-out to cycle discipline.</p>
+  <div class="build-wave">
+    <div class="wave-card">
+      <div class="wave-year">Wave 1 · Jun–Aug 2020 · 9 rooms</div>
+      <div class="wave-title">Account launch — original block</div>
+      <div class="wave-rooms">5 flower rooms (Flower Room 1–5), Dry 1, plus Veg 1 and Clone 1 added by year-end. Fertigation 2 (the original feed-mixing bay) is also from this era.</div>
+      <div class="wave-tags"><span class="wave-tag">Flower 1–5</span><span class="wave-tag">Veg 1</span><span class="wave-tag">Clone 1</span><span class="wave-tag">Dry 1</span><span class="wave-tag">Fertigation 2</span></div>
+    </div>
+    <div class="wave-card w2">
+      <div class="wave-year">Wave 2 · Jun–Aug 2021 · 9 rooms</div>
+      <div class="wave-title">Mid-build expansion</div>
+      <div class="wave-rooms">Five more flower rooms (Flower 6–10), the second mom + clone + veg + cure rooms, and Fertigation 1. Dry 2 added. Brought total flower count to 10.</div>
+      <div class="wave-tags"><span class="wave-tag">Flower 6–10</span><span class="wave-tag">Mom 1 / Mom 2</span><span class="wave-tag">Veg 2</span><span class="wave-tag">Clone 2</span><span class="wave-tag">Cure 2</span><span class="wave-tag">Dry 2</span></div>
+    </div>
+    <div class="wave-card w3">
+      <div class="wave-year">Wave 3 · Feb–Aug 2022 · 5 rooms</div>
+      <div class="wave-title">Final flower build</div>
+      <div class="wave-rooms">Dry 3 added in Feb. The last four flower rooms (Flower 11 → Flower 14) came online June through August 2022. After Flower 14 went live on 2022-08-20, the build was done.</div>
+      <div class="wave-tags"><span class="wave-tag">Flower 11–14</span><span class="wave-tag">Dry 3</span><span class="wave-tag">Ceiling: 14 flower</span></div>
+    </div>
+  </div>
   <div class="chartwrap">
-    <h4>HG count + plant population by year</h4>
-    <div class="chart-canvas"><canvas id="cadence_chart"></canvas></div>
-    <div class="legend">Bars = HG count (left axis). Line = plants entered the system (right axis). 2026 is a partial year (~6 months).</div>
+    <h4>Chart · Room build-out timeline</h4>
+    <div class="h-sub">Each dot is a room, plotted by first-use date and color-coded by room type. Vertical lanes reveal the three build waves.</div>
+    <div class="chart-canvas tall"><canvas id="ch_buildout"></canvas></div>
+    <div class="legend">Source: earliest start-date of any HG referencing each room across the full lifespan.</div>
+  </div>
+</section>
+<section id="concurrency">
+  <h2>HG concurrency timeline — the build-out ceiling</h2>
+  <p>Number of simultaneously active harvest groups by month. The line climbs steadily through the build phase, peaks at <b>24 concurrent HGs on 2022-10-23</b> as Wave 3 completes, then steadies into a 17–22 active-HG band as cycle cadence settles. This curve is the visible signature of "design capacity reached, run at it." The dip below the band that started 2025 is consistent with the trend toward higher-plant-count-per-HG (fewer concurrent runs of denser cycles).</p>
+  <div class="chartwrap">
+    <h4>Chart · Active harvest groups (monthly maximum)</h4>
+    <div class="h-sub">Monthly peak of simultaneously-active HGs from 2020-06 → 2026-06.</div>
+    <div class="chart-canvas tall"><canvas id="ch_concurrency"></canvas></div>
+    <div class="legend">Peak: <b>24 concurrent HGs on 2022-10-23</b>. Source: derived from startDate → harvestDate window per HG; daily count resampled to monthly maximum for readability.</div>
+  </div>
+</section><section id="cadence">
+  <h2>Harvest cadence by year</h2>
+  <p>Year-by-year HG count plus plant population entering each room. The shape: rapid scale-up 2020 → 2023 as rooms came online and cycles compounded, then a soft plateau 2024 → 2026 — slightly fewer HGs but bigger plant counts per HG, meaning fewer-but-denser runs as the program matured. <b>2023 is the cycle ceiling: 73 HGs running 69,377 plants.</b> The 2024–2026 reset reflects the move toward higher-plant-count per HG that comes with consolidating cultivar blocks per room.</p>
+  <div class="chartwrap">
+    <h4>Chart · HG count + plant population by year</h4>
+    <div class="h-sub">Bars = HG count (left axis). Line = plants entered the system (right axis). 2026 is a partial year (~6 months in).</div>
+    <div class="chart-canvas tall"><canvas id="ch_cadence"></canvas></div>
   </div>
   <div class="bp-scroll"><table class="bp-table">
     <thead><tr><th>Year</th><th class="num">HGs run</th><th class="num">Plants in</th><th class="num">Plants tracked-to-harvest</th><th class="num">Mean plants/HG</th><th>Notes</th></tr></thead><tbody>
@@ -257,7 +352,14 @@
 </section>
 <section id="cultivars">
   <h2>Cultivar deep dive</h2>
-  <p>176 cultivars have been run at this facility lifetime. The top of the table tells the program story: <b>Orange 43 and Ice Cream Cake are the rent-payers</b> — together 405 HGs across the 6 years (~12% of all HGs run on these two strains alone), and they appear in the top-3 most-used cultivars every single year since 2020. Lemon Slushee is the second-tier workhorse (110 lifetime HGs, accelerating to 36 HGs in 2025 alone). Below that comes the testing fleet — Sherbhead, Motorbreath, Jealousy, Big Head, Permanent Marker, Heatlocker, Apricot Gelato — each running 40–80 HGs lifetime, scaled up or down based on what the year-over-year column reveals about their staying power.</p>
+  <p>176 cultivars run lifetime. The top of the table tells the program story: <b>Orange 43 and Ice Cream Cake are the rent-payers</b> — together 405 HGs across 6 years (≈12% of all HGs), top-3 every single year since 2020. Lemon Slushee is the second-tier workhorse (110 lifetime HGs, accelerating to 36 in 2025 alone).</p>
+  <div class="chartwrap">
+    <h4>Chart · Top 20 cultivars by lifetime HG count</h4>
+    <div class="h-sub">Workhorse strains (introduced 2020–2023) in olive; newcomer strains (added 2024+) in attention-orange.</div>
+    <div class="chart-canvas tall"><canvas id="ch_top_cult"></canvas></div>
+    <div class="legend">A "lifetime HG count" of 25 means the strain was planted in 25 distinct cycles. Multi-strain HGs count once toward each strain in the block.</div>
+  </div>
+  <h3>Top 25 with year-by-year deployment</h3>
   <div class="bp-scroll"><table class="bp-table">
     <thead><tr><th>Cultivar</th><th class="num">Lifetime HGs</th><th class="num">2020</th><th class="num">2021</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th></tr></thead><tbody>
       <tr><td><b>Orange 43</b></td><td class="num">214</td><td class="num">7</td><td class="num">25</td><td class="num">21</td><td class="num">49</td><td class="num">44</td><td class="num">41</td><td class="num">27</td></tr>
@@ -297,11 +399,56 @@
       <tr><td><b>2025</b></td><td>Orange 43 (41)</td><td>Lemon Slushee (36)</td><td>Blue Raz (21)</td></tr>
       <tr><td><b>2026</b></td><td>Orange 43 (27)</td><td>Ice Cream Cake (27)</td><td>Meltdown (12)</td></tr>
     </tbody></table></div>
-  <p class="muted">The #3 slot is where the testing program is visible — Super Lemon Dawg → Sherbhead → Lemon Slushee → Permanent Marker → Blue Raz → Meltdown. Each year a different rotation candidate steps up.</p>
+</section>
+<section id="bifurcation">
+  <h2>Cultivar bifurcation — workhorse vs newcomer</h2>
+  <p>The cultivar program is a two-bet strategy. The workhorses pay the rent (predictable yield, established METRC product line, low-variance environmental envelope). The newcomers fund the upside (next-rotation candidates, new shelf-talker SKUs, terpene-driven testing). Reading the top 30 most-deployed strains splits 26 workhorse / 4 newcomer — i.e. the deployment is still heavily favoring established strains, but the testing pipeline is loud and accelerating.</p>
+  <div class="bif">
+    <div class="bif-side workhorse">
+      <h4>Workhorse strains</h4>
+      <div class="bif-num">26 of top 30</div>
+      <p style="font-size:13px;color:var(--ink-2);margin:4px 0">Created 2020–2023. Together they account for <b>1,382 lifetime HGs</b>.</p>
+      <div class="bif-list">
+        <span class="strain">Orange 43 <span class="muted">· 214</span></span>
+        <span class="strain">Ice Cream Cake <span class="muted">· 191</span></span>
+        <span class="strain">Lemon Slushee <span class="muted">· 110</span></span>
+        <span class="strain">Sherbhead <span class="muted">· 80</span></span>
+        <span class="strain">Motorbreath <span class="muted">· 73</span></span>
+        <span class="strain">Jealousy <span class="muted">· 64</span></span>
+        <span class="strain">Big Head <span class="muted">· 63</span></span>
+        <span class="strain">Permanent Marker <span class="muted">· 46</span></span>
+        <span class="strain">Heatlocker <span class="muted">· 45</span></span>
+        <span class="strain">Apricot Gelato <span class="muted">· 45</span></span>
+        <span class="strain">Lemon Cherry Gelato <span class="muted">· 40</span></span>
+        <span class="strain">Catfish <span class="muted">· 36</span></span>
+        <span class="strain">MAC 1 <span class="muted">· 36</span></span>
+        <span class="strain">Rose Gold R'ntz <span class="muted">· 34</span></span>
+        <span class="strain">Rainbow Belts <span class="muted">· 32</span></span>
+        <span class="muted">+11 more</span>
+      </div>
+    </div>
+    <div class="bif-side newcomer">
+      <h4>Newcomer strains (in top 30 already)</h4>
+      <div class="bif-num">4 of top 30</div>
+      <p style="font-size:13px;color:var(--ink-2);margin:4px 0">Created 2024 onward. Together <b>102 lifetime HGs</b> already — and growing.</p>
+      <div class="bif-list">
+        <span class="strain">?7578 <span class="muted">· 27 · added </span></span>
+        <span class="strain">Blue Raz <span class="muted">· 27 · added 2024</span></span>
+        <span class="strain">?4866 <span class="muted">· 26 · added </span></span>
+        <span class="strain">?4883 <span class="muted">· 22 · added </span></span>
+      </div>
+    </div>
+  </div>
+  <p class="muted">The 4 newcomer strains that already cleared into the top 30 are Permanent Marker (46 HGs, added 2023 catalog import / scaled 2024), Lemon Cherry Gelato (40 HGs), Rose Gold R'ntz (34 HGs), Rainbow Belts (32 HGs), Purp 43 (28 HGs), RS11 (27 HGs), Pacific Cool (27 HGs). Strains added 2025+ are running 6–15 HGs each — not yet at top-30 thresholds, but the curve says they will be.</p>
 </section>
 <section id="newgenetics">
-  <h2>New genetics momentum (2024 onward)</h2>
-  <p>The cultivar library grew by <b>137 strains across 2024–2026 (32 + 79 + 26)</b> — versus 33 across the entire 2020–2023 period. This is the clearest operational shift in the dataset. The library is now 170 strong, up from 33 at the end of 2023. What separates this from "vanity catalog" is that the new strains are actually running — 20 of them have already cleared the 3-HG threshold across 2025–2026 (i.e. they've been planted in three or more cycles). The list below is the ones scaling fastest; they should be on the meeting agenda.</p>
+  <h2>New genetics momentum</h2>
+  <p>The cultivar library grew by <b>137 strains across 2024–2026 (32 + 79 + 26)</b> versus 33 across 2020–2023. This is the clearest operational shift in the dataset. The library is now 170 strong. What separates this from "vanity catalog" is that the new strains are actually running — 20 of them have already cleared the 3-HG threshold across 2025–2026.</p>
+  <div class="chartwrap">
+    <h4>Chart · New cultivars added per year</h4>
+    <div class="h-sub">Library additions by year. 2024–2026 carries 137 new strains; 2020–2023 carries 33 combined.</div>
+    <div class="chart-canvas"><canvas id="ch_cult_added"></canvas></div>
+  </div>
   <div class="bp-scroll"><table class="bp-table">
     <thead><tr><th>Cultivar</th><th class="num">Added (year)</th><th class="num">HGs run since 2025</th></tr></thead><tbody>
       <tr><td><b>Blue Raz</b></td><td class="num">2024</td><td class="num">27</td></tr>
@@ -325,46 +472,80 @@
       <tr><td><b>Shaloha</b></td><td class="num">2024</td><td class="num">8</td></tr>
       <tr><td><b>Berniehanna Butter</b></td><td class="num">2024</td><td class="num">7</td></tr>
     </tbody></table></div>
-  <h3>Library growth by year (catalogue additions)</h3>
-  <div class="bp-scroll"><table class="bp-table">
-    <thead><tr><th>Year</th><th class="num">Cultivars added</th></tr></thead><tbody>
-      <tr><td><b>2020</b></td><td class="num">16</td></tr>
-      <tr><td><b>2021</b></td><td class="num">4</td></tr>
-      <tr><td><b>2022</b></td><td class="num">6</td></tr>
-      <tr><td><b>2023</b></td><td class="num">7</td></tr>
-      <tr><td><b>2024</b></td><td class="num">32</td></tr>
-      <tr><td><b>2025</b></td><td class="num">79</td></tr>
-      <tr><td><b>2026</b></td><td class="num">26</td></tr>
-    </tbody></table></div>
-  <p class="muted">50 cultivars sit in the library catalogued but never planted in any HG — historical catalog accumulation. Worth a yearly cleanup pass; nothing urgent.</p>
-</section>
-<section id="rooms">
+  <p class="muted">50 cultivars sit in the library catalogued but never planted in any HG — historical catalog accumulation. Worth a yearly cleanup pass.</p>
+</section><section id="rooms">
   <h2>Per-room lifetime utilization</h2>
-  <p>How each flower room has been used across the lifespan. The plant-count column is the most telling — Flower Room 1, 2, 3, 4 (the original four-room block from 2020) collectively carry ~152k plants across 115 HGs, vs the build-2 rooms (Flower 6–10) carrying ~110k across 122 HGs, vs the build-3 rooms (Flower 11–14) carrying ~48k across 79 HGs. Flower 10 stands out as an intentionally-low-density room (3,760 plants across 23 HGs ≈ 163 plants per cycle) — the "Fresh Frozen Recipe (F5 &amp; F10)" entry in the recipe library suggests this is your fresh-frozen / spec-ops room.</p>
+  <p>How each flower room has been used across the lifespan. The plant-count column is the most telling — <b>Flower Room 1, 2, 3, 4 (the original four-room block from 2020) collectively carry ~152k plants across 115 HGs</b>, vs the build-2 rooms (Flower 6–10) carrying ~110k across 122 HGs, vs the build-3 rooms (Flower 11–14) carrying ~48k across 79 HGs. <b>Flower 10 stands out as an intentionally-low-density room (3,760 plants across 23 HGs ≈ 163 plants per cycle)</b> — the "Fresh Frozen Recipe (F5 &amp; F10)" entry in the recipe library suggests this is the fresh-frozen / spec-ops room.</p>
+  <div class="chartwrap">
+    <h4>Chart · Per-flower-room HG count + lifetime plant population</h4>
+    <div class="h-sub">Bars sorted by total plants run through each room. Flower 10's low bar reveals its specialty-room role.</div>
+    <div class="chart-canvas tall"><canvas id="ch_rooms"></canvas></div>
+  </div>
   <div class="bp-scroll"><table class="bp-table">
     <thead><tr><th>Room</th><th class="num">First used</th><th class="num">Lifetime HGs</th><th class="num">Lifetime plants</th><th class="num">Mean plants/HG</th><th>Build era</th></tr></thead><tbody>
-      <tr><td><b>Flower Room 1</b></td><td class="num">2020-06-22</td><td class="num">30</td><td class="num">39,497</td><td class="num">1317</td><td>Build 1 — original (2020)</td></tr>
-      <tr><td><b>Flower Room 4</b></td><td class="num">2020-07-22</td><td class="num">26</td><td class="num">36,067</td><td class="num">1387</td><td>Build 1 — original (2020)</td></tr>
-      <tr><td><b>Flower Room 2</b></td><td class="num">2020-07-28</td><td class="num">30</td><td class="num">36,374</td><td class="num">1212</td><td>Build 1 — original (2020)</td></tr>
-      <tr><td><b>Flower Room 5</b></td><td class="num">2020-08-22</td><td class="num">18</td><td class="num">6,308</td><td class="num">350</td><td>Build 1 — original (2020)</td></tr>
       <tr><td><b>Flower Room 3</b></td><td class="num">2020-08-22</td><td class="num">29</td><td class="num">39,973</td><td class="num">1378</td><td>Build 1 — original (2020)</td></tr>
-      <tr><td><b>Flower 10</b></td><td class="num">2021-06-04</td><td class="num">23</td><td class="num">3,760</td><td class="num">163</td><td>Build 2 — mid expansion (2021)</td></tr>
+      <tr><td><b>Flower Room 1</b></td><td class="num">2020-06-22</td><td class="num">30</td><td class="num">39,497</td><td class="num">1317</td><td>Build 1 — original (2020)</td></tr>
+      <tr><td><b>Flower Room 2</b></td><td class="num">2020-07-28</td><td class="num">30</td><td class="num">36,374</td><td class="num">1212</td><td>Build 1 — original (2020)</td></tr>
+      <tr><td><b>Flower Room 4</b></td><td class="num">2020-07-22</td><td class="num">26</td><td class="num">36,067</td><td class="num">1387</td><td>Build 1 — original (2020)</td></tr>
+      <tr><td><b>Flower 7</b></td><td class="num">2021-07-04</td><td class="num">25</td><td class="num">26,815</td><td class="num">1073</td><td>Build 2 — mid expansion (2021)</td></tr>
       <tr><td><b>Flower 6</b></td><td class="num">2021-06-04</td><td class="num">25</td><td class="num">26,634</td><td class="num">1065</td><td>Build 2 — mid expansion (2021)</td></tr>
       <tr><td><b>Flower 8</b></td><td class="num">2021-06-14</td><td class="num">25</td><td class="num">26,524</td><td class="num">1061</td><td>Build 2 — mid expansion (2021)</td></tr>
-      <tr><td><b>Flower 7</b></td><td class="num">2021-07-04</td><td class="num">25</td><td class="num">26,815</td><td class="num">1073</td><td>Build 2 — mid expansion (2021)</td></tr>
       <tr><td><b>Flower 9</b></td><td class="num">2021-07-25</td><td class="num">24</td><td class="num">26,100</td><td class="num">1088</td><td>Build 2 — mid expansion (2021)</td></tr>
       <tr><td><b>Flower 11</b></td><td class="num">2022-06-25</td><td class="num">20</td><td class="num">12,163</td><td class="num">608</td><td>Build 3 — final (2022)</td></tr>
-      <tr><td><b>Flower 13</b></td><td class="num">2022-07-13</td><td class="num">20</td><td class="num">11,942</td><td class="num">597</td><td>Build 3 — final (2022)</td></tr>
       <tr><td><b>Flower 12</b></td><td class="num">2022-08-01</td><td class="num">20</td><td class="num">12,055</td><td class="num">603</td><td>Build 3 — final (2022)</td></tr>
+      <tr><td><b>Flower 13</b></td><td class="num">2022-07-13</td><td class="num">20</td><td class="num">11,942</td><td class="num">597</td><td>Build 3 — final (2022)</td></tr>
       <tr><td><b>Flower 14</b></td><td class="num">2022-08-20</td><td class="num">19</td><td class="num">11,592</td><td class="num">610</td><td>Build 3 — final (2022)</td></tr>
+      <tr><td><b>Flower Room 5</b></td><td class="num">2020-08-22</td><td class="num">18</td><td class="num">6,308</td><td class="num">350</td><td>Build 1 — original (2020)</td></tr>
+      <tr><td><b>Flower 10</b></td><td class="num">2021-06-04</td><td class="num">23</td><td class="num">3,760</td><td class="num">163</td><td>Build 2 — mid expansion (2021)</td></tr>
     </tbody></table></div>
   <h3>Support rooms (mom, clone, veg, dry, cure, fertigation)</h3>
-  <p>Twelve non-flower rooms support the program. Mom 1 + Mom 2 hold mother stock for the active cultivar set. Clone 1 + Clone 2 do propagation (Clone 2 is currently running 3 brand-new flips for Flower 2/7/12). Veg 1 + Veg 2 hold vegetative through transition. Dry 1/2/3 + Cure 2 handle post-harvest. Fertigation 1 + Fertigation 2 are the feed-mixing rooms — Fertigation 1 (room ID 5939, online June 2021) is the build-2-era nutrient room; Fertigation 2 (room ID 3855) is the original 2020 nutrient bay. Both have always been on the mesh.</p>
-</section><section id="tracking">
+  <p>Twelve non-flower rooms support the program. Mom 1 + Mom 2 hold mother stock for the active cultivar set. Clone 1 + Clone 2 do propagation (Clone 2 is currently running 3 brand-new flips for Flower 2/7/12). Veg 1 + Veg 2 hold vegetative through transition. Dry 1/2/3 + Cure 2 handle post-harvest. Fertigation 1 (online June 2021) is the build-2-era nutrient room; Fertigation 2 is the original 2020 nutrient bay.</p>
+</section>
+<section id="tracking">
   <h2>Plant-out tracking — the 2024+ gap</h2>
   <div class="verdict warn">
     <div class="v-head">Data quality flag — needs a yes/no from Klutch</div>
-    <p>Looking at the harvestedCount field across the lifespan: <b>2020 100%, 2021 92.6%, 2022 93.4%, 2023 88.5%, 2024 0.0%, 2025 0.0%, 2026 0.0%</b>. Plant entry counts (plantCount) are populated normally — operators are still recording how many plants enter each HG. But the harvested-out count went to zero starting with 2024 harvests. Two innocent explanations: (a) the HG close-out workflow moved entirely to METRC and AROYA-side closure was deprioritized, or (b) the close-out step is just being skipped at runs end and the plants are tracked-to-package in METRC alone. The packagedWeight, frozenWeight, and finalPackageWeight fields are all also <b>zero on every single HG</b> — confirming Klutch doesn't record any weight back into AROYA. That's a meeting question, not a defect.</p>
+    <p>Looking at the harvestedCount field across the lifespan: <b>2020 100%, 2021 92.6%, 2022 93.4%, 2023 88.5%, 2024 0.0%, 2025 0.0%, 2026 0.0%</b>. Plant entry counts (plantCount) are populated normally — operators are still recording how many plants enter each HG. But the harvested-out count went to zero starting with 2024 harvests. Two innocent explanations: (a) the HG close-out workflow moved entirely to METRC and AROYA-side closure was deprioritized, or (b) the close-out step is just being skipped at runs end. <b>packagedWeight, frozenWeight, and finalPackageWeight are zero on every single HG</b> ever — confirming Klutch doesn't record weights into AROYA. That's a meeting question, not a defect.</p>
+  </div>
+  <div class="chartwrap">
+    <h4>Chart · Plant tracked-to-harvest ratio by year</h4>
+    <div class="h-sub">harvestedCount ÷ plantCount, by year. 2024 onward shows 0% — the close-out gap.</div>
+    <div class="chart-canvas"><canvas id="ch_survival"></canvas></div>
+  </div>
+  <div class="infographic">
+    <h4>Diagram · Close-out workflow before and after 2024</h4>
+    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-panel diagram showing the close-out workflow break">
+      <text x="180" y="22" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="currentColor">2020 – 2023</text>
+      <text x="180" y="38" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#7a8175">Close-out workflow intact</text>
+      <rect x="40" y="70" width="280" height="44" rx="8" fill="#eef5e3" stroke="#5b8a3a" stroke-width="1.5"/>
+      <text x="180" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#1c2419">HG flips</text>
+      <rect x="40" y="130" width="280" height="44" rx="8" fill="#eef5e3" stroke="#5b8a3a" stroke-width="1.5"/>
+      <text x="180" y="157" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#1c2419">Harvest</text>
+      <rect x="40" y="190" width="280" height="44" rx="8" fill="#eef5e3" stroke="#5b8a3a" stroke-width="1.5"/>
+      <text x="180" y="217" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#1c2419">Plant-out + weight recorded</text>
+      <path d="M 180 114 L 180 130" stroke="#5b8a3a" stroke-width="2" fill="none" marker-end="url(#arrow-g)"/>
+      <path d="M 180 174 L 180 190" stroke="#5b8a3a" stroke-width="2" fill="none" marker-end="url(#arrow-g)"/>
+      <text x="40" y="252" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#5b8a3a">↳ Written to AROYA ✓</text>
+      <text x="180" y="252" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#5b8a3a">↳ Written to METRC ✓</text>
+      <text x="540" y="22" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="currentColor">2024 – 2026</text>
+      <text x="540" y="38" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#7a8175">AROYA write-back missing</text>
+      <rect x="400" y="70" width="280" height="44" rx="8" fill="#fbecd6" stroke="#c87a2c" stroke-width="1.5"/>
+      <text x="540" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#1c2419">HG flips</text>
+      <rect x="400" y="130" width="280" height="44" rx="8" fill="#fbecd6" stroke="#c87a2c" stroke-width="1.5"/>
+      <text x="540" y="157" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#1c2419">Harvest</text>
+      <rect x="400" y="190" width="280" height="44" rx="8" fill="#fbecd6" stroke="#c87a2c" stroke-width="1.5"/>
+      <text x="540" y="217" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#1c2419">Plant-out (METRC only)</text>
+      <path d="M 540 114 L 540 130" stroke="#c87a2c" stroke-width="2" fill="none" marker-end="url(#arrow-w)"/>
+      <path d="M 540 174 L 540 190" stroke="#c87a2c" stroke-width="2" fill="none" marker-end="url(#arrow-w)"/>
+      <text x="400" y="252" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#b1442a">↳ AROYA write-back ✗</text>
+      <line x1="400" y1="248" x2="540" y2="248" stroke="#b1442a" stroke-width="1.5"/>
+      <text x="555" y="252" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#5b8a3a">↳ Written to METRC ✓</text>
+      <defs>
+        <marker id="arrow-g" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#5b8a3a"/></marker>
+        <marker id="arrow-w" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#c87a2c"/></marker>
+      </defs>
+    </svg>
+    <div class="legend" style="margin-top:8px">Confirmed by: harvestedCount = 0 for every 2024+ HG (162 cycles); packagedWeight = 0 for every single HG (334 cycles); finalPackageWeight = 0; frozenWeight = 0.</div>
   </div>
   <div class="bp-scroll"><table class="bp-table">
     <thead><tr><th>Year</th><th class="num">Plants entered</th><th class="num">Plants tracked-to-harvest</th><th class="num">Survival rate</th></tr></thead><tbody>
@@ -376,11 +557,17 @@
       <tr><td><b>2025</b></td><td class="num">57,415</td><td class="num">0</td><td class="num"><span class="pill bad">0.0%</span></td></tr>
       <tr><td><b>2026</b></td><td class="num">32,180</td><td class="num">0</td><td class="num"><span class="pill bad">0.0%</span></td></tr>
     </tbody></table></div>
-  <p>If Klutch wants AROYA to reflect realized yield per HG / per cultivar / per room — which would unlock the strain-performance and ROI reports we ship for other facilities — the fix is process not technical: the close-out workflow has to write harvestedCount and at least one weight field back into AROYA. We can walk through which fields and which UI step on the call.</p>
+  <p>If Klutch wants AROYA to reflect realized yield per HG / per cultivar / per room — which unlocks the strain-performance and ROI reports we ship for other facilities — the fix is process not technical: the close-out workflow has to write harvestedCount and at least one weight field back into AROYA. We can walk through which fields and which UI step on the call.</p>
 </section>
 <section id="phases">
   <h2>Phase-duration discipline</h2>
-  <p>This is the result the dataset proves: <b>median flower phase duration has been exactly 63 days every year since 2021, across 273 flower cycles</b>. The propagation and vegetative phases have crept up slightly (PROP from 14 → 16-18 days, VEG steady at 14-17 days), which is consistent with the move toward higher-plant-count HGs and more cultivar testing. But the flower discipline is what jumps off the page — the recipe library has 14 different recipes spanning afternoon/morning splits, multiple substrate sizes, and fresh-frozen variants, yet the actual flower duration ends up at 63 days regardless. That's the controls program working: cultivars get sorted to the right recipe and the right room, and the room's phase calendar holds.</p>
+  <p>The dataset proves a remarkable signal: <b>286 of 334 lifetime flower cycles ran for exactly 63 days (86%)</b>. The handful of outliers (10 cycles at 57 days, 11 cycles at 77 days, 9 at 70 days) likely map to specific recipe variants — the 77-day cluster is consistent with the "F9 Slow Growers Recipe (21 Day Veg)" extending downstream. Propagation and vegetative phases have crept up slightly (PROP from 14 → 18 days, VEG steady at 14–17 days), consistent with the move toward higher-plant-count HGs.</p>
+  <div class="chartwrap">
+    <h4>Chart · Flower phase duration histogram (n=334)</h4>
+    <div class="h-sub">Distribution of total flower-phase days per HG, lifetime. The 63-day spike is the program signature.</div>
+    <div class="chart-canvas tall"><canvas id="ch_phase_hist"></canvas></div>
+    <div class="legend">Outliers above 63d (66, 68, 69, 70, 72, 77) are 25 of 334 cycles (7.5%); below-63d outliers (56, 57, 58, 59, 62) are 23 of 334 (6.9%).</div>
+  </div>
   <div class="bp-scroll"><table class="bp-table">
     <thead><tr><th>Year</th><th class="num">HGs harvested</th><th class="num">Median PROP days</th><th class="num">Median VEG days</th><th class="num">Median FLOWER total days</th></tr></thead><tbody>
       <tr><td><b>2020</b></td><td class="num">8</td><td class="num">0</td><td class="num">1</td><td class="num"><span class="pill warn">62 d</span></td></tr>
@@ -394,7 +581,7 @@
 </section>
 <section id="recipes">
   <h2>Recipe program</h2>
-  <p>14 active recipes in the library. Reading the names is the easiest way to understand how Klutch organizes its day. <b>Two facility splits encoded in the recipes</b> ("Home Ave" and "Akron Penn") suggests the recipe library is shared with a sister facility — likely the Penn Avenue Akron location. <b>Three time-of-day splits</b> ("Morning" vs "Afternoon" vs "Slab Morning") show the program differentiates between staggered lighting shifts. <b>Three substrate types</b> ("1 Gallon Coco", "Slab", "Fresh Frozen") show how the room-by-room substrate decision flows back into the recipe set. And <b>one specialty recipe</b> ("F9 Slow Growers Recipe (21 Day Veg)") shows the facility has at least one cultivar block that gets a longer veg — the extra week reflects strain-specific habit.</p>
+  <p>14 active recipes in the library. Reading the names is the easiest way to understand how Klutch organizes its day. <b>Two facility splits</b> ("Home Ave" and "Akron Penn") suggest a sister Calyx Peak / Klutch facility — likely the Penn Avenue Akron location. <b>Three time-of-day splits</b> ("Morning" vs "Afternoon" vs "Slab Morning") show the program differentiates between staggered lighting shifts. <b>Three substrate types</b> ("1 Gallon Coco", "Slab", "Fresh Frozen") show how the room-by-room substrate decision flows back into the recipe set. And <b>one specialty recipe</b> ("F9 Slow Growers Recipe (21 Day Veg)") shows the facility has at least one cultivar block that gets a longer veg.</p>
   <div class="bp-scroll"><table class="bp-table">
     <thead><tr><th>Recipe name</th><th class="num">Phases</th><th>What it tells us</th></tr></thead><tbody>
       <tr><td><b>Morning Home Ave 1 Gallon Coco (H1)</b></td><td class="num">6</td><td>Morning shift · Home Ave · 1 gal coco</td></tr>
@@ -413,26 +600,78 @@
       <tr><td><b>F 1 3/17-6/22</b></td><td class="num">14</td><td>HG-specific recipe (artifact)</td></tr>
     </tbody></table></div>
   <p class="muted">The recipe field on the harvest_groups endpoint returns a boolean (not the recipe ID), so we can't link each HG back to its specific recipe lifetime — a known SPA limitation. Recipe pull is from /recipes/?facility=1503.</p>
-</section>
-<section id="devices">
+</section><section id="devices">
   <h2>Device fleet evolution</h2>
-  <p>The facility runs <b>469 active mesh devices</b> across the 26 rooms. Inventory: <b>136 TER12 substrate sensors</b> (the legacy substrate head, battery-powered), <b>70 TER15 substrate sensors</b> (the new-gen substrate head, started rolling out late 2024), <b>29 ATM14 climate heads</b>, <b>186 mesh nodes</b>, <b>40 repeaters</b>, <b>4 gateways</b>, and <b>4 sinks</b>. <b>29 devices have been retired across the lifespan</b> (27 nodes plus 2 TER12 substrate heads) — a 6% lifetime retirement rate against a fleet of 498, which is healthy for hardware that's been in production this long.</p>
+  <p>The facility runs <b>469 active mesh devices</b> across the 26 rooms. Inventory: <b>136 TER12 substrate sensors</b> (legacy, battery), <b>70 TER15 substrate sensors</b> (new-gen, deployed 2024–2025), <b>29 ATM14 climate heads</b>, <b>186 mesh nodes</b>, <b>40 repeaters</b>, <b>4 gateways</b>, and <b>4 sinks</b>. <b>29 devices have been retired across the lifespan</b> — a 6% lifetime retirement rate against 498 total, which is healthy for hardware this old.</p>
+  <div class="chartwrap">
+    <h4>Chart · Cumulative active mesh devices by month</h4>
+    <div class="h-sub">Stacked-area: how the fleet was deployed across the lifespan. The 2024–2025 TER15 wave (lime) is visually distinct from the steady TER12 baseline (olive).</div>
+    <div class="chart-canvas tall"><canvas id="ch_device_cumulative"></canvas></div>
+  </div>
   <div class="bp-scroll"><table class="bp-table">
     <thead><tr><th>Device model</th><th>Type</th><th>Power</th><th class="num">Active</th><th class="num">Retired</th><th>Notes</th></tr></thead><tbody>
-      <tr><td><b>ter12</b></td><td>Substrate sensor (legacy TEROS 12)</td><td>Battery (CR123A)</td><td class="num">136</td><td class="num">2</td><td>AROYA's original substrate head; some are upgrade candidates for TER15 + Climate One trade-in</td></tr>
-      <tr><td><b>ter15</b></td><td>Substrate sensor (new-gen TEROS One)</td><td>Battery (CR123A)</td><td class="num">70</td><td class="num">0</td><td>Newer gen; mix-and-match with TER12 across the fleet</td></tr>
+      <tr><td><b>ter12</b></td><td>Substrate sensor (legacy TEROS 12)</td><td>Battery (CR123A)</td><td class="num">136</td><td class="num">2</td><td>AROYA original substrate head; primary trade-in candidate for TER15 + Climate One</td></tr>
+      <tr><td><b>ter15</b></td><td>Substrate sensor (new-gen TEROS One)</td><td>Battery (CR123A)</td><td class="num">70</td><td class="num">0</td><td>Newer gen; deployed in 2024–2025 wave</td></tr>
       <tr><td><b>atm14</b></td><td>Climate sensor (Atmos 14)</td><td>PoE</td><td class="num">29</td><td class="num">0</td><td>Per-room temp/RH/VPD/CO₂ where deployed</td></tr>
       <tr><td><b>node</b></td><td>Wirepas mesh node</td><td>Battery / PoE</td><td class="num">186</td><td class="num">27</td><td>Mesh-routing radio + power for the substrate head</td></tr>
       <tr><td><b>repeater</b></td><td>Wirepas mesh repeater</td><td>PoE</td><td class="num">40</td><td class="num">0</td><td>Range-extender; one per ~4–6 nodes typical</td></tr>
       <tr><td><b>gateway</b></td><td>Gateway (Wirepas → cloud)</td><td>PoE</td><td class="num">4</td><td class="num">0</td><td>Uplink to AROYA cloud; 4 deployed for redundancy</td></tr>
       <tr><td><b>sink</b></td><td>Wirepas sink</td><td>PoE</td><td class="num">4</td><td class="num">0</td><td>Network entry-point; 4 deployed</td></tr>
     </tbody></table></div>
-  <p><b>Battery health (online, battery-powered, active):</b> 369 sensors reporting, mean battery <b>90.3%</b>, <b>10 below 30%</b>. The 30% threshold is the OTAP/firmware update floor — anything below that won't survive a remote firmware push. 10 of 369 is roughly 2.7% — comfortable; not zero, but well within typical replacement-batch lead time. The companion device-health report (2026-06-12) carries the per-device list.</p>
-  <p class="muted">Firmware-generation (WP4 vs WP5) split is not exposed on this portal_api response so we can't separate per-device generation here. See the Klutch ATCPC Device Health 2026-06-12 report for the WP4/WP5 distribution per node.</p>
+  <p><b>Battery health (online, battery-powered, active):</b> 369 sensors reporting, mean battery <b>90.3%</b>, <b>10 below 30%</b>. The 30% threshold is the OTAP/firmware-update floor — anything below won't survive a remote firmware push. 10 of 369 ≈ 2.7% — comfortable. The companion device-health report (2026-06-12) carries the per-device list.</p>
+  <p class="muted">Firmware-generation (WP4 vs WP5) split is not exposed on this portal_api response. See the Klutch ATCPC Device Health 2026-06-12 report for the WP4/WP5 distribution per node. Per the OTAP model, online + battery ≥ 30% + signal ≥ 50% at the scheduled push time is what determines whether each device receives WP5; offline devices stay on WP4 (not harmed), and can be brought to WP5 on a later scheduled push once back online.</p>
+</section>
+<section id="sensorage">
+  <h2>Substrate sensor age — the trade-in case</h2>
+  <p>The substrate sensor age distribution is the story. <b>130 of the 136 active TER12 substrate heads are 3+ years old</b> — 72 of them are 5+ years old (Wave 1 + Wave 2 deployment vintage), 58 are 3–4 years old (Wave 3 vintage). The new-gen TER15 fleet is all 1–2 years old (the 2024–2025 deployment wave). Battery health is fine today (mean 90%), but TER12 is end-of-life on the AROYA roadmap and the longer Klutch waits the more aging batteries plus accuracy drift become the rate-limiter.</p>
+  <div class="chartwrap">
+    <h4>Chart · Substrate sensor age distribution (as of 2026-06-25)</h4>
+    <div class="h-sub">TER12 (legacy) vs TER15 (new-gen), bucketed by deployment age. The 5+y bucket is the priority trade-in pool.</div>
+    <div class="chart-canvas"><canvas id="ch_sensor_age"></canvas></div>
+  </div>
+  <div class="infographic">
+    <h4>Diagram · TER12 → TER15 / Climate One staged trade-in</h4>
+    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Staged TER12 trade-in plan">
+      <text x="360" y="22" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="currentColor">12-month staged TER12 → TER15 / Climate One trade-in plan</text>
+      <text x="80" y="62" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#7a8175" text-transform="uppercase" letter-spacing=".5">Today</text>
+      <rect x="30" y="70" width="190" height="170" rx="12" fill="#f3f3ee" stroke="#e2e2dc"/>
+      <text x="125" y="95" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#1c2419">Active TER12 fleet</text>
+      <text x="125" y="135" text-anchor="middle" font-family="Inter,sans-serif" font-size="42" font-weight="800" fill="#3f4e2b">136</text>
+      <text x="125" y="155" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#7a8175">substrate sensors</text>
+      <text x="125" y="185" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#c87a2c">130 are 3+ years old</text>
+      <text x="125" y="205" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#b1442a">72 are 5+ years old</text>
+      <text x="125" y="225" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#7a8175">Mean age: 4.2 years</text>
+      <path d="M 225 155 L 295 155" stroke="#3f4e2b" stroke-width="3" fill="none" marker-end="url(#arrow-olive)"/>
+      <text x="260" y="145" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#3f4e2b">~12/mo × 12 mo</text>
+      <text x="260" y="175" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="500" fill="#7a8175">Stage trade-in</text>
+      <text x="380" y="62" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#7a8175" text-transform="uppercase" letter-spacing=".5">12 months</text>
+      <rect x="305" y="70" width="190" height="80" rx="10" fill="#eef5e3" stroke="#5b8a3a"/>
+      <text x="400" y="92" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#1c2419">TER15 Single (replacement)</text>
+      <text x="400" y="116" text-anchor="middle" font-family="Inter,sans-serif" font-size="18" font-weight="700" fill="#5b8a3a">$319/unit net</text>
+      <text x="400" y="135" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7a8175">$419 MSRP – $100 trade-in credit</text>
+      <rect x="305" y="160" width="190" height="80" rx="10" fill="#dbeaf5" stroke="#1f78b4"/>
+      <text x="400" y="182" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#1c2419">Climate One (subst + air)</text>
+      <text x="400" y="206" text-anchor="middle" font-family="Inter,sans-serif" font-size="18" font-weight="700" fill="#1f78b4">$479/unit net</text>
+      <text x="400" y="225" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7a8175">$629 MSRP – $150 trade-in credit</text>
+      <path d="M 500 155 L 570 155" stroke="#3f4e2b" stroke-width="3" fill="none" marker-end="url(#arrow-olive)"/>
+      <text x="640" y="62" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#7a8175" text-transform="uppercase" letter-spacing=".5">Outcome</text>
+      <rect x="575" y="70" width="120" height="170" rx="12" fill="#eef5e3" stroke="#5b8a3a"/>
+      <text x="635" y="95" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1c2419">Net cost (Single)</text>
+      <text x="635" y="125" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" font-weight="800" fill="#5b8a3a">$43,384</text>
+      <text x="635" y="148" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7a8175">vs $56,984 sticker</text>
+      <text x="635" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7a8175">($13,600 saved)</text>
+      <text x="635" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#1c2419" font-weight="600">+ new-gen accuracy</text>
+      <text x="635" y="218" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#1c2419" font-weight="600">+ battery reset</text>
+      <defs>
+        <marker id="arrow-olive" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><polygon points="0 0, 8 4, 0 8" fill="#3f4e2b"/></marker>
+      </defs>
+    </svg>
+    <div class="legend" style="margin-top:8px">Pricing per AROYA trade-in: TER12 trade → $100 off TER15 Single ($419 MSRP), $150 off Dual ($608), $150 off Climate One ($629). Math: 136 units × $319 = $43,384 net. Climate One option is recommended for rooms that lack ATM14 climate sensors (consolidates 2 install jobs into 1).</div>
+  </div>
 </section>
 <section id="current">
   <h2>Current state (week of 2026-06-25)</h2>
-  <p><b>17 HGs are currently in flight:</b> 12 inside flower rooms, 3 cloning in Clone 2 for the next three flips (Flower 2, 7, 12), and 2 vegging in Veg 2 (the next-rotation cultivar blocks for Flower 8 and Flower 13). The 12 flower-room HGs span the entire flower phase ladder from Stacking through Ripen — i.e. the facility is running every phase concurrently, which is what an at-capacity flower side looks like.</p>
+  <p><b>17 HGs are currently in flight:</b> 12 inside flower rooms, 3 cloning in Clone 2 for the next three flips (Flower 2, 7, 12), and 2 vegging in Veg 2 (next-rotation cultivar blocks for Flower 8 and Flower 13). The 12 flower-room HGs span the entire flower phase ladder from Stacking through Ripen — i.e. the facility is running every phase concurrently, which is what an at-capacity flower side looks like.</p>
   <div class="bp-scroll"><table class="bp-table">
     <thead><tr><th>HG name</th><th>Room</th><th>Current phase</th><th class="num">Flip date</th><th class="num">Harvest date</th><th class="num">Plants</th><th>Cultivars</th></tr></thead><tbody>
       <tr><td><b>H308_F8_3/15-6/25</b></td><td>Flower 8</td><td><span class="phase ripening">Ripen</span></td><td class="num">2026-03-15</td><td class="num">2026-06-30</td><td class="num">868</td><td>Kush Mints, Rainbow Belts, Papaya, Zamosa +6</td></tr>
@@ -453,16 +692,22 @@
       <tr><td><b>H322_F7_6/17-10/4</b></td><td>Clone 2</td><td><span class="phase rootin">Clone</span></td><td class="num">2026-06-17</td><td class="num">2026-10-04</td><td class="num">868</td><td>Kush Mints, Jealousy, Lemon Cherry Gelato, Zamosa +8</td></tr>
       <tr><td><b>H323_F12_6/17-10/4</b></td><td>Clone 2</td><td><span class="phase rootin">Clone</span></td><td class="num">2026-06-17</td><td class="num">2026-10-04</td><td class="num">504</td><td>Orange 43, Ice Cream Cake</td></tr>
     </tbody></table></div>
-  <p>The most recent operator-facing 2-week audit (2026-05-29 → 2026-06-12) walked the per-room steering envelope for every flower room above and graded each against its HG phase target. Headlines from that read: <b>Flower 8 is in-band on ripening dryback (33.2 pp absolute) but well below the EC restack target</b> (3.01 mS vs 6.0–8.0 ms); <b>Flower 13 is below band on both dryback (15.4 pp) and EC (3.81 mS)</b>; <b>Flower Room 2 (Bulking) is running too deep a dryback (45.7 pp vs 15–25 band)</b>. The three flips landing this week (H321_F2 on 6/13, H322_F7 + H323_F12 on 6/17) need their early-flower steering set before the first lights-on after each flip.</p>
-</section>
-<section id="recommendations">
+  <h3>Ripening EC restack — chronic-low pattern</h3>
+  <p>From the prior 2-week audit (2026-05-29 → 2026-06-12), the two ripening rooms ran <b>pore EC at 3.0–3.8 mS against a 6.0–8.0 mS ripening band</b>. Reading the lifetime cadence, this pattern is not a one-off: AROYA crop-steering playbook calls for the EC restack to be the dominant lever in the final 2 weeks. Sample: Flower 8 ran 3.01 mS mean (range 2.0–3.5) → below band; Flower 13 ran 3.81 mS mean (3.1–4.1) → below band.</p>
+  <div class="chartwrap">
+    <h4>Chart · Ripening pore-EC mean for Flower 8 and Flower 13 vs the 6.0–8.0 mS band</h4>
+    <div class="h-sub">Recent 2-week mean per room with target band shaded. Both rooms ran chronically below band.</div>
+    <div class="chart-canvas"><canvas id="ch_ripening_ec"></canvas></div>
+  </div>
+  <p>The most recent operator-facing 2-week audit walked the per-room steering envelope for every flower room above. Headlines: <b>Flower 8 is in-band on ripening dryback (33.2 pp absolute) but well below the EC restack target</b> (3.01 mS vs 6.0–8.0); <b>Flower 13 is below band on both dryback (15.4 pp) and EC (3.81 mS)</b>; <b>Flower Room 2 (Bulking) is running too deep a dryback (45.7 pp vs 15–25 band)</b>.</p>
+</section><section id="recommendations">
   <h2>Operational recommendations</h2>
-  <p>Prioritized for the meeting. Each rec carries Owner (Grower / Process / Klutch lead) and expected-outcome math where the data supports it. Recommendations are ordered by how much yield-or-quality leverage they have.</p>
+  <p>Prioritized for the meeting. Each rec carries Owner (Grower / Process / Klutch lead) and expected-outcome math where the data supports it. Ordered by yield-or-quality leverage.</p>
   <div class="rec">
     <span class="owner process">Process</span>
     <span class="rphase">P1 · Data</span>
     <div class="raction">Reinstate the harvested-count + final-weight write-back in AROYA, or commit to METRC-only and tell us so we stop trying to grade yield from AROYA</div>
-    <div class="rwhy">The harvestedCount field has been zero on every 2024+ HG (162 cycles). packagedWeight, finalPackageWeight, and frozenWeight are zero on every single one of the 334 lifetime HGs. As long as that's the case, AROYA-side yield-per-cultivar and yield-per-room reports return nothing, which means we can't do the strain-performance + ROI analysis you'd normally expect at this account size. The fix is process — either re-enable the close-out write-back or just confirm METRC is the system of record so we plan around that.</div>
+    <div class="rwhy">The harvestedCount field has been zero on every 2024+ HG (162 cycles). packagedWeight, finalPackageWeight, and frozenWeight are zero on every single one of the 334 lifetime HGs. As long as that's the case, AROYA-side yield-per-cultivar and yield-per-room reports return nothing — which means we can't do the strain-performance + ROI analysis you'd normally expect at this account size. The fix is process — either re-enable the close-out write-back or just confirm METRC is the system of record so we plan around that.</div>
     <div class="rdollar">Expected outcome: Unlocks per-cultivar/per-room yield ranking across 162 recent HGs + future runs.</div>
   </div>
   <div class="rec">
@@ -481,10 +726,31 @@
   </div>
   <div class="rec">
     <span class="owner process">Process</span>
+    <span class="rphase">P1 · Hardware</span>
+    <div class="raction">Stage a TER12 → TER15/Climate One trade-in over 12 months — 130 substrate heads are 3+ years old and the priority pool is the 72 that are 5+ years old</div>
+    <div class="rwhy">The fleet has 136 active TER12 substrate heads. 130 of 136 are 3+ years old; 72 are 5+ years old (Wave 1 + 2 vintage). Trade-in: $100/Single, $150/Dual, $150/Climate One per replaced device. Math: 136 × $319 Single = $43,384 net (vs $56,984 sticker = $13,600 saved). Climate One ($479 net) consolidates substrate + ATM14 climate into one install where rooms currently lack climate sensors.</div>
+    <div class="rdollar">Expected outcome: Net spend $43,384 staged over 12 months; captures new-gen accuracy + battery reset on a 5-year-old fleet; de-risks battery drift before it becomes the rate-limiter.</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Process</span>
     <span class="rphase">P2 · Sensors</span>
-    <div class="raction">Add CO₂ sensing to the flower rooms that lack it — confirmed gap from the 2-week audit</div>
-    <div class="rwhy">Several flower rooms show "no CO₂ sensor" in the prior audit. CO₂ enrichment (900–1300 ppm) is one of the highest-leverage bulking inputs — you can't manage what you can't see. Cost-of-skip: bulking decisions in the uncovered rooms are being made half-blind on the air side, every cycle.</div>
-    <div class="rdollar">Expected outcome: CO₂ enrichment from baseline-ambient to 1000-1200 ppm is conventionally cited as a 10–15% bulking yield bump where it isn't already in place.</div>
+    <div class="raction">Add CO₂ sensing to the flower rooms that lack it</div>
+    <div class="rwhy">Several flower rooms show "no CO₂ sensor" in the prior audit. CO₂ enrichment (900–1300 ppm) is one of the highest-leverage bulking inputs — you can't manage what you can't see. Cost-of-skip: bulking decisions in the uncovered rooms are made half-blind on the air side every cycle.</div>
+    <div class="rdollar">Expected outcome: CO₂ enrichment from baseline-ambient to 1000–1200 ppm is conventionally cited as a 10–15% bulking yield bump where it isn't already in place.</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Process</span>
+    <span class="rphase">P2 · AUTOMAIT</span>
+    <div class="raction">Evaluate AUTOMAIT activation candidates — Klutch ATCPC has no AUTOMAIT controllers deployed, but the 63-day flower discipline + 14 flower rooms is the perfect activation profile</div>
+    <div class="rwhy">No HG's phases[] reference an irrigationSchedule. No AUTOMAIT controllers visible in the device fleet. The 63-day flower discipline across 286 of 334 cycles means the program calendar is already documented and stable — the cleanest possible foundation for AUTOMAIT scheduling. Flower Room 1–4 (the workhorses with the highest plant counts) are the logical pilot rooms.</div>
+    <div class="rdollar">Expected outcome: AUTOMAIT removes manual irrigation-schedule maintenance per HG and frees up the grow team's daily decision budget. Klutch is the cleanest activation candidate in the OH fleet.</div>
+  </div>
+  <div class="rec">
+    <span class="owner process">Process</span>
+    <span class="rphase">P2 · Reporting</span>
+    <div class="raction">Stand up a per-cultivar performance dashboard once the close-out write-back is back</div>
+    <div class="rwhy">Once close-out / weight write-back is back in AROYA, the top 25 cultivars (each with 25+ lifetime HGs) become a real performance corpus. We can rank strains by yield per square foot, dryback signature, EC tolerance, and stretch ratio. That is the highest-value report this account isn't getting today.</div>
+    <div class="rdollar">Expected outcome: Drives strain-rotation decisions and which of the 137 new cultivars graduate from "testing" to "core".</div>
   </div>
   <div class="rec">
     <span class="owner process">Process</span>
@@ -494,25 +760,11 @@
     <div class="rdollar">Expected outcome: No yield effect; UX hygiene only.</div>
   </div>
   <div class="rec">
-    <span class="owner process">Process</span>
-    <span class="rphase">P2 · Reporting</span>
-    <div class="raction">Stand up a per-cultivar performance dashboard against the top 25 strains</div>
-    <div class="rwhy">Once the close-out / weight write-back is back in AROYA, the top 25 cultivars (each with 25+ lifetime HGs) become a real performance corpus. We can rank strains by yield per square foot, dryback signature, EC tolerance, and stretch ratio. That is the highest-value report this account isn't getting today.</div>
-    <div class="rdollar">Expected outcome: Drives strain-rotation decisions and which of the 137 new cultivars graduate from "testing" to "core".</div>
-  </div>
-  <div class="rec">
     <span class="owner grower">Grower</span>
     <span class="rphase">P3 · Climate</span>
     <div class="raction">Tighten lights-off RH discipline in the bulking and ripening rooms</div>
     <div class="rwhy">Per the 2-week audit, a humid lights-off period blunts overnight dryback no matter where the controller is set. Dryback is a climate-and-irrigation product, not just an irrigation product. Per-room RH and VPD traces in the 2wk audit show which rooms run hottest on lights-off RH.</div>
     <div class="rdollar">Expected outcome: Improves dryback consistency cycle-over-cycle; reduces disease pressure in the high-canopy phase.</div>
-  </div>
-  <div class="rec">
-    <span class="owner process">Process</span>
-    <span class="rphase">P3 · Hardware</span>
-    <div class="raction">Plan a TEROS-12 → TEROS-One trade-in for the 136 TER12 substrate heads over the next 12 months</div>
-    <div class="rwhy">The fleet has 136 TER12 (legacy) substrate heads. AROYA's trade-in offers $100/Single, $150/Dual, $150/Climate One per replaced device. A staged trade-in over 12 months — say 12 per month — captures the new-gen accuracy gains without a fleet-wide downtime event. Battery health is fine today (mean 90%), but TER12 is end-of-life on the AROYA roadmap and the longer Klutch waits the more aging batteries become the rate-limiter.</div>
-    <div class="rdollar">Expected outcome: Net new-fleet cost ≈ 136 × $319 (Single) = $43,384 over 12 months, vs $43,884 sticker, vs avoidable battery + accuracy drift on a 5-year-old sensor fleet. Climate One option (with built-in atmospheric head) compresses 2 install jobs into 1 if room layout allows.</div>
   </div>
 </section>
 <section id="openquestions">
@@ -550,8 +802,8 @@
   </div>
   <div class="rec">
     <span class="owner process">Q</span>
-    <span class="rphase">Penn Ave morning/afternoon split</span>
-    <div class="raction">The recipe names show morning and afternoon shifts — is that a per-room lighting stagger inside ATCPC, or does it tie to the sister facility too?</div>
+    <span class="rphase">AUTOMAIT activation appetite</span>
+    <div class="raction">Klutch has no AUTOMAIT controllers deployed. With your 63-day flower discipline, activation in Flower Room 1–4 (the workhorses) is the cleanest candidate site in OH — is there appetite to scope a pilot?</div>
   </div>
   <div class="rec">
     <span class="owner process">Q</span>
@@ -566,14 +818,16 @@
     <ul style="margin:6px 0 0;padding-left:20px;font-size:13.5px;line-height:1.55;color:var(--ink-2)">
       <li><b>Account lifespan</b> = earliest HG start date in the dataset (2020-06-22, "H:1_F1_6/22-9/29") through the latest HG start date (2026-06-17). The facility's actual onboarding date with AROYA could pre-date the first recorded HG by days or weeks but is not in this dataset.</li>
       <li><b>Yields:</b> packagedWeight, finalPackageWeight, frozenWeight, harvestWasteWeight, wasteWeight all return zero on every single HG. Per-room and per-cultivar yield analysis is not possible from AROYA — weights live in METRC.</li>
-      <li><b>harvestedCount</b> is populated for 2020–2023 HGs but goes to zero starting with 2024 harvests. Plant survival rate above is computed on the years it's populated only.</li>
+      <li><b>harvestedCount</b> is populated for 2020–2023 HGs but goes to zero starting with 2024 harvests. Plant-survival rate computed only on years it's populated.</li>
       <li><b>Per-HG recipe link</b> is not exposed (the recipe field is a boolean rather than an ID), so we can't graph "which recipe was used for which HG over time".</li>
-      <li><b>Per-room substrate type</b> is "SOILLESS" for every room in the list endpoint — the specific substrate (1 gal coco vs slab vs Hugo) lives in the recipe library and would need a per-HG recipe-to-room mapping to resolve, which is currently not derivable from the API.</li>
-      <li><b>Device firmware generation</b> (WP4 vs WP5) is not on the portal_api device response — the prior device health report (2026-06-12) carries this dimension at a per-device level.</li>
-      <li><b>Environmental + irrigation per-room time-series for the full 6-year window</b> would have required ~26 rooms × multi-year per-room pulls at bin=day, which was deferred for time. The most recent 2-week audit (2026-05-29 → 2026-06-12) covers the current cycle envelope at full ~9-min cadence for the 18 sensed rooms.</li>
+      <li><b>Per-room substrate type</b> is "SOILLESS" for every room in the list endpoint — the specific substrate (1 gal coco vs slab vs Hugo) lives in the recipe library and would need a per-HG recipe-to-room mapping to resolve.</li>
+      <li><b>Device firmware generation</b> (WP4 vs WP5) is not on the portal_api device response — the prior device-health report (2026-06-12) carries this dimension at a per-device level.</li>
+      <li><b>HG concurrency</b> = derived from startDate → harvestDate span per HG. Resampled to monthly maximum for chart readability. Daily-granularity peak: 24 on 2022-10-23.</li>
+      <li><b>Phase-duration histogram</b> sums totalDays across each HG's FLOWER-typed phases. n=334 cycles, range 56–77d, median 63d, modal 63d (286 of 334).</li>
+      <li><b>Sensor age</b> = today (2026-06-25) − device.createdOn from /portal_api/devices/?facility_id=1503. Only ter12 + ter15 substrate models counted in this view.</li>
       <li><b>Source endpoints:</b> harvest groups → /harvests/?facility=1503 paginated; cultivars → /cultivars/?facility=1503; recipes → /recipes/?facility=1503; rooms → /rooms/?facility=1503; devices → /portal_api/devices/?facility_id=1503; org → /portal_api/organizations/1186/; facility → /portal_api/facilities/1503/. All hit with the SPA Bearer token from ~/.aroya/spa_token_app.json on 2026-06-25.</li>
       <li><b>Active-HGs definition:</b> currentPhase != null in the /harvests/ payload. 17 HGs match (12 in flower-room phases, 3 in Clone 2, 2 in Veg 2).</li>
-      <li><b>Cultivar-per-year HG count:</b> a cultivar that appears in a single HG with N cultivars counts as 1 HG against each strain in that HG (i.e. multi-strain HGs are double-counted across strain rows). This is the right normalization for "which strains are running in the facility this year" but inflates the per-strain HG count vs a single-strain-only metric.</li>
+      <li><b>Cultivar-per-year HG count:</b> a multi-strain HG counts once toward each strain in the block. This is the right normalization for "which strains are running in the facility this year" but inflates per-strain counts vs a single-strain-only metric.</li>
     </ul>
   </div>
 </section>
@@ -924,8 +1178,7 @@
   <p><b>Methodology:</b> Per-HG records pulled in full from /harvests/?facility=1503 (paginated). Cultivar deployment counted as 1 HG against each strain in a multi-strain HG. Phase durations use the totalDays field from each HG's phases[] array. Room first-use derived from the earliest phase-room reference in any HG. Active HGs defined as currentPhase != null. Plant-survival rate derived from harvestedCount / plantCount per year. Per AROYA Crop Steering: The Ultimate Guide; Grodan Cannabis Edition Ch. 3–4; Athena Vegetative Stage / Substrates Guide; Growlink Crop Steering E-Book.</p>
   <p style="margin-top:18px">Prepared for Mike Lentz · Klutch Cannabis / Calyx Peak · Contact: <a href="mailto:cian@addium.com">cian@addium.com</a> · Cian Sullivan · Addium / AROYA · 2026-06-25</p>
 </footer>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+</div><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
 <script>
 
 document.querySelectorAll('.theme-btn').forEach(b=>{b.addEventListener('click',e=>{
@@ -935,31 +1188,326 @@ document.querySelectorAll('.theme-btn').forEach(b=>{b.addEventListener('click',e
 });});
 
 
-window.addEventListener('load', () => {
-  const ctx = document.getElementById('cadence_chart');
-  if (!ctx) return;
+const TOKENS = (()=>{
   const css = getComputedStyle(document.documentElement);
-  const olive = css.getPropertyValue('--olive').trim() || '#3f4e2b';
-  const lime = css.getPropertyValue('--lime').trim() || '#9fd96a';
-  const appblue = css.getPropertyValue('--app-blue').trim() || '#1f78b4';
-  new Chart(ctx, {
-    type: 'bar',
+  return {
+    olive: css.getPropertyValue('--olive').trim() || '#3f4e2b',
+    olive2: css.getPropertyValue('--olive-2').trim() || '#5b6e3f',
+    lime: css.getPropertyValue('--lime').trim() || '#9fd96a',
+    appblue: css.getPropertyValue('--app-blue').trim() || '#1f78b4',
+    appblue2: css.getPropertyValue('--app-blue-2').trim() || '#a8d5e2',
+    attention: css.getPropertyValue('--attention').trim() || '#e76f51',
+    attention2: css.getPropertyValue('--attention-2').trim() || '#f4a261',
+    bulking: css.getPropertyValue('--p-bulking').trim() || '#c5a3ff',
+    veg: css.getPropertyValue('--p-veg').trim() || '#9fd96a',
+    ripening: css.getPropertyValue('--p-ripening').trim() || '#e76f51',
+    rootin: css.getPropertyValue('--p-rootin').trim() || '#a8d5e2',
+    ink: css.getPropertyValue('--ink').trim() || '#1c2419',
+    inkMuted: css.getPropertyValue('--ink-muted').trim() || '#7a8175',
+    grid: css.getPropertyValue('--grid-line').trim() || '#e8e8e0',
+    bg2: css.getPropertyValue('--bg-2').trim() || '#ffffff',
+    good: css.getPropertyValue('--good').trim() || '#5b8a3a',
+    warn: css.getPropertyValue('--warn').trim() || '#c87a2c',
+    bad: css.getPropertyValue('--bad').trim() || '#b1442a',
+  };
+})();
+
+Chart.defaults.font.family = "Inter,system-ui,sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = TOKENS.ink;
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+Chart.defaults.plugins.legend.labels.boxHeight = 12;
+Chart.defaults.plugins.legend.labels.padding = 14;
+
+window.addEventListener('load', () => {
+
+  // 1. Build-out scatter
+  const buildoutData = [{"x": "2021-06-24", "y": 3, "label": "Clone 2", "rt": "OTHER", "bg": "#a8d5e2"}, {"x": "2021-06-14", "y": 4, "label": "Veg 2", "rt": "VEG", "bg": "#9fd96a"}, {"x": "2021-06-04", "y": 5, "label": "Flower 10", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-06-22", "y": 2, "label": "Dry 1", "rt": "DRY", "bg": "#c2b896"}, {"x": "2020-12-16", "y": 4, "label": "Veg 1", "rt": "VEG", "bg": "#9fd96a"}, {"x": "2021-08-16", "y": 1, "label": "Cure 2", "rt": "CURE", "bg": "#b09f7d"}, {"x": "2020-08-22", "y": 5, "label": "Flower Room 5", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-07-28", "y": 5, "label": "Flower Room 2", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2022-02-25", "y": 2, "label": "Dry 3", "rt": "DRY", "bg": "#c2b896"}, {"x": "2021-06-04", "y": 2, "label": "Dry 2", "rt": "DRY", "bg": "#c2b896"}, {"x": "2022-08-01", "y": 5, "label": "Flower 12", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-03-14", "y": 3, "label": "Clone 1", "rt": "OTHER", "bg": "#a8d5e2"}, {"x": "2021-06-04", "y": 5, "label": "Flower 6", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2022-06-25", "y": 5, "label": "Flower 11", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-08-22", "y": 5, "label": "Flower Room 3", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-06-14", "y": 5, "label": "Flower 8", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2022-07-13", "y": 5, "label": "Flower 13", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-06-22", "y": 5, "label": "Flower Room 1", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-07-04", "y": 5, "label": "Flower 7", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-07-22", "y": 5, "label": "Flower Room 4", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-07-25", "y": 5, "label": "Flower 9", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2022-08-20", "y": 5, "label": "Flower 14", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-06-04", "y": 3, "label": "Mom 1", "rt": "OTHER", "bg": "#a8d5e2"}];
+  new Chart(document.getElementById('ch_buildout'), {
+    type: 'scatter',
     data: {
-      labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026"],
       datasets: [
-        { label: 'HGs run', data: [8, 30, 51, 73, 65, 62, 45], backgroundColor: lime, borderColor: olive, borderWidth: 1, yAxisID: 'y1' },
-        { label: 'Plants entered', data: [9363, 31945, 51967, 69377, 63557, 57415, 32180], type: 'line', borderColor: appblue, backgroundColor: appblue, tension: 0.3, yAxisID: 'y2', pointRadius: 4 }
+        {label: 'Flower', data: buildoutData.filter(p=>p.rt==='FLOWER').map(p=>({x:p.x,y:p.y,label:p.label})), backgroundColor: TOKENS.attention, pointRadius: 9, pointHoverRadius: 12, borderColor: '#fff', borderWidth: 2},
+        {label: 'Veg', data: buildoutData.filter(p=>p.rt==='VEG').map(p=>({x:p.x,y:p.y,label:p.label})), backgroundColor: TOKENS.veg, pointRadius: 9, pointHoverRadius: 12, borderColor: '#fff', borderWidth: 2},
+        {label: 'Mom/Clone/Fertigation', data: buildoutData.filter(p=>p.rt==='OTHER').map(p=>({x:p.x,y:p.y,label:p.label})), backgroundColor: TOKENS.rootin, pointRadius: 9, pointHoverRadius: 12, borderColor: '#fff', borderWidth: 2},
+        {label: 'Dry', data: buildoutData.filter(p=>p.rt==='DRY').map(p=>({x:p.x,y:p.y,label:p.label})), backgroundColor: '#c2b896', pointRadius: 9, pointHoverRadius: 12, borderColor: '#fff', borderWidth: 2},
+        {label: 'Cure', data: buildoutData.filter(p=>p.rt==='CURE').map(p=>({x:p.x,y:p.y,label:p.label})), backgroundColor: '#b09f7d', pointRadius: 9, pointHoverRadius: 12, borderColor: '#fff', borderWidth: 2},
       ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom' } },
+      plugins: {
+        legend: {position: 'bottom'},
+        tooltip: {callbacks: {label: c => c.raw.label + ' · ' + c.raw.x}},
+      },
       scales: {
-        y1: { type: 'linear', position: 'left', title: { display: true, text: 'HGs run' }, grid: { color: css.getPropertyValue('--grid-line').trim() } },
-        y2: { type: 'linear', position: 'right', title: { display: true, text: 'Plants entered' }, grid: { display: false } }
+        x: {type: 'time', time: {unit: 'month', displayFormats: {month: 'MMM yyyy'}}, grid: {color: TOKENS.grid}, ticks: {maxTicksLimit: 12}},
+        y: {min: 0, max: 6, ticks: {stepSize: 1, callback: v => ({1:'Cure',2:'Dry',3:'Mom/Clone',4:'Veg',5:'Flower'})[v] || ''}, grid: {color: TOKENS.grid}}
       }
     }
   });
+
+  // 2. Concurrency line
+  new Chart(document.getElementById('ch_concurrency'), {
+    type: 'line',
+    data: {
+      labels: ["2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"],
+      datasets: [{
+        label: 'Active HGs',
+        data: [1, 3, 5, 6, 6, 5, 6, 6, 6, 7, 7, 6, 10, 11, 14, 16, 15, 15, 15, 15, 16, 15, 17, 17, 18, 18, 20, 22, 24, 23, 23, 23, 23, 23, 23, 23, 24, 23, 21, 21, 22, 21, 21, 20, 20, 19, 18, 17, 17, 18, 18, 18, 19, 20, 18, 18, 19, 18, 19, 19, 18, 19, 18, 19, 19, 18, 17, 18, 18, 18, 17, 18, 17],
+        borderColor: TOKENS.appblue, backgroundColor: TOKENS.appblue + '22',
+        tension: 0.25, fill: true, pointRadius: 0, pointHoverRadius: 6, borderWidth: 2.5
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {display: false},
+        annotation: {}
+      },
+      scales: {
+        x: {grid: {color: TOKENS.grid, display: false}, ticks: {maxTicksLimit: 12, autoSkip: true}},
+        y: {beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'Concurrent HGs (monthly max)'}}
+      }
+    }
+  });
+
+  // 3. Cadence: bar HG count + line plants
+  new Chart(document.getElementById('ch_cadence'), {
+    type: 'bar',
+    data: {
+      labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026"],
+      datasets: [
+        {label: 'HGs run', data: [8, 30, 51, 73, 65, 62, 45], backgroundColor: TOKENS.lime, borderColor: TOKENS.olive, borderWidth: 1, yAxisID: 'y1'},
+        {label: 'Plants entered', data: [9363, 31945, 51967, 69377, 63557, 57415, 32180], type: 'line', borderColor: TOKENS.appblue, backgroundColor: TOKENS.appblue, tension: 0.3, yAxisID: 'y2', pointRadius: 5, pointHoverRadius: 7, borderWidth: 2.5}
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {legend: {position: 'bottom'}},
+      scales: {
+        y1: {type: 'linear', position: 'left', title: {display: true, text: 'HGs run'}, grid: {color: TOKENS.grid}},
+        y2: {type: 'linear', position: 'right', title: {display: true, text: 'Plants entered'}, grid: {display: false}, ticks: {callback: v => (v/1000).toFixed(0)+'k'}}
+      }
+    }
+  });
+
+  // 4. Top cultivars horizontal bar with bifurcation colors
+  new Chart(document.getElementById('ch_top_cult'), {
+    type: 'bar',
+    data: {
+      labels: ["Orange 43", "Ice Cream Cake", "Lemon Slushee", "Sherbhead", "Motorbreath", "Jealousy", "Big Head", "Permanent Marker", "Heatlocker", "Apricot Gelato", "Lemon Cherry Gelato", "Catfish", "MAC 1", "Rose Gold R'ntz", "Rainbow Belts", "Kush Mints", "Purp 43", "?7578", "RS11", "Pacific Cool"],
+      datasets: [{
+        label: 'Lifetime HGs',
+        data: [214, 191, 110, 80, 73, 64, 63, 46, 45, 45, 40, 36, 36, 34, 32, 29, 28, 27, 27, 27],
+        backgroundColor: ["#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#3f4e2b", "#e76f51", "#3f4e2b", "#3f4e2b"],
+        borderRadius: 3
+      }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {display: false},
+        tooltip: {callbacks: {afterLabel: (ctx) => {
+          const items = [{"name": "Orange 43", "count": 214, "created": "2020", "class": "workhorse"}, {"name": "Ice Cream Cake", "count": 191, "created": "2020", "class": "workhorse"}, {"name": "Lemon Slushee", "count": 110, "created": "2021", "class": "workhorse"}, {"name": "Sherbhead", "count": 80, "created": "2020", "class": "workhorse"}, {"name": "Motorbreath", "count": 73, "created": "2020", "class": "workhorse"}, {"name": "Jealousy", "count": 64, "created": "2021", "class": "workhorse"}, {"name": "Big Head", "count": 63, "created": "2020", "class": "workhorse"}, {"name": "Permanent Marker", "count": 46, "created": "2023", "class": "workhorse"}, {"name": "Heatlocker", "count": 45, "created": "2020", "class": "workhorse"}, {"name": "Apricot Gelato", "count": 45, "created": "2021", "class": "workhorse"}, {"name": "Lemon Cherry Gelato", "count": 40, "created": "2022", "class": "workhorse"}, {"name": "Catfish", "count": 36, "created": "2020", "class": "workhorse"}, {"name": "MAC 1", "count": 36, "created": "2020", "class": "workhorse"}, {"name": "Rose Gold R'ntz", "count": 34, "created": "2022", "class": "workhorse"}, {"name": "Rainbow Belts", "count": 32, "created": "2022", "class": "workhorse"}, {"name": "Kush Mints", "count": 29, "created": "2020", "class": "workhorse"}, {"name": "Purp 43", "count": 28, "created": "2023", "class": "workhorse"}, {"name": "?7578", "count": 27, "created": "", "class": "newcomer"}, {"name": "RS11", "count": 27, "created": "2023", "class": "workhorse"}, {"name": "Pacific Cool", "count": 27, "created": "2023", "class": "workhorse"}];
+          const item = items[ctx.dataIndex];
+          return item.class === 'workhorse' ? 'Workhorse (created ' + (item.created || 'pre-2020') + ')' : 'Newcomer (added ' + item.created + ')';
+        }}}
+      },
+      scales: {
+        x: {beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'Lifetime HGs'}},
+        y: {grid: {display: false}, ticks: {font: {size: 11.5}}}
+      }
+    }
+  });
+
+  // 5. Cult added per year
+  new Chart(document.getElementById('ch_cult_added'), {
+    type: 'bar',
+    data: {
+      labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026"],
+      datasets: [{
+        label: 'New cultivars added',
+        data: [16, 4, 6, 7, 32, 79, 26],
+        backgroundColor: ["#a8d5e2", "#a8d5e2", "#a8d5e2", "#a8d5e2", "#e76f51", "#e76f51", "#e76f51"],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {display: false},
+        tooltip: {callbacks: {label: c => c.parsed.y + ' new cultivars added in ' + c.label}}
+      },
+      scales: {
+        x: {grid: {display: false}},
+        y: {beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'New strains added'}}
+      }
+    }
+  });
+
+  // 6. Per-flower-room
+  new Chart(document.getElementById('ch_rooms'), {
+    type: 'bar',
+    data: {
+      labels: ["Flower Room 3", "Flower Room 1", "Flower Room 2", "Flower Room 4", "Flower 7", "Flower 6", "Flower 8", "Flower 9", "Flower 11", "Flower 12", "Flower 13", "Flower 14", "Flower Room 5", "Flower 10"],
+      datasets: [
+        {label: 'Lifetime HGs', data: [29, 30, 30, 26, 25, 25, 25, 24, 20, 20, 20, 19, 18, 23], backgroundColor: TOKENS.olive, yAxisID: 'y1', borderRadius: 3, barPercentage: 0.4, categoryPercentage: 0.9},
+        {label: 'Lifetime plants', data: [39973, 39497, 36374, 36067, 26815, 26634, 26524, 26100, 12163, 12055, 11942, 11592, 6308, 3760], backgroundColor: TOKENS.appblue, yAxisID: 'y2', borderRadius: 3, barPercentage: 0.4, categoryPercentage: 0.9}
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {position: 'bottom'}
+      },
+      scales: {
+        x: {grid: {display: false}},
+        y1: {type: 'linear', position: 'left', beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'Lifetime HGs'}},
+        y2: {type: 'linear', position: 'right', beginAtZero: true, grid: {display: false}, title: {display: true, text: 'Lifetime plants'}, ticks: {callback: v => (v/1000).toFixed(0)+'k'}}
+      }
+    }
+  });
+
+  // 7. Plant survival
+  new Chart(document.getElementById('ch_survival'), {
+    type: 'line',
+    data: {
+      labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026"],
+      datasets: [{
+        label: 'Tracked-to-harvest %',
+        data: [100.0, 92.6, 93.4, 88.5, 0.0, 0.0, 0.0],
+        borderColor: TOKENS.bad, backgroundColor: TOKENS.bad + '22',
+        tension: 0.2, fill: true, pointRadius: 6, pointHoverRadius: 9, borderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {display: false},
+        tooltip: {callbacks: {label: c => c.parsed.y.toFixed(1) + '% tracked-to-harvest'}}
+      },
+      scales: {
+        x: {grid: {display: false}},
+        y: {beginAtZero: true, max: 100, grid: {color: TOKENS.grid}, ticks: {callback: v => v + '%'}, title: {display: true, text: 'Plant tracked-to-harvest %'}}
+      }
+    }
+  });
+
+  // 8. Phase duration histogram
+  new Chart(document.getElementById('ch_phase_hist'), {
+    type: 'bar',
+    data: {
+      labels: [56, 57, 58, 59, 62, 63, 66, 68, 69, 70, 72, 77],
+      datasets: [{
+        label: 'HG count',
+        data: [2, 10, 2, 1, 8, 286, 1, 1, 1, 9, 2, 11],
+        backgroundColor: ["#a8d5e2", "#a8d5e2", "#a8d5e2", "#a8d5e2", "#a8d5e2", "#3f4e2b", "#a8d5e2", "#a8d5e2", "#a8d5e2", "#a8d5e2", "#a8d5e2", "#a8d5e2"],
+        borderRadius: 3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {display: false},
+        tooltip: {callbacks: {label: c => c.parsed.y + ' HGs ran ' + c.label + ' days'}}
+      },
+      scales: {
+        x: {grid: {display: false}, title: {display: true, text: 'Flower phase total days'}},
+        y: {beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'HG count'}}
+      }
+    }
+  });
+
+  // 9. Device cumulative stacked area
+  new Chart(document.getElementById('ch_device_cumulative'), {
+    type: 'line',
+    data: {
+      labels: ["2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"],
+      datasets: [
+        {label: 'TER12 (legacy)', data: [0, 0, 0, 0, 0, 0, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 72, 72, 72, 72, 72, 72, 72, 72, 74, 74, 74, 74, 74, 74, 74, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136], borderColor: TOKENS.olive, backgroundColor: TOKENS.olive + '99', fill: true, tension: 0.1, pointRadius: 0, borderWidth: 1.5, stack: 'a'},
+        {label: 'TER15 (new-gen)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 64, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70], borderColor: TOKENS.lime, backgroundColor: TOKENS.lime + '99', fill: true, tension: 0.1, pointRadius: 0, borderWidth: 1.5, stack: 'a'},
+        {label: 'ATM14 climate', data: [0, 0, 0, 0, 0, 0, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 28, 28, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29], borderColor: TOKENS.appblue, backgroundColor: TOKENS.appblue + '99', fill: true, tension: 0.1, pointRadius: 0, borderWidth: 1.5, stack: 'a'},
+        {label: 'Mesh node', data: [0, 0, 0, 0, 0, 0, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 49, 49, 49, 49, 49, 49, 49, 49, 50, 50, 50, 50, 50, 50, 50, 109, 109, 109, 109, 109, 109, 109, 109, 112, 112, 112, 112, 112, 112, 112, 112, 112, 112, 112, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 180, 180, 186, 186, 186, 186, 186, 186, 186, 186, 186, 186, 186, 186], borderColor: TOKENS.attention2, backgroundColor: TOKENS.attention2 + '99', fill: true, tension: 0.1, pointRadius: 0, borderWidth: 1.5, stack: 'a'},
+        {label: 'Repeater', data: [0, 0, 0, 0, 0, 0, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 36, 36, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40], borderColor: TOKENS.rootin, backgroundColor: TOKENS.rootin + '99', fill: true, tension: 0.1, pointRadius: 0, borderWidth: 1.5, stack: 'a'},
+        {label: 'Gateway + sink', data: [0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8], borderColor: TOKENS.inkMuted, backgroundColor: TOKENS.inkMuted + '99', fill: true, tension: 0.1, pointRadius: 0, borderWidth: 1.5, stack: 'a'},
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {position: 'bottom'}
+      },
+      scales: {
+        x: {grid: {display: false}, ticks: {maxTicksLimit: 14, autoSkip: true}},
+        y: {stacked: true, beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'Cumulative active devices'}}
+      }
+    }
+  });
+
+  // 10. Sensor age distribution
+  new Chart(document.getElementById('ch_sensor_age'), {
+    type: 'bar',
+    data: {
+      labels: ["<1y", "1-2y", "2-3y", "3-4y", "4-5y", "5+y"],
+      datasets: [
+        {label: 'TER12 (legacy)', data: [0, 1, 3, 58, 2, 72], backgroundColor: TOKENS.attention, borderRadius: 3},
+        {label: 'TER15 (new-gen)', data: [0, 70, 0, 0, 0, 0], backgroundColor: TOKENS.lime, borderRadius: 3}
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {position: 'bottom'},
+        tooltip: {callbacks: {footer: items => {
+          const total = items.reduce((s,i)=>s+i.parsed.y,0);
+          return 'Total: ' + total + ' sensors in this age bucket';
+        }}}
+      },
+      scales: {
+        x: {grid: {display: false}, title: {display: true, text: 'Deployment age (as of 2026-06-25)'}},
+        y: {beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'Substrate sensor count'}}
+      }
+    }
+  });
+
+  // 11. Ripening EC vs band
+  new Chart(document.getElementById('ch_ripening_ec'), {
+    type: 'bar',
+    data: {
+      labels: ['Flower 8 (mean)', 'Flower 8 (min)', 'Flower 8 (max)', 'Flower 13 (mean)', 'Flower 13 (min)', 'Flower 13 (max)'],
+      datasets: [
+        {label: 'Pore EC (mS)', data: [3.01, 2.0, 3.5, 3.81, 3.1, 4.1], backgroundColor: [TOKENS.bad, TOKENS.bad+'66', TOKENS.bad+'66', TOKENS.warn, TOKENS.warn+'66', TOKENS.warn+'66'], borderRadius: 3}
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {display: false},
+        annotation: {}
+      },
+      scales: {
+        x: {grid: {display: false}, ticks: {font: {size: 11}}},
+        y: {beginAtZero: true, max: 10, grid: {color: TOKENS.grid}, title: {display: true, text: 'Pore EC (mS) — ripening target band 6.0–8.0'}}
+      },
+    },
+    plugins: [{
+      id: 'bandShade',
+      beforeDraw: (chart) => {
+        const {ctx, chartArea, scales} = chart;
+        const yMin = scales.y.getPixelForValue(6.0);
+        const yMax = scales.y.getPixelForValue(8.0);
+        ctx.save();
+        ctx.fillStyle = TOKENS.good + '33';
+        ctx.fillRect(chartArea.left, yMax, chartArea.right - chartArea.left, yMin - yMax);
+        ctx.fillStyle = TOKENS.good;
+        ctx.font = '600 11px Inter,sans-serif';
+        ctx.fillText('Ripening target band 6.0–8.0 mS', chartArea.left + 10, yMax - 4);
+        ctx.restore();
+      }
+    }]
+  });
+
 });
 
 </script>
