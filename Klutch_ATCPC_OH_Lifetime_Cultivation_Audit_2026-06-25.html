@@ -1179,6 +1179,8 @@
   <p style="margin-top:18px">Prepared for Mike Lentz · Klutch Cannabis / Calyx Peak · Contact: <a href="mailto:cian@addium.com">cian@addium.com</a> · Cian Sullivan · Addium / AROYA · 2026-06-25</p>
 </footer>
 </div><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/cdn.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>
 
 document.querySelectorAll('.theme-btn').forEach(b=>{b.addEventListener('click',e=>{
@@ -1220,10 +1222,27 @@ Chart.defaults.plugins.legend.labels.boxHeight = 12;
 Chart.defaults.plugins.legend.labels.padding = 14;
 
 window.addEventListener('load', () => {
+  function safeChart(canvasId, build){
+    try {
+      const el = document.getElementById(canvasId);
+      if (!el) { console.warn('canvas missing:', canvasId); return; }
+      return build(el);
+    } catch(e) {
+      console.error('Chart failed for', canvasId, e);
+      const el = document.getElementById(canvasId);
+      if (el && el.parentElement) {
+        const div = document.createElement('div');
+        div.style.cssText = 'padding:18px;text-align:center;color:#7a8175;font-size:12px;font-style:italic';
+        div.textContent = 'Chart unavailable — ' + (e && e.message ? e.message : 'render error');
+        el.replaceWith(div);
+      }
+    }
+  }
+
 
   // 1. Build-out scatter
   const buildoutData = [{"x": "2021-06-24", "y": 3, "label": "Clone 2", "rt": "OTHER", "bg": "#a8d5e2"}, {"x": "2021-06-14", "y": 4, "label": "Veg 2", "rt": "VEG", "bg": "#9fd96a"}, {"x": "2021-06-04", "y": 5, "label": "Flower 10", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-06-22", "y": 2, "label": "Dry 1", "rt": "DRY", "bg": "#c2b896"}, {"x": "2020-12-16", "y": 4, "label": "Veg 1", "rt": "VEG", "bg": "#9fd96a"}, {"x": "2021-08-16", "y": 1, "label": "Cure 2", "rt": "CURE", "bg": "#b09f7d"}, {"x": "2020-08-22", "y": 5, "label": "Flower Room 5", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-07-28", "y": 5, "label": "Flower Room 2", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2022-02-25", "y": 2, "label": "Dry 3", "rt": "DRY", "bg": "#c2b896"}, {"x": "2021-06-04", "y": 2, "label": "Dry 2", "rt": "DRY", "bg": "#c2b896"}, {"x": "2022-08-01", "y": 5, "label": "Flower 12", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-03-14", "y": 3, "label": "Clone 1", "rt": "OTHER", "bg": "#a8d5e2"}, {"x": "2021-06-04", "y": 5, "label": "Flower 6", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2022-06-25", "y": 5, "label": "Flower 11", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-08-22", "y": 5, "label": "Flower Room 3", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-06-14", "y": 5, "label": "Flower 8", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2022-07-13", "y": 5, "label": "Flower 13", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-06-22", "y": 5, "label": "Flower Room 1", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-07-04", "y": 5, "label": "Flower 7", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2020-07-22", "y": 5, "label": "Flower Room 4", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-07-25", "y": 5, "label": "Flower 9", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2022-08-20", "y": 5, "label": "Flower 14", "rt": "FLOWER", "bg": "#e76f51"}, {"x": "2021-06-04", "y": 3, "label": "Mom 1", "rt": "OTHER", "bg": "#a8d5e2"}];
-  new Chart(document.getElementById('ch_buildout'), {
+  safeChart('ch_buildout', el => new Chart(el, {
     type: 'scatter',
     data: {
       datasets: [
@@ -1245,10 +1264,10 @@ window.addEventListener('load', () => {
         y: {min: 0, max: 6, ticks: {stepSize: 1, callback: v => ({1:'Cure',2:'Dry',3:'Mom/Clone',4:'Veg',5:'Flower'})[v] || ''}, grid: {color: TOKENS.grid}}
       }
     }
-  });
+  }))
 
   // 2. Concurrency line
-  new Chart(document.getElementById('ch_concurrency'), {
+  safeChart('ch_concurrency', el => new Chart(el, {
     type: 'line',
     data: {
       labels: ["2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"],
@@ -1270,10 +1289,10 @@ window.addEventListener('load', () => {
         y: {beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'Concurrent HGs (monthly max)'}}
       }
     }
-  });
+  }))
 
   // 3. Cadence: bar HG count + line plants
-  new Chart(document.getElementById('ch_cadence'), {
+  safeChart('ch_cadence', el => new Chart(el, {
     type: 'bar',
     data: {
       labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026"],
@@ -1290,10 +1309,10 @@ window.addEventListener('load', () => {
         y2: {type: 'linear', position: 'right', title: {display: true, text: 'Plants entered'}, grid: {display: false}, ticks: {callback: v => (v/1000).toFixed(0)+'k'}}
       }
     }
-  });
+  }))
 
   // 4. Top cultivars horizontal bar with bifurcation colors
-  new Chart(document.getElementById('ch_top_cult'), {
+  safeChart('ch_top_cult', el => new Chart(el, {
     type: 'bar',
     data: {
       labels: ["Orange 43", "Ice Cream Cake", "Lemon Slushee", "Sherbhead", "Motorbreath", "Jealousy", "Big Head", "Permanent Marker", "Heatlocker", "Apricot Gelato", "Lemon Cherry Gelato", "Catfish", "MAC 1", "Rose Gold R'ntz", "Rainbow Belts", "Kush Mints", "Purp 43", "?7578", "RS11", "Pacific Cool"],
@@ -1319,10 +1338,10 @@ window.addEventListener('load', () => {
         y: {grid: {display: false}, ticks: {font: {size: 11.5}}}
       }
     }
-  });
+  }))
 
   // 5. Cult added per year
-  new Chart(document.getElementById('ch_cult_added'), {
+  safeChart('ch_cult_added', el => new Chart(el, {
     type: 'bar',
     data: {
       labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026"],
@@ -1344,10 +1363,10 @@ window.addEventListener('load', () => {
         y: {beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'New strains added'}}
       }
     }
-  });
+  }))
 
   // 6. Per-flower-room
-  new Chart(document.getElementById('ch_rooms'), {
+  safeChart('ch_rooms', el => new Chart(el, {
     type: 'bar',
     data: {
       labels: ["Flower Room 3", "Flower Room 1", "Flower Room 2", "Flower Room 4", "Flower 7", "Flower 6", "Flower 8", "Flower 9", "Flower 11", "Flower 12", "Flower 13", "Flower 14", "Flower Room 5", "Flower 10"],
@@ -1367,10 +1386,10 @@ window.addEventListener('load', () => {
         y2: {type: 'linear', position: 'right', beginAtZero: true, grid: {display: false}, title: {display: true, text: 'Lifetime plants'}, ticks: {callback: v => (v/1000).toFixed(0)+'k'}}
       }
     }
-  });
+  }))
 
   // 7. Plant survival
-  new Chart(document.getElementById('ch_survival'), {
+  safeChart('ch_survival', el => new Chart(el, {
     type: 'line',
     data: {
       labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026"],
@@ -1392,10 +1411,10 @@ window.addEventListener('load', () => {
         y: {beginAtZero: true, max: 100, grid: {color: TOKENS.grid}, ticks: {callback: v => v + '%'}, title: {display: true, text: 'Plant tracked-to-harvest %'}}
       }
     }
-  });
+  }))
 
   // 8. Phase duration histogram
-  new Chart(document.getElementById('ch_phase_hist'), {
+  safeChart('ch_phase_hist', el => new Chart(el, {
     type: 'bar',
     data: {
       labels: [56, 57, 58, 59, 62, 63, 66, 68, 69, 70, 72, 77],
@@ -1417,10 +1436,10 @@ window.addEventListener('load', () => {
         y: {beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'HG count'}}
       }
     }
-  });
+  }))
 
   // 9. Device cumulative stacked area
-  new Chart(document.getElementById('ch_device_cumulative'), {
+  safeChart('ch_device_cumulative', el => new Chart(el, {
     type: 'line',
     data: {
       labels: ["2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"],
@@ -1443,10 +1462,10 @@ window.addEventListener('load', () => {
         y: {stacked: true, beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'Cumulative active devices'}}
       }
     }
-  });
+  }))
 
   // 10. Sensor age distribution
-  new Chart(document.getElementById('ch_sensor_age'), {
+  safeChart('ch_sensor_age', el => new Chart(el, {
     type: 'bar',
     data: {
       labels: ["<1y", "1-2y", "2-3y", "3-4y", "4-5y", "5+y"],
@@ -1469,10 +1488,10 @@ window.addEventListener('load', () => {
         y: {beginAtZero: true, grid: {color: TOKENS.grid}, title: {display: true, text: 'Substrate sensor count'}}
       }
     }
-  });
+  }))
 
   // 11. Ripening EC vs band
-  new Chart(document.getElementById('ch_ripening_ec'), {
+  safeChart('ch_ripening_ec', el => new Chart(el, {
     type: 'bar',
     data: {
       labels: ['Flower 8 (mean)', 'Flower 8 (min)', 'Flower 8 (max)', 'Flower 13 (mean)', 'Flower 13 (min)', 'Flower 13 (max)'],
@@ -1506,7 +1525,7 @@ window.addEventListener('load', () => {
         ctx.restore();
       }
     }]
-  });
+  }))
 
 });
 
