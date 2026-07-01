@@ -1,9 +1,161 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<title>Verano PA — Day-1 Device + Mesh Health · AROYA</title>
-<style>
+"""
+Rebuild Verano PA Day-1 Device + Mesh Health report in the Aurora 99 /
+GTI Danville gold-standard AROYA fleet-health format.
+
+Preserves exact data payload from the prior (2026-07-01) pull.
+
+Emits two files:
+  - VeranoPA_Day1_Device_Mesh_Health_2026-07-01.html      (light)
+  - VeranoPA_Day1_Device_Mesh_Health_2026-07-01_dark.html (dark)
+"""
+
+from pathlib import Path
+
+REPO = Path("/Users/ciansullivan/code/aroya-reports")
+
+# -----------------------------------------------------------------------------
+# DATA PAYLOAD (from AROYA SPA /devices/?facility=4742 · 2026-07-01 15:04 UTC)
+# -----------------------------------------------------------------------------
+FACILITY_ID = 4742
+ORG_ID = 3501
+PULLED_UTC = "2026-07-01 15:04 UTC"
+WINDOW = "last 24 hours"
+
+# Fleet counts
+RAW_SERIALS = 175
+DASH2_COLLAPSED = 73
+UNIQUE_RADIOS = 102
+GATEWAYS = 1        # H2200001049
+H421_CLIMATE = 22
+REPEATERS = 6
+SUBSTRATE_NODES = 73  # unique after dedup
+REPORTING = 93
+SILENT_COUNT = 9
+BAT_HEALTHY = 79    # /79 reporting battery-nodes
+ROOMS_TOTAL = 22
+ROOMS_WITH_RADIOS = 20
+ROOMS_EMPTY = ["Room 6", "Mom 1"]
+ARTIFACT_ROOMS = ["Flower 4", "Room 10", "Room 8", "Room 12", "mom 2 (13)"]
+
+# Saturation
+GATEWAY_SINK_CHILDREN = 18   # over the 14-slot limit
+GATEWAY_SINK_ID = "H2200001049 (sink anchor)"
+REPEATER_361_CHILDREN = 15
+REPEATER_361_ID = "H3400003361"
+PARENTS_OVER_14 = 2
+PARENTS_WATCH_12_14 = 0
+PARENTS_HEADROOM = 37
+
+# Rooms — (name, room_id, radios, online, silent, watch_devices, artifact, note)
+ROOMS = [
+    ("Veg 1",      20335, 1, 1, 0, 1, False, "0 zones"),
+    ("Veg 2",      20337, 1, 1, 0, 0, False, "0 zones"),
+    ("Flower 1",   20336, 11, 11, 0, 0, False, "10 zones"),
+    ("Flower 2",   20331, 12, 12, 0, 2, False, "11 zones"),
+    ("Flower 3",   20338, 8, 7, 1, 1, False, "7 zones"),
+    ("Flower 4",   20327, 4, 4, 0, 0, True,  "3 zones · VPD 1.66 on empty substrate"),
+    ("Flower 5",   20341, 8, 8, 0, 0, False, "7 zones"),
+    ("Room 6",     20340, 0, 0, 0, 0, False, "zero radios assigned"),
+    ("Room 7",     20328, 5, 5, 0, 0, False, "8 zones"),
+    ("Room 8",     20329, 6, 5, 1, 0, True,  "0 zones · probe near-zero VWC"),
+    ("Room 9",     20330, 6, 5, 1, 0, False, "10 zones"),
+    ("Room 10",    20323, 6, 6, 0, 1, True,  "10 zones · VPD 2.11 empty room"),
+    ("Room 11",    20324, 6, 6, 0, 0, False, "10 zones"),
+    ("Room 12",    20325, 6, 5, 1, 1, True,  "10 zones · probe near-zero VWC"),
+    ("mom 2 (13)", 20326, 1, 0, 1, 0, True,  "0 zones · probe near-zero VWC"),
+    ("Mom 1",      20342, 0, 0, 0, 0, False, "zero radios assigned"),
+    ("Dry 1",      20346, 1, 1, 0, 1, False, "0 zones"),
+    ("Dry 2",      20345, 1, 1, 0, 0, False, "0 zones"),
+    ("Dry 3",      20348, 1, 0, 1, 0, False, "0 zones"),
+    ("Dry 4",      20347, 1, 1, 0, 0, False, "0 zones"),
+    ("Cure",       20355, 1, 1, 0, 1, False, "0 zones"),
+    ("prop",       20354, 1, 1, 0, 0, False, "0 zones"),
+]
+
+# Silent devices (9)
+SILENT_DEVICES = [
+    # (serial, model, room, parent, rssi_hops, linkq)
+    ("H4210006470", "h421", "(mesh infrastructure)", "sink/H2200001049", "6",  "92"),
+    ("H4210006781", "h421", "(mesh infrastructure)", "sink/H2200001049", "6",  "100"),
+    ("H4210006852", "h421", "(mesh infrastructure)", "H3440018406",      "1",  "100"),
+    ("H4210006784", "h421", "Flower 3",              "H4210006869",      "8",  "98"),
+    ("H4210006869", "h421", "Room 8",                "sink/H2200001049", "3",  "84"),
+    ("H4210006893", "h421", "Room 9",                "H3440018412",      "4",  "100"),
+    ("H4210006778", "h421", "Room 12",               "H4210006771",      "8",  "100"),
+    ("H4210006866", "h421", "mom 2 (13)",            "H4210006569",      "8",  "100"),
+    ("H4210006569", "h421", "Dry 3",                 "sink/H2200001049", "6",  "100"),
+]
+
+# Watch devices (8) — link quality < 80% but reporting
+WATCH_DEVICES = [
+    ("H4210006468", "h421", "Veg 1",     "H4210006849",      "1", "49"),
+    ("H3440017140", "node", "Flower 2",  "H3440018416",      "3", "44"),
+    ("H3440018677", "node", "Flower 2",  "sink/H2200001049", "1", "58"),
+    ("H3440017115", "node", "Flower 3",  "H3440018678",      "1", "54"),
+    ("H4210006587", "h421", "Room 10",   "sink/H2200001049", "1", "44"),
+    ("H3440018394", "node", "Room 12",   "sink/H2200001049", "1", "53"),
+    ("H4210006771", "h421", "Dry 1",     "H4210006587",      "3", "71"),
+    ("H4210006846", "h421", "Cure",      "H4210006587",      "1", "73"),
+]
+
+# Install-artifact readings
+ARTIFACTS = [
+    ("Flower 4",   "VPD 1.66 with VWC 0.2 — probe reading empty substrate, not plant zone"),
+    ("Room 10",    "VPD 2.11 — probe reading air in an empty room, not a canopy"),
+    ("Room 8",     "Near-zero VWC — probe not yet inserted into substrate"),
+    ("Room 12",    "Near-zero VWC — probe not yet inserted into substrate"),
+    ("mom 2 (13)", "Near-zero VWC — probe not yet inserted into substrate"),
+]
+
+# Prioritized actions
+ACTIONS = [
+    (1, "Silent-radio walkdown", "9 h421 silent 24h",
+     "Confirm each of the 9 silent h421 units is powered, in position, and joined. Prioritize the 3 mesh-infrastructure silents (H4210006470, H4210006781, H4210006852) — those are anchor-tier.",
+     "P1", "Low", "Impact: High"),
+    (2, "Gateway sink saturation (18/14)", GATEWAY_SINK_ID,
+     "Sink is +4 over the Wirepas 14-child limit. Every additional joiner past 14 either fails to attach or thrashes. Rebalance direct-parented h421s onto downstream relays before more silent radios come online.",
+     "P1", "Medium", "Impact: High"),
+    (3, "Repeater H3400003361 saturation (15/14)", REPEATER_361_ID,
+     "One over the limit. Same failure mode as the sink — one node's mesh headroom is gone. Split its Flower 1 / Flower 2 sub-mesh onto H3400003362 or H3400003476.",
+     "P1", "Medium", "Impact: High"),
+    (4, "Install-artifact readings in 5 rooms", "Flower 4, Room 10, Room 8, Room 12, mom 2 (13)",
+     "Reposition probes into their target substrate/canopy zones. Devices are healthy — they're just reading the wrong environment. Left uncorrected these will look like device failures on the day-7 pull.",
+     "P2", "Low", "Impact: High"),
+    (5, "Zero-radio rooms", "Room 6, Mom 1",
+     "Confirm build-out status. If cultivation-active, assign radios. If dormant, mark room dormant in AROYA inventory so the day-7 audit doesn't flag them again.",
+     "P2", "Low", "Impact: Medium"),
+    (6, "Day-7 re-audit", "full fleet",
+     "Wirepas mesh takes days-to-weeks to stabilize. Every metric in this report is directional; the meaningful reliability judgment (churn rate, battery decay, saturation trend) comes from re-pulling this same audit on 2026-07-08.",
+     "P1", "Low", "Impact: High"),
+]
+
+# Mesh topology tree — gateway → sink → direct children.
+# Sink is over-subscribed at 18/14. Nodes annotated with their own child count.
+SINK_CHILDREN = [
+    ("H3400003361", "repeater", 15, "SAT"),  # 15/14 — one over
+    ("H3400003462", "repeater",  1, "OK"),
+    ("H3440018391", "node",      0, "OK"),
+    ("H3440018394", "node",      1, "OK"),
+    ("H3440018398", "node",      4, "OK"),
+    ("H3440018410", "node",      1, "OK"),
+    ("H3440018416", "node",      4, "OK"),
+    ("H3440018417", "node",      0, "OK"),
+    ("H3440018418", "node",      3, "OK"),
+    ("H3440018650", "node",      2, "OK"),
+    ("H3440018653", "node",      2, "OK"),
+    ("H3440018677", "node",      0, "OK"),
+    ("H4210006470", "h421",      0, "SILENT"),
+    ("H4210006569", "h421",      1, "OK"),
+    ("H4210006587", "h421",      1, "OK"),
+    ("H4210006772", "h421",      7, "OK"),
+    ("H4210006781", "h421",      0, "SILENT"),
+    ("H4210006869", "h421",      1, "OK"),
+]
+
+# -----------------------------------------------------------------------------
+# STYLE — Aurora 99 tokens ported verbatim
+# -----------------------------------------------------------------------------
+STYLE = r"""
 :root[data-theme="light"]{--bg:#fafaf7;--bg-2:#ffffff;--bg-3:#f3f3ee;--border:#e2e2dc;--ink:#1c2419;--ink-2:#4a5340;--ink-muted:#7a8175;--olive:#3f4e2b;--olive-2:#5b6e3f;--lime:#9fd96a;--lime-2:#cfe9a8;--app-blue:#1f78b4;--app-blue-2:#a8d5e2;--attention:#e76f51;--attention-2:#f4a261;--good:#5b8a3a;--warn:#c87a2c;--bad:#b1442a;--good-bg:#eef5e3;--warn-bg:#fbecd6;--bad-bg:#f7d9cf;--card-shadow:0 1px 3px rgba(0,0,0,0.04),0 4px 16px rgba(0,0,0,0.05);--grid-line:#e8e8e0}
 :root[data-theme="dark"]{--bg:#13160f;--bg-2:#1a1e15;--bg-3:#22281c;--border:#2e3624;--ink:#e8ead9;--ink-2:#b9bda5;--ink-muted:#7e836e;--olive:#8aa05c;--olive-2:#a7bb74;--lime:#b9e587;--lime-2:#6b8d3d;--app-blue:#6cb5d8;--app-blue-2:#3a6d80;--attention:#f48066;--attention-2:#f4a261;--good:#86c25b;--warn:#e4a35e;--bad:#df6a4d;--good-bg:#1f2c19;--warn-bg:#2e2418;--bad-bg:#2e1c16;--card-shadow:0 1px 3px rgba(0,0,0,0.5),0 8px 28px rgba(0,0,0,0.45);--grid-line:#2a3220}
 *{box-sizing:border-box}
@@ -96,8 +248,9 @@ tr:last-child td{border-bottom:none}
 .es-only{display:none}
 body.es .en-only{display:none}
 body.es .es-only{display:initial}
-</style>
+"""
 
+MOBILE_QA = r"""
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style id="aroya-mobile-qa">
 html { -webkit-text-size-adjust: 100%; }
@@ -129,10 +282,10 @@ html { -webkit-text-size-adjust: 100%; }
 }
 </style>
 <script id="aroya-mobile-qa-js">(function(){function wrap(){var ts=document.querySelectorAll('table');for(var i=0;i<ts.length;i++){var t=ts[i];if(!t.parentElement)continue;if(t.parentElement.classList.contains('table-scroll'))continue;var w=document.createElement('div');w.className='table-scroll';t.parentNode.insertBefore(w,t);w.appendChild(t);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',wrap);}else{wrap();}})();</script>
+"""
 
-</head>
-<body>
-<div class="masthead">
+def masthead():
+    return '''<div class="masthead">
   <span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span>
   <span class="tick t4"></span><span class="tick t5"></span><span class="tick t6"></span><span class="tick t7"></span>
   <div class="masthead-inner">
@@ -148,22 +301,25 @@ html { -webkit-text-size-adjust: 100%; }
       <button class="btn theme-btn" data-theme="dark">☾</button>
     </div>
   </div>
-</div>
-<div class="wrap">
-  <div class="pagehead">
+</div>'''
+
+def pagehead():
+    return f'''<div class="pagehead">
     <div class="pagehead-eyebrow"><span class="en-only">AROYA Device Fleet Health · Day-1 Install Baseline</span><span class="es-only">Salud de Flota · Base de Día-1</span> · <span class="en-only">Verano PA install team</span><span class="es-only">Equipo Verano PA</span></div>
     <h1><span class="en-only">Verano PA — Day-1 Device + Mesh Health</span><span class="es-only">Verano PA — Salud Radio y Mesh</span><span class="day1-badge">Day-1 Baseline</span></h1>
-    <div class="sub"><span class="en-only">Install-quality snapshot of every AROYA radio at Verano PA (facility 4742, org 3501). The facility came online in the last ~24-48 hours, so every finding here is a directional install-day signal — <b>not</b> a long-term reliability judgment. The meaningful reliability review is the day-7 re-audit on 2026-07-08.</span><span class="es-only">Base de instalación para cada radio AROYA en Verano PA. Instalación reciente — datos son direccionales. Re-auditoría real: día-7 (2026-07-08).</span></div>
+    <div class="sub"><span class="en-only">Install-quality snapshot of every AROYA radio at Verano PA (facility {FACILITY_ID}, org {ORG_ID}). The facility came online in the last ~24-48 hours, so every finding here is a directional install-day signal — <b>not</b> a long-term reliability judgment. The meaningful reliability review is the day-7 re-audit on 2026-07-08.</span><span class="es-only">Base de instalación para cada radio AROYA en Verano PA. Instalación reciente — datos son direccionales. Re-auditoría real: día-7 (2026-07-08).</span></div>
     <div class="meta">
-      <div><b><span class="en-only">Facility</span><span class="es-only">Instalación</span></b><span>Verano PA (id 4742, Org #3501)</span></div>
-      <div><b><span class="en-only">Window</span><span class="es-only">Ventana</span></b><span>last 24 hours → 2026-07-01 15:04 UTC</span></div>
-      <div><b><span class="en-only">Fleet on file</span><span class="es-only">Flota registrada</span></b><span>102 unique radios · 93 reporting · 9 silent</span></div>
-      <div><b><span class="en-only">Active mesh</span><span class="es-only">Mesh activo</span></b><span>1 gateway · 6 repeaters · 22 h421 climate · 73 substrate</span></div>
-      <div><b><span class="en-only">Data sources</span><span class="es-only">Fuentes</span></b><span>AROYA SPA <code>/devices/?facility=4742</code></span></div>
-      <div><b><span class="en-only">Generated</span><span class="es-only">Generado</span></b><span>2026-07-01 15:04 UTC · Day-1 baseline pull</span></div>
+      <div><b><span class="en-only">Facility</span><span class="es-only">Instalación</span></b><span>Verano PA (id {FACILITY_ID}, Org #{ORG_ID})</span></div>
+      <div><b><span class="en-only">Window</span><span class="es-only">Ventana</span></b><span>{WINDOW} → {PULLED_UTC}</span></div>
+      <div><b><span class="en-only">Fleet on file</span><span class="es-only">Flota registrada</span></b><span>{UNIQUE_RADIOS} unique radios · {REPORTING} reporting · {SILENT_COUNT} silent</span></div>
+      <div><b><span class="en-only">Active mesh</span><span class="es-only">Mesh activo</span></b><span>{GATEWAYS} gateway · {REPEATERS} repeaters · {H421_CLIMATE} h421 climate · {SUBSTRATE_NODES} substrate</span></div>
+      <div><b><span class="en-only">Data sources</span><span class="es-only">Fuentes</span></b><span>AROYA SPA <code>/devices/?facility={FACILITY_ID}</code></span></div>
+      <div><b><span class="en-only">Generated</span><span class="es-only">Generado</span></b><span>{PULLED_UTC} · Day-1 baseline pull</span></div>
     </div>
-  </div>
-  <section>
+  </div>'''
+
+def verdict_headline():
+    return '''<section>
     <h2><span class="en-only">Headline — Day-1 Diagnosis</span><span class="es-only">Titular — Diagnóstico Día-1</span></h2>
     <div class="verdict warn">
       <div class="v-head"><span class="en-only">Diagnosis · Day-1 Directional</span><span class="es-only">Diagnóstico · Día-1 Direccional</span></div>
@@ -174,21 +330,25 @@ html { -webkit-text-size-adjust: 100%; }
         <b>Instalación al 91% en día-1 con dos problemas estructurales.</b> 93 de 102 radios reportando, 9 silenciosos (normal para instalación fresca). Baterías, RSSI y link-quality limpios. <b>Dos padres sobre el límite Wirepas de 14 hijos:</b> sink <code>H2200001049</code> 18/14, repetidor <code>H3400003361</code> 15/14. Rebalancear antes del día-7. Adicional: 5 salas con lecturas VPD/VWC extremas — artefactos de instalación (sondas mal ubicadas), <b>no</b> fallo de dispositivo.
       </span>
     </div>
-  </section>
-  <section>
+  </section>'''
+
+def kpi_strip():
+    return f'''<section>
     <h2><span class="en-only">Fleet KPI Strip</span><span class="es-only">KPIs de Flota</span></h2>
     <div class="kpis">
-      <div class="kpi"><div class="label"><span class="en-only">Unique radios</span><span class="es-only">Radios únicos</span></div><div class="val">102</div><div class="delta">175 raw · −73 dash-2 dedup</div></div>
-      <div class="kpi warn"><div class="label"><span class="en-only">Reporting day-1</span><span class="es-only">Reportando día-1</span></div><div class="val">93 <span style="font-size:14px;color:var(--ink-muted)">/ 102</span></div><div class="delta">91% · 9 silent (walkdown pending)</div></div>
+      <div class="kpi"><div class="label"><span class="en-only">Unique radios</span><span class="es-only">Radios únicos</span></div><div class="val">{UNIQUE_RADIOS}</div><div class="delta">{RAW_SERIALS} raw · −{DASH2_COLLAPSED} dash-2 dedup</div></div>
+      <div class="kpi warn"><div class="label"><span class="en-only">Reporting day-1</span><span class="es-only">Reportando día-1</span></div><div class="val">{REPORTING} <span style="font-size:14px;color:var(--ink-muted)">/ {UNIQUE_RADIOS}</span></div><div class="delta">91% · {SILENT_COUNT} silent (walkdown pending)</div></div>
       <div class="kpi good"><div class="label"><span class="en-only">Gateway online</span><span class="es-only">Gateway online</span></div><div class="val">1 / 1</div><div class="delta">H2200001049 · anchor healthy</div></div>
-      <div class="kpi bad"><div class="label"><span class="en-only">Parents &gt; 14 children</span><span class="es-only">Padres &gt; 14 hijos</span></div><div class="val">2</div><div class="delta">🔴🔴 sink 18/14 · 🔴 H3400003361 15/14</div></div>
-      <div class="kpi good"><div class="label"><span class="en-only">Parents 12–14 (watch)</span><span class="es-only">Padres 12–14 (vigilar)</span></div><div class="val">0</div><div class="delta">no headroom-thin parents · 37 🟢 ≤11</div></div>
-      <div class="kpi warn"><div class="label"><span class="en-only">Rooms with radios</span><span class="es-only">Salas con radios</span></div><div class="val">20 <span style="font-size:14px;color:var(--ink-muted)">/ 22</span></div><div class="delta">Room 6, Mom 1 have zero radios assigned</div></div>
-      <div class="kpi good"><div class="label"><span class="en-only">Batteries ≥ 90%</span><span class="es-only">Baterías ≥ 90%</span></div><div class="val">79 / 79</div><div class="delta">fresh install · every reporting node OK</div></div>
+      <div class="kpi bad"><div class="label"><span class="en-only">Parents &gt; 14 children</span><span class="es-only">Padres &gt; 14 hijos</span></div><div class="val">{PARENTS_OVER_14}</div><div class="delta">🔴🔴 sink 18/14 · 🔴 H3400003361 15/14</div></div>
+      <div class="kpi good"><div class="label"><span class="en-only">Parents 12–14 (watch)</span><span class="es-only">Padres 12–14 (vigilar)</span></div><div class="val">{PARENTS_WATCH_12_14}</div><div class="delta">no headroom-thin parents · {PARENTS_HEADROOM} 🟢 ≤11</div></div>
+      <div class="kpi warn"><div class="label"><span class="en-only">Rooms with radios</span><span class="es-only">Salas con radios</span></div><div class="val">{ROOMS_WITH_RADIOS} <span style="font-size:14px;color:var(--ink-muted)">/ {ROOMS_TOTAL}</span></div><div class="delta">Room 6, Mom 1 have zero radios assigned</div></div>
+      <div class="kpi good"><div class="label"><span class="en-only">Batteries ≥ 90%</span><span class="es-only">Baterías ≥ 90%</span></div><div class="val">{BAT_HEALTHY} / {BAT_HEALTHY}</div><div class="delta">fresh install · every reporting node OK</div></div>
       <div class="kpi warn"><div class="label"><span class="en-only">Install-artifact rooms</span><span class="es-only">Salas con artefactos</span></div><div class="val">5</div><div class="delta">VPD/VWC — probes not yet in target zone</div></div>
     </div>
-  </section>
-  <section>
+  </section>'''
+
+def rule_callouts():
+    return '''<section>
     <h2><span class="en-only">14-Child Slot Rule</span><span class="es-only">Regla de 14 hijos</span> <span style="font-size:12px;color:var(--ink-muted);font-weight:400;letter-spacing:normal;text-transform:none">— why saturation is the load-bearing metric here</span></h2>
     <div class="card">
       <p><span class="en-only">Each parent node in the Wirepas mesh — gateway sink, relay, or upstream node — supports at most <b>14 direct children</b>. <b>Grandchildren count against their immediate parent's slots, not against the grandparent's.</b> Mid-layer relays can be saturated even when the gateway above them has plenty of headroom, so saturation has to be checked at <b>every</b> level of the topology, not just gateway-level. Once a parent crosses 14, additional devices either fail to join, get pushed to a worse parent at higher hop count, or thrash between slots — producing long travel times, retries, and growing data gaps.</span><span class="es-only">Cada padre en la mesh Wirepas soporta 14 hijos directos. Los nietos cuentan contra su padre inmediato. Rebalancear antes de saturar produce fallos silenciosos.</span></p>
@@ -208,125 +368,214 @@ html { -webkit-text-size-adjust: 100%; }
         <li><span class="en-only"><b>Parent saturation ≥ 14 children</b> — Wirepas hard limit</span><span class="es-only"><b>Saturación padre ≥ 14 hijos</b> — límite Wirepas</span></li>
       </ul>
     </div>
-  </section>
-  <section>
-    <h2><span class="en-only">Mesh Saturation &amp; Topology</span><span class="es-only">Saturación de Mesh y Topología</span></h2>
-    <p class="note"><span class="en-only">Sink saturation is the day-1 headline number. The gateway sink is holding 18 direct children against a 14-slot Wirepas hard limit. Twelve of those are healthy nodes; two are silent h421s that will either join or need to be re-parented; the remaining slots are either operational h421s or the over-subscribed repeater below. The tree also shows the one saturated repeater (<code>H3400003361</code> at 15/14) — that's a downstream saturation the gateway can't see or fix.</span><span class="es-only">Saturación del sink es el número principal. El gateway tiene 18 hijos directos contra el límite Wirepas de 14. Repetidor <code>H3400003361</code> también saturado (15/14).</span></p>
-    <div class="topo">
-<div class="topo-tree">
+  </section>'''
+
+def mesh_saturation_section():
+    rows = ""
+    for serial, model, kids, status in SINK_CHILDREN:
+        if status == "SILENT":
+            pill = '<span class="pill bad">silent</span>'
+            row_cls = 'topo-child silent'
+        elif status == "SAT":
+            pill = '<span class="pill warn">15/14 over</span>'
+            row_cls = 'topo-child sat'
+        elif kids >= 12:
+            pill = f'<span class="pill warn">{kids} kids · watch</span>'
+            row_cls = 'topo-child sat'
+        elif kids > 0:
+            pill = f'<span class="pill muted">{kids} kids</span>'
+            row_cls = 'topo-child'
+        else:
+            pill = '<span class="pill muted">leaf</span>'
+            row_cls = 'topo-child'
+        rows += f'    <div class="{row_cls}">├─ <code>{serial}</code> · {model} &nbsp; {pill}</div>\n'
+    tree = f'''<div class="topo-tree">
     <div class="topo-root">● <code>H2200001049</code> · gateway · ONLINE</div>
     <div class="topo-sat">└─ SINK anchor · <b>18/14</b> children · 🔴🔴 over-subscribed (+4)</div>
-    <div class="topo-child sat">├─ <code>H3400003361</code> · repeater &nbsp; <span class="pill warn">15/14 over</span></div>
-    <div class="topo-child">├─ <code>H3400003462</code> · repeater &nbsp; <span class="pill muted">1 kids</span></div>
-    <div class="topo-child">├─ <code>H3440018391</code> · node &nbsp; <span class="pill muted">leaf</span></div>
-    <div class="topo-child">├─ <code>H3440018394</code> · node &nbsp; <span class="pill muted">1 kids</span></div>
-    <div class="topo-child">├─ <code>H3440018398</code> · node &nbsp; <span class="pill muted">4 kids</span></div>
-    <div class="topo-child">├─ <code>H3440018410</code> · node &nbsp; <span class="pill muted">1 kids</span></div>
-    <div class="topo-child">├─ <code>H3440018416</code> · node &nbsp; <span class="pill muted">4 kids</span></div>
-    <div class="topo-child">├─ <code>H3440018417</code> · node &nbsp; <span class="pill muted">leaf</span></div>
-    <div class="topo-child">├─ <code>H3440018418</code> · node &nbsp; <span class="pill muted">3 kids</span></div>
-    <div class="topo-child">├─ <code>H3440018650</code> · node &nbsp; <span class="pill muted">2 kids</span></div>
-    <div class="topo-child">├─ <code>H3440018653</code> · node &nbsp; <span class="pill muted">2 kids</span></div>
-    <div class="topo-child">├─ <code>H3440018677</code> · node &nbsp; <span class="pill muted">leaf</span></div>
-    <div class="topo-child silent">├─ <code>H4210006470</code> · h421 &nbsp; <span class="pill bad">silent</span></div>
-    <div class="topo-child">├─ <code>H4210006569</code> · h421 &nbsp; <span class="pill muted">1 kids</span></div>
-    <div class="topo-child">├─ <code>H4210006587</code> · h421 &nbsp; <span class="pill muted">1 kids</span></div>
-    <div class="topo-child">├─ <code>H4210006772</code> · h421 &nbsp; <span class="pill muted">7 kids</span></div>
-    <div class="topo-child silent">├─ <code>H4210006781</code> · h421 &nbsp; <span class="pill bad">silent</span></div>
-    <div class="topo-child">├─ <code>H4210006869</code> · h421 &nbsp; <span class="pill muted">1 kids</span></div>
-  </div>
+{rows}  </div>'''
+    return f'''<section>
+    <h2><span class="en-only">Mesh Saturation &amp; Topology</span><span class="es-only">Saturación de Mesh y Topología</span></h2>
+    <p class="note"><span class="en-only">Sink saturation is the day-1 headline number. The gateway sink is holding {GATEWAY_SINK_CHILDREN} direct children against a 14-slot Wirepas hard limit. Twelve of those are healthy nodes; two are silent h421s that will either join or need to be re-parented; the remaining slots are either operational h421s or the over-subscribed repeater below. The tree also shows the one saturated repeater (<code>H3400003361</code> at 15/14) — that's a downstream saturation the gateway can't see or fix.</span><span class="es-only">Saturación del sink es el número principal. El gateway tiene {GATEWAY_SINK_CHILDREN} hijos directos contra el límite Wirepas de 14. Repetidor <code>H3400003361</code> también saturado (15/14).</span></p>
+    <div class="topo">
+{tree}
     </div>
     <p class="note" style="margin-top:10px"><span class="en-only">Legend: silent = not reporting in 24h · sat = at or over 14 children · leaf = no dependent devices under this parent. Children with their own dependents are labelled with kid-count.</span><span class="es-only">Leyenda: silent = sin reporte 24h · sat = 14+ hijos · leaf = sin dependientes.</span></p>
-  </section>
-  <section>
+  </section>'''
+
+def per_axis_distribution():
+    total = UNIQUE_RADIOS
+    # Silent-on-day-1 axis
+    silent_ok = REPORTING
+    silent_bad = SILENT_COUNT
+    # Battery axis (79 battery-reporting nodes, 79 healthy, 23 no-battery/line-powered)
+    bat_ok = 79
+    bat_unk = UNIQUE_RADIOS - 79
+    # Link quality (98/102 nominal — 8 watch, 9 silent excluded from calc but shown as unknown here)
+    link_ok = UNIQUE_RADIOS - len(WATCH_DEVICES) - SILENT_COUNT
+    link_warn = len(WATCH_DEVICES)
+    link_unk = SILENT_COUNT
+    # Saturation across parents shown
+    sat_over = 2
+    sat_at = 0
+    sat_watch = 0
+    sat_ok = PARENTS_HEADROOM
+    total_parents = sat_over + sat_watch + sat_ok
+    def pct(v, t): return round(100 * v / t, 1)
+    return f'''<section>
     <h2><span class="en-only">Per-Axis Distribution</span><span class="es-only">Distribución por Eje</span></h2>
     <p class="note"><span class="en-only">Four axes evaluated on day-1: silent-on-day-1 (primary install signal), battery health, link quality, and parent saturation. Steady-state RSSI / travel-time / gap-rate axes will populate at day-7 once the mesh has stabilized — those need &gt;24h of samples to be meaningful.</span><span class="es-only">Cuatro ejes evaluados en día-1: silencios, batería, link quality, saturación padre. RSSI/latencia/gap-rate se evaluarán en día-7.</span></p>
     <div class="bar-axis">
       <div class="stack"><h4><span class="en-only">Silent-on-Day-1</span><span class="es-only">Silenciosos Día-1</span></h4>
-        <div class="seg"><span class="s-good" style="width:91.2%">93</span><span class="s-bad" style="width:8.8%">9</span></div>
-        <div class="leg"><span><span class="legend-dot" style="background:var(--good)"></span>Reporting 93</span><span><span class="legend-dot" style="background:var(--bad)"></span>Silent 9</span></div>
+        <div class="seg"><span class="s-good" style="width:{pct(silent_ok,total)}%">{silent_ok}</span><span class="s-bad" style="width:{pct(silent_bad,total)}%">{silent_bad}</span></div>
+        <div class="leg"><span><span class="legend-dot" style="background:var(--good)"></span>Reporting {silent_ok}</span><span><span class="legend-dot" style="background:var(--bad)"></span>Silent {silent_bad}</span></div>
         <div class="note"><span class="en-only">Silent = no data in the 24h window</span><span class="es-only">Sin datos en 24h</span></div></div>
 
       <div class="stack"><h4><span class="en-only">Battery (reporting nodes)</span><span class="es-only">Batería (nodos reportando)</span></h4>
-        <div class="seg"><span class="s-good" style="width:77.5%">79</span><span class="s-unk" style="width:22.5%">23</span></div>
-        <div class="leg"><span><span class="legend-dot" style="background:var(--good)"></span>≥90% · 79</span><span><span class="legend-dot" style="background:var(--ink-muted)"></span>Line-powered / n/a · 23</span></div>
+        <div class="seg"><span class="s-good" style="width:{pct(bat_ok,total)}%">{bat_ok}</span><span class="s-unk" style="width:{pct(bat_unk,total)}%">{bat_unk}</span></div>
+        <div class="leg"><span><span class="legend-dot" style="background:var(--good)"></span>≥90% · {bat_ok}</span><span><span class="legend-dot" style="background:var(--ink-muted)"></span>Line-powered / n/a · {bat_unk}</span></div>
         <div class="note"><span class="en-only">Gateways, sinks, repeaters, and reporting h421s are line-powered — no battery reading expected.</span><span class="es-only">Gateways/sinks/repeaters son line-powered.</span></div></div>
 
       <div class="stack"><h4><span class="en-only">Link Quality</span><span class="es-only">Calidad de Enlace</span></h4>
-        <div class="seg"><span class="s-good" style="width:83.3%">85</span><span class="s-warn" style="width:7.8%">8</span><span class="s-unk" style="width:8.8%">9</span></div>
-        <div class="leg"><span><span class="legend-dot" style="background:var(--good)"></span>OK ≥80% · 85</span><span><span class="legend-dot" style="background:var(--warn)"></span>Watch &lt;80% · 8</span><span><span class="legend-dot" style="background:var(--ink-muted)"></span>Silent · 9</span></div>
+        <div class="seg"><span class="s-good" style="width:{pct(link_ok,total)}%">{link_ok}</span><span class="s-warn" style="width:{pct(link_warn,total)}%">{link_warn}</span><span class="s-unk" style="width:{pct(link_unk,total)}%">{link_unk}</span></div>
+        <div class="leg"><span><span class="legend-dot" style="background:var(--good)"></span>OK ≥80% · {link_ok}</span><span><span class="legend-dot" style="background:var(--warn)"></span>Watch &lt;80% · {link_warn}</span><span><span class="legend-dot" style="background:var(--ink-muted)"></span>Silent · {link_unk}</span></div>
         <div class="note"><span class="en-only">Watch tier will be worth re-checking at day-7 — most link-quality dips at install are placement-related and improve with mesh stabilization.</span><span class="es-only">Vigilar en día-7.</span></div></div>
 
       <div class="stack"><h4><span class="en-only">Parent Saturation</span><span class="es-only">Saturación de Padre</span></h4>
-        <div class="seg"><span class="s-good" style="width:94.9%">37</span><span class="s-warn" style="width:0.0%">0</span><span class="s-bad" style="width:5.1%">2</span></div>
-        <div class="leg"><span><span class="legend-dot" style="background:var(--good)"></span>≤11 · 37</span><span><span class="legend-dot" style="background:var(--warn)"></span>12–13 · 0</span><span><span class="legend-dot" style="background:var(--bad)"></span>&gt;14 · 2</span></div>
+        <div class="seg"><span class="s-good" style="width:{pct(sat_ok,total_parents)}%">{sat_ok}</span><span class="s-warn" style="width:{pct(sat_watch,total_parents)}%">{sat_watch}</span><span class="s-bad" style="width:{pct(sat_over,total_parents)}%">{sat_over}</span></div>
+        <div class="leg"><span><span class="legend-dot" style="background:var(--good)"></span>≤11 · {sat_ok}</span><span><span class="legend-dot" style="background:var(--warn)"></span>12–13 · {sat_watch}</span><span><span class="legend-dot" style="background:var(--bad)"></span>&gt;14 · {sat_over}</span></div>
         <div class="note"><span class="en-only">Only parents currently anchoring the mesh — leaf nodes excluded.</span><span class="es-only">Solo padres activos.</span></div></div>
     </div>
-  </section>
-  <section>
-    <h2><span class="en-only">Per-Room Summary</span><span class="es-only">Resumen por Sala</span> <span style="font-size:12px;color:var(--ink-muted);font-weight:400;letter-spacing:normal;text-transform:none">— 22 rooms</span></h2>
+  </section>'''
+
+def room_grid_section():
+    cards = ""
+    for name, rid, r, on, sil, watch, art, note in ROOMS:
+        if r == 0:
+            cls = "room-card empty"
+            stats = '<div class="room-stats"><span>zero radios assigned</span></div>'
+            flag = ""
+        else:
+            if sil >= 1:
+                cls = "room-card crit"
+            elif art or watch >= 1:
+                cls = "room-card warn"
+            else:
+                cls = "room-card"
+            sil_color = 'var(--bad)' if sil else 'var(--good)'
+            watch_bit = f'<span>watch <b style="color:var(--warn)">{watch}</b></span>' if watch else ''
+            stats = (f'<div class="room-stats">'
+                     f'<span>radios <b>{r}</b></span>'
+                     f'<span>online <b>{on}</b></span>'
+                     f'<span>silent <b style="color:{sil_color}">{sil}</b></span>'
+                     f'{watch_bit}'
+                     f'</div>')
+            flag = f'<div class="room-flag">⚠ install-artifact flagged</div>' if art else ''
+        cards += (f'<div class="{cls}">'
+                  f'<div class="room-name">{name}</div>'
+                  f'<div class="room-meta">room_id {rid} · {note}</div>'
+                  f'{stats}{flag}'
+                  f'</div>')
+    return f'''<section>
+    <h2><span class="en-only">Per-Room Summary</span><span class="es-only">Resumen por Sala</span> <span style="font-size:12px;color:var(--ink-muted);font-weight:400;letter-spacing:normal;text-transform:none">— {ROOMS_TOTAL} rooms</span></h2>
     <p class="note"><span class="en-only">Red = one or more silent radios in the room · orange = install-artifact flagged or link-quality watch · grey = zero radios assigned. Room 6 and Mom 1 have no AROYA radios in inventory — either in build-out or awaiting device binding.</span><span class="es-only">Rojo = silencios · naranja = artefacto o watch · gris = sin radios. Room 6 y Mom 1 sin radios asignados.</span></p>
-    <div class="room-grid"><div class="room-card warn"><div class="room-name">Veg 1</div><div class="room-meta">room_id 20335 · 0 zones</div><div class="room-stats"><span>radios <b>1</b></span><span>online <b>1</b></span><span>silent <b style="color:var(--good)">0</b></span><span>watch <b style="color:var(--warn)">1</b></span></div></div><div class="room-card"><div class="room-name">Veg 2</div><div class="room-meta">room_id 20337 · 0 zones</div><div class="room-stats"><span>radios <b>1</b></span><span>online <b>1</b></span><span>silent <b style="color:var(--good)">0</b></span></div></div><div class="room-card"><div class="room-name">Flower 1</div><div class="room-meta">room_id 20336 · 10 zones</div><div class="room-stats"><span>radios <b>11</b></span><span>online <b>11</b></span><span>silent <b style="color:var(--good)">0</b></span></div></div><div class="room-card warn"><div class="room-name">Flower 2</div><div class="room-meta">room_id 20331 · 11 zones</div><div class="room-stats"><span>radios <b>12</b></span><span>online <b>12</b></span><span>silent <b style="color:var(--good)">0</b></span><span>watch <b style="color:var(--warn)">2</b></span></div></div><div class="room-card crit"><div class="room-name">Flower 3</div><div class="room-meta">room_id 20338 · 7 zones</div><div class="room-stats"><span>radios <b>8</b></span><span>online <b>7</b></span><span>silent <b style="color:var(--bad)">1</b></span><span>watch <b style="color:var(--warn)">1</b></span></div></div><div class="room-card warn"><div class="room-name">Flower 4</div><div class="room-meta">room_id 20327 · 3 zones · VPD 1.66 on empty substrate</div><div class="room-stats"><span>radios <b>4</b></span><span>online <b>4</b></span><span>silent <b style="color:var(--good)">0</b></span></div><div class="room-flag">⚠ install-artifact flagged</div></div><div class="room-card"><div class="room-name">Flower 5</div><div class="room-meta">room_id 20341 · 7 zones</div><div class="room-stats"><span>radios <b>8</b></span><span>online <b>8</b></span><span>silent <b style="color:var(--good)">0</b></span></div></div><div class="room-card empty"><div class="room-name">Room 6</div><div class="room-meta">room_id 20340 · zero radios assigned</div><div class="room-stats"><span>zero radios assigned</span></div></div><div class="room-card"><div class="room-name">Room 7</div><div class="room-meta">room_id 20328 · 8 zones</div><div class="room-stats"><span>radios <b>5</b></span><span>online <b>5</b></span><span>silent <b style="color:var(--good)">0</b></span></div></div><div class="room-card crit"><div class="room-name">Room 8</div><div class="room-meta">room_id 20329 · 0 zones · probe near-zero VWC</div><div class="room-stats"><span>radios <b>6</b></span><span>online <b>5</b></span><span>silent <b style="color:var(--bad)">1</b></span></div><div class="room-flag">⚠ install-artifact flagged</div></div><div class="room-card crit"><div class="room-name">Room 9</div><div class="room-meta">room_id 20330 · 10 zones</div><div class="room-stats"><span>radios <b>6</b></span><span>online <b>5</b></span><span>silent <b style="color:var(--bad)">1</b></span></div></div><div class="room-card warn"><div class="room-name">Room 10</div><div class="room-meta">room_id 20323 · 10 zones · VPD 2.11 empty room</div><div class="room-stats"><span>radios <b>6</b></span><span>online <b>6</b></span><span>silent <b style="color:var(--good)">0</b></span><span>watch <b style="color:var(--warn)">1</b></span></div><div class="room-flag">⚠ install-artifact flagged</div></div><div class="room-card"><div class="room-name">Room 11</div><div class="room-meta">room_id 20324 · 10 zones</div><div class="room-stats"><span>radios <b>6</b></span><span>online <b>6</b></span><span>silent <b style="color:var(--good)">0</b></span></div></div><div class="room-card crit"><div class="room-name">Room 12</div><div class="room-meta">room_id 20325 · 10 zones · probe near-zero VWC</div><div class="room-stats"><span>radios <b>6</b></span><span>online <b>5</b></span><span>silent <b style="color:var(--bad)">1</b></span><span>watch <b style="color:var(--warn)">1</b></span></div><div class="room-flag">⚠ install-artifact flagged</div></div><div class="room-card crit"><div class="room-name">mom 2 (13)</div><div class="room-meta">room_id 20326 · 0 zones · probe near-zero VWC</div><div class="room-stats"><span>radios <b>1</b></span><span>online <b>0</b></span><span>silent <b style="color:var(--bad)">1</b></span></div><div class="room-flag">⚠ install-artifact flagged</div></div><div class="room-card empty"><div class="room-name">Mom 1</div><div class="room-meta">room_id 20342 · zero radios assigned</div><div class="room-stats"><span>zero radios assigned</span></div></div><div class="room-card warn"><div class="room-name">Dry 1</div><div class="room-meta">room_id 20346 · 0 zones</div><div class="room-stats"><span>radios <b>1</b></span><span>online <b>1</b></span><span>silent <b style="color:var(--good)">0</b></span><span>watch <b style="color:var(--warn)">1</b></span></div></div><div class="room-card"><div class="room-name">Dry 2</div><div class="room-meta">room_id 20345 · 0 zones</div><div class="room-stats"><span>radios <b>1</b></span><span>online <b>1</b></span><span>silent <b style="color:var(--good)">0</b></span></div></div><div class="room-card crit"><div class="room-name">Dry 3</div><div class="room-meta">room_id 20348 · 0 zones</div><div class="room-stats"><span>radios <b>1</b></span><span>online <b>0</b></span><span>silent <b style="color:var(--bad)">1</b></span></div></div><div class="room-card"><div class="room-name">Dry 4</div><div class="room-meta">room_id 20347 · 0 zones</div><div class="room-stats"><span>radios <b>1</b></span><span>online <b>1</b></span><span>silent <b style="color:var(--good)">0</b></span></div></div><div class="room-card warn"><div class="room-name">Cure</div><div class="room-meta">room_id 20355 · 0 zones</div><div class="room-stats"><span>radios <b>1</b></span><span>online <b>1</b></span><span>silent <b style="color:var(--good)">0</b></span><span>watch <b style="color:var(--warn)">1</b></span></div></div><div class="room-card"><div class="room-name">prop</div><div class="room-meta">room_id 20354 · 0 zones</div><div class="room-stats"><span>radios <b>1</b></span><span>online <b>1</b></span><span>silent <b style="color:var(--good)">0</b></span></div></div></div>
-  </section>
-  <section>
+    <div class="room-grid">{cards}</div>
+  </section>'''
+
+def install_artifacts_section():
+    items = "".join(f'<li><b>{room}:</b> {desc}</li>\n' for room, desc in ARTIFACTS)
+    return f'''<section>
     <h2><span class="en-only">Install-Artifact Readings</span><span class="es-only">Lecturas por Artefacto de Instalación</span> <span style="font-size:12px;color:var(--ink-muted);font-weight:400;letter-spacing:normal;text-transform:none">— not malfunctions</span></h2>
     <div class="artifact-card">
       <h3><span class="en-only">These are install-artifacts, not device faults</span><span class="es-only">Artefactos de instalación — no fallo de dispositivo</span></h3>
       <p><span class="en-only">The following five rooms are producing sensor values that are physically impossible for a live grow. The devices themselves are healthy — they're reporting the environment they're currently sitting in (air, empty stonewool, wrong medium), not the plant zone they will eventually monitor. These will normalize as the operator finishes probe placement. If left uncorrected, they will look like device faults on the day-7 pull.</span><span class="es-only">Estos cinco rooms muestran valores físicamente imposibles. Los dispositivos están bien — reportan aire o sustrato vacío. Se normalizarán con la instalación final.</span></p>
       <ul style="margin:0 0 0 22px;padding:0;line-height:1.75">
-        <li><b>Flower 4:</b> VPD 1.66 with VWC 0.2 — probe reading empty substrate, not plant zone</li>
-<li><b>Room 10:</b> VPD 2.11 — probe reading air in an empty room, not a canopy</li>
-<li><b>Room 8:</b> Near-zero VWC — probe not yet inserted into substrate</li>
-<li><b>Room 12:</b> Near-zero VWC — probe not yet inserted into substrate</li>
-<li><b>mom 2 (13):</b> Near-zero VWC — probe not yet inserted into substrate</li>
-
+        {items}
       </ul>
     </div>
-  </section>
-  <section>
+  </section>'''
+
+def actions_section():
+    rows = ""
+    for seq, title, target, action, urg, effort, impact in ACTIONS:
+        urg_cls = 'bad' if urg == 'P1' else 'warn' if urg == 'P2' else 'muted'
+        rows += (f'<tr><td class="num">{seq}</td>'
+                 f'<td>{title}</td>'
+                 f'<td><code>{target}</code></td>'
+                 f'<td>{action}</td>'
+                 f'<td><span class="pill {urg_cls}">{urg}</span></td>'
+                 f'<td>{impact}</td>'
+                 f'<td>{effort}</td>'
+                 f'</tr>')
+    return f'''<section>
     <h2><span class="en-only">Prioritized Actions</span><span class="es-only">Acciones Priorizadas</span> <span style="font-size:12px;color:var(--ink-muted);font-weight:400;letter-spacing:normal;text-transform:none">— day-1 triage → day-7 re-audit</span></h2>
     <p class="note"><span class="en-only">Two P1 rebalances (sink + repeater H3400003361) should be done before the mesh takes on more traffic. Silent-radio walkdown is the fastest-payoff item. Install-artifact fixes are straightforward but must be done before the day-7 pull or those rooms will look worse.</span><span class="es-only">Dos rebalanceos P1 (sink + repetidor H3400003361) antes de más tráfico. Walkdown de silenciosos es el más rápido.</span></p>
     <table>
       <thead><tr><th>#</th><th>Action</th><th>Target</th><th>Why</th><th>Urgency</th><th>Impact</th><th>Effort</th></tr></thead>
-      <tbody><tr><td class="num">1</td><td>Silent-radio walkdown</td><td><code>9 h421 silent 24h</code></td><td>Confirm each of the 9 silent h421 units is powered, in position, and joined. Prioritize the 3 mesh-infrastructure silents (H4210006470, H4210006781, H4210006852) — those are anchor-tier.</td><td><span class="pill bad">P1</span></td><td>Impact: High</td><td>Low</td></tr><tr><td class="num">2</td><td>Gateway sink saturation (18/14)</td><td><code>H2200001049 (sink anchor)</code></td><td>Sink is +4 over the Wirepas 14-child limit. Every additional joiner past 14 either fails to attach or thrashes. Rebalance direct-parented h421s onto downstream relays before more silent radios come online.</td><td><span class="pill bad">P1</span></td><td>Impact: High</td><td>Medium</td></tr><tr><td class="num">3</td><td>Repeater H3400003361 saturation (15/14)</td><td><code>H3400003361</code></td><td>One over the limit. Same failure mode as the sink — one node's mesh headroom is gone. Split its Flower 1 / Flower 2 sub-mesh onto H3400003362 or H3400003476.</td><td><span class="pill bad">P1</span></td><td>Impact: High</td><td>Medium</td></tr><tr><td class="num">4</td><td>Install-artifact readings in 5 rooms</td><td><code>Flower 4, Room 10, Room 8, Room 12, mom 2 (13)</code></td><td>Reposition probes into their target substrate/canopy zones. Devices are healthy — they're just reading the wrong environment. Left uncorrected these will look like device failures on the day-7 pull.</td><td><span class="pill warn">P2</span></td><td>Impact: High</td><td>Low</td></tr><tr><td class="num">5</td><td>Zero-radio rooms</td><td><code>Room 6, Mom 1</code></td><td>Confirm build-out status. If cultivation-active, assign radios. If dormant, mark room dormant in AROYA inventory so the day-7 audit doesn't flag them again.</td><td><span class="pill warn">P2</span></td><td>Impact: Medium</td><td>Low</td></tr><tr><td class="num">6</td><td>Day-7 re-audit</td><td><code>full fleet</code></td><td>Wirepas mesh takes days-to-weeks to stabilize. Every metric in this report is directional; the meaningful reliability judgment (churn rate, battery decay, saturation trend) comes from re-pulling this same audit on 2026-07-08.</td><td><span class="pill bad">P1</span></td><td>Impact: High</td><td>Low</td></tr></tbody>
+      <tbody>{rows}</tbody>
     </table>
-  </section>
-  <section>
-    <h2><span class="en-only">Silent Device Roster (9)</span><span class="es-only">Radios Silenciosos (9)</span></h2>
+  </section>'''
+
+def silent_roster_section():
+    rows = ""
+    for s, m, room, parent, rssi, lq in SILENT_DEVICES:
+        rows += (f'<tr><td><code>{s}</code></td>'
+                 f'<td>{m}</td>'
+                 f'<td>{room}</td>'
+                 f'<td><code>{parent}</code></td>'
+                 f'<td class="num">{rssi}</td>'
+                 f'<td class="num">{lq}%</td>'
+                 f'<td><span class="pill bad">silent 24h</span></td></tr>')
+    return f'''<section>
+    <h2><span class="en-only">Silent Device Roster ({SILENT_COUNT})</span><span class="es-only">Radios Silenciosos ({SILENT_COUNT})</span></h2>
     <p class="note"><span class="en-only">Zero data in the 24h window. Every silent device on day-1 is an h421 climate node — a strong signal these were the last hardware family staged before the pull started. The three parented to <code>sink/H2200001049</code> directly are the highest-priority walkdown targets because they're taking sink slots they can't hold.</span><span class="es-only">Sin datos en 24h. Los 9 silenciosos son h421 climate — probablemente la última familia instalada. Los 3 con padre directo <code>sink/H2200001049</code> son prioridad.</span></p>
     <table>
       <thead><tr><th>Serial</th><th>Model</th><th>Room</th><th>Last known parent</th><th class="num">Hops</th><th class="num">Last link%</th><th>State</th></tr></thead>
-      <tbody><tr><td><code>H4210006470</code></td><td>h421</td><td>(mesh infrastructure)</td><td><code>sink/H2200001049</code></td><td class="num">6</td><td class="num">92%</td><td><span class="pill bad">silent 24h</span></td></tr><tr><td><code>H4210006781</code></td><td>h421</td><td>(mesh infrastructure)</td><td><code>sink/H2200001049</code></td><td class="num">6</td><td class="num">100%</td><td><span class="pill bad">silent 24h</span></td></tr><tr><td><code>H4210006852</code></td><td>h421</td><td>(mesh infrastructure)</td><td><code>H3440018406</code></td><td class="num">1</td><td class="num">100%</td><td><span class="pill bad">silent 24h</span></td></tr><tr><td><code>H4210006784</code></td><td>h421</td><td>Flower 3</td><td><code>H4210006869</code></td><td class="num">8</td><td class="num">98%</td><td><span class="pill bad">silent 24h</span></td></tr><tr><td><code>H4210006869</code></td><td>h421</td><td>Room 8</td><td><code>sink/H2200001049</code></td><td class="num">3</td><td class="num">84%</td><td><span class="pill bad">silent 24h</span></td></tr><tr><td><code>H4210006893</code></td><td>h421</td><td>Room 9</td><td><code>H3440018412</code></td><td class="num">4</td><td class="num">100%</td><td><span class="pill bad">silent 24h</span></td></tr><tr><td><code>H4210006778</code></td><td>h421</td><td>Room 12</td><td><code>H4210006771</code></td><td class="num">8</td><td class="num">100%</td><td><span class="pill bad">silent 24h</span></td></tr><tr><td><code>H4210006866</code></td><td>h421</td><td>mom 2 (13)</td><td><code>H4210006569</code></td><td class="num">8</td><td class="num">100%</td><td><span class="pill bad">silent 24h</span></td></tr><tr><td><code>H4210006569</code></td><td>h421</td><td>Dry 3</td><td><code>sink/H2200001049</code></td><td class="num">6</td><td class="num">100%</td><td><span class="pill bad">silent 24h</span></td></tr></tbody>
+      <tbody>{rows}</tbody>
     </table>
-  </section>
-  <section>
-    <h2><span class="en-only">Watch Device Roster (8)</span><span class="es-only">Radios en Watch (8)</span></h2>
+  </section>'''
+
+def watch_roster_section():
+    rows = ""
+    for s, m, room, parent, hops, lq in WATCH_DEVICES:
+        rows += (f'<tr><td><code>{s}</code></td>'
+                 f'<td>{m}</td>'
+                 f'<td>{room}</td>'
+                 f'<td><code>{parent}</code></td>'
+                 f'<td class="num">{hops}</td>'
+                 f'<td class="num">{lq}%</td>'
+                 f'<td><span class="pill warn">link {lq}%</span></td></tr>')
+    return f'''<section>
+    <h2><span class="en-only">Watch Device Roster ({len(WATCH_DEVICES)})</span><span class="es-only">Radios en Watch ({len(WATCH_DEVICES)})</span></h2>
     <p class="note"><span class="en-only">Reporting, but link quality &lt;80%. At day-1 this often resolves as the mesh stabilizes and radios drift onto better parents. If the same devices are still &lt;80% at day-7, they're placement issues — check line-of-sight to the parent.</span><span class="es-only">Reportando pero link &lt;80%. Se resuelve muchas veces al estabilizar la mesh — re-verificar día-7.</span></p>
     <table>
       <thead><tr><th>Serial</th><th>Model</th><th>Room</th><th>Parent</th><th class="num">Hops</th><th class="num">Link%</th><th>State</th></tr></thead>
-      <tbody><tr><td><code>H4210006468</code></td><td>h421</td><td>Veg 1</td><td><code>H4210006849</code></td><td class="num">1</td><td class="num">49%</td><td><span class="pill warn">link 49%</span></td></tr><tr><td><code>H3440017140</code></td><td>node</td><td>Flower 2</td><td><code>H3440018416</code></td><td class="num">3</td><td class="num">44%</td><td><span class="pill warn">link 44%</span></td></tr><tr><td><code>H3440018677</code></td><td>node</td><td>Flower 2</td><td><code>sink/H2200001049</code></td><td class="num">1</td><td class="num">58%</td><td><span class="pill warn">link 58%</span></td></tr><tr><td><code>H3440017115</code></td><td>node</td><td>Flower 3</td><td><code>H3440018678</code></td><td class="num">1</td><td class="num">54%</td><td><span class="pill warn">link 54%</span></td></tr><tr><td><code>H4210006587</code></td><td>h421</td><td>Room 10</td><td><code>sink/H2200001049</code></td><td class="num">1</td><td class="num">44%</td><td><span class="pill warn">link 44%</span></td></tr><tr><td><code>H3440018394</code></td><td>node</td><td>Room 12</td><td><code>sink/H2200001049</code></td><td class="num">1</td><td class="num">53%</td><td><span class="pill warn">link 53%</span></td></tr><tr><td><code>H4210006771</code></td><td>h421</td><td>Dry 1</td><td><code>H4210006587</code></td><td class="num">3</td><td class="num">71%</td><td><span class="pill warn">link 71%</span></td></tr><tr><td><code>H4210006846</code></td><td>h421</td><td>Cure</td><td><code>H4210006587</code></td><td class="num">1</td><td class="num">73%</td><td><span class="pill warn">link 73%</span></td></tr></tbody>
+      <tbody>{rows}</tbody>
     </table>
-  </section>
-  <section>
+  </section>'''
+
+def methodology_section():
+    return f'''<section>
     <h2><span class="en-only">Data Quality &amp; Methodology</span><span class="es-only">Metodología</span></h2>
     <div class="card">
       <ul style="margin:0;padding-left:22px;line-height:1.75">
-        <li><span class="en-only"><b>Inventory:</b> <code>GET /devices/?facility=4742</code> · 175 raw serials.</span><span class="es-only">Inventario: 175 serials crudos.</span></li>
-        <li><span class="en-only"><b>Dash-2 dedup:</b> raw serials collapsed to <b>102 unique radios</b> (73 sensor-head duplicates removed). Every count in this report is per unique radio, not per raw serial.</span><span class="es-only">Dedup dash-2: 102 radios únicos.</span></li>
-        <li><span class="en-only"><b>Window:</b> last 24 hours ending 2026-07-01 15:04 UTC. This is a <b>day-1 install baseline</b> pull, not a steady-state audit — 24 hours of data cannot support reliability judgments about churn rate, battery decay, or long-run mesh stability.</span><span class="es-only">Ventana: last 24 hours. Base día-1, no auditoría estable.</span></li>
+        <li><span class="en-only"><b>Inventory:</b> <code>GET /devices/?facility={FACILITY_ID}</code> · {RAW_SERIALS} raw serials.</span><span class="es-only">Inventario: {RAW_SERIALS} serials crudos.</span></li>
+        <li><span class="en-only"><b>Dash-2 dedup:</b> raw serials collapsed to <b>{UNIQUE_RADIOS} unique radios</b> ({DASH2_COLLAPSED} sensor-head duplicates removed). Every count in this report is per unique radio, not per raw serial.</span><span class="es-only">Dedup dash-2: {UNIQUE_RADIOS} radios únicos.</span></li>
+        <li><span class="en-only"><b>Window:</b> {WINDOW} ending {PULLED_UTC}. This is a <b>day-1 install baseline</b> pull, not a steady-state audit — 24 hours of data cannot support reliability judgments about churn rate, battery decay, or long-run mesh stability.</span><span class="es-only">Ventana: {WINDOW}. Base día-1, no auditoría estable.</span></li>
         <li><span class="en-only"><b>Flag thresholds (fresh-install, stricter than steady-state):</b> Battery &lt;90% · Link &lt;80% · Silent-on-day-1 (no data in 24h) · Parent saturation ≥14 children (Wirepas hard limit).</span><span class="es-only">Umbrales frescos: Batería &lt;90%, Link &lt;80%, silencio 24h, ≥14 hijos.</span></li>
-        <li><span class="en-only"><b>Saturation counting:</b> children counted per-parent at every mesh level. Grandchildren count against the immediate parent's slots, not the grandparent's — sink saturation (18/14) and repeater saturation (15/14) are separate findings.</span><span class="es-only">Nietos cuentan a su padre inmediato, no al abuelo.</span></li>
+        <li><span class="en-only"><b>Saturation counting:</b> children counted per-parent at every mesh level. Grandchildren count against the immediate parent's slots, not the grandparent's — sink saturation ({GATEWAY_SINK_CHILDREN}/14) and repeater saturation ({REPEATER_361_CHILDREN}/14) are separate findings.</span><span class="es-only">Nietos cuentan a su padre inmediato, no al abuelo.</span></li>
         <li><span class="en-only"><b>Not in scope:</b> agronomic data (VPD, dryback, yield, crop steering). Device-side install audit only. Any VPD/VWC mention in this report is flagged as an <b>install-artifact</b> — a device correctly reporting the wrong environment because it hasn't been placed in its target zone yet.</span><span class="es-only">Sin datos agronómicos. Solo lado dispositivo.</span></li>
         <li><span class="en-only"><b>Re-audit date:</b> 2026-07-08 (day-7). At that point the Wirepas mesh has had time to stabilize, silent radios have either joined or been physically confirmed missing, and probe placement will (should) be complete.</span><span class="es-only">Re-auditoría: 2026-07-08 (día-7).</span></li>
       </ul>
     </div>
-  </section>
-  <div class="footer-note">
-    <span class="en-only">Report generated 2026-07-01 15:04 UTC · pulled live from AROYA SPA <code>/devices/?facility=4742</code>. Dash-2 sensor-head duplicates deduplicated before counts. 14-child rule per Wirepas spec. Every finding qualified as "based on ~24h of data — directional only." Sole authoritative source for the payload is the AROYA public/SPA API — no third-party enrichment.</span>
-    <span class="es-only">Reporte generado 2026-07-01 15:04 UTC · fuente única: AROYA SPA <code>/devices/?facility=4742</code>. Regla de 14 hijos por spec Wirepas. Todo direccional en día-1.</span>
-  </div>
-</div>
-<script>
+  </section>'''
+
+def footer():
+    return f'''<div class="footer-note">
+    <span class="en-only">Report generated {PULLED_UTC} · pulled live from AROYA SPA <code>/devices/?facility={FACILITY_ID}</code>. Dash-2 sensor-head duplicates deduplicated before counts. 14-child rule per Wirepas spec. Every finding qualified as "based on ~24h of data — directional only." Sole authoritative source for the payload is the AROYA public/SPA API — no third-party enrichment.</span>
+    <span class="es-only">Reporte generado {PULLED_UTC} · fuente única: AROYA SPA <code>/devices/?facility={FACILITY_ID}</code>. Regla de 14 hijos por spec Wirepas. Todo direccional en día-1.</span>
+  </div>'''
+
+SCRIPT = r"""<script>
 document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => {
   const lang = btn.dataset.lang;
   document.body.className = lang;
@@ -337,6 +586,43 @@ document.querySelectorAll('.theme-btn').forEach(btn => btn.addEventListener('cli
   if (theme === 'light') window.location.href = window.location.pathname.replace('_dark.html', '.html');
   else window.location.href = window.location.pathname.replace('.html', '_dark.html').replace('_dark_dark.html', '_dark.html');
 }));
-</script>
+</script>"""
+
+def build(theme):
+    return f"""<!DOCTYPE html>
+<html lang="en" data-theme="{theme}">
+<head>
+<meta charset="UTF-8">
+<title>Verano PA — Day-1 Device + Mesh Health · AROYA</title>
+<style>{STYLE}</style>
+{MOBILE_QA}
+</head>
+<body>
+{masthead()}
+<div class="wrap">
+  {pagehead()}
+  {verdict_headline()}
+  {kpi_strip()}
+  {rule_callouts()}
+  {mesh_saturation_section()}
+  {per_axis_distribution()}
+  {room_grid_section()}
+  {install_artifacts_section()}
+  {actions_section()}
+  {silent_roster_section()}
+  {watch_roster_section()}
+  {methodology_section()}
+  {footer()}
+</div>
+{SCRIPT}
 </body>
 </html>
+"""
+
+if __name__ == "__main__":
+    light = build("light")
+    dark = build("dark")
+    (REPO / "VeranoPA_Day1_Device_Mesh_Health_2026-07-01.html").write_text(light)
+    (REPO / "VeranoPA_Day1_Device_Mesh_Health_2026-07-01_dark.html").write_text(dark)
+    print(f"Wrote light: {len(light)} bytes")
+    print(f"Wrote dark : {len(dark)} bytes")
