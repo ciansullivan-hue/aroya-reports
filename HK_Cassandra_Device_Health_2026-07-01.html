@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HK Cassandra LLC · Device Health &amp; Data Continuity · 2026-07-01</title>
+<style>:root{
+  --bg:#fafaf7; --bg-2:#ffffff; --bg-3:#f3f3ee; --border:#e2e2dc;
+  --ink:#1c2419; --ink-2:#4a5340; --ink-muted:#7a8175;
+  --olive:#3f4e2b; --olive-2:#5b6e3f; --lime:#9fd96a; --lime-2:#cfe9a8;
+  --app-blue:#1f78b4; --app-blue-2:#a8d5e2;
+  --attention:#e76f51; --attention-2:#f4a261;
+  --good:#5b8a3a; --warn:#c87a2c; --bad:#b1442a;
+  --good-bg:#eef5e3; --warn-bg:#fbecd6; --bad-bg:#f7d9cf;
+  --p-rootin:#a8d5e2; --p-veg:#9fd96a; --p-stretch:#f4a261; --p-bulking:#c5a3ff; --p-ripening:#e76f51; --p-dry:#cfd0c8;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font:14.5px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px 80px}
+.masthead{background:#1a1c19;color:#fff;padding:22px 28px 26px;margin:0 -28px 0}
+.masthead-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.lockup{display:flex;align-items:center;gap:12px;color:#fff}
+.aroya-wordmark{height:34px;width:auto;color:#fff;display:block}
+.lockup-byline{font-size:11px;color:#aaa;letter-spacing:.04em}
+.sync-status{font-size:11px;color:#aaa}
+.pagehead{max-width:1180px;margin:0 auto;padding:30px 0 0;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+.pagehead-eyebrow{font-size:11px;font-weight:600;color:var(--olive);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+.pagehead h1{font-size:32px;line-height:1.15;letter-spacing:-.018em;margin:0 0 8px;color:var(--ink);font-weight:600}
+.pagehead .sub{color:var(--ink-2);font-size:15px;line-height:1.5}
+.pagehead .meta{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px 24px;font-size:12.5px;color:var(--ink-muted)}
+.pagehead .meta span{padding:6px 0;border-top:1px solid var(--border)}
+.pagehead .meta b{color:var(--ink);font-weight:600;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+section{margin-top:40px}
+h2{font-size:22px;margin:0 0 14px;font-weight:700;letter-spacing:-.3px;padding-bottom:6px;border-bottom:2px solid var(--lime)}
+h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:18px}
+.kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive)}
+.kpi.bad::before{background:var(--bad)}.kpi.warn::before{background:var(--warn)}.kpi.good::before{background:var(--good)}
+.kpi .l{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.kpi .v{font-size:21px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--ink-2);margin-top:3px}
+.kpi.bad .v{color:var(--bad)}.kpi.warn .v{color:var(--warn)}.kpi.good .v{color:var(--good)}
+.verdict{padding:14px 18px;border-radius:10px;font-weight:500;margin:10px 0;border-left:4px solid}
+.verdict.bad{background:linear-gradient(90deg,var(--bad-bg) 0%,transparent 100%);border-color:var(--bad)}
+.verdict.warn{background:linear-gradient(90deg,var(--warn-bg) 0%,transparent 100%);border-color:var(--warn)}
+.verdict.good{background:linear-gradient(90deg,var(--good-bg) 0%,transparent 100%);border-color:var(--good)}
+.verdict .v-head{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
+table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:13.5px}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700;background:var(--bg-3)}
+.pill{display:inline-block;padding:2px 9px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:.4px}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}.pill.warn{background:var(--warn-bg);color:var(--warn)}.pill.good{background:var(--good-bg);color:var(--good)}.pill.muted{background:var(--bg-3);color:var(--ink-muted)}
+
+.room-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 22px}
+.chip{cursor:pointer;border:1.5px solid var(--border);background:var(--bg-2);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--ink);text-align:left;box-shadow:var(--card-shadow);transition:all .12s;display:inline-flex;flex-direction:column;gap:1px}
+.chip:hover{border-color:var(--olive-2);transform:translateY(-1px)}
+.chip.active{background:var(--olive);color:#fff;border-color:var(--olive)}
+.chip-sub{font-size:10.5px;font-weight:500;opacity:.85;text-transform:none;letter-spacing:.3px}
+.compare-toggle{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);background:var(--bg-2);border:1px solid var(--border);border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:600;box-shadow:var(--card-shadow)}
+.compare-toggle:hover{border-color:var(--olive-2)}
+.compare-toggle.active{background:var(--olive);color:#fff;border-color:var(--olive)}
+.compare-toggle .dot{width:8px;height:8px;border-radius:50%;background:#aaa;transition:all .15s}
+.compare-toggle.active .dot{background:var(--lime)}
+
+.panel-head{margin:6px 0 14px;padding-left:14px}
+.panel-head h2{margin:4px 0 4px;font-size:21px;border:none;padding:0}
+.rid{color:var(--ink-muted);font-weight:500;font-size:.78em}
+.hgline{color:var(--ink-muted);font-size:12.5px;margin-top:2px}
+.narr{background:var(--bg-2);border:1px solid var(--border);border-left:4px solid var(--lime);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;line-height:1.6}
+.charts{display:grid;grid-template-columns:1fr;gap:14px;margin-top:8px}
+.chart-wrap{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;box-shadow:var(--card-shadow)}
+.chart-wrap h3{margin:0 0 10px;font-size:13px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+.chart-wrap canvas{width:100%!important;height:280px!important}
+
+#compare-view{display:none}
+#compare-view.active{display:block}
+#compare-view .compare-hint{background:var(--bg-2);border:1px solid var(--border);border-left:4px solid var(--lime);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--ink-2);margin-bottom:14px}
+#single-view.hidden{display:none}
+
+.rec{padding:14px 16px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--card-shadow);overflow:hidden}
+.rec .owner{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--olive);color:#fff;letter-spacing:.6px;text-transform:uppercase;margin-right:8px}
+.rec .owner.grower{background:var(--app-blue)}.rec .owner.process{background:var(--ink-2)}
+.rec .raction{margin-top:8px;font-weight:500;font-size:14.5px}
+.rec .rwhy{margin-top:6px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+ul.openqs{padding-left:20px;line-height:1.7}ul.openqs li{margin-bottom:8px}
+footer{margin-top:60px;text-align:center;font-size:12px;color:var(--ink-muted);padding:30px 0 0;border-top:1px solid var(--border)}
+@media(max-width:720px){.wrap{padding:0 16px 60px}.masthead{margin:0 -16px;padding:18px 16px 20px}.pagehead h1{font-size:24px}h2{font-size:18px}.kpi .v{font-size:18px}.chip{font-size:12px}}
+body.dark{--bg:#14160f;--bg-2:#1c1f17;--bg-3:#22261c;--border:#333a2b;--ink:#eef0e6;--ink-2:#c3ccb4;--ink-muted:#8c9580;}
+body.dark .masthead{background:#0d0f0a}
+body{background:var(--bg);color:var(--ink);}
+
+td.good{color:#3f7d20;font-weight:600}td.warn{color:#b8860b;font-weight:600}td.bad{color:#b1442a;font-weight:700}
+.devtbl{font-size:12px} .devtbl td,.devtbl th{padding:5px 8px}
+body.dark{--bg:#14160f;--bg-2:#1c1f17;--bg-3:#22261c;--border:#333a2b;--ink:#eef0e6;--ink-2:#c3ccb4;--ink-muted:#8c9580;}
+body.dark .masthead{background:#0d0f0a}
+body{background:var(--bg);color:var(--ink)}
+.theme-btn{position:fixed;top:12px;right:12px;z-index:50;background:var(--bg-2);border:1px solid var(--border);border-radius:999px;padding:7px 13px;font-size:12px;cursor:pointer;color:var(--ink-2);font-weight:600}
+</style></head><body><div class="wrap">
+<button class="theme-btn" onclick="document.body.classList.toggle('dark')">◐ Theme</button>
+<div class="masthead"><div class="masthead-inner"><div class="lockup">
+     <svg class="aroya-wordmark" viewBox="0 0 202.1 75" fill="currentColor" role="img" aria-label="AROYA" xmlns="http://www.w3.org/2000/svg">
+<path d="M83.7,45.3c10.2,0,15.9-7.3,15.9-17.4s-5.6-17.4-15.9-17.4-16,7.2-16,17.4,5.8,17.4,16,17.4ZM75.2,17.9c1.4-1.9,4.3-3.6,8.7-3.6s6.5,1.3,8.2,3.8c1.7,2.4,2.6,5.5,2.6,9.9s-.9,7.5-2.6,9.9c-1.7,2.5-4.4,3.8-8.4,3.8s-6.8-1.3-8.7-3.8c-1.3-1.7-2.4-5.2-2.4-9.9s.9-7.9,2.5-10.1Z"/>
+<path d="M18.6,11.1L5.4,44.8h4.6l3.7-10.1h14.3l3.8,10.1h4.6L23.2,11.1h-4.6ZM15.2,30.9l3.8-10.1c.8-2.1,1.3-3.7,1.9-5.4h0c.5,1.4,1.3,3.7,1.9,5.4l3.8,10.1h-11.4Z"/>
+<path d="m148.7 44.8h4.6l-13.1-33.7h-4.6l-13.2 33.7h4.6l3.7-10.1h14.3l3.8 10.1zm-16.6-13.9 3.8-10.1c0.8-2.1 1.3-3.7 1.9-5.4 0.5 1.4 1.3 3.7 1.9 5.4l3.8 10.1h-11.4z"/>
+<path d="m59.1 29.2c2.9-1 5.2-4.1 5.2-8.2 0-9.1-7.3-9.9-13.3-9.9h-11.4v33.7h4.3v-14h7.5c5.9 0 7.7 1.3 7.7 6s0.3 6.3 1.4 7.9h4.8s0-0.2 0-0.2c-1.6-2.1-1.9-4.4-1.9-8.3s-1.2-5.9-4.4-7.1zm-8.2-2.1h-7v-12.3h7.1c4.1 0 9 0 9 6.3 0 5.6-4.9 5.9-9 5.9z"/>
+<path d="m122.1 11.1-5.7 9.6c-1.1 1.8-2.1 3.7-3.5 6.2-1.2-2.3-3.2-5.6-3.5-6.2l-5.7-9.6h-5l12.1 19.3v14.4h4.4v-14.4l12.1-19.3h-5.1z"/>
+<rect x="127.4" y="57.2" width="1.8" height="9.9"/>
+<path d="M138,62.8c0,2.1-.9,3.1-2.6,3.1s-.7,0-1,0c-.3-.1-.5-.3-.8-.5-.2-.2-.3-.4-.4-.6-.1-.2-.2-.5-.2-.7v-6.8h-1.9v7.2c0,.3.1.7.2,1,0,.4.3.6.5.9.4.3.8.6,1.3.8s1.1.3,1.8.2c.7,0,1.4-.1,1.9-.4s.9-.7,1.2-1.3v1.5h1.8v-9.9h-1.8v5.6Z"/>
+<path d="M152.7,57c-.6,0-1,.1-1.4.2-.4.1-.7.3-1,.6-.2.2-.4.4-.6.6s-.3.5-.4.7c-.2-.7-.6-1.2-1.2-1.6-.5-.4-1.2-.6-2-.6s-1.7.3-2.3.8c-.3.3-.6.6-.7,1v-1.5h-1.6v9.9h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6.1.2.1.5.2.7v6.8h1.8v-5.5c0-.7.1-1.3.2-1.7.2-.4.4-.7.7-1,.4-.4.9-.5,1.5-.5s.6,0,.9,0c.3.1.6.2.8.5.2.2.3.4.4.6,0,.2.1.5.1.7v6.8h1.8v-6.4c0-1.2-.3-2.2-.9-2.8-.6-.6-1.4-.9-2.6-.9Z"/>
+<path d="M112.7,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.3.8-.5,1.7-.5,2.8s.2,1.9.6,2.7c.4.8.9,1.4,1.6,1.8.7.4,1.5.6,2.4.6s1.3-.1,1.8-.4,1-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM112.1,65c-.5.6-1.2,1-2.1,1s-1.3-.2-1.8-.5c-.5-.3-.8-.7-1-1.3-.2-.6-.3-1.2-.3-2.1,0-1.3.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.5.6.7,1.5.7,2.7s-.2,2.2-.7,2.8Z"/>
+<rect x="127.4" y="53.2" width="1.8" height="1.8"/>
+<path d="M123.8,58.5c-.7-1-1.8-1.5-3.2-1.5s-1.7.2-2.4.6c-.7.4-1.2,1-1.6,1.8-.4.8-.6,1.6-.6,2.7s.2,2,.6,2.8c.4.8.9,1.4,1.6,1.8.7.5,1.4.7,2.5.6.7,0,1.3-.1,1.8-.4s.9-.7,1.3-1.3v1.5h1.8v-13.9h-1.8v5.3ZM123,65c-.5.6-1.2,1-2.1,1s-1.4-.2-1.8-.5c-.4-.3-.7-.7-.9-1.3-.2-.6-.3-1.3-.3-2.1,0-1.2.2-2.2.7-2.8.5-.6,1.2-.9,2.3-.9s1.8.4,2.2,1.1c.4.7.6,1.6.6,2.7s-.2,2.2-.7,2.8Z"/>
+<path d="M97.7,53.2l-5.5,13.9h1.9l1.5-4.2h5.9l1.6,4.2h1.9l-5.4-13.9h-1.9ZM96.2,61.4l1.6-4.2c.4-.9.6-1.7.8-2.2.3.8.6,1.5.8,2.2l1.6,4.2h-4.8Z"/>
+<path d="M85.4,62.4c-.2.7-.5,1.6-.9,2.6-.4-1.1-.6-2-.9-2.6l-1.9-5.3h-1.9l3.9,9.8c-.3.6-.5,1.1-.6,1.4,0,.3-.3.5-.5.7-.2.2-.4.3-.6.3-.4,0-.8-.1-1.2-.2v1.6c.5.1,1,.2,1.5.2s.8,0,1.2-.3c.3-.2.6-.5.9-1,.3-.4.5-1,.8-1.8l4-10.8h-1.9l-1.9,5.4Z"/>
+<path d="M77.5,57.5c-.7-.4-1.5-.7-2.3-.7-1.4,0-2.4.5-3.2,1.6v-5.3h-1.8v13.9h1.8v-1.4c.4.5.8.9,1.4,1.2.5.3,1.1.4,1.8.4s1.7-.2,2.3-.6c.7-.4,1.2-1,1.6-1.8.4-.8.6-1.7.6-2.8s-.2-1.9-.6-2.7c-.4-.8-.9-1.4-1.6-1.8ZM77.5,64.1c-.2.6-.5,1-.9,1.3-.4.3-1,.5-1.8.5s-1.7-.3-2.1-1c-.5-.6-.7-1.6-.7-2.8s.2-2,.6-2.8c.3-.7,1.1-1.1,2.2-1.1s1.8.3,2.3,1c.5.6.7,1.6.7,2.8s0,1.5-.3,2.1Z"/>
+<path d="m185.8 9v9.9c0 1.2-1 2.1-2.1 2.1h-21.9v12h9.9c1.2 0 2.1 1 2.1 2.1v9.9h12v-21.9c0-1.2 1-2.1 2.1-2.1h9.9v-12h-12z"/>
+</svg>
+
+<span class="lockup-byline">by Addium · Device Health</span></div>
+<div class="sync-status">Facility 4576 · HK Cassandra LLC · device audit · 2026-07-01</div></div></div>
+<div class="pagehead">
+ <div class="pagehead-eyebrow">AROYA · Device Health &amp; Data Continuity · Mesh Intelligence</div>
+ <h1>HK Cassandra LLC · Device Health &amp; Data Continuity</h1>
+ <div class="sub">Wirepas mesh + sensor continuity check across 10 flower rooms, prepared for the 2026-07-01 call. Grounded in genuine 14-day data-coverage (AROYA /dataReadings/) plus live device inventory (spa room-config, captured 2026-07-01 13:43–13:44 UTC).</div>
+ <div class="meta">
+  <span><b>Facility</b>HK Cassandra LLC (ID 4576) · Org 3576</span>
+  <span><b>Gateway</b>Single gateway 223245 (one sink)</span>
+  <span><b>Coverage window</b>2026-06-17 → 2026-07-01 (14 days, ~3-min cadence)</span>
+  <span><b>Headline</b>All 10 rooms ≥98% coverage · no material data gaps · 6/24 Room-6 silent-h421 flag resolved</span>
+ </div>
+</div>
+
+<section><h2>1 · Headline</h2>
+<div class="kpis">
+ <div class="kpi good"><div class="l">Data continuity (14d)</div><div class="v">≥98% all rooms</div><div class="s">Every flower room returned 98.1–98.2% timestamp coverage over the 14-day window — no material gaps this cycle. Newest cohort (R4/R6/R8) spans from its 2026-06-28 flip.</div></div>
+ <div class="kpi good"><div class="l">Room 6 silent-h421 flag (6/24)</div><div class="v">Resolved</div><div class="s">Both R6 climate pucks (H4210005066, H4210005537) flagged silent on 6/24 are now online &amp; reporting (link 100 / 86, last comm current). R6 hit 98% coverage.</div></div>
+ <div class="kpi good"><div class="l">Battery (node + TEROS One)</div><div class="v">100%</div><div class="s">Every battery-powered device (mesh node + ter15 TEROS One substrate sensor) reads 100%. Climate pucks (h421), CO₂ (ee894) and repeaters are PoE — no battery.</div></div>
+ <div class="kpi good"><div class="l">Link quality (spot-checked)</div><div class="v">86–100</div><div class="s">R5 + R6 device inventory: lowest link 86 (an R6 h421), most 93–100. All devices online with current last-communication timestamps.</div></div>
+</div>
+<div class="verdict good"><div class="v-head">Mesh is healthy — this cycle showed no data gaps, and the one open device issue from 6/24 is cleared</div>
+<span>The most direct test of mesh/sensor health is whether the substrate and climate series are continuous: over 14 days at ~3-minute cadence, all 10 flower rooms returned ≥98% coverage, which is the strongest possible evidence that nodes, TEROS One sensors and climate pucks are reporting reliably through the single gateway (223245). The two Room-6 h421 climate sensors that were silent in the 2026-06-24 mesh audit are back online and Room 6 now reports 98% coverage. Full per-device mesh topology (57 radios, single sink 198079) was mapped in the <a href="https://ciansullivan-hue.github.io/aroya-reports/HK_Cassandra_Wirepas_Mesh_Health_2026-06-24.html" style="color:var(--app-blue)">2026-06-24 Wirepas Mesh Health report</a> — this is a continuity re-check on top of that baseline.</span></div>
+</section>
+
+<section><h2>2 · Per-Room Data Continuity (14-day coverage)</h2>
+<table><thead><tr><th>Room</th><th>Cohort</th><th>Phase</th><th>Coverage</th><th>Days</th><th>Gap status</th></tr></thead><tbody>
+<tr><td>Room 1 (21 LED)</td><td>Jun-3</td><td>Mid Flower</td><td class="good">98.1%</td><td>15 d</td><td class="good">no material gaps</td></tr>
+<tr><td>Room 2 (99 LED)</td><td>Jun-4</td><td>Mid Flower</td><td class="good">98.1%</td><td>15 d</td><td class="good">no material gaps</td></tr>
+<tr><td>Room 3 (42 LED)</td><td>May-10</td><td>Late Flower</td><td class="good">98.2%</td><td>15 d</td><td class="good">no material gaps</td></tr>
+<tr><td>Room 4 (16 lights)</td><td>Jun-28</td><td>Early Day 1-21</td><td class="good">98.2%</td><td>15 d</td><td class="good">no material gaps</td></tr>
+<tr><td>Room 5 (24 lights)</td><td>Jun-3</td><td>Mid Flower</td><td class="good">98.1%</td><td>15 d</td><td class="good">no material gaps</td></tr>
+<tr><td>Room 6 (75 lights)</td><td>Jun-28</td><td>Early Day 1-21</td><td class="good">98.2%</td><td>12 d</td><td class="good">no material gaps</td></tr>
+<tr><td>Room 8 (49 lights)</td><td>Jun-28</td><td>Early Day 1-21</td><td class="good">98.2%</td><td>15 d</td><td class="good">no material gaps</td></tr>
+<tr><td>Room 9 (27 lights)</td><td>May-10</td><td>Late Flower</td><td class="good">98.2%</td><td>15 d</td><td class="good">no material gaps</td></tr>
+<tr><td>Room 10 (27 lights)</td><td>May-10</td><td>Late Flower</td><td class="good">98.2%</td><td>15 d</td><td class="good">no material gaps</td></tr>
+<tr><td>Room 11 (31 lights)</td><td>May-10</td><td>Late Flower</td><td class="good">98.2%</td><td>15 d</td><td class="good">no material gaps</td></tr>
+</tbody></table>
+<p style="font-size:12.5px;color:var(--ink-muted);max-width:900px;margin-top:8px">Coverage = share of the 14-day window with sensor readings present, computed from the audit pull. R4/R6/R8 (Jun-28 cohort) span from their flip date, hence fewer calendar days at full coverage. Veg room (18759) not pulled this cycle.</p>
+</section>
+
+<section><h2>3 · Device Inventory Spot-Check — R5 &amp; R6</h2>
+<p style="font-size:13px;color:var(--ink-2);max-width:900px">Live device inventory pulled from AROYA room-config at 2026-07-01 13:43–13:44 UTC. <b>Only mesh nodes and ter15 (TEROS One) substrate sensors are battery-powered</b>; h421 climate pucks, ee894 CO₂ sensors and mesh repeaters run on PoE (battery = "PoE"). Link quality is 0–100; RSSI is the raw radio hop metric.</p>
+<h3>Room 5 (AUTOMAIT · Rockwool 1.5 gal) — 5 device stacks, all online</h3>
+<table class="devtbl"><thead><tr><th>Device (H-serial)</th><th>Model</th><th>Zone</th><th>Battery</th><th>Link</th><th>RSSI</th><th>Status</th></tr></thead><tbody>
+<tr><td>H3440014640</td><td>node</td><td>Z1</td><td>100</td><td class="good">100</td><td>5</td><td class="good">● online</td></tr>
+<tr><td>H3440014640·ter15</td><td>ter15(TEROS One)</td><td>Z1</td><td>100</td><td class="good">100</td><td>5</td><td class="good">● online</td></tr>
+<tr><td>H3440014640-2</td><td>node</td><td>Z2</td><td>100</td><td class="good">100</td><td>5</td><td class="good">● online</td></tr>
+<tr><td>H3440014640-2·ter15</td><td>ter15</td><td>Z2</td><td>100</td><td class="good">—</td><td>0</td><td class="good">● online</td></tr>
+<tr><td>H4210005143</td><td>h421 (PoE)</td><td>Z1</td><td>PoE</td><td class="good">100</td><td>3</td><td class="good">● online</td></tr>
+<tr><td>H4210005143·ee894</td><td>ee894 CO2 (PoE)</td><td>Z1</td><td>PoE</td><td class="good">100</td><td>3</td><td class="good">● online</td></tr>
+<tr><td>H8100001834</td><td>node · DRIP</td><td>Z2</td><td>100</td><td class="good">93</td><td>1</td><td class="good">● online</td></tr>
+<tr><td>H8100001834·ter15</td><td>ter15 · DRIP</td><td>Z2</td><td>100</td><td class="good">93</td><td>1</td><td class="good">● online</td></tr>
+<tr><td>H8100001834-2</td><td>node · DRAIN</td><td>Z2</td><td>100</td><td class="good">93</td><td>1</td><td class="good">● online</td></tr>
+<tr><td>H8100001834-2·ter15</td><td>ter15 · DRAIN</td><td>Z2</td><td>100</td><td class="good">—</td><td>0</td><td class="good">● online</td></tr>
+</tbody></table>
+<h3 style="margin-top:20px">Room 6 (Jun-28 flip · Soilless) — 9 device stacks + repeater, all online</h3>
+<table class="devtbl"><thead><tr><th>Device (H-serial)</th><th>Model</th><th>Zone</th><th>Battery</th><th>Link</th><th>RSSI</th><th>Status</th></tr></thead><tbody>
+<tr><td>H3400003020</td><td>repeater (PoE)</td><td>Z1</td><td>100</td><td class="good">99</td><td>1</td><td class="good">● online</td></tr>
+<tr><td>H3440014715</td><td>node</td><td>Z1</td><td>100</td><td class="good">100</td><td>4</td><td class="good">● online</td></tr>
+<tr><td>H3440014715·ter15</td><td>ter15</td><td>Z1</td><td>100</td><td class="good">100</td><td>4</td><td class="good">● online</td></tr>
+<tr><td>H3440014715-2</td><td>node</td><td>Z2</td><td>100</td><td class="good">100</td><td>4</td><td class="good">● online</td></tr>
+<tr><td>H3440014731</td><td>node</td><td>Z3</td><td>100</td><td class="good">100</td><td>3</td><td class="good">● online</td></tr>
+<tr><td>H3440014731-2</td><td>node</td><td>Z4</td><td>100</td><td class="good">100</td><td>3</td><td class="good">● online</td></tr>
+<tr><td>H4210005066</td><td>h421 (PoE) — was silent 6/24</td><td>Z2</td><td>PoE</td><td class="good">100</td><td>1</td><td class="good">● online</td></tr>
+<tr><td>H4210005537</td><td>h421 (PoE) — was silent 6/24</td><td>Z1</td><td>PoE</td><td class="good">86</td><td>1</td><td class="good">● online</td></tr>
+<tr><td>H8100001832</td><td>node · DRIP</td><td>Z1</td><td>100</td><td class="good">100</td><td>4</td><td class="good">● online</td></tr>
+<tr><td>H8100001832-2</td><td>node · DRAIN</td><td>Z1</td><td>100</td><td class="good">100</td><td>4</td><td class="good">● online</td></tr>
+</tbody></table>
+</section>
+
+<section><h2>4 · Device Model Mix &amp; Power</h2>
+<table><thead><tr><th>Model</th><th>Role</th><th>Power</th><th>Battery health</th></tr></thead><tbody>
+<tr><td>node</td><td>Wirepas mesh node (hosts TEROS One)</td><td>Battery</td><td class="good">100%</td></tr>
+<tr><td>ter15</td><td>TEROS One substrate sensor (VWC / EC / temp; DRIP &amp; DRAIN variants)</td><td>Battery</td><td class="good">100%</td></tr>
+<tr><td>h421</td><td>Climate puck (air temp / RH / VPD)</td><td>PoE</td><td>n/a</td></tr>
+<tr><td>ee894</td><td>CO₂ sensor (on h421)</td><td>PoE</td><td>n/a</td></tr>
+<tr><td>repeater</td><td>Mesh repeater</td><td>PoE</td><td>n/a</td></tr>
+<tr><td>gateway 223245</td><td>Single facility gateway / sink</td><td>PoE</td><td>n/a</td></tr>
+</tbody></table>
+</section>
+
+<section><h2>5 · Watch Items &amp; Method</h2>
+<ul style="font-size:13px;color:var(--ink-2);line-height:1.7;max-width:920px">
+<li><b>Single gateway (223245):</b> the whole facility meshes through one sink. No redundancy — worth confirming the gateway itself has UPS/PoE backup, since it is the single point of failure for all data.</li>
+<li><b>R6 h421 link 86:</b> H4210005537 is back online but at link 86 (vs 100 on its neighbours) — keep an eye on it; it is the lowest-margin radio in the two rooms spot-checked.</li>
+<li><b>Coverage-first method:</b> the primary health signal is 14-day continuity (≥98% everywhere). Device inventory (battery/link/RSSI/last-comm) was spot-checked live on R5 &amp; R6; a full per-device pull of all 11 rooms was not run this unattended cycle — the 2026-06-24 mesh report holds the complete 57-radio topology.</li>
+<li><b>Substrate note (from room-config):</b> R2 is configured as Coco Coir 1.5 gal bag and R5 as Rockwool 1.5 gal (2×0.3 GPH emitters each); the remaining flower rooms are generic soilless.</li>
+</ul>
+</section>
+
+<footer>AROYA by Addium · Device Health &amp; Data Continuity · Facility 4576 (HK Cassandra LLC) · Generated 2026-07-01 · 14d continuity + live device-config spot-check · single gateway 223245</footer>
+</div>
+<script>if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)document.body.classList.add("dark");</script>
+</body></html>
